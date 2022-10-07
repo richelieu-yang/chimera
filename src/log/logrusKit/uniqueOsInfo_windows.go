@@ -1,0 +1,5 @@
+package logrusKit
+
+func printUniqueOsInfo() {
+
+}

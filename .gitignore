@@ -1,0 +1,27 @@
+### Go template
+# Binaries for programs and plugins
+*.exe
+*.exe~
+*.dll
+*.so
+*.dylib
+
+# Test binary, built wit
+*.test
+
+# Output of the go coverage tool, specifically when used with LiteIDE
+*.out
+
+# Dependency directories (remove the comment below to include it)
+# vendor/
+
+.idea
+/src/test.go
+/test1
+*.log
+
+.DS_Store
+# 以 **/ 开头表示匹配所有的文件夹，例如 **/test.md 匹配所有的test.md文件。
+**/.DS_Store
+.DS_Store?
+

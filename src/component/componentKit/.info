@@ -1,0 +1,10 @@
+必需得组件: logrus、runtime
+可选的组件: redis、json、gin
+
+业务中可选配置：
+监听系统的退出信号:    osKit.MonitorExitSignal()
+json相关的自定义:     componentKit.InitializeJsonComponent()
+
+PS:
+gin组件会阻塞当前协程（一般是main程）；
+如果使用gin组件的话，建议把业务逻辑放到 componentKit.InitializeGinComponent() 的传参回调函数中.
