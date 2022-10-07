@@ -1,8 +1,8 @@
 package pointerKit
 
 import (
-	"gitee.com/richelieu042/go-scales/src/core/strKit"
 	"github.com/modern-go/reflect2"
+	"github.com/richelieu42/go-scales/src/core/strKit"
 	"reflect"
 )
 

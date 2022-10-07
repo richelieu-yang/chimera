@@ -1,8 +1,8 @@
 package httpKit
 
 import (
-	"gitee.com/richelieu042/go-scales/src/core/strKit"
-	"gitee.com/richelieu042/go-scales/src/urlKit"
+	"github.com/richelieu42/go-scales/src/core/strKit"
+	"github.com/richelieu42/go-scales/src/urlKit"
 	"io/ioutil"
 	"net/http"
 	"strings"

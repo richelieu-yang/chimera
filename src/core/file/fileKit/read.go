@@ -1,7 +1,7 @@
 package fileKit
 
 import (
-	"gitee.com/richelieu042/go-scales/src/crypto/base64Kit"
+	"github.com/richelieu42/go-scales/src/crypto/base64Kit"
 	"os"
 )
 

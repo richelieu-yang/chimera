@@ -5,12 +5,12 @@ TODO: 响应文件或文件流，目前一律用no-cache，在此种情况下会
 package ginKit
 
 import (
-	"gitee.com/richelieu042/go-scales/src/consts/httpStatusCode"
-	"gitee.com/richelieu042/go-scales/src/core/file/fileKit"
-	"gitee.com/richelieu042/go-scales/src/core/intKit"
-	"gitee.com/richelieu042/go-scales/src/core/strKit"
-	"gitee.com/richelieu042/go-scales/src/jsonKit"
 	"github.com/gin-gonic/gin"
+	"github.com/richelieu42/go-scales/src/consts/httpStatusCode"
+	"github.com/richelieu42/go-scales/src/core/file/fileKit"
+	"github.com/richelieu42/go-scales/src/core/intKit"
+	"github.com/richelieu42/go-scales/src/core/strKit"
+	"github.com/richelieu42/go-scales/src/jsonKit"
 	"net/http"
 	"net/url"
 	"unicode"

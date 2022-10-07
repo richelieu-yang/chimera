@@ -1,9 +1,9 @@
 package httpClientKit
 
 import (
-	"gitee.com/richelieu042/go-scales/src/core/mapKit"
-	"gitee.com/richelieu042/go-scales/src/core/strKit"
-	"gitee.com/richelieu042/go-scales/src/urlKit"
+	"github.com/richelieu42/go-scales/src/core/mapKit"
+	"github.com/richelieu42/go-scales/src/core/strKit"
+	"github.com/richelieu42/go-scales/src/urlKit"
 	"io"
 	"net/http"
 )

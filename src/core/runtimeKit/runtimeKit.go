@@ -5,7 +5,7 @@
 package runtimeKit
 
 import (
-	"gitee.com/richelieu042/go-scales/src/core/errorKit"
+	"github.com/richelieu42/go-scales/src/core/errorKit"
 	"github.com/shirou/gopsutil/v3/host"
 	"runtime"
 )

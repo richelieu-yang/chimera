@@ -1,10 +1,10 @@
 package ginKit
 
 import (
-	"gitee.com/richelieu042/go-scales/src/core/strKit"
 	"github.com/gin-contrib/cors"
 	"github.com/gin-contrib/gzip"
 	"github.com/gin-gonic/gin"
+	"github.com/richelieu42/go-scales/src/core/strKit"
 	"time"
 )
 

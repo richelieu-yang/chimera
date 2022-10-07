@@ -1,8 +1,8 @@
 package redisKit
 
 import (
-	"gitee.com/richelieu042/go-scales/src/core/timeKit"
-	"gitee.com/richelieu042/go-scales/src/idKit"
+	"github.com/richelieu42/go-scales/src/core/timeKit"
+	"github.com/richelieu42/go-scales/src/idKit"
 	"github.com/sirupsen/logrus"
 	"testing"
 	"time"

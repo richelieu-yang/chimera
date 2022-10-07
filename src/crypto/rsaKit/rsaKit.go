@@ -11,8 +11,8 @@ import (
 	"bytes"
 	"crypto/rand"
 	"crypto/rsa"
-	"gitee.com/richelieu042/go-scales/src/crypto/base64Kit"
-	"gitee.com/richelieu042/go-scales/src/resources"
+	"github.com/richelieu42/go-scales/src/crypto/base64Kit"
+	"github.com/richelieu42/go-scales/src/resources"
 	"github.com/sirupsen/logrus"
 )
 

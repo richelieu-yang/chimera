@@ -1,7 +1,7 @@
 package sliceKit
 
 import (
-	"gitee.com/richelieu042/go-scales/src/core/strKit"
+	"github.com/richelieu42/go-scales/src/core/strKit"
 )
 
 // ToString 切片实例（元素任意类型） => string

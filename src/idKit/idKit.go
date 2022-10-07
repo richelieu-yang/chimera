@@ -10,8 +10,8 @@ gonanoid依赖（650 Star） - https://github.com/matoous/go-nanoid
 */
 
 import (
-	"gitee.com/richelieu042/go-scales/src/core/strKit"
 	gonanoid "github.com/matoous/go-nanoid/v2"
+	"github.com/richelieu42/go-scales/src/core/strKit"
 	uuid "github.com/satori/go.uuid"
 )
 

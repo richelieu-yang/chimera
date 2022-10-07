@@ -5,8 +5,8 @@
 package randomKit
 
 import (
-	"gitee.com/richelieu042/go-scales/src/core/errorKit"
-	"gitee.com/richelieu042/go-scales/src/core/floatKit"
+	"github.com/richelieu42/go-scales/src/core/errorKit"
+	"github.com/richelieu42/go-scales/src/core/floatKit"
 	"math/rand"
 	"time"
 )

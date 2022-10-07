@@ -1,7 +1,7 @@
 package stackKit
 
 import (
-	"gitee.com/richelieu042/go-scales/src/core/sliceKit"
+	"github.com/richelieu42/go-scales/src/core/sliceKit"
 	"sync"
 )
 

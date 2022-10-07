@@ -1,9 +1,9 @@
 package main
 
 import (
-	"gitee.com/richelieu042/go-scales/src/core/errorKit"
-	"gitee.com/richelieu042/go-scales/src/core/strKit"
 	jsoniter "github.com/json-iterator/go"
+	"github.com/richelieu42/go-scales/src/core/errorKit"
+	"github.com/richelieu42/go-scales/src/core/strKit"
 )
 
 type (

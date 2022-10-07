@@ -1,12 +1,12 @@
 package ocrKit
 
 import (
-	"gitee.com/richelieu042/go-scales/src/cmdKit"
-	"gitee.com/richelieu042/go-scales/src/core/errorKit"
-	"gitee.com/richelieu042/go-scales/src/core/file/fileKit"
-	"gitee.com/richelieu042/go-scales/src/core/pathKit"
-	"gitee.com/richelieu042/go-scales/src/core/sliceKit"
-	"gitee.com/richelieu042/go-scales/src/idKit"
+	"github.com/richelieu42/go-scales/src/cmdKit"
+	"github.com/richelieu42/go-scales/src/core/errorKit"
+	"github.com/richelieu42/go-scales/src/core/file/fileKit"
+	"github.com/richelieu42/go-scales/src/core/pathKit"
+	"github.com/richelieu42/go-scales/src/core/sliceKit"
+	"github.com/richelieu42/go-scales/src/idKit"
 )
 
 //// GetText1 通过 第三方依赖otiai10/gosseract 实现

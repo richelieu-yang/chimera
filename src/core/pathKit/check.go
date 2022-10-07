@@ -1,6 +1,6 @@
 package pathKit
 
-import "gitee.com/richelieu042/go-scales/src/core/strKit"
+import "github.com/richelieu42/go-scales/src/core/strKit"
 
 // CheckSkip 检查是否发生"路径穿越"（路径穿透）
 /*

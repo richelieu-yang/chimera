@@ -1,8 +1,8 @@
 package logrusKit
 
 import (
-	"gitee.com/richelieu042/go-scales/src/core/file/rotateFileKit"
-	"gitee.com/richelieu042/go-scales/src/core/timeKit"
+	"github.com/richelieu42/go-scales/src/core/file/rotateFileKit"
+	"github.com/richelieu42/go-scales/src/core/timeKit"
 	"github.com/rifflock/lfshook"
 	"github.com/sirupsen/logrus"
 	"time"

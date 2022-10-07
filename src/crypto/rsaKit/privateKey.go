@@ -4,7 +4,7 @@ import (
 	"crypto/rsa"
 	"crypto/x509"
 	"encoding/pem"
-	"gitee.com/richelieu042/go-scales/src/core/errorKit"
+	"github.com/richelieu42/go-scales/src/core/errorKit"
 )
 
 /**

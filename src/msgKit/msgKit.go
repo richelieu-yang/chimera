@@ -1,8 +1,8 @@
 package msgKit
 
 import (
-	"gitee.com/richelieu042/go-scales/src/confKit"
-	"gitee.com/richelieu042/go-scales/src/core/file/fileKit"
+	"github.com/richelieu42/go-scales/src/confKit"
+	"github.com/richelieu42/go-scales/src/core/file/fileKit"
 )
 
 /*

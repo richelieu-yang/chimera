@@ -1,12 +1,12 @@
 package ginKit
 
 import (
-	"gitee.com/richelieu042/go-scales/src/core/mapKit"
-	"gitee.com/richelieu042/go-scales/src/core/strKit"
-	"gitee.com/richelieu042/go-scales/src/http/httpKit"
-	"gitee.com/richelieu042/go-scales/src/netKit"
-	"gitee.com/richelieu042/go-scales/src/urlKit"
 	"github.com/gin-gonic/gin"
+	"github.com/richelieu42/go-scales/src/core/mapKit"
+	"github.com/richelieu42/go-scales/src/core/strKit"
+	"github.com/richelieu42/go-scales/src/http/httpKit"
+	"github.com/richelieu42/go-scales/src/netKit"
+	"github.com/richelieu42/go-scales/src/urlKit"
 	"log"
 	"net/http"
 	"net/http/httputil"

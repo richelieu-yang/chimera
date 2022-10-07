@@ -1,8 +1,8 @@
 package logrusKit
 
 import (
-	"gitee.com/richelieu042/go-scales/src/core/timeKit"
-	"gitee.com/richelieu042/go-scales/src/mainControl"
+	"github.com/richelieu42/go-scales/src/core/timeKit"
+	"github.com/richelieu42/go-scales/src/mainControl"
 	"github.com/sirupsen/logrus"
 )
 

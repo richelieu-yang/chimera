@@ -2,7 +2,7 @@ package typeSet
 
 import (
 	"fmt"
-	"gitee.com/richelieu042/go-scales/src/database/redisKit/test"
+	"github.com/richelieu42/go-scales/src/database/redisKit/test"
 	"testing"
 )
 

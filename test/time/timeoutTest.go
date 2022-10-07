@@ -2,7 +2,7 @@ package main
 
 import (
 	"fmt"
-	"gitee.com/richelieu042/go-scales/src/core/timeKit"
+	"github.com/richelieu42/go-scales/src/core/timeKit"
 	"time"
 )
 

@@ -1,13 +1,13 @@
 package logrusKit
 
 import (
-	"gitee.com/richelieu042/go-scales/src/core/errorKit"
-	"gitee.com/richelieu042/go-scales/src/core/osKit"
-	"gitee.com/richelieu042/go-scales/src/core/pathKit"
-	"gitee.com/richelieu042/go-scales/src/core/runtimeKit"
-	"gitee.com/richelieu042/go-scales/src/core/timeKit"
-	"gitee.com/richelieu042/go-scales/src/core/userKit"
-	"gitee.com/richelieu042/go-scales/src/ipKit"
+	"github.com/richelieu42/go-scales/src/core/errorKit"
+	"github.com/richelieu42/go-scales/src/core/osKit"
+	"github.com/richelieu42/go-scales/src/core/pathKit"
+	"github.com/richelieu42/go-scales/src/core/runtimeKit"
+	"github.com/richelieu42/go-scales/src/core/timeKit"
+	"github.com/richelieu42/go-scales/src/core/userKit"
+	"github.com/richelieu42/go-scales/src/ipKit"
 	"github.com/sirupsen/logrus"
 )
 

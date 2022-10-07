@@ -1,7 +1,7 @@
 package errorKit
 
 import (
-	"gitee.com/richelieu042/go-scales/src/funcKit"
+	"github.com/richelieu42/go-scales/src/funcKit"
 )
 
 // addCallerInfoToFormat 在传参format前面加上: "$包名.$方法名"

@@ -2,9 +2,9 @@ package main
 
 import (
 	"fmt"
-	"gitee.com/richelieu042/go-scales/src/component/nacosKit"
-	"gitee.com/richelieu042/go-scales/src/core/floatKit"
 	"github.com/nacos-group/nacos-sdk-go/vo"
+	"github.com/richelieu42/go-scales/src/component/nacosKit"
+	"github.com/richelieu42/go-scales/src/core/floatKit"
 )
 
 func main() {

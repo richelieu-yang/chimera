@@ -1,7 +1,7 @@
 package ipKit
 
 import (
-	"gitee.com/richelieu042/go-scales/src/ipKit/ipType"
+	"github.com/richelieu42/go-scales/src/ipKit/ipType"
 	"net"
 )
 

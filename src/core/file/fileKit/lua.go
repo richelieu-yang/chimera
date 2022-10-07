@@ -3,7 +3,7 @@ package fileKit
 import (
 	"bufio"
 	"bytes"
-	"gitee.com/richelieu042/go-scales/src/core/strKit"
+	"github.com/richelieu42/go-scales/src/core/strKit"
 	"os"
 )
 

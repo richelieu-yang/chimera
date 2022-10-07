@@ -11,7 +11,7 @@ import (
 	"crypto/x509"
 	"encoding/base64"
 	"encoding/pem"
-	"gitee.com/richelieu042/go-scales/src/core/errorKit"
+	"github.com/richelieu42/go-scales/src/core/errorKit"
 )
 
 // EncryptPEM 通过password，加密私钥

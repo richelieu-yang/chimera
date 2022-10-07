@@ -1,11 +1,11 @@
 package imageKit
 
 import (
-	"gitee.com/richelieu042/go-scales/src/core/errorKit"
-	"gitee.com/richelieu042/go-scales/src/core/file/fileKit"
-	"gitee.com/richelieu042/go-scales/src/core/strKit"
-	"gitee.com/richelieu042/go-scales/src/crypto/base64Kit"
-	"gitee.com/richelieu042/go-scales/src/http/httpClientKit"
+	"github.com/richelieu42/go-scales/src/core/errorKit"
+	"github.com/richelieu42/go-scales/src/core/file/fileKit"
+	"github.com/richelieu42/go-scales/src/core/strKit"
+	"github.com/richelieu42/go-scales/src/crypto/base64Kit"
+	"github.com/richelieu42/go-scales/src/http/httpClientKit"
 	"regexp"
 )
 

@@ -1,8 +1,8 @@
 package dataSizeKit
 
 import (
-	"gitee.com/richelieu042/go-scales/src/core/floatKit"
-	"gitee.com/richelieu042/go-scales/src/core/sliceKit"
+	"github.com/richelieu42/go-scales/src/core/floatKit"
+	"github.com/richelieu42/go-scales/src/core/sliceKit"
 	"math"
 )
 

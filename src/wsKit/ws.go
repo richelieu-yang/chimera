@@ -1,11 +1,11 @@
 package wsKit
 
 import (
-	"gitee.com/richelieu042/go-scales/src/core/errorKit"
-	"gitee.com/richelieu042/go-scales/src/core/strKit"
-	"gitee.com/richelieu042/go-scales/src/http/httpKit"
 	"github.com/gin-gonic/gin"
 	"github.com/gorilla/websocket"
+	"github.com/richelieu42/go-scales/src/core/errorKit"
+	"github.com/richelieu42/go-scales/src/core/strKit"
+	"github.com/richelieu42/go-scales/src/http/httpKit"
 	"github.com/sirupsen/logrus"
 	"net/http"
 )

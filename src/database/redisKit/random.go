@@ -2,8 +2,8 @@ package redisKit
 
 import (
 	"context"
-	"gitee.com/richelieu042/go-scales/src/randomKit"
 	"github.com/go-redis/redis/v8"
+	"github.com/richelieu42/go-scales/src/randomKit"
 )
 
 // RandomKey 从当前数据库中随机返回一个key

@@ -9,9 +9,9 @@ host in js: 	"127.0.0.1:8888"
 package netKit
 
 import (
-	"gitee.com/richelieu042/go-scales/src/core/errorKit"
-	"gitee.com/richelieu042/go-scales/src/core/intKit"
-	"gitee.com/richelieu042/go-scales/src/core/strKit"
+	"github.com/richelieu42/go-scales/src/core/errorKit"
+	"github.com/richelieu42/go-scales/src/core/intKit"
+	"github.com/richelieu42/go-scales/src/core/strKit"
 	"net"
 	"strconv"
 )

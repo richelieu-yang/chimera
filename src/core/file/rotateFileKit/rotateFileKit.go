@@ -8,10 +8,10 @@ PS:
 package rotateFileKit
 
 import (
-	"gitee.com/richelieu042/go-scales/src/core/file/fileKit"
-	"gitee.com/richelieu042/go-scales/src/core/osKit"
-	"gitee.com/richelieu042/go-scales/src/core/pathKit"
 	rotatelogs "github.com/lestrrat-go/file-rotatelogs"
+	"github.com/richelieu42/go-scales/src/core/file/fileKit"
+	"github.com/richelieu42/go-scales/src/core/osKit"
+	"github.com/richelieu42/go-scales/src/core/pathKit"
 	"io"
 	"time"
 )

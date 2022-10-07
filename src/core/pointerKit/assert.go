@@ -1,6 +1,6 @@
 package pointerKit
 
-import "gitee.com/richelieu042/go-scales/src/core/errorKit"
+import "github.com/richelieu42/go-scales/src/core/errorKit"
 
 // AssertPointer 断言是指针
 /*

@@ -1,8 +1,8 @@
 package userKit
 
 import (
-	"gitee.com/richelieu042/go-scales/src/core/errorKit"
 	"github.com/mitchellh/go-homedir"
+	"github.com/richelieu42/go-scales/src/core/errorKit"
 	"os/user"
 )
 

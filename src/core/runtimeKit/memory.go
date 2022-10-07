@@ -1,9 +1,9 @@
 package runtimeKit
 
 import (
-	"gitee.com/richelieu042/go-scales/src/core/floatKit"
-	"gitee.com/richelieu042/go-scales/src/core/strKit"
-	"gitee.com/richelieu042/go-scales/src/dataSizeKit"
+	"github.com/richelieu42/go-scales/src/core/floatKit"
+	"github.com/richelieu42/go-scales/src/core/strKit"
+	"github.com/richelieu42/go-scales/src/dataSizeKit"
 	"github.com/shirou/gopsutil/v3/mem"
 )
 

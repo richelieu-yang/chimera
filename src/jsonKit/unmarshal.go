@@ -1,10 +1,10 @@
 package jsonKit
 
 import (
-	"gitee.com/richelieu042/go-scales/src/core/errorKit"
-	"gitee.com/richelieu042/go-scales/src/core/pointerKit"
-	"gitee.com/richelieu042/go-scales/src/core/strKit"
 	jsoniter "github.com/json-iterator/go"
+	"github.com/richelieu42/go-scales/src/core/errorKit"
+	"github.com/richelieu42/go-scales/src/core/pointerKit"
+	"github.com/richelieu42/go-scales/src/core/strKit"
 )
 
 // Unmarshal ！！！：要注意传参data长度为0的情况，会报错

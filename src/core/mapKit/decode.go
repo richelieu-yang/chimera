@@ -1,8 +1,8 @@
 package mapKit
 
 import (
-	"gitee.com/richelieu042/go-scales/src/core/pointerKit"
 	"github.com/mitchellh/mapstructure"
+	"github.com/richelieu42/go-scales/src/core/pointerKit"
 )
 
 // DecodeToPointer 结构体（包括map）的实例或指针 => 结构体（包括map）的指针

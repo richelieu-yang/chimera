@@ -3,10 +3,10 @@
 package ginKit
 
 import (
-	"gitee.com/richelieu042/go-scales/src/core/file/fileKit"
-	"gitee.com/richelieu042/go-scales/src/core/pathKit"
-	"gitee.com/richelieu042/go-scales/src/resources"
 	"github.com/gin-gonic/gin"
+	"github.com/richelieu42/go-scales/src/core/file/fileKit"
+	"github.com/richelieu42/go-scales/src/core/pathKit"
+	"github.com/richelieu42/go-scales/src/resources"
 	"net/http"
 )
 

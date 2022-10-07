@@ -1,10 +1,10 @@
 package nacosKit
 
 import (
-	"gitee.com/richelieu042/go-scales/src/jsonKit"
-	"gitee.com/richelieu042/go-scales/src/randomKit"
 	"github.com/nacos-group/nacos-sdk-go/model"
 	"github.com/nacos-group/nacos-sdk-go/vo"
+	"github.com/richelieu42/go-scales/src/jsonKit"
+	"github.com/richelieu42/go-scales/src/randomKit"
 	"log"
 	"testing"
 	"time"

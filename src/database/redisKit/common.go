@@ -2,8 +2,8 @@ package redisKit
 
 import (
 	"context"
-	"gitee.com/richelieu042/go-scales/src/core/sliceKit"
 	"github.com/go-redis/redis/v8"
+	"github.com/richelieu42/go-scales/src/core/sliceKit"
 	"time"
 )
 

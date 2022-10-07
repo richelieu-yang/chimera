@@ -1,8 +1,8 @@
 package pathKit
 
 import (
-	"gitee.com/richelieu042/go-scales/src/core/file/fileKit"
-	"gitee.com/richelieu042/go-scales/src/core/strKit"
+	"github.com/richelieu42/go-scales/src/core/file/fileKit"
+	"github.com/richelieu42/go-scales/src/core/strKit"
 	"github.com/sirupsen/logrus"
 	"os"
 )

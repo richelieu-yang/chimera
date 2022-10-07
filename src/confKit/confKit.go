@@ -9,11 +9,11 @@
 package confKit
 
 import (
-	"gitee.com/richelieu042/go-scales/src/core/errorKit"
-	"gitee.com/richelieu042/go-scales/src/core/file/fileKit"
-	"gitee.com/richelieu042/go-scales/src/core/ioKit"
-	"gitee.com/richelieu042/go-scales/src/core/pointerKit"
 	"github.com/mitchellh/mapstructure"
+	"github.com/richelieu42/go-scales/src/core/errorKit"
+	"github.com/richelieu42/go-scales/src/core/file/fileKit"
+	"github.com/richelieu42/go-scales/src/core/ioKit"
+	"github.com/richelieu42/go-scales/src/core/pointerKit"
 	"github.com/spf13/viper"
 )
 

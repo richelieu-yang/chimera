@@ -1,11 +1,11 @@
 package ginKit
 
 import (
-	"gitee.com/richelieu042/go-scales/src/core/boolKit"
-	"gitee.com/richelieu042/go-scales/src/core/floatKit"
-	"gitee.com/richelieu042/go-scales/src/core/intKit"
-	"gitee.com/richelieu042/go-scales/src/http/httpKit"
 	"github.com/gin-gonic/gin"
+	"github.com/richelieu42/go-scales/src/core/boolKit"
+	"github.com/richelieu42/go-scales/src/core/floatKit"
+	"github.com/richelieu42/go-scales/src/core/intKit"
+	"github.com/richelieu42/go-scales/src/http/httpKit"
 	"io/ioutil"
 	"mime/multipart"
 	"strings"

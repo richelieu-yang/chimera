@@ -2,7 +2,7 @@ package base64Kit
 
 import (
 	"encoding/base64"
-	"gitee.com/richelieu042/go-scales/src/core/sliceKit"
+	"github.com/richelieu42/go-scales/src/core/sliceKit"
 )
 
 // Encode

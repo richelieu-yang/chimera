@@ -1,6 +1,6 @@
 package test
 
-import "gitee.com/richelieu042/go-scales/src/database/redisKit"
+import "github.com/richelieu42/go-scales/src/database/redisKit"
 
 // NewSingleNodeClient 单节点集群的客户端
 func NewSingleNodeClient() (*redisKit.Client, error) {

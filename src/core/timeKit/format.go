@@ -2,7 +2,7 @@ package timeKit
 
 import (
 	"fmt"
-	"gitee.com/richelieu042/go-scales/src/core/sliceKit"
+	"github.com/richelieu42/go-scales/src/core/sliceKit"
 	"time"
 )
 

@@ -1,6 +1,6 @@
 package strKit
 
-import "gitee.com/richelieu042/go-scales/src/core/errorKit"
+import "github.com/richelieu42/go-scales/src/core/errorKit"
 
 func AssertNotEmpty(str, variableName string) error {
 	if IsEmpty(str) {

@@ -2,8 +2,8 @@ package cluster
 
 import (
 	"fmt"
-	"gitee.com/richelieu042/go-scales/src/database/redisKit/test"
-	"gitee.com/richelieu042/go-scales/src/idKit"
+	"github.com/richelieu42/go-scales/src/database/redisKit/test"
+	"github.com/richelieu42/go-scales/src/idKit"
 	"github.com/sirupsen/logrus"
 	"testing"
 )

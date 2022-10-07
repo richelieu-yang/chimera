@@ -1,17 +1,17 @@
 package componentKit
 
 import (
-	"gitee.com/richelieu042/go-scales/src/confKit"
-	"gitee.com/richelieu042/go-scales/src/consts"
-	"gitee.com/richelieu042/go-scales/src/core/errorKit"
-	"gitee.com/richelieu042/go-scales/src/core/pathKit"
-	"gitee.com/richelieu042/go-scales/src/core/sliceKit"
-	"gitee.com/richelieu042/go-scales/src/core/strKit"
-	"gitee.com/richelieu042/go-scales/src/core/timeKit"
-	"gitee.com/richelieu042/go-scales/src/database/redisKit"
-	"gitee.com/richelieu042/go-scales/src/ginKit"
-	"gitee.com/richelieu042/go-scales/src/jsonKit"
-	"gitee.com/richelieu042/go-scales/src/log/logrusKit"
+	"github.com/richelieu42/go-scales/src/confKit"
+	"github.com/richelieu42/go-scales/src/consts"
+	"github.com/richelieu42/go-scales/src/core/errorKit"
+	"github.com/richelieu42/go-scales/src/core/pathKit"
+	"github.com/richelieu42/go-scales/src/core/sliceKit"
+	"github.com/richelieu42/go-scales/src/core/strKit"
+	"github.com/richelieu42/go-scales/src/core/timeKit"
+	"github.com/richelieu42/go-scales/src/database/redisKit"
+	"github.com/richelieu42/go-scales/src/ginKit"
+	"github.com/richelieu42/go-scales/src/jsonKit"
+	"github.com/richelieu42/go-scales/src/log/logrusKit"
 	"github.com/sirupsen/logrus"
 )
 

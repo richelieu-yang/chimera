@@ -2,10 +2,10 @@ package mailKit
 
 import (
 	"crypto/tls"
-	"gitee.com/richelieu042/go-scales/src/core/errorKit"
 	"github.com/emersion/go-imap"
 	id "github.com/emersion/go-imap-id"
 	"github.com/emersion/go-imap/client"
+	"github.com/richelieu42/go-scales/src/core/errorKit"
 	"sync"
 )
 

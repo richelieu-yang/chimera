@@ -1,8 +1,8 @@
 package componentKit
 
 import (
-	"gitee.com/richelieu042/go-scales/src/jsonKit"
-	"gitee.com/richelieu042/go-scales/src/msgKit"
+	"github.com/richelieu42/go-scales/src/jsonKit"
+	"github.com/richelieu42/go-scales/src/msgKit"
 	"github.com/sirupsen/logrus"
 )
 

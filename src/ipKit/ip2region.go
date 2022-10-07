@@ -1,10 +1,10 @@
 package ipKit
 
 import (
-	"gitee.com/richelieu042/go-scales/src/consts"
-	"gitee.com/richelieu042/go-scales/src/core/file/fileKit"
-	"gitee.com/richelieu042/go-scales/src/core/pathKit"
 	"github.com/lionsoul2014/ip2region/binding/golang/xdb"
+	"github.com/richelieu42/go-scales/src/consts"
+	"github.com/richelieu42/go-scales/src/core/file/fileKit"
+	"github.com/richelieu42/go-scales/src/core/pathKit"
 	"sync"
 )
 

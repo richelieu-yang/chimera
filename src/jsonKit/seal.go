@@ -1,9 +1,9 @@
 package jsonKit
 
 import (
-	"gitee.com/richelieu042/go-scales/src/core/strKit"
-	"gitee.com/richelieu042/go-scales/src/msgKit"
 	jsoniter "github.com/json-iterator/go"
+	"github.com/richelieu42/go-scales/src/core/strKit"
+	"github.com/richelieu42/go-scales/src/msgKit"
 )
 
 // Seal

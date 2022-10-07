@@ -2,10 +2,10 @@
 package nacosKit
 
 import (
-	"gitee.com/richelieu042/go-scales/src/core/strKit"
 	"github.com/nacos-group/nacos-sdk-go/clients/naming_client"
 	"github.com/nacos-group/nacos-sdk-go/model"
 	"github.com/nacos-group/nacos-sdk-go/vo"
+	"github.com/richelieu42/go-scales/src/core/strKit"
 )
 
 // RegisterInstance 注册实例

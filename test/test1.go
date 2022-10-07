@@ -2,7 +2,7 @@ package main
 
 import (
 	"fmt"
-	"gitee.com/richelieu042/go-scales/src/http/httpClientKit"
+	"github.com/richelieu42/go-scales/src/http/httpClientKit"
 )
 
 func main() {
@@ -11,5 +11,5 @@ func main() {
 		panic(err)
 	}
 	fmt.Println(string(data))
-	fmt.Println("-----------------------------")
+	fmt.Println("================================================")
 }

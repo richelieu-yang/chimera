@@ -1,10 +1,10 @@
 package mailKit
 
 import (
-	"gitee.com/richelieu042/go-scales/src/consts"
-	"gitee.com/richelieu042/go-scales/src/core/errorKit"
-	"gitee.com/richelieu042/go-scales/src/core/strKit"
 	"github.com/jordan-wright/email"
+	"github.com/richelieu42/go-scales/src/consts"
+	"github.com/richelieu42/go-scales/src/core/errorKit"
+	"github.com/richelieu42/go-scales/src/core/strKit"
 	"net/smtp"
 	"sync"
 	"time"

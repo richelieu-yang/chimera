@@ -1,8 +1,8 @@
 package runtimeKit
 
 import (
-	"gitee.com/richelieu042/go-scales/src/core/errorKit"
-	"gitee.com/richelieu042/go-scales/src/dataSizeKit"
+	"github.com/richelieu42/go-scales/src/core/errorKit"
+	"github.com/richelieu42/go-scales/src/dataSizeKit"
 	"runtime/debug"
 )
 

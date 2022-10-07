@@ -1,9 +1,9 @@
 package ginKit
 
 import (
-	"gitee.com/richelieu042/go-scales/src/log/logrusKit"
-	"gitee.com/richelieu042/go-scales/src/mainControl"
 	"github.com/gin-gonic/gin"
+	"github.com/richelieu42/go-scales/src/log/logrusKit"
+	"github.com/richelieu42/go-scales/src/mainControl"
 	"github.com/sirupsen/logrus"
 )
 

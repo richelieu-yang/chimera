@@ -5,7 +5,7 @@ byte <=> uint8
 package byteKit
 
 import (
-	"gitee.com/richelieu042/go-scales/src/core/strKit"
+	"github.com/richelieu42/go-scales/src/core/strKit"
 	"github.com/spf13/cast"
 )
 

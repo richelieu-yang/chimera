@@ -2,8 +2,8 @@ package random
 
 import (
 	"fmt"
-	"gitee.com/richelieu042/go-scales/src/database/redisKit/test"
 	"github.com/go-redis/redis/v8"
+	"github.com/richelieu42/go-scales/src/database/redisKit/test"
 	"testing"
 )
 

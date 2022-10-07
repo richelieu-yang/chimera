@@ -1,10 +1,10 @@
 package baiduOcrKit
 
 import (
-	"gitee.com/richelieu042/go-scales/src/core/errorKit"
-	"gitee.com/richelieu042/go-scales/src/core/strKit"
-	"gitee.com/richelieu042/go-scales/src/http/httpClientKit"
-	"gitee.com/richelieu042/go-scales/src/jsonKit"
+	"github.com/richelieu42/go-scales/src/core/errorKit"
+	"github.com/richelieu42/go-scales/src/core/strKit"
+	"github.com/richelieu42/go-scales/src/http/httpClientKit"
+	"github.com/richelieu42/go-scales/src/jsonKit"
 	"sync"
 	"time"
 )

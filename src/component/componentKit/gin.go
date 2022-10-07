@@ -1,13 +1,13 @@
 package componentKit
 
 import (
-	"gitee.com/richelieu042/go-scales/src/core/errorKit"
-	"gitee.com/richelieu042/go-scales/src/ginKit"
-	"gitee.com/richelieu042/go-scales/src/ipKit"
-	"gitee.com/richelieu042/go-scales/src/log/logrusKit"
-	"gitee.com/richelieu042/go-scales/src/mainControl"
-	"gitee.com/richelieu042/go-scales/src/netKit"
 	"github.com/gin-gonic/gin"
+	"github.com/richelieu42/go-scales/src/core/errorKit"
+	"github.com/richelieu42/go-scales/src/ginKit"
+	"github.com/richelieu42/go-scales/src/ipKit"
+	"github.com/richelieu42/go-scales/src/log/logrusKit"
+	"github.com/richelieu42/go-scales/src/mainControl"
+	"github.com/richelieu42/go-scales/src/netKit"
 )
 
 // InitializeGinComponent 初始化Gin组件（可选）

@@ -1,9 +1,9 @@
 package service
 
 import (
-	"gitee.com/richelieu042/go-scales/src/core/strKit"
-	"gitee.com/richelieu042/go-scales/src/jsonKit"
-	"gitee.com/richelieu042/go-scales/src/netKit"
+	"github.com/richelieu42/go-scales/src/core/strKit"
+	"github.com/richelieu42/go-scales/src/jsonKit"
+	"github.com/richelieu42/go-scales/src/netKit"
 )
 
 type (

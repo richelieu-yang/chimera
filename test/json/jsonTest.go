@@ -2,7 +2,7 @@ package main
 
 import (
 	"fmt"
-	"gitee.com/richelieu042/go-scales/src/jsonKit"
+	"github.com/richelieu42/go-scales/src/jsonKit"
 )
 
 func main() {

@@ -2,7 +2,7 @@ package excelKit
 
 import (
 	"fmt"
-	"gitee.com/richelieu042/go-scales/src/core/errorKit"
+	"github.com/richelieu42/go-scales/src/core/errorKit"
 	"regexp"
 	"strconv"
 )

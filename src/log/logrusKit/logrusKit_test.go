@@ -1,7 +1,7 @@
 package logrusKit
 
 import (
-	"gitee.com/richelieu042/go-scales/src/core/pathKit"
+	"github.com/richelieu42/go-scales/src/core/pathKit"
 	"testing"
 )
 
