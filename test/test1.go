@@ -6,7 +6,7 @@ import (
 )
 
 func main() {
-	data, err := httpClientKit.Post("https://cn.bing.com", nil)
+	data, err := httpClientKit.Post("https://cn.bing.com/1/1", nil)
 	if err != nil {
 		panic(err)
 	}
