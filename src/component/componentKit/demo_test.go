@@ -21,6 +21,7 @@ func Test(t *testing.T) {
 		errorKit.Panic("fail to initialize %s, error: %+v", "redis", err)
 	}
 
+	// 业务逻辑
 	if err := business(); err != nil {
 		errorKit.PanicByError(err)
 	}
