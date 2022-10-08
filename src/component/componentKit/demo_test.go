@@ -13,6 +13,7 @@ func Test(t *testing.T) {
 
 	if err := InitializeEnvironment(); err != nil {
 		panic(err)
+		panic(err)
 	}
 
 	logrus.Info("----------------------------------")
