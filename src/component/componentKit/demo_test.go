@@ -26,6 +26,7 @@ func Test(t *testing.T) {
 		errorKit.PanicByError(err)
 	}
 
+	// json组件（可选）
 	msgProcessor := func(code string, msg string, data interface{}) string {
 		return strKit.Format("[%s] %s", code, msg)
 	}
