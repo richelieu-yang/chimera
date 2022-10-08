@@ -36,7 +36,7 @@ func Test(t *testing.T) {
 
 	// gin组件（可选）
 	recoveryMiddleware := gin.CustomRecovery(func(c *gin.Context, err any) {
-		// TODO: gin处理请求时发生panic的情况，进行相应的处理，比如响应json给前端
+		// TODO: gin处理请求时发生panic的情况，在此处进行相应的处理（比如响应json给前端）
 	})
 	if err := InitializeGinComponent(recoveryMiddleware, tmp1); err != nil {
 		errorKit.Panic("fail to initialize %s, error: %+v", "gin", err)
