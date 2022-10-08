@@ -40,12 +40,14 @@ func Test(t *testing.T) {
 	}
 }
 
+// tmp 业务逻辑（读取业务配置文件...）
 func tmp() error {
-	// 业务逻辑（读取业务配置文件...）
+
 	return nil
 }
 
+// tmp1 业务逻辑（绑定路由...）
 func tmp1(engine *gin.Engine) error {
-	// 业务逻辑（绑定路由...）
+
 	return nil
 }
