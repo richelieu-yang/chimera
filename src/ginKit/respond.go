@@ -129,18 +129,28 @@ func RespondPdfContentToPrint(ctx *gin.Context, httpStatusCode int, pdfContent [
 }
 
 func RespondError(ctx *gin.Context, httpStatusCode int, err error) {
+	var message string
 	if err != nil {
-		httpStatusCode = handleHttpStatusCode(httpStatusCode)
-		json, _ := jsonKit.SealFully(nil, "error", err.Error(), nil)
-		RespondText(ctx, httpStatusCode, json)
+		message = err.Error()
+	} else {
+		message = "err == nil"
 	}
+
+	httpStatusCode = handleHttpStatusCode(httpStatusCode)
+	json, _ := jsonKit.SealFully(nil, "error", message, nil)
+	RespondText(ctx, httpStatusCode, json)
 }
 
 func RespondPanic(ctx *gin.Context, err any) {
+	var message string
 	if err != nil {
-		json, _ := jsonKit.SealFully(nil, "panic", strKit.Format("%v", err), nil)
-		RespondText(ctx, httpStatusCode.Panic, json)
+		message = strKit.Format("%v", err)
+	} else {
+		message = "err == nil"
 	}
+
+	json, _ := jsonKit.SealFully(nil, "panic", message, nil)
+	RespondText(ctx, httpStatusCode.Panic, json)
 }
 
 func RespondPackageOrError(ctx *gin.Context, pack *ResponsePackage, err error) {
