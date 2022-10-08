@@ -40,7 +40,7 @@ func Test(t *testing.T) {
 }
 
 func tmp() error {
-	// 业务逻辑（读取配置文件...）
+	// 业务逻辑（读取业务配置文件...）
 	return nil
 }
 
