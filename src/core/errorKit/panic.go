@@ -14,10 +14,9 @@ func PanicByError(err error) {
 
 // Panic
 /*
-@param format 	推荐使用格式: "{包名}: {panic的具体信息}". e.g. "main: fail to load config file"
 
 e.g. 想要输出error的情况
-传参: ("main: fail to initialize %s component, error:\n%+v", "gin", err)
+传参: ("fail to initialize %s, error:\n%+v", "gin", err)
 */
 func Panic(format string, args ...interface{}) {
 	format = addCallerInfoToFormat(format)
