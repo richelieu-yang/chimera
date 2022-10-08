@@ -6,7 +6,7 @@ import (
 	"google.golang.org/grpc/status"
 )
 
-func IsDeadlineExceeded(err error) bool {
+func IsDeadlineExceededError(err error) bool {
 	if err != nil {
 		// 防止多层error嵌套
 		err = errorKit.Cause(err)
