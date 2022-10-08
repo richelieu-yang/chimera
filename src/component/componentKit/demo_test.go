@@ -1,7 +1,6 @@
 package componentKit
 
 import (
-	"fmt"
 	"github.com/gin-gonic/gin"
 	"github.com/richelieu42/go-scales/src/core/errorKit"
 	"github.com/richelieu42/go-scales/src/core/pathKit"
@@ -42,8 +41,6 @@ func Test(t *testing.T) {
 	if err := InitializeGinComponent(recoveryMiddleware, routeBusiness); err != nil {
 		errorKit.Panic("fail to initialize %s, error: %+v", "gin", err)
 	}
-
-	fmt.Println("")
 }
 
 func business() error {
