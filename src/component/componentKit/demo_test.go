@@ -22,7 +22,7 @@ func Test(t *testing.T) {
 		errorKit.Panic("fail to initialize %s, error: %+v", "redis", err)
 	}
 
-	if err := tmp(); err != nil {
+	if err := business(); err != nil {
 		errorKit.PanicByError(err)
 	}
 
@@ -38,17 +38,17 @@ func Test(t *testing.T) {
 	recoveryMiddleware := gin.CustomRecovery(func(c *gin.Context, err any) {
 		// TODO: gin处理请求时发生panic的情况，在此处进行相应的处理（比如响应json给前端）
 	})
-	if err := InitializeGinComponent(recoveryMiddleware, tmp1); err != nil {
+	if err := InitializeGinComponent(recoveryMiddleware, business1); err != nil {
 		errorKit.Panic("fail to initialize %s, error: %+v", "gin", err)
 	}
 }
 
-func tmp() error {
+func business() error {
 	// TODO: 业务逻辑（读取业务配置文件...）
 	return nil
 }
 
-func tmp1(engine *gin.Engine) error {
+func business1(engine *gin.Engine) error {
 	// TODO: 业务逻辑（绑定路由...）
 	return nil
 }
