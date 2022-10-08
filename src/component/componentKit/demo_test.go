@@ -35,19 +35,20 @@ func Test(t *testing.T) {
 	}
 
 	// gin组件（可选）
-	if err := InitializeGinComponent(nil, tmp1); err != nil {
+	recoveryMiddleware := gin.CustomRecovery(func(c *gin.Context, err any) {
+		// TODO: gin处理请求时发生panic的情况，进行相应的处理，比如响应json给前端
+	})
+	if err := InitializeGinComponent(recoveryMiddleware, tmp1); err != nil {
 		errorKit.Panic("fail to initialize %s, error: %+v", "gin", err)
 	}
 }
 
-// tmp 业务逻辑（读取业务配置文件...）
 func tmp() error {
-
+	// TODO: 业务逻辑（读取业务配置文件...）
 	return nil
 }
 
-// tmp1 业务逻辑（绑定路由...）
 func tmp1(engine *gin.Engine) error {
-
+	// TODO: 业务逻辑（绑定路由...）
 	return nil
 }
