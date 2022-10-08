@@ -15,5 +15,9 @@ func Test(t *testing.T) {
 		panic(err)
 	}
 
+	if err := InitializeRedisComponent(); err != nil {
+		panic(err)
+	}
+
 	logrus.Info("----------------------------------")
 }

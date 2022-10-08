@@ -13,9 +13,9 @@ import (
 */
 func InitializeJsonComponent(msgProcessor jsonKit.MsgProcessor, messageFilePath string) error {
 	jsonKit.SetMsgProcessor(msgProcessor)
-	err := msgKit.ReadFile(messageFilePath)
-	if err == nil {
-		logrus.Info("[COMPONENT, JSON] Initialize successfully.")
+	if err := msgKit.ReadFile(messageFilePath); err != nil {
+		return err
 	}
-	return err
+	logrus.Info("[COMPONENT, JSON] Initialize successfully.")
+	return nil
 }
