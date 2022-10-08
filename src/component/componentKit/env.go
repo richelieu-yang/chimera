@@ -43,7 +43,7 @@ var (
 
 var envConfig *EnvConfig = nil
 
-// InitializeEnvironment 加载 env.yaml && 初始化logrus、runtime
+// InitializeEnvironment 加载 env.yaml; 初始化组件: logrus、runtime
 /*
 @param pathArgs 第1个值代表（如果有的话）: env.yaml的相对路径
 */
