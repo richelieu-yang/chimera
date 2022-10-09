@@ -17,14 +17,14 @@ func Test(t *testing.T) {
 		errorKit.Panic("fail to initialize %s, error: %+v", "env", err)
 	}
 
-	// redis组件（可选）
-	if err := InitializeRedisComponent(); err != nil {
-		errorKit.Panic("fail to initialize %s, error: %+v", "redis", err)
-	}
-
 	// 业务逻辑
 	if err := business(); err != nil {
 		errorKit.PanicByError(err)
+	}
+
+	// redis组件（可选）
+	if err := InitializeRedisComponent(); err != nil {
+		errorKit.Panic("fail to initialize %s, error: %+v", "redis", err)
 	}
 
 	// json组件（可选）
@@ -33,7 +33,7 @@ func Test(t *testing.T) {
 		return msg
 	}
 	var respProcessor jsonKit.ResponseProcessor = func(resp *jsonKit.Response) any {
-		// TODO: 额外处理message
+		// TODO: 额外处理响应结构体的key
 		return resp
 	}
 	if err := InitializeJsonComponent("", msgProcessor, respProcessor); err != nil {
