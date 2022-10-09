@@ -14,7 +14,7 @@ type (
 )
 
 func main() {
-	jsonKit.SetJsonResponseProcessor(func(resp *jsonKit.JsonResponse) any {
+	jsonKit.SetRespProcessor(func(resp *jsonKit.Response) any {
 		return &CurJsonResponse{
 			Code:    resp.Code,
 			Message: resp.Message,

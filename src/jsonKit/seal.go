@@ -25,11 +25,11 @@ func SealFully(api jsoniter.API, code, message string, data interface{}, args ..
 	}
 
 	message = getFinalMessage(code, message, data, args...)
-	resp := &JsonResponse{Code: code, Message: message, Data: data}
+	resp := &Response{Code: code, Message: message, Data: data}
 
 	var obj any
-	if jsonResponseProcessor != nil {
-		obj = jsonResponseProcessor(resp)
+	if responseProcessor != nil {
+		obj = responseProcessor(resp)
 	} else {
 		obj = resp
 	}

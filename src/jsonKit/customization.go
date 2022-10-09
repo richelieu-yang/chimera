@@ -1,18 +1,18 @@
 package jsonKit
 
 type (
-	MsgProcessor func(code string, message string, data interface{}) string
+	MessageProcessor func(code string, message string, data interface{}) string
 
-	JsonResponseProcessor func(resp *JsonResponse) any
+	ResponseProcessor func(resp *Response) any
 )
 
 // 根据 code、message、data 返回一个 新的message
-var msgProcessor MsgProcessor
+var msgProcessor MessageProcessor
 
 // 可用于修改响应对象属性的key值
-var jsonResponseProcessor JsonResponseProcessor
+var responseProcessor ResponseProcessor
 
-func SetMsgProcessor(processor MsgProcessor) {
+func SetMsgProcessor(processor MessageProcessor) {
 	msgProcessor = processor
 }
 
@@ -20,10 +20,10 @@ func ClearMsgProcessor() {
 	msgProcessor = nil
 }
 
-func SetJsonResponseProcessor(processor JsonResponseProcessor) {
-	jsonResponseProcessor = processor
+func SetRespProcessor(processor ResponseProcessor) {
+	responseProcessor = processor
 }
 
-func ClearJsonResponseProcessor() {
-	jsonResponseProcessor = nil
+func ClearRespProcessor() {
+	responseProcessor = nil
 }

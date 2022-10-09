@@ -4,6 +4,7 @@ import (
 	"github.com/gin-gonic/gin"
 	"github.com/richelieu42/go-scales/src/core/errorKit"
 	"github.com/richelieu42/go-scales/src/core/pathKit"
+	"github.com/richelieu42/go-scales/src/jsonKit"
 	"testing"
 )
 
@@ -27,11 +28,15 @@ func Test(t *testing.T) {
 	}
 
 	// json组件（可选）
-	msgProcessor := func(code string, msg string, data interface{}) string {
+	var msgProcessor jsonKit.MessageProcessor = func(code string, msg string, data interface{}) string {
 		// TODO: 额外处理message
 		return msg
 	}
-	if err := InitializeJsonComponent(msgProcessor, ""); err != nil {
+	var respProcessor jsonKit.ResponseProcessor = func(resp *jsonKit.Response) any {
+		// TODO: 额外处理message
+		return resp
+	}
+	if err := InitializeJsonComponent("", msgProcessor, respProcessor); err != nil {
 		errorKit.Panic("fail to initialize %s, error: %+v", "json", err)
 	}
 
