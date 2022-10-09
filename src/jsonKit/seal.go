@@ -25,7 +25,7 @@ func SealFully(api jsoniter.API, code, msg string, data interface{}, args ...int
 	}
 
 	msg = getFinalMessage(code, msg, data, args...)
-	resp := &JsonResponse{Code: code, Msg: msg, Data: data}
+	resp := &JsonResponse{Code: code, Message: msg, Data: data}
 	json, err := MarshalToStringWithJsoniterApi(api, resp)
 	if err != nil {
 		return "", err

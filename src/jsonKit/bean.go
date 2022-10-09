@@ -5,7 +5,7 @@ package jsonKit
 响应给前端的json对象.
 */
 type JsonResponse struct {
-	Code string      `json:"code" example:"0"`
-	Msg  string      `json:"msg" example:"no error"`
-	Data interface{} `json:"data,omitempty"`
+	Code    string      `json:"code" example:"0"`
+	Message string      `json:"message" example:"no error"`
+	Data    interface{} `json:"data,omitempty"`
 }
