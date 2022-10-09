@@ -5,14 +5,6 @@ import (
 	"github.com/richelieu42/go-scales/src/jsonKit"
 )
 
-type (
-	CurJsonResponse struct {
-		Code    string      `json:"errorCode" example:"0"`
-		Message string      `json:"errorMessage" example:"no error"`
-		Data    interface{} `json:"result,omitempty"`
-	}
-)
-
 func main() {
 	jsonKit.SetRespProcessor(func(resp *jsonKit.Response) any {
 		return resp
