@@ -35,7 +35,7 @@ func Simple(format string, args ...interface{}) error {
 
 // SimpleWithExtraSkip
 /*
-@param extraSkip 额外跳过的层数
+@param extraSkip 额外跳过的层数（>= 0）
 */
 func SimpleWithExtraSkip(extraSkip int, format string, args ...interface{}) error {
 	format = addCallerInfoToFormat(format, extraSkip)
