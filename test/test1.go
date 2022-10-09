@@ -15,11 +15,12 @@ type (
 
 func main() {
 	jsonKit.SetRespProcessor(func(resp *jsonKit.Response) any {
-		return &CurJsonResponse{
-			Code:    resp.Code,
-			Message: resp.Message,
-			Data:    resp.Data,
-		}
+		return resp
+		//return &CurJsonResponse{
+		//	Code:    resp.Code,
+		//	Message: resp.Message,
+		//	Data:    resp.Data,
+		//}
 	})
 
 	fmt.Println(jsonKit.SealFully(nil, "c", "m", "d"))
