@@ -19,18 +19,21 @@ func SealWithData(code string, data interface{}, args ...interface{}) string {
 	return json
 }
 
-func SealFully(api jsoniter.API, code, msg string, data interface{}, args ...interface{}) (string, error) {
+func SealFully(api jsoniter.API, code, message string, data interface{}, args ...interface{}) (json string, err error) {
 	if api == nil {
 		api = jsoniter.ConfigDefault
 	}
 
-	msg = getFinalMessage(code, msg, data, args...)
-	resp := &JsonResponse{Code: code, Message: msg, Data: data}
-	json, err := MarshalToStringWithJsoniterApi(api, resp)
-	if err != nil {
-		return "", err
+	message = getFinalMessage(code, message, data, args...)
+	resp := &JsonResponse{Code: code, Message: message, Data: data}
+
+	var obj any
+	if jsonResponseProcessor != nil {
+		obj = jsonResponseProcessor(resp)
+	} else {
+		obj = resp
 	}
-	return json, nil
+	return MarshalToStringWithJsoniterApi(api, obj)
 }
 
 func getFinalMessage(code, msg string, data interface{}, args ...interface{}) string {
