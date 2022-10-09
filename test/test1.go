@@ -1,13 +1,26 @@
 package main
 
-import "fmt"
+import (
+	"fmt"
+	"github.com/richelieu42/go-scales/src/jsonKit"
+)
 
 type (
-	IFly struct {
-		Code string
+	CurJsonResponse struct {
+		Code    string      `json:"errorCode" example:"0"`
+		Message string      `json:"errorMessage" example:"no error"`
+		Data    interface{} `json:"result,omitempty"`
 	}
 )
 
 func main() {
-	fmt.Println("--------------")
+	jsonKit.SetJsonResponseProcessor(func(resp *jsonKit.JsonResponse) any {
+		return &CurJsonResponse{
+			Code:    resp.Code,
+			Message: resp.Message,
+			Data:    resp.Data,
+		}
+	})
+
+	fmt.Println(jsonKit.SealFully(nil, "c", "m", "d"))
 }

@@ -6,16 +6,12 @@ type (
 	JsonResponseProcessor func(resp *JsonResponse) any
 )
 
-// 不为nil的情况，将根据 code、message、data 返回一个 新的message
+// 根据 code、message、data 返回一个 新的message
 var msgProcessor MsgProcessor
 
-// 不为nil的情况，将根据 code 和 msg 返回一个新的 msg
+// 可用于修改响应对象属性的key值
 var jsonResponseProcessor JsonResponseProcessor
 
-// SetMsgProcessor
-/*
-可以通过此方法实现修改 JsonResponse.Message，可用于: 告知前端此响应是哪个服务返回的，便于后续定位问题.
-*/
 func SetMsgProcessor(processor MsgProcessor) {
 	msgProcessor = processor
 }
