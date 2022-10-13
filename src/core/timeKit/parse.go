@@ -1,20 +1,21 @@
 package timeKit
 
-import "time"
+import (
+	"github.com/richelieu42/go-scales/src/core/sliceKit"
+	"time"
+)
 
 // ParseStringToTime 类型转换: string => time.Time
 /*
 @param layout 	时间格式
-@param str 		时间字符串
+@param str 		要解析的时间字符串
 */
-func ParseStringToTime(layout, str string) (time.Time, error) {
-	return time.Parse(layout, str)
-}
-
-func ParseStringToTimeWithLocation(layout, str string, loc *time.Location) (time.Time, error) {
+func ParseStringToTime(layout, str string, args ...*time.Location) (time.Time, error) {
+	loc := sliceKit.GetFirstItemWithDefault(nil, args...)
 	if loc == nil {
 		loc = time.Local
 	}
+
 	return time.ParseInLocation(layout, str, loc)
 }
 

@@ -1,49 +1,57 @@
 package main
 
 import (
-	"fmt"
-	"github.com/richelieu42/go-scales/src/cmdKit"
-	"github.com/richelieu42/go-scales/src/core/strKit"
+	"bufio"
 	"github.com/richelieu42/go-scales/src/core/timeKit"
+	"github.com/richelieu42/go-scales/src/log/logrusKit"
+	"github.com/sirupsen/logrus"
+	"os"
 	"time"
 )
 
 func main() {
-	t, err := timeKit.ParseStringToTime(string(timeKit.CommonFormat), "2006-01-02 15:04:05.000")
+	rootPwd := "Cyy7587141200"
+	/*
+		真实的开始结束时间: time0、time1
+		虚假的开始结束时间: timeA、timeB
+	*/
+	var time0, time1, timeA, timeB time.Time
+
+	logrusKit.InitializeByDefault()
+
+	// time0
+	time0 = time.Now()
+	logrus.Infof("time0: [%s].", timeKit.FormatTimeToString(time0, timeKit.EntireFormat))
+
+	// timeA
+	timeA, err := timeKit.ParseStringToTime(string(timeKit.CommonFormat), "2000-01-01 00:00:00.000")
 	if err != nil {
 		panic(err)
 	}
-	fmt.Println(t)
-
-	if err := SetSystemTime(t, "Cyy7587141200"); err != nil {
+	logrus.Infof("timeA: [%s].", timeKit.FormatTimeToString(timeA, timeKit.EntireFormat))
+	if err := timeKit.SetSystemTime(timeA, rootPwd); err != nil {
 		panic(err)
 	}
+	logrus.Infof("System time is set to timeA(%s).", timeKit.FormatTimeToString(timeA, timeKit.EntireFormat))
 
-	//result, err := cmdKit.ExecuteToString("sh", "-c", `echo "Cyy7587141200" | sudo -S date 010203042010.05`)
-	//if err != nil {
-	//	panic(err)
-	//}
-	//fmt.Println(result)
-}
-
-// SetSystemTime 设置系统时间（机器时间）
-/*
-PS:
-通过date命令设置root权限，需要root权限.
-
-@param password root用户的密码
-*/
-func SetSystemTime(t time.Time, password string) error {
-	format := "010215042006.05"
-	timeStr := timeKit.FormatTimeToString(t, timeKit.TimeFormat(format))
-
-	var script string
-	if strKit.IsEmpty(password) {
-		script = strKit.Format("date %s", timeStr)
-	} else {
-		script = strKit.Format(`echo "%s" | sudo -S date %s`, password, timeStr)
+	// timeB
+	logrus.Info("Please enter text to continue...")
+	scanner := bufio.NewScanner(os.Stdin)
+	for scanner.Scan() {
+		text := scanner.Text()
+		logrus.Infof("input text: [%s].", text)
+		timeB = time.Now()
+		logrus.Infof("timeB: [%s].", timeKit.FormatTimeToString(timeB, timeKit.EntireFormat))
+		break
 	}
+	d := timeB.Sub(timeA)
+	logrus.Infof("timeB.Sub(timeA): [%s].", timeKit.FormatDurationToString(d))
 
-	_, err := cmdKit.ExecuteToString("sh", "-c", script)
-	return err
+	// time1
+	time1 = time0.Add(d)
+	logrus.Infof("time1: [%s].", timeKit.FormatTimeToString(time1, timeKit.EntireFormat))
+	if err := timeKit.SetSystemTime(time1, rootPwd); err != nil {
+		panic(err)
+	}
+	logrus.Infof("System time is set to time1(%s).", timeKit.FormatTimeToString(time1, timeKit.EntireFormat))
 }
