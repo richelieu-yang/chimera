@@ -24,7 +24,7 @@ func main() {
 	logrus.Infof("time0: [%s].", timeKit.FormatTimeToString(time0, timeKit.EntireFormat))
 
 	// timeA
-	timeA, err := timeKit.ParseStringToTime(string(timeKit.CommonFormat), "2000-01-01 00:00:00.000")
+	timeA, err := timeKit.ParseStringToTime(string(timeKit.CommonFormat), "2022-10-01 00:00:00.000")
 	if err != nil {
 		panic(err)
 	}
