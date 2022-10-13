@@ -16,18 +16,27 @@ PS:
 
 @param password root用户的密码
 */
-func SetSystemTime(t time.Time, password string) error {
+func SetSystemTime(t time.Time, rootPassword string) error {
 	// 将时间转换为（date命令认可的）字符串
 	format := "010215042006.05"
 	timeStr := FormatTimeToString(t, TimeFormat(format))
 
 	var script string
-	if strKit.IsEmpty(password) {
+	if strKit.IsEmpty(rootPassword) {
 		script = strKit.Format("date %s", timeStr)
 	} else {
-		script = strKit.Format(`echo "%s" | sudo -S date %s`, password, timeStr)
+		script = strKit.Format(`echo "%s" | sudo -S date %s`, rootPassword, timeStr)
 	}
 
 	_, err := cmdKit.ExecuteToString("sh", "-c", script)
 	return err
+}
+
+// CorrectSystemTime （根据网络时间）纠正系统时间
+func CorrectSystemTime(rootPassword string) error {
+	t, _, err := GetNetworkTime()
+	if err != nil {
+		return err
+	}
+	return SetSystemTime(t, rootPassword)
 }
