@@ -37,9 +37,9 @@ func PrintBasicDetails() {
 	logrus.Infof("[SCALES, PATH] temporary directory: [%s].", pathKit.GetTempDir())
 
 	// time
-	machineTime := timeKit.GetMachineTime()
-	zoneName, zoneOffset := machineTime.Zone()
-	logrus.Infof("[SCALES, TIME] machine time: [%v], zone: [%s, %d].", machineTime, zoneName, zoneOffset)
+	systemTime := timeKit.GetSystemTime()
+	zoneName, zoneOffset := systemTime.Zone()
+	logrus.Infof("[SCALES, TIME] system time: [%v], zone: [%s, %d].", systemTime, zoneName, zoneOffset)
 	if networkTime, source, err := timeKit.GetNetworkTime(); err != nil {
 		logrus.Warnf("[SCALES, TIME] fail to get network time, error: %v", err)
 	} else {
