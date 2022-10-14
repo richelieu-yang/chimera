@@ -52,6 +52,9 @@ var envConfig *EnvConfig = nil
 @param pathArgs 第1个值代表（如果有的话）: env.yaml的相对路径
 */
 func InitializeEnvironment(pathArgs ...string) error {
+	// 先简单初始化下logrus，建议后面再初始化下logrus组件
+	logrusKit.Initialize(logrus.DebugLevel, timeKit.DirFormat)
+
 	if envConfig != nil {
 		// 理论上此方法只会被调用1次，因此此处会返回error
 		return EnvAlreadyLoadedError
