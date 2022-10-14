@@ -13,6 +13,7 @@ import (
 	"github.com/richelieu42/go-scales/src/jsonKit"
 	"github.com/richelieu42/go-scales/src/log/logrusKit"
 	"github.com/sirupsen/logrus"
+	"time"
 )
 
 type (
@@ -40,6 +41,9 @@ var (
 	EnvNotLoadedError     = errorKit.Simple("env file hasn't been loaded")
 	EnvAlreadyLoadedError = errorKit.Simple("env file has already been loaded")
 )
+
+// 服务的启动时间
+var startingTime = time.Now()
 
 var envConfig *EnvConfig = nil
 
@@ -86,6 +90,10 @@ func initializeEnv(path string) error {
 
 	logrus.Info("[COMPONENT, ENV] Initialize successfully.")
 	return nil
+}
+
+func GetStartingTime() time.Time {
+	return startingTime
 }
 
 // GetRuntimeConfig
