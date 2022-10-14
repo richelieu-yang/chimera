@@ -32,19 +32,19 @@ func MkDirs(dirPaths ...string) (err error) {
 	return
 }
 
-// MkParentDirs 为文件的父路径，创建（一级或多级）目录.
+// MkParentDirs 为父路径，创建（一级或多级）目录.
 /*
-@param filePaths 文件路径s（相对路径 || 绝对路径）
+@param filePaths （文件 || 目录）路径s（相对路径 || 绝对路径）
 
 e.g.
 ("")	=> nil
 (".")	=> nil
 */
-func MkParentDirs(filePaths ...string) (err error) {
-	for _, fp := range filePaths {
+func MkParentDirs(paths ...string) (err error) {
+	for _, path := range paths {
 		// Richelieu: 为防止 import cycle，不直接使用 pathKit.GetParentDir()
-		//dirPath := pathKit.GetParentDir(fp)
-		dirPath := filepath.Dir(fp)
+		//dirPath := pathKit.GetParentDir(path)
+		dirPath := filepath.Dir(path)
 
 		err = MkDirs(dirPath)
 		if err != nil {
