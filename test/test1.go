@@ -11,6 +11,13 @@ import (
 
 func main() {
 	rootPwd := "Cyy7587141200"
+
+	//if t, err := timeKit.CorrectSystemTime(rootPwd); err != nil {
+	//	panic(err)
+	//} else {
+	//	fmt.Println(t)
+	//}
+
 	/*
 		真实的开始结束时间: time0、time1
 		虚假的开始结束时间: timeA、timeB

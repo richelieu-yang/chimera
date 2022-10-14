@@ -33,10 +33,11 @@ func SetSystemTime(t time.Time, rootPassword string) error {
 }
 
 // CorrectSystemTime （根据网络时间）纠正系统时间
-func CorrectSystemTime(rootPassword string) error {
-	t, _, err := GetNetworkTime()
+func CorrectSystemTime(rootPassword string) (t time.Time, err error) {
+	t, _, err = GetNetworkTime()
 	if err != nil {
-		return err
+		return
 	}
-	return SetSystemTime(t, rootPassword)
+	err = SetSystemTime(t, rootPassword)
+	return
 }
