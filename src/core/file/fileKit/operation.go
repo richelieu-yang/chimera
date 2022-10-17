@@ -27,11 +27,11 @@ func CreateTemporaryFile(dirPath, pattern string) (*os.File, error) {
 	return os.CreateTemp(dirPath, pattern)
 }
 
-// CreateFile 创建文件.
+// NewFile 创建文件.
 /*
 PS: 如果文件已经存在，会覆盖掉它.
 */
-func CreateFile(filePath string) (*os.File, error) {
+func NewFile(filePath string) (*os.File, error) {
 	// 检查 filePath
 	if err := AssertNotExistOrIsFile(filePath); err != nil {
 		return nil, err
