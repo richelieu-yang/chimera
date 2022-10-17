@@ -1,7 +1,9 @@
 package logrusKit
 
 import (
+	"github.com/richelieu42/go-scales/src/core/file/fileKit"
 	"github.com/richelieu42/go-scales/src/core/file/rotateFileKit"
+	"github.com/richelieu42/go-scales/src/core/strKit"
 	"github.com/richelieu42/go-scales/src/core/timeKit"
 	"github.com/rifflock/lfshook"
 	"github.com/sirupsen/logrus"
@@ -37,6 +39,14 @@ func NewFileLogger(logPath string, formatter logrus.Formatter, level logrus.Leve
 	rotationTime := time.Hour * 12
 	// 日志文件的有效期，超时将被删除
 	maxAge := timeKit.Week
+
+	/* 处理 logPath */
+	if err := strKit.AssertNotEmpty(logPath, "logPath"); err != nil {
+		return nil, err
+	}
+	if err := fileKit.MkParentDirs(logPath); err != nil {
+		return nil, err
+	}
 
 	writer, err := rotateFileKit.NewRotateWriter(logPath, rotationTime, maxAge)
 	if err != nil {
