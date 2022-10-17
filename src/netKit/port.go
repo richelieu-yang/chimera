@@ -41,7 +41,7 @@ golang端口占用检测的使用	https://wenku.baidu.com/view/25716f5b01768e995
 */
 func IsLocalPortUsable(port int) (bool, error) {
 	if !IsValidPort(port) {
-		return false, errorKit.Simple("port(%d) is not valid", port)
+		return false, errorKit.Simple("port(%d) is invalid", port)
 	}
 	// 能连通就说明端口被占用了
 	ok, _ := CanDialWithTimeout("127.0.0.1", port, time.Second*3)
