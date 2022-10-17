@@ -15,7 +15,7 @@ var (
 	NoUsablePortError = errorKit.Simple("no usable port")
 )
 
-// IsValidPort 是否为有效的端口
+// IsValidPort 是否为有效的端口？（根据值范围判断）
 /*
 参考:
 Java，hutool中的NetUtil.isValidPort()
@@ -51,18 +51,18 @@ func IsLocalPortUsable(port int) (bool, error) {
 	return true, nil
 }
 
-// GetUsablePort 从 传参startPort 开始(包括)，返回一个可用的端口，直至端口超过上限65535
+// GetUsablePort 从 传参startPort开始(包括)向后找，返回一个可用的端口，或者直至端口超过上限65535.
 /*
-@return 第一个返回值：不包括 传参specifiedPorts 中的端口
+@param exceptivePorts 例外的端口（即返回的端口号不在exceptivePorts中）
 */
-func GetUsablePort(startPort int, specifiedPorts ...int) (int, error) {
+func GetUsablePort(startPort int, exceptivePorts ...int) (int, error) {
 	if !IsValidPort(startPort) {
 		return 0, errorKit.Simple("startPort(%d) is invalid", startPort)
 	}
 
 	for p := startPort; p <= MaxPort; p++ {
 		if ok, _ := IsLocalPortUsable(p); ok {
-			if !sliceKit.Contains(specifiedPorts, p) {
+			if !sliceKit.Contains(exceptivePorts, p) {
 				return p, nil
 			}
 		}
