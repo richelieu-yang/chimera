@@ -6,7 +6,7 @@ import (
 	"path/filepath"
 )
 
-// CreateTemporaryFile 在指定目录下，生成临时文件.
+// NewTemporaryFile 在指定目录下，生成临时文件.
 /*
 @param dirPath 如果为""，临时文件将生成在 系统临时目录 内；如果为"."，临时文件将生成在 当前目录 内.
 
@@ -15,7 +15,7 @@ pattern: "tempfile_test" 		=> 临时文件的文件名: "tempfile_test2594316144
 pattern: "tempfile_test*" 		=> 临时文件的文件名: "tempfile_test827818253"
 pattern: "tempfile_test*.xyz" 	=> 临时文件的文件名: "tempfile_test3617672388.xyz"
 */
-func CreateTemporaryFile(dirPath, pattern string) (*os.File, error) {
+func NewTemporaryFile(dirPath, pattern string) (*os.File, error) {
 	// check dirPath
 	if err := AssertNotExistOrIsDir(dirPath); err != nil {
 		return nil, err
