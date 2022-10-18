@@ -10,6 +10,7 @@ func Execute(name string, args ...string) ([]byte, error) {
 	return cmd.CombinedOutput()
 }
 
+// ExecuteToString 执行命令（会阻塞直到命令结束）
 func ExecuteToString(name string, args ...string) (string, error) {
 	data, err := Execute(name, args...)
 	if err != nil {
