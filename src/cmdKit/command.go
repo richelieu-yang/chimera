@@ -1,9 +1,7 @@
 package cmdKit
 
 import (
-	"github.com/richelieu42/go-scales/src/core/strKit"
 	"os/exec"
-	"regexp"
 )
 
 // Execute 执行命令（会阻塞直到命令结束）
@@ -23,16 +21,4 @@ func ExecuteToString(name string, args ...string) (string, error) {
 		return "", err
 	}
 	return string(data), nil
-}
-
-// PolyfillCommandPath 处理命令行中的路径（主要是处理其中的空格）
-/*
-e.g.
-("/root/a b/c  d/java") => `/root/a" "b/c"  "d/java`
-*/
-func PolyfillCommandPath(path string) string {
-	re := regexp.MustCompile("\\s+")
-	return re.ReplaceAllStringFunc(path, func(s string) string {
-		return strKit.Format(`"%s"`, s)
-	})
 }
