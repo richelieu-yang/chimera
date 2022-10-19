@@ -61,7 +61,7 @@ func toFilePathWithPattern(filePath string) string {
 	dir := pathKit.GetParentDir(filePath)
 	prefix := fileKit.GetPrefix(filePath)
 	suffix := fileKit.GetSuffix(filePath)
-	return pathKit.Join(dir, prefix+".%Y-%m-%d %H_%M_%S"+suffix)
+	return pathKit.Join(dir, prefix+"(%Y-%m-%d %H_%M_%S)"+suffix)
 }
 
 // attachSoftLink 由 args 决定是否生成软链接
