@@ -8,7 +8,7 @@ import (
 )
 
 func main() {
-	writer, err := rotateFileKit.NewRotateWriter("/Users/richelieu/Downloads/tmp.log", time.Second*10, time.Second*10*6)
+	writer, err := rotateFileKit.NewRotateWriter("/Users/richelieu/Downloads/tmp.log", time.Second*10, time.Second*10*6, true)
 	if err != nil {
 		panic(err)
 	}

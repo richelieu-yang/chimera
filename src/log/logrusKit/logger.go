@@ -4,7 +4,6 @@ import (
 	"github.com/richelieu42/go-scales/src/core/file/fileKit"
 	"github.com/richelieu42/go-scales/src/core/file/rotateFileKit"
 	"github.com/richelieu42/go-scales/src/core/strKit"
-	"github.com/richelieu42/go-scales/src/core/timeKit"
 	"github.com/rifflock/lfshook"
 	"github.com/sirupsen/logrus"
 	"time"
@@ -43,14 +42,6 @@ PS:
 @param maxAge 		日志文件的有效期（超时将被删除）
 */
 func NewCustomizedFileLogger(logPath string, formatter logrus.Formatter, level logrus.Level, toConsole bool, rotationTime, maxAge time.Duration) (*logrus.Logger, error) {
-	/* 默认值 */
-	if rotationTime <= 0 {
-		rotationTime = time.Hour * 12
-	}
-	if maxAge <= 0 {
-		maxAge = timeKit.Week
-	}
-
 	/* 处理 logPath */
 	if err := strKit.AssertNotEmpty(logPath, "logPath"); err != nil {
 		return nil, err

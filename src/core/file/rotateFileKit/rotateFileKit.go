@@ -12,6 +12,7 @@ import (
 	"github.com/richelieu42/go-scales/src/core/file/fileKit"
 	"github.com/richelieu42/go-scales/src/core/pathKit"
 	"github.com/richelieu42/go-scales/src/core/sliceKit"
+	"github.com/richelieu42/go-scales/src/core/timeKit"
 	"io"
 	"time"
 )
@@ -21,6 +22,14 @@ import (
 @param patternPath 附带pattern的文件路径，e.g. "d:/test/test.%Y-%m-%d %H_%M_%S.log"
 */
 func NewRotateWriter(filePath string, rotationTime, maxAge time.Duration, args ...bool) (io.Writer, error) {
+	/* 默认值 */
+	if rotationTime <= 0 {
+		rotationTime = time.Hour * 12
+	}
+	if maxAge <= 0 {
+		maxAge = timeKit.Week
+	}
+
 	options := []rotatelogs.Option{
 		rotatelogs.WithRotationTime(rotationTime),
 		rotatelogs.WithMaxAge(maxAge),
