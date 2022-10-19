@@ -10,8 +10,8 @@ package rotateFileKit
 import (
 	rotatelogs "github.com/lestrrat-go/file-rotatelogs"
 	"github.com/richelieu42/go-scales/src/core/file/fileKit"
-	"github.com/richelieu42/go-scales/src/core/osKit"
 	"github.com/richelieu42/go-scales/src/core/pathKit"
+	"github.com/richelieu42/go-scales/src/core/sliceKit"
 	"io"
 	"time"
 )
@@ -20,31 +20,22 @@ import (
 /*
 @param patternPath 附带pattern的文件路径，e.g. "d:/test/test.%Y-%m-%d %H_%M_%S.log"
 */
-func NewRotateWriter(filePath string, rotationTime, maxAge time.Duration) (io.Writer, error) {
+func NewRotateWriter(filePath string, rotationTime, maxAge time.Duration, args ...bool) (io.Writer, error) {
 	options := []rotatelogs.Option{
 		rotatelogs.WithRotationTime(rotationTime),
 		rotatelogs.WithMaxAge(maxAge),
 	}
-	// Linux环境下，才会创建软链接（防止在Goland中报错）
-	if !osKit.IsWindows() {
-		options = append(options, rotatelogs.WithLinkName(filePath))
-	}
+	options = attachSoftLink(options, filePath, args...)
 
-	return rotatelogs.New(
-		toFilePathWithPattern(filePath),
-		options...,
-	)
+	return rotatelogs.New(toFilePathWithPattern(filePath), options...)
 }
 
-func NewRotateWriterWithCount(filePath string, rotationTime time.Duration, rotationCount uint) (io.Writer, error) {
+func NewRotateWriterWithCount(filePath string, rotationTime time.Duration, rotationCount uint, args ...bool) (io.Writer, error) {
 	options := []rotatelogs.Option{
 		rotatelogs.WithRotationTime(rotationTime),
 		rotatelogs.WithRotationCount(rotationCount),
 	}
-	// Linux环境下，才会创建软链接
-	if !osKit.IsWindows() {
-		options = append(options, rotatelogs.WithLinkName(filePath))
-	}
+	options = attachSoftLink(options, filePath, args...)
 
 	return rotatelogs.New(
 		toFilePathWithPattern(filePath),
@@ -62,4 +53,13 @@ func toFilePathWithPattern(filePath string) string {
 	prefix := fileKit.GetPrefix(filePath)
 	suffix := fileKit.GetSuffix(filePath)
 	return pathKit.Join(dir, prefix+".%Y-%m-%d %H_%M_%S"+suffix)
+}
+
+// attachSoftLink 由 args 决定是否生成软链接
+func attachSoftLink(options []rotatelogs.Option, filePath string, args ...bool) []rotatelogs.Option {
+	softLink := sliceKit.GetFirstItemWithDefault(false, args...)
+	if softLink {
+		options = append(options, rotatelogs.WithLinkName(filePath))
+	}
+	return options
 }

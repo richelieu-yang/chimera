@@ -22,9 +22,14 @@ func NewConsoleLogger(formatter logrus.Formatter, level logrus.Level) *logrus.Lo
 	return logger
 }
 
-// NewFileLogger
+func NewFileLogger(logPath string, formatter logrus.Formatter, level logrus.Level, toConsole bool) (*logrus.Logger, error) {
+	return NewCustomizedFileLogger(logPath, formatter, level, toConsole, -1, -1)
+}
+
+// NewCustomizedFileLogger
 /*
-参考：https://blog.csdn.net/weixin_42681866/article/details/120876946
+参考：
+golang日志框架--logrus+lfshook+file-rotatelogs https://blog.csdn.net/weixin_42681866/article/details/120876946
 
 PS:
 (1) 文件已经存在的话，会 append；
@@ -32,13 +37,19 @@ PS:
 
 @param logPath		会自动创建父级目录；e.g. "d:/test/test.log"
 @param formatter 	可以为nil，将采用默认值
-@param additivity   true: 将日志内容输出到日志文件的同时，也输出到控制台
+@param level 		日志级别
+@param toConsole   	将日志内容输出到日志文件的同时，是否也输出到控制台？
+@param rotationTime 每多少时间生成一个新日志文件？（以防一个日志文件太大）
+@param maxAge 		日志文件的有效期（超时将被删除）
 */
-func NewFileLogger(logPath string, formatter logrus.Formatter, level logrus.Level, toConsole bool) (*logrus.Logger, error) {
-	// 每多少时间生成一个新日志文件？（以防一个日志文件太大）
-	rotationTime := time.Hour * 12
-	// 日志文件的有效期，超时将被删除
-	maxAge := timeKit.Week
+func NewCustomizedFileLogger(logPath string, formatter logrus.Formatter, level logrus.Level, toConsole bool, rotationTime, maxAge time.Duration) (*logrus.Logger, error) {
+	/* 默认值 */
+	if rotationTime <= 0 {
+		rotationTime = time.Hour * 12
+	}
+	if maxAge <= 0 {
+		maxAge = timeKit.Week
+	}
 
 	/* 处理 logPath */
 	if err := strKit.AssertNotEmpty(logPath, "logPath"); err != nil {
