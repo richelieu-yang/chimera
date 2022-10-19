@@ -9,6 +9,7 @@ filepath标准库的使用可以参考: https://www.cnblogs.com/jkko123/p/692396
 package pathKit
 
 import (
+	"github.com/richelieu42/go-scales/src/cmdKit"
 	"github.com/richelieu42/go-scales/src/core/file/fileKit"
 	"github.com/richelieu42/go-scales/src/core/strKit"
 	"github.com/richelieu42/go-scales/src/core/timeKit"
@@ -94,8 +95,13 @@ e.g.
 e.g.1	支持: 路径穿越（路径穿透）
 ("/a/b", "../c.docx") => "/a/c.docx"
 */
-func Join(elem ...string) string {
-	return filepath.Join(elem...)
+func Join(eles ...string) string {
+	return filepath.Join(eles...)
+}
+
+func JoinForCommand(eles ...string) string {
+	str := Join(eles...)
+	return cmdKit.PolyfillCommandPath(str)
 }
 
 // Split 分割路径中的目录与文件
