@@ -57,7 +57,7 @@ func InitializeEnvironment(pathArgs ...string) error {
 		return EnvAlreadyLoadedError
 	}
 
-	// 先简单初始化下logrus，建议后面再初始化下logrus组件
+	// 先简单初始化下logrus，下面会完整地初始化logrus组件
 	logrusKit.Initialize(logrus.DebugLevel, timeKit.DirFormat)
 
 	path := sliceKit.GetFirstItemWithDefault("", pathArgs...)
