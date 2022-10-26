@@ -4,13 +4,9 @@ import (
 	"fmt"
 	"github.com/gin-gonic/gin"
 	"github.com/gorilla/websocket"
-	"github.com/oklog/ulid/v2"
-	"github.com/richelieu42/go-scales/src/idKit"
 	"github.com/sirupsen/logrus"
-	"math/rand"
 	"net/http"
 	"strconv"
-	"time"
 )
 
 // 允许跨域
@@ -21,14 +17,6 @@ var upgrader = websocket.Upgrader{
 }
 
 func main() {
-	fmt.Println(idKit.NewULID())
-
-	ms := ulid.Timestamp(time.Now())
-	entropy := rand.New(rand.NewSource(time.Now().UnixNano()))
-	fmt.Println(idKit.NewCustomizedULID(ms, entropy))
-}
-
-func main1() {
 	r := gin.Default()
 	r.GET("/ping", ping)
 	if err := r.Run(":8080"); err != nil {

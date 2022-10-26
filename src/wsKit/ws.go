@@ -2,20 +2,12 @@ package wsKit
 
 import (
 	"github.com/gin-gonic/gin"
-	"github.com/gorilla/websocket"
 	"github.com/richelieu42/go-scales/src/core/errorKit"
 	"github.com/richelieu42/go-scales/src/core/strKit"
 	"github.com/richelieu42/go-scales/src/http/httpKit"
 	"github.com/sirupsen/logrus"
 	"net/http"
 )
-
-// 允许跨域
-var upgrader = websocket.Upgrader{
-	CheckOrigin: func(r *http.Request) bool {
-		return true
-	},
-}
 
 // WebSocketHandler
 // websocket服务器.
