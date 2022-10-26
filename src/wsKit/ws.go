@@ -51,7 +51,7 @@ func WebSocketHandler(ctx *gin.Context) {
 		//读取ws中的数据
 		mt, message, err := ws.ReadMessage()
 		if err != nil {
-			logrus.Errorf("Fail to execute ws.ReadMessage(), error: [%s].", err.Error())
+			logrus.Errorf("Fail to execute conn.ReadMessage(), error: [%s].", err.Error())
 			break
 		}
 		if string(message) == "ping" {
@@ -60,7 +60,7 @@ func WebSocketHandler(ctx *gin.Context) {
 		//写入ws数据
 		err = ws.WriteMessage(mt, message)
 		if err != nil {
-			logrus.Errorf("Fail to execute ws.WriteMessage(mt, message), error: [%s].", err.Error())
+			logrus.Errorf("Fail to execute conn.WriteMessage(mt, message), error: [%s].", err.Error())
 			break
 		}
 	}
@@ -89,13 +89,13 @@ func PolyfillWsConnection(req *http.Request) error {
 
 	// (3)connection && upgrade
 	// case 0: [http]请求，Connection: ["keep-alive"]，Upgrade: [""]
-	// case 1: [ws]请求，Connection: ["Upgrade"]，Upgrade: ["websocket"]
-	// case 2: nginx代理（未设置websocket穿透），[ws]请求，Connection: ["close"]，Upgrade: [""]
-	// case 3: nginx代理（已设置websocket穿透），[ws]请求，Connection: ["Upgrade"]，Upgrade: ["websocket"]（Connection也有可能为"upgrade"，由于nginx配置的原因）
+	// case 1: [conn]请求，Connection: ["Upgrade"]，Upgrade: ["websocket"]
+	// case 2: nginx代理（未设置websocket穿透），[conn]请求，Connection: ["close"]，Upgrade: [""]
+	// case 3: nginx代理（已设置websocket穿透），[conn]请求，Connection: ["Upgrade"]，Upgrade: ["websocket"]（Connection也有可能为"upgrade"，由于nginx配置的原因）
 	connection := httpKit.GetConnection(req)
 	upgrade := httpKit.GetUpgrade(req)
 	if connection == "keep-alive" && upgrade == "" {
-		return errorKit.Simple("req(Connection: %s, Upgrade: %s) isn't a ws request", connection, upgrade)
+		return errorKit.Simple("req(Connection: %s, Upgrade: %s) isn't a conn request", connection, upgrade)
 	}
 	// 不再需要nginx设置websocket穿透了
 	if connection != "Upgrade" {

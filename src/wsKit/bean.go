@@ -1,13 +1,20 @@
 package wsKit
 
-import "github.com/gorilla/websocket"
+import (
+	"github.com/gorilla/websocket"
+	"sync"
+)
 
 type (
-	wsConnection struct {
-		// gorilla/websocket的连接
-		ws *websocket.Conn
+	Connection struct {
 		// 唯一id
 		uniqueId string
+		// 锁
+		lock *sync.Mutex
+
+		// gorilla/websocket的连接
+		conn *websocket.Conn
+
 		// 所属于的群组（有且仅有一个）
 		group string
 		// 所属于的用户（有且仅有一个）
@@ -17,14 +24,29 @@ type (
 	}
 )
 
-func (conn *wsConnection) Dispose() {
+func (c *Connection) Dispose() error {
+	conn := c.conn
 	if conn == nil {
-		return
+		return NoConnError
 	}
-	_ = conn.ws.Close()
-	conn.ws = nil
+
+	err := c.conn.Close()
+	c.conn = nil
+	return err
 }
 
-func NewWsConnection() *wsConnection {
-	return new(wsConnection)
+func (c *Connection) Push(messageType int, data []byte) error {
+
+	ws := c.conn
+	if err := ws.WriteMessage(messageType, data); err != nil {
+		return err
+	}
+	return nil
+}
+
+func NewConnection(conn *websocket.Conn) *Connection {
+	return &Connection{
+		conn: conn,
+		lock: new(sync.Mutex),
+	}
 }
