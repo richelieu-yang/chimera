@@ -5,6 +5,7 @@ import (
 	"github.com/gin-gonic/gin"
 	"github.com/gorilla/websocket"
 	"github.com/oklog/ulid/v2"
+	"github.com/richelieu42/go-scales/src/idKit"
 	"github.com/sirupsen/logrus"
 	"math/rand"
 	"net/http"
@@ -20,22 +21,11 @@ var upgrader = websocket.Upgrader{
 }
 
 func main() {
-	id := ulid.Make()
-	fmt.Println(id.String())
+	fmt.Println(idKit.NewULID())
 
-	entropy := rand.New(rand.NewSource(time.Now().UnixNano()))
 	ms := ulid.Timestamp(time.Now())
-	id, err := ulid.New(ms, entropy)
-	if err != nil {
-		panic(err)
-	}
-	fmt.Println(id.String())
-
-	//t := time.Now().UTC()
-	//entropy := rand.New(rand.NewSource(t.UnixNano()))
-	//id := ulid.MustNew(ulid.Timestamp(t), entropy)
-	//// id: 01G902ZSM96WV5D5DC5WFHF8WY length: 26
-	//fmt.Println("id:", id.String(), "length:", len(id.String()))
+	entropy := rand.New(rand.NewSource(time.Now().UnixNano()))
+	fmt.Println(idKit.NewCustomizedULID(ms, entropy))
 }
 
 func main1() {
