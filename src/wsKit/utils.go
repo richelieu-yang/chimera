@@ -51,7 +51,7 @@ func AssertWebSocketUpgrade(req *http.Request) error {
 	if !websocket.IsWebSocketUpgrade(req) {
 		connection := httpKit.GetHeader(req.Header, "Connection")
 		upgrade := httpKit.GetHeader(req.Header, "Upgrade")
-		return errorKit.Simple("it isn't a websocket request with connection(%s) and upgrade(%s)", connection, upgrade)
+		return errorKit.Simple("request(connection: %s, upgrade: %s) isn't a websocket request", connection, upgrade)
 	}
 	return nil
 }
