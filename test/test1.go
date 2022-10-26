@@ -34,10 +34,13 @@ func ping(ctx *gin.Context) {
 	defer conn.Close()
 
 	for {
+		tmp := conn.CloseHandler()
+		fmt.Println(tmp)
+
 		m := make(map[string]interface{})
 		if err := conn.ReadJSON(nil); err != nil {
 			logrus.Errorf("读取数据失败，error: %v", err)
-			//break
+			continue
 		}
 
 		json, _ := jsonKit.MarshalToString(m)
