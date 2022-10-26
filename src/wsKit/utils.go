@@ -1,6 +1,8 @@
 package wsKit
 
 import (
+	"github.com/gorilla/websocket"
+	"github.com/richelieu42/go-scales/src/core/errorKit"
 	"github.com/richelieu42/go-scales/src/core/strKit"
 	"github.com/richelieu42/go-scales/src/http/httpKit"
 	"net/http"
@@ -10,7 +12,7 @@ import (
 /*
 PS:
 (1) 当客户使用了Nginx，但不设置websocket穿透，我们只能通过Golang代码来设置websocket穿透了；
-(2) 还有问题的话，可以参考下："github.com/gorilla/websocket"中server.go的Upgrade方法.
+(2) 先调用此方法，再调用 IsWebSocketUpgrade().
 */
 func SetWebSocketPenetration(req *http.Request) {
 	/*
@@ -29,4 +31,27 @@ func SetWebSocketPenetration(req *http.Request) {
 			httpKit.SetHeader(req.Header, "Upgrade", "websocket")
 		}
 	}
+}
+
+// IsWebSocketUpgrade
+/*
+PS: 建议先调用 SetWebSocketPenetration().
+
+@return true: websocket请求; false: 普通http请求.
+*/
+func IsWebSocketUpgrade(req *http.Request) bool {
+	return websocket.IsWebSocketUpgrade(req)
+}
+
+// AssertWebSocketUpgrade
+/*
+PS: 建议先调用 SetWebSocketPenetration().
+*/
+func AssertWebSocketUpgrade(req *http.Request) error {
+	if !websocket.IsWebSocketUpgrade(req) {
+		connection := httpKit.GetHeader(req.Header, "Connection")
+		upgrade := httpKit.GetHeader(req.Header, "Upgrade")
+		return errorKit.Simple("it isn't a websocket request with connection(%s) and upgrade(%s)", connection, upgrade)
+	}
+	return nil
 }
