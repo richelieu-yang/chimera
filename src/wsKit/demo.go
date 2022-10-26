@@ -7,17 +7,16 @@ import (
 	"github.com/sirupsen/logrus"
 )
 
-// WebSocketHandler
-// websocket服务器.
+// WebSocketHandler websocket服务器.
 func WebSocketHandler(ctx *gin.Context) {
 	// 清空cookie，防止因为cookie过大导致t-io报异常
 	httpKit.ClearCookies(ctx.Request)
 
 	// 输出所有请求头信息
 	logrus.Debugf("----------------------------------------------------")
-	err := CheckAndPolyfill(ctx.Request)
+	err := SetWebSocketPenetration(ctx.Request)
 	if err != nil {
-		logrus.Errorf("Fail to execute CheckAndPolyfill(ctx.Request), error: [%s].", err.Error())
+		logrus.Errorf("Fail to execute SetWebSocketPenetration(ctx.Request), error: [%s].", err.Error())
 	}
 
 	var headers map[string][]string = ctx.Request.Header
