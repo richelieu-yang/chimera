@@ -26,6 +26,14 @@ type (
 		token string
 		data  map[string]interface{}
 	}
+
+	Listener interface {
+		// 接收到前端发来的消息
+		onMessage(c *Connection, msgType int, msgData []byte)
+
+		// 监听 websocket 连接断开
+		onClose(c *Connection)
+	}
 )
 
 func (c *Connection) Dispose() error {
@@ -41,7 +49,15 @@ func (c *Connection) Dispose() error {
 	return c.conn.Close()
 }
 
-func (c *Connection) Push(messageType int, data []byte) error {
+func (c *Connection) PushTextMessage(msgData []byte) error {
+	return c.PushMessage(websocket.TextMessage, msgData)
+}
+
+func (c *Connection) PushBinaryMessage(msgData []byte) error {
+	return c.PushMessage(websocket.BinaryMessage, msgData)
+}
+
+func (c *Connection) PushMessage(msgType int, msgData []byte) error {
 	if c == nil {
 		return nil
 	}
@@ -50,16 +66,21 @@ func (c *Connection) Push(messageType int, data []byte) error {
 	defer c.lock.Unlock()
 
 	ws := c.conn
-	if err := ws.WriteMessage(messageType, data); err != nil {
+	if err := ws.WriteMessage(msgType, msgData); err != nil {
 		return err
 	}
 	return nil
 }
 
-func NewConnection(conn *websocket.Conn) (*Connection, error) {
+func NewConnection(conn *websocket.Conn, listener Listener) (*Connection, error) {
 	lock := new(sync.Mutex)
 	if conn == nil {
 		return nil, errorKit.Simple("conn == nil")
+	}
+
+	c := &Connection{
+		conn: conn,
+		lock: lock,
 	}
 
 	// 写（推送）的压缩 compress
@@ -68,8 +89,22 @@ func NewConnection(conn *websocket.Conn) (*Connection, error) {
 		return nil, err
 	}
 
-	return &Connection{
-		conn: conn,
-		lock: lock,
-	}, nil
+	// 接收前端发来的数据
+	if listener != nil {
+		go func() {
+			var err error
+			for {
+				msgType, msgData, err := conn.ReadMessage()
+				if err != nil {
+					break
+				}
+				listener.onMessage(c, msgType, msgData)
+			}
+
+			// TODO: 接收数据失败，此时默认该连接废了？
+			err = err
+		}()
+	}
+
+	return c, nil
 }
