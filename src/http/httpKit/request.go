@@ -1,7 +1,9 @@
 package httpKit
 
 import (
+	"github.com/gorilla/websocket"
 	"github.com/richelieu42/go-scales/src/core/strKit"
+	"github.com/richelieu42/go-scales/src/operationKit"
 	"github.com/richelieu42/go-scales/src/urlKit"
 	"io"
 	"net/http"
@@ -38,11 +40,17 @@ func GetRequestUrl(req *http.Request) string {
 	/* scheme */
 	scheme := url.Scheme
 	if strKit.IsEmpty(scheme) {
-		if req.TLS != nil {
-			scheme = "https"
+		if websocket.IsWebSocketUpgrade(req) {
+			scheme = operationKit.Ternary(req.TLS != nil, "wss", "ws")
 		} else {
-			scheme = "http"
+			scheme = operationKit.Ternary(req.TLS != nil, "https", "http")
 		}
+
+		//if req.TLS != nil {
+		//	scheme = "https"
+		//} else {
+		//	scheme = "http"
+		//}
 	}
 
 	/* host */
