@@ -19,23 +19,14 @@ var upgrader = websocket.Upgrader{
 }
 
 func main() {
-	//gin.SetMode(gin.ReleaseMode)
 	engine := gin.Default()
 
-	if err := engine.SetTrustedProxies([]string{"172.19.10.12"}); err != nil {
-		panic(err)
-	}
-
-	//engine.TrustedPlatform
-
 	engine.GET("/ping", ping)
+
 	_ = engine.Run(":8080")
 }
 
 func ping(ctx *gin.Context) {
-
-	ctx.ClientIP()
-
 	// 先判断是不是websocket请求
 	if !websocket.IsWebSocketUpgrade(ctx.Request) {
 		// 普通http请求
