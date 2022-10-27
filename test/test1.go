@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"github.com/gin-gonic/gin"
 	"github.com/gorilla/websocket"
+	"github.com/richelieu42/go-scales/src/http/httpKit"
 	"github.com/sirupsen/logrus"
 	"net/http"
 	"time"
@@ -24,8 +25,18 @@ func main() {
 }
 
 func ping(ctx *gin.Context) {
+
+	fmt.Println(httpKit.GetRequestUrl(ctx.Request))
+
+	// 先判断是不是websocket请求
+	if !websocket.IsWebSocketUpgrade(ctx.Request) {
+		ctx.String(http.StatusOK, `request(method: %s, Connection: %s, Upgrade: %s) isn't a websocket request`,
+			ctx.Request.Method, ctx.Request.Header["Connection"], ctx.Request.Header["Upgrade"])
+		return
+	}
+
 	// 升级get请求为webSocket协议（如果返此处回的err != nil，说明websocket连接已经建立成功了）
-	conn, err := upgrader.Upgrade(ctx.Writer, ctx.Request, ctx.Writer.Header())
+	conn, err := upgrader.Upgrade(ctx.Writer, ctx.Request, nil)
 	if err != nil {
 		fmt.Println(err)
 		return

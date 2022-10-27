@@ -3,7 +3,7 @@ package httpKit
 import (
 	"github.com/richelieu42/go-scales/src/core/strKit"
 	"github.com/richelieu42/go-scales/src/urlKit"
-	"io/ioutil"
+	"io"
 	"net/http"
 	"strings"
 )
@@ -16,22 +16,6 @@ func GetProto(req *http.Request) string {
 	return req.Proto
 }
 
-func GetConnection(req *http.Request) string {
-	return GetHeader(req.Header, "Connection")
-}
-
-func SetConnection(req *http.Request, value string) {
-	SetHeader(req.Header, "Connection", value)
-}
-
-func GetUpgrade(req *http.Request) string {
-	return GetHeader(req.Header, "Upgrade")
-}
-
-func SetUpgrade(req *http.Request, value string) {
-	SetHeader(req.Header, "Upgrade", value)
-}
-
 // OverridePostRequestBody 覆盖POST请求的请求体.
 func OverridePostRequestBody(req *http.Request, m map[string]string) {
 	content := urlKit.ToQueryString(m)
@@ -39,15 +23,19 @@ func OverridePostRequestBody(req *http.Request, m map[string]string) {
 
 	// 下面2行代码二选一，都可以
 	//req.Body = &Repeat{Reader: reader, Offset: 0}
-	req.Body = ioutil.NopCloser(reader)
+	req.Body = io.NopCloser(reader)
 
 	req.ContentLength = int64(len(content))
 }
 
-// GetRequestUrl 返回当前接口的url（不包括query数据）
+// GetRequestUrl 返回当前接口的url.
+/*
+PS: 不包括query数据.
+*/
 func GetRequestUrl(req *http.Request) string {
 	url := req.URL
 
+	/* scheme */
 	scheme := url.Scheme
 	if strKit.IsEmpty(scheme) {
 		if req.TLS != nil {
@@ -56,10 +44,14 @@ func GetRequestUrl(req *http.Request) string {
 			scheme = "http"
 		}
 	}
+
+	/* host */
 	host := url.Host
 	if strKit.IsEmpty(host) {
 		host = req.Host
 	}
+
+	/* path */
 	path := url.Path
 
 	return strKit.Format("%s://%s%s", scheme, host, path)

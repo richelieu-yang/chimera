@@ -13,6 +13,8 @@ import (
 PS:
 (1) 当客户使用了Nginx，但不设置websocket穿透，我们只能通过Golang代码来设置websocket穿透了；
 (2) 先调用此方法，再调用 IsWebSocketUpgrade().
+
+Deprecated: 此方法仅能解决部分情况，目前gin还无法获取请求的协议，是http(https)还是ws(wss)？
 */
 func SetWebSocketPenetration(req *http.Request) {
 	/*
@@ -35,23 +37,18 @@ func SetWebSocketPenetration(req *http.Request) {
 
 // IsWebSocketUpgrade
 /*
-PS: 建议先调用 SetWebSocketPenetration().
-
 @return true: websocket请求; false: 普通http请求.
 */
 func IsWebSocketUpgrade(req *http.Request) bool {
 	return websocket.IsWebSocketUpgrade(req)
 }
 
-// AssertWebSocketUpgrade
-/*
-PS: 建议先调用 SetWebSocketPenetration().
-*/
 func AssertWebSocketUpgrade(req *http.Request) error {
 	if !websocket.IsWebSocketUpgrade(req) {
 		connection := httpKit.GetHeader(req.Header, "Connection")
 		upgrade := httpKit.GetHeader(req.Header, "Upgrade")
-		return errorKit.Simple("request(connection: %s, upgrade: %s) isn't a websocket request", connection, upgrade)
+		return errorKit.Simple("request(method: %s, connection: %s, upgrade: %s) isn't a websocket request",
+			req.Method, connection, upgrade)
 	}
 	return nil
 }
