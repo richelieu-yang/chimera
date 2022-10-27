@@ -20,6 +20,9 @@ var upgrader = websocket.Upgrader{
 
 func main() {
 	r := gin.Default()
+
+	r.TrustedPlatform
+
 	r.GET("/ping", ping)
 	_ = r.Run(":8080")
 }
