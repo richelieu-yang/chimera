@@ -25,17 +25,15 @@ func main() {
 }
 
 func ping(ctx *gin.Context) {
-
-	fmt.Println(httpKit.GetRequestUrl(ctx.Request))
-
 	// 先判断是不是websocket请求
 	if !websocket.IsWebSocketUpgrade(ctx.Request) {
-		ctx.String(http.StatusOK, `request(method: %s, Connection: %s, Upgrade: %s) isn't a websocket request`,
-			ctx.Request.Method, ctx.Request.Header["Connection"], ctx.Request.Header["Upgrade"])
+		// 普通http请求
+		ctx.String(http.StatusOK, `request(method: %s, url: %s, Connection: %s, Upgrade: %s) isn't a websocket request`,
+			ctx.Request.Method, httpKit.GetRequestUrl(ctx.Request), ctx.Request.Header["Connection"], ctx.Request.Header["Upgrade"])
 		return
 	}
 
-	// 升级get请求为webSocket协议（如果返此处回的err != nil，说明websocket连接已经建立成功了）
+	// 升级请求为WebSocket协议（如果返此处回的err != nil，说明websocket连接已经建立成功了，即握手成功）
 	conn, err := upgrader.Upgrade(ctx.Writer, ctx.Request, nil)
 	if err != nil {
 		fmt.Println(err)

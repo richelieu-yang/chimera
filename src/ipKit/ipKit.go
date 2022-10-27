@@ -5,12 +5,10 @@ import (
 	"net"
 )
 
-// GetIpInfo
-/**
- * 获取ip字符串的信息.
- *
- * @param str 字符串，IPv4 或 IPv6
- */
+// GetIpInfo 获取ip字符串的信息.
+/*
+@param str 字符串，IPv4 或 IPv6
+*/
 func GetIpInfo(str string) IpInfo {
 	kind := ipType.UNKNOWN
 	ip := net.ParseIP(str)
@@ -44,9 +42,8 @@ func GetIpInfo(str string) IpInfo {
 	}
 }
 
-// IsIP
+// IsIP 检查传参是否为ip（支持ipv4和ipv6）？
 /*
-检查传参是否为ip（支持ipv4和ipv6）？
 参考：https://www.php.cn/be/go/441401.html
 */
 func IsIP(str string) bool {
@@ -54,10 +51,10 @@ func IsIP(str string) bool {
 }
 
 // IsIPv4
-/**
- * "0.0.0.0" 	=> true
- * "127.0.0.1" 	=> true
- */
+/*
+"0.0.0.0" 	=> true
+"127.0.0.1"	=> true
+*/
 func IsIPv4(str string) bool {
 	ip := net.ParseIP(str)
 	return ip != nil && ip.To4() != nil
