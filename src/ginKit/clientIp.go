@@ -15,7 +15,7 @@ PS: Context.ClientIP() 可以和 Engine.TrustedPlatform 搭配使用，详见参
 func GetClientIp(ctx *gin.Context) string {
 	/*
 		Context.RemoteIP(): 无代理返回客户端IP,有代理返回代理IP
-		Context.ClientIP(): 无论是否有代理，都会返回客户端IP（代理比如Nginx也需要配置）
+		Context.ClientIP(): 无论是否有代理，都会返回客户端IP（代理比如Nginx也需要配置；方法体内部会调用 Context.RemoteIP()）
 	*/
 	return ctx.ClientIP()
 }
