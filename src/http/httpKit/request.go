@@ -45,12 +45,6 @@ func GetRequestUrl(req *http.Request) string {
 		} else {
 			scheme = operationKit.Ternary(req.TLS != nil, "https", "http")
 		}
-
-		//if req.TLS != nil {
-		//	scheme = "https"
-		//} else {
-		//	scheme = "http"
-		//}
 	}
 
 	/* host */

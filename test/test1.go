@@ -21,12 +21,18 @@ var upgrader = websocket.Upgrader{
 func main() {
 	engine := gin.Default()
 
-	engine.GET("/ping", ping)
+	engine.Any("/ping", ping)
 
 	_ = engine.Run(":8080")
 }
 
 func ping(ctx *gin.Context) {
+	//if true {
+	//	ctx.String(333, "123")
+	//	//ctx.Status(333)
+	//	return
+	//}
+
 	// 先判断是不是websocket请求
 	if !websocket.IsWebSocketUpgrade(ctx.Request) {
 		// 普通http请求
@@ -41,6 +47,10 @@ func ping(ctx *gin.Context) {
 		fmt.Println(err)
 		return
 	}
+
+	time.Sleep(time.Second * 3)
+	conn.Close()
+
 	defer conn.Close()
 
 	for {
