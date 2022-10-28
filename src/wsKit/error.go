@@ -1,11 +1,13 @@
 package wsKit
 
-import "github.com/richelieu42/go-scales/src/core/errorKit"
+import "github.com/gorilla/websocket"
 
-var (
-	NotInitializedError = errorKit.Simple("Connection hasn't been initialized correctly")
+// IsCloseError 错误判断
+func IsCloseError(err error) bool {
+	return websocket.IsCloseError(err)
+}
 
-	DisposedError = errorKit.Simple("Connection has already been disposed")
-
-	NoConnError = errorKit.Simple("no conn")
-)
+// IsUnexpectedCloseError 错误判断
+func IsUnexpectedCloseError(err error) bool {
+	return websocket.IsUnexpectedCloseError(err)
+}

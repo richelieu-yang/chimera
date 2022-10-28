@@ -5,31 +5,31 @@ import (
 )
 
 // key: group
-var groupMapper = make(map[string][]*Connection)
+var groupMapper = make(map[string][]*Channel)
 
 // key: user
-var userMapper = make(map[string][]*Connection)
+var userMapper = make(map[string][]*Channel)
 
 // key: uniqueId
-var all = make(map[string][]*Connection)
+var all = make(map[string][]*Channel)
 
 //var rwLock = new(sync.RWMutex)
 
-func addToMapper(mapper map[string][]*Connection, key string, conn *Connection) {
+func addToMapper(mapper map[string][]*Channel, key string, conn *Channel) {
 	s := mapper[key]
 	if s == nil {
-		s = make([]*Connection, 16)
+		s = make([]*Channel, 16)
 	}
 
 	mapper[key] = s
 }
 
-func removeFromMapper(mapper map[string][]*Connection) {
+func removeFromMapper(mapper map[string][]*Channel) {
 
 }
 
 // BindGroup 可以多次绑定
-func BindGroup(conn *Connection, group string) {
+func BindGroup(conn *Channel, group string) {
 	if conn == nil {
 		return
 	}
@@ -56,7 +56,7 @@ func BindGroup(conn *Connection, group string) {
 	//conn.group = group
 }
 
-func UnbindGroup(conn *Connection) {
+func UnbindGroup(conn *Channel) {
 	if conn == nil {
 		return
 	}
@@ -70,7 +70,7 @@ func UnbindGroup(conn *Connection) {
 	delete(groupMapper, old)
 }
 
-func BindUser(conn *Connection, user string) {
+func BindUser(conn *Channel, user string) {
 	if conn == nil {
 		return
 	}
@@ -78,7 +78,7 @@ func BindUser(conn *Connection, user string) {
 	conn.user = user
 }
 
-func BindUniqueId(conn *Connection, uniqueId string) {
+func BindUniqueId(conn *Channel, uniqueId string) {
 	if conn == nil {
 		return
 	}

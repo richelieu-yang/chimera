@@ -8,7 +8,7 @@ import (
 )
 
 type (
-	Connection struct {
+	Channel struct {
 		disposed bool
 
 		// 锁
@@ -29,35 +29,35 @@ type (
 
 	Listener interface {
 		// 接收到前端发来的消息
-		onMessage(c *Connection, msgType int, msgData []byte)
+		onMessage(c *Channel, msgType int, msgData []byte)
 
 		// 监听 websocket 连接断开
-		onClose(c *Connection)
+		onClose(c *Channel)
 	}
 )
 
-func (c *Connection) Dispose() error {
+func (c *Channel) Dispose() error {
 	if c == nil {
 		return nil
 	}
 
 	conn := c.conn
 	c.conn = nil
-	if conn == nil {
-		return NoConnError
-	}
-	return c.conn.Close()
+	//if conn == nil {
+	//	return NoConnError
+	//}
+	return conn.Close()
 }
 
-func (c *Connection) PushTextMessage(msgData []byte) error {
+func (c *Channel) PushTextMessage(msgData []byte) error {
 	return c.PushMessage(websocket.TextMessage, msgData)
 }
 
-func (c *Connection) PushBinaryMessage(msgData []byte) error {
+func (c *Channel) PushBinaryMessage(msgData []byte) error {
 	return c.PushMessage(websocket.BinaryMessage, msgData)
 }
 
-func (c *Connection) PushMessage(msgType int, msgData []byte) error {
+func (c *Channel) PushMessage(msgType int, msgData []byte) error {
 	if c == nil {
 		return nil
 	}
@@ -72,13 +72,13 @@ func (c *Connection) PushMessage(msgType int, msgData []byte) error {
 	return nil
 }
 
-func NewConnection(conn *websocket.Conn, listener Listener) (*Connection, error) {
+func NewConnection(conn *websocket.Conn, listener Listener) (*Channel, error) {
 	lock := new(sync.Mutex)
 	if conn == nil {
 		return nil, errorKit.Simple("conn == nil")
 	}
 
-	c := &Connection{
+	c := &Channel{
 		conn: conn,
 		lock: lock,
 	}

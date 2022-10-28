@@ -4,7 +4,6 @@ import (
 	"fmt"
 	"github.com/gin-gonic/gin"
 	"github.com/gorilla/websocket"
-	"github.com/richelieu42/go-scales/src/http/httpKit"
 	"github.com/sirupsen/logrus"
 	"net/http"
 	"time"
@@ -19,45 +18,32 @@ var upgrader = websocket.Upgrader{
 }
 
 func main() {
-	engine := gin.Default()
-
-	engine.Any("/ping", ping)
-
-	_ = engine.Run(":8080")
+	r := gin.Default()
+	r.GET("/ping", ping)
+	_ = r.Run(":8080")
 }
 
 func ping(ctx *gin.Context) {
-	//if true {
-	//	ctx.String(333, "123")
-	//	//ctx.Status(333)
-	//	return
-	//}
-
 	// 先判断是不是websocket请求
 	if !websocket.IsWebSocketUpgrade(ctx.Request) {
-		// 普通http请求
-		ctx.String(http.StatusOK, `request(method: %s, url: %s, Connection: %s, Upgrade: %s) isn't a websocket request`,
-			ctx.Request.Method, httpKit.GetRequestUrl(ctx.Request), ctx.Request.Header["Connection"], ctx.Request.Header["Upgrade"])
+		ctx.String(http.StatusOK, "request(method: %s, Connection: %s, Upgrade: %s) isn't a websocket request",
+			ctx.Request.Method, ctx.Request.Header["Connection"], ctx.Request.Header["Upgrade"])
 		return
 	}
 
-	// 升级请求为WebSocket协议（如果返此处回的err != nil，说明websocket连接已经建立成功了，即握手成功）
+	// 升级get请求为webSocket协议（如果返此处回的err != nil，说明websocket连接已经建立成功了）
 	conn, err := upgrader.Upgrade(ctx.Writer, ctx.Request, nil)
 	if err != nil {
-		fmt.Println(err)
+		logrus.Errorf("fail to upgrade, error: %v", err)
 		return
 	}
-
-	time.Sleep(time.Second * 3)
-	conn.Close()
-
 	defer conn.Close()
 
 	for {
 		// 读取前端发来的消息
 		msgType, msgData, err := conn.ReadMessage()
 		if err != nil {
-			logrus.Errorf("读取数据失败，error: %v", err)
+			logrus.Errorf("fail to read message，error: %v", err)
 			break
 		}
 
@@ -66,6 +52,11 @@ func ping(ctx *gin.Context) {
 		switch message {
 		case "ping":
 			responseText = "pong"
+		case "close":
+			if err := conn.Close(); err != nil {
+				logrus.Errorf("fail to close connection，error: %v", err)
+			}
+			return
 		default:
 			responseText = fmt.Sprintf("receive message: [%d, %s].", msgType, message)
 		}
@@ -73,7 +64,7 @@ func ping(ctx *gin.Context) {
 		// 推送消息给前端
 		err = conn.WriteMessage(websocket.TextMessage, []byte(responseText))
 		if err != nil {
-			logrus.Errorf("发送数据失败，error: %v", err)
+			logrus.Errorf("fail to write message，error: %v", err)
 			break
 		}
 	}
