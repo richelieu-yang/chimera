@@ -39,7 +39,7 @@ func ping(ctx *gin.Context) {
 	}
 	defer conn.Close()
 
-	// 监听连接的断开
+	/* 监听连接的断开 */
 	conn.SetCloseHandler(func(code int, text string) error {
 		logrus.Warnf("connection is closed with code(%d) and text(%s)", code, text)
 
@@ -49,12 +49,17 @@ func ping(ctx *gin.Context) {
 		return nil
 	})
 
+	/* 读取前端发来的消息 */
 LOOP:
 	for {
-		// 读取前端发来的消息
 		msgType, msgData, err := conn.ReadMessage()
 		if err != nil {
-			logrus.Errorf("fail to read text，error: %v", err)
+			if ce, ok := err.(*websocket.CloseError); ok {
+				logrus.Infof("connection is already closed with code(%d) and text(%s)", ce.Code, ce.Text)
+			} else {
+				logrus.Errorf("fail to read text，error: %v", err)
+			}
+			logrus.Info("Read will stop.")
 			break
 		}
 
@@ -62,6 +67,7 @@ LOOP:
 		var responseText string
 		switch text {
 		case "ping":
+
 			responseText = "pong"
 		case "close":
 			if err := conn.Close(); err != nil {
