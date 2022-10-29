@@ -3,7 +3,7 @@ package wsKit
 type (
 	Listener interface {
 		/*
-			websocket连接握手成功后，会调用此方法.
+			连接握手成功后，会调用此方法.
 		*/
 		onAfterHandshake()
 
@@ -13,7 +13,7 @@ type (
 		onMessage(c *Channel, msgType int, msgData []byte)
 
 		/*
-			websocket连接断开后，会调用此方法.
+			连接断开后，会调用此方法.
 
 			PS: 后端调用 Conn.Close() 并不会触发.
 		*/
