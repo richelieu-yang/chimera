@@ -23,6 +23,6 @@ type (
 
 var listener Listener = nil
 
-func SetListener(listener1 Listener) {
+func setListener(listener1 Listener) {
 	listener = listener1
 }

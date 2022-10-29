@@ -30,7 +30,7 @@ func WebSocketHandler(ctx *gin.Context) {
 	logrus.Debugf("====================================================")
 
 	// 升级get请求为webSocket协议
-	ws, err := upgrader.Upgrade(ctx.Writer, ctx.Request, nil)
+	ws, err := DefaultUpgrader.Upgrade(ctx.Writer, ctx.Request, nil)
 	if err != nil {
 		logrus.Errorf("Fail to upgrade, error: [%s].", err.Error())
 		return
