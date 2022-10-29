@@ -26,14 +26,6 @@ type (
 		token string
 		data  map[string]interface{}
 	}
-
-	Listener interface {
-		// 接收到前端发来的消息
-		onMessage(c *Channel, msgType int, msgData []byte)
-
-		// 监听 websocket 连接断开
-		onClose(c *Channel)
-	}
 )
 
 func (c *Channel) Dispose() error {
