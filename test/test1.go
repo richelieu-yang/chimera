@@ -5,20 +5,18 @@ import (
 )
 
 func main() {
-	wc, err := ioKit.NewFileWriterCloser("a.log", true)
+	wc, err := ioKit.NewRotateFileWriteCloser1("ccc.log", -1, -1, true)
 	if err != nil {
 		panic(err)
 	}
 
-	_, err = wc.Write([]byte("123"))
-	if err != nil {
+	if _, err := wc.Write([]byte("abc")); err != nil {
 		panic(err)
 	}
 	if err := wc.Close(); err != nil {
 		panic(err)
 	}
-	_, err = wc.Write([]byte("456"))
-	if err != nil {
+	if _, err := wc.Write([]byte("def")); err != nil {
 		panic(err)
 	}
 }
