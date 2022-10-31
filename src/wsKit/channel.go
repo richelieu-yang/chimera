@@ -3,7 +3,6 @@ package wsKit
 import (
 	"compress/flate"
 	"github.com/gorilla/websocket"
-	"github.com/richelieu42/go-scales/src/core/errorKit"
 	"sync"
 )
 
@@ -64,15 +63,14 @@ func (c *Channel) PushMessage(msgType int, msgData []byte) error {
 	return nil
 }
 
-func NewConnection(conn *websocket.Conn, listener Listener) (*Channel, error) {
-	lock := new(sync.Mutex)
-	if conn == nil {
-		return nil, errorKit.Simple("conn == nil")
-	}
-
+// newChannel
+/*
+@param conn 必定不为nil
+*/
+func newChannel(conn *websocket.Conn) (*Channel, error) {
 	c := &Channel{
 		conn: conn,
-		lock: lock,
+		lock: new(sync.Mutex),
 	}
 
 	// 写（推送）的压缩 compress
@@ -81,21 +79,30 @@ func NewConnection(conn *websocket.Conn, listener Listener) (*Channel, error) {
 		return nil, err
 	}
 
-	// 接收前端发来的数据
 	if listener != nil {
-		go func() {
+		listener.OnAfterHandshake(c)
+
+		conn.SetCloseHandler(func(code int, text string) error {
+			listener.OnAfterClose(c, code, text)
+			return nil
+		})
+
+		// 接收前端发来的数据
+		go func(c *Channel) {
 			var err error
+
 			for {
 				msgType, msgData, err := conn.ReadMessage()
 				if err != nil {
+					// 一旦读取失败，就中断读循环
 					break
 				}
-				listener.onMessage(c, msgType, msgData)
+				listener.OnMessage(c, msgType, msgData)
 			}
-
-			// TODO: 接收数据失败，此时默认该连接废了？
-			err = err
-		}()
+			getLogger().Warnf("[READ] Loop stops because of error: %+v", err)
+		}(c)
+	} else {
+		getLogger().Warn("[READ] Won't process data from front end because listener == nil.")
 	}
 
 	return c, nil

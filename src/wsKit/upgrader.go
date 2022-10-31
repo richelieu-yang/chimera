@@ -11,6 +11,10 @@ var (
 	upgrader *websocket.Upgrader = nil
 
 	DefaultUpgrader = &websocket.Upgrader{
+		/* 设置缓冲区的尺寸，以 byte 为单位 */
+		ReadBufferSize:  4096,
+		WriteBufferSize: 4096,
+
 		// 握手的超时时间
 		HandshakeTimeout: time.Second * 6,
 
@@ -27,6 +31,10 @@ func setUpgrader(upgrader1 *websocket.Upgrader) {
 	}
 }
 
+// getUpgrader
+/*
+@return 必定不为nil
+*/
 func getUpgrader() *websocket.Upgrader {
 	if upgrader == nil {
 		return DefaultUpgrader
