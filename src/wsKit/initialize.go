@@ -14,7 +14,6 @@ import (
 func Initialize(upgrader *websocket.Upgrader, listener Listener, logger *logrus.Logger) error {
 	setUpgrader(upgrader)
 	setListener(listener)
-	setLogger(logger)
 
 	return nil
 }

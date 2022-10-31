@@ -3,6 +3,7 @@ package wsKit
 import (
 	"compress/flate"
 	"github.com/gorilla/websocket"
+	"github.com/richelieu42/go-scales/src/idKit"
 	"sync"
 )
 
@@ -10,14 +11,15 @@ type (
 	Channel struct {
 		disposed bool
 
+		// 唯一id（ULID）
+		id string
 		// 锁
 		lock *sync.Mutex
-
 		// gorilla/websocket的连接
 		conn *websocket.Conn
 
-		// 唯一id
-		uniqueId string
+		// 业务id（必须确保唯一！）
+		bsId string
 		// 所属于的群组（有且仅有一个）
 		group string
 		// 所属于的用户（有且仅有一个）
@@ -28,15 +30,12 @@ type (
 )
 
 func (c *Channel) Dispose() error {
-	if c == nil {
-		return nil
-	}
+	//if c == nil {
+	//	return nil
+	//}
 
 	conn := c.conn
 	c.conn = nil
-	//if conn == nil {
-	//	return NoConnError
-	//}
 	return conn.Close()
 }
 
@@ -70,6 +69,7 @@ func (c *Channel) PushMessage(msgType int, msgData []byte) error {
 func newChannel(conn *websocket.Conn) (*Channel, error) {
 	c := &Channel{
 		conn: conn,
+		id:   idKit.NewULID(),
 		lock: new(sync.Mutex),
 	}
 
