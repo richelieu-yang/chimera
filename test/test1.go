@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"github.com/gin-gonic/gin"
 	"github.com/gorilla/websocket"
-	"github.com/richelieu42/go-scales/src/wsKit"
+	"github.com/richelieu42/go-scales/src/idKit"
 	"github.com/sirupsen/logrus"
 	"net/http"
 	"time"
@@ -19,12 +19,14 @@ var upgrader = websocket.Upgrader{
 }
 
 func main() {
-	engine := gin.Default()
+	fmt.Println(idKit.NewULID())
 
-	//engine.GET("/ping", ping)
-	engine.Any("/ping", wsKit.GinHandler)
-
-	_ = engine.Run(":8080")
+	//engine := gin.Default()
+	//
+	////engine.GET("/ping", ping)
+	//engine.Any("/ping", wsKit.GinHandler)
+	//
+	//_ = engine.Run(":8080")
 }
 
 func ping(ctx *gin.Context) {
