@@ -19,7 +19,9 @@ var upgrader = websocket.Upgrader{
 }
 
 func main() {
-	fmt.Println(idKit.NewULID())
+	id := idKit.NewULID()
+	fmt.Println(id)
+	fmt.Println(len(id))
 
 	//engine := gin.Default()
 	//
