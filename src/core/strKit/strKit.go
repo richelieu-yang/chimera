@@ -28,6 +28,9 @@ PS:
 (1) s中不存在substr的话，返回-1
 (2) s中存在多个substr的话，返回第一个的下标
 
+@param s	被查找的字符串
+@param str	查找的字符串
+
 e.g.
 ("abcabc", "ab")	=> 0
 ("bcabc", "ab")		=> 2
