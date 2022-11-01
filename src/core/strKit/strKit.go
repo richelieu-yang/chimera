@@ -26,15 +26,15 @@ func ToUpper(s string) string {
 /*
 PS:
 (1) s中不存在substr的话，返回-1
-(2) s中存在多个substr的话，返回第一个
+(2) s中存在多个substr的话，返回第一个的下标
 
 e.g.
 ("abcabc", "ab")	=> 0
 ("bcabc", "ab")		=> 2
 ("23", "1")			=> -1
 */
-func Index(s, substr string) int {
-	return strings.Index(s, substr)
+func Index(s, str string) int {
+	return strings.Index(s, str)
 }
 
 // LastIndex
@@ -42,8 +42,8 @@ func Index(s, substr string) int {
 e.g.
 ("", "1") => -1
 */
-func LastIndex(s, substr string) int {
-	return strings.LastIndex(s, substr)
+func LastIndex(s, str string) int {
+	return strings.LastIndex(s, str)
 }
 
 // Contains 是否包含（区分大小写）

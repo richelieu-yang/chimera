@@ -5,8 +5,22 @@ package strKit
 @param index 不包括
 @return 范围: [0, index)
 */
-func SubBefore(str string, index int) string {
-	return str[:index]
+func SubBefore(s string, index int) string {
+	return s[:index]
+}
+
+// SubBeforeString
+/*
+case 1: s包含str的情况，返回截取后的字符串；
+case 2: s不包含str的情况，直接返回s.
+*/
+func SubBeforeString(s, str string) string {
+	i := Index(s, str)
+
+	if i != -1 {
+		return SubBefore(s, i)
+	}
+	return s
 }
 
 // SubAfter
@@ -14,8 +28,22 @@ func SubBefore(str string, index int) string {
 @param index 包括
 @return 范围: [index, length)
 */
-func SubAfter(str string, index int) string {
-	return str[index:]
+func SubAfter(s string, index int) string {
+	return s[index:]
+}
+
+// SubAfterString
+/*
+case 1: s包含str的情况，返回截取后的字符串；
+case 2: s不包含str的情况，直接返回s.
+*/
+func SubAfterString(s, str string) string {
+	i := Index(s, str)
+
+	if i != -1 {
+		return SubAfter(s, i)
+	}
+	return s
 }
 
 // Substring 类似：Java的String.substring()

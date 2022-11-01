@@ -2,19 +2,44 @@ package main
 
 import (
 	"fmt"
-	"github.com/gin-gonic/gin"
-	"net/http"
+	"github.com/richelieu42/go-scales/src/core/strKit"
+	"regexp"
 )
 
 func main() {
-	engine := gin.Default()
+	str := "https://blog.csdn.net/weixin_44014995/article/details/120332422"
 
-	engine.Any("/test", func(ctx *gin.Context) {
-		referer := ctx.GetHeader("referer")
-		ctx.String(http.StatusOK, fmt.Sprintf("referer: [%s]", referer))
-	})
+	re := regexp.MustCompile("\\\\")
+	fmt.Println(re.Match([]byte("\\"))) // true
+}
 
-	if err := engine.Run(":80"); err != nil {
-		panic(err)
+// VerifyReferer 验证 referer
+/*
+@return 验证是否成功 + 验证失败的原因
+*/
+func VerifyReferer(referer string, none bool, blocked bool) (bool, string) {
+	if strKit.IsEmpty(referer) {
+		return none, "none"
 	}
+
+	var prefix string
+	if strKit.StartWith(referer, "http://") {
+		prefix = "http://"
+	} else if strKit.StartWith(referer, "https://") {
+		prefix = "https://"
+	} else {
+		return blocked, "blocked"
+	}
+
+	referer = strKit.RemovePrefixIfExist(referer, prefix)
+
+	i := strKit.Index(referer, "/")
+	if i != -1 {
+		referer = strKit.SubBefore(referer, i)
+	}
+	i = strKit.Index(referer, ":")
+	if i != -1 {
+		referer = strKit.SubBefore(referer, i)
+	}
+
 }
