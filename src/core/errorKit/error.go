@@ -25,11 +25,12 @@ import (
 	"errors"
 	"fmt"
 	errors2 "github.com/pkg/errors"
+	"github.com/richelieu42/go-scales/src/funcKit"
 )
 
 // Simple 新建error（指针；不会携带堆栈信息）
 func Simple(format string, args ...interface{}) error {
-	format = addCallerInfoToFormat(format)
+	format = funcKit.AddFuncInfoToString(format, 1)
 	return errors.New(fmt.Sprintf(format, args...))
 }
 
@@ -38,7 +39,7 @@ func Simple(format string, args ...interface{}) error {
 @param extraSkip 额外跳过的层数（>= 0）
 */
 func SimpleWithExtraSkip(extraSkip int, format string, args ...interface{}) error {
-	format = addCallerInfoToFormat(format, extraSkip)
+	format = funcKit.AddFuncInfoToString(format, 1)
 	return errors.New(fmt.Sprintf(format, args...))
 }
 
@@ -54,18 +55,18 @@ fmt.Println(err == err)  	// true
 fmt.Println(err == err1) 	// false（因为内存地址不一样）
 */
 func New(format string, args ...interface{}) error {
-	format = addCallerInfoToFormat(format)
+	format = funcKit.AddFuncInfoToString(format, 1)
 	return errors2.Errorf(format, args...)
 }
 
-// NewWithExtraSkip
-/*
-@param extraSkip 额外跳过的层数
-*/
-func NewWithExtraSkip(extraSkip int, format string, args ...interface{}) error {
-	format = addCallerInfoToFormat(format, extraSkip)
-	return errors2.Errorf(format, args...)
-}
+//// NewWithExtraSkip
+///*
+//@param extraSkip 额外跳过的层数
+//*/
+//func NewWithExtraSkip(extraSkip int, format string, args ...interface{}) error {
+//	format = addCallerInfoToFormat(format, extraSkip)
+//	return errors2.Errorf(format, args...)
+//}
 
 // IsErrorWithStack 错误是否有堆栈信息？
 /*
@@ -108,7 +109,7 @@ If err is nil, Wrap returns nil.
 @param format 建议首字母小写，且最后面不要加标点符号，否则"%v"输出会比较难看（%v: message在左边；%+v: message在下边）
 */
 func Wrap(err error, format string, args ...interface{}) error {
-	format = addCallerInfoToFormat(format)
+	format = funcKit.AddFuncInfoToString(format, 1)
 	return errors2.Wrapf(err, format, args...)
 }
 
@@ -120,7 +121,7 @@ If err is nil, WithMessage returns nil.
 %+v：	message在下面。
 */
 func WithMessage(err error, format string, args ...interface{}) error {
-	format = addCallerInfoToFormat(format)
+	format = funcKit.AddFuncInfoToString(format, 1)
 	return errors2.WithMessagef(err, format, args...)
 }
 
