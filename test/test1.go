@@ -1,16 +1,20 @@
 package main
 
 import (
-	"github.com/richelieu42/go-scales/src/assertKit"
+	"fmt"
+	"github.com/gin-gonic/gin"
+	"net/http"
 )
 
 func main() {
-	test()
-}
+	engine := gin.Default()
 
-func test() {
-	var obj interface{} = nil
-	if err := assertKit.NotNil(obj, "obj"); err != nil {
+	engine.Any("/test", func(ctx *gin.Context) {
+		referer := ctx.GetHeader("referer")
+		ctx.String(http.StatusOK, fmt.Sprintf("referer: [%s]", referer))
+	})
+
+	if err := engine.Run(":80"); err != nil {
 		panic(err)
 	}
 }
