@@ -2,7 +2,7 @@ package logKit
 
 import (
 	"github.com/richelieu42/go-scales/src/core/file/fileKit"
-	"github.com/richelieu42/go-scales/src/core/file/rotateFileKit"
+	"github.com/richelieu42/go-scales/src/core/ioKit"
 	"github.com/richelieu42/go-scales/src/core/strKit"
 	"io"
 	"log"
@@ -10,18 +10,18 @@ import (
 	"time"
 )
 
-// NewLogger
+// NewFileLogger
 /*
 @param logPath 如果文件不存在，会生成文件和目录；文件存在，新的内容会append
 */
-func NewLogger(logPath, prefix string) (*log.Logger, error) {
-	if err := fileKit.MkParentDirs(logPath); err != nil {
+func NewFileLogger(filePath, prefix string) (*log.Logger, error) {
+	if err := fileKit.MkParentDirs(filePath); err != nil {
 		return nil, err
 	}
 
 	// 如果生成文件的话，其权限为0666（与os.Create()的权限一样）
 	// os.OpenFile()的传参flag，可参考：https://studygolang.com/articles/22180
-	writer, err := os.OpenFile(logPath, os.O_CREATE|os.O_WRONLY|os.O_APPEND, 0666)
+	writer, err := os.OpenFile(filePath, os.O_CREATE|os.O_WRONLY|os.O_APPEND, 0666)
 	if err != nil {
 		return nil, err
 	}
@@ -32,8 +32,8 @@ func NewLogger(logPath, prefix string) (*log.Logger, error) {
 	return newLogger(writer, prefix), nil
 }
 
-func NewRotateLogger(logPath, prefix string, rotationTime, maxAge time.Duration) (*log.Logger, error) {
-	writer, err := rotateFileKit.NewRotateWriter(logPath, rotationTime, maxAge)
+func NewRotateFileLogger(logPath, prefix string, rotationTime, maxAge time.Duration) (*log.Logger, error) {
+	writer, err := ioKit.NewRotateFileWriteCloser(logPath, rotationTime, maxAge, true)
 	if err != nil {
 		return nil, err
 	}

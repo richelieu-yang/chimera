@@ -57,6 +57,13 @@ func NewRotateFileLogger(filePath string, toConsole bool, formatter logrus.Forma
 	return logger, nil
 }
 
+func DisposeLogger(logger *logrus.Logger) error {
+	if logger != nil {
+
+	}
+	return nil
+}
+
 //func NewFileLogger(logPath string, formatter logrus.Formatter, level logrus.Level, toConsole bool) (*logrus.Logger, error) {
 //	return NewCustomizedFileLogger(logPath, formatter, level, toConsole, -1, -1)
 //}
