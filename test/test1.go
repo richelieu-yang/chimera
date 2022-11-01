@@ -1,8 +1,7 @@
 package main
 
 import (
-	"fmt"
-	"github.com/richelieu42/go-scales/src/core/errorKit"
+	"github.com/richelieu42/go-scales/src/assertKit"
 )
 
 func main() {
@@ -10,7 +9,8 @@ func main() {
 }
 
 func test() {
-	fmt.Println(errorKit.Simple("Simple"))
-	fmt.Println(errorKit.New("New"))
-	fmt.Println(errorKit.WithMessage(errorKit.New("New"), "wmq"))
+	var obj interface{} = nil
+	if err := assertKit.NotNil(obj, "obj"); err != nil {
+		panic(err)
+	}
 }

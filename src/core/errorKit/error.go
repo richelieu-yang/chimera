@@ -39,7 +39,8 @@ func Simple(format string, args ...interface{}) error {
 @param extraSkip 额外跳过的层数（>= 0）
 */
 func SimpleWithExtraSkip(extraSkip int, format string, args ...interface{}) error {
-	format = funcKit.AddFuncInfoToString(format, 1)
+	// 1: 当前函数这一层
+	format = funcKit.AddFuncInfoToString(format, extraSkip+1)
 	return errors.New(fmt.Sprintf(format, args...))
 }
 
@@ -59,14 +60,15 @@ func New(format string, args ...interface{}) error {
 	return errors2.Errorf(format, args...)
 }
 
-//// NewWithExtraSkip
-///*
-//@param extraSkip 额外跳过的层数
-//*/
-//func NewWithExtraSkip(extraSkip int, format string, args ...interface{}) error {
-//	format = addCallerInfoToFormat(format, extraSkip)
-//	return errors2.Errorf(format, args...)
-//}
+// NewWithExtraSkip
+/*
+@param extraSkip 额外跳过的层数
+*/
+func NewWithExtraSkip(extraSkip int, format string, args ...interface{}) error {
+	// 1: 当前函数这一层
+	format = funcKit.AddFuncInfoToString(format, extraSkip+1)
+	return errors2.Errorf(format, args...)
+}
 
 // IsErrorWithStack 错误是否有堆栈信息？
 /*
