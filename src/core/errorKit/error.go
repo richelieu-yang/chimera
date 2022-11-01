@@ -31,6 +31,7 @@ import (
 // Simple 新建error（指针；不会携带堆栈信息）
 func Simple(format string, args ...interface{}) error {
 	format = funcKit.AddFuncInfoToString(format, 1)
+
 	return errors.New(fmt.Sprintf(format, args...))
 }
 
@@ -41,6 +42,7 @@ func Simple(format string, args ...interface{}) error {
 func SimpleWithExtraSkip(extraSkip int, format string, args ...interface{}) error {
 	// 1: 当前函数这一层
 	format = funcKit.AddFuncInfoToString(format, extraSkip+1)
+
 	return errors.New(fmt.Sprintf(format, args...))
 }
 
@@ -57,6 +59,7 @@ fmt.Println(err == err1) 	// false（因为内存地址不一样）
 */
 func New(format string, args ...interface{}) error {
 	format = funcKit.AddFuncInfoToString(format, 1)
+
 	return errors2.Errorf(format, args...)
 }
 
@@ -67,6 +70,7 @@ func New(format string, args ...interface{}) error {
 func NewWithExtraSkip(extraSkip int, format string, args ...interface{}) error {
 	// 1: 当前函数这一层
 	format = funcKit.AddFuncInfoToString(format, extraSkip+1)
+
 	return errors2.Errorf(format, args...)
 }
 
@@ -112,6 +116,7 @@ If err is nil, Wrap returns nil.
 */
 func Wrap(err error, format string, args ...interface{}) error {
 	format = funcKit.AddFuncInfoToString(format, 1)
+
 	return errors2.Wrapf(err, format, args...)
 }
 
@@ -124,6 +129,7 @@ If err is nil, WithMessage returns nil.
 */
 func WithMessage(err error, format string, args ...interface{}) error {
 	format = funcKit.AddFuncInfoToString(format, 1)
+
 	return errors2.WithMessagef(err, format, args...)
 }
 
