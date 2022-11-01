@@ -76,3 +76,20 @@ func processFuncName(name string) string {
 	//}
 	return name
 }
+
+// AddFuncInfoToString 在传参format前面加上: "$包名.$方法名"
+/*
+@param extraSkips 额外跳过的步骤，第1个值（有的话）必须: >= 0
+
+@return e.g. ""
+*/
+func AddFuncInfoToString(str string, extraSkips ...int) string {
+	var extraSkip int
+	if extraSkips != nil {
+		extraSkip = extraSkips[0]
+	} else {
+		extraSkip = 0
+	}
+
+	return GetCallerNameWithSkip(2+extraSkip) + ": " + str
+}

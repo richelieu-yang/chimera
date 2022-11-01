@@ -31,13 +31,18 @@ type (
 
 	// Logger 对 logrus.Logger 进行了封装，以便于释放资源.
 	Logger struct {
+		// disposed 相关资源是否已经被释放？
 		disposed bool
 		// prefix 每条输出的前缀，可以为""
 		prefix string
 
 		lock         *sync.RWMutex
 		logrusLogger *logrus.Logger
-		output       interface{}
+
+		// output 可以为nil
+		output interface{}
+		// filePath 可以为""
+		filePath string
 	}
 )
 
@@ -204,9 +209,17 @@ func attachPrefixToFormat(prefix, format string) string {
 /*
 @param prefix 每条输出语句的前缀，可以为""
 */
-func NewLogger(logrusLogger *logrus.Logger, output interface{}, prefix string) ILogger {
+func NewLogger(logrusLogger *logrus.Logger, output interface{}, filePath, prefix string) ILogger {
 	if strKit.IsNotEmpty(prefix) && !strKit.EndWith(prefix, " ") {
 		prefix = prefix + " "
+	}
+
+	switch output {
+	case os.Stdout:
+		filePath = "os.Stdout"
+	case os.Stderr:
+		filePath = "os.Stderr"
+	default:
 	}
 
 	return &Logger{

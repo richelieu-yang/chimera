@@ -2,22 +2,19 @@ package main
 
 import (
 	"fmt"
-	"os"
+	"github.com/richelieu42/go-scales/src/funcKit"
 )
 
 func main() {
-	print(nil)
-	print(os.Stderr)
-
+	fmt.Println(funcKit.AddFuncInfoToString("1", 0))
+	Print()
 }
 
-func print(obj interface{}) {
-	switch obj {
-	case os.Stdout:
-		fmt.Println("os.Stdout")
-	case os.Stderr:
-		fmt.Println("os.Stderr")
-	default:
-		fmt.Println("default")
-	}
+func Print() {
+	fmt.Println(funcKit.AddFuncInfoToString("2", 0))
+	test()
+}
+
+func test() {
+	fmt.Println(funcKit.AddFuncInfoToString("3", 0))
 }
