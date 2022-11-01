@@ -3,14 +3,16 @@ package main
 import (
 	"fmt"
 	"github.com/richelieu42/go-scales/src/core/strKit"
-	"regexp"
 )
 
 func main() {
-	str := "https://blog.csdn.net/weixin_44014995/article/details/120332422"
+	fmt.Println(strKit.SubAfterString("abcd", "bc"))
+	fmt.Println(strKit.SubBeforeString("abcd", "bc"))
 
-	re := regexp.MustCompile("\\\\")
-	fmt.Println(re.Match([]byte("\\"))) // true
+	//str := "https://blog.csdn.net/weixin_44014995/article/details/120332422"
+	//
+	//re := regexp.MustCompile("\\\\")
+	//fmt.Println(re.Match([]byte("\\"))) // true
 }
 
 // VerifyReferer 验证 referer
@@ -42,4 +44,5 @@ func VerifyReferer(referer string, none bool, blocked bool) (bool, string) {
 		referer = strKit.SubBefore(referer, i)
 	}
 
+	return false, ""
 }

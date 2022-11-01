@@ -13,6 +13,9 @@ func SubBefore(s string, index int) string {
 /*
 case 1: s包含str的情况，返回截取后的字符串；
 case 2: s不包含str的情况，直接返回s.
+
+e.g.
+("abcd", "bc") => "a"
 */
 func SubBeforeString(s, str string) string {
 	i := Index(s, str)
@@ -36,6 +39,9 @@ func SubAfter(s string, index int) string {
 /*
 case 1: s包含str的情况，返回截取后的字符串；
 case 2: s不包含str的情况，直接返回s.
+
+e.g.
+("abcd", "bc") => "bcd"
 */
 func SubAfterString(s, str string) string {
 	i := Index(s, str)
