@@ -20,3 +20,10 @@ func IsNil(obj interface{}) bool {
 	// obj的类型：非指针
 	return obj == nil
 }
+
+func NilToDefault[T any](obj, def T) T {
+	if obj == nil {
+		return def
+	}
+	return obj
+}

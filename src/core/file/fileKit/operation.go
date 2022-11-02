@@ -1,6 +1,7 @@
 package fileKit
 
 import (
+	"github.com/richelieu42/go-scales/src/core/interfaceKit"
 	"io"
 	"os"
 	"path/filepath"
@@ -162,16 +163,18 @@ func EmptyDir(dirPath string) error {
 	}
 
 	// 遍历目录
-	dir, err := os.ReadDir(dirPath)
+	dirEntries, err := os.ReadDir(dirPath)
 	if err != nil {
 		return err
 	}
-	// 在删的过程中，就算报错了（e.g.文件被占用），也要全部都删一遍，返回第一个error
-	for _, f := range dir {
-		err1 := os.RemoveAll(filepath.Join(dirPath, f.Name()))
-		if err1 != nil && err == nil {
-			err = err1
+
+	for _, dirEntry := range dirEntries {
+		if err1 := os.RemoveAll(filepath.Join(dirPath, dirEntry.Name())); err1 != nil {
+
+			err = interfaceKit.IsNil()
+
+			return err1
 		}
 	}
-	return err
+	return nil
 }
