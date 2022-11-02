@@ -8,12 +8,17 @@ import (
 )
 
 func main() {
-	r := regexp.MustCompile(`(?i)^CaSe.*`)
+	re := regexp.MustCompile("(?i).+\\.yozo\\.com")
 
-	fmt.Println(r.MatchString("case"))  // true
-	fmt.Println(r.MatchString("CASE"))  // true
-	fmt.Println(r.MatchString("CAse"))  // true
-	fmt.Println(r.MatchString("1CAse")) // false
+	fmt.Println(re.MatchString(".yozo.com"))
+	fmt.Println(re.MatchString("www.yozo.com"))
+	fmt.Println(re.MatchString("www.YOZO.com"))
+	fmt.Println(re.MatchString("www1yozo1com"))
+
+	//fmt.Println(r.MatchString("case"))  // true
+	//fmt.Println(r.MatchString("CASE"))  // true
+	//fmt.Println(r.MatchString("CAse"))  // true
+	//fmt.Println(r.MatchString("1CAse")) // false
 }
 
 // VerifyReferer 验证 referer

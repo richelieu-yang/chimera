@@ -53,7 +53,7 @@ func GetText(imgPath string, languages ...string) (string, error) {
 	defer fileKit.Delete(filePath)
 
 	var lang string
-	languages = sliceKit.TrimAndRemoveEmpty(languages)
+	languages = sliceKit.RemoveEmpty(languages, true)
 	if len(languages) == 0 {
 		// 默认值
 		lang = "chi_sim"

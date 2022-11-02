@@ -43,6 +43,37 @@ func TrimAndRemoveEmpty(s []string) []string {
 	return rst
 }
 
+// RemoveEmpty
+/*
+e.g.
+([]string{""})	=> []string{}
+*/
+func RemoveEmpty(s []string, args ...bool) []string {
+	if s == nil {
+		return nil
+	}
+
+	rst := make([]string, 0, len(s))
+	// 是否先对切片中的每个元素进行trim操作？默认false
+	trimFlag := GetFirstItemWithDefault(false, args...)
+	if trimFlag {
+		for _, str := range s {
+			str = strKit.Trim(str)
+			if strKit.IsNotEmpty(str) {
+				rst = append(rst, str)
+			}
+		}
+	} else {
+		for _, str := range s {
+			//str = strKit.Trim(str)
+			if strKit.IsNotEmpty(str) {
+				rst = append(rst, str)
+			}
+		}
+	}
+	return rst
+}
+
 // ContainsStringIgnoreCase 字符串str是否在切片s中？（不区分大小写）
 func ContainsStringIgnoreCase(s []string, str string) bool {
 	for _, tmp := range s {
