@@ -139,11 +139,13 @@ func CopyDir(src, dest string) error {
 	})
 }
 
-// Delete 删除文件或目录（内部有文件或目录也会一并删除）.
+// Delete 删除 文件 或 目录（内部有文件或目录也会一并删除）.
 /*
+@param path 文件或目录的路径（绝对 || 相对）
+
 PS:
-(1) 传参""，不会报错；
-(2) path对应的文件或目录不存在，不会报错；
+(1) 传参"": 正常执行，返回nil；
+(2) path对应的文件或目录不存在: 正常执行，返回nil；
 (3) Windows，若文件被锁定，会报错：panic: remove xxx(path): The process cannot access the file because it is being used by another process.
 (4) Windows，若目录中存在被锁定的文件，能删的会被删掉，然后报错：panic: remove xxx(path): The process cannot access the file because it is being used by another process.
 */
