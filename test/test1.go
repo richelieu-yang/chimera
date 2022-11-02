@@ -1,19 +1,23 @@
 package main
 
 import (
-	"fmt"
+	"github.com/richelieu42/go-scales/src/core/file/fileKit"
 	"github.com/richelieu42/go-scales/src/core/sliceKit"
 	"github.com/richelieu42/go-scales/src/core/strKit"
 	"regexp"
 )
 
 func main() {
-	re := regexp.MustCompile("(?i).+\\.yozo\\.com")
+	if err := fileKit.Delete("/Users/richelieu/Downloads/a"); err != nil {
+		panic(err)
+	}
 
-	fmt.Println(re.MatchString(".yozo.com"))
-	fmt.Println(re.MatchString("www.yozo.com"))
-	fmt.Println(re.MatchString("www.YOZO.com"))
-	fmt.Println(re.MatchString("www1yozo1com"))
+	//re := regexp.MustCompile("(?i).+\\.yozo\\.com")
+	//
+	//fmt.Println(re.MatchString(".yozo.com"))
+	//fmt.Println(re.MatchString("www.yozo.com"))
+	//fmt.Println(re.MatchString("www.YOZO.com"))
+	//fmt.Println(re.MatchString("www1yozo1com"))
 
 	//fmt.Println(r.MatchString("case"))  // true
 	//fmt.Println(r.MatchString("CASE"))  // true

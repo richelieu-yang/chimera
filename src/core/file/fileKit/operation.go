@@ -139,7 +139,7 @@ func CopyDir(src, dest string) error {
 	})
 }
 
-// Delete 删除 文件 或 目录（内部有文件或目录也会一并删除）.
+// Delete 删除 文件 或 目录（内部有文件或目录，也会一并删除）.
 /*
 @param path 文件或目录的路径（绝对 || 相对）
 
