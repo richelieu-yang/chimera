@@ -55,9 +55,10 @@ func RemoveEmpty(s []string, args ...bool) []string {
 		return nil
 	}
 
-	rst := make([]string, 0, len(s))
 	// 是否先对切片中的每个元素进行trim操作？默认false
 	trimFlag := GetFirstItemWithDefault(false, args...)
+
+	rst := make([]string, 0, len(s))
 	if trimFlag {
 		for _, str := range s {
 			str = strKit.Trim(str)
