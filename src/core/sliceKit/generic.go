@@ -189,7 +189,7 @@ func IsNotEmpty[T any](s []T) bool {
 	return len(s) != 0
 }
 
-// Contains 切片s是否包含元素t？
+// Contains 切片s是否包含元素t？（区分大小写，因为使用"=="比较）
 /*
 @param s 如果为nil，返回值必定为 false
 */
