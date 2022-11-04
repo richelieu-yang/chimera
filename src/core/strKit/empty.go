@@ -1,7 +1,6 @@
 package strKit
 
 import (
-	"github.com/richelieu42/go-scales/src/core/sliceKit"
 	"strings"
 )
 
@@ -51,7 +50,12 @@ func IsAllNotEmpty(strings ...string) bool {
 @param trimArgs 是否先对 传参str 进行trim处理？（默认：false，不处理）
 */
 func EmptyToDefault(str, def string, trimArgs ...bool) string {
-	trimFlag := sliceKit.GetFirstItemWithDefault(false, trimArgs...)
+	var trimFlag bool
+	if trimArgs != nil {
+		trimFlag = trimArgs[0]
+	} else {
+		trimFlag = false
+	}
 	if trimFlag {
 		str = Trim(str)
 	}

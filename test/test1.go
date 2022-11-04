@@ -1,29 +1,23 @@
 package main
 
 import (
-	"github.com/richelieu42/go-scales/src/core/file/fileKit"
+	"github.com/gin-gonic/gin"
 	"github.com/richelieu42/go-scales/src/core/sliceKit"
 	"github.com/richelieu42/go-scales/src/core/strKit"
+	"github.com/richelieu42/go-scales/src/core/timeKit"
 	"regexp"
 )
 
 func main() {
+	engine := gin.Default()
 
-	if err := fileKit.Delete("/Users/richelieu/Downloads/a"); err != nil {
+	engine.Any("/test.act", func(ctx *gin.Context) {
+		ctx.String(200, timeKit.FormatCurrentTime())
+	})
+
+	if err := engine.Run(":80"); err != nil {
 		panic(err)
 	}
-
-	//re := regexp.MustCompile("(?i).+\\.yozo\\.com")
-	//
-	//fmt.Println(re.MatchString(".yozo.com"))
-	//fmt.Println(re.MatchString("www.yozo.com"))
-	//fmt.Println(re.MatchString("www.YOZO.com"))
-	//fmt.Println(re.MatchString("www1yozo1com"))
-
-	//fmt.Println(r.MatchString("case"))  // true
-	//fmt.Println(r.MatchString("CASE"))  // true
-	//fmt.Println(r.MatchString("CAse"))  // true
-	//fmt.Println(r.MatchString("1CAse")) // false
 }
 
 // VerifyReferer 验证 referer
