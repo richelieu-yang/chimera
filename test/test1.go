@@ -8,6 +8,7 @@ import (
 )
 
 func main() {
+
 	if err := fileKit.Delete("/Users/richelieu/Downloads/a"); err != nil {
 		panic(err)
 	}

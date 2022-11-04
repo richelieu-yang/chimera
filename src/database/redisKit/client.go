@@ -153,7 +153,7 @@ func newSentinelOptions(config *RedisConfig) (*redis.UniversalOptions, error) {
 	opts := newBaseOptions(config.UserName, config.Password)
 
 	// MasterName默认为"mymaster"
-	opts.MasterName = strKit.TrimAndEmptyToDefault(c.MasterName, "mymaster")
+	opts.MasterName = strKit.EmptyToDefault(c.MasterName, "mymaster", true)
 	opts.Addrs = c.SentinelAddrs
 	opts.DB = c.DB
 

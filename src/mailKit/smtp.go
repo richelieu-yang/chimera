@@ -42,7 +42,7 @@ func InitializeSmtp(config *SmtpConfig, count int) error {
 	if config == nil {
 		return errorKit.Simple("config == nil")
 	}
-	config.NickName = strKit.TrimAndEmptyToDefault(config.NickName, consts.Name)
+	config.NickName = strKit.EmptyToDefault(config.NickName, consts.Name, true)
 	defaultFrom = strKit.Format("%s <%s>", config.NickName, config.Account)
 
 	if count <= 0 {
@@ -92,6 +92,6 @@ func SendMail(mail *email.Email) error {
 	if mail == nil {
 		return errorKit.Simple("mail == nil")
 	}
-	mail.From = strKit.TrimAndEmptyToDefault(mail.From, defaultFrom)
+	mail.From = strKit.EmptyToDefault(mail.From, defaultFrom, true)
 	return smtpPool.Send(mail, time.Second*6)
 }

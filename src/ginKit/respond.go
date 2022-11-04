@@ -66,7 +66,7 @@ func RespondFileContent(ctx *gin.Context, httpStatusCode int, name, contentType 
 
 	// https://www.runoob.com/http/http-content-type.html
 	// application/octet-stream: 二进制流数据（如常见的文件下载）
-	contentType = strKit.TrimAndEmptyToDefault(contentType, "application/octet-stream; charset=utf-8")
+	contentType = strKit.EmptyToDefault(contentType, "application/octet-stream; charset=utf-8", true)
 	ctx.Header("Content-Type", contentType)
 
 	ctx.Header("Content-Length", intKit.IntToString(len(data)))

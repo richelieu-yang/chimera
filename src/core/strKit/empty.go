@@ -1,6 +1,9 @@
 package strKit
 
-import "strings"
+import (
+	"github.com/richelieu42/go-scales/src/core/sliceKit"
+	"strings"
+)
 
 // IsEmpty strings.Compare比自建方法“==”的速度要快
 /*
@@ -43,7 +46,16 @@ func IsAllNotEmpty(strings ...string) bool {
 	return !HasEmpty(strings...)
 }
 
-func EmptyToDefault(str, def string) string {
+// EmptyToDefault
+/*
+@param trimArgs 是否先对 传参str 进行trim处理？（默认：false，不处理）
+*/
+func EmptyToDefault(str, def string, trimArgs ...bool) string {
+	trimFlag := sliceKit.GetFirstItemWithDefault(false, trimArgs...)
+	if trimFlag {
+		str = Trim(str)
+	}
+
 	if IsEmpty(str) {
 		return def
 	}

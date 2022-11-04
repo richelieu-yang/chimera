@@ -46,7 +46,7 @@ func ForwardRequest(ctx *gin.Context, params ForwardParams, errorLogger *log.Log
 	var err error
 
 	// scheme默认"http"
-	scheme := strKit.TrimAndEmptyToDefault(params.Scheme, "http")
+	scheme := strKit.EmptyToDefault(params.Scheme, "http", true)
 	addr := params.Address.String()
 	reqUrlPath := params.ReqUrlPath
 	extraQuery := mapKit.MergeSS(baseExtraQuery, params.ExtraQuery)
