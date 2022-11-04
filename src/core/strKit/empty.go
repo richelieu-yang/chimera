@@ -61,8 +61,3 @@ func EmptyToDefault(str, def string, trimArgs ...bool) string {
 	}
 	return str
 }
-
-func TrimAndEmptyToDefault(str, def string) string {
-	str = Trim(str)
-	return EmptyToDefault(str, def)
-}
