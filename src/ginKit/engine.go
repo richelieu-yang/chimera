@@ -11,7 +11,7 @@ import (
 func NewEngine() *gin.Engine {
 	engine := gin.New()
 
-	//限制上传最大尺寸
+	// 限制上传最大尺寸
 	engine.MaxMultipartMemory = 16 << 20
 
 	engine.RedirectTrailingSlash = true
