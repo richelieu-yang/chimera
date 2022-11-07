@@ -1,7 +1,6 @@
 package fileKit
 
 import (
-	"github.com/richelieu42/go-scales/src/core/interfaceKit"
 	"io"
 	"os"
 	"path/filepath"
@@ -167,13 +166,9 @@ func EmptyDir(dirPath string) error {
 	if err != nil {
 		return err
 	}
-
 	for _, dirEntry := range dirEntries {
-		if err1 := os.RemoveAll(filepath.Join(dirPath, dirEntry.Name())); err1 != nil {
-
-			err = interfaceKit.IsNil()
-
-			return err1
+		if err := os.RemoveAll(filepath.Join(dirPath, dirEntry.Name())); err != nil {
+			return err
 		}
 	}
 	return nil

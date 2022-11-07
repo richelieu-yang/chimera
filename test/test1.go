@@ -1,28 +1,42 @@
 package main
 
 import (
-	"fmt"
-	"github.com/richelieu42/go-scales/src/http/refererKit"
+	"github.com/gin-gonic/gin"
+	"github.com/richelieu42/go-scales/src/ginKit"
+	"github.com/sirupsen/logrus"
 )
 
 func main() {
-	v, err := refererKit.NewRefererVerifier(true, false, "", "*.yozo.com")
+	r := gin.New()
+
+	middleware, err := ginKit.NewRefererMiddleware(true, false, "", "*.yozo.com")
 	if err != nil {
 		panic(err)
 	}
+	r.Use(gin.Logger(), gin.Recovery(), middleware)
 
-	fmt.Println(v.Verify("", ""))
-	fmt.Println(v.Verify("", "http://www.yozo.com"))
-	fmt.Println(v.Verify("", "http://mail.yozo.com"))
-	fmt.Println(v.Verify("", "http://1.yozo.com1"))
+	r.Use(func(ctx *gin.Context) {
+		/* 第1个自定义中间件 */
+		logrus.Info("[A] before")
+		ctx.Next()
+		logrus.Info("[A] after")
+	}, func(ctx *gin.Context) {
+		/* 第2个自定义中间件 */
+		logrus.Info("[B] before")
+		ctx.Next()
+		logrus.Info("[B] after")
+	}, func(ctx *gin.Context) {
+		/* 第3个自定义中间件 */
+		logrus.Info("[C] before")
+		ctx.Next()
+		logrus.Info("[C] after")
+	})
 
-	//re, err := regexpKit.StringToRegexp("**.yozo.com")
-	//if err != nil {
-	//	panic(err)
-	//}
-	//fmt.Println(re)
-	//fmt.Println(re.MatchString("11yozo2com"))
-	//fmt.Println(re.MatchString(".yozo.com"))
-	//fmt.Println(re.MatchString("1.yozo.com"))
-	//fmt.Println(re.MatchString("www.yozo.com"))
+	r.GET("/test", func(c *gin.Context) {
+		logrus.Info("[Handler]")
+		c.String(200, "OK")
+	})
+	if err := r.Run(":80"); err != nil {
+		panic(err)
+	}
 }
