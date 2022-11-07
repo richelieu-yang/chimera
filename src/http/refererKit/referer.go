@@ -18,7 +18,7 @@ type (
 	}
 )
 
-func NewRefererVerifier(route string, serverNames []string, none bool, blocked bool) (v *RefererVerifier, err error) {
+func NewRefererVerifier(none bool, blocked bool, route string, serverNames ...string) (v *RefererVerifier, err error) {
 	v = &RefererVerifier{}
 
 	v.routeRegexp, err = regexpKit.StringToRegexp(route)
@@ -26,7 +26,7 @@ func NewRefererVerifier(route string, serverNames []string, none bool, blocked b
 		return
 	}
 
-	refererRegexps := make([]*regexp.Regexp, len(serverNames))
+	refererRegexps := make([]*regexp.Regexp, 0, len(serverNames))
 	for _, serverName := range serverNames {
 		var tmp *regexp.Regexp
 		tmp, err = regexpKit.StringToRegexp(serverName)
