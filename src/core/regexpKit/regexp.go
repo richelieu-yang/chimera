@@ -28,10 +28,10 @@ func StringToRegexp(str string, borderArgs ...bool) (*regexp.Regexp, error) {
 		}
 	}
 
-	/* 处理"." */
+	/* (1) 处理"." */
 	str = strKit.ReplaceAll(str, ".", "\\.")
 
-	/* 处理"*" */
+	/* (2) 处理"*" */
 	if strKit.Index(str, "*") != -1 {
 		// 额外兼容情况：连续"*"的情况
 		starRegexp := regexp.MustCompile("\\*+")
