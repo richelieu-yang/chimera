@@ -1,6 +1,7 @@
 package refererKit
 
 import (
+	"github.com/richelieu42/go-scales/src/core/regexpKit"
 	"github.com/richelieu42/go-scales/src/core/strKit"
 	"regexp"
 )
@@ -8,8 +9,7 @@ import (
 type (
 	RefererVerifier struct {
 		/*
-			!= nil: 正则匹配的才要验证referer；正则匹配的直接认为验证referer通过
-			== nil: 不判断route，直接验证referer
+			必定不为nil
 		*/
 		routeRegexp    *regexp.Regexp
 		none           bool
@@ -18,23 +18,28 @@ type (
 	}
 )
 
-func NewRefererVerifier(route string, serverNames []string, none bool, blocked bool) (*RefererVerifier, error) {
-	instance := &RefererVerifier{
-		routeRegexp:    nil,
-		none:           true,
-		blocked:        false,
-		refererRegexps: nil,
+func NewRefererVerifier(route string, serverNames []string, none bool, blocked bool) (v *RefererVerifier, err error) {
+	v = &RefererVerifier{}
+
+	v.routeRegexp, err = regexpKit.StringToRegexp(route)
+	if err != nil {
+		return
 	}
 
-	route = strKit.Trim(route)
-	if strKit.IsNotEmpty(route) {
-
-	} else {
-		instance.routeRegexp = nil
+	refererRegexps := make([]*regexp.Regexp, len(serverNames))
+	for _, serverName := range serverNames {
+		var tmp *regexp.Regexp
+		tmp, err = regexpKit.StringToRegexp(serverName)
+		if err != nil {
+			return
+		}
+		refererRegexps = append(refererRegexps, tmp)
 	}
+	v.refererRegexps = refererRegexps
 
-	// TODO:
-	return nil, nil
+	v.none = none
+	v.blocked = blocked
+	return
 }
 
 // Verify 验证referer
@@ -49,15 +54,9 @@ func (v *RefererVerifier) Verify(route, referer string) (bool, string) {
 	}
 
 	/* route */
-	if v.routeRegexp != nil {
-		if v.routeRegexp.MatchString(route) {
-			// 对于当前路由，需要验证referer，继续向下执行
-		} else {
-			// 对于当前路由，无需验证referer
-			return true, ""
-		}
-	} else {
-		// 对于当前路由，需要验证referer，继续向下执行
+	if !v.routeRegexp.MatchString(route) {
+		// 路由不匹配的情况下，默认通过referer验证
+		return true, ""
 	}
 
 	/* referer */
