@@ -20,6 +20,7 @@ func StringToRegexp(str string, borderArgs ...bool) (*regexp.Regexp, error) {
 
 	switch len(borderArgs) {
 	case 0:
+		// do nothing
 	case 1:
 		startBorder = borderArgs[0]
 	case 2:
