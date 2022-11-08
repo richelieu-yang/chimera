@@ -9,7 +9,7 @@ import (
 /*
 PS: 主要是处理 传参str 中的"*".
 
-@param str 			(1) 不会进行trim操作; (2) 不同于原生的 regexp.Compile().
+@param str 			(1) 可以为""，此时：第1个返回值将匹配任意字符串，第2个返回值为nil; (2) 不会进行trim操作; (3) 不同于原生的 regexp.Compile().
 @param borderArgs 	边界匹配
 */
 func StringToRegexp(str string, borderArgs ...bool) (*regexp.Regexp, error) {

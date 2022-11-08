@@ -1,14 +1,18 @@
 package main
 
-import "fmt"
+import (
+	"fmt"
+	"github.com/richelieu42/go-scales/src/core/regexpKit"
+)
 
 func main() {
-	var s []interface{}
-	var s1 []interface{}
+	re, err := regexpKit.StringToRegexp("")
+	if err != nil {
+		panic(err)
+	}
 
-	s = append(s)
-	fmt.Println(s == nil) // true
+	fmt.Println(re.MatchString(""))
+	fmt.Println(re.MatchString("awdqw"))
+	fmt.Println(re.MatchString("强无敌群无多"))
 
-	s = append(s, s1...)
-	fmt.Println(s == nil) // true
 }
