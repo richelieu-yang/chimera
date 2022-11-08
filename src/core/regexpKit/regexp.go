@@ -44,5 +44,6 @@ func StringToRegexp(str string, borderArgs ...bool) (*regexp.Regexp, error) {
 		str = strKit.AppendIfMissing(str, "$")
 	}
 
+	// 此时如果 str == ""：第一个返回值将匹配任意字符串，第二个返回值为nil
 	return regexp.Compile(str)
 }
