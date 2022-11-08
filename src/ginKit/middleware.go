@@ -4,6 +4,7 @@ import (
 	"github.com/gin-contrib/cors"
 	"github.com/gin-contrib/gzip"
 	"github.com/gin-gonic/gin"
+	"github.com/richelieu42/go-scales/src/core/sliceKit"
 	"github.com/richelieu42/go-scales/src/core/strKit"
 	"github.com/richelieu42/go-scales/src/http/refererKit"
 	"time"
@@ -45,8 +46,16 @@ func AttachCommonMiddlewares(engine *gin.Engine, middlewareConfig *MiddlewareCon
 		}
 
 		// cors
-		if middlewareConfig.Cors != nil && middlewareConfig.Cors.Access {
-			engine.Use(cors.New(newCorsConfig(middlewareConfig.Cors.Origins)))
+		{
+			corsConfig := middlewareConfig.Cors
+			if corsConfig != nil {
+				origins := corsConfig.Origins
+				// 去除无效项
+				origins = sliceKit.RemoveEmpty(origins, true)
+				if len(origins) >= 0 {
+					engine.Use(cors.New(newCorsConfig(origins)))
+				}
+			}
 		}
 
 		// others
@@ -64,6 +73,7 @@ func AttachCommonMiddlewares(engine *gin.Engine, middlewareConfig *MiddlewareCon
 }
 
 /*
+@param origins origin白名单，可以为nil
 @return cors依赖的配置
 */
 func newCorsConfig(origins []string) cors.Config {

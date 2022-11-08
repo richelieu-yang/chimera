@@ -3,8 +3,8 @@ package refererKit
 import (
 	"github.com/gin-gonic/gin"
 	"github.com/richelieu42/go-scales/src/core/regexpKit"
+	"github.com/richelieu42/go-scales/src/core/sliceKit"
 	"github.com/richelieu42/go-scales/src/core/strKit"
-	"github.com/richelieu42/go-scales/src/ginKit"
 	"regexp"
 )
 
@@ -27,8 +27,13 @@ func (builder *RefererVerifierBuilder) Build() (*RefererVerifier, error) {
 		return nil, err
 	}
 
-	refererRegexps := make([]*regexp.Regexp, 0, len(builder.ServerNames))
-	for _, serverName := range builder.ServerNames {
+	/* refererRegexps 属性 */
+	serverNames := builder.ServerNames
+	// 优化 serverNames
+	serverNames = sliceKit.RemoveEmpty(serverNames, true)
+	serverNames = sliceKit.RemoveDuplicate(serverNames)
+	refererRegexps := make([]*regexp.Regexp, 0, len(serverNames))
+	for _, serverName := range serverNames {
 		var tmp *regexp.Regexp
 		tmp, err = regexpKit.StringToRegexp(serverName)
 		if err != nil {
@@ -55,7 +60,7 @@ type RefererVerifier struct {
 
 // VerifyByGinContext 验证referer
 func (verifier *RefererVerifier) VerifyByGinContext(ctx *gin.Context) (bool, string) {
-	route := ginKit.GetRequestRoute(ctx)
+	route := ctx.Request.URL.Path
 	referer := ctx.GetHeader("Referer")
 
 	return verifier.Verify(route, referer)

@@ -62,7 +62,7 @@ func Merge[T comparable](slices ...[]T) []T {
 	return rst
 }
 
-// RemoveDuplicate 切片去重
+// RemoveDuplicate 切片实例去重.
 /*
 PS: 并不会改变传参s的内容（因为只是获取切片s的内容，并未修改）.
 
@@ -173,6 +173,13 @@ func GetFirstItemWithDefault[T any](def T, args ...T) T {
 	return def
 }
 
+func EmptyToNil[T any](s []T) []T {
+	if IsEmpty(s) {
+		return nil
+	}
+	return s
+}
+
 // IsEmpty
 /*
 @param s 可以为nil
@@ -186,7 +193,7 @@ func IsEmpty[T any](s []T) bool {
 @param s 可以为nil
 */
 func IsNotEmpty[T any](s []T) bool {
-	return len(s) != 0
+	return len(s) > 0
 }
 
 // Contains 切片s是否包含元素t？（区分大小写，因为使用"=="比较）

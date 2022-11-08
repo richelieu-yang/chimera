@@ -76,6 +76,7 @@ func InitializeEnvironment(pathArgs ...string) error {
 	return nil
 }
 
+// initializeEnv 加载配置文件
 func initializeEnv(path string) error {
 	path = strKit.EmptyToDefault(path, consts.EnvPath)
 	absPath := pathKit.Join(pathKit.GetProjectDir(), path)
@@ -83,9 +84,14 @@ func initializeEnv(path string) error {
 	envConfig = &EnvConfig{}
 	if err := confKit.ReadFileAs(absPath, defaultEnvMap, envConfig); err != nil {
 		envConfig = nil
+
 		return err
 	}
-	envConfig.Redis.Simplify()
+
+	/* 优化配置文件 */
+	{
+		envConfig.Redis.Simplify()
+	}
 
 	logrusKit.Initialize(logrus.DebugLevel, timeKit.EntireFormat)
 	json, _ := jsonKit.MarshalWithIndent(envConfig)
