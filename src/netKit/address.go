@@ -106,6 +106,8 @@ func SplitHostPort(str string) (string, int, error) {
 
 // JoinHostPort
 /*
+@param host 可以为""
+
 e.g.
 ("127.0.0.1", 80) 	=> "127.0.0.1:80"
 ("", 80) 			=> ":80"

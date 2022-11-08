@@ -60,7 +60,11 @@ func InitializeGinComponent(recoveryMiddleware gin.HandlerFunc, businessLogic fu
 	gin.DefaultWriter = logger.Out
 
 	engine := ginKit.NewEngine()
-	ginKit.AttachCommonMiddlewares(engine, config.Middleware, recoveryMiddleware)
+
+	/* middleware */
+	if err := ginKit.AttachCommonMiddlewares(engine, config.Middleware, recoveryMiddleware); err != nil {
+		return err
+	}
 
 	/* businessLogic */
 	if businessLogic != nil {

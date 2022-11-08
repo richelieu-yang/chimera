@@ -1,6 +1,9 @@
 package ginKit
 
-import "github.com/richelieu42/go-scales/src/netKit"
+import (
+	"github.com/richelieu42/go-scales/src/http/refererKit"
+	"github.com/richelieu42/go-scales/src/netKit"
+)
 
 type (
 	GinConfig struct {
@@ -19,6 +22,7 @@ type (
 		Gzip          bool
 		XFrameOptions string
 		Cors          *CorsConfig
+		Referer       []*refererKit.RefererVerifierBuilder
 	}
 
 	// CorsConfig cors（跨源资源共享）的配置
