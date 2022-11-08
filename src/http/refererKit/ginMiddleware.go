@@ -23,7 +23,7 @@ func NewGinRefererMiddlewares(builders []*RefererVerifierBuilder) ([]gin.Handler
 					ctx.Next()
 				} else {
 					// http.StatusUnauthorized: 401
-					ctx.AbortWithStatusJSON(http.StatusUnauthorized, map[string]interface{}{
+					ctx.AbortWithStatusJSON(http.StatusUnauthorized, gin.H{
 						"reason": reason,
 					})
 				}
