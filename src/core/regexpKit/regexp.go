@@ -18,16 +18,15 @@ func StringToRegexp(str string, borderArgs ...bool) (*regexp.Regexp, error) {
 	startBorder := false
 	endBorder := false
 
-	if borderArgs != nil {
-		switch len(borderArgs) {
-		case 1:
-			startBorder = borderArgs[0]
-		case 2:
-			fallthrough
-		default:
-			startBorder = borderArgs[0]
-			endBorder = borderArgs[1]
-		}
+	switch len(borderArgs) {
+	case 0:
+	case 1:
+		startBorder = borderArgs[0]
+	case 2:
+		fallthrough
+	default:
+		startBorder = borderArgs[0]
+		endBorder = borderArgs[1]
 	}
 
 	/* (1) 处理"." */
