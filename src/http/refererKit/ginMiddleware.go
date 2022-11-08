@@ -31,5 +31,4 @@ func NewGinRefererMiddlewares(builders []*RefererVerifierBuilder) ([]gin.Handler
 		}
 	}
 	return middlewares, nil
-
 }

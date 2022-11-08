@@ -10,6 +10,11 @@ import (
 	"strings"
 )
 
+// GetRequestRoute 获取请求的路由.
+func GetRequestRoute(req *http.Request) string {
+	return req.URL.Path
+}
+
 // GetProto
 /*
 @return "HTTP/1.0" || "HTTP/1.1" || ...
