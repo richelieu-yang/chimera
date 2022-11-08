@@ -4,6 +4,7 @@ import (
 	"github.com/gin-gonic/gin"
 	"github.com/richelieu42/go-scales/src/core/regexpKit"
 	"github.com/richelieu42/go-scales/src/core/strKit"
+	"github.com/richelieu42/go-scales/src/ginKit"
 	"regexp"
 )
 
@@ -54,7 +55,10 @@ type RefererVerifier struct {
 
 // VerifyByGinContext 验证referer
 func (verifier *RefererVerifier) VerifyByGinContext(ctx *gin.Context) (bool, string) {
-	return verifier.Verify(ctx.FullPath(), ctx.GetHeader("Referer"))
+	route := ginKit.GetRequestRoute(ctx)
+	referer := ctx.GetHeader("Referer")
+
+	return verifier.Verify(route, referer)
 }
 
 // Verify 验证referer
