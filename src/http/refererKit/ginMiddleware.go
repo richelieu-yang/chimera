@@ -22,7 +22,7 @@ func NewGinRefererMiddlewares(builders []*RefererVerifierBuilder) ([]gin.Handler
 				if ok, reason := verifier.VerifyByGinContext(ctx); ok {
 					ctx.Next()
 				} else {
-					// http.StatusUnauthorized: 404
+					// http.StatusUnauthorized: 401
 					ctx.AbortWithStatusJSON(http.StatusUnauthorized, map[string]interface{}{
 						"reason": reason,
 					})
