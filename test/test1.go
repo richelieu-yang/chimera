@@ -14,5 +14,4 @@ func main() {
 	fmt.Println(re.MatchString(""))
 	fmt.Println(re.MatchString("awdqw"))
 	fmt.Println(re.MatchString("强无敌群无多"))
-
 }
