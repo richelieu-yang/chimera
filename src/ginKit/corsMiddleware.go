@@ -6,7 +6,12 @@ import (
 	"time"
 )
 
-// NewCorsMiddleware 新建一个cors的中间件.
+// NewOpenCorsMiddleware 新建一个开放的（任意origin都通过）cors中间件.
+func NewOpenCorsMiddleware() gin.HandlerFunc {
+	return NewCorsMiddleware(nil)
+}
+
+// NewCorsMiddleware 新建一个cors中间件.
 /*
 @param origins origin白名单，可以为nil
 */
@@ -16,7 +21,7 @@ func NewCorsMiddleware(origins []string) gin.HandlerFunc {
 }
 
 /*
-@param origins origin白名单，可以为nil
+@param origins origin白名单，可以为nil（任意origin都通过）
 @return cors依赖的配置
 */
 func newCorsConfig(origins []string) cors.Config {

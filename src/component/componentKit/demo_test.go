@@ -60,6 +60,7 @@ func business() error {
 func routeBusiness(engine *gin.Engine) error {
 	// TODO: 业务逻辑（绑定路由...）
 
+	// test
 	engine.Any("/test.act", func(ctx *gin.Context) {
 		ctx.String(http.StatusOK, time.Now().UTC().Format(time.RFC3339))
 	})
