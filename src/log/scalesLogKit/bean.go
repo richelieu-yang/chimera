@@ -36,7 +36,7 @@ type (
 		// prefix 每条输出的前缀，可以为""
 		prefix string
 
-		lock         *sync.RWMutex
+		rwLock       *sync.RWMutex
 		logrusLogger *logrus.Logger
 
 		// output 可以为nil
@@ -47,8 +47,8 @@ type (
 )
 
 func (l *Logger) Debug(args ...interface{}) {
-	l.lock.RLock()
-	defer l.lock.RUnlock()
+	l.rwLock.RLock()
+	defer l.rwLock.RUnlock()
 
 	if l.checkDisposed() {
 		return
@@ -59,8 +59,8 @@ func (l *Logger) Debug(args ...interface{}) {
 }
 
 func (l *Logger) Debugf(format string, args ...interface{}) {
-	l.lock.RLock()
-	defer l.lock.RUnlock()
+	l.rwLock.RLock()
+	defer l.rwLock.RUnlock()
 
 	if l.checkDisposed() {
 		return
@@ -71,8 +71,8 @@ func (l *Logger) Debugf(format string, args ...interface{}) {
 }
 
 func (l *Logger) Info(args ...interface{}) {
-	l.lock.RLock()
-	defer l.lock.RUnlock()
+	l.rwLock.RLock()
+	defer l.rwLock.RUnlock()
 
 	if l.checkDisposed() {
 		return
@@ -83,8 +83,8 @@ func (l *Logger) Info(args ...interface{}) {
 }
 
 func (l *Logger) Infof(format string, args ...interface{}) {
-	l.lock.RLock()
-	defer l.lock.RUnlock()
+	l.rwLock.RLock()
+	defer l.rwLock.RUnlock()
 
 	if l.checkDisposed() {
 		return
@@ -95,8 +95,8 @@ func (l *Logger) Infof(format string, args ...interface{}) {
 }
 
 func (l *Logger) Warn(args ...interface{}) {
-	l.lock.RLock()
-	defer l.lock.RUnlock()
+	l.rwLock.RLock()
+	defer l.rwLock.RUnlock()
 
 	if l.checkDisposed() {
 		return
@@ -107,8 +107,8 @@ func (l *Logger) Warn(args ...interface{}) {
 }
 
 func (l *Logger) Warnf(format string, args ...interface{}) {
-	l.lock.RLock()
-	defer l.lock.RUnlock()
+	l.rwLock.RLock()
+	defer l.rwLock.RUnlock()
 
 	if l.checkDisposed() {
 		return
@@ -119,8 +119,8 @@ func (l *Logger) Warnf(format string, args ...interface{}) {
 }
 
 func (l *Logger) Error(args ...interface{}) {
-	l.lock.RLock()
-	defer l.lock.RUnlock()
+	l.rwLock.RLock()
+	defer l.rwLock.RUnlock()
 
 	if l.checkDisposed() {
 		return
@@ -131,8 +131,8 @@ func (l *Logger) Error(args ...interface{}) {
 }
 
 func (l *Logger) Errorf(format string, args ...interface{}) {
-	l.lock.RLock()
-	defer l.lock.RUnlock()
+	l.rwLock.RLock()
+	defer l.rwLock.RUnlock()
 
 	if l.checkDisposed() {
 		return
@@ -148,8 +148,8 @@ func (l *Logger) Dispose() error {
 		return nil
 	}
 
-	l.lock.Lock()
-	defer l.lock.Unlock()
+	l.rwLock.Lock()
+	defer l.rwLock.Unlock()
 
 	if l.disposed {
 		// 资源已经被释放的情况: do nothing
@@ -203,31 +203,4 @@ func attachPrefixToFormat(prefix, format string) string {
 		return format
 	}
 	return prefix + format
-}
-
-// NewLogger
-/*
-@param prefix 每条输出语句的前缀，可以为""
-*/
-func NewLogger(logrusLogger *logrus.Logger, output interface{}, filePath, prefix string) ILogger {
-	if strKit.IsNotEmpty(prefix) && !strKit.EndWith(prefix, " ") {
-		prefix = prefix + " "
-	}
-
-	switch output {
-	case os.Stdout:
-		filePath = "os.Stdout"
-	case os.Stderr:
-		filePath = "os.Stderr"
-	default:
-	}
-
-	return &Logger{
-		disposed: false,
-		lock:     new(sync.RWMutex),
-
-		prefix:       prefix,
-		logrusLogger: logrusLogger,
-		output:       output,
-	}
 }
