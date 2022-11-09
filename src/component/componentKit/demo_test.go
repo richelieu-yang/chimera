@@ -5,7 +5,9 @@ import (
 	"github.com/richelieu42/go-scales/src/core/errorKit"
 	"github.com/richelieu42/go-scales/src/core/pathKit"
 	"github.com/richelieu42/go-scales/src/jsonKit"
+	"net/http"
 	"testing"
+	"time"
 )
 
 func Test(t *testing.T) {
@@ -57,6 +59,10 @@ func business() error {
 
 func routeBusiness(engine *gin.Engine) error {
 	// TODO: 业务逻辑（绑定路由...）
+
+	engine.Any("/test.act", func(ctx *gin.Context) {
+		ctx.String(http.StatusOK, time.Now().UTC().Format(time.RFC3339))
+	})
 
 	return nil
 }

@@ -1,16 +1,14 @@
 package ginKit
 
 import (
-	"github.com/gin-contrib/cors"
 	"github.com/gin-contrib/gzip"
 	"github.com/gin-gonic/gin"
 	"github.com/richelieu42/go-scales/src/core/sliceKit"
 	"github.com/richelieu42/go-scales/src/core/strKit"
 	"github.com/richelieu42/go-scales/src/http/refererKit"
-	"time"
 )
 
-// AttachCommonMiddlewares 绑定一些常用的中间件
+// AttachCommonMiddlewares 绑定一些常用的中间件.
 func AttachCommonMiddlewares(engine *gin.Engine, middlewareConfig *MiddlewareConfig, recoveryMiddleware gin.HandlerFunc) error {
 	// gzip
 	/*
@@ -33,7 +31,20 @@ func AttachCommonMiddlewares(engine *gin.Engine, middlewareConfig *MiddlewareCon
 	}
 
 	if middlewareConfig != nil {
-		// referer
+		// cors
+		{
+			var origins []string
+			corsConfig := middlewareConfig.Cors
+			if corsConfig != nil {
+				origins = corsConfig.Origins
+			}
+			// 去除无效项
+			origins = sliceKit.RemoveEmpty(origins, true)
+
+			engine.Use(NewCorsMiddleware(origins))
+		}
+
+		// referer（必须在cors中间件后面）
 		{
 			refererConfig := middlewareConfig.Referer
 			if refererConfig != nil {
@@ -42,19 +53,6 @@ func AttachCommonMiddlewares(engine *gin.Engine, middlewareConfig *MiddlewareCon
 					return err
 				}
 				engine.Use(middleware)
-			}
-		}
-
-		// cors
-		{
-			corsConfig := middlewareConfig.Cors
-			if corsConfig != nil {
-				origins := corsConfig.Origins
-				// 去除无效项
-				origins = sliceKit.RemoveEmpty(origins, true)
-				if len(origins) >= 0 {
-					engine.Use(cors.New(newCorsConfig(origins)))
-				}
 			}
 		}
 
@@ -70,30 +68,4 @@ func AttachCommonMiddlewares(engine *gin.Engine, middlewareConfig *MiddlewareCon
 	}
 
 	return nil
-}
-
-/*
-@param origins origin白名单，可以为nil
-@return cors依赖的配置
-*/
-func newCorsConfig(origins []string) cors.Config {
-	config := cors.Config{
-		AllowMethods:     []string{"GET", "POST", "OPTIONS"},
-		AllowHeaders:     []string{"Origin", "Content-Length", "Content-Type", "Authorization"},
-		ExposeHeaders:    []string{"Content-Length", "Content-Type", "Last-Modified"},
-		MaxAge:           12 * time.Hour,
-		AllowCredentials: true,
-		AllowWebSockets:  true,
-		AllowWildcard:    true,
-	}
-	if len(origins) > 0 {
-		// 允许部分
-		config.AllowOrigins = origins
-	} else {
-		// 允许全部
-		config.AllowOriginFunc = func(origin string) bool {
-			return true
-		}
-	}
-	return config
 }

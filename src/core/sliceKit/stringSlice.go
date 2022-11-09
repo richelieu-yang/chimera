@@ -23,6 +23,7 @@ func Join(s []string, sep string) string {
 @param trimArgs 是否先对每个元素进行trim操作？默认：false
 
 e.g.
+(nil) 			=> nil
 ([]string{""})	=> []string{}
 */
 func RemoveEmpty(s []string, trimArgs ...bool) []string {
