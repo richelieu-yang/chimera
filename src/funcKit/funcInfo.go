@@ -3,7 +3,7 @@ package funcKit
 // GetFuncInfo
 /*
 @param extraSkips 额外跳过的步骤，第1个值（有的话）必须: >= 0
-@return extraSkip == 0的情况下，返回: 调用此函数的函数的信息
+@return extraSkip == 0的情况下，返回: 调用此函数的函数的信息（"$包名.$方法名: "）
 
 e.g.
 "main.main: "
@@ -21,7 +21,7 @@ func GetFuncInfo(extraSkips ...int) string {
 	return GetCallerNameWithSkip(2+extraSkip) + ": "
 }
 
-// AddFuncInfoToString 在传参format前面加上: "$包名.$方法名"
+// AddFuncInfoToString 在传参format前面加上: "$包名.$方法名: "
 /*
 @param extraSkips 额外跳过的步骤，第1个值（有的话）必须: >= 0
 */
