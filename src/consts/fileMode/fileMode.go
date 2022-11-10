@@ -7,37 +7,30 @@ import "os"
 
 ！！！：0开头，即八进制.
 
--: 无权限
-r: 读权限
-w: 写权限
-x: 执行权限
+r: 读权限(4)
+w: 写权限(2)
+x: 执行权限(1)
+-: 无权限(0)
 */
 const (
-	// ModeA
-	// -rw-------: 只有拥有者有读写权限
-	ModeA = os.FileMode(0600)
+	// FileModeA -rw-------: 只有拥有者有读写权限
+	FileModeA = os.FileMode(0600)
 
-	// ModeB
-	// -rw-r--r--: 只有拥有者有读写权限；而属组用户和其他用户只有读权限
-	ModeB = os.FileMode(0644)
+	// FileModeB -rw-r--r--: 只有拥有者有读写权限；而属组用户和其他用户只有读权限
+	FileModeB = os.FileMode(0644)
 
-	// ModeC
-	// -rwx------: 只有拥有者有读、写、执行权限
-	ModeC = os.FileMode(0700)
+	// FileModeC -rwx------: 只有拥有者有读、写、执行权限
+	FileModeC = os.FileMode(0700)
 
-	// ModeD
-	// -rwxr-xr-x: 拥有者有读、写、执行权限；而属组用户和其他用户只有读、执行权限
-	ModeD = os.FileMode(0755)
+	// FileModeD -rwxr-xr-x: 拥有者有读、写、执行权限；而属组用户和其他用户只有读、执行权限
+	FileModeD = os.FileMode(0755)
 
-	// ModeE
-	// -rwx--x--x: 拥有者有读、写、执行权限；而属组用户和其他用户只有执行权限
-	ModeE = os.FileMode(0711)
+	// FileModeE -rwx--x--x: 拥有者有读、写、执行权限；而属组用户和其他用户只有执行权限
+	FileModeE = os.FileMode(0711)
 
-	// ModeAllReadWrite
-	// -rw-rw-rw-: 所有用户 有 读、写权限
-	ModeAllReadWrite = os.FileMode(0666)
+	// FileModeAllReadWrite -rw-rw-rw-: 所有用户 有 读、写权限
+	FileModeAllReadWrite = os.FileMode(0666)
 
-	// ModeAll
-	// -rwxrwxrwx: 所有用户 有 读、写、执行权限
-	ModeAll = os.FileMode(0777)
+	// FileModeAll -rwxrwxrwx: 所有用户 有 读、写、执行权限
+	FileModeAll = os.FileMode(0777)
 )

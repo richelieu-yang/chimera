@@ -7,11 +7,11 @@ import (
 	"sync"
 )
 
-// NewLogger
+// newLogger
 /*
 @param prefix 每条输出语句的前缀，可以为""
 */
-func NewLogger(logrusLogger *logrus.Logger, output interface{}, filePath, prefix string) ILogger {
+func newLogger(logrusLogger *logrus.Logger, output interface{}, filePath, prefix string) ILogger {
 	if strKit.IsNotEmpty(prefix) && !strKit.EndWith(prefix, " ") {
 		prefix = prefix + " "
 	}

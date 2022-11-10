@@ -27,7 +27,7 @@ func NewFileLogger(filePath, prefix string) (*log.Logger, error) {
 	}
 
 	// 此处不能关闭writer，否则日志内容将写不进去
-	//defer writer.Close()
+	//defer writer.CloseWriter()
 
 	return newLogger(writer, prefix), nil
 }

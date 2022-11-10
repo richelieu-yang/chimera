@@ -15,7 +15,7 @@ import (
 PS:
 (1) patternPath: 附带pattern的文件路径，e.g. "d:/test/test.%Y-%m-%d %H_%M_%S.log"
 (2) 只会输出到文件，并不会输出到控制台；
-(3) 第一个返回值，如果调用 Close() 后再调用 Write()，将返回error（invalid argument）.
+(3) 第一个返回值，如果调用 CloseWriter() 后再调用 Write()，将返回error（invalid argument）.
 (4) 如果filePath对应的文件已经存在，会追加在最后（并不会覆盖）.
 
 @param args 控制是否生成软链接
