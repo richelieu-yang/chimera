@@ -3,7 +3,7 @@ module github.com/richelieu42/go-scales
 go 1.19
 
 require (
-	github.com/dablelv/go-huge-util v0.0.21
+	github.com/dablelv/go-huge-util v0.0.22
 	github.com/deckarep/golang-set/v2 v2.1.0
 	github.com/disintegration/imaging v1.6.2
 	github.com/emersion/go-imap v1.2.1
@@ -18,12 +18,12 @@ require (
 	github.com/jordan-wright/email v4.0.1-0.20210109023952-943e75fe5223+incompatible
 	github.com/json-iterator/go v1.1.12
 	github.com/lestrrat-go/file-rotatelogs v2.4.0+incompatible
-	github.com/lionsoul2014/ip2region/binding/golang v0.0.0-20221017063954-c5c24655eb63
+	github.com/lionsoul2014/ip2region/binding/golang v0.0.0-20221118010501-c1dc60d7d387
 	github.com/matoous/go-nanoid/v2 v2.0.0
 	github.com/mitchellh/go-homedir v1.1.0
 	github.com/mitchellh/mapstructure v1.5.0
 	github.com/modern-go/reflect2 v1.0.2
-	github.com/nacos-group/nacos-sdk-go v1.1.2
+	github.com/nacos-group/nacos-sdk-go v1.1.3
 	github.com/oklog/ulid/v2 v2.1.0
 	github.com/pkg/errors v0.9.1
 	github.com/rifflock/lfshook v0.0.0-20180920164130-b9218ef580f5
@@ -35,9 +35,9 @@ require (
 	github.com/spf13/cast v1.5.0
 	github.com/spf13/viper v1.14.0
 	github.com/xuri/excelize/v2 v2.6.1
-	golang.org/x/exp v0.0.0-20221109205753-fc8884afc316
+	golang.org/x/exp v0.0.0-20221114191408-850992195362
 	golang.org/x/text v0.4.0
-	google.golang.org/grpc v1.50.1
+	google.golang.org/grpc v1.51.0
 )
 
 require (

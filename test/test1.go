@@ -8,7 +8,12 @@ import (
 )
 
 func main() {
-	writeCloser, err := ioKit.WrapToWriteCloser(os.Stderr)
+	file, err := os.Create("/Users/richelieu/Downloads/1.log")
+	if err != nil {
+		panic(err)
+	}
+
+	writeCloser, err := ioKit.WrapToWriteCloser(file)
 	if err != nil {
 		panic(err)
 	}
