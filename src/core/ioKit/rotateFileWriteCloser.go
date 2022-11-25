@@ -12,6 +12,7 @@ import (
 // NewRotateFileWriteCloser
 /*
 PS:
+(0) 写是线程安全的；
 (1) patternPath: 附带pattern的文件路径，e.g. "d:/test/test.%Y-%m-%d %H_%M_%S.log"
 (2) 只会输出到文件，并不会输出到控制台；
 (3) 第一个返回值，如果调用 CloseWriter() 后再调用 Write()，将返回error（invalid argument）.
@@ -20,7 +21,7 @@ PS:
 @param softLinkFlag true: 生成软链接（替身）
 
 e.g.
-("aaa.log", time.Second*3, time.Second*30, true) => 最多同时存在 11 个日志文件（不算替身）
+("aaa.log", time.Second*3, time.Second*30, true) => 最多同时存在 11 个日志文件（不算替身；30 / 3 + 1 = 11）
 */
 func NewRotateFileWriteCloser(filePath string, rotationTime, maxAge time.Duration, softLinkFlag bool) (io.WriteCloser, error) {
 	/* 默认值 */
@@ -39,11 +40,7 @@ func NewRotateFileWriteCloser(filePath string, rotationTime, maxAge time.Duratio
 		options = append(options, rotatelogs.WithLinkName(filePath))
 	}
 
-	wc, err := rotatelogs.New(toFilePathWithPattern(filePath), options...)
-	if err != nil {
-		return nil, err
-	}
-	return wc, nil
+	return newWithOptions(filePath, options)
 }
 
 func NewRotateFileWriteCloser1(filePath string, rotationTime time.Duration, rotationCount int, softLinkFlag bool) (io.WriteCloser, error) {
@@ -63,6 +60,10 @@ func NewRotateFileWriteCloser1(filePath string, rotationTime time.Duration, rota
 		options = append(options, rotatelogs.WithLinkName(filePath))
 	}
 
+	return newWithOptions(filePath, options)
+}
+
+func newWithOptions(filePath string, options []rotatelogs.Option) (io.WriteCloser, error) {
 	wc, err := rotatelogs.New(toFilePathWithPattern(filePath), options...)
 	if err != nil {
 		return nil, err
