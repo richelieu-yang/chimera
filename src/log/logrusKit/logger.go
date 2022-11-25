@@ -64,6 +64,10 @@ func NewFileLogger(filePath string, formatter logrus.Formatter, level logrus.Lev
 	return logger, nil
 }
 
+// NewRotateFileLogger
+/*
+PS: 如果 logger.Out 被释放后继续调用 logger 进行输出，会失败（e.g. 控制台os.Stderr有输出: Failed to write to log, invalid argument）.
+*/
 func NewRotateFileLogger(filePath string, formatter logrus.Formatter, level logrus.Level, rotationTime, maxAge time.Duration, toConsoleFlag bool) (*logrus.Logger, error) {
 	var out io.WriteCloser
 	out, err := ioKit.NewRotateFileWriteCloser(filePath, rotationTime, maxAge, true, toConsoleFlag)
