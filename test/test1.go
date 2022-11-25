@@ -1,47 +1,70 @@
 package main
 
 import (
+	"context"
 	"fmt"
-	"github.com/richelieu42/go-scales/src/core/ioKit"
-	"io"
+	"github.com/apache/rocketmq-clients/golang/credentials"
 	"os"
+	"strconv"
+	"time"
+
+	rmq_client "github.com/apache/rocketmq-clients/golang"
+)
+
+const (
+	Topic     = "wmq"
+	Endpoint  = "198.18.0.1:9876"
+	AccessKey = "xxxxxx"
+	SecretKey = "xxxxxx"
 )
 
 func main() {
-	file, err := os.Create("/Users/richelieu/Downloads/1.log")
+	if err := os.Setenv("mq.consoleAppender.enabled", "true"); err != nil {
+		panic(err)
+	}
+
+	rmq_client.ResetLogger()
+
+	// new producer instance
+	producer, err := rmq_client.NewProducer(&rmq_client.Config{
+		Endpoint:    Endpoint,
+		Credentials: &credentials.SessionCredentials{
+			//AccessKey:    AccessKey,
+			//AccessSecret: SecretKey,
+		},
+	},
+		rmq_client.WithTopics(Topic),
+	)
 	if err != nil {
 		panic(err)
 	}
 
-	writeCloser, err := ioKit.WrapToWriteCloser(file)
-	if err != nil {
+	// start producer
+	if err := producer.Start(); err != nil {
 		panic(err)
 	}
 
-	fmt.Println(io.WriteString(writeCloser, "0\n"))
-	fmt.Println(io.WriteString(writeCloser, "1\n"))
+	// gracefule stop producer
+	defer producer.GracefulStop()
 
-	fmt.Println("error:", writeCloser.Close())
-
-	fmt.Println(io.WriteString(writeCloser, "2\n"))
+	for i := 0; i < 10; i++ {
+		// new a message
+		msg := &rmq_client.Message{
+			Topic: Topic,
+			Body:  []byte("this is a message : " + strconv.Itoa(i)),
+		}
+		// set keys and tag
+		msg.SetKeys("a", "b")
+		msg.SetTag("ab")
+		// send message in sync
+		resp, err := producer.Send(context.TODO(), msg)
+		if err != nil {
+			panic(err)
+		}
+		for i := 0; i < len(resp); i++ {
+			fmt.Printf("%#v\n", resp[i])
+		}
+		// wait a moment
+		time.Sleep(time.Second * 1)
+	}
 }
-
-//func InitLog() {
-//	//设置输出样式，自带的只有两种样式logrus.JSONFormatter{}和logrus.TextFormatter{}
-//	log.SetFormatter(&log.TextFormatter{})
-//	log.SetOutput(os.Stdout)
-//	//设置output,默认为stderr,可以为任何io.Writer，比如文件*os.File
-//	file, err := os.OpenFile("checkemstools.log", os.O_CREATE|os.O_WRONLY|os.O_APPEND, 0666)
-//	writers := []io.Writer{
-//		file,
-//		os.Stdout}
-//	//同时写文件和屏幕
-//	fileAndStdoutWriter := io.MultiWriter(writers...)
-//	if err == nil {
-//		log.SetOutput(fileAndStdoutWriter)
-//	} else {
-//		log.Info("failed to log to file.")
-//	}
-//	//设置最低loglevel
-//	log.SetLevel(log.InfoLevel)
-//}

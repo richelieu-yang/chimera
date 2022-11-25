@@ -1,12 +1,22 @@
 package main
 
-import "fmt"
+import (
+	"github.com/richelieu42/go-scales/src/core/ioKit"
+	"io"
+	"time"
+)
 
 func main() {
-	var s []string = nil
-
-	for i := 0; i < len(s); i++ {
-		fmt.Println(i, s[i])
+	wc, err := ioKit.NewRotateFileWriteCloser("aaa.log", time.Second*3, time.Second*30, true)
+	if err != nil {
+		panic(err)
 	}
-	fmt.Println("--------------------")
+
+	for {
+		_, err := io.WriteString(wc, time.Now().String()+"\n")
+		if err != nil {
+			panic(err)
+		}
+		time.Sleep(time.Millisecond * 100)
+	}
 }
