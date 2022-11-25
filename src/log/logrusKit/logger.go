@@ -3,7 +3,18 @@ package logrusKit
 import (
 	"github.com/richelieu42/go-scales/src/core/ioKit"
 	"github.com/sirupsen/logrus"
+	"io"
+	"os"
+	"time"
 )
+
+// DisposeLogger 释放资源（主要针对文件日志）
+func DisposeLogger(logger *logrus.Logger) error {
+	if logger != nil {
+		return ioKit.CloseWriter(logger.Out)
+	}
+	return nil
+}
 
 // NewLogger 输出到控制台（os.Stderr）
 func NewLogger() *logrus.Logger {
@@ -11,6 +22,9 @@ func NewLogger() *logrus.Logger {
 }
 
 // NewCustomizedLogger 输出到控制台（os.Stderr）
+/*
+@param formatter 可以为nil，此时将采用默认值
+*/
 func NewCustomizedLogger(formatter logrus.Formatter, level logrus.Level) *logrus.Logger {
 	logger := logrus.New()
 	if formatter == nil {
@@ -19,6 +33,58 @@ func NewCustomizedLogger(formatter logrus.Formatter, level logrus.Level) *logrus
 	logger.SetFormatter(formatter)
 	logger.SetLevel(level)
 	return logger
+}
+
+// NewFileLogger
+/*
+PS: 如果 logger.Out 被释放后继续调用 logger 进行输出，会失败（e.g. 控制台os.Stderr有输出: Failed to write to log, write /Users/richelieu/Downloads/a.txt: file already closed）.
+
+@param toConsoleFlag true: 输出到日志文件的同时，也输出到控制台
+*/
+func NewFileLogger(filePath string, formatter logrus.Formatter, level logrus.Level, toConsoleFlag bool) (*logrus.Logger, error) {
+	var out io.WriteCloser
+	out, err := os.OpenFile(filePath, os.O_RDWR|os.O_APPEND|os.O_CREATE, 0666)
+	if err != nil {
+		return nil, err
+	}
+	if toConsoleFlag {
+		tmp, err := ioKit.WrapToWriteCloser(os.Stdout)
+		if err != nil {
+			return nil, err
+		}
+		mwc, err := ioKit.MultiWriteCloser(out, tmp)
+		if err != nil {
+			return nil, err
+		}
+		out = mwc
+	}
+
+	logger := NewCustomizedLogger(formatter, level)
+	logger.Out = out
+	return logger, nil
+}
+
+func NewRotateFileLogger(filePath string, formatter logrus.Formatter, level logrus.Level, rotationTime, maxAge time.Duration, toConsoleFlag bool) (*logrus.Logger, error) {
+	var out io.WriteCloser
+	out, err := ioKit.NewRotateFileWriteCloser(filePath, rotationTime, maxAge, true, toConsoleFlag)
+	if err != nil {
+		return nil, err
+	}
+	if toConsoleFlag {
+		tmp, err := ioKit.WrapToWriteCloser(os.Stdout)
+		if err != nil {
+			return nil, err
+		}
+		mwc, err := ioKit.MultiWriteCloser(out, tmp)
+		if err != nil {
+			return nil, err
+		}
+		out = mwc
+	}
+
+	logger := NewCustomizedLogger(formatter, level)
+	logger.Out = out
+	return logger, nil
 }
 
 //func NewFileLogger(filePath string, toConsole bool, formatter logrus.Formatter, level logrus.Level) (*logrus.Logger, error) {
@@ -57,14 +123,6 @@ func NewCustomizedLogger(formatter logrus.Formatter, level logrus.Level) *logrus
 //	}
 //	return logger, nil
 //}
-
-// DisposeLogger 释放资源（主要是文件日志）
-func DisposeLogger(logger *logrus.Logger) error {
-	if logger != nil {
-		return ioKit.CloseWriter(logger.Out)
-	}
-	return nil
-}
 
 //func NewFileLogger(logPath string, formatter logrus.Formatter, level logrus.Level, toConsole bool) (*logrus.Logger, error) {
 //	return NewCustomizedFileLogger(logPath, formatter, level, toConsole, -1, -1)
