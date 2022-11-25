@@ -6,6 +6,7 @@ import (
 	"github.com/richelieu42/go-scales/src/core/pathKit"
 	"github.com/richelieu42/go-scales/src/core/timeKit"
 	"io"
+	"os"
 	"time"
 )
 
@@ -18,12 +19,13 @@ PS:
 (3) 第一个返回值，如果调用 CloseWriter() 后再调用 Write()，将返回error（invalid argument）.
 (4) 如果filePath对应的文件已经存在，会追加在最后（并不会覆盖）.
 
-@param softLinkFlag true: 生成软链接（替身）
+@param softLinkFlag 	true: 生成软链接（替身）
+@param toConsoleFlag 	true: 输出到文件日志的同时，也输出到控制台
 
 e.g.
 ("aaa.log", time.Second*3, time.Second*30, true) => 最多同时存在 11 个日志文件（不算替身；30 / 3 + 1 = 11）
 */
-func NewRotateFileWriteCloser(filePath string, rotationTime, maxAge time.Duration, softLinkFlag bool) (io.WriteCloser, error) {
+func NewRotateFileWriteCloser(filePath string, rotationTime, maxAge time.Duration, softLinkFlag bool, toConsoleFlag bool) (io.WriteCloser, error) {
 	/* 默认值 */
 	if rotationTime <= 0 {
 		rotationTime = time.Hour * 12
@@ -40,10 +42,10 @@ func NewRotateFileWriteCloser(filePath string, rotationTime, maxAge time.Duratio
 		options = append(options, rotatelogs.WithLinkName(filePath))
 	}
 
-	return newWithOptions(filePath, options)
+	return newWithOptions(filePath, options, toConsoleFlag)
 }
 
-func NewRotateFileWriteCloser1(filePath string, rotationTime time.Duration, rotationCount int, softLinkFlag bool) (io.WriteCloser, error) {
+func NewRotateFileWriteCloser1(filePath string, rotationTime time.Duration, rotationCount int, softLinkFlag bool, toConsoleFlag bool) (io.WriteCloser, error) {
 	/* 默认值 */
 	if rotationTime <= 0 {
 		rotationTime = time.Hour * 12
@@ -60,15 +62,23 @@ func NewRotateFileWriteCloser1(filePath string, rotationTime time.Duration, rota
 		options = append(options, rotatelogs.WithLinkName(filePath))
 	}
 
-	return newWithOptions(filePath, options)
+	return newWithOptions(filePath, options, toConsoleFlag)
 }
 
-func newWithOptions(filePath string, options []rotatelogs.Option) (io.WriteCloser, error) {
+func newWithOptions(filePath string, options []rotatelogs.Option, toConsoleFlag bool) (io.WriteCloser, error) {
 	wc, err := rotatelogs.New(toFilePathWithPattern(filePath), options...)
 	if err != nil {
 		return nil, err
 	}
-	return wc, nil
+
+	if !toConsoleFlag {
+		return wc, nil
+	}
+	wc1, err := WrapToWriteCloser(os.Stdout)
+	if err != nil {
+		return nil, err
+	}
+	return MultiWriteCloser(wc, wc1)
 }
 
 // toFilePathWithPattern

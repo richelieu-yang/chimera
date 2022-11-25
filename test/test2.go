@@ -2,6 +2,8 @@ package main
 
 import (
 	"github.com/richelieu42/go-scales/src/core/ioKit"
+	"github.com/sirupsen/logrus"
+	"os"
 	"time"
 )
 
@@ -11,17 +13,46 @@ func main() {
 		panic(err)
 	}
 
-	if _, err := wc.Write([]byte("0")); err != nil {
+	wc1, err := ioKit.WrapToWriteCloser(os.Stdout)
+	if err != nil {
 		panic(err)
 	}
 
-	if err := wc.Close(); err != nil {
+	mwc, err := ioKit.MultiWriteCloser(wc, wc1)
+	if err != nil {
 		panic(err)
 	}
 
-	if _, err := wc.Write([]byte("1")); err != nil {
+	logger := logrus.New()
+	logger.Out = mwc
+
+	logger.Info("000")
+	if err := mwc.Close(); err != nil {
 		panic(err)
 	}
+	logger.Info("111")
+
+	//if _, err := mwc.Write([]byte("0")); err != nil {
+	//	panic(err)
+	//}
+	//if err := mwc.Close(); err != nil {
+	//	panic(err)
+	//}
+	//if _, err := mwc.Write([]byte("1")); err != nil {
+	//	panic(err)
+	//}
+
+	//if _, err := wc.Write([]byte("0")); err != nil {
+	//	panic(err)
+	//}
+	//
+	//if err := wc.Close(); err != nil {
+	//	panic(err)
+	//}
+	//
+	//if _, err := wc.Write([]byte("1")); err != nil {
+	//	panic(err)
+	//}
 
 	//lock := new(sync.Mutex)
 	//flag := false
