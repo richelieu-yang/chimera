@@ -2,64 +2,66 @@ package logrusKit
 
 import (
 	"github.com/richelieu42/go-scales/src/core/ioKit"
-	"github.com/richelieu42/go-scales/src/core/timeKit"
-	"github.com/rifflock/lfshook"
 	"github.com/sirupsen/logrus"
-	"time"
 )
 
-// NewConsoleLogger 仅输出到控制台
-func NewConsoleLogger(formatter logrus.Formatter, level logrus.Level) *logrus.Logger {
+// NewLogger 输出到控制台（os.Stderr）
+func NewLogger() *logrus.Logger {
+	return NewCustomizedLogger(nil, logrus.DebugLevel)
+}
+
+// NewCustomizedLogger 输出到控制台（os.Stderr）
+func NewCustomizedLogger(formatter logrus.Formatter, level logrus.Level) *logrus.Logger {
+	logger := logrus.New()
 	if formatter == nil {
 		formatter = DefaultTextFormatter
 	}
-
-	logger := logrus.New()
 	logger.SetFormatter(formatter)
 	logger.SetLevel(level)
 	return logger
 }
 
-func NewFileLogger(filePath string, toConsole bool, formatter logrus.Formatter, level logrus.Level) (*logrus.Logger, error) {
-	wc, err := ioKit.NewFileWriterCloser(filePath, toConsole)
-	if err != nil {
-		return nil, err
-	}
+//func NewFileLogger(filePath string, toConsole bool, formatter logrus.Formatter, level logrus.Level) (*logrus.Logger, error) {
+//	wc, err := ioKit.NewFileWriterCloser(filePath, toConsole)
+//	if err != nil {
+//		return nil, err
+//	}
+//
+//	logger := NewCustomizedLogger(formatter, level)
+//	logger.Out = wc
+//	return logger, nil
+//}
+//
+//func NewRotateFileLogger(filePath string, toConsole bool, formatter logrus.Formatter, level logrus.Level) (*logrus.Logger, error) {
+//	wc, err := ioKit.NewRotateFileWriteCloser(filePath, time.Hour*12, timeKit.Week, toConsole, true)
+//	if err != nil {
+//		return nil, err
+//	}
+//
+//	logger := NewCustomizedLogger(formatter, level)
+//	if toConsole {
+//		/* (1) 输出到：文件、控制台 */
+//		lfsHook := lfshook.NewHook(lfshook.WriterMap{
+//			logrus.TraceLevel: wc,
+//			logrus.DebugLevel: wc,
+//			logrus.InfoLevel:  wc,
+//			logrus.WarnLevel:  wc,
+//			logrus.ErrorLevel: wc,
+//			logrus.FatalLevel: wc,
+//			logrus.PanicLevel: wc,
+//		}, formatter)
+//		logger.AddHook(lfsHook)
+//	} else {
+//		/* (2) 输出到：文件 */
+//		logger.Out = wc
+//	}
+//	return logger, nil
+//}
 
-	logger := NewConsoleLogger(formatter, level)
-	logger.Out = wc
-	return logger, nil
-}
-
-func NewRotateFileLogger(filePath string, toConsole bool, formatter logrus.Formatter, level logrus.Level) (*logrus.Logger, error) {
-	wc, err := ioKit.NewRotateFileWriteCloser(filePath, time.Hour*12, timeKit.Week, toConsole, true)
-	if err != nil {
-		return nil, err
-	}
-
-	logger := NewConsoleLogger(formatter, level)
-	if toConsole {
-		/* (1) 输出到：文件、控制台 */
-		lfsHook := lfshook.NewHook(lfshook.WriterMap{
-			logrus.TraceLevel: wc,
-			logrus.DebugLevel: wc,
-			logrus.InfoLevel:  wc,
-			logrus.WarnLevel:  wc,
-			logrus.ErrorLevel: wc,
-			logrus.FatalLevel: wc,
-			logrus.PanicLevel: wc,
-		}, formatter)
-		logger.AddHook(lfsHook)
-	} else {
-		/* (2) 输出到：文件 */
-		logger.Out = wc
-	}
-	return logger, nil
-}
-
+// DisposeLogger 释放资源（主要是文件日志）
 func DisposeLogger(logger *logrus.Logger) error {
 	if logger != nil {
-
+		return ioKit.CloseWriter(logger.Out)
 	}
 	return nil
 }
@@ -97,7 +99,7 @@ func DisposeLogger(logger *logrus.Logger) error {
 //	if err != nil {
 //		return nil, err
 //	}
-//	logger := NewConsoleLogger(formatter, level)
+//	logger := NewCustomizedLogger(formatter, level)
 //	if toConsole {
 //		lfsHook := lfshook.NewHook(lfshook.WriterMap{
 //			logrus.TraceLevel: writer,

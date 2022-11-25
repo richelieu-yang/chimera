@@ -2,32 +2,21 @@ package main
 
 import (
 	"github.com/richelieu42/go-scales/src/core/ioKit"
-	"github.com/sirupsen/logrus"
-	"os"
+	"github.com/richelieu42/go-scales/src/log/logrusKit"
 	"time"
 )
 
 func main() {
-	wc, err := ioKit.NewRotateFileWriteCloser("aaa.log", time.Second*3, time.Second*30, true)
+	wc, err := ioKit.NewRotateFileWriteCloser("aaa.log", time.Second*3, time.Second*30, true, true)
 	if err != nil {
 		panic(err)
 	}
 
-	wc1, err := ioKit.WrapToWriteCloser(os.Stdout)
-	if err != nil {
-		panic(err)
-	}
-
-	mwc, err := ioKit.MultiWriteCloser(wc, wc1)
-	if err != nil {
-		panic(err)
-	}
-
-	logger := logrus.New()
-	logger.Out = mwc
+	logger := logrusKit.NewCustomizedLogger()
+	logger.Out = wc
 
 	logger.Info("000")
-	if err := mwc.Close(); err != nil {
+	if err := wc.Close(); err != nil {
 		panic(err)
 	}
 	logger.Info("111")

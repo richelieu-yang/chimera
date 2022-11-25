@@ -56,7 +56,7 @@ func InitializeGinComponent(recoveryMiddleware gin.HandlerFunc, businessLogic fu
 
 	/* 通过logrus输出Gin的日志 */
 	// Richelieu：从目前表现来看，虽然gin和logrus都可以设置颜色，但在此处,只要gin允许了，logrus的logger是否允许就无效了
-	logger := logrusKit.NewConsoleLogger(nil, mainControl.GetLogrusLevel())
+	logger := logrusKit.NewCustomizedLogger(nil, mainControl.GetLogrusLevel())
 	gin.DefaultWriter = logger.Out
 
 	engine := ginKit.NewEngine()
