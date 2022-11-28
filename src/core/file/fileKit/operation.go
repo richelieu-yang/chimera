@@ -141,10 +141,10 @@ func CopyDir(src, dest string) error {
 
 // Delete 删除 文件 或 目录（内部有文件或目录，也会一并删除）.
 /*
-@param path 文件或目录的路径（绝对 || 相对）
+@param path 文件（或目录）的路径（绝对 || 相对），可以不存在，此时将返回nil
 
 PS:
-(1) 传参"": 正常执行，返回nil；
+(1) 传参path可以为"": 正常执行，返回nil；
 (2) path对应的文件或目录不存在: 正常执行，返回nil；
 (3) Windows系统，如果 传参path 对应的是 一个被锁定的文件 或者 一个目录（内部有文件被锁定），将返回error（remove xxx(path): The process cannot access the file because it is being used by another process.）.
 */
@@ -153,6 +153,9 @@ func Delete(path string) error {
 }
 
 // EmptyDir 清空目录：删掉目录中的文件和子目录（递归），但该目录本身不会被删掉.
+/*
+@param dirPath 可以不存在，此时将返回nil
+*/
 func EmptyDir(dirPath string) error {
 	if NotExist(dirPath) {
 		return nil
