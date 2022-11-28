@@ -3,8 +3,10 @@ package ioKit
 import (
 	rotatelogs "github.com/lestrrat-go/file-rotatelogs"
 	"github.com/richelieu42/go-scales/src/core/file/fileKit"
+	"github.com/richelieu42/go-scales/src/core/osKit"
 	"github.com/richelieu42/go-scales/src/core/pathKit"
 	"github.com/richelieu42/go-scales/src/core/timeKit"
+	"github.com/richelieu42/go-scales/src/operationKit"
 	"io"
 	"os"
 	"time"
@@ -83,12 +85,15 @@ func newWithOptions(filePath string, options []rotatelogs.Option, toConsoleFlag 
 
 // toFilePathWithPattern
 /*
-e.g.
-("d:/test999/test.log") => "d:\test999\test.%Y-%m-%d %H_%M_%S.log"
+e.g. Mac M1
+("/Users/richelieu/Downloads/111.log") => "111(2022-11-28 15：50：40).log"
 */
 func toFilePathWithPattern(filePath string) string {
 	dir := pathKit.GetParentDir(filePath)
 	prefix := fileKit.GetPrefix(filePath)
 	suffix := fileKit.GetSuffix(filePath)
-	return pathKit.Join(dir, prefix+"(%Y-%m-%d %H_%M_%S)"+suffix)
+
+	// Windows 和 Mac 的文件名不支持":"
+	timePattern := operationKit.Ternary(osKit.IsLinux(), "(%Y-%m-%d %H:%M:%S)", "(%Y-%m-%d %H：%M：%S)")
+	return pathKit.Join(dir, prefix+timePattern+suffix)
 }
