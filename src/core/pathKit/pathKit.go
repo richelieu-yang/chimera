@@ -20,9 +20,13 @@ var outputDir string
 
 // IsAbs 判断路径是不是绝对路径
 /*
+PS: 传参path 对应的文件（或目录）可以不存在.
+
 e.g.
-("./a/b/c") => false
-("C:/a/b/c") => true
+("./a/b/c") 	=> false
+("C:/a/b/c") 	=> true
+("/root") 		=> true
+("root") 		=> false
 */
 func IsAbs(path string) bool {
 	return filepath.IsAbs(path)
