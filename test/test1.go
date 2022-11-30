@@ -4,6 +4,7 @@ import (
 	"context"
 	"fmt"
 	"github.com/apache/rocketmq-clients/golang/credentials"
+	"github.com/sirupsen/logrus"
 	"os"
 	"strconv"
 	"time"
@@ -12,8 +13,8 @@ import (
 )
 
 const (
-	Topic     = "wmq"
-	Endpoint  = "198.18.0.1:9876"
+	Topic     = "test666"
+	Endpoint  = "localhost:8081"
 	AccessKey = "xxxxxx"
 	SecretKey = "xxxxxx"
 )
@@ -36,11 +37,13 @@ func main() {
 		rmq_client.WithTopics(Topic),
 	)
 	if err != nil {
+		fmt.Println(err.Error())
 		panic(err)
 	}
 
 	// start producer
 	if err := producer.Start(); err != nil {
+		fmt.Println(err.Error())
 		panic(err)
 	}
 
@@ -56,14 +59,18 @@ func main() {
 		// set keys and tag
 		msg.SetKeys("a", "b")
 		msg.SetTag("ab")
+
 		// send message in sync
-		resp, err := producer.Send(context.TODO(), msg)
+		resps, err := producer.Send(context.TODO(), msg)
 		if err != nil {
+			fmt.Println(err.Error())
 			panic(err)
 		}
-		for i := 0; i < len(resp); i++ {
-			fmt.Printf("%#v\n", resp[i])
+		for i := 0; i < len(resps); i++ {
+			resp := resps[i]
+			logrus.Infof("MessageID: [%s].", resp.MessageID)
 		}
+
 		// wait a moment
 		time.Sleep(time.Second * 1)
 	}
