@@ -2,12 +2,10 @@ package main
 
 import (
 	"fmt"
-	"github.com/richelieu42/go-scales/src/core/file/fileKit"
+	"github.com/richelieu42/go-scales/src/consts"
 )
 
 func main() {
-	path := "/a/v/c"
-
-	fmt.Println(fileKit.Exist(path))
-	fmt.Println(fileKit.Delete(path))
+	timePattern := "(%Y-%m-%d %H" + consts.ColonInFileName + "%M" + consts.ColonInFileName + "%S)"
+	fmt.Println(timePattern)
 }

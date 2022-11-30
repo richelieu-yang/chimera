@@ -6,21 +6,16 @@ package consts
 
 import "github.com/richelieu42/go-scales/src/core/osKit"
 
-// LeftParenthesisInFileName 左侧的小括号
-var LeftParenthesisInFileName string
-
-// RightParenthesisInFileName 右侧的小括号
-var RightParenthesisInFileName string
+// ColonInFileName （文件名中的）冒号
+var ColonInFileName string
 
 func init() {
 	if osKit.IsLinux() {
-		// Linux: 半角
-		LeftParenthesisInFileName = "("
-		RightParenthesisInFileName = ")"
+		// Linux: 半角（英文）
+		ColonInFileName = ":"
 	} else {
-		// Windows || Mac: 全角
-		LeftParenthesisInFileName = "（"
-		RightParenthesisInFileName = "）"
+		// Windows || Mac: 全角（中文）
+		ColonInFileName = "："
 	}
 }
 
