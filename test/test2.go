@@ -2,10 +2,13 @@ package main
 
 import (
 	"fmt"
-	"github.com/richelieu42/go-scales/src/consts"
+	"os"
 )
 
 func main() {
-	timePattern := "(%Y-%m-%d %H" + consts.ColonInFileName + "%M" + consts.ColonInFileName + "%S)"
-	fmt.Println(timePattern)
+	//if err := os.Setenv("CCC", "1"); err != nil {
+	//	panic(err)
+	//}
+
+	fmt.Println(os.LookupEnv("CCC"))
 }
