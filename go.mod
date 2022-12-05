@@ -3,7 +3,7 @@ module github.com/richelieu42/go-scales
 go 1.19
 
 require (
-	github.com/apache/rocketmq-clients/golang v0.0.0-20221130014708-5d9e8c576e7f
+	github.com/apache/rocketmq-clients/golang v0.0.0-20221202122734-8aa0ee1c066c
 	github.com/dablelv/go-huge-util v0.0.23
 	github.com/deckarep/golang-set/v2 v2.1.0
 	github.com/disintegration/imaging v1.6.2
@@ -14,7 +14,7 @@ require (
 	github.com/gin-contrib/gzip v0.0.6
 	github.com/gin-gonic/gin v1.8.1
 	github.com/go-redis/redis/v8 v8.11.5
-	github.com/go-redsync/redsync/v4 v4.6.0
+	github.com/go-redsync/redsync/v4 v4.7.1
 	github.com/gorilla/websocket v1.5.0
 	github.com/jordan-wright/email v4.0.1-0.20210109023952-943e75fe5223+incompatible
 	github.com/json-iterator/go v1.1.12
@@ -35,8 +35,8 @@ require (
 	github.com/spf13/cast v1.5.0
 	github.com/spf13/viper v1.14.0
 	github.com/xuri/excelize/v2 v2.6.1
-	golang.org/x/exp v0.0.0-20221126150942-6ab00d035af9
-	golang.org/x/text v0.4.0
+	golang.org/x/exp v0.0.0-20221204150635-6dcec336b2bb
+	golang.org/x/text v0.5.0
 	google.golang.org/grpc v1.51.0
 )
 
