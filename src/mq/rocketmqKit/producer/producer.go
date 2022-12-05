@@ -59,12 +59,12 @@ func main() {
 		msg.SetTag("ab")
 
 		// send message in sync
-		resps, err := producer.Send(context.TODO(), msg)
+		respSlice, err := producer.Send(context.TODO(), msg)
 		if err != nil {
 			panic(err)
 		}
-		for i := 0; i < len(resps); i++ {
-			resp := resps[i]
+		for i := 0; i < len(respSlice); i++ {
+			resp := respSlice[i]
 			logrus.Infof("MessageID: [%s].", resp.MessageID)
 		}
 
