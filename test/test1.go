@@ -1,11 +1,12 @@
 package main
 
 import (
-	"fmt"
-	"github.com/richelieu42/go-scales/src/core/osKit"
+	"github.com/sirupsen/logrus"
+	"os"
 )
 
 func main() {
-	str := osKit.GetEnv("JAVA_HOME")
-	fmt.Println(str)
+	path := os.Getenv("user.home")
+	logrus.Info(path)
+	logrus.Info(path == "")
 }
