@@ -7,7 +7,7 @@ import (
 
 // GetHomeDir 获取当前用户的home dir（当前用户主目录）
 func GetHomeDir() string {
-	return userKit.GetHomeDir()
+	return userKit.GetUserHomeDir()
 }
 
 // ExpandTilde "~"（波浪号） => 当前用户主目录

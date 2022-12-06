@@ -2,8 +2,7 @@ package main
 
 import (
 	"context"
-	"fmt"
-	"os"
+	"github.com/sirupsen/logrus"
 	"time"
 
 	rmq_client "github.com/apache/rocketmq-clients/golang"
@@ -11,13 +10,12 @@ import (
 )
 
 const (
-	Topic = "ccc"
-	// Endpoint Proxy服务的ip+port
-	Endpoint  = "localhost:8081"
+	Topic         = "ttt"
+	ConsumerGroup = "cg"
+	Endpoint      = "localhost:8081"
+
 	AccessKey = ""
 	SecretKey = ""
-
-	ConsumerGroup = "cg"
 )
 
 var (
@@ -27,18 +25,16 @@ var (
 	maxMessageNum int32 = 16
 	// invisibleDuration should > 20s
 	invisibleDuration = time.Second * 20
-
 	// receive messages in a loop
 )
 
 func main() {
 	// log to console
-	os.Setenv("mq.consoleAppender.enabled", "true")
+	//os.Setenv("mq.consoleAppender.enabled", "true")
 
 	rmq_client.ResetLogger()
-
-	// new consumer instance
-	consumer, err := rmq_client.NewSimpleConsumer(&rmq_client.Config{
+	// new simpleConsumer instance
+	simpleConsumer, err := rmq_client.NewSimpleConsumer(&rmq_client.Config{
 		Endpoint:      Endpoint,
 		ConsumerGroup: ConsumerGroup,
 		Credentials: &credentials.SessionCredentials{
@@ -54,31 +50,38 @@ func main() {
 	if err != nil {
 		panic(err)
 	}
-	// start consumer
-	err = consumer.Start()
+	// start simpleConsumer
+	err = simpleConsumer.Start()
 	if err != nil {
 		panic(err)
 	}
-	// gracefule stop consumer
-	defer consumer.GracefulStop()
+	// gracefule stop simpleConsumer
+	defer simpleConsumer.GracefulStop()
 
 	go func() {
 		for {
-			fmt.Println("start recevie message")
-			mvs, err := consumer.Receive(context.TODO(), maxMessageNum, invisibleDuration)
+			mvs, err := simpleConsumer.Receive(context.TODO(), maxMessageNum, invisibleDuration)
 			if err != nil {
-				panic(err)
+				// ！！！：此处不能用 panic()
+				logrus.Errorf("[CONSUMER] fail to receive, error: %+v", err)
 			}
+
 			// ack message
 			for _, mv := range mvs {
-				consumer.Ack(context.TODO(), mv)
-				fmt.Println(mv)
+				if err := simpleConsumer.Ack(context.TODO(), mv); err != nil {
+					logrus.Errorf("[CONSUMER] fail to ack, error: %+v", err)
+				} else {
+					logrus.Infof("[CONSUMER] recevie message(id: %s, text: %s).", mv.GetMessageId(), string(mv.GetBody()))
+				}
 			}
-			fmt.Println("wait a moment")
-			fmt.Println()
+
+			logrus.Info("---------------------------------------------------------")
+
+			// wait a moment
 			time.Sleep(time.Second * 3)
 		}
 	}()
+
 	// run for a while
-	time.Sleep(time.Minute)
+	time.Sleep(time.Minute * 60)
 }

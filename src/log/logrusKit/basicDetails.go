@@ -30,7 +30,7 @@ func PrintBasicDetails() {
 	// user
 	logrus.Infof("[SCALES, USER] name: [%s].", userKit.GetName())
 	logrus.Infof("[SCALES, USER] user name: [%s].", userKit.GetUserName())
-	logrus.Infof("[SCALES, PATH] home dir: [%s].", userKit.GetHomeDir())
+	logrus.Infof("[SCALES, PATH] home dir: [%s].", userKit.GetUserHomeDir())
 
 	// path
 	logrus.Infof("[SCALES, PATH] project path: [%s].", pathKit.GetProjectDir())

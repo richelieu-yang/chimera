@@ -12,9 +12,10 @@ import (
 )
 
 const (
-	Topic = "test123"
+	Topic = "ttt"
 	// Endpoint Proxy服务的ip+port
-	Endpoint  = "localhost:8081"
+	Endpoint = "localhost:8081"
+
 	AccessKey = ""
 	SecretKey = ""
 )
@@ -65,7 +66,7 @@ func main() {
 		}
 		for i := 0; i < len(respSlice); i++ {
 			resp := respSlice[i]
-			logrus.Infof("MessageID: [%s].", resp.MessageID)
+			logrus.Infof("[PRODUCER] MessageID: [%s].", resp.MessageID)
 		}
 
 		// wait a moment

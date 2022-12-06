@@ -1,9 +1,9 @@
 package pathKit
 
 import (
-	"github.com/richelieu42/go-scales/src/core/osKit"
+	"github.com/richelieu42/go-scales/src/core/userKit"
 )
 
 func GetUserHomePath() string {
-	return osKit.GetUserHome()
+	return userKit.GetUserHomeDir()
 }
