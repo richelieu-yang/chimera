@@ -35,7 +35,7 @@ require (
 	github.com/spf13/cast v1.5.0
 	github.com/spf13/viper v1.14.0
 	github.com/xuri/excelize/v2 v2.6.1
-	golang.org/x/exp v0.0.0-20221204150635-6dcec336b2bb
+	golang.org/x/exp v0.0.0-20221205204356-47842c84f3db
 	golang.org/x/text v0.5.0
 	google.golang.org/grpc v1.51.0
 )
