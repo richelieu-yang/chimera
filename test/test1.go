@@ -13,7 +13,3 @@ func main() {
 	}
 	fmt.Println(tmp) // "/Users/richelieu"
 }
-
-//fmt.Println(userKit.GetName())
-//fmt.Println(userKit.GetUserName())
-//fmt.Println(userKit.GetUserHomeDir())
