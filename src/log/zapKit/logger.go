@@ -12,6 +12,9 @@ import (
 @param level e.g. zap.InfoLevel
 */
 func NewLogger(logPath string, maxFileSize, maxFileIndex int, compress bool, level zapcore.Level) (*zap.Logger, error) {
+	// 由于调用输出时才会尝试生成日志文件（包括创建父目录），失败则会在控制台有错误输出:
+	// e.g. 2022-12-07 11:03:01.742597 +0800 CST m=+0.000902876 write error: can't make directories for new logfile: mkdir /logs: read-only file system
+	// 因此，还不如在初始化logger时先把该做的都做了.
 	if err := fileKit.MkParentDirs(logPath); err != nil {
 		return nil, err
 	}
