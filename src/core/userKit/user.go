@@ -25,10 +25,17 @@ func GetUserHomeDir() string {
 }
 
 func getUserHomeDir() (string, error) {
+	//// os.Getenv("user.home")可能会返回""，比如在Mac环境下
+	//userHomeDir := os.Getenv("user.home")
+	//if userHomeDir == "" {
+	//	userHomeDir = os.Getenv("HOME")
+	//}
+
 	userHomeDir, err := homedir.Dir()
 	if err != nil {
 		return "", err
 	}
+
 	if err := fileKit.AssertExistAndIsDir(userHomeDir); err != nil {
 		return "", err
 	}
