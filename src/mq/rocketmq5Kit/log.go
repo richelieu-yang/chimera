@@ -51,10 +51,13 @@ func (lc *LogConfig) SetLogout() error {
 		if err := fileKit.MkDirs(logDir); err != nil {
 			return err
 		}
+		logDir = strKit.EmptyToDefault(logDir, ".")
+
 		logName := c.LogName
 		if strKit.IsEmpty(logName) {
 			return errorKit.Simple("logName is empty")
 		}
+
 		if err := osKit.SetEnvs(map[string]string{
 			rmq_client.ENABLE_CONSOLE_APPENDER: "false",
 			rmq_client.CLIENT_LOG_ROOT:         logDir,
