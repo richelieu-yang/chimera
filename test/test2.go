@@ -1,10 +1,21 @@
 package main
 
 import (
-	"github.com/sirupsen/logrus"
-	"os"
+	"fmt"
 )
 
 func main() {
-	logrus.Infof("[B] value: [%s].", os.Getenv("test"))
+	defer func() {
+		fmt.Println("a")
+	}()
+
+	{
+		defer func() {
+			fmt.Println("b")
+		}()
+	}
+
+	defer func() {
+		fmt.Println("c")
+	}()
 }
