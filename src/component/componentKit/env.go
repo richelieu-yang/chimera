@@ -5,8 +5,6 @@ import (
 	"github.com/richelieu42/go-scales/src/consts"
 	"github.com/richelieu42/go-scales/src/core/errorKit"
 	"github.com/richelieu42/go-scales/src/core/pathKit"
-	"github.com/richelieu42/go-scales/src/core/sliceKit"
-	"github.com/richelieu42/go-scales/src/core/strKit"
 	"github.com/richelieu42/go-scales/src/core/timeKit"
 	"github.com/richelieu42/go-scales/src/database/redisKit"
 	"github.com/richelieu42/go-scales/src/ginKit"
@@ -14,14 +12,17 @@ import (
 	"github.com/richelieu42/go-scales/src/log/logrusKit"
 	"github.com/sirupsen/logrus"
 	"time"
+
+	rmq_client "github.com/apache/rocketmq-clients/golang"
 )
 
 type (
 	EnvConfig struct {
-		Runtime *RuntimeConfig
-		Logrus  *logrusKit.LogrusConfig
-		Gin     *ginKit.GinConfig
-		Redis   *redisKit.RedisConfig
+		Runtime   *RuntimeConfig
+		Logrus    *logrusKit.LogrusConfig
+		Gin       *ginKit.GinConfig
+		Redis     *redisKit.RedisConfig
+		RocketMQ5 *rmq_client.Config
 	}
 )
 
@@ -51,7 +52,7 @@ var envConfig *EnvConfig = nil
 /*
 @param pathArgs 第1个值代表（如果有的话）: env.yaml的相对路径
 */
-func InitializeEnvironment(pathArgs ...string) error {
+func InitializeEnvironment() error {
 	if envConfig != nil {
 		// 理论上此方法只会被调用1次，因此此处会返回error
 		return EnvAlreadyLoadedError
@@ -60,8 +61,7 @@ func InitializeEnvironment(pathArgs ...string) error {
 	// 先简单初始化下logrus，下面会完整地初始化logrus组件
 	logrusKit.Initialize(logrus.DebugLevel, timeKit.DirFormat)
 
-	path := sliceKit.GetFirstItemWithDefault("", pathArgs...)
-	if err := initializeEnv(path); err != nil {
+	if err := loadEnvYaml(); err != nil {
 		return err
 	}
 
@@ -76,10 +76,9 @@ func InitializeEnvironment(pathArgs ...string) error {
 	return nil
 }
 
-// initializeEnv 加载配置文件
-func initializeEnv(path string) error {
-	path = strKit.EmptyToDefault(path, consts.EnvPath)
-	absPath := pathKit.Join(pathKit.GetProjectDir(), path)
+// loadEnvYaml 加载配置文件
+func loadEnvYaml() error {
+	absPath := pathKit.Join(pathKit.GetProjectDir(), consts.EnvPath)
 
 	envConfig = &EnvConfig{}
 	if err := confKit.ReadFileAs(absPath, defaultEnvMap, envConfig); err != nil {

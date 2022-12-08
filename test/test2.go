@@ -1,14 +1,10 @@
 package main
 
 import (
-	"fmt"
+	"github.com/sirupsen/logrus"
 	"os"
 )
 
 func main() {
-	//if err := os.Setenv("CCC", "1"); err != nil {
-	//	panic(err)
-	//}
-
-	fmt.Println(os.LookupEnv("CCC"))
+	logrus.Infof("[B] value: [%s].", os.Getenv("test"))
 }
