@@ -17,8 +17,12 @@ PS:
 e.g.
 ("i:/test/test.exe") 	=> 	路径没问题且目录不存在的情况下，会在i盘创建"test"、"test.exe"两个目录
 ("i:/test1/test2/")		=>	路径没问题且目录不存在的情况下，会在i盘创建"test1"、"test2"两个目录
+
+e.g.1 Mac
 ("")					=>	nil（什么都不会做）
+("/")					=>	nil（什么都不会做）
 (".")					=>	nil（什么都不会做）
+("./")					=>	nil（什么都不会做）
 */
 func MkDirs(dirPaths ...string) (err error) {
 	for _, dirPath := range dirPaths {

@@ -47,8 +47,8 @@ func (lc *LogConfig) SetLogout() error {
 		}
 	} else {
 		// (2) 输出到日志文件
-		LogDir := c.LogDir
-		if err := fileKit.MkDirs(LogDir); err != nil {
+		logDir := c.LogDir
+		if err := fileKit.MkDirs(logDir); err != nil {
 			return err
 		}
 		logName := c.LogName
@@ -56,8 +56,9 @@ func (lc *LogConfig) SetLogout() error {
 			return errorKit.Simple("logName is empty")
 		}
 		if err := osKit.SetEnvs(map[string]string{
-			rmq_client.CLIENT_LOG_ROOT:     LogDir,
-			rmq_client.CLIENT_LOG_FILENAME: logName,
+			rmq_client.ENABLE_CONSOLE_APPENDER: "false",
+			rmq_client.CLIENT_LOG_ROOT:         logDir,
+			rmq_client.CLIENT_LOG_FILENAME:     logName,
 		}); err != nil {
 			return err
 		}

@@ -14,7 +14,11 @@ func main() {
 		Credentials: nil,
 	}
 
-	consumer, err := rocketmq5Kit.NewSimpleConsumer(nil, config, "cg", "test", "*")
+	consumer, err := rocketmq5Kit.NewSimpleConsumer(&rocketmq5Kit.LogConfig{
+		ToConsole: false,
+		LogDir:    "",
+		LogName:   "cyy.out",
+	}, config, "cg", "test", "*")
 	if err != nil {
 		panic(err)
 	}

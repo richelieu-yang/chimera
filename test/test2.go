@@ -2,20 +2,18 @@ package main
 
 import (
 	"fmt"
+	"github.com/richelieu42/go-scales/src/core/file/fileKit"
 )
 
 func main() {
-	defer func() {
-		fmt.Println("a")
-	}()
-
-	{
-		defer func() {
-			fmt.Println("b")
-		}()
+	if err := fileKit.MkDirs("."); err != nil {
+		panic(err)
 	}
-
-	defer func() {
-		fmt.Println("c")
-	}()
+	if err := fileKit.MkDirs("./"); err != nil {
+		panic(err)
+	}
+	if err := fileKit.MkDirs("/"); err != nil {
+		panic(err)
+	}
+	fmt.Println("---------------------------------------")
 }
