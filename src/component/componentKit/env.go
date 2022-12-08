@@ -32,12 +32,18 @@ var (
 		// logrus
 		"logrus.level":           "debug",
 		"logrus.timestampFormat": string(timeKit.EntireFormat),
+
 		// gin
 		"gin.port":            80,
 		"gin.colorful":        true,
 		"gin.middleware.gzip": true,
+
 		// redis
 		"redis.mode": -1,
+
+		// RocketMQ5
+		"rocketmq5.credentials.accessKey":    "",
+		"rocketmq5.credentials.accessSecret": "",
 	}
 	EnvNotLoadedError     = errorKit.Simple("env file hasn't been loaded")
 	EnvAlreadyLoadedError = errorKit.Simple("env file has already been loaded")
@@ -88,9 +94,7 @@ func loadEnvYaml() error {
 	}
 
 	/* 优化配置文件 */
-	{
-		envConfig.Redis.Simplify()
-	}
+	envConfig.Redis.Simplify()
 
 	logrusKit.Initialize(logrus.DebugLevel, timeKit.EntireFormat)
 	json, _ := jsonKit.MarshalWithIndent(envConfig)

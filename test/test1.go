@@ -1,13 +1,12 @@
 package main
 
 import (
-	"github.com/sirupsen/logrus"
-	"os"
+	"github.com/richelieu42/go-scales/src/component/componentKit"
 )
 
 func main() {
-	if err := os.Setenv("test", "测试"); err != nil {
+	err := componentKit.InitializeEnvironment()
+	if err != nil {
 		panic(err)
 	}
-	logrus.Infof("value: [%s].", os.Getenv("test"))
 }
