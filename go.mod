@@ -19,7 +19,7 @@ require (
 	github.com/jordan-wright/email v4.0.1-0.20210109023952-943e75fe5223+incompatible
 	github.com/json-iterator/go v1.1.12
 	github.com/lestrrat-go/file-rotatelogs v2.4.0+incompatible
-	github.com/lionsoul2014/ip2region/binding/golang v0.0.0-20221118010501-c1dc60d7d387
+	github.com/lionsoul2014/ip2region/binding/golang v0.0.0-20221207032553-a3971652cef7
 	github.com/matoous/go-nanoid/v2 v2.0.0
 	github.com/mitchellh/go-homedir v1.1.0
 	github.com/mitchellh/mapstructure v1.5.0
@@ -35,8 +35,8 @@ require (
 	github.com/spf13/cast v1.5.0
 	github.com/spf13/viper v1.14.0
 	github.com/xuri/excelize/v2 v2.6.1
-	go.uber.org/zap v1.21.0
-	golang.org/x/exp v0.0.0-20221205204356-47842c84f3db
+	go.uber.org/zap v1.24.0
+	golang.org/x/exp v0.0.0-20221207211629-99ab8fa1c11f
 	golang.org/x/text v0.5.0
 	google.golang.org/grpc v1.51.0
 	gopkg.in/natefinch/lumberjack.v2 v2.0.0
