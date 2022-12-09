@@ -12,6 +12,7 @@ import (
 )
 
 type (
+	// LogConfig 如果输出到日志文件且该文件已存在，会"追加到最后面".
 	LogConfig struct {
 		// ToConsole RocketMQ5的客户端日志是否输出到控制台？
 		ToConsole bool

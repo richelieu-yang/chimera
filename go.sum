@@ -46,6 +46,8 @@ github.com/aliyun/alibaba-cloud-sdk-go v1.61.18/go.mod h1:v8ESoHo4SyHmuB4b1tJqDH
 github.com/antihax/optional v1.0.0/go.mod h1:uupD/76wgC+ih3iEmQUL+0Ugr19nfwCT1kdvxnR2qWY=
 github.com/apache/rocketmq-clients/golang v0.0.0-20221207121141-c3cb6620bb05 h1:/o/6aogv6cvtqV1uf0L3w+l8C73dENXX1s9G80Sk3X8=
 github.com/apache/rocketmq-clients/golang v0.0.0-20221207121141-c3cb6620bb05/go.mod h1:wtbEvUkAKHlc3h4FU8AZw0w+plDI8kGtmSPNAPGQahw=
+github.com/apache/rocketmq-clients/golang v0.0.0-20221208064856-ba3c5c8e8a5f h1:RzEsCNsREZGb3D9vo+/gLWW/DGOT0I+fg/Pev0eaeYc=
+github.com/apache/rocketmq-clients/golang v0.0.0-20221208064856-ba3c5c8e8a5f/go.mod h1:wtbEvUkAKHlc3h4FU8AZw0w+plDI8kGtmSPNAPGQahw=
 github.com/benbjohnson/clock v1.3.0 h1:ip6w0uFQkncKQ979AypyG0ER7mqUSBdKLOgAle/AT8A=
 github.com/buger/jsonparser v1.1.1 h1:2PnMjfWD7wBILjqQbt530v576A/cAbQvEW9gGIpYMUs=
 github.com/buger/jsonparser v1.1.1/go.mod h1:6RYKKt7H4d4+iWqouImQ9R2FZql3VbhNgx27UK13J/0=
@@ -444,6 +446,8 @@ golang.org/x/exp v0.0.0-20200207192155-f17229e696bd/go.mod h1:J/WKrq2StrnmMY6+EH
 golang.org/x/exp v0.0.0-20200224162631-6cc2880d07d6/go.mod h1:3jZMyOhIsHpP37uCMkUooju7aAi5cS1Q23tOzKc+0MU=
 golang.org/x/exp v0.0.0-20221207211629-99ab8fa1c11f h1:90Jq/vvGVDsqj8QqCynjFw9MCerDguSMODLYII416Y8=
 golang.org/x/exp v0.0.0-20221207211629-99ab8fa1c11f/go.mod h1:CxIveKay+FTh1D0yPZemJVgC/95VzuuOLq5Qi4xnoYc=
+golang.org/x/exp v0.0.0-20221208152030-732eee02a75a h1:4iLhBPcpqFmylhnkbY3W0ONLUYYkDAW9xMFLfxgsvCw=
+golang.org/x/exp v0.0.0-20221208152030-732eee02a75a/go.mod h1:CxIveKay+FTh1D0yPZemJVgC/95VzuuOLq5Qi4xnoYc=
 golang.org/x/image v0.0.0-20190227222117-0694c2d4d067/go.mod h1:kZ7UVZpmo3dzQBMxlp+ypCbDeSB+sBbTgSJuh5dn5js=
 golang.org/x/image v0.0.0-20190802002840-cff245a6509b/go.mod h1:FeLwcggjj3mMvU+oOTbSwawSJRM1uh48EjtB4UJZlP0=
 golang.org/x/image v0.0.0-20191009234506-e7c1f5e7dbb8/go.mod h1:FeLwcggjj3mMvU+oOTbSwawSJRM1uh48EjtB4UJZlP0=
