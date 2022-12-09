@@ -15,7 +15,8 @@ var (
 	}
 )
 
-func processBaseConfig(srcConfig *rmq_client.Config) (*rmq_client.Config, error) {
+// processConfig Consumer和Producer通用
+func processConfig(srcConfig *rmq_client.Config) (*rmq_client.Config, error) {
 	if srcConfig == nil {
 		return nil, errorKit.Simple("config == nil")
 	}

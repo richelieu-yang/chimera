@@ -22,8 +22,9 @@ const (
 
 // NewSimpleConsumer
 /*
-@param logConfig 	可以为nil（此时将默认输出到控制台）
+@param logConfig	可以为nil（此时将默认输出到控制台）
 @param config 		不会修改传参config，因为修改的是副本
+@return 第一个返回值需要手动调用 Start()!
 */
 func NewSimpleConsumer(logConfig *LogConfig, config *rmq_client.Config, consumerGroup, topic, tag string) (rmq_client.SimpleConsumer, error) {
 	lock.Lock()
@@ -33,7 +34,7 @@ func NewSimpleConsumer(logConfig *LogConfig, config *rmq_client.Config, consumer
 		return nil, err
 	}
 
-	config, err := processBaseConfig(config)
+	config, err := processConfig(config)
 	if err != nil {
 		return nil, err
 	}
