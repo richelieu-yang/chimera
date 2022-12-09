@@ -25,7 +25,11 @@ func NewProducer(logConfig *LogConfig, config *rmq_client.Config) (rmq_client.Pr
 	return rmq_client.NewProducer(config)
 }
 
-func SendMessage(producer rmq_client.Producer, topic string, body []byte, tag string, keys ...string) (*rmq_client.SendReceipt, error) {
+// SendMessage
+/*
+@param tag 可以为nil
+*/
+func SendMessage(producer rmq_client.Producer, topic string, body []byte, tag *string, keys ...string) (*rmq_client.SendReceipt, error) {
 	respSlice, err := SendMessageForSendReceipts(producer, topic, body, tag, keys...)
 	if err != nil {
 		return nil, err
@@ -34,7 +38,7 @@ func SendMessage(producer rmq_client.Producer, topic string, body []byte, tag st
 	return respSlice[0], nil
 }
 
-func SendMessageForSendReceipts(producer rmq_client.Producer, topic string, body []byte, tag string, keys ...string) ([]*rmq_client.SendReceipt, error) {
+func SendMessageForSendReceipts(producer rmq_client.Producer, topic string, body []byte, tag *string, keys ...string) ([]*rmq_client.SendReceipt, error) {
 	if producer == nil {
 		return nil, errorKit.Simple("producer == nil")
 	}
@@ -43,7 +47,9 @@ func SendMessageForSendReceipts(producer rmq_client.Producer, topic string, body
 		Topic: topic,
 		Body:  body,
 	}
-	msg.SetTag(tag)
+	if tag != nil {
+		msg.SetTag(*tag)
+	}
 	msg.SetKeys(keys...)
 
 	respSlice, err := producer.Send(context.TODO(), msg)
