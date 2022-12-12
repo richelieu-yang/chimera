@@ -151,3 +151,14 @@ func GetRedisConfig() (*redisKit.RedisConfig, error) {
 	}
 	return envConfig.Redis, nil
 }
+
+// GetRocketmq5Config
+/*
+@return 两个返回值有可能都为nil（因为没有默认值）
+*/
+func GetRocketmq5Config() (*rmq_client.Config, error) {
+	if envConfig == nil {
+		return nil, EnvNotLoadedError
+	}
+	return envConfig.RocketMQ5, nil
+}

@@ -8,6 +8,7 @@ import (
 
 // NewProducer
 /*
+@param logConfig 可以为nil
 @return 第一个返回值需要手动调用 Start()!
 */
 func NewProducer(logConfig *LogConfig, config *rmq_client.Config) (rmq_client.Producer, error) {
@@ -27,6 +28,7 @@ func NewProducer(logConfig *LogConfig, config *rmq_client.Config) (rmq_client.Pr
 
 // SendMessage
 /*
+@param logConfig 可以为nil
 @param tag 可以为nil
 */
 func SendMessage(producer rmq_client.Producer, topic string, body []byte, tag *string, keys ...string) (*rmq_client.SendReceipt, error) {
