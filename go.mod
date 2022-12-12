@@ -4,7 +4,7 @@ go 1.19
 
 require (
 	github.com/apache/rocketmq-clients/golang v0.0.0-20221209030919-8f5f33be4461
-	github.com/dablelv/go-huge-util v0.0.23
+	github.com/dablelv/go-huge-util v0.0.24
 	github.com/deckarep/golang-set/v2 v2.1.0
 	github.com/disintegration/imaging v1.6.2
 	github.com/emersion/go-imap v1.2.1
@@ -37,7 +37,7 @@ require (
 	github.com/spf13/viper v1.14.0
 	github.com/xuri/excelize/v2 v2.6.1
 	go.uber.org/zap v1.24.0
-	golang.org/x/exp v0.0.0-20221208152030-732eee02a75a
+	golang.org/x/exp v0.0.0-20221211140036-ad323defaf05
 	golang.org/x/text v0.5.0
 	google.golang.org/grpc v1.51.0
 	gopkg.in/natefinch/lumberjack.v2 v2.0.0

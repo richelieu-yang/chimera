@@ -1,9 +1,19 @@
 package main
 
-import rmq_client "github.com/apache/rocketmq-clients/golang"
+import (
+	"fmt"
+	"math"
+)
 
 func main() {
-	msg := &rmq_client.Message{}
-	msg.SetTag("")
-	//msg.SetKeys(keys...)
+	x := math.Inf(1)
+
+	switch {
+	case x < 0, x > 0:
+		fmt.Println(x) // +Inf
+	case x == 0:
+		fmt.Println("zero")
+	default:
+		fmt.Println("something else")
+	}
 }
