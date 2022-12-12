@@ -1,19 +1,12 @@
 package main
 
-import (
-	"fmt"
-	"math"
-)
+import "fmt"
 
 func main() {
-	x := math.Inf(1)
-
-	switch {
-	case x < 0, x > 0:
-		fmt.Println(x) // +Inf
-	case x == 0:
-		fmt.Println("zero")
-	default:
-		fmt.Println("something else")
+	for i := 0; i < 6; i++ {
+		if i == 5 {
+			continue
+		}
+		fmt.Println(i)
 	}
 }
