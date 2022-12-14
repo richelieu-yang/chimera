@@ -8,9 +8,9 @@ import (
 	"net/http"
 )
 
-// Get 额外处理了http状态码
-func Get(url string, params map[string]string) ([]byte, error) {
-	statusCode, data, err := Get1(url, params)
+// SimpleGet 额外处理了http状态码
+func SimpleGet(url string, params map[string]string) ([]byte, error) {
+	statusCode, data, err := Get(url, params)
 	if err != nil {
 		return nil, err
 	}
@@ -20,14 +20,14 @@ func Get(url string, params map[string]string) ([]byte, error) {
 	return data, nil
 }
 
-// Get1 发送GET请求（可用于下载文件等场景）
+// Get 发送GET请求（可用于下载文件等场景）
 /*
 @param params 	请求参数，可以为nil
 @return 		http状态码 + 响应内容 + error
 
 参考: golang 将图片生成Base64 https://blog.csdn.net/weixin_40292098/article/details/126029489
 */
-func Get1(url string, params map[string]string) (int, []byte, error) {
+func Get(url string, params map[string]string) (int, []byte, error) {
 	// 参数加到url上
 	callback := func(str string) string {
 		return urlKit.EncodeURIComponent(str)

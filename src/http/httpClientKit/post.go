@@ -12,9 +12,9 @@ import (
 	"strings"
 )
 
-// Post 额外处理了http状态码
-func Post(url string, params map[string]string) ([]byte, error) {
-	statusCode, data, err := Post1(url, params)
+// SimplePost 额外处理了http状态码
+func SimplePost(url string, params map[string]string) ([]byte, error) {
+	statusCode, data, err := Post(url, params)
 	if err != nil {
 		return nil, err
 	}
@@ -24,12 +24,12 @@ func Post(url string, params map[string]string) ([]byte, error) {
 	return data, nil
 }
 
-// Post1
+// Post
 /*
 @param params 	请求参数，可以为nil
 @return 		http状态码 + 响应内容 + error
 */
-func Post1(url string, params map[string]string) (int, []byte, error) {
+func Post(url string, params map[string]string) (int, []byte, error) {
 	// body
 	paramStr := mapKit.JoinSS(params, "&", "=", nil, nil)
 	body := strings.NewReader(paramStr)

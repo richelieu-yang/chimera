@@ -73,7 +73,7 @@ func newAccessToken() (*accessToken, error) {
 		grantType,
 		clientId,
 		clientSecret)
-	resp, err := httpClientKit.Get(url, nil)
+	resp, err := httpClientKit.SimpleGet(url, nil)
 	if err != nil {
 		return nil, err
 	}

@@ -4,6 +4,7 @@ import (
 	"github.com/gin-gonic/gin"
 	"github.com/richelieu42/go-scales/src/core/errorKit"
 	"github.com/richelieu42/go-scales/src/core/pathKit"
+	"github.com/richelieu42/go-scales/src/ginKit"
 	"github.com/richelieu42/go-scales/src/jsonKit"
 	"net/http"
 	"testing"
@@ -25,9 +26,9 @@ func Test(t *testing.T) {
 	}
 
 	// redis组件（可选）
-	if err := InitializeRedisComponent(); err != nil {
-		errorKit.Panic("fail to initialize %s, error: %+v", "redis", err)
-	}
+	//if err := InitializeRedisComponent(); err != nil {
+	//	errorKit.Panic("fail to initialize %s, error: %+v", "redis", err)
+	//}
 
 	// json组件（可选）
 	var msgProcessor jsonKit.MessageProcessor = func(code string, msg string, data interface{}) string {
@@ -64,6 +65,10 @@ func routeBusiness(engine *gin.Engine) error {
 	engine.Any("/test.act", func(ctx *gin.Context) {
 		ctx.String(http.StatusOK, time.Now().UTC().Format(time.RFC3339))
 	})
+
+	ginKit.StaticDir(engine, "/s", "/Users/richelieu/Downloads", false)
+
+	//engine.Static()
 
 	return nil
 }

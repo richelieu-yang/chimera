@@ -39,7 +39,7 @@ func RecognizeUniversalWords(imagePath string) (*Words, error) {
 	}
 
 	// 发请求
-	resp, err := httpClientKit.Post(url, params)
+	resp, err := httpClientKit.SimplePost(url, params)
 	if err != nil {
 		return nil, err
 	}
