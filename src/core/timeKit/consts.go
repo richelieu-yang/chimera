@@ -8,13 +8,6 @@ type (
 	TimeFormat string
 )
 
-var networkTimeSources = []string{
-	"http://www.ntsc.ac.cn",
-	"http://www.taobao.com",
-	"http://www.baidu.com",
-	"http://www.360.cn",
-}
-
 const (
 	Day  = 24 * time.Hour
 	Week = 7 * Day
