@@ -9,5 +9,5 @@ var (
 		(1) 个人实测，对于 http.Client 结构体，Timeout 默认为30s.
 		(2) e.g. yozo的网访问谷歌必定超时.
 	*/
-	DefaultTimeout = time.Second * 30
+	DefaultTimeout = time.Second * 6
 )
