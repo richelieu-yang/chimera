@@ -41,13 +41,15 @@ func GetKeySlice[K comparable, V any](m map[K]V) []K {
 
 // Remove
 /*
+PS: 可能会修改传参m（移除的话），因为它是map类型.
+
 @return 被移除出map的条目的值（存在的话） + 传参m是否包含传参key
 */
 func Remove[K comparable, V any](m map[K]V, key K) (V, bool) {
-	value, ok := m[key]
-	if ok {
+	value, exist := m[key]
+	if exist {
 		// 存在的话，移除对应条目
 		delete(m, key)
 	}
-	return value, ok
+	return value, exist
 }
