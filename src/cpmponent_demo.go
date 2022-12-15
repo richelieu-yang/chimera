@@ -11,7 +11,7 @@ import (
 
 func main() {
 	if err := componentKit.InitializeEnvironment(); err != nil {
-		errorKit.Panic("fail to initialize %s, error: %+v", "env", err)
+		errorKit.PanicByError(err)
 	}
 
 	// 业务逻辑
@@ -21,7 +21,7 @@ func main() {
 
 	// redis组件（可选）
 	if err := componentKit.InitializeRedisComponent(); err != nil {
-		errorKit.Panic("fail to initialize %s, error: %+v", "redis", err)
+		errorKit.PanicByError(err)
 	}
 
 	// json组件（可选）
@@ -34,7 +34,7 @@ func main() {
 		return resp
 	}
 	if err := componentKit.InitializeJsonComponent("", msgProcessor, respProcessor); err != nil {
-		errorKit.Panic("fail to initialize %s, error: %+v", "json", err)
+		errorKit.PanicByError(err)
 	}
 
 	// gin组件（可选）
@@ -42,7 +42,7 @@ func main() {
 		// TODO: gin处理请求时发生panic的情况，在此处进行相应的处理（比如响应json给前端）
 	})
 	if err := componentKit.InitializeGinComponent(recoveryMiddleware, routeBusiness); err != nil {
-		errorKit.Panic("fail to initialize %s, error: %+v", "gin", err)
+		errorKit.PanicByError(err)
 	}
 }
 
