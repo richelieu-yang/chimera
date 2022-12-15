@@ -36,7 +36,7 @@ func (token *accessToken) isExpired() bool {
 }
 
 func parseMapToAccessToken(m map[string]interface{}) (*accessToken, error) {
-	if !mapKit.ContainsKeys(m, "access_token", "expires_in") {
+	if !mapKit.ContainKeys(m, "access_token", "expires_in") {
 		return nil, nil
 	}
 
@@ -49,7 +49,7 @@ func parseMapToAccessToken(m map[string]interface{}) (*accessToken, error) {
 }
 
 func parseMapToWords(m map[string]interface{}) (*Words, error) {
-	if !mapKit.ContainsKeys(m, "log_id", "words_result_num", "words_result") {
+	if !mapKit.ContainKeys(m, "log_id", "words_result_num", "words_result") {
 		return nil, nil
 	}
 	words := &Words{}

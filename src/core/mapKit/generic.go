@@ -1,24 +1,24 @@
 package mapKit
 
-// ContainsKey 判断 map实例 中是否存在 指定的key
+// Contains 判断 map实例 中是否存在 指定的key
 /*
 @param m 可以为nil（此时返回值固定为false）
 
 e.g.
 (m, "1") => false
 */
-func ContainsKey[K comparable, V any](m map[K]V, key K) bool {
+func Contains[K comparable, V any](m map[K]V, key K) bool {
 	_, ok := m[key]
 	return ok
 }
 
-// ContainsKeys 判断 map实例 中是否存在 所有指定的key
+// ContainKeys 判断 map实例 中是否存在 所有指定的key
 /*
 @param keys 可以一个key都不传，此时将固定返回true
 */
-func ContainsKeys[K comparable, V any](m map[K]V, keys ...K) bool {
+func ContainKeys[K comparable, V any](m map[K]V, keys ...K) bool {
 	for _, key := range keys {
-		if !ContainsKey(m, key) {
+		if !Contains(m, key) {
 			return false
 		}
 	}
@@ -37,4 +37,17 @@ func GetKeySlice[K comparable, V any](m map[K]V) []K {
 		s = append(s, key)
 	}
 	return s
+}
+
+// Remove
+/*
+@return 被移除出map的条目的值（存在的话） + 传参m是否包含传参key
+*/
+func Remove[K comparable, V any](m map[K]V, key K) (V, bool) {
+	value, ok := m[key]
+	if ok {
+		// 存在的话，移除对应条目
+		delete(m, key)
+	}
+	return value, ok
 }
