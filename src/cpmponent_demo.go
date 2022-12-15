@@ -19,10 +19,10 @@ func main() {
 		errorKit.PanicByError(err)
 	}
 
-	// redis组件（可选）
-	if err := componentKit.InitializeRedisComponent(); err != nil {
-		errorKit.PanicByError(err)
-	}
+	//// redis组件（可选）
+	//if err := componentKit.InitializeRedisComponent(); err != nil {
+	//	errorKit.PanicByError(err)
+	//}
 
 	// json组件（可选）
 	var msgProcessor jsonKit.MessageProcessor = func(code string, msg string, data interface{}) string {
@@ -46,15 +46,14 @@ func main() {
 	}
 }
 
+// 业务逻辑1: 读取业务配置文件...
 func business() error {
-	// TODO: 业务逻辑（读取业务配置文件...）
 
 	return nil
 }
 
+// 业务逻辑2: 绑定路由...
 func routeBusiness(engine *gin.Engine) error {
-	// TODO: 业务逻辑（绑定路由...）
-
 	// test
 	engine.Any("/test.act", func(ctx *gin.Context) {
 		ctx.String(http.StatusOK, time.Now().UTC().Format(time.RFC3339))
