@@ -17,10 +17,13 @@ import (
 )
 
 // RespondText 响应文本.
-func RespondText(ctx *gin.Context, statusCode int, format string, values ...interface{}) {
+/*
+@param args 用于替换 传参format 中的格式占位符（%s、%d...）
+*/
+func RespondText(ctx *gin.Context, statusCode int, format string, args ...interface{}) {
 	SetCacheControlNoCache(ctx)
 
-	ctx.String(statusCode, format, values...)
+	ctx.String(statusCode, format, args...)
 }
 
 // RespondJson 响应json字符串.
