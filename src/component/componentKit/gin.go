@@ -15,8 +15,7 @@ import (
 PS: 由于会阻塞当前goroutine，建议在业务的最后调用此方法.
 
 @param recoveryMiddleware 	可以为nil，将采用默认值 gin.Recovery()
-@param businessLogic 		可以为nil；
-					 		用于添加业务逻辑，可以在此回调函数内：设置Gin的模式（gin.SetMode()）、对"中间件"和"路由"进行定制化处理......
+@param businessLogic 		可以为nil；用于添加业务逻辑，可以在此回调函数内：设置Gin的模式（gin.SetMode()）、对"中间件"和"路由"进行定制化处理...
 */
 func InitializeGinComponent(recoveryMiddleware gin.HandlerFunc, businessLogic func(engine *gin.Engine) error) error {
 	config, err := GetGinConfig()
