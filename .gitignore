@@ -21,7 +21,6 @@
 *.log
 
 .DS_Store
-# 以 **/ 开头表示匹配所有的文件夹，例如 **/test.md 匹配所有的test.md文件。
 **/.DS_Store
 .DS_Store?
 
