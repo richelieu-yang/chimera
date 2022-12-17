@@ -6,7 +6,11 @@ import (
 
 // Marshal 序列化.
 /*
-@param obj 可以为nil
+@param obj 可以为nil || ""
+
+e.g.
+(nil) 	=> []byte("null"), nil
+("") 	=> []byte("\"\""), nil
 */
 func Marshal(obj interface{}) ([]byte, error) {
 	return jsoniter.Marshal(obj)
@@ -17,17 +21,18 @@ func Marshal(obj interface{}) ([]byte, error) {
 PS:
 (1) 缺陷: 多次序列化相同的map实例(length >= 2)，返回值可能不同，想解决可以使用 MarshalToStringWithJsoniterApi().
 
-@param obj 可以为nil
+@param obj 可以为nil || ""
 
 e.g.
-(nil) => ("null", nil)
+(nil) 	=> "null", nil
+("") 	=> "\"\"", nil
 */
 func MarshalToString(obj interface{}) (string, error) {
-	if str, err := jsoniter.MarshalToString(obj); err != nil {
+	str, err := jsoniter.MarshalToString(obj)
+	if err != nil {
 		return "", err
-	} else {
-		return str, nil
 	}
+	return str, nil
 }
 
 // MarshalToStringWithJsoniterApi
@@ -40,11 +45,12 @@ func MarshalToStringWithJsoniterApi(api jsoniter.API, obj interface{}) (string, 
 	if api == nil {
 		api = jsoniter.ConfigDefault
 	}
-	if str, err := api.MarshalToString(obj); err != nil {
+
+	str, err := api.MarshalToString(obj)
+	if err != nil {
 		return "", err
-	} else {
-		return str, nil
 	}
+	return str, nil
 }
 
 func MarshalWithIndent(obj interface{}) ([]byte, error) {
@@ -60,10 +66,6 @@ func MarshalWithIndent(obj interface{}) ([]byte, error) {
 	}
 }
 
-// MarshalToStringWithIndent
-/*
-PS: string(nil) => ""
-*/
 func MarshalToStringWithIndent(obj interface{}) (string, error) {
 	data, err := MarshalWithIndent(obj)
 	if err != nil {
