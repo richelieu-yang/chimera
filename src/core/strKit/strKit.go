@@ -10,6 +10,9 @@ import (
 )
 
 // Format 格式化文本，类似Java的"StrUtil.format".
+/*
+Deprecated: 直接用 fmt.Sprintf() 对编码更友好。
+*/
 func Format(format string, args ...interface{}) string {
 	return fmt.Sprintf(format, args...)
 }
