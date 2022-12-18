@@ -2,10 +2,9 @@ package mapKit
 
 import (
 	"github.com/mitchellh/mapstructure"
-	"github.com/richelieu42/go-scales/src/core/pointerKit"
 )
 
-// DecodeToPointer 结构体（包括map）的实例或指针 => 结构体（包括map）的指针
+// Decode 将 通用的map[string]interface{} 解码到对应的 Go结构体中 ，或者执行相反的操作。
 /*
 PS:
 (1) 也可用于: map转map；
@@ -14,10 +13,6 @@ PS:
 @param input	structure（包括map）
 @param output 	指针，must be a pointer to a map or struct
 */
-func DecodeToPointer(input interface{}, outputPtr interface{}) error {
-	err := pointerKit.AssertPointer(outputPtr, "outputPtr")
-	if err != nil {
-		return err
-	}
-	return mapstructure.Decode(input, outputPtr)
+func Decode(input interface{}, output interface{}) error {
+	return mapstructure.Decode(input, output)
 }

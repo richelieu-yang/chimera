@@ -41,7 +41,7 @@ func parseMapToAccessToken(m map[string]interface{}) (*accessToken, error) {
 	}
 
 	token := &accessToken{}
-	err := mapKit.DecodeToPointer(m, token)
+	err := mapKit.Decode(m, token)
 	if err != nil {
 		return nil, err
 	}
@@ -53,7 +53,7 @@ func parseMapToWords(m map[string]interface{}) (*Words, error) {
 		return nil, nil
 	}
 	words := &Words{}
-	err := mapKit.DecodeToPointer(m, words)
+	err := mapKit.Decode(m, words)
 	if err != nil {
 		return nil, err
 	}
