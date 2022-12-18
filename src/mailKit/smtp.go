@@ -1,6 +1,7 @@
 package mailKit
 
 import (
+	"fmt"
 	"github.com/jordan-wright/email"
 	"github.com/richelieu42/go-scales/src/consts"
 	"github.com/richelieu42/go-scales/src/core/errorKit"
@@ -43,7 +44,7 @@ func InitializeSmtp(config *SmtpConfig, count int) error {
 		return errorKit.Simple("config == nil")
 	}
 	config.NickName = strKit.EmptyToDefault(config.NickName, consts.Name, true)
-	defaultFrom = strKit.Format("%s <%s>", config.NickName, config.Account)
+	defaultFrom = fmt.Sprintf("%s <%s>", config.NickName, config.Account)
 
 	if count <= 0 {
 		return errorKit.Simple("count(%d) is invalid", count)

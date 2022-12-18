@@ -1,9 +1,9 @@
 package imageKit
 
 import (
+	"fmt"
 	"github.com/richelieu42/go-scales/src/core/errorKit"
 	"github.com/richelieu42/go-scales/src/core/file/fileKit"
-	"github.com/richelieu42/go-scales/src/core/strKit"
 	"github.com/richelieu42/go-scales/src/crypto/base64Kit"
 	"github.com/richelieu42/go-scales/src/http/httpClientKit"
 	"regexp"
@@ -47,7 +47,7 @@ func EncodeToBase64String(data []byte) (string, error) {
 	case "image/jpeg":
 		fallthrough
 	case "image/png":
-		base64Str := strKit.Format("data:%s;base64,%s", mimeType, base64Kit.EncodeToString(data))
+		base64Str := fmt.Sprintf("data:%s;base64,%s", mimeType, base64Kit.EncodeToString(data))
 		return base64Str, nil
 	default:
 		return "", errorKit.Simple("mimeType(%s) isn't supported currently", mimeType)

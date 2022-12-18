@@ -1,9 +1,9 @@
 package baiduOcrKit
 
 import (
+	"fmt"
 	"github.com/richelieu42/go-scales/src/core/errorKit"
 	"github.com/richelieu42/go-scales/src/core/file/fileKit"
-	"github.com/richelieu42/go-scales/src/core/strKit"
 	"github.com/richelieu42/go-scales/src/http/httpClientKit"
 	"github.com/richelieu42/go-scales/src/jsonKit"
 	"github.com/richelieu42/go-scales/src/urlKit"
@@ -26,7 +26,7 @@ func RecognizeUniversalWords(imagePath string) (*Words, error) {
 	if err != nil {
 		return nil, err
 	}
-	url := strKit.Format("%s?access_token=%s", "https://aip.baidubce.com/rest/2.0/ocr/v1/general_basic", token.AccessToken)
+	url := fmt.Sprintf("%s?access_token=%s", "https://aip.baidubce.com/rest/2.0/ocr/v1/general_basic", token.AccessToken)
 
 	// params
 	base64Str, err := fileKit.ReadFileToBase64(imagePath)

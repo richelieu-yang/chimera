@@ -1,6 +1,7 @@
 package jsonKit
 
 import (
+	"fmt"
 	jsoniter "github.com/json-iterator/go"
 	"github.com/richelieu42/go-scales/src/core/strKit"
 	"github.com/richelieu42/go-scales/src/msgKit"
@@ -41,7 +42,7 @@ func getFinalMessage(code, msg string, data interface{}, args ...interface{}) st
 		msg = msgKit.GetMsg(code)
 	}
 	if strKit.IsNotEmpty(msg) && args != nil {
-		msg = strKit.Format(msg, args...)
+		msg = fmt.Sprintf(msg, args...)
 	}
 	if msgProcessor != nil {
 		msg = msgProcessor(code, msg, data)

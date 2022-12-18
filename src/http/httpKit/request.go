@@ -1,6 +1,7 @@
 package httpKit
 
 import (
+	"fmt"
 	"github.com/gorilla/websocket"
 	"github.com/richelieu42/go-scales/src/core/strKit"
 	"github.com/richelieu42/go-scales/src/operationKit"
@@ -61,5 +62,5 @@ func GetRequestUrl(req *http.Request) string {
 	/* path */
 	path := url.Path
 
-	return strKit.Format("%s://%s%s", scheme, host, path)
+	return fmt.Sprintf("%s://%s%s", scheme, host, path)
 }

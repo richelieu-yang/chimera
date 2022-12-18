@@ -1,9 +1,9 @@
 package runtimeKit
 
 import (
+	"fmt"
 	"github.com/richelieu42/go-scales/src/core/errorKit"
 	"github.com/richelieu42/go-scales/src/core/floatKit"
-	"github.com/richelieu42/go-scales/src/core/strKit"
 	"github.com/richelieu42/go-scales/src/dataSizeKit"
 	"github.com/shirou/gopsutil/v3/disk"
 )
@@ -30,7 +30,7 @@ e.g.
 ""free: 300 GB, used: 160.43 GB, total: 460.43 GB, used percent: 34.84%""
 */
 func (stat DiskStat) String() string {
-	return strKit.Format("free: %s, used: %s, total: %s, free percent: %.2f%%",
+	return fmt.Sprintf("free: %s, used: %s, total: %s, free percent: %.2f%%",
 		dataSizeKit.ToReadableDataSizeString(stat.Free),
 		dataSizeKit.ToReadableDataSizeString(stat.Used),
 		dataSizeKit.ToReadableDataSizeString(stat.Total),

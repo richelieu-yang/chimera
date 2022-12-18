@@ -1,8 +1,8 @@
 package runtimeKit
 
 import (
+	"fmt"
 	"github.com/richelieu42/go-scales/src/core/floatKit"
-	"github.com/richelieu42/go-scales/src/core/strKit"
 	"github.com/richelieu42/go-scales/src/dataSizeKit"
 	"github.com/shirou/gopsutil/v3/mem"
 )
@@ -21,7 +21,7 @@ func (stat MemoryStat) GetAvailablePercent() float64 {
 }
 
 func (stat MemoryStat) String() string {
-	return strKit.Format("available: %s, free: %s, used: %s, total: %s, available percent: %.2f%%",
+	return fmt.Sprintf("available: %s, free: %s, used: %s, total: %s, available percent: %.2f%%",
 		dataSizeKit.ToReadableDataSizeString(stat.Available),
 		dataSizeKit.ToReadableDataSizeString(stat.Free),
 		dataSizeKit.ToReadableDataSizeString(stat.Used),

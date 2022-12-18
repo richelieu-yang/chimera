@@ -5,6 +5,7 @@ TODO: 响应文件或文件流，目前一律用no-cache，在此种情况下会
 package ginKit
 
 import (
+	"fmt"
 	"github.com/gin-gonic/gin"
 	"github.com/richelieu42/go-scales/src/consts/httpStatusCode"
 	"github.com/richelieu42/go-scales/src/core/file/fileKit"
@@ -147,7 +148,7 @@ func RespondError(ctx *gin.Context, httpStatusCode int, err error) {
 func RespondPanic(ctx *gin.Context, err any) {
 	var message string
 	if err != nil {
-		message = strKit.Format("%v", err)
+		message = fmt.Sprintf("%v", err)
 	} else {
 		message = "err == nil"
 	}

@@ -1,6 +1,7 @@
 package pointerKit
 
 import (
+	"fmt"
 	"github.com/modern-go/reflect2"
 	"github.com/richelieu42/go-scales/src/core/strKit"
 	"reflect"
@@ -15,7 +16,7 @@ e.g.1
 (nil) => "%!p(<nil>)"
 */
 func ToString(ptr interface{}) string {
-	return strKit.Format("%p", ptr)
+	return fmt.Sprintf("%p", ptr)
 }
 
 // IsPointer
@@ -47,6 +48,6 @@ e.g.
 (nil) => false
 */
 func IsPointer2(obj interface{}) bool {
-	str := strKit.Format("%T", obj)
+	str := fmt.Sprintf("%T", obj)
 	return strKit.StartWith(str, "*")
 }

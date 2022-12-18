@@ -1,6 +1,7 @@
 package redisKit
 
 import (
+	"fmt"
 	"github.com/go-redis/redis/v8"
 	"github.com/go-redsync/redsync/v4"
 	"github.com/go-redsync/redsync/v4/redis/goredis/v8"
@@ -71,7 +72,7 @@ func testConnection(client *Client) error {
 		return err
 	}
 
-	key := strKit.Format("go-scales:test:redis:%s", idKit.NewSimpleUUID())
+	key := fmt.Sprintf("go-scales:test:redis:%s", idKit.NewSimpleUUID())
 	value := timeKit.FormatCurrentTime()
 	expiration := time.Second * 8 // 8s后过期（PS: 如果要debug此函数的话，建议将时间延长）
 

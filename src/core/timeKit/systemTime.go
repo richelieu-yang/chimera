@@ -3,6 +3,7 @@
 package timeKit
 
 import (
+	"fmt"
 	"github.com/richelieu42/go-scales/src/cmdKit"
 	"github.com/richelieu42/go-scales/src/core/strKit"
 	"time"
@@ -23,9 +24,9 @@ func SetSystemTime(t time.Time, rootPassword string) error {
 
 	var script string
 	if strKit.IsEmpty(rootPassword) {
-		script = strKit.Format("date %s", timeStr)
+		script = fmt.Sprintf("date %s", timeStr)
 	} else {
-		script = strKit.Format(`echo "%s" | sudo -S date %s`, rootPassword, timeStr)
+		script = fmt.Sprintf(`echo "%s" | sudo -S date %s`, rootPassword, timeStr)
 	}
 
 	_, err := cmdKit.ExecuteToString("sh", "-c", script)

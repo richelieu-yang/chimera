@@ -1,6 +1,7 @@
 package baiduOcrKit
 
 import (
+	"fmt"
 	"github.com/richelieu42/go-scales/src/core/errorKit"
 	"github.com/richelieu42/go-scales/src/core/strKit"
 	"github.com/richelieu42/go-scales/src/http/httpClientKit"
@@ -69,7 +70,7 @@ func newAccessToken() (*accessToken, error) {
 		return nil, errorKit.Simple("SetApiKeyAndSecretKey() should be invoked firstly")
 	}
 
-	url := strKit.Format("https://aip.baidubce.com/oauth/2.0/token?grant_type=%s&client_id=%s&client_secret=%s",
+	url := fmt.Sprintf("https://aip.baidubce.com/oauth/2.0/token?grant_type=%s&client_id=%s&client_secret=%s",
 		grantType,
 		clientId,
 		clientSecret)

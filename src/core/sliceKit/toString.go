@@ -1,7 +1,7 @@
 package sliceKit
 
 import (
-	"github.com/richelieu42/go-scales/src/core/strKit"
+	"fmt"
 )
 
 // ToString 切片实例（元素任意类型） => string
@@ -12,5 +12,5 @@ e.g.
 ([]int{-1, 0, 1}) => "[-1 0 1]"
 */
 func ToString[T any](s []T) string {
-	return strKit.Format("%v", s)
+	return fmt.Sprintf("%v", s)
 }
