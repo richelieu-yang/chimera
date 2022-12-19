@@ -9,7 +9,7 @@ import (
 // NewProducer
 /*
 @param logConfig 可以为nil
-@return 第一个返回值需要手动调用 Start()!
+@return rmq_client.Producer实例要手动调用 Start()!!!
 */
 func NewProducer(logConfig *LogConfig, config *rmq_client.Config) (rmq_client.Producer, error) {
 	lock.Lock()

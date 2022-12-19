@@ -9,6 +9,7 @@ import (
 // NewProducer
 /*
 @param logConfig 可以为nil
+@return rmq_client.Producer实例要手动调用 Start()!!!
 */
 func NewProducer(logConfig *rocketmq5Kit.LogConfig) (rmq_client.Producer, error) {
 	config, err := GetRocketmq5Config()
@@ -25,6 +26,7 @@ func NewProducer(logConfig *rocketmq5Kit.LogConfig) (rmq_client.Producer, error)
 // NewSimpleConsumer
 /*
 @param logConfig 可以为nil
+@return rmq_client.SimpleConsumer实例要手动调用 Start()!!!
 */
 func NewSimpleConsumer(logConfig *rocketmq5Kit.LogConfig, consumerGroup, topic, tag string) (rmq_client.SimpleConsumer, error) {
 	config, err := GetRocketmq5Config()

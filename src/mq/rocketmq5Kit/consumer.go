@@ -24,7 +24,7 @@ const (
 /*
 @param logConfig	可以为nil（此时将默认输出到控制台）
 @param config 		不会修改传参config，因为修改的是副本
-@return 第一个返回值需要手动调用 Start()!
+@return rmq_client.SimpleConsumer实例要手动调用 Start()!!!
 */
 func NewSimpleConsumer(logConfig *LogConfig, config *rmq_client.Config, consumerGroup, topic, tag string) (rmq_client.SimpleConsumer, error) {
 	lock.Lock()
