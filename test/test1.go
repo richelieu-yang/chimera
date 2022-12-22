@@ -1,10 +1,5 @@
 package main
 
-import (
-	"fmt"
-	"github.com/richelieu42/go-scales/src/core/sliceKit"
-)
-
 type (
 	Bean struct {
 		Id int
@@ -12,9 +7,6 @@ type (
 )
 
 func main() {
-	s, err := sliceKit.DeepCopy([]string(nil))
-	fmt.Println(s, err)
-
 	//var c interface{} = nil
 
 	//c1, err := copyKit.DeepCopy(interface{}(nil))

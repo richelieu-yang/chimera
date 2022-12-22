@@ -9,7 +9,7 @@ import (
 
 // DeepCopyStruct 深拷贝结构体
 /*
-PS: 不支持map!!!
+Deprecated: 不支持map，因为结果为浅拷贝.
 
 @param toValue 		必须是指针类型
 @param fromValue 	指针类型 || 结构体实例
