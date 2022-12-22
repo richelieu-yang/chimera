@@ -2,7 +2,7 @@ package main
 
 import (
 	"fmt"
-	"github.com/jinzhu/copier"
+	"github.com/richelieu42/go-scales/src/copyKit"
 	"github.com/richelieu42/go-scales/src/jsonKit"
 )
 
@@ -21,15 +21,12 @@ func main() {
 	u := &User{
 		Name: "张三",
 	}
-	b := Bean{
+	b := &Bean{
 		Id: 666,
 		U:  u,
 	}
-	b1 := Bean{}
-
-	if err := copier.CopyWithOption(&b1, b, copier.Option{
-		DeepCopy:    false,
-	}); err != nil {
+	b1, err := copyKit.DeepCopy(b)
+	if err != nil {
 		panic(err)
 	}
 
