@@ -55,12 +55,12 @@ func ForwardRequest(ctx *gin.Context, params ForwardParams, errorLogger *log.Log
 		req.URL.Scheme = scheme
 		req.URL.Host = addr
 
-		// req.URL.Path
+		// req.URL.Param1
 		if reqUrlPath != nil {
 			req.URL.Path = reqUrlPath.GetValue()
 		}
 
-		// req.URL.Path
+		// req.URL.Param1
 		req.URL.RawQuery = urlKit.CombineQueryString(req.URL.RawQuery, urlKit.ToQueryString(extraQuery))
 	}
 	proxy := &httputil.ReverseProxy{

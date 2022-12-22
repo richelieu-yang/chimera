@@ -21,7 +21,7 @@ PS:
 	("myhash", map[string]interface{}{"key1": "value1", "key2": "value2"})
 */
 func (client Client) HSet(key string, values ...interface{}) (int64, error) {
-	return client.UC.HSet(context.Background(), key, values...).Result()
+	return client.UC.HSet(context.TODO(), key, values...).Result()
 }
 
 // HSetNX 只有在 字段field 不存在时，设置哈希表字段的值
@@ -33,7 +33,7 @@ PS:
 @param key 如果db中不存在，会自动创建
 */
 func (client Client) HSetNX(key, field string, value interface{}) (bool, error) {
-	return client.UC.HSetNX(context.Background(), key, field, value).Result()
+	return client.UC.HSetNX(context.TODO(), key, field, value).Result()
 }
 
 // HGet 获取存储在哈希表中指定字段的值。
@@ -42,7 +42,7 @@ func (client Client) HSetNX(key, field string, value interface{}) (bool, error) 
 		field不存在 => 	("", redis.Nil)
 */
 func (client Client) HGet(key, field string) (string, error) {
-	return client.UC.HGet(context.Background(), key, field).Result()
+	return client.UC.HGet(context.TODO(), key, field).Result()
 }
 
 // HDel 删除一个或多个哈希表字段.
@@ -51,12 +51,12 @@ func (client Client) HGet(key, field string) (string, error) {
 @return 第一个返回值：被成功删除字段的数量，不包括被忽略的字段
 */
 func (client Client) HDel(key string, fields ...string) (int64, error) {
-	return client.UC.HDel(context.Background(), key, fields...).Result()
+	return client.UC.HDel(context.TODO(), key, fields...).Result()
 }
 
 // HKeys 获取哈希表中所有字段
 func (client Client) HKeys(key string) ([]string, error) {
-	return client.UC.HKeys(context.Background(), key).Result()
+	return client.UC.HKeys(context.TODO(), key).Result()
 }
 
 // HScan 迭代哈希表中的键值对
@@ -64,7 +64,7 @@ func (client Client) HKeys(key string) ([]string, error) {
 @return e.g. 如果哈希表中有两对键值，那么不出错的情况下，返回的[]string实例的长度为4
 */
 func (client Client) HScan(key string, cursor uint64, match string, count int64) ([]string, uint64, error) {
-	return client.UC.HScan(context.Background(), key, cursor, match, count).Result()
+	return client.UC.HScan(context.TODO(), key, cursor, match, count).Result()
 }
 
 //func (client Client) HScanFully(key string, match string, count int64) ([]string, error) {

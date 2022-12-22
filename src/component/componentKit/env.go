@@ -18,10 +18,13 @@ import (
 
 type (
 	EnvConfig struct {
-		Runtime   *RuntimeConfig
-		Logrus    *logrusKit.LogrusConfig
-		Gin       *ginKit.GinConfig
-		Redis     *redisKit.RedisConfig
+		Ip string
+
+		Runtime *RuntimeConfig
+		Logrus  *logrusKit.LogrusConfig
+		Gin     *ginKit.GinConfig
+		Redis   *redisKit.RedisConfig
+
 		RocketMQ5 *rmq_client.Config
 	}
 )
@@ -53,6 +56,13 @@ var (
 var startingTime = time.Now()
 
 var envConfig *EnvConfig = nil
+
+func GetIp() (string, error) {
+	if envConfig == nil {
+		return "", EnvNotLoadedError
+	}
+	return envConfig.Ip, nil
+}
 
 // InitializeEnvironment 加载 env.yaml; 初始化组件: logrus、runtime
 /*

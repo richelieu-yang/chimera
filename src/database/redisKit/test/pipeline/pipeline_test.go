@@ -17,13 +17,13 @@ func TestPipeline(t *testing.T) {
 	}
 
 	pipe := client.Pipeline()
-	cmd := pipe.Set(context.Background(), "a", "c", 0)
+	cmd := pipe.Set(context.TODO(), "a", "c", 0)
 	// 此处会报错
-	cmd1 := pipe.Do(context.Background(), "ino")
-	cmd2 := pipe.Set(context.Background(), "b", "c", 0)
-	cmd3 := pipe.Do(context.Background(), "ino111")
+	cmd1 := pipe.Do(context.TODO(), "ino")
+	cmd2 := pipe.Set(context.TODO(), "b", "c", 0)
+	cmd3 := pipe.Do(context.TODO(), "ino111")
 
-	_, err = pipe.Exec(context.Background())
+	_, err = pipe.Exec(context.TODO())
 	fmt.Println(err)
 
 	fmt.Println(cmd.Result())

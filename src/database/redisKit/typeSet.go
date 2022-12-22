@@ -13,7 +13,7 @@ Redis 集合(Set): https://www.runoob.com/redis/redis-sets.html
 @param key 不存在的话，会自动创建此key
 */
 func (client Client) SAdd(key string, members ...interface{}) (int64, error) {
-	return client.UC.SAdd(context.Background(), key, members...).Result()
+	return client.UC.SAdd(context.TODO(), key, members...).Result()
 }
 
 // SRem 移除集合中一个或多个成员
@@ -23,7 +23,7 @@ func (client Client) SAdd(key string, members ...interface{}) (int64, error) {
 @param key 如果移除成员后集合为空，将删除此key
 */
 func (client Client) SRem(key string, members ...interface{}) (int64, error) {
-	return client.UC.SRem(context.Background(), key, members...).Result()
+	return client.UC.SRem(context.TODO(), key, members...).Result()
 }
 
 // SMembers 返回集合中的所有成员
@@ -34,7 +34,7 @@ func (client Client) SRem(key string, members ...interface{}) (int64, error) {
 		e.g.1	如果key不存在，将返回 ([], nil)
 */
 func (client Client) SMembers(key string) ([]string, error) {
-	return client.UC.SMembers(context.Background(), key).Result()
+	return client.UC.SMembers(context.TODO(), key).Result()
 }
 
 // SMembersMap
@@ -44,5 +44,5 @@ func (client Client) SMembers(key string) ([]string, error) {
 @return 如果key不存在，将返回 (map[], nil)
 */
 func (client Client) SMembersMap(key string) (map[string]struct{}, error) {
-	return client.UC.SMembersMap(context.Background(), key).Result()
+	return client.UC.SMembersMap(context.TODO(), key).Result()
 }

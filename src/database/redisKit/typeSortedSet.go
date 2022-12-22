@@ -14,7 +14,7 @@ Redis 有序集合(sorted set): https://www.runoob.com/redis/redis-sorted-sets.h
 @param key 如果在db中不存在的话，会自动创建
 */
 func (client Client) ZAdd(key string, members ...*redis.Z) (int64, error) {
-	return client.UC.ZAdd(context.Background(), key, members...).Result()
+	return client.UC.ZAdd(context.TODO(), key, members...).Result()
 }
 
 // ZRem [删]移除有序集合中的一个或多个成员
@@ -22,7 +22,7 @@ func (client Client) ZAdd(key string, members ...*redis.Z) (int64, error) {
 @return 如果传参key在db中不存在的话，将返回(0, nil)
 */
 func (client Client) ZRem(key string, members ...interface{}) (int64, error) {
-	return client.UC.ZRem(context.Background(), key, members...).Result()
+	return client.UC.ZRem(context.TODO(), key, members...).Result()
 }
 
 // ZRangeByScore 通过分数返回有序集合指定区间内的成员，分数 从低到高 排序
@@ -30,11 +30,11 @@ func (client Client) ZRem(key string, members ...interface{}) (int64, error) {
 具体如何调用可以参考 ZRevRangeByScore.
 */
 func (client Client) ZRangeByScore(key string, opt *redis.ZRangeBy) ([]string, error) {
-	return client.UC.ZRangeByScore(context.Background(), key, opt).Result()
+	return client.UC.ZRangeByScore(context.TODO(), key, opt).Result()
 }
 
 func (client Client) ZRangeByScoreWithScores(key string, opt *redis.ZRangeBy) ([]redis.Z, error) {
-	return client.UC.ZRangeByScoreWithScores(context.Background(), key, opt).Result()
+	return client.UC.ZRangeByScoreWithScores(context.TODO(), key, opt).Result()
 }
 
 // ZRevRangeByScore 返回有序集中指定分数区间内的成员，分数 从高到低 排序
@@ -52,10 +52,10 @@ ZRANGEBYSCORE zset (1 5		返回所有符合条件 1 < score <= 5 的成员
 ZRANGEBYSCORE zset (5 (10	返回所有符合条件 5 < score < 10 的成员
 */
 func (client Client) ZRevRangeByScore(key string, opt *redis.ZRangeBy) ([]string, error) {
-	return client.UC.ZRevRangeByScore(context.Background(), key, opt).Result()
+	return client.UC.ZRevRangeByScore(context.TODO(), key, opt).Result()
 }
 
 // ZRevRangeByScoreWithScores 类似 ZRevRangeByScore，返回值元素中多了score属性
 func (client Client) ZRevRangeByScoreWithScores(key string, opt *redis.ZRangeBy) ([]redis.Z, error) {
-	return client.UC.ZRevRangeByScoreWithScores(context.Background(), key, opt).Result()
+	return client.UC.ZRevRangeByScoreWithScores(context.TODO(), key, opt).Result()
 }

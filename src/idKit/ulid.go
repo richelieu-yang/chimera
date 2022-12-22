@@ -13,6 +13,9 @@ PS:
 	This function calls time.Now to get a timestamp, and uses a source of entropy which is process-global, pseudo-random, and monotonic.
 
 @return 长度: 26（即ulid.EncodedSize）
+
+e.g.
+() => "01GMSRXRWJPYSQQZ5Z6T832CSZ"
 */
 func NewULID() string {
 	return ulid.Make().String()
