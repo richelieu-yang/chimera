@@ -20,8 +20,9 @@ func Clone[K comparable, V any](m map[K]V) map[K]V {
 
 // DeepClone 深拷贝.
 /*
-参考:
-「Go工具箱」推荐一个非常简单的深拷贝工具：deepcopy https://mp.weixin.qq.com/s/e3bL1i6WT-4MwK-SEpUa6Q
+PS:
+(1) 参考: 「Go工具箱」推荐一个非常简单的深拷贝工具：deepcopy https://mp.weixin.qq.com/s/e3bL1i6WT-4MwK-SEpUa6Q；
+(2) 不要使用 copier 来拷贝map，因为不管如何配置都是浅拷贝（感觉是bug）.
 */
 func DeepClone[K comparable, V any](m map[K]V) (map[K]V, error) {
 	obj := deepcopy.Copy(m)

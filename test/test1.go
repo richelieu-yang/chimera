@@ -3,65 +3,40 @@ package main
 import (
 	"fmt"
 	"github.com/jinzhu/copier"
-	"github.com/richelieu42/go-scales/src/core/mapKit"
-	"unsafe"
+	"github.com/richelieu42/go-scales/src/jsonKit"
+)
+
+type (
+	Bean struct {
+		Id int
+		U  *User
+	}
+
+	User struct {
+		Name string
+	}
 )
 
 func main() {
-	tmp := &map[string]interface{}{
-		"a": true,
+	u := &User{
+		Name: "张三",
 	}
-	src := map[string]interface{}{
-		"b":   false,
-		"tmp": tmp,
+	b := Bean{
+		Id: 666,
+		U:  u,
 	}
+	b1 := Bean{}
 
-	dest := mapKit.Clone(src)
-
-	//dest, err := mapKit.DeepClone(src)
-	//if err != nil {
-	//	panic(err)
-	//}
-
-	//(*tmp)["a"] = "aaa"
-	//fmt.Printf("%p\n", tmp)
-	//fmt.Printf("%+v\n", src)
-	//fmt.Printf("%+v\n", dest)
-
-	{
-		obj := src["tmp"]
-		fmt.Println(unsafe.Pointer(obj.(*map[string]interface{})))
-	}
-	{
-		obj := dest["tmp"]
-		fmt.Println(unsafe.Pointer(obj.(*map[string]interface{})))
-	}
-
-	//fmt.Println(unsafe.Pointer(dest["tmp"]))
-	//
-	//fmt.Println(src)
-	//fmt.Println(dest)
-}
-
-// Clone 浅拷贝
-func Clone[K comparable, V any](m map[K]V) map[K]V {
-	if m == nil {
-		return nil
-	}
-
-	dolly := make(map[K]V)
-	for k, v := range m {
-		dolly[k] = v
-	}
-	return dolly
-}
-
-func DeepClone[K comparable, V any](m map[K]V) (map[K]V, error) {
-	dolly := make(map[K]V)
-	if err := copier.CopyWithOption(&dolly, &m, copier.Option{
-		DeepCopy: true,
+	if err := copier.CopyWithOption(&b1, b, copier.Option{
+		DeepCopy:    false,
 	}); err != nil {
-		return nil, err
+		panic(err)
 	}
-	return dolly, nil
+
+	fmt.Printf("%+v\n", b)
+	fmt.Printf("%+v\n", b1)
+
+	u.Name = "李四"
+	fmt.Println(jsonKit.MarshalToString(b))
+	fmt.Println(jsonKit.MarshalToString(b1))
 }
