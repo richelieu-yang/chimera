@@ -3,8 +3,8 @@ module github.com/richelieu42/go-scales
 go 1.19
 
 require (
-	github.com/apache/rocketmq-clients/golang v0.0.0-20221213030432-db1e7aee4c9d
-	github.com/dablelv/go-huge-util v0.0.25
+	github.com/apache/rocketmq-clients/golang v0.0.0-20221221030536-5a6a16c69787
+	github.com/dablelv/go-huge-util v0.0.27
 	github.com/deckarep/golang-set/v2 v2.1.0
 	github.com/disintegration/imaging v1.6.2
 	github.com/emersion/go-imap v1.2.1
@@ -37,7 +37,7 @@ require (
 	github.com/spf13/viper v1.14.0
 	github.com/xuri/excelize/v2 v2.6.1
 	go.uber.org/zap v1.24.0
-	golang.org/x/exp v0.0.0-20221212164502-fae10dda9338
+	golang.org/x/exp v0.0.0-20221217163422-3c43f8badb15
 	golang.org/x/text v0.5.0
 	google.golang.org/grpc v1.51.0
 	gopkg.in/natefinch/lumberjack.v2 v2.0.0

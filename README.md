@@ -10,4 +10,5 @@ Golang的工具类.
 PS: 如果安装失败（因为部分依赖 i/o timeout等原因），可以考虑更改 环境变量GOPROXY，比如切换为阿里的代理（https://mirrors.aliyun.com/goproxy/）.
 go get github.com/richelieu42/go-scales
 
-
+## TODOS
+将redisKit中的 go-redis依赖 升级为 v9版本（正式版发布的话）.
