@@ -9,6 +9,8 @@ import (
 // Set 设置指定key的值.
 /*
 @param key 			可以为""
+@param value 		支持的类型: string、int、float64、bool(true: "1"; false: "0")...
+					不至此的类型（会返回error）: map、自定义结构体...
 @param expiration 	e.g.	120*time.Second
 					 		0: 						持久化的键（即TTL为-1），无论：键是否存在、存在的键是否有超时时间
 					 		-1(即 redis.KeepTTL): 	保持已经存在的TTL.(1)如果key不存在，则TTL为-1；(2)如果"Redis服务器版本"<6.0，会报错：ERR syntax error.
@@ -34,7 +36,7 @@ func (client Client) SetNX(key string, value interface{}, expiration time.Durati
 /*
 PS:
 (1) 如果当前db中不存在传参key，将返回 ("", redis.Nil)
-(2) 如果对应value的类型不为string，会返回error:	WRONGTYPE Operation against a key holding the wrong kind of value
+(2) 如果对应value的类型不为string，会返回error: WRONGTYPE Operation against a key holding the wrong kind of value
 */
 func (client Client) Get(key string) (string, error) {
 	return client.UC.Get(context.TODO(), key).Result()

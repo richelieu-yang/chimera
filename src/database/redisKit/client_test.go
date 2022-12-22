@@ -24,9 +24,10 @@ func TestClusterMode(test *testing.T) {
 		panic(err)
 	}
 
-	if ok, err := client.Set("", "100", 0); err != nil {
+	tmp := false
+	if ok, err := client.Set("ccc", tmp, 0); err != nil {
 		panic(err)
 	} else {
-		fmt.Printf("ok: [%t].", ok)
+		fmt.Printf("ok: [%t].\n", ok)
 	}
 }
