@@ -1,7 +1,6 @@
 package grpcKit
 
 import (
-	"context"
 	"github.com/richelieu42/go-scales/src/core/errorKit"
 	"google.golang.org/grpc/codes"
 	"google.golang.org/grpc/status"
@@ -18,9 +17,7 @@ func IsDeadlineExceededError(err error) bool {
 
 	// 防止多层error嵌套
 	err = errorKit.Cause(err)
-	if err == context.DeadlineExceeded {
-		return true
-	}
+
 	if s, ok := status.FromError(err); ok {
 		if s.Code() == codes.DeadlineExceeded {
 			return true
