@@ -28,7 +28,8 @@ func NewProducer(logConfig *LogConfig, config *rmq_client.Config) (rmq_client.Pr
 
 // SendMessage
 /*
-@param logConfig 可以为nil
+Deprecated: 此方法仅供参考.
+
 @param tag 可以为nil
 */
 func SendMessage(producer rmq_client.Producer, topic string, body []byte, tag *string, keys ...string) (*rmq_client.SendReceipt, error) {
@@ -40,6 +41,10 @@ func SendMessage(producer rmq_client.Producer, topic string, body []byte, tag *s
 	return respSlice[0], nil
 }
 
+// SendMessageForSendReceipts
+/*
+Deprecated: 此方法仅供参考.
+*/
 func SendMessageForSendReceipts(producer rmq_client.Producer, topic string, body []byte, tag *string, keys ...string) ([]*rmq_client.SendReceipt, error) {
 	if producer == nil {
 		return nil, errorKit.Simple("producer == nil")

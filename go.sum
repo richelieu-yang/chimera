@@ -50,6 +50,8 @@ github.com/apache/rocketmq-clients/golang v0.0.0-20221221030536-5a6a16c69787 h1:
 github.com/apache/rocketmq-clients/golang v0.0.0-20221221030536-5a6a16c69787/go.mod h1:wtbEvUkAKHlc3h4FU8AZw0w+plDI8kGtmSPNAPGQahw=
 github.com/apache/rocketmq-clients/golang v0.0.0-20221229102224-577469b4f56d h1:qFouhFIhEyL3Dcm6ltsTgMKQE7x4RQuzQ9TiNfpJA2g=
 github.com/apache/rocketmq-clients/golang v0.0.0-20221229102224-577469b4f56d/go.mod h1:wtbEvUkAKHlc3h4FU8AZw0w+plDI8kGtmSPNAPGQahw=
+github.com/apache/rocketmq-clients/golang v0.0.0-20230104075614-087479a03efe h1:FjUF2oaRRYj93LC7kX0nzLSRZ7dbey2KoFhfes3B/0s=
+github.com/apache/rocketmq-clients/golang v0.0.0-20230104075614-087479a03efe/go.mod h1:wtbEvUkAKHlc3h4FU8AZw0w+plDI8kGtmSPNAPGQahw=
 github.com/benbjohnson/clock v1.3.0 h1:ip6w0uFQkncKQ979AypyG0ER7mqUSBdKLOgAle/AT8A=
 github.com/buger/jsonparser v1.1.1 h1:2PnMjfWD7wBILjqQbt530v576A/cAbQvEW9gGIpYMUs=
 github.com/buger/jsonparser v1.1.1/go.mod h1:6RYKKt7H4d4+iWqouImQ9R2FZql3VbhNgx27UK13J/0=
@@ -72,6 +74,8 @@ github.com/dablelv/go-huge-util v0.0.27 h1:shaRWzAVTYahUPVYVnl/eJYrMSlmbj573KC7s
 github.com/dablelv/go-huge-util v0.0.27/go.mod h1:M8jj8LsowwtdhJtakRnrSCpZDmvn0qQ3nJ7WIRDM1ZU=
 github.com/dablelv/go-huge-util v0.0.29 h1:Fh/IzIwz3Q0E/o1hG3GzPbMVqQKKRVAv1fpF13nHXoQ=
 github.com/dablelv/go-huge-util v0.0.29/go.mod h1:Qhmf1WZsdi443ia1Ne87b+wrHh4xnJRRotSp+c8PgXs=
+github.com/dablelv/go-huge-util v0.0.30 h1:QuCMQQzhH67qB0S1u1eRmfzgZlH+qCGgHvhAbO/e1M4=
+github.com/dablelv/go-huge-util v0.0.30/go.mod h1:CTdXt+L11UBDS+dg9LPgslqDMXcCvhTv51IikcQDxGA=
 github.com/davecgh/go-spew v1.1.0/go.mod h1:J7Y8YcW2NihsgmVo/mv3lAwl/skON4iLHjSsI+c5H38=
 github.com/davecgh/go-spew v1.1.1 h1:vj9j/u1bqnvCEfJOwUhtlOARqs3+rkHYY13jYWTU97c=
 github.com/davecgh/go-spew v1.1.1/go.mod h1:J7Y8YcW2NihsgmVo/mv3lAwl/skON4iLHjSsI+c5H38=
@@ -365,6 +369,8 @@ github.com/satori/go.uuid v1.2.0 h1:0uYX9dsZ2yD7q2RtLRtPSdGDWzjeM3TbMJP9utgA0ww=
 github.com/satori/go.uuid v1.2.0/go.mod h1:dA0hQrYB0VpLJoorglMZABFdXlWrHn1NEOzdhQKdks0=
 github.com/shirou/gopsutil/v3 v3.22.11 h1:kxsPKS+Eeo+VnEQ2XCaGJepeP6KY53QoRTETx3+1ndM=
 github.com/shirou/gopsutil/v3 v3.22.11/go.mod h1:xl0EeL4vXJ+hQMAGN8B9VFpxukEMA0XdevQOe5MZ1oY=
+github.com/shirou/gopsutil/v3 v3.22.12 h1:oG0ns6poeUSxf78JtOsfygNWuEHYYz8hnnNg7P04TJs=
+github.com/shirou/gopsutil/v3 v3.22.12/go.mod h1:Xd7P1kwZcp5VW52+9XsirIKd/BROzbb2wdX3Kqlz9uI=
 github.com/shopspring/decimal v1.3.1 h1:2Usl1nmF/WZucqkFZhnfFYxxxu8LG21F6nPQBE5gKV8=
 github.com/shopspring/decimal v1.3.1/go.mod h1:DKyhrW/HYNuLGql+MJL6WCR6knT2jwCFRcu2hWCYk4o=
 github.com/sirupsen/logrus v1.9.0 h1:trlNQbNUG3OdDrDil03MCb1H2o9nJ1x4/5LYw7byDE0=

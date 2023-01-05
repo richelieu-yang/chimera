@@ -1,13 +1,14 @@
 package main
 
 import (
-	"fmt"
+	"github.com/richelieu42/go-scales/src/log/logrusKit"
 	"github.com/richelieu42/go-scales/src/mq/rocketmq5Kit"
+	"github.com/sirupsen/logrus"
 )
 
 func main() {
-	if err := rocketmq5Kit.TestEndpoint("localhost:8081", "test"); err != nil {
-		panic(err)
-	}
-	fmt.Println("---------------------------")
+	logrusKit.InitializeByDefault()
+
+	err := rocketmq5Kit.TestEndpoint("localhost:8081", "test")
+	logrus.Error(err)
 }
