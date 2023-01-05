@@ -19,16 +19,18 @@ import (
 	"time"
 )
 
+var (
+	producerTimeout = time.Millisecond * 300
+	consumerTimeout = time.Second * 3
+)
+
 // TestEndpoint 测试RocketMQ5服务是否启动正常.
 /*
 @param endpoint 用于测试的RocketMQ5服务的endpoint
 @param topic 	用于测试的topic（理论上，此topic仅用于测试，不能同时用于业务，因为测试发的消息无意义）
 @return 如果为nil，说明 RocketMQ5服务 正常启动
 */
-func TestEndpoint(endpoint, topic string) error {
-	producerTimeout := time.Millisecond * 300
-	consumerTimeout := time.Second * 3
-
+func TestEndpoint(endpoint, topic string) (finalErr error) {
 	/* texts */
 	timeStr := timeKit.FormatCurrentTime()
 	ulid := idKit.NewULID()
@@ -63,14 +65,26 @@ func TestEndpoint(endpoint, topic string) error {
 	}
 	logger.Infof("endpoint: [%s].", endpoint)
 	logger.Infof("topic: [%s].", topic)
+	defer func() {
+		_ = logrusKit.DisposeLogger(logger)
+
+		if finalErr != nil {
+			finalErr = errorKit.Wrap(finalErr, "log path: %s", logPath)
+		} else {
+			// 通过测试的话，删除日志文件
+			_ = fileKit.Delete(logPath)
+		}
+	}()
 
 	/* Producer */
 	producer, err := NewProducer(logConfig, config)
 	if err != nil {
-		return errorKit.Wrap(err, "fail to new producer")
+		finalErr = errorKit.Wrap(err, "fail to new producer")
+		return
 	}
 	if err := producer.Start(); err != nil {
-		return errorKit.Wrap(err, "fail to start producer")
+		finalErr = errorKit.Wrap(err, "fail to start producer")
+		return
 	}
 	defer producer.GracefulStop()
 
@@ -78,10 +92,12 @@ func TestEndpoint(endpoint, topic string) error {
 	consumerGroup := fmt.Sprintf("simpleConsumer-group-%s-%s", topic, idKit.NewULID())
 	simpleConsumer, err := NewSimpleConsumer(logConfig, config, consumerGroup, topic, "*")
 	if err != nil {
-		return errorKit.Wrap(err, "fail to new simple consumer")
+		finalErr = errorKit.Wrap(err, "fail to new simple consumer")
+		return
 	}
 	if err := simpleConsumer.Start(); err != nil {
-		return errorKit.Wrap(err, "fail to start simple consumer")
+		finalErr = errorKit.Wrap(err, "fail to start simple consumer")
+		return
 	}
 	defer simpleConsumer.GracefulStop()
 
@@ -194,14 +210,14 @@ LOOP:
 
 	if producerErr != nil {
 		logger.Errorf("Fail to pass test, error: %+v", producerErr)
-		return errorKit.Wrap(producerErr, "log path: %s", logPath)
+		finalErr = producerErr
+		return
 	}
 	if consumerErr != nil {
 		logger.Errorf("Fail to pass test, error: %+v", consumerErr)
-		return errorKit.Wrap(consumerErr, "log path: %s", logPath)
+		finalErr = consumerErr
+		return
 	}
 	logger.Info("Pass test.")
-	// 通过测试的话，删除日志文件
-	_ = fileKit.Delete(logPath)
-	return nil
+	return
 }

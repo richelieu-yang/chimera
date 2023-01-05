@@ -10,5 +10,5 @@ func main() {
 	logrusKit.InitializeByDefault()
 
 	err := rocketmq5Kit.TestEndpoint("localhost:8081", "test")
-	logrus.Error(err)
+	logrus.Errorf("%+v", err)
 }
