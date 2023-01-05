@@ -3,7 +3,7 @@ package rocketmq5Kit
 import (
 	rmq_client "github.com/apache/rocketmq-clients/golang"
 	"github.com/apache/rocketmq-clients/golang/credentials"
-	"github.com/jinzhu/copier"
+	"github.com/richelieu42/go-scales/src/copyKit"
 	"github.com/richelieu42/go-scales/src/core/errorKit"
 	"github.com/richelieu42/go-scales/src/core/strKit"
 )
@@ -16,14 +16,14 @@ var (
 )
 
 // processConfig Consumer和Producer通用
-func processConfig(srcConfig *rmq_client.Config) (*rmq_client.Config, error) {
-	if srcConfig == nil {
+func processConfig(baseConfig *rmq_client.Config) (*rmq_client.Config, error) {
+	if baseConfig == nil {
 		return nil, errorKit.Simple("config == nil")
 	}
 
-	// 为了不修改传参 srcConfig 而新建了 config
-	config := &rmq_client.Config{}
-	if err := copier.Copy(config, srcConfig); err != nil {
+	// 深拷贝，为了不修改传参baseConfig
+	config, err := copyKit.DeepCopy(baseConfig)
+	if err != nil {
 		return nil, err
 	}
 
