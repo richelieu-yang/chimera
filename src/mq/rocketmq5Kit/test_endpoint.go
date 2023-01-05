@@ -6,9 +6,13 @@ import (
 	rmq_client "github.com/apache/rocketmq-clients/golang"
 	"github.com/apache/rocketmq-clients/golang/protocol/v2"
 	"github.com/richelieu42/go-scales/src/core/errorKit"
+	"github.com/richelieu42/go-scales/src/core/file/fileKit"
+	"github.com/richelieu42/go-scales/src/core/pathKit"
 	"github.com/richelieu42/go-scales/src/core/sliceKit"
+	"github.com/richelieu42/go-scales/src/core/strKit"
 	"github.com/richelieu42/go-scales/src/core/timeKit"
 	"github.com/richelieu42/go-scales/src/idKit"
+	"github.com/richelieu42/go-scales/src/log/logrusKit"
 	"github.com/sirupsen/logrus"
 	"google.golang.org/grpc/codes"
 	"google.golang.org/grpc/status"
@@ -23,8 +27,9 @@ import (
 */
 func TestEndpoint(endpoint, topic string) error {
 	producerTimeout := time.Millisecond * 300
-	consumerTimeout := time.Second * 10
+	consumerTimeout := time.Second * 3
 
+	/* texts */
 	timeStr := timeKit.FormatCurrentTime()
 	ulid := idKit.NewULID()
 	texts := []string{
@@ -33,12 +38,31 @@ func TestEndpoint(endpoint, topic string) error {
 		fmt.Sprintf("%s_%s_%s", ulid, timeStr, "$2"),
 		fmt.Sprintf("%s_%s_%s", ulid, timeStr, "$3"),
 	}
-	textsCount := len(texts)
 
 	config := &rmq_client.Config{
 		Endpoint: endpoint,
 	}
-	var logConfig *LogConfig = nil
+
+	/* log */
+	tempDir, err := pathKit.GetTempDirOfGoScales()
+	if err != nil {
+		return errorKit.Wrap(err, "fail to get temporary directory")
+	}
+	logName := fmt.Sprintf("rocketmq5_test_%s_%s_%s.log", endpoint, topic, timeStr)
+	// 文件名不支持":"（无论是Mac还是Windows）
+	logName = strKit.ReplaceAll(logName, ":", "：")
+	logPath := pathKit.Join(tempDir, logName)
+	var logConfig = &LogConfig{
+		ToConsole: false,
+		LogDir:    tempDir,
+		LogName:   logName,
+	}
+	logger, err := logrusKit.NewFileLogger(logPath, nil, logrus.DebugLevel, false)
+	if err != nil {
+		return errorKit.Wrap(err, "fail to new logger")
+	}
+	logger.Infof("endpoint: [%s].", endpoint)
+	logger.Infof("topic: [%s].", topic)
 
 	/* Producer */
 	producer, err := NewProducer(logConfig, config)
@@ -63,12 +87,12 @@ func TestEndpoint(endpoint, topic string) error {
 
 	consumerCtx, cancel := context.WithTimeout(context.TODO(), consumerTimeout)
 	defer cancel()
-	var e error
 
 	/* 启动Producer */
+	var producerErr error
 	go func() {
 		defer func() {
-			logrus.Info("[Producer] Goroutine ends.")
+			logger.Info("[Producer] Goroutine ends.")
 		}()
 
 		// 等100ms，以确保: producer发消息时，consumer已经开始收消息了（以免丢失消息: 明明producer发了，但consumer却没收到）
@@ -87,17 +111,27 @@ func TestEndpoint(endpoint, topic string) error {
 				break
 			}
 
-			// test
-			logrus.Debugf("[SEND] %s", text)
+			logger.WithFields(logrus.Fields{
+				"text": text,
+			}).Info("[Producer] Send message successfully.")
 		}
+
 		if err != nil {
-			e = err
+			producerErr = err
 			cancel()
+			logger.Infof("[Producer] Invoke cancel() with error: %+v", err)
 			return
 		}
+		logger.WithFields(logrus.Fields{
+			"count": len(texts),
+		}).Info("[Producer] Send all messages successfully.")
+
 	}()
 
 	/* 启动Consumer */
+	var consumerErr error
+	// 拷贝，不修改texts
+	var text1 = sliceKit.Copy(texts)
 LOOP:
 	for {
 		mvs, err := simpleConsumer.Receive(consumerCtx, MaxMessageNum, InvisibleDuration)
@@ -107,13 +141,10 @@ LOOP:
 				switch s.Code() {
 				case codes.Canceled:
 					/* 提前结束（被取消） */
-					if e == nil {
-						e = errorKit.Simple("consumer is canceled")
-					}
 					break LOOP
 				case codes.DeadlineExceeded:
 					/* 超时结束 */
-					e = errorKit.Simple("consumer fails to receive all messages(count: %d) with timeout(%s) and missing(%d)", textsCount, consumerTimeout.String(), len(texts))
+					consumerErr = errorKit.Simple("consumer fails to receive all messages(count: %d) within timeout(%s), missing(%d)", len(texts), consumerTimeout.String(), len(text1))
 					break LOOP
 				}
 			}
@@ -128,7 +159,7 @@ LOOP:
 			}
 
 			/* 提前结束（未知错误） */
-			e = errorKit.Wrap(err, "consumer meets an unprocessed error")
+			consumerErr = errorKit.Wrap(err, "consumer meets an unprocessed error")
 			break LOOP
 		}
 
@@ -137,20 +168,21 @@ LOOP:
 			err := simpleConsumer.Ack(context.TODO(), mv)
 			if err != nil {
 				/* 提前结束（确认消息） */
-				e = errorKit.Wrap(err, "consumer fails to ack message")
+				consumerErr = errorKit.Wrap(err, "consumer fails to ack message")
 				break LOOP
 			}
 			text := string(mv.GetBody())
 
-			// test
-			logrus.Debugf("[RECEIVE] %s", text)
+			logger.WithFields(logrus.Fields{
+				"text": text,
+			}).Info("[CONSUMER] Receive a message.")
 
 			var ok bool
-			texts, ok = sliceKit.Remove(texts, text)
+			text1, ok = sliceKit.Remove(text1, text)
 			if ok {
-				if sliceKit.IsEmpty(texts) {
+				if sliceKit.IsEmpty(text1) {
 					/* 提前结束（已收到所有消息） */
-					e = nil
+					consumerErr = nil
 					break LOOP
 				}
 			}
@@ -160,5 +192,16 @@ LOOP:
 		time.Sleep(time.Millisecond * 100)
 	}
 
-	return e
+	if producerErr != nil {
+		logger.Errorf("Fail to pass test, error: %+v", producerErr)
+		return errorKit.Wrap(producerErr, "log path: %s", logPath)
+	}
+	if consumerErr != nil {
+		logger.Errorf("Fail to pass test, error: %+v", consumerErr)
+		return errorKit.Wrap(consumerErr, "log path: %s", logPath)
+	}
+	logger.Info("Pass test.")
+	// 通过测试的话，删除日志文件
+	_ = fileKit.Delete(logPath)
+	return nil
 }
