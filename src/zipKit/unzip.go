@@ -1,7 +1,7 @@
 package zipKit
 
 import (
-	huge "github.com/dablelv/go-huge-util"
+	"github.com/dablelv/go-huge-util/zip"
 )
 
 // Unzip 解压
@@ -9,5 +9,5 @@ import (
 @param zipPath e.g."archive.zip"
 */
 func Unzip(zipPath, dstDir string) error {
-	return huge.Unzip(zipPath, dstDir)
+	return zip.Unzip(zipPath, dstDir)
 }

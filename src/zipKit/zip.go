@@ -1,7 +1,7 @@
 package zipKit
 
 import (
-	huge "github.com/dablelv/go-huge-util"
+	"github.com/dablelv/go-huge-util/zip"
 )
 
 // Zip 压缩文件（或目录）
@@ -15,5 +15,5 @@ PS:
 @param paths	多个文件（或目录）的路径
 */
 func Zip(zipPath string, paths ...string) error {
-	return huge.Zip(zipPath, paths...)
+	return zip.Zip(zipPath, paths...)
 }
