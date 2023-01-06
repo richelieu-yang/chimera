@@ -61,7 +61,7 @@ func TestEndpoint(endpoint, topic string) (finalErr error) {
 	}
 	logger, err := logrusKit.NewFileLogger(logPath, nil, logrus.DebugLevel, false)
 	if err != nil {
-		return errorKit.Wrap(err, "fail to new logger")
+		return errorKit.Wrap(err, "fail to new logger with logPath(%s)", logPath)
 	}
 	logger.Infof("endpoint: [%s].", endpoint)
 	logger.Infof("topic: [%s].", topic)
@@ -209,12 +209,12 @@ LOOP:
 	}
 
 	if producerErr != nil {
-		logger.Errorf("Fail to pass test, error: %+v", producerErr)
+		logger.Errorf("Fail to pass test, producerErr: %+v", producerErr)
 		finalErr = producerErr
 		return
 	}
 	if consumerErr != nil {
-		logger.Errorf("Fail to pass test, error: %+v", consumerErr)
+		logger.Errorf("Fail to pass test, consumerErr: %+v", consumerErr)
 		finalErr = consumerErr
 		return
 	}
