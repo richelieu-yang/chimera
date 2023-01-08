@@ -143,7 +143,8 @@ func Reverse[T any](s []T) []T {
 /*
 PS:
 （1）传参s不能为nil，会panic（下标越界）；
-（2）此方法会修改传参s（虽然golang是值传递）.
+（2）此方法会修改传参s（虽然golang是值传递）；
+（3）传参i、j：下标越界会导致panic.
 
 @param s 不能为nil
 @param i 第1个元素的下标（从0开始）
