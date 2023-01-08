@@ -5,8 +5,14 @@ import (
 	"github.com/richelieu42/go-scales/src/core/sliceKit"
 )
 
+type Bean struct {
+	Id int
+}
+
 func main() {
-	var s []int = nil
-	sliceKit.Swap(s, 0, 2)
-	fmt.Println(s) // [100 0 1]
+	s1, err := sliceKit.DeepCopy([]string(nil))
+	if err != nil {
+		panic(err)
+	}
+	fmt.Println(s1 == nil)
 }

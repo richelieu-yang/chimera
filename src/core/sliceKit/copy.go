@@ -25,35 +25,20 @@ func CopyToDest[T any](src, dest []T) int {
 	return copy(dest, src)
 }
 
-// DeepCopy 深拷贝
-/*
-@return e.g. ([]string(nil)) => (nil, nil)
-*/
-func DeepCopy[T any](src []T) ([]T, error) {
-	return copyKit.DeepCopy(src)
-}
-
 // Copy 浅克隆（浅拷贝）
 /*
-参考:
-golang复制切片的方法（避免操作同一底层数组） https://blog.csdn.net/weixin_43970884/article/details/126051345
+@param src 可以为nil
 
-@param src 	可以为nil，将返回一个非nil的len==0的slice
-@return		必定不为nil
+e.g.
+([]int(nil)) => nil
 */
 func Copy[T any](src []T) []T {
-	if src == nil {
-		return nil
-	}
-
-	dolly := make([]T, len(src))
-	copy(dolly, src)
-	return dolly
+	return src[:]
 }
 
 // Copy1 浅克隆（浅拷贝）
 /*
-Deprecated: 性能不如 Copy()
+Deprecated: 性能不如 Copy2()
 
 @param src 可以为nil，将返回nil
 */
@@ -63,10 +48,44 @@ func Copy1[T any](src []T) []T {
 
 // Copy2 浅克隆（浅拷贝）
 /*
-Deprecated: 返回值可能为nil
+参考:
+golang复制切片的方法（避免操作同一底层数组） https://blog.csdn.net/weixin_43970884/article/details/126051345
 
-@param src 可以为nil，将返回nil
+@param src 	可以为nil，将返回一个非nil的len==0的slice
+@return		必定不为nil
 */
 func Copy2[T any](src []T) []T {
-	return src[:]
+	if src == nil {
+		return nil
+	}
+
+	dolly := make([]T, len(src))
+	copy(dolly, src)
+	return dolly
+}
+
+// DeepCopy 深拷贝
+/*
+e.g.
+	([]string(nil)) => (nil, nil)
+
+e.g.1
+	s := []*Bean{{Id: 0}, {Id: 1}}
+	s1, err := sliceKit.DeepCopy(s)
+	if err != nil {
+		panic(err)
+	}
+
+	fmt.Printf("%p\n", &s)   // 0x1400000c048
+	fmt.Printf("%p\n", s[0]) // 0x140000220a0
+	fmt.Printf("%p\n", s[1]) // 0x140000220a8
+
+	fmt.Println("==================")
+
+	fmt.Printf("%p\n", &s1)   // 0x1400000c060
+	fmt.Printf("%p\n", s1[0]) // 0x140000220b0
+	fmt.Printf("%p\n", s1[1]) // 0x140000220d8
+*/
+func DeepCopy[T any](src []T) ([]T, error) {
+	return copyKit.DeepCopy(src)
 }
