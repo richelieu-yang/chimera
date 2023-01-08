@@ -28,29 +28,29 @@ e.g.
 ("") 	=> "\"\"", nil
 */
 func MarshalToString(obj interface{}) (string, error) {
-	str, err := jsoniter.MarshalToString(obj)
-	if err != nil {
-		return "", err
-	}
-	return str, nil
+	return jsoniter.MarshalToString(obj)
 }
 
-// MarshalToStringWithJsoniterApi
+// MarshalWithJsoniterApi 可以自定义api
+func MarshalWithJsoniterApi(api jsoniter.API, obj interface{}) ([]byte, error) {
+	if api == nil {
+		api = jsoniter.ConfigDefault
+	}
+	return api.Marshal(obj)
+}
+
+// MarshalToStringWithJsoniterApi 可以自定义api
 /*
 @param api 可以为nil，jsoniter.ConfigDefault || jsoniter.ConfigCompatibleWithStandardLibrary || ...
 
-使用场景：多次序列化相同的map实例，希望返回值相同（此时需要传参 jsoniter.ConfigCompatibleWithStandardLibrary）.
+e.g.
+如果希望多次序列化同一map实例，返回的json字符串一直，传参api可以为 jsoniter.ConfigCompatibleWithStandardLibrary.
 */
 func MarshalToStringWithJsoniterApi(api jsoniter.API, obj interface{}) (string, error) {
 	if api == nil {
 		api = jsoniter.ConfigDefault
 	}
-
-	str, err := api.MarshalToString(obj)
-	if err != nil {
-		return "", err
-	}
-	return str, nil
+	return api.MarshalToString(obj)
 }
 
 func MarshalWithIndent(obj interface{}) ([]byte, error) {
@@ -59,18 +59,13 @@ func MarshalWithIndent(obj interface{}) ([]byte, error) {
 	//indent := "\t"
 	indent := "    "
 
-	if data, err := jsoniter.MarshalIndent(obj, prefix, indent); err != nil {
-		return nil, err
-	} else {
-		return data, nil
-	}
+	return jsoniter.MarshalIndent(obj, prefix, indent)
 }
 
 func MarshalToStringWithIndent(obj interface{}) (string, error) {
 	data, err := MarshalWithIndent(obj)
 	if err != nil {
 		return "", err
-	} else {
-		return string(data), nil
 	}
+	return string(data), nil
 }

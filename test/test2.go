@@ -1,15 +1,20 @@
 package main
 
-import "fmt"
+import (
+	"fmt"
+	jsoniter "github.com/json-iterator/go"
+	"github.com/richelieu42/go-scales/src/jsonKit"
+)
 
 func main() {
-	var m = map[string]interface{}{}
+	m := map[string]interface{}{
+		"a": 0,
+		"b": 1,
+		"c": 2,
+		"d": 3,
+	}
 
-	v, ok := m[""]
-	fmt.Println(v, ok) // <nil> false
-
-	m[""] = nil
-
-	v, ok = m[""]
-	fmt.Println(v, ok) // <nil> true
+	for i := 0; i < 10; i++ {
+		fmt.Println(jsonKit.MarshalToStringWithJsoniterApi(jsoniter.ConfigCompatibleWithStandardLibrary, m))
+	}
 }
