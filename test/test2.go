@@ -1,11 +1,12 @@
 package main
 
-import "fmt"
+import (
+	"fmt"
+	"github.com/richelieu42/go-scales/src/core/sliceKit"
+)
 
 func main() {
-	s := make([]int, 0, 10)
-
-	fmt.Println(len(s)) // 0
-	fmt.Println(cap(s)) // 10
-	fmt.Println(s[0])
+	var s []int = nil
+	sliceKit.Swap(s, 0, 2)
+	fmt.Println(s) // [100 0 1]
 }

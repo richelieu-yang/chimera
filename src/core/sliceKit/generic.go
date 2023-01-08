@@ -142,17 +142,17 @@ func Reverse[T any](s []T) []T {
 // Swap 交换切片实例中两个元素的值
 /*
 PS:
-(1) 下标越界会导致panic!!!
-(2) 此方法会修改传参s（虽然golang是值传递）.
+（1）传参s不能为nil，会panic（下标越界）；
+（2）此方法会修改传参s（虽然golang是值传递）.
 
+@param s 不能为nil
 @param i 第1个元素的下标（从0开始）
 @param j 第2个元素的下标（从0开始）
 
 e.g.
-s := []int{0, 1, 2, 3}
-fmt.Println(s)	// [0 1 2 3]
-sliceKit.Swap(s, 1, 2)
-fmt.Println(s)	// [0 2 1 3]
+	s := []int{1, 0, 100}
+	sliceKit.Swap(s, 0, 2)
+	fmt.Println(s)			// [100 0 1]
 */
 func Swap[T any](s []T, i, j int) {
 	s[i], s[j] = s[j], s[i]

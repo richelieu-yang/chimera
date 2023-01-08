@@ -17,23 +17,19 @@ e.g.
 s := []int{0, 1, 2, 3, 4, 5}
 fmt.Println(sliceKit.Intercept(s, len(s), len(s))) // []（非nil）
 */
-func Intercept[T any](s []T, from, to int, args ...int) []T {
+func Intercept[T any](s []T, from, to int, maxArgs ...int) []T {
 	if len(s) == 0 {
 		return s
 	}
 
 	// 此时返回值必定非nil，且len >= 0
-	if args == nil {
-		/*
-			情况1: 返回slice的cap采用默认值（cap = len(s) - from）
-		*/
+	if maxArgs == nil {
+		/* 情况1: 返回slice的cap采用默认值（cap = len(s) - from） */
 		return s[from:to]
 	}
-	/*
-		情况2: 人为干预返回slice的cap（cap = max - from），适用场景: 想要减少内存消耗.
-	*/
+	/* 情况2: 人为干预返回slice的cap（cap = max - from），适用场景: 想要减少内存消耗. */
 	// max的理论取值范围: [to, len(s)]
-	max := args[0]
+	max := maxArgs[0]
 	if max < to {
 		max = to
 	} else if max > len(s) {
