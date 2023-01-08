@@ -1,13 +1,15 @@
 package main
 
-import (
-	"context"
-	"fmt"
-)
+import "fmt"
 
 func main() {
-	_, cancel := context.WithCancel(context.TODO())
-	cancel()
-	cancel()
-	fmt.Println("======")
+	var m = map[string]interface{}{}
+
+	v, ok := m[""]
+	fmt.Println(v, ok) // <nil> false
+
+	m[""] = nil
+
+	v, ok = m[""]
+	fmt.Println(v, ok) // <nil> true
 }
