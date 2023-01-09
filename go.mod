@@ -38,9 +38,9 @@ require (
 	github.com/sirupsen/logrus v1.9.0
 	github.com/spf13/cast v1.5.0
 	github.com/spf13/viper v1.14.0
-	github.com/xuri/excelize/v2 v2.6.1
+	github.com/xuri/excelize/v2 v2.7.0
 	go.uber.org/zap v1.24.0
-	golang.org/x/exp v0.0.0-20230105202349-8879d0199aa3
+	golang.org/x/exp v0.0.0-20230108222341-4b8118a2686a
 	golang.org/x/text v0.6.0
 	google.golang.org/grpc v1.51.0
 	gopkg.in/natefinch/lumberjack.v2 v2.0.0
@@ -102,11 +102,11 @@ require (
 	go.opencensus.io v0.23.0 // indirect
 	go.uber.org/atomic v1.9.0 // indirect
 	go.uber.org/multierr v1.8.0 // indirect
-	golang.org/x/crypto v0.0.0-20220817201139-bc19a97f63c8 // indirect
-	golang.org/x/image v0.0.0-20220722155232-062f8c9fd539 // indirect
-	golang.org/x/net v0.4.0 // indirect
+	golang.org/x/crypto v0.5.0 // indirect
+	golang.org/x/image v0.0.0-20220902085622-e7cb96979f69 // indirect
+	golang.org/x/net v0.5.0 // indirect
 	golang.org/x/sync v0.1.0 // indirect
-	golang.org/x/sys v0.3.0 // indirect
+	golang.org/x/sys v0.4.0 // indirect
 	google.golang.org/api v0.102.0 // indirect
 	google.golang.org/genproto v0.0.0-20221024183307-1bc688fe9f3e // indirect
 	google.golang.org/protobuf v1.28.1 // indirect
