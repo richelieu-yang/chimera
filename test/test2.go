@@ -1,16 +1,57 @@
 package main
 
 import (
-	"fmt"
+	"net/http"
+
+	"github.com/gin-gonic/gin"
+	"github.com/go-oauth2/gin-server"
+	"github.com/go-oauth2/oauth2/v4/manage"
+	"github.com/go-oauth2/oauth2/v4/models"
+	"github.com/go-oauth2/oauth2/v4/server"
+	"github.com/go-oauth2/oauth2/v4/store"
 )
 
-type Bean struct {
-	Id int
-}
-
 func main() {
-	s := []string(nil)
+	manager := manage.NewDefaultManager()
 
-	fmt.Println(s[0:0])        // []
-	fmt.Println(s[0:0] == nil) // true
+	// token store
+	manager.MustTokenStorage(store.NewFileTokenStore("data.db"))
+
+	// client store
+	clientStore := store.NewClientStore()
+	clientStore.Set("000000", &models.Client{
+		ID:     "000000",
+		Secret: "999999",
+		Domain: "http://localhost",
+	})
+	manager.MapClientStorage(clientStore)
+
+	// Initialize the oauth2 service
+	ginserver.InitServer(manager)
+	ginserver.SetAllowGetAccessRequest(true)
+	ginserver.SetClientInfoHandler(server.ClientFormHandler)
+
+	engine := gin.Default()
+
+	auth := engine.Group("/oauth2")
+	{
+		auth.GET("/token", ginserver.HandleTokenRequest)
+	}
+
+	api := engine.Group("/api")
+	{
+		api.Use(ginserver.HandleTokenVerify())
+		api.GET("/test", func(c *gin.Context) {
+			ti, exists := c.Get(ginserver.DefaultConfig.TokenKey)
+			if exists {
+				c.JSON(http.StatusOK, ti)
+				return
+			}
+			c.String(http.StatusOK, "not found")
+		})
+	}
+
+	if err := engine.Run(":9096"); err != nil {
+		panic(err)
+	}
 }

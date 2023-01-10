@@ -6,17 +6,17 @@ import (
 	"strconv"
 )
 
-func ParseToInt32(src interface{}) (int32, error) {
-	switch src.(type) {
+func ParseToInt32(obj interface{}) (int32, error) {
+	switch obj.(type) {
 	case string:
-		return ParseStringToInt32(src.(string))
+		return ParseStringToInt32(obj.(string))
 	default:
-		return cast.ToInt32E(src)
+		return cast.ToInt32E(obj)
 	}
 }
 
-func ParseToInt32WithDefault(src interface{}, def int32) int32 {
-	i, err := ParseToInt32(src)
+func ParseToInt32WithDefault(obj interface{}, def int32) int32 {
+	i, err := ParseToInt32(obj)
 	if err != nil {
 		return def
 	}
