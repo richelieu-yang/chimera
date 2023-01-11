@@ -8,13 +8,13 @@ import (
 	"strconv"
 )
 
-var name = ""
+var name = "NamE"
 
 func main() {
 	engine := gin.Default()
 
 	engine.Any("/set", func(ctx *gin.Context) {
-		cookie := cookieKit.NewCookie(name, strconv.Itoa(0), "", "", 3600, false, true, http.SameSiteDefaultMode)
+		cookie := cookieKit.NewCookie(name, strconv.Itoa(0), "", "", 0, false, true, http.SameSiteDefaultMode)
 		cookieKit.SetCookie(ctx.Writer, cookie)
 
 		ctx.String(http.StatusOK, "set")
@@ -23,7 +23,7 @@ func main() {
 	engine.Any("/add", func(ctx *gin.Context) {
 		cookie, err := cookieKit.GetCookie(ctx.Request, name)
 		if err != nil {
-			ctx.String(http.StatusOK, err.Error())
+			ctx.String(http.StatusOK, "no cookie with name(%s)", name)
 			return
 		}
 
