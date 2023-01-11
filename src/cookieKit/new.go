@@ -7,6 +7,8 @@ import (
 
 // NewCookie
 /*
+@param name			可以为""，但无意义，设置不了
+@param value
 @param path			可以为""
 @param domain		可以为""
 @param maxAge		单位为秒（s）
