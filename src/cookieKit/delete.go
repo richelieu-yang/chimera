@@ -2,6 +2,10 @@ package cookieKit
 
 import "net/http"
 
+// DeleteCookieByName
+/*
+@param name	可以为""，但无意义
+*/
 func DeleteCookieByName(req *http.Request, writer http.ResponseWriter, name string) {
 	cookie, err := GetCookie(req, name)
 	if err != nil {
