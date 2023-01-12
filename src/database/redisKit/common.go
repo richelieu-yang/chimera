@@ -135,11 +135,3 @@ func (client *Client) FlushAll() error {
 	_, err := client.UC.FlushAll(context.TODO()).Result()
 	return err
 }
-
-// Type 返回 key 所储存的值的类型
-/*
-@return 第二个返回值为nil的情况下，第一个返回值可能为（5种数据类型）："string"、"hash"、"list"、"set"、"zset".
-*/
-func (client *Client) Type(key string) (string, error) {
-	return client.UC.Type(context.TODO(), key).Result()
-}
