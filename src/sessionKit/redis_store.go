@@ -187,7 +187,6 @@ func (s *RedisStore) save(ctx context.Context, session *sessions.Session) error 
 
 // load reads session from Redis
 func (s *RedisStore) load(ctx context.Context, session *sessions.Session) error {
-
 	cmd := s.client.Get(ctx, s.keyPrefix+session.ID)
 	if cmd.Err() != nil {
 		return cmd.Err()
