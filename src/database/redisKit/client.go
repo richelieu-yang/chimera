@@ -4,8 +4,6 @@ import (
 	"context"
 	"fmt"
 	"github.com/go-redis/redis/v8"
-	"github.com/go-redsync/redsync/v4"
-	"github.com/go-redsync/redsync/v4/redis/goredis/v8"
 	"github.com/richelieu42/go-scales/src/core/errorKit"
 	"github.com/richelieu42/go-scales/src/core/strKit"
 	"github.com/richelieu42/go-scales/src/core/timeKit"
@@ -17,12 +15,19 @@ import (
 type (
 	Client struct {
 		mode Mode
+
 		// goRedisClient 真正的go-redis客户端
 		goRedisClient redis.UniversalClient
-		// sync 用于生成Redis分布式互斥锁
-		sync *redsync.Redsync
 	}
 )
+
+func (client *Client) GetMode() Mode {
+	return client.mode
+}
+
+func (client *Client) GetGoRedisClient() redis.UniversalClient {
+	return client.goRedisClient
+}
 
 // NewClient 新建一个go-redis客户端（内置连接池，调用方无需额外考虑并发问题）
 /*
@@ -52,13 +57,11 @@ func NewClient(config *RedisConfig) (*Client, error) {
 	if err != nil {
 		return nil, err
 	}
-	uc := redis.NewUniversalClient(opts)
-	pool := goredis.NewPool(uc) // or, pool := redigo.NewPool(...)
-	rs := redsync.New(pool)
+	goRedisClient := redis.NewUniversalClient(opts)
+
 	client := &Client{
 		mode:          config.Mode,
-		goRedisClient: uc,
-		sync:          rs,
+		goRedisClient: goRedisClient,
 	}
 
 	if err := testConnection(client); err != nil {
