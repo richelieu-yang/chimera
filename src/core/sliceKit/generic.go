@@ -38,10 +38,9 @@ PS:
 (1) 先要传参nil的话，必须要造型. e.g. []string(nil)
 (2) 第1个传参可以为nil
 
-e.g.
-() 				=> 编译报错：cannot infer T
-(nil) 			=> 编译报错：cannot infer T
+@return 可能为nil
 
+e.g.
 ([]string(nil), []string{"1", "2"}) => [1 2]
 ([]string{"1", "2"}, []string(nil)) => [1 2]
 

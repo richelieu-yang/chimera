@@ -2,13 +2,8 @@ package redisKit
 
 import (
 	"context"
-	"github.com/go-redis/redis/v8"
 	"github.com/richelieu42/go-scales/src/core/sliceKit"
 )
-
-func (client *Client) Ping() (string, error) {
-	return client.goRedisClient.Ping(context.TODO()).Result()
-}
 
 // Del （删）key 存在时，删除 key
 /*
@@ -37,69 +32,49 @@ func (client *Client) Exists(ctx context.Context, keys ...string) (bool, error) 
 	return reply == 1, nil
 }
 
-func scan(client redis.UniversalClient, cursor uint64, match string, count int64) ([]string, uint64, error) {
-	return client.Scan(context.TODO(), cursor, match, count).Result()
-}
-
-func scanFully(client redis.UniversalClient, match string, count int64) ([]string, error) {
-	// 使用 0 作为游标，开始新的迭代
-	keys, cursor, err := scan(client, 0, match, count)
-	if err != nil {
-		return nil, err
-	}
-
-	for cursor != 0 {
-		var tmp []string
-		tmp, cursor, err = scan(client, cursor, match, count)
-		if err != nil {
-			return nil, err
-		}
-		keys = sliceKit.Merge(keys, tmp)
-	}
-	// 返回前去重
-	return sliceKit.RemoveDuplicate(keys), nil
-}
-
-// Scan 迭代当前数据库中的数据库键
-/*
-！！！：
-(1)	scan命令也并不是完美的，它"返回的结果有可能重复"，因此需要客户端"去重"；
-(2) 用于替代keys，因为keys在大数据量有性能问题；
-(3) 如果db为空，将返回: [] 0 <nil>
-(4) 返回的[]string实例的长度可能会大于传参count，比如瞎传cursor的情况，编码时得注意.
-
-@return 3个值分别为：keys、新的cursor、err
-*/
-func (client *Client) Scan(cursor uint64, match string, count int64) ([]string, uint64, error) {
-	return scan(client.goRedisClient, cursor, match, count)
-}
-
-// ScanFully 对 Scan 进行了封装，用于替代 Keys 命令
+// ScanFully 对 Scan 进行了封装，用于替代 Keys 命令.
 /*
 PS:
 (1) 如果db为空，将返回: [] <nil>
 (2) redis cluster模式下，需要特殊处理（详见代码），否则：明明有数据的情况下，可能取不到数据，或者取到的数据不全（因为只找1个节点要）.
 */
-func (client *Client) ScanFully(match string, count int64) ([]string, error) {
-	if count <= 0 {
-		count = 10
-	}
+func (client *Client) ScanFully(ctx context.Context, match string, count int64) ([]string, error) {
+	var cursor uint64 = 0
+	var s []string
 
-	if clusterClient, ok := client.goRedisClient.(*redis.ClusterClient); ok {
-		// cluster集群的情况，遍历每个master节点（由于主从复制，slave节点没必要去执行）
-		var keys []string
-
-		err := clusterClient.ForEachMaster(context.TODO(), func(ctx context.Context, client *redis.Client) error {
-			tmp, err := scanFully(client, match, count)
-			keys = sliceKit.Merge(keys, tmp)
-			return err
-		})
+	for {
+		var tmp []string
+		var err error
+		tmp, cursor, err = client.Scan(ctx, cursor, match, count)
 		if err != nil {
 			return nil, err
 		}
-		return sliceKit.RemoveDuplicate(keys), nil
+
+		s = sliceKit.Merge(s, tmp)
+		if cursor == 0 {
+			break
+		}
 	}
-	return scanFully(client.goRedisClient, match, count)
+	return sliceKit.RemoveDuplicate(s), nil
+
+	//if count <= 0 {
+	//	count = 10
+	//}
+	//if clusterClient, ok := client.goRedisClient.(*redis.ClusterClient); ok {
+	//	// cluster集群的情况，遍历每个master节点（由于主从复制，slave节点没必要去执行）
+	//	var keys []string
+	//
+	//	err := clusterClient.ForEachMaster(ctx, func(ctx context.Context, client *redis.Client) error {
+	//		tmp, err := scanFully(client, match, count)
+	//		keys = sliceKit.Merge(keys, tmp)
+	//		return err
+	//	})
+	//	if err != nil {
+	//		return nil, err
+	//	}
+	//	return sliceKit.RemoveDuplicate(keys), nil
+	//}
+	//return scanFully(client.goRedisClient, match, count)
 }
 
 // Publish 发布
@@ -107,8 +82,8 @@ func (client *Client) ScanFully(match string, count int64) ([]string, error) {
 e.g.
 ("", "") => nil
 */
-func (client *Client) Publish(channel string, message interface{}) error {
-	_, err := client.goRedisClient.Publish(context.TODO(), channel, message).Result()
+func (client *Client) Publish(ctx context.Context, channel string, message interface{}) error {
+	_, err := client.goRedisClient.Publish(ctx, channel, message).Result()
 	return err
 }
 
@@ -116,16 +91,14 @@ func (client *Client) Publish(channel string, message interface{}) error {
 /*
 慎用！！！
 */
-func (client *Client) FlushDB() error {
-	_, err := client.goRedisClient.FlushDB(context.TODO()).Result()
-	return err
+func (client *Client) FlushDB(ctx context.Context) (string, error) {
+	return client.goRedisClient.FlushDB(ctx).Result()
 }
 
 // FlushAll 清空整个 Redis 服务器的数据(删除所有数据库的所有 key )
 /*
 慎用！！！
 */
-func (client *Client) FlushAll() error {
-	_, err := client.goRedisClient.FlushAll(context.TODO()).Result()
-	return err
+func (client *Client) FlushAll(ctx context.Context) (string, error) {
+	return client.goRedisClient.FlushAll(ctx).Result()
 }

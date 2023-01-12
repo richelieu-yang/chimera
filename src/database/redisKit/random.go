@@ -10,19 +10,19 @@ import (
 /*
 PS: 如果当前db是空的，将返回error（redis.Nil）.
 */
-func (client *Client) RandomKey() (string, error) {
-	return client.goRedisClient.RandomKey(context.TODO()).Result()
+func (client *Client) RandomKey(ctx context.Context) (string, error) {
+	return client.goRedisClient.RandomKey(ctx).Result()
 }
 
 // RandomKeyWithMatch 从当前数据库中随机返回一个key(指定match).
-// Deprecated: 传参match 对应的key有很多的情况下，会有性能问题.
 /*
+Deprecated: 传参match 对应的key有很多的情况下，会有性能问题.
 PS:
 (1) 官方没有实现此功能的方法，此方法是通过Scan命令来实现的；
 (2) 如果当前db不存在符合条件的key，将返回error(redis.Nil).
 */
-func (client *Client) RandomKeyWithMatch(match string) (string, error) {
-	s, err := client.ScanFully(match, -1)
+func (client *Client) RandomKeyWithMatch(ctx context.Context, match string) (string, error) {
+	s, err := client.ScanFully(ctx, match, -1)
 	if err != nil {
 		return "", err
 	}

@@ -73,7 +73,7 @@ func NewClient(config *RedisConfig) (*Client, error) {
 // testConnection 进行简单的测试，以防Redis服务部署的有问题（方便甩锅）
 func testConnection(client *Client) error {
 	// ping
-	if _, err := client.Ping(); err != nil {
+	if _, err := client.Ping(context.TODO()); err != nil {
 		return err
 	}
 

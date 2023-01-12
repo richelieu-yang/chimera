@@ -83,3 +83,19 @@ func (client *Client) Expire(ctx context.Context, key string, expiration time.Du
 func (client *Client) ExpireAt(ctx context.Context, key string, tm time.Time) (bool, error) {
 	return client.goRedisClient.ExpireAt(ctx, key, tm).Result()
 }
+
+// Scan 迭代当前数据库中的数据库键.
+/*
+PS:
+(1)	scan命令也并不是完美的，它"返回的结果有可能重复"，因此需要客户端"去重"；
+(2) 用于替代keys，因为keys在大数据量有性能问题；
+(3) 返回的[]string实例的长度可能会大于传参count，比如瞎传cursor的情况，编码时得注意.
+
+@return 返回的error == nil的情况下，第1个返回值([]string)必定不为nil
+
+e.g. db为空（|| db中不存在符合条件的key）
+(context.TODO(), 0, "*", 10) => ([]string{}, 0, nil)
+*/
+func (client *Client) Scan(ctx context.Context, cursor uint64, match string, count int64) ([]string, uint64, error) {
+	return client.goRedisClient.Scan(ctx, cursor, match, count).Result()
+}
