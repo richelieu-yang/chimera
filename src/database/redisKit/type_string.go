@@ -6,7 +6,7 @@ import (
 	"time"
 )
 
-// Set 设置指定key的值.
+// Set 设置指定key的值（string类型）.
 /*
 @param key 			可以为""
 @param value 		支持的类型: string、[]byte、int、float64、bool(true: "1"; false: "0")...

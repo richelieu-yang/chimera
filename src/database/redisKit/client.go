@@ -1,6 +1,7 @@
 package redisKit
 
 import (
+	"context"
 	"fmt"
 	"github.com/go-redis/redis/v8"
 	"github.com/go-redsync/redsync/v4"
@@ -78,7 +79,7 @@ func testConnection(client *Client) error {
 	expiration := time.Second * 8 // 8s后过期（PS: 如果要debug此函数的话，建议将时间延长）
 
 	// set
-	ok, err := client.Set(key, value, expiration)
+	ok, err := client.Set(context.TODO(), key, value, expiration)
 	if err != nil {
 		return err
 	}
@@ -87,7 +88,7 @@ func testConnection(client *Client) error {
 	}
 
 	// get
-	value1, err := client.Get(key)
+	value1, err := client.Get(context.TODO(), key)
 	if err != nil {
 		if err == redis.Nil {
 			return errorKit.Simple("key(%s) doesn't exist", key)
@@ -99,7 +100,7 @@ func testConnection(client *Client) error {
 	}
 
 	// del && get
-	ok, err = client.Del(key)
+	ok, err = client.Del(context.TODO(), key)
 	if err != nil {
 		return err
 	}

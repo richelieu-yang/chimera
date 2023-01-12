@@ -42,3 +42,15 @@ func (client Client) SMembers(ctx context.Context, key string) ([]string, error)
 func (client Client) SMembersMap(ctx context.Context, key string) (map[string]struct{}, error) {
 	return client.UC.SMembersMap(ctx, key).Result()
 }
+
+// SPop 用于移除并返回集合(set)中的一个随机元素.
+/*
+语法: SPOP KEY
+*/
+func (client Client) SPop(ctx context.Context, key string) (string, error) {
+	return client.UC.SPop(ctx, key).Result()
+}
+
+func (client Client) SPopN(ctx context.Context, key string, count int64) ([]string, error) {
+	return client.UC.SPopN(ctx, key, count).Result()
+}

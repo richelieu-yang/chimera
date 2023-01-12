@@ -1,6 +1,7 @@
 package redisKit
 
 import (
+	"context"
 	"fmt"
 	"testing"
 )
@@ -25,7 +26,7 @@ func TestClusterMode(test *testing.T) {
 	}
 
 	tmp := false
-	if ok, err := client.Set("ccc", tmp, 0); err != nil {
+	if ok, err := client.Set(context.TODO(), "ccc", tmp, 0); err != nil {
 		panic(err)
 	} else {
 		fmt.Printf("ok: [%t].\n", ok)
