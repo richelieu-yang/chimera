@@ -82,7 +82,8 @@ func (s *RedisStore) New(r *http.Request, name string) (*sessions.Session, error
 // web browser.
 func (s *RedisStore) Save(r *http.Request, w http.ResponseWriter, session *sessions.Session) error {
 	// Delete if max-age is <= 0
-	if session.Options.MaxAge <= 0 {
+	//if session.Options.MaxAge <= 0 {
+	if session.Options.MaxAge < 0 {
 		if err := s.delete(r.Context(), session); err != nil {
 			return err
 		}
