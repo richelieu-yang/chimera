@@ -5,9 +5,8 @@ import (
 	"github.com/gin-gonic/gin"
 	"github.com/go-redis/redis/v8"
 	"github.com/gorilla/sessions"
-	"github.com/rbcervilla/redisstore/v8"
-	"github.com/richelieu42/go-scales/src/core/intKit"
 	"github.com/richelieu42/go-scales/src/idKit"
+	"github.com/richelieu42/go-scales/src/sessionKit"
 	"net/http"
 )
 
@@ -24,7 +23,8 @@ func main() {
 		Addr: "localhost:6379",
 		DB:   0,
 	})
-	store, err := redisstore.NewRedisStore(context.TODO(), client)
+
+	store, err := sessionKit.NewRedisStore(context.TODO(), client)
 	if err != nil {
 		panic(err)
 	}
@@ -33,11 +33,9 @@ func main() {
 	store.KeyPrefix(redisKeyPrefix)
 	// 自定义: cookie的配置
 	store.Options(sessions.Options{
-		HttpOnly: false,
+		HttpOnly: true,
 		Secure:   false,
-		//Path: "/path",
-		//Domain: "localhost",
-		MaxAge: 1800, // 只有 >=0 的情况下，才会将数据写到Redis中
+		MaxAge:   0, // 只有 > 0 的情况下，才会将数据写到Redis中
 	})
 	// 自定义: cookie的value、Redis中的key的后半部分
 	store.KeyGen(func() (string, error) {
@@ -53,22 +51,13 @@ func main() {
 			return
 		}
 
-		/* (2) 从session中读取或存储数据 */
-		count, err := intKit.ParseToInt(session.Values["count"])
-		if err != nil {
-			ctx.String(http.StatusOK, err.Error())
-			return
-		}
-		count++
-		session.Values["count"] = count
-
-		/* (3) 保存session数据，本质上是将内存中的数据持久化到存储介质中（序列化并写到Redis中；会重置key的TTL） */
+		/* (2) 保存session数据，本质上是将内存中的数据持久化到存储介质中（序列化并写到Redis中；会重置key的TTL） */
 		if err := session.Save(ctx.Request, ctx.Writer); err != nil {
 			ctx.String(http.StatusOK, err.Error())
 			return
 		}
 
-		ctx.String(http.StatusOK, "count: [%d]", count)
+		ctx.String(http.StatusOK, "set IsNew: [%t].", session.IsNew)
 	})
 	if err := engine.Run(":80"); err != nil {
 		panic(err)

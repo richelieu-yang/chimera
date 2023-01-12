@@ -1,0 +1,2 @@
+redis_store.go 实际上是修改了 github.com/rbcervilla/redisstore/v8 v8.1.0.（因为该依赖有bug，详见 go - session.wps）
+
