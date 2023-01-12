@@ -18,8 +18,8 @@ func (client Client) Ping() (string, error) {
 e.g.
 如果key不存在，将返回: (false, nil)
 */
-func (client Client) Del(key string) (bool, error) {
-	reply, err := client.UC.Del(context.TODO(), key).Result()
+func (client Client) Del(ctx context.Context, key string) (bool, error) {
+	reply, err := client.UC.Del(ctx, key).Result()
 	if err != nil {
 		return false, err
 	}
@@ -30,12 +30,30 @@ func (client Client) Del(key string) (bool, error) {
 /*
 PS: 如果传参的key有多个，只要其中有一个key存在，就返回true（不报错的情况下）.
 */
-func (client Client) Exists(keys ...string) (bool, error) {
-	reply, err := client.UC.Exists(context.TODO(), keys...).Result()
+func (client Client) Exists(ctx context.Context, keys ...string) (bool, error) {
+	reply, err := client.UC.Exists(ctx, keys...).Result()
 	if err != nil {
 		return false, err
 	}
 	return reply == 1, nil
+}
+
+// Expire
+/*
+语法：EXPIRE key seconds
+说明：为给定 key 设置过期时间，以秒计。
+*/
+func (client Client) Expire(ctx context.Context, key string, expiration time.Duration) (bool, error) {
+	return client.UC.Expire(ctx, key, expiration).Result()
+}
+
+// ExpireAt
+/*
+语法：EXPIREAT key timestamp
+说明：EXPIREAT 的作用和 EXPIRE 类似，都用于为 key 设置过期时间。 不同在于 EXPIREAT 命令接受的时间参数是 UNIX 时间戳(unix timestamp)。
+*/
+func (client Client) ExpireAt(ctx context.Context, key string, tm time.Time) (bool, error) {
+	return client.UC.ExpireAt(ctx, key, tm).Result()
 }
 
 // TTL 返回给定 key 的剩余生存时间
@@ -44,12 +62,8 @@ func (client Client) Exists(keys ...string) (bool, error) {
 (1) key不存在，返回值: 	-2ns（即-2）, nil（能直接通过 == 或 switch 进行比较）
 (2) key为持久化键，返回值: -1ns（即-1）, nil（能直接通过 == 或 switch 进行比较）
 */
-func (client Client) TTL(key string) (time.Duration, error) {
-	reply, err := client.UC.TTL(context.TODO(), key).Result()
-	if err != nil {
-		return 0, err
-	}
-	return reply, nil
+func (client Client) TTL(ctx context.Context, key string) (time.Duration, error) {
+	return client.UC.TTL(ctx, key).Result()
 }
 
 func scan(client redis.UniversalClient, cursor uint64, match string, count int64) ([]string, uint64, error) {
