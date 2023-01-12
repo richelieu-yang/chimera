@@ -68,7 +68,7 @@ func NewRedisStore(ctx context.Context, client redis.UniversalClient) (*RedisSto
 	return rs, rs.client.Ping(ctx).Err()
 }
 
-// SetSessionTimeoutWhenMaxAgeZero
+// SetSessionTimeoutWhenMaxAgeZero Richelieu
 /*
 @param duration > 0: 指定时间的有效期
 				== 0: 永久有效（TTL == -1，不建议这么干）
