@@ -2,6 +2,7 @@ package redisKit
 
 import (
 	"context"
+	"github.com/richelieu42/go-scales/src/core/sliceKit"
 	"time"
 )
 
@@ -98,4 +99,54 @@ e.g. db为空（|| db中不存在符合条件的key）
 */
 func (client *Client) Scan(ctx context.Context, cursor uint64, match string, count int64) ([]string, uint64, error) {
 	return client.goRedisClient.Scan(ctx, cursor, match, count).Result()
+}
+
+// ScanFully 对 Scan 进行了封装，用于替代 Keys 命令.
+/*
+PS:
+(1) 如果db为空，将返回: [] <nil>
+(2) redis cluster模式下，需要特殊处理（详见代码），否则：明明有数据的情况下，可能取不到数据，或者取到的数据不全（因为只找1个节点要）.
+
+@return 返回的error == nil的情况下，第1个返回值([]string)必定不为nil
+
+e.g. db为空（|| db中不存在符合条件的key）
+(context.TODO(), "*", 10) => ([]string{}, nil)
+*/
+func (client *Client) ScanFully(ctx context.Context, match string, count int64) ([]string, error) {
+	var cursor uint64 = 0
+	var s []string
+
+	for {
+		var tmp []string
+		var err error
+		tmp, cursor, err = client.Scan(ctx, cursor, match, count)
+		if err != nil {
+			return nil, err
+		}
+
+		s = sliceKit.Merge(s, tmp)
+		if cursor == 0 {
+			break
+		}
+	}
+	return sliceKit.RemoveDuplicate(s), nil
+
+	//if count <= 0 {
+	//	count = 10
+	//}
+	//if clusterClient, ok := client.goRedisClient.(*redis.ClusterClient); ok {
+	//	// cluster集群的情况，遍历每个master节点（由于主从复制，slave节点没必要去执行）
+	//	var keys []string
+	//
+	//	err := clusterClient.ForEachMaster(ctx, func(ctx context.Context, client *redis.Client) error {
+	//		tmp, err := scanFully(client, match, count)
+	//		keys = sliceKit.Merge(keys, tmp)
+	//		return err
+	//	})
+	//	if err != nil {
+	//		return nil, err
+	//	}
+	//	return sliceKit.RemoveDuplicate(keys), nil
+	//}
+	//return scanFully(client.goRedisClient, match, count)
 }

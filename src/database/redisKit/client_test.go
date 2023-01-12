@@ -25,8 +25,8 @@ func TestClusterMode(test *testing.T) {
 		panic(err)
 	}
 
-	s, cursor, err := client.Scan(context.TODO(), 0, "*", 10)
-	fmt.Println(s, cursor, err)
+	s, err := client.ScanFully(context.TODO(), "*", 10)
+	fmt.Println(s, err)
 
 	//value := true
 	//ok, err := client.Set(context.TODO(), "ccc", value, 0)
