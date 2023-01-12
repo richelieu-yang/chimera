@@ -8,7 +8,7 @@ import (
 
 // RandomKey 从当前数据库中随机返回一个key
 /*
-PS: 如果当前db是空的，将返回error（redis.Nil）
+PS: 如果当前db是空的，将返回error（redis.Nil）.
 */
 func (client *Client) RandomKey() (string, error) {
 	return client.goRedisClient.RandomKey(context.TODO()).Result()
