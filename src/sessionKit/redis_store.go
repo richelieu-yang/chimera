@@ -15,6 +15,14 @@ import (
 	"time"
 )
 
+const (
+	// defaultExpirationWhenMaxAgeZero
+	/*
+		Richelieu: RedisStore.expirationWhenMaxAgeZero 的默认值.
+	*/
+	defaultExpirationWhenMaxAgeZero = 30 * time.Minute /*1800s*/
+)
+
 // RedisStore stores gorilla sessions in Redis
 type RedisStore struct {
 	// client to connect to redis
@@ -27,6 +35,16 @@ type RedisStore struct {
 	keyGen KeyGenFunc
 	// session serializer
 	serializer SessionSerializer
+
+	// expirationWhenMaxAgeZero
+	/*
+		Richelieu: 当 MaxAge == 0 时，后端session的有效期.
+
+		PS:
+		(1) 单位为秒（s）；
+		(2) 即Redis中key的超时时间.
+	*/
+	expirationWhenMaxAgeZero time.Duration
 }
 
 // KeyGenFunc defines a function used by store to generate a key
@@ -43,8 +61,21 @@ func NewRedisStore(ctx context.Context, client redis.UniversalClient) (*RedisSto
 		keyPrefix:  "session:",
 		keyGen:     generateRandomKey,
 		serializer: GobSerializer{},
+
+		// Richelieu: 初始化实例时，值-1将使用默认值
+		expirationWhenMaxAgeZero: -1,
 	}
 	return rs, rs.client.Ping(ctx).Err()
+}
+
+// SetExpirationWhenMaxAgeZero
+/*
+@param duration > 0: 指定时间的有效期
+				== 0: 永久有效（TTL == -1，不建议这么干）
+				< 0: 采用默认值
+*/
+func (s *RedisStore) SetExpirationWhenMaxAgeZero(duration time.Duration) {
+	s.expirationWhenMaxAgeZero = duration
 }
 
 // Get returns a session for the given name after adding it to the registry.
@@ -82,6 +113,8 @@ func (s *RedisStore) New(r *http.Request, name string) (*sessions.Session, error
 // web browser.
 func (s *RedisStore) Save(r *http.Request, w http.ResponseWriter, session *sessions.Session) error {
 	// Delete if max-age is <= 0
+
+	// Richelieu: MaxAge == 0时，将生成cookie和存储到Redis中.
 	//if session.Options.MaxAge <= 0 {
 	if session.Options.MaxAge < 0 {
 		if err := s.delete(r.Context(), session); err != nil {
@@ -131,15 +164,25 @@ func (s *RedisStore) Close() error {
 	return s.client.Close()
 }
 
-// save writes session in Redis
+// save writes session in Redis（存储到Redis中）
 func (s *RedisStore) save(ctx context.Context, session *sessions.Session) error {
-
 	b, err := s.serializer.Serialize(session)
 	if err != nil {
 		return err
 	}
 
-	return s.client.Set(ctx, s.keyPrefix+session.ID, b, time.Duration(session.Options.MaxAge)*time.Second).Err()
+	// Richelieu: MaxAge == 0时，将使用 expirationWhenMaxAgeZero 属性
+	var expiration time.Duration
+	if session.Options.MaxAge == 0 {
+		expiration = s.expirationWhenMaxAgeZero
+		if expiration < 0 {
+			expiration = defaultExpirationWhenMaxAgeZero
+		}
+	} else {
+		expiration = time.Duration(session.Options.MaxAge) * time.Second
+	}
+
+	return s.client.Set(ctx, s.keyPrefix+session.ID, b, expiration).Err()
 }
 
 // load reads session from Redis
