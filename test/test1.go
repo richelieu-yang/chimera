@@ -8,7 +8,6 @@ import (
 	"github.com/richelieu42/go-scales/src/idKit"
 	"github.com/richelieu42/go-scales/src/sessionKit"
 	"net/http"
-	"time"
 )
 
 var (
@@ -42,7 +41,7 @@ func main() {
 	store.KeyGen(func() (string, error) {
 		return idKit.NewULID(), nil
 	})
-	store.SetSessionTimeoutWhenMaxAgeZero(time.Hour)
+	//store.SetSessionTimeoutWhenMaxAgeZero(time.Hour)
 
 	engine := gin.Default()
 	engine.Any("/test", func(ctx *gin.Context) {
