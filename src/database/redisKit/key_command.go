@@ -15,6 +15,9 @@ import (
 	set (集合)
 	zset (有序集)
 	hash (哈希表)
+
+e.g.
+传参key不存在的情况 => ("none", nil)
 */
 func (client *Client) Type(key string) (string, error) {
 	return client.UC.Type(context.TODO(), key).Result()
