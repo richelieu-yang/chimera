@@ -66,6 +66,10 @@ func (client *Client) TTL(ctx context.Context, key string) (time.Duration, error
 /*
 语法：EXPIRE key seconds
 说明：为给定 key 设置过期时间，以秒计。
+
+e.g.
+key不存在	=> (false, nil)
+key存在		=> (true, nil)
 */
 func (client *Client) Expire(ctx context.Context, key string, expiration time.Duration) (bool, error) {
 	return client.goRedisClient.Expire(ctx, key, expiration).Result()

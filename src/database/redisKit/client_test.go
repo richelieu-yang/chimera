@@ -4,6 +4,7 @@ import (
 	"context"
 	"fmt"
 	"testing"
+	"time"
 )
 
 // TestClusterMode 测试Redis的Cluster集群模式
@@ -25,12 +26,11 @@ func TestClusterMode(test *testing.T) {
 		panic(err)
 	}
 
-	duration, err := client.TTL(context.TODO(), "a")
+	flag, err := client.Expire(context.TODO(), "a", time.Second*100)
 	if err != nil {
 		panic(err)
 	}
-	fmt.Println(duration)       // -1ns
-	fmt.Println(duration == -1) // true
+	fmt.Println(flag, err)
 
 	//value := true
 	//ok, err := client.Set(context.TODO(), "ccc", value, 0)
