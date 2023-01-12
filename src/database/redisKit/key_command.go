@@ -114,22 +114,23 @@ e.g. db为空（|| db中不存在符合条件的key）
 */
 func (client *Client) ScanFully(ctx context.Context, match string, count int64) ([]string, error) {
 	var cursor uint64 = 0
-	var s []string
+	var keys []string
 
 	for {
-		var tmp []string
+		var s []string
 		var err error
-		tmp, cursor, err = client.Scan(ctx, cursor, match, count)
+		s, cursor, err = client.Scan(ctx, cursor, match, count)
 		if err != nil {
 			return nil, err
 		}
 
-		s = sliceKit.Merge(s, tmp)
+		keys = sliceKit.Merge(keys, s)
 		if cursor == 0 {
+			// 完整的过一遍了，中断循环
 			break
 		}
 	}
-	return sliceKit.RemoveDuplicate(s), nil
+	return sliceKit.RemoveDuplicate(keys), nil
 
 	//if count <= 0 {
 	//	count = 10
