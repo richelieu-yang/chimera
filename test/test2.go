@@ -1,58 +1,18 @@
 package main
 
 import (
-	"github.com/gin-gonic/gin"
-	"github.com/richelieu42/go-scales/src/cookieKit"
-	"github.com/richelieu42/go-scales/src/urlKit"
-	"net/http"
-	"strconv"
+	"fmt"
 )
 
-var name = "NamE"
-
 func main() {
-	engine := gin.Default()
-
-	engine.Any("/set", func(ctx *gin.Context) {
-		cookie := cookieKit.NewCookie(name, strconv.Itoa(0), "", "", 0, false, true, http.SameSiteDefaultMode)
-		cookieKit.SetCookie(ctx.Writer, cookie)
-
-		ctx.String(http.StatusOK, "set")
-	})
-
-	engine.Any("/add", func(ctx *gin.Context) {
-		cookie, err := cookieKit.GetCookie(ctx.Request, name)
-		if err != nil {
-			ctx.String(http.StatusOK, "no cookie with name(%s)", name)
-			return
+LABEL1:
+	for i := 0; i < 3; i++ {
+		for j := 0; j < 3; j++ {
+			fmt.Printf("i = [%d], j = [%d].\n", i, j)
+			if j == 1 {
+				fmt.Println("goto")
+				goto LABEL1
+			}
 		}
-
-		value, err := urlKit.DecodeURIComponent(cookie.Value)
-		if err != nil {
-			ctx.String(http.StatusOK, err.Error())
-			return
-		}
-		i, err := strconv.Atoi(value)
-		if err != nil {
-			ctx.String(http.StatusOK, err.Error())
-			return
-		}
-		i++
-		cookie.Value = urlKit.EncodeURIComponent(strconv.Itoa(i))
-
-		// 后端修改了cookie，如果不set回去，前端的cookie将不会同步修改
-		cookieKit.SetCookie(ctx.Writer, cookie)
-
-		ctx.String(http.StatusOK, "get "+cookie.Value)
-	})
-
-	engine.Any("/del", func(ctx *gin.Context) {
-		cookieKit.DeleteCookieByName(ctx.Request, ctx.Writer, name)
-
-		ctx.String(http.StatusOK, "del")
-	})
-
-	if err := engine.Run(":80"); err != nil {
-		panic(err)
 	}
 }
