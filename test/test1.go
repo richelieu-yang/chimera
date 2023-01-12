@@ -42,7 +42,7 @@ func main() {
 	store.KeyGen(func() (string, error) {
 		return idKit.NewULID(), nil
 	})
-	store.SetExpirationWhenMaxAgeZero(time.Hour)
+	store.SetSessionTimeoutWhenMaxAgeZero(time.Hour)
 
 	engine := gin.Default()
 	engine.Any("/test", func(ctx *gin.Context) {
