@@ -5,16 +5,6 @@ import (
 	"time"
 )
 
-// TTL 返回给定 key 的剩余生存时间
-/*
-@return
-(1) key不存在，返回值: 	-2ns（即-2）, nil（能直接通过 == 或 switch 进行比较）
-(2) key为持久化键，返回值: -1ns（即-1）, nil（能直接通过 == 或 switch 进行比较）
-*/
-func (client *Client) TTL(ctx context.Context, key string) (time.Duration, error) {
-	return client.goRedisClient.TTL(ctx, key).Result()
-}
-
 // Expire
 /*
 语法：EXPIRE key seconds

@@ -102,12 +102,6 @@ func (client *Client) ScanFully(match string, count int64) ([]string, error) {
 	return scanFully(client.goRedisClient, match, count)
 }
 
-// Keys
-// Deprecated: 禁止在生产环境使用Keys正则匹配操作（实际即便是开发、测试环境也要慎重使用）！！！
-func (client *Client) Keys(match string) ([]string, error) {
-	return client.goRedisClient.Keys(context.TODO(), match).Result()
-}
-
 // Publish 发布
 /*
 e.g.
