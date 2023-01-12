@@ -5,7 +5,7 @@ import (
 	"github.com/go-redsync/redsync/v4/redis/goredis/v8"
 )
 
-// NewDistributedMutex 生成生成Redis分布式互斥锁
+// NewDistributedMutex 生成Redis分布式互斥锁.
 /*
 PS:
 (1) 不可重入锁；
