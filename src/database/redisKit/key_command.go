@@ -20,5 +20,5 @@ e.g.
 传参key不存在的情况 => ("none", nil)
 */
 func (client *Client) Type(key string) (string, error) {
-	return client.UC.Type(context.TODO(), key).Result()
+	return client.goRedisClient.Type(context.TODO(), key).Result()
 }

@@ -12,7 +12,7 @@ import (
 (2) key为持久化键，返回值: -1ns（即-1）, nil（能直接通过 == 或 switch 进行比较）
 */
 func (client *Client) TTL(ctx context.Context, key string) (time.Duration, error) {
-	return client.UC.TTL(ctx, key).Result()
+	return client.goRedisClient.TTL(ctx, key).Result()
 }
 
 // Expire
@@ -21,7 +21,7 @@ func (client *Client) TTL(ctx context.Context, key string) (time.Duration, error
 说明：为给定 key 设置过期时间，以秒计。
 */
 func (client *Client) Expire(ctx context.Context, key string, expiration time.Duration) (bool, error) {
-	return client.UC.Expire(ctx, key, expiration).Result()
+	return client.goRedisClient.Expire(ctx, key, expiration).Result()
 }
 
 // ExpireAt
@@ -30,5 +30,5 @@ func (client *Client) Expire(ctx context.Context, key string, expiration time.Du
 说明：EXPIREAT 的作用和 EXPIRE 类似，都用于为 key 设置过期时间。 不同在于 EXPIREAT 命令接受的时间参数是 UNIX 时间戳(unix timestamp)。
 */
 func (client *Client) ExpireAt(ctx context.Context, key string, tm time.Time) (bool, error) {
-	return client.UC.ExpireAt(ctx, key, tm).Result()
+	return client.goRedisClient.ExpireAt(ctx, key, tm).Result()
 }

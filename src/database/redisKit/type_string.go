@@ -17,7 +17,7 @@ import (
 @return 第一个返回值代表: 是否设置成功
 */
 func (client *Client) Set(ctx context.Context, key string, value interface{}, expiration time.Duration) (bool, error) {
-	reply, err := client.UC.Set(ctx, key, value, expiration).Result()
+	reply, err := client.goRedisClient.Set(ctx, key, value, expiration).Result()
 	if err != nil {
 		return false, err
 	}
@@ -29,7 +29,7 @@ func (client *Client) Set(ctx context.Context, key string, value interface{}, ex
 @return 第一个返回值代表: 是否设置成功
 */
 func (client *Client) SetNX(ctx context.Context, key string, value interface{}, expiration time.Duration) (bool, error) {
-	return client.UC.SetNX(ctx, key, value, expiration).Result()
+	return client.goRedisClient.SetNX(ctx, key, value, expiration).Result()
 }
 
 // Get
@@ -39,7 +39,7 @@ PS:
 (2) 如果对应value的类型不为string，会返回error: WRONGTYPE Operation against a key holding the wrong kind of value
 */
 func (client *Client) Get(ctx context.Context, key string) (string, error) {
-	return client.UC.Get(ctx, key).Result()
+	return client.goRedisClient.Get(ctx, key).Result()
 }
 
 // GetWithoutRedisNil

@@ -11,5 +11,5 @@ PS:
 @param name 建议以 "mutex:" 为前缀
 */
 func (client *Client) NewMutex(name string, options ...redsync.Option) *redsync.Mutex {
-	return client.rs.NewMutex(name, options...)
+	return client.sync.NewMutex(name, options...)
 }

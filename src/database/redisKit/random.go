@@ -11,7 +11,7 @@ import (
 PS: 如果当前db是空的，将返回error（redis.Nil）
 */
 func (client *Client) RandomKey() (string, error) {
-	return client.UC.RandomKey(context.TODO()).Result()
+	return client.goRedisClient.RandomKey(context.TODO()).Result()
 }
 
 // RandomKeyWithMatch 从当前数据库中随机返回一个key(指定match).

@@ -7,7 +7,7 @@ import (
 )
 
 func (client *Client) Ping() (string, error) {
-	return client.UC.Ping(context.TODO()).Result()
+	return client.goRedisClient.Ping(context.TODO()).Result()
 }
 
 // Del （删）key 存在时，删除 key
@@ -18,7 +18,7 @@ e.g.
 如果key不存在，将返回: (false, nil)
 */
 func (client *Client) Del(ctx context.Context, key string) (bool, error) {
-	reply, err := client.UC.Del(ctx, key).Result()
+	reply, err := client.goRedisClient.Del(ctx, key).Result()
 	if err != nil {
 		return false, err
 	}
@@ -30,7 +30,7 @@ func (client *Client) Del(ctx context.Context, key string) (bool, error) {
 PS: 如果传参的key有多个，只要其中有一个key存在，就返回true（不报错的情况下）.
 */
 func (client *Client) Exists(ctx context.Context, keys ...string) (bool, error) {
-	reply, err := client.UC.Exists(ctx, keys...).Result()
+	reply, err := client.goRedisClient.Exists(ctx, keys...).Result()
 	if err != nil {
 		return false, err
 	}
@@ -71,7 +71,7 @@ func scanFully(client redis.UniversalClient, match string, count int64) ([]strin
 @return 3个值分别为：keys、新的cursor、err
 */
 func (client *Client) Scan(cursor uint64, match string, count int64) ([]string, uint64, error) {
-	return scan(client.UC, cursor, match, count)
+	return scan(client.goRedisClient, cursor, match, count)
 }
 
 // ScanFully 对 Scan 进行了封装，用于替代 Keys 命令
@@ -85,7 +85,7 @@ func (client *Client) ScanFully(match string, count int64) ([]string, error) {
 		count = 10
 	}
 
-	if clusterClient, ok := client.UC.(*redis.ClusterClient); ok {
+	if clusterClient, ok := client.goRedisClient.(*redis.ClusterClient); ok {
 		// cluster集群的情况，遍历每个master节点（由于主从复制，slave节点没必要去执行）
 		var keys []string
 
@@ -99,13 +99,13 @@ func (client *Client) ScanFully(match string, count int64) ([]string, error) {
 		}
 		return sliceKit.RemoveDuplicate(keys), nil
 	}
-	return scanFully(client.UC, match, count)
+	return scanFully(client.goRedisClient, match, count)
 }
 
 // Keys
 // Deprecated: 禁止在生产环境使用Keys正则匹配操作（实际即便是开发、测试环境也要慎重使用）！！！
 func (client *Client) Keys(match string) ([]string, error) {
-	return client.UC.Keys(context.TODO(), match).Result()
+	return client.goRedisClient.Keys(context.TODO(), match).Result()
 }
 
 // Publish 发布
@@ -114,7 +114,7 @@ e.g.
 ("", "") => nil
 */
 func (client *Client) Publish(channel string, message interface{}) error {
-	_, err := client.UC.Publish(context.TODO(), channel, message).Result()
+	_, err := client.goRedisClient.Publish(context.TODO(), channel, message).Result()
 	return err
 }
 
@@ -123,7 +123,7 @@ func (client *Client) Publish(channel string, message interface{}) error {
 慎用！！！
 */
 func (client *Client) FlushDB() error {
-	_, err := client.UC.FlushDB(context.TODO()).Result()
+	_, err := client.goRedisClient.FlushDB(context.TODO()).Result()
 	return err
 }
 
@@ -132,6 +132,6 @@ func (client *Client) FlushDB() error {
 慎用！！！
 */
 func (client *Client) FlushAll() error {
-	_, err := client.UC.FlushAll(context.TODO()).Result()
+	_, err := client.goRedisClient.FlushAll(context.TODO()).Result()
 	return err
 }

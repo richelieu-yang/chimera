@@ -16,11 +16,11 @@ import (
 
 type (
 	Client struct {
-		Mode Mode
-		/* 真正的go-redis客户端 */
-		UC redis.UniversalClient
-		/* 用于生成Redis分布式互斥锁 */
-		rs *redsync.Redsync
+		mode Mode
+		// goRedisClient 真正的go-redis客户端
+		goRedisClient redis.UniversalClient
+		// sync 用于生成Redis分布式互斥锁
+		sync *redsync.Redsync
 	}
 )
 
@@ -56,9 +56,9 @@ func NewClient(config *RedisConfig) (*Client, error) {
 	pool := goredis.NewPool(uc) // or, pool := redigo.NewPool(...)
 	rs := redsync.New(pool)
 	client := &Client{
-		Mode: config.Mode,
-		UC:   uc,
-		rs:   rs,
+		mode:          config.Mode,
+		goRedisClient: uc,
+		sync:          rs,
 	}
 
 	if err := testConnection(client); err != nil {
