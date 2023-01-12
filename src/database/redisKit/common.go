@@ -6,7 +6,7 @@ import (
 	"github.com/richelieu42/go-scales/src/core/sliceKit"
 )
 
-func (client Client) Ping() (string, error) {
+func (client *Client) Ping() (string, error) {
 	return client.UC.Ping(context.TODO()).Result()
 }
 
@@ -17,7 +17,7 @@ func (client Client) Ping() (string, error) {
 e.g.
 如果key不存在，将返回: (false, nil)
 */
-func (client Client) Del(ctx context.Context, key string) (bool, error) {
+func (client *Client) Del(ctx context.Context, key string) (bool, error) {
 	reply, err := client.UC.Del(ctx, key).Result()
 	if err != nil {
 		return false, err
@@ -29,7 +29,7 @@ func (client Client) Del(ctx context.Context, key string) (bool, error) {
 /*
 PS: 如果传参的key有多个，只要其中有一个key存在，就返回true（不报错的情况下）.
 */
-func (client Client) Exists(ctx context.Context, keys ...string) (bool, error) {
+func (client *Client) Exists(ctx context.Context, keys ...string) (bool, error) {
 	reply, err := client.UC.Exists(ctx, keys...).Result()
 	if err != nil {
 		return false, err
@@ -70,7 +70,7 @@ func scanFully(client redis.UniversalClient, match string, count int64) ([]strin
 
 @return 3个值分别为：keys、新的cursor、err
 */
-func (client Client) Scan(cursor uint64, match string, count int64) ([]string, uint64, error) {
+func (client *Client) Scan(cursor uint64, match string, count int64) ([]string, uint64, error) {
 	return scan(client.UC, cursor, match, count)
 }
 
@@ -80,7 +80,7 @@ PS:
 (1) 如果db为空，将返回: [] <nil>
 (2) redis cluster模式下，需要特殊处理（详见代码），否则：明明有数据的情况下，可能取不到数据，或者取到的数据不全（因为只找1个节点要）.
 */
-func (client Client) ScanFully(match string, count int64) ([]string, error) {
+func (client *Client) ScanFully(match string, count int64) ([]string, error) {
 	if count <= 0 {
 		count = 10
 	}
@@ -104,7 +104,7 @@ func (client Client) ScanFully(match string, count int64) ([]string, error) {
 
 // Keys
 // Deprecated: 禁止在生产环境使用Keys正则匹配操作（实际即便是开发、测试环境也要慎重使用）！！！
-func (client Client) Keys(match string) ([]string, error) {
+func (client *Client) Keys(match string) ([]string, error) {
 	return client.UC.Keys(context.TODO(), match).Result()
 }
 
@@ -113,7 +113,7 @@ func (client Client) Keys(match string) ([]string, error) {
 e.g.
 ("", "") => nil
 */
-func (client Client) Publish(channel string, message interface{}) error {
+func (client *Client) Publish(channel string, message interface{}) error {
 	_, err := client.UC.Publish(context.TODO(), channel, message).Result()
 	return err
 }
@@ -122,7 +122,7 @@ func (client Client) Publish(channel string, message interface{}) error {
 /*
 慎用！！！
 */
-func (client Client) FlushDB() error {
+func (client *Client) FlushDB() error {
 	_, err := client.UC.FlushDB(context.TODO()).Result()
 	return err
 }
@@ -131,7 +131,7 @@ func (client Client) FlushDB() error {
 /*
 慎用！！！
 */
-func (client Client) FlushAll() error {
+func (client *Client) FlushAll() error {
 	_, err := client.UC.FlushAll(context.TODO()).Result()
 	return err
 }
@@ -140,6 +140,6 @@ func (client Client) FlushAll() error {
 /*
 @return 第二个返回值为nil的情况下，第一个返回值可能为（5种数据类型）："string"、"hash"、"list"、"set"、"zset".
 */
-func (client Client) Type(key string) (string, error) {
+func (client *Client) Type(key string) (string, error) {
 	return client.UC.Type(context.TODO(), key).Result()
 }

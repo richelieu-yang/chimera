@@ -8,7 +8,7 @@ import "context"
 
 @param key 不存在的话，会自动创建此key
 */
-func (client Client) SAdd(ctx context.Context, key string, members ...interface{}) (int64, error) {
+func (client *Client) SAdd(ctx context.Context, key string, members ...interface{}) (int64, error) {
 	return client.UC.SAdd(ctx, key, members...).Result()
 }
 
@@ -18,7 +18,7 @@ func (client Client) SAdd(ctx context.Context, key string, members ...interface{
 
 @param key 如果移除成员后集合为空，将删除此key
 */
-func (client Client) SRem(ctx context.Context, key string, members ...interface{}) (int64, error) {
+func (client *Client) SRem(ctx context.Context, key string, members ...interface{}) (int64, error) {
 	return client.UC.SRem(ctx, key, members...).Result()
 }
 
@@ -29,7 +29,7 @@ func (client Client) SRem(ctx context.Context, key string, members ...interface{
 @return e.g. 	([a c b], nil)
 		e.g.1	如果key不存在，将返回 ([], nil)
 */
-func (client Client) SMembers(ctx context.Context, key string) ([]string, error) {
+func (client *Client) SMembers(ctx context.Context, key string) ([]string, error) {
 	return client.UC.SMembers(ctx, key).Result()
 }
 
@@ -39,7 +39,7 @@ func (client Client) SMembers(ctx context.Context, key string) ([]string, error)
 
 @return 如果key不存在，将返回 (map[], nil)
 */
-func (client Client) SMembersMap(ctx context.Context, key string) (map[string]struct{}, error) {
+func (client *Client) SMembersMap(ctx context.Context, key string) (map[string]struct{}, error) {
 	return client.UC.SMembersMap(ctx, key).Result()
 }
 
@@ -47,10 +47,10 @@ func (client Client) SMembersMap(ctx context.Context, key string) (map[string]st
 /*
 语法: SPOP KEY
 */
-func (client Client) SPop(ctx context.Context, key string) (string, error) {
+func (client *Client) SPop(ctx context.Context, key string) (string, error) {
 	return client.UC.SPop(ctx, key).Result()
 }
 
-func (client Client) SPopN(ctx context.Context, key string, count int64) ([]string, error) {
+func (client *Client) SPopN(ctx context.Context, key string, count int64) ([]string, error) {
 	return client.UC.SPopN(ctx, key, count).Result()
 }

@@ -12,7 +12,7 @@ Redis 列表(List): https://www.runoob.com/redis/redis-lists.html
 
 @param key 不存在的话，会自动创建此key
 */
-func (client Client) LPush(ctx context.Context, key string, values ...interface{}) (int64, error) {
+func (client *Client) LPush(ctx context.Context, key string, values ...interface{}) (int64, error) {
 	return client.UC.LPush(ctx, key, values...).Result()
 }
 
@@ -24,7 +24,7 @@ PS:
 
 @return key不存在的话，将返回 (0, nil)
 */
-func (client Client) LPushX(ctx context.Context, key string, values ...interface{}) (int64, error) {
+func (client *Client) LPushX(ctx context.Context, key string, values ...interface{}) (int64, error) {
 	return client.UC.LPushX(ctx, key, values...).Result()
 }
 
@@ -34,6 +34,6 @@ PS: 如果移除后列表为空。将删除该key.
 
 @return key不存在的情况，将返回 ("", redis.Nil)
 */
-func (client Client) LPop(ctx context.Context, key string) (string, error) {
+func (client *Client) LPop(ctx context.Context, key string) (string, error) {
 	return client.UC.LPop(ctx, key).Result()
 }

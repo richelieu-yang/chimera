@@ -10,7 +10,7 @@ import (
 /*
 PS: 如果当前db是空的，将返回error（redis.Nil）
 */
-func (client Client) RandomKey() (string, error) {
+func (client *Client) RandomKey() (string, error) {
 	return client.UC.RandomKey(context.TODO()).Result()
 }
 
@@ -21,7 +21,7 @@ PS:
 (1) 官方没有实现此功能的方法，此方法是通过Scan命令来实现的；
 (2) 如果当前db不存在符合条件的key，将返回error(redis.Nil).
 */
-func (client Client) RandomKeyWithMatch(match string) (string, error) {
+func (client *Client) RandomKeyWithMatch(match string) (string, error) {
 	s, err := client.ScanFully(match, -1)
 	if err != nil {
 		return "", err

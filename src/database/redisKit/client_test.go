@@ -13,7 +13,7 @@ func TestClusterMode(test *testing.T) {
 		Password: "",
 		Mode:     SingleNodeMode,
 		SingleNodeConfig: &SingleNodeConfig{
-			Addr: "",
+			Addr: "127.0.0.1:6379",
 			DB:   10,
 		},
 		MasterSlaverConfig: nil,
