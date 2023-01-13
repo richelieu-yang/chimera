@@ -49,9 +49,9 @@ func TestClusterMode(test *testing.T) {
 				"127.0.0.1:6380",
 				"127.0.0.1:6381",
 				"127.0.0.1:6382",
-				//"127.0.0.1:6383",
-				//"127.0.0.1:6384",
-				//"127.0.0.1:6385",
+				"127.0.0.1:6383",
+				"127.0.0.1:6384",
+				"127.0.0.1:6385",
 			},
 		},
 	}
@@ -60,13 +60,5 @@ func TestClusterMode(test *testing.T) {
 		panic(err)
 	}
 
-	s, err := client.ScanFully(context.TODO(), "*", 10)
-	fmt.Println(s, err)
-
-	//value := true
-	//ok, err := client.Set(context.TODO(), "ccc", value, 0)
-	//if err != nil {
-	//	panic(err)
-	//}
-	//fmt.Printf("ok: [%t].\n", ok)
+	fmt.Println(client.Ping(context.TODO()))
 }

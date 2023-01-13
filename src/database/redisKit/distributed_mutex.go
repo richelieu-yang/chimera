@@ -2,7 +2,7 @@ package redisKit
 
 import (
 	"github.com/go-redsync/redsync/v4"
-	"github.com/go-redsync/redsync/v4/redis/goredis/v8"
+	"github.com/go-redsync/redsync/v4/redis/goredis/v9"
 )
 
 // NewDistributedMutex 生成Redis分布式互斥锁.

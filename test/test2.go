@@ -33,14 +33,15 @@ func main() {
 		//DialTimeout: 5 * time.Second, //连接建立超时时间，默认5秒。
 		////ReadTimeout:  3 * time.Second, //读超时，默认3秒， -1表示取消读超时
 		//WriteTimeout: 3 * time.Second, //写超时，默认等于读超时
-		////OnConnect: func(ctx context.Context, conn *redis.Conn) error {
-		////	fmt.Printf("创建新的连接: %v\n", conn)
-		////	return nil
-		////},
+		OnConnect: func(ctx context.Context, conn *redis.Conn) error {
+			fmt.Printf("创建新的连接: %v\n", conn)
+			return nil
+		},
 	})
 	//ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
 	//defer cancel()
-	str, err := Cluster.Ping(context.Background()).Result()
+
+	str, err := Cluster.Set(context.Background(), "k", "v", 0).Result()
 	if err != nil {
 		logrus.Error(err.Error())
 		panic(err)

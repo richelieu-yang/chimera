@@ -13,7 +13,7 @@ Redis 有序集合(sorted set): https://www.runoob.com/redis/redis-sorted-sets.h
 /*
 @param key 如果在db中不存在的话，会自动创建
 */
-func (client *Client) ZAdd(ctx context.Context, key string, members ...*redis.Z) (int64, error) {
+func (client *Client) ZAdd(ctx context.Context, key string, members ...redis.Z) (int64, error) {
 	return client.goRedisClient.ZAdd(ctx, key, members...).Result()
 }
 
