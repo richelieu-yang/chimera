@@ -1,6 +1,8 @@
 package redisKit
 
-import "github.com/go-redis/redis/v8"
+import (
+	"github.com/go-redis/redis/v8"
+)
 
 // Pipeline 管道
 /*
