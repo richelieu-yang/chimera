@@ -36,7 +36,7 @@ type (
 		/*
 			A seed list of host:port addresses of cluster nodes.
 			可以是: 所有的 master 的地址，
-			也可以是: 所有的 master + slave 的地址.
+			也可以是: 所有的 master + slave 的地址（推荐）.
 		*/
 		Addrs []string
 	}
