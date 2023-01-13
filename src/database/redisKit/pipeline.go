@@ -1,7 +1,7 @@
 package redisKit
 
 import (
-	"github.com/go-redis/redis/v8"
+	"github.com/go-redis/redis/v9"
 )
 
 // Pipeline 管道

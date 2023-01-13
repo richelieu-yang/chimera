@@ -2,10 +2,9 @@ package redisKit
 
 import (
 	"context"
-	"github.com/go-redis/redis/v8"
+	"github.com/go-redis/redis/v9"
 	"github.com/richelieu42/go-scales/src/core/errorKit"
 	"github.com/richelieu42/go-scales/src/core/strKit"
-	"time"
 )
 
 type (
@@ -74,8 +73,6 @@ func NewClient(config *RedisConfig) (*Client, error) {
 
 func newBaseOptions(userName, password string) *redis.UniversalOptions {
 	return &redis.UniversalOptions{
-		IdleTimeout: time.Minute * 5, // 默认5min
-
 		MinIdleConns: 32,
 		PoolSize:     128,
 
