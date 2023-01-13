@@ -71,24 +71,24 @@ func NewClient(config *RedisConfig) (*Client, error) {
 	return client, nil
 }
 
-func newBaseOptions(userName, password string) *redis.UniversalOptions {
+func newBaseOptions(config *RedisConfig) *redis.UniversalOptions {
 	return &redis.UniversalOptions{
 		MinIdleConns: 32,
 		PoolSize:     128,
 
-		Username: strKit.Trim(userName),
-		Password: strKit.Trim(password),
+		Username: config.UserName,
+		Password: config.Password,
 	}
 }
 
-// 单点模式
+// newSingleNodeOptions 单点模式
 func newSingleNodeOptions(config *RedisConfig) (*redis.UniversalOptions, error) {
 	c := config.SingleNodeConfig
 	if c == nil {
 		return nil, errorKit.Simple("SingleNodeConfig is nil")
 	}
 
-	opts := newBaseOptions(config.UserName, config.Password)
+	opts := newBaseOptions(config)
 
 	opts.Addrs = []string{c.Addr}
 	opts.DB = c.DB
@@ -96,12 +96,12 @@ func newSingleNodeOptions(config *RedisConfig) (*redis.UniversalOptions, error) 
 	return opts, nil
 }
 
-// 主从模式
+// newMasterSlaverOptions 主从模式
 func newMasterSlaverOptions(config *RedisConfig) (*redis.UniversalOptions, error) {
 	return nil, errorKit.Simple("mode(%d) is unsupported now", config.Mode)
 }
 
-// 哨兵模式
+// newSentinelOptions 哨兵模式
 func newSentinelOptions(config *RedisConfig) (*redis.UniversalOptions, error) {
 	c := config.SentinelConfig
 	if c == nil {
@@ -111,7 +111,7 @@ func newSentinelOptions(config *RedisConfig) (*redis.UniversalOptions, error) {
 		return nil, errorKit.Simple("length of SentinelAddrs is 0")
 	}
 
-	opts := newBaseOptions(config.UserName, config.Password)
+	opts := newBaseOptions(config)
 
 	// MasterName默认为"mymaster"
 	opts.MasterName = strKit.EmptyToDefault(c.MasterName, "mymaster", true)
@@ -121,14 +121,14 @@ func newSentinelOptions(config *RedisConfig) (*redis.UniversalOptions, error) {
 	return opts, nil
 }
 
-// cluster模式
+// newClusterOptions cluster模式
 func newClusterOptions(config *RedisConfig) (*redis.UniversalOptions, error) {
 	c := config.ClusterConfig
 	if c == nil {
 		return nil, errorKit.Simple("ClusterConfig is nil")
 	}
 
-	opts := newBaseOptions(config.UserName, config.Password)
+	opts := newBaseOptions(config)
 
 	opts.Addrs = c.Addrs
 
