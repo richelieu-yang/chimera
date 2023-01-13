@@ -60,9 +60,11 @@ func TestClusterMode(test *testing.T) {
 		panic(err)
 	}
 
-	count, err := client.SRem(context.TODO(), "sss", "0", "1", "2", "4", "3", "5")
+	count, err := client.SMembersMap(context.TODO(), "sss")
 	if err != nil {
 		panic(err)
 	}
 	fmt.Println(count)
+	fmt.Println(len(count))
+	fmt.Println(count != nil)
 }
