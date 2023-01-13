@@ -3,7 +3,7 @@ module github.com/richelieu42/go-scales
 go 1.19
 
 require (
-	github.com/apache/rocketmq-clients/golang v0.0.0-20230105061434-bbcbcac196ff
+	github.com/apache/rocketmq-clients/golang v0.0.0-20230111094312-1184903c0901
 	github.com/dablelv/go-huge-util v0.0.31
 	github.com/deckarep/golang-set/v2 v2.1.0
 	github.com/disintegration/imaging v1.6.2
@@ -13,9 +13,9 @@ require (
 	github.com/gin-contrib/cors v1.4.0
 	github.com/gin-contrib/gzip v0.0.6
 	github.com/gin-gonic/gin v1.8.2
-	github.com/go-redis/redis/v8 v8.11.1
+	github.com/go-redis/redis/v8 v8.11.5
 	github.com/go-redis/redis/v9 v9.0.0-rc.2
-	github.com/go-redsync/redsync/v4 v4.4.1
+	github.com/go-redsync/redsync/v4 v4.7.1
 	github.com/gorilla/sessions v1.2.1
 	github.com/gorilla/websocket v1.5.0
 	github.com/jinzhu/copier v0.3.5
@@ -28,7 +28,7 @@ require (
 	github.com/mitchellh/mapstructure v1.5.0
 	github.com/modern-go/reflect2 v1.0.2
 	github.com/mohae/deepcopy v0.0.0-20170929034955-c48cc78d4826
-	github.com/nacos-group/nacos-sdk-go v1.1.3
+	github.com/nacos-group/nacos-sdk-go v1.1.4
 	github.com/oklog/ulid/v2 v2.1.0
 	github.com/pkg/errors v0.9.1
 	github.com/robfig/cron/v3 v3.0.1
@@ -40,7 +40,7 @@ require (
 	github.com/spf13/viper v1.14.0
 	github.com/xuri/excelize/v2 v2.7.0
 	go.uber.org/zap v1.24.0
-	golang.org/x/exp v0.0.0-20230108222341-4b8118a2686a
+	golang.org/x/exp v0.0.0-20230111222715-75897c7a292a
 	golang.org/x/text v0.6.0
 	google.golang.org/grpc v1.52.0
 	gopkg.in/natefinch/lumberjack.v2 v2.0.0

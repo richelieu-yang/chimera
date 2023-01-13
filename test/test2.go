@@ -4,6 +4,7 @@ import (
 	"context"
 	"fmt"
 	"github.com/go-redis/redis/v8"
+	"github.com/sirupsen/logrus"
 )
 
 var Cluster *redis.ClusterClient
@@ -41,6 +42,7 @@ func main() {
 	//defer cancel()
 	str, err := Cluster.Ping(context.Background()).Result()
 	if err != nil {
+		logrus.Error(err.Error())
 		panic(err)
 	}
 	fmt.Println(str)
