@@ -2,13 +2,9 @@ package redisKit
 
 import (
 	"context"
-	"fmt"
 	"github.com/go-redis/redis/v8"
 	"github.com/richelieu42/go-scales/src/core/errorKit"
 	"github.com/richelieu42/go-scales/src/core/strKit"
-	"github.com/richelieu42/go-scales/src/core/timeKit"
-	"github.com/richelieu42/go-scales/src/idKit"
-
 	"time"
 )
 
@@ -64,54 +60,16 @@ func NewClient(config *RedisConfig) (*Client, error) {
 		goRedisClient: goRedisClient,
 	}
 
-	if err := testConnection(client); err != nil {
-		return nil, err
+	// 简单测试是否可用
+	str, err := client.Ping(context.TODO())
+	if err != nil {
+		return nil, errorKit.Wrap(err, "fail to ping")
 	}
+	if str != "PONG" {
+		return nil, errorKit.Simple("result(%s) of ping in invalid", str)
+	}
+
 	return client, nil
-}
-
-// testConnection 进行简单的测试，以防Redis服务部署的有问题（方便甩锅）
-func testConnection(client *Client) error {
-	// ping
-	if _, err := client.Ping(context.TODO()); err != nil {
-		return err
-	}
-
-	key := fmt.Sprintf("go-scales:test:redis:%s", idKit.NewSimpleUUID())
-	value := timeKit.FormatCurrentTime()
-	expiration := time.Second * 8 // 8s后过期（PS: 如果要debug此函数的话，建议将时间延长）
-
-	// set
-	ok, err := client.Set(context.TODO(), key, value, expiration)
-	if err != nil {
-		return err
-	}
-	if !ok {
-		return errorKit.Simple("fail to set item(key: %s, value: %s)", key, value)
-	}
-
-	// get
-	value1, err := client.Get(context.TODO(), key)
-	if err != nil {
-		if err == redis.Nil {
-			return errorKit.Simple("key(%s) doesn't exist", key)
-		}
-		return err
-	}
-	if value != value1 {
-		return errorKit.Simple("value(%s) != value1(%s)", value, value1)
-	}
-
-	// del && get
-	ok, err = client.Del(context.TODO(), key)
-	if err != nil {
-		return err
-	}
-	if !ok {
-		return errorKit.Simple("fail to delete item(key: %s)", key)
-	}
-
-	return nil
 }
 
 func newBaseOptions(userName, password string) *redis.UniversalOptions {
