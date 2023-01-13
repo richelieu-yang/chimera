@@ -60,11 +60,17 @@ func TestClusterMode(test *testing.T) {
 		panic(err)
 	}
 
-	count, err := client.SMembersMap(context.TODO(), "sss")
-	if err != nil {
-		panic(err)
+	//for i := 0; i < 10; i++ {
+	//	_, _ = client.Set(context.TODO(), strconv.Itoa(i), strconv.Itoa(i), 0)
+	//}
+
+	for i := 0; i < 100; i++ {
+		s, _ := client.ScanFully(context.TODO(), "*", 3)
+		//fmt.Println(len(s))
+		fmt.Println(s)
+		if len(s) != 11 {
+			//fmt.Println(666)
+			//panic(666)
+		}
 	}
-	fmt.Println(count)
-	fmt.Println(len(count))
-	fmt.Println(count != nil)
 }

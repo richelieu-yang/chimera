@@ -29,6 +29,8 @@ func (client *Client) GetGoRedisClient() redis.UniversalClient {
 ！！！：每一个命令都会重新取得一个连接，执行后立即回收，而且回收到资源池的顺序类似于堆. https://www.cnblogs.com/yangqi7/p/13289232.html
 
 连接哨兵集群的demo: https://blog.csdn.net/supery071/article/details/109491404
+
+@return cluster模式下，第1个返回值的类型: *redis.ClusterClient
 */
 func NewClient(config *RedisConfig) (*Client, error) {
 	if config == nil {

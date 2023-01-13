@@ -17,6 +17,7 @@ func (client *Client) RandomKey(ctx context.Context) (string, error) {
 // RandomKeyWithMatch 从当前数据库中随机返回一个key(指定match).
 /*
 Deprecated: 传参match 对应的key有很多的情况下，会有性能问题.
+
 PS:
 (1) 官方没有实现此功能的方法，此方法是通过Scan命令来实现的；
 (2) 如果当前db不存在符合条件的key，将返回error(redis.Nil).

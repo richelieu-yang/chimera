@@ -2,6 +2,7 @@ package redisKit
 
 import (
 	"context"
+	"github.com/go-redis/redis/v9"
 	"github.com/richelieu42/go-scales/src/core/sliceKit"
 	"time"
 )
@@ -103,6 +104,8 @@ func (client *Client) Scan(ctx context.Context, cursor uint64, match string, cou
 
 // ScanFully 对 Scan 进行了封装，用于替代 Keys 命令.
 /*
+Deprecated: cluster模式下，虽然做了特殊处理，但（多次循环下）仍旧有小概率漏数据.
+
 PS:
 (1) 如果db为空，将返回: [] <nil>
 (2) redis cluster模式下，需要特殊处理（详见代码），否则：明明有数据的情况下，可能取不到数据，或者取到的数据不全（因为只找1个节点要）.
@@ -113,41 +116,58 @@ e.g. db为空（|| db中不存在符合条件的key）
 (context.TODO(), "*", 10) => ([]string{}, nil)
 */
 func (client *Client) ScanFully(ctx context.Context, match string, count int64) ([]string, error) {
-	var cursor uint64 = 0
-	var keys []string
+	f := func(ctx context.Context, client redis.UniversalClient) ([]string, error) {
+		var cursor uint64 = 0
+		var keys []string
 
-	for {
-		var s []string
-		var err error
-		s, cursor, err = client.Scan(ctx, cursor, match, count)
+		for {
+			var s []string
+			var err error
+			s, cursor, err = client.Scan(ctx, cursor, match, count).Result()
+			if err != nil {
+				return nil, err
+			}
+
+			keys = sliceKit.Merge(keys, s)
+			if cursor == 0 {
+				// 完整的过一遍了，中断循环
+				break
+			}
+		}
+		return sliceKit.RemoveDuplicate(keys), nil
+	}
+
+	clusterClient, ok := client.goRedisClient.(*redis.ClusterClient)
+	if ok {
+		// (1) cluster集群，特殊处理（还是有小概率漏数据）
+		var keys []string
+
+		err := clusterClient.ForEachMaster(ctx, func(ctx context.Context, client *redis.Client) error {
+			s, err := f(ctx, client)
+			if err != nil {
+				return err
+			}
+			keys = sliceKit.Merge(keys, s)
+			return nil
+		})
 		if err != nil {
 			return nil, err
 		}
 
-		keys = sliceKit.Merge(keys, s)
-		if cursor == 0 {
-			// 完整的过一遍了，中断循环
-			break
+		err = clusterClient.ForEachSlave(ctx, func(ctx context.Context, client *redis.Client) error {
+			s, err := f(ctx, client)
+			if err != nil {
+				return err
+			}
+			keys = sliceKit.Merge(keys, s)
+			return nil
+		})
+		if err != nil {
+			return nil, err
 		}
-	}
-	return sliceKit.RemoveDuplicate(keys), nil
 
-	//if count <= 0 {
-	//	count = 10
-	//}
-	//if clusterClient, ok := client.goRedisClient.(*redis.ClusterClient); ok {
-	//	// cluster集群的情况，遍历每个master节点（由于主从复制，slave节点没必要去执行）
-	//	var keys []string
-	//
-	//	err := clusterClient.ForEachMaster(ctx, func(ctx context.Context, client *redis.Client) error {
-	//		tmp, err := scanFully(client, match, count)
-	//		keys = sliceKit.Merge(keys, tmp)
-	//		return err
-	//	})
-	//	if err != nil {
-	//		return nil, err
-	//	}
-	//	return sliceKit.RemoveDuplicate(keys), nil
-	//}
-	//return scanFully(client.goRedisClient, match, count)
+		return sliceKit.RemoveDuplicate(keys), nil
+	}
+	// (2) 非cluster集群，常规处理
+	return f(ctx, client.goRedisClient)
 }
