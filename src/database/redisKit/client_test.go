@@ -28,9 +28,7 @@ func TestSingleNodeMode(test *testing.T) {
 	if _, err := client.Ping(context.TODO()); err != nil {
 		panic(err)
 	}
-
-	client.GetGoRedisClient().PSubscribe()
-
+	
 	//for i := 0; i < 1; i++ {
 	//	s, err := scan(client.GetGoRedisClient(), context.TODO(), "*", 10)
 	//	if err != nil {

@@ -31,16 +31,6 @@ func (client *Client) Exists(ctx context.Context, keys ...string) (bool, error) 
 	return reply == 1, nil
 }
 
-// Publish 发布
-/*
-e.g.
-("", "") => nil
-*/
-func (client *Client) Publish(ctx context.Context, channel string, message interface{}) error {
-	_, err := client.goRedisClient.Publish(ctx, channel, message).Result()
-	return err
-}
-
 // FlushDB 清空当前数据库中的所有 key
 /*
 慎用！！！
