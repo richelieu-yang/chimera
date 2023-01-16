@@ -33,7 +33,7 @@ func GetNetworkTime() (time.Time, string, error) {
 func getNetworkTimeBySource(source string) (time.Time, error) {
 	/*
 		超时时间设置的短一点，以防内网环境启动服务耗时太长.
-		PS: 内网环境，可能直接返回error，也可能请求超时而返回error.
+		PS: 内网环境，可能的情况: (1) 直接返回error；(2) 请求超时而返回error.
 	*/
 	client := &http.Client{
 		Timeout: time.Second * 5,
