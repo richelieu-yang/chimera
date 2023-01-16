@@ -26,7 +26,13 @@ PS:
 (1) 传参s == nil的情况下，此时如果eles数量>=1，将返回1个非nil的slice实例，否则将返回nil.
 (2) append()返回的是1个新的slice实例.
 
-@param s 可以为nil
+@param s 	可以为nil
+@return 	可能为nil
+
+e.g.
+([]string(nil)) 					=> nil
+([]string(nil), []string(nil)...) 	=> nil
+([]string(nil), "0")				=> []string{"0"}
 */
 func Append[T any](s []T, eles ...T) []T {
 	return append(s, eles...)

@@ -27,15 +27,15 @@ func TestSingleNodeMode(test *testing.T) {
 		panic(err)
 	}
 
-	s, err := client.ScanFully(context.TODO(), "*", 10)
-	fmt.Println(s, err)
-
-	//value := true
-	//ok, err := client.Set(context.TODO(), "ccc", value, 0)
-	//if err != nil {
-	//	panic(err)
-	//}
-	//fmt.Printf("ok: [%t].\n", ok)
+	for i := 0; i < 100; i++ {
+		s, err := scan(client.GetGoRedisClient(), context.TODO(), "*", 10)
+		if err != nil {
+			panic(err)
+		}
+		fmt.Println(s)
+		fmt.Println(len(s))
+		fmt.Println("======")
+	}
 }
 
 func TestClusterMode(test *testing.T) {
@@ -112,8 +112,7 @@ func scan1(client redis.UniversalClient, ctx context.Context, match string, coun
 	scanCmd := client.Scan(ctx, cursor, match, count)
 	iter := scanCmd.Iterator()
 	for iter.Next(ctx) {
-		tmp := iter.Val()
-		keys = append(keys, tmp)
+		keys = append(keys, iter.Val())
 	}
 	if err := iter.Err(); err != nil {
 		return nil, err
@@ -125,9 +124,4 @@ func scan1(client redis.UniversalClient, ctx context.Context, match string, coun
 		keys = sliceKit.RemoveDuplicate(keys)
 	}
 	return keys, nil
-
-	//s, cursor, err = .Result()
-	//if err != nil {
-	//	return nil, err
-	//}
 }
