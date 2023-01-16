@@ -4,6 +4,7 @@ import (
 	"context"
 	"github.com/go-redis/redis/v9"
 	"github.com/richelieu42/go-scales/src/core/sliceKit"
+	"sync"
 	"time"
 )
 
@@ -104,8 +105,6 @@ func (client *Client) Scan(ctx context.Context, cursor uint64, match string, cou
 
 // ScanFully 对 Scan 进行了封装，用于替代 Keys 命令.
 /*
-Deprecated: cluster模式下，虽然做了特殊处理，但（多次循环下）仍旧有小概率漏数据.
-
 PS:
 (1) 如果db为空，将返回: [] <nil>
 (2) redis cluster模式下，需要特殊处理（详见代码），否则：明明有数据的情况下，可能取不到数据，或者取到的数据不全（因为只找1个节点要）.
@@ -116,6 +115,7 @@ e.g. db为空（|| db中不存在符合条件的key）
 (context.TODO(), "*", 10) => ([]string{}, nil)
 */
 func (client *Client) ScanFully(ctx context.Context, match string, count int64) ([]string, error) {
+	// 抽出来的通用代码，作用: 让1个节点（node）执行命令
 	f := func(ctx context.Context, client redis.UniversalClient) ([]string, error) {
 		var cursor uint64 = 0
 		var keys []string
@@ -129,24 +129,52 @@ func (client *Client) ScanFully(ctx context.Context, match string, count int64) 
 			}
 
 			keys = sliceKit.Merge(keys, s)
+
 			if cursor == 0 {
-				// 完整的过一遍了，中断循环
+				// 已经完整的过一遍了，中断循环
 				break
 			}
 		}
 		return sliceKit.RemoveDuplicate(keys), nil
 	}
 
+	//f1 := func(ctx context.Context, client redis.UniversalClient) ([]string, error) {
+	//	var cursor uint64 = 0
+	//	var keys []string
+	//
+	//	scanCmd := client.Scan(ctx, cursor, match, count)
+	//	iter := scanCmd.Iterator()
+	//	for iter.Next(ctx) {
+	//		keys = append(keys, iter.Val())
+	//	}
+	//	if err := iter.Err(); err != nil {
+	//		return nil, err
+	//	}
+	//
+	//	if keys == nil {
+	//		keys = []string{}
+	//	} else {
+	//		keys = sliceKit.RemoveDuplicate(keys)
+	//	}
+	//	return keys, nil
+	//}
+
 	clusterClient, ok := client.goRedisClient.(*redis.ClusterClient)
 	if ok {
 		// (1) cluster集群，特殊处理（还是有小概率漏数据）
 		var keys []string
+		var lock = new(sync.Mutex)
 
-		err := clusterClient.ForEachShard(ctx, func(ctx context.Context, client *redis.Client) error {
+		err := clusterClient.ForEachMaster(ctx, func(ctx context.Context, client *redis.Client) error {
 			s, err := f(ctx, client)
 			if err != nil {
 				return err
 			}
+
+			// !!!: 对于ForEachMaster()，会起多个goroutine"同时"执行传入的函数，此处加锁是为了处理并发问题，以防: 同时修改变量keys，导致最终的keys漏东西
+			lock.Lock()
+			defer lock.Unlock()
+
 			keys = sliceKit.Merge(keys, s)
 			return nil
 		})
