@@ -6,16 +6,6 @@ import (
 )
 
 func main() {
-	//var s []string = nil
-	//var s1 []string = nil
-
-	//sliceKit.Append()
-
-	s := sliceKit.Append([]string(nil), "0")
+	s := sliceKit.Merge([]string(nil), []string{"a", "b"}, []string(nil), []string{"b", "c"})
 	fmt.Println(s)
-	fmt.Println(s == nil)
-	fmt.Println(len(s))
-
-	s1 := []string{"0"}
-	fmt.Println(s1)
 }

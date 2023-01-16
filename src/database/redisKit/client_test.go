@@ -27,7 +27,7 @@ func TestSingleNodeMode(test *testing.T) {
 		panic(err)
 	}
 
-	for i := 0; i < 100; i++ {
+	for i := 0; i < 1; i++ {
 		s, err := scan(client.GetGoRedisClient(), context.TODO(), "*", 10)
 		if err != nil {
 			panic(err)
@@ -35,6 +35,10 @@ func TestSingleNodeMode(test *testing.T) {
 		fmt.Println(s)
 		fmt.Println(len(s))
 		fmt.Println("======")
+
+		if len(s) != 101 {
+			panic(666)
+		}
 	}
 }
 
@@ -62,26 +66,29 @@ func TestClusterMode(test *testing.T) {
 		panic(err)
 	}
 
-	c := client.GetGoRedisClient()
-
-	sc := c.Scan(context.TODO(), 0, "*", 10)
-	iter := sc.Iterator()
-	for iter.Next(context.TODO()) {
-		fmt.Println(iter.Val())
-	}
-
-	//for i := 0; i < 10; i++ {
+	//for i := 0; i < 100; i++ {
 	//	_, _ = client.Set(context.TODO(), strconv.Itoa(i), strconv.Itoa(i), 0)
 	//}
-	//for i := 0; i < 100; i++ {
-	//	s, _ := client.ScanFully(context.TODO(), "*", 3)
-	//	//fmt.Println(len(s))
-	//	fmt.Println(s)
-	//	if len(s) != 11 {
-	//		//fmt.Println(666)
-	//		//panic(666)
-	//	}
+
+	for i := 0; i < 100; i++ {
+		s, err := client.ScanFully(context.TODO(), "*", 10)
+		if err != nil {
+			panic(err)
+		}
+		fmt.Println(len(s))
+		if len(s) != 101 {
+			panic("cccccccccccccccccccc")
+		}
+	}
+
+	//c := client.GetGoRedisClient()
+
+	//sc := c.Scan(context.TODO(), 0, "*", 10)
+	//iter := sc.Iterator()
+	//for iter.Next(context.TODO()) {
+	//	fmt.Println(iter.Val())
 	//}
+
 }
 
 func scan(client redis.UniversalClient, ctx context.Context, match string, count int64) ([]string, error) {

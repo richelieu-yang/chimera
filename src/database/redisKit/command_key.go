@@ -142,7 +142,7 @@ func (client *Client) ScanFully(ctx context.Context, match string, count int64) 
 		// (1) cluster集群，特殊处理（还是有小概率漏数据）
 		var keys []string
 
-		err := clusterClient.ForEachMaster(ctx, func(ctx context.Context, client *redis.Client) error {
+		err := clusterClient.ForEachShard(ctx, func(ctx context.Context, client *redis.Client) error {
 			s, err := f(ctx, client)
 			if err != nil {
 				return err
@@ -153,19 +153,6 @@ func (client *Client) ScanFully(ctx context.Context, match string, count int64) 
 		if err != nil {
 			return nil, err
 		}
-
-		err = clusterClient.ForEachSlave(ctx, func(ctx context.Context, client *redis.Client) error {
-			s, err := f(ctx, client)
-			if err != nil {
-				return err
-			}
-			keys = sliceKit.Merge(keys, s)
-			return nil
-		})
-		if err != nil {
-			return nil, err
-		}
-
 		return sliceKit.RemoveDuplicate(keys), nil
 	}
 	// (2) 非cluster集群，常规处理

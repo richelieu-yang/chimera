@@ -5,6 +5,7 @@ import (
 	"github.com/go-redis/redis/v9"
 	"github.com/richelieu42/go-scales/src/core/errorKit"
 	"github.com/richelieu42/go-scales/src/core/strKit"
+	"github.com/sirupsen/logrus"
 )
 
 type (
@@ -54,6 +55,13 @@ func NewClient(config *RedisConfig) (*Client, error) {
 	if err != nil {
 		return nil, err
 	}
+
+	// test
+	opts.OnConnect = func(ctx context.Context, conn *redis.Conn) error {
+		logrus.Infof("conn: %v", conn)
+		return nil
+	}
+
 	goRedisClient := redis.NewUniversalClient(opts)
 
 	client := &Client{

@@ -52,6 +52,7 @@ e.g.
 
 ([]string(nil))	=> nil
 ([]string{}) 	=> []
+
 ([]string(nil), []string{"a", "b"}, []string(nil), []string{"b", "c"}) => [a b b c]
 */
 func Merge[T comparable](slices ...[]T) []T {
