@@ -5,7 +5,6 @@ import (
 	"github.com/go-redis/redis/v9"
 	"github.com/richelieu42/go-scales/src/core/errorKit"
 	"github.com/richelieu42/go-scales/src/core/strKit"
-	"github.com/sirupsen/logrus"
 )
 
 type (
@@ -57,19 +56,18 @@ func NewClient(config *RedisConfig) (*Client, error) {
 	}
 
 	// test
-	opts.OnConnect = func(ctx context.Context, conn *redis.Conn) error {
-		logrus.Infof("conn: %v", conn)
-		return nil
-	}
+	//opts.OnConnect = func(ctx context.Context, conn *redis.Conn) error {
+	//	logrus.Infof("conn: %v", conn)
+	//	return nil
+	//}
 
 	goRedisClient := redis.NewUniversalClient(opts)
-
 	client := &Client{
 		mode:          config.Mode,
 		goRedisClient: goRedisClient,
 	}
 
-	// 简单测试是否可用
+	// 简单测试是否Redis服务可用
 	str, err := client.Ping(context.TODO())
 	if err != nil {
 		return nil, errorKit.Wrap(err, "fail to ping")
