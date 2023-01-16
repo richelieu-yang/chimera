@@ -40,7 +40,7 @@ require (
 	github.com/spf13/viper v1.14.0
 	github.com/xuri/excelize/v2 v2.7.0
 	go.uber.org/zap v1.24.0
-	golang.org/x/exp v0.0.0-20230111222715-75897c7a292a
+	golang.org/x/exp v0.0.0-20230113213754-f9f960f08ad4
 	golang.org/x/text v0.6.0
 	google.golang.org/grpc v1.52.0
 	gopkg.in/natefinch/lumberjack.v2 v2.0.0

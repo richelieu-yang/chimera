@@ -1,5 +1,3 @@
-//go:build !windows
-
 package timeKit
 
 import (
@@ -8,6 +6,11 @@ import (
 	"github.com/richelieu42/go-scales/src/core/strKit"
 	"time"
 )
+
+// GetSystemTime 获取系统时间（机器时间；本地时间；time.Local）.
+func GetSystemTime() time.Time {
+	return time.Now()
+}
 
 // SetSystemTime 设置系统时间（机器时间）
 /*

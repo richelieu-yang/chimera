@@ -13,27 +13,6 @@ var networkTimeSources = []string{
 	"http://www.360.cn",
 }
 
-//// ParseStringToTime string => time.Time
-///*
-//PS: 采用本地时区(time zone).
-//*/
-//func ParseStringToTime(timeString, format string) (time.Time, error) {
-//	return time.ParseStringToTimeWithLocation(format, timeString, time.Local)
-//}
-//
-//func ParseStringToTimeWithLocation(timeString, format string, loc *time.Location) (time.Time, error) {
-//	if loc == nil {
-//		return time.Time{}, errorKit.Simple("loc is nil")
-//	}
-//	// 此处如果loc为nil，会panic("time: missing Location in call to Date").
-//	return time.ParseStringToTimeWithLocation(format, timeString, loc)
-//}
-
-// GetSystemTime 获取系统时间（机器时间；本地时间；time.Local）.
-func GetSystemTime() time.Time {
-	return time.Now()
-}
-
 // GetNetworkTime 获取网络时间.
 /*
 PS: 获取不到的话，返回机器时间.
@@ -69,9 +48,7 @@ func getNetworkTimeBySource(source string) (time.Time, error) {
 		return time.Time{}, err
 	}
 	defer func() {
-		if resp != nil && resp.Body != nil {
-			_ = resp.Body.Close()
-		}
+		_ = resp.Body.Close()
 	}()
 
 	timeString := resp.Header.Get("Date")
