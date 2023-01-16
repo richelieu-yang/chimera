@@ -24,3 +24,13 @@ func (client *Client) GeoPos(ctx context.Context, key string, members ...string)
 	geoPosCmd := client.goRedisClient.GeoPos(ctx, key, members...)
 	return geoPosCmd.Result()
 }
+
+// GeoDist
+/*
+命令说明: 用于返回两个给定位置之间的距离.
+命令语法: GEODIST key member1 member2 [m|km|ft|mi]
+*/
+func (client *Client) GeoDist(ctx context.Context, key string, member1, member2, unit string) (float64, error) {
+	floatCmd := client.goRedisClient.GeoDist(ctx, key, member1, member2, unit)
+	return floatCmd.Result()
+}
