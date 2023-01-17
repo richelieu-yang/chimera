@@ -243,3 +243,27 @@ func (client *Client) RandomKey(ctx context.Context) (string, error) {
 	stringCmd := client.goRedisClient.RandomKey(ctx)
 	return stringCmd.Result()
 }
+
+// Rename
+/*
+命令说明:	修改 key 的名称 。
+命令语法:	RENAME OLD_KEY_NAME NEW_KEY_NAME
+命令返回值:
+	改名成功时提示 OK ，失败时候返回一个错误。
+	当 OLD_KEY_NAME 和 NEW_KEY_NAME 相同，或者 OLD_KEY_NAME 不存在时，返回一个错误。 当 NEW_KEY_NAME 已经存在时， RENAME 命令将覆盖旧值。
+*/
+func (client *Client) Rename(ctx context.Context, key, newKey string) (string, error) {
+	statusCmd := client.goRedisClient.Rename(ctx, key, newKey)
+	return statusCmd.Result()
+}
+
+// RenameNX
+/*
+命令说明:	在新的 key 不存在时修改 key 的名称 。
+命令语法:	RENAMENX OLD_KEY_NAME NEW_KEY_NAME
+命令返回值:	修改成功时，返回 1 。 如果 NEW_KEY_NAME 已经存在，返回 0 。
+*/
+func (client *Client) RenameNX(ctx context.Context, key, newKey string) (bool, error) {
+	boolCmd := client.goRedisClient.RenameNX(ctx, key, newKey)
+	return boolCmd.Result()
+}
