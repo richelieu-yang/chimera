@@ -163,7 +163,7 @@ e.g. db为空（|| db中不存在符合条件的key）
 */
 func (client *Client) ScanFully(ctx context.Context, match string, count int64) ([]string, error) {
 	// 抽出来的通用代码，作用: 让1个节点（node）执行命令
-	// 方法1: 自行通过重复调用scan实现
+	// 方法1: 多次调用scan，直至cursor为0
 	f := func(ctx context.Context, client redis.UniversalClient) ([]string, error) {
 		var cursor uint64 = 0
 		var keys []string
@@ -186,7 +186,7 @@ func (client *Client) ScanFully(ctx context.Context, match string, count int64) 
 		return sliceKit.RemoveDuplicate(keys), nil
 	}
 
-	// 方法2:
+	//// 方法2: 通过go-redis依赖的Iterator实现
 	//f := func(ctx context.Context, client redis.UniversalClient) ([]string, error) {
 	//	var cursor uint64 = 0
 	//	var keys []string
