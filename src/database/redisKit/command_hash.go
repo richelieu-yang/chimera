@@ -6,6 +6,14 @@ import (
 
 // HSet 将哈希表 key 中的字段 field 的值设为 value
 /*
+命令说明:
+	为哈希表中的字段赋值 。
+	PS:
+	(1) 如果哈希表不存在，一个新的哈希表被创建并进行 HSET 操作。
+	(2) 如果字段已经存在于哈希表中，旧值将被覆盖。
+命令语法:	HSET KEY_NAME FIELD VALUE
+命令返回值:	如果字段是哈希表中的一个新建字段，并且值设置成功，返回 1 。 如果哈希表中域字段已经存在且旧值已被新值覆盖，返回 0 。
+
 PS:
 (1) 3个传参都可以为""（3个全是""也可以）；
 (2) 可以一次性设置多对 field 和 value.
@@ -22,6 +30,15 @@ func (client *Client) HSet(ctx context.Context, key string, values ...interface{
 
 // HSetNX 只有在 字段field 不存在时，设置哈希表字段的值
 /*
+命令说明:
+	为哈希表中不存在的的字段赋值。
+	PS:
+	(1) 如果哈希表不存在，一个新的哈希表被创建并进行 HSET 操作。
+	(2) 如果字段已经存在于哈希表中，操作无效。
+	(3) 如果 key 不存在，一个新哈希表被创建并执行 HSETNX 命令。
+命令语法:	HSETNX KEY_NAME FIELD VALUE
+命令返回值:	设置成功，返回 1 。 如果给定字段已经存在且没有操作被执行，返回 0 。
+
 PS:
 (1) 如果field未存在，将返回: (true, nil).
 (2) 如果field已存在，将返回: (false, nil)，且 此次设置哈希表字段的值 将无效.
