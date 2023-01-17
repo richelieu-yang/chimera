@@ -118,7 +118,7 @@ func (client *Client) Persist(ctx context.Context, key string) (bool, error) {
 
 // Keys
 /*
-Deprecated: 禁止在生产环境使用Keys正则匹配操作（即便是开发、测试环境，也要慎重使用）！！！建议使用 ScanFully.
+Deprecated: 当KEYS命令被用于处理一个大的数据库时，它可能会阻塞服务器达数秒之久。
 
 e.g.
 db为空（或者不存在与 传参match 响应的key） => ([]string{}, nil)（第一个返回值不为nil）

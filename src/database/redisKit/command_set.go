@@ -28,8 +28,10 @@ func (client *Client) SRem(ctx context.Context, key string, members ...interface
 
 // SMembers 返回集合中的所有的成员（不存在的集合 key 被视为空集合）.
 /*
-e.g. key不存在的情况
-=> ([]string{}, nil)
+Deprecated: 当 SMEMBERS命令 被用于处理一个大的数据库时，它可能会阻塞服务器达数秒之久。
+
+e.g.
+key不存在的情况 => ([]string{}, nil)
 */
 func (client *Client) SMembers(ctx context.Context, key string) ([]string, error) {
 	return client.goRedisClient.SMembers(ctx, key).Result()
@@ -37,6 +39,8 @@ func (client *Client) SMembers(ctx context.Context, key string) ([]string, error
 
 // SMembersMap
 /*
+Deprecated: 当 SMEMBERS命令 被用于处理一个大的数据库时，它可能会阻塞服务器达数秒之久。
+
 @return 第1个返回值: key为成员的值，value为空结构体（无意义）
 
 e.g. key不存在的情况
