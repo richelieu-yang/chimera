@@ -42,19 +42,15 @@ func (client *Client) Exists(ctx context.Context, keys ...string) (bool, error) 
 	return i == 1, nil
 }
 
-// Del （删）key 存在时，删除 key
+// Del
 /*
-@return 第一个返回值代表：是否删除成功
-
-e.g.
-如果key不存在，将返回: (false, nil)
+命令说明:	删除已存在的键。不存在的 key 会被忽略。
+命令语法:	DEL KEY_NAME
+命令返回值:	被删除 key 的数量。
 */
-func (client *Client) Del(ctx context.Context, key string) (bool, error) {
-	reply, err := client.goRedisClient.Del(ctx, key).Result()
-	if err != nil {
-		return false, err
-	}
-	return reply == 1, nil
+func (client *Client) Del(ctx context.Context, keys ...string) (int64, error) {
+	intCmd := client.goRedisClient.Del(ctx, keys...)
+	return intCmd.Result()
 }
 
 // TTL
@@ -220,4 +216,15 @@ func (client *Client) ScanFully(ctx context.Context, match string, count int64) 
 	}
 	// (2) 非cluster集群，常规处理
 	return f(ctx, client.goRedisClient)
+}
+
+// RandomKey
+/*
+命令说明:	从当前数据库中随机返回一个 key.
+命令语法:	RANDOMKEY
+命令返回值:	当数据库不为空时，返回一个 key；当数据库为空时，返回 nil（windows 系统返回 null）.
+*/
+func (client *Client) RandomKey(ctx context.Context) (string, error) {
+	stringCmd := client.goRedisClient.RandomKey(ctx)
+	return stringCmd.Result()
 }
