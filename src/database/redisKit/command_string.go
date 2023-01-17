@@ -8,6 +8,12 @@ import (
 
 // Set 设置指定key的值（string类型）.
 /*
+命令说明:	设置给定 key 的值。如果 key 已经存储其他值， SET 就覆写旧值，且无视类型。
+命令语法:	SET KEY_NAME VALUE
+命令返回值:
+	在 Redis 2.6.12 以前版本， SET 命令总是返回 OK 。
+	从 Redis 2.6.12 版本开始， SET 在设置操作成功完成时，才返回 OK 。
+
 @param key 			可以为""
 @param value 		支持的类型: string、[]byte、int、float64、bool(true: "1"; false: "0")...
 					不支持的类型（会返回error）: map、自定义结构体...
@@ -16,11 +22,12 @@ import (
 					 		redis.KeepTTL(即-1) 	保持已经存在的TTL（需要确保Redis版本 >= 6.0，否则会返回error: ERR syntax error）
 */
 func (client *Client) Set(ctx context.Context, key string, value interface{}, expiration time.Duration) (bool, error) {
-	reply, err := client.goRedisClient.Set(ctx, key, value, expiration).Result()
+	statusCmd := client.goRedisClient.Set(ctx, key, value, expiration)
+	str, err := statusCmd.Result()
 	if err != nil {
 		return false, err
 	}
-	return reply == "OK", nil
+	return str == "OK", nil
 }
 
 // SetNX
@@ -38,22 +45,27 @@ func (client *Client) SetNX(ctx context.Context, key string, value interface{}, 
 
 // SetEx
 /*
-命令说明:
-命令语法:
-命令返回值:
+命令说明:	为指定的 key 设置值及其过期时间。如果 key 已经存在， SETEX 命令将会替换旧的值。
+命令语法:	SETEX KEY_NAME TIMEOUT VALUE
+命令返回值:	设置成功时返回 OK 。
 */
-func (client *Client) SetEx(ctx context.Context, key string, value interface{}, expiration time.Duration) (string, error) {
+func (client *Client) SetEx(ctx context.Context, key string, value interface{}, expiration time.Duration) (bool, error) {
 	statusCmd := client.goRedisClient.SetEx(ctx, key, value, expiration)
-	return statusCmd.Result()
+	str, err := statusCmd.Result()
+	if err != nil {
+		return false, err
+	}
+	return str == "OK", nil
 }
 
 // Get
 /*
-PS:
-(1) 如果对应value的类型不为string，会返回error: WRONGTYPE Operation against a key holding the wrong kind of value
+命令说明:	获取指定 key 的值。（如果 key 不存在，返回 nil；如果key 储存的值不是字符串类型，返回一个错误）
+命令语法:	GET KEY_NAME
+命令返回值:	返回 key 的值，如果 key 不存在时，返回 nil。 如果 key 不是字符串类型，那么返回一个错误。
 
-e.g.	当前db中不存在传参key
-=>	("", redis.Nil)
+e.g.
+当前db中不存在 传参key => ("", redis.Nil)
 */
 func (client *Client) Get(ctx context.Context, key string) (string, error) {
 	return client.goRedisClient.Get(ctx, key).Result()
