@@ -58,6 +58,32 @@ func (client *Client) SetEx(ctx context.Context, key string, value interface{}, 
 	return str == "OK", nil
 }
 
+// MSet
+/*
+命令说明:	同时设置一个或多个 key-value 对。
+命令语法:	MSET key1 value1 key2 value2 .. keyN valueN
+命令返回值:	总是返回 OK 。
+*/
+func (client *Client) MSet(ctx context.Context, values ...interface{}) (bool, error) {
+	statusCmd := client.goRedisClient.MSet(ctx, values...)
+	str, err := statusCmd.Result()
+	if err != nil {
+		return false, err
+	}
+	return str == "OK", nil
+}
+
+// MSetNX
+/*
+命令说明:	所有给定 key 都不存在时，同时设置一个或多个 key-value 对。
+命令语法:	MSETNX key1 value1 key2 value2 .. keyN valueN
+命令返回值:	当所有 key 都成功设置，返回 1 。 如果所有给定 key 都设置失败(至少有一个 key 已经存在)，那么返回 0 。
+*/
+func (client *Client) MSetNX(ctx context.Context, values ...interface{}) (bool, error) {
+	boolCmd := client.goRedisClient.MSetNX(ctx, values...)
+	return boolCmd.Result()
+}
+
 // Get
 /*
 命令说明:	获取指定 key 的值。（如果 key 不存在，返回 nil；如果key 储存的值不是字符串类型，返回一个错误）
