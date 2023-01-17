@@ -118,7 +118,7 @@ func (client *Client) Persist(ctx context.Context, key string) (bool, error) {
 
 // Keys
 /*
-Deprecated: 当KEYS命令被用于处理一个大的数据库时，它可能会阻塞服务器达数秒之久。
+Deprecated: 当 KEYS命令 被用于处理一个大的数据库时，它可能会阻塞服务器达数秒之久。
 
 e.g.
 db为空（或者不存在与 传参match 响应的key） => ([]string{}, nil)（第一个返回值不为nil）
