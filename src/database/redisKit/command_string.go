@@ -34,14 +34,16 @@ func (client *Client) SetNX(ctx context.Context, key string, value interface{}, 
 // Get
 /*
 PS:
-(1) 如果当前db中不存在传参key，将返回 ("", redis.Nil)
-(2) 如果对应value的类型不为string，会返回error: WRONGTYPE Operation against a key holding the wrong kind of value
+(1) 如果对应value的类型不为string，会返回error: WRONGTYPE Operation against a key holding the wrong kind of value
+
+e.g.	当前db中不存在传参key
+=>	("", redis.Nil)
 */
 func (client *Client) Get(ctx context.Context, key string) (string, error) {
 	return client.goRedisClient.Get(ctx, key).Result()
 }
 
-// GetWithoutRedisNil
+// GetWithoutRedisNil 对 Get 进行封装（特殊处理）: 当前db中不存在传参key时，返回 ("", nil).
 /*
 PS：
 (1) 如果当前db中不存在传参key，将返回 ("", nil)
