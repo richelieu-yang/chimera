@@ -81,24 +81,39 @@ func (client *Client) TTL(ctx context.Context, key string) (time.Duration, error
 
 // Expire
 /*
-语法：EXPIRE key seconds
-说明：为给定 key 设置过期时间，以秒计。
+命令说明:	设置 key 的过期时间，key 过期后将不再可用。单位以秒计。
+命令语法:	Expire KEY_NAME TIME_IN_SECONDS
+命令返回值:	设置成功返回 1 。 当 key 不存在或者不能为 key 设置过期时间时(比如在低于 2.1.3 版本的 Redis 中你尝试更新 key 的过期时间)返回 0 。
 
 e.g.
 key不存在	=> (false, nil)
 key存在		=> (true, nil)
 */
 func (client *Client) Expire(ctx context.Context, key string, expiration time.Duration) (bool, error) {
-	return client.goRedisClient.Expire(ctx, key, expiration).Result()
+	boolCmd := client.goRedisClient.Expire(ctx, key, expiration)
+	return boolCmd.Result()
 }
 
 // ExpireAt
 /*
-语法：EXPIREAT key timestamp
-说明：EXPIREAT 的作用和 EXPIRE 类似，都用于为 key 设置过期时间。 不同在于 EXPIREAT 命令接受的时间参数是 UNIX 时间戳(unix timestamp)。
+命令说明:	以 UNIX 时间戳(unix timestamp)格式设置 key 的过期时间。key 过期后将不再可用。
+命令语法:	Expireat KEY_NAME TIME_IN_UNIX_TIMESTAMP
+命令返回值:	设置成功返回 1 。 当 key 不存在或者不能为 key 设置过期时间时(比如在低于 2.1.3 版本的 Redis 中你尝试更新 key 的过期时间)返回 0 。
 */
 func (client *Client) ExpireAt(ctx context.Context, key string, tm time.Time) (bool, error) {
-	return client.goRedisClient.ExpireAt(ctx, key, tm).Result()
+	boolCmd := client.goRedisClient.ExpireAt(ctx, key, tm)
+	return boolCmd.Result()
+}
+
+// Persist
+/*
+命令说明:	移除给定 key 的过期时间，使得 key 永不过期。
+命令语法:	PERSIST KEY_NAME
+命令返回值:	当过期时间移除成功时，返回 1 。 如果 key 不存在或 key 没有设置过期时间，返回 0 。
+*/
+func (client *Client) Persist(ctx context.Context, key string) (bool, error) {
+	boolCmd := client.goRedisClient.Persist(ctx, key)
+	return boolCmd.Result()
 }
 
 // Keys
