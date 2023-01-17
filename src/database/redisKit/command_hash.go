@@ -4,10 +4,6 @@ import (
 	"context"
 )
 
-/*
-Redis 哈希(Hash): https://www.runoob.com/redis/redis-hashes.html
-*/
-
 // HSet 将哈希表 key 中的字段 field 的值设为 value
 /*
 PS:
