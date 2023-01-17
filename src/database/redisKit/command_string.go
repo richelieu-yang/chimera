@@ -115,3 +115,14 @@ func (client *Client) GetWithoutRedisNil(ctx context.Context, key string) (strin
 	}
 	return str, nil
 }
+
+// MGet
+/*
+命令说明:	返回所有(一个或多个)给定 key 的值。 如果给定的 key 里面，有某个 key 不存在，那么这个 key 返回特殊值 nil 。
+命令语法:	MGET KEY1 KEY2 .. KEYN
+命令返回值:	一个包含所有给定 key 的值的列表。
+*/
+func (client *Client) MGet(ctx context.Context, keys ...string) ([]interface{}, error) {
+	sliceCmd := client.goRedisClient.MGet(ctx, keys...)
+	return sliceCmd.Result()
+}
