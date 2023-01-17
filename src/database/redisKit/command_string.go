@@ -23,12 +23,28 @@ func (client *Client) Set(ctx context.Context, key string, value interface{}, ex
 	return reply == "OK", nil
 }
 
-// SetNX 只有在 key 不存在时设置 key 的值
+// SetNX
 /*
+命令说明: 	在指定的 key 不存在时，为 key 设置指定的值.
+命令语法: 	SETNX KEY_NAME VALUE
+命令返回值: 	设置成功，返回 1 ；设置失败，返回 0 .
+
 @return 第一个返回值代表: 是否设置成功
 */
 func (client *Client) SetNX(ctx context.Context, key string, value interface{}, expiration time.Duration) (bool, error) {
-	return client.goRedisClient.SetNX(ctx, key, value, expiration).Result()
+	boolCmd := client.goRedisClient.SetNX(ctx, key, value, expiration)
+	return boolCmd.Result()
+}
+
+// SetEx
+/*
+命令说明:
+命令语法:
+命令返回值:
+*/
+func (client *Client) SetEx(ctx context.Context, key string, value interface{}, expiration time.Duration) (string, error) {
+	statusCmd := client.goRedisClient.SetEx(ctx, key, value, expiration)
+	return statusCmd.Result()
 }
 
 // Get
