@@ -31,6 +31,28 @@ func (client *Client) ZRem(ctx context.Context, key string, members ...interface
 	return intCmd.Result()
 }
 
+// ZCard
+/*
+命令说明:	计算集合中元素的数量。
+命令语法:	ZCARD KEY_NAME
+命令返回值:	当 key 存在且是有序集类型时，返回有序集的基数。 当 key 不存在时，返回 0。
+*/
+func (client *Client) ZCard(ctx context.Context, key string) (int64, error) {
+	intCmd := client.goRedisClient.ZCard(ctx, key)
+	return intCmd.Result()
+}
+
+// ZCount
+/*
+命令说明:	计算有序集合中指定分数区间的成员数量。
+命令语法:	ZCOUNT key min max
+命令返回值:	分数值在 min 和 max 之间的成员的数量。
+*/
+func (client *Client) ZCount(ctx context.Context, key, min, max string) (int64, error) {
+	intCmd := client.goRedisClient.ZCount(ctx, key, min, max)
+	return intCmd.Result()
+}
+
 // ZRangeByScore
 /*
 命令说明:
