@@ -149,6 +149,9 @@ func (client *Client) Scan(ctx context.Context, cursor uint64, match string, cou
 
 // ScanFully 对 Scan 进行了封装，用于替代 Keys 命令.
 /*
+增量迭代命令的缺点:
+	因为在对键进行增量式迭代的过程中， 键可能会被修改， 所以增量式迭代命令只能对被返回的元素"提供有限的保证" （offer limited guarantees about the returned elements）。
+
 PS:
 (1) 如果db为空，将返回: [] <nil>
 (2) redis cluster模式下，需要特殊处理（详见代码），否则：明明有数据的情况下，可能取不到数据，或者取到的数据不全（因为只找1个节点要）.
