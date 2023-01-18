@@ -59,6 +59,14 @@ func Remove[K comparable, V any](m map[K]V, key K) (V, bool) {
 	return value, exist
 }
 
+// Set 设置值（或更新值）
+/*
+@param m 不能为nil（否则会导致 panic: assignment to entry in nil map）
+*/
+func Set[K comparable, V any](m map[K]V, key K, value V) {
+	m[key] = value
+}
+
 func GetString[K comparable, V any](m map[K]V, key K) (string, error) {
 	obj, exist := m[key]
 	if !exist {

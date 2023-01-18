@@ -1,10 +1,10 @@
 package main
 
-import (
-	"fmt"
-	"github.com/richelieu42/go-scales/src/core/boolKit"
-)
+import "fmt"
 
 func main() {
-	fmt.Println(boolKit.BoolToString(true))
+	var m map[string]interface{} = nil
+
+	m["1"] = 1
+	fmt.Println(m)
 }
