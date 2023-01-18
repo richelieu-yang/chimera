@@ -5,12 +5,12 @@ import (
 	"github.com/richelieu42/go-scales/src/core/strKit"
 )
 
-// Contains 判断 map实例 中是否存在 指定的key
+// Contains 判断 map实例 中是否存在 指定的key.
 /*
 @param m 可以为nil（此时返回值固定为false）
 
 e.g.
-(m, "1") => false
+(map[string]interface{}(nil), "1") => false
 */
 func Contains[K comparable, V any](m map[K]V, key K) bool {
 	_, ok := m[key]
