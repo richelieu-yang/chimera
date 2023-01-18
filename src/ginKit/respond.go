@@ -159,8 +159,12 @@ func RespondPanic(ctx *gin.Context, err any) {
 
 func RespondPackageOrError(ctx *gin.Context, pack *ResponsePackage, err error) {
 	if err != nil {
-		RespondError(ctx, http.StatusOK, err)
-		return
+		if pack == nil {
+			pack = &ResponsePackage{
+				Error: nil,
+			}
+		}
+		pack.Error = err
 	}
 	RespondPackage(ctx, pack)
 }
