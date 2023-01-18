@@ -11,8 +11,6 @@ func IntToString(i int) string {
 
 // ToString
 /*
-@param obj 支持的类型：time.Duration...
-
 e.g.
 (nil) => ""
 */
@@ -20,20 +18,11 @@ func ToString(obj interface{}) string {
 	return cast.ToString(obj)
 }
 
+// ToStringE
+/*
+e.g.
+(nil) => "", nil
+*/
 func ToStringE(obj interface{}) (string, error) {
 	return cast.ToStringE(obj)
 }
-
-//func ParseInterfaceToString(obj interface{}, def string) (string, error) {
-//	if obj == nil {
-//		return def, nil
-//	}
-//
-//	cast.ToString()
-//
-//	rst, err := cast.ToStringE(obj)
-//	if err != nil {
-//		return def, err
-//	}
-//	return rst, nil
-//}
