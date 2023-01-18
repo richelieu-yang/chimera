@@ -2,12 +2,12 @@ package main
 
 import (
 	"fmt"
-	"github.com/richelieu42/go-scales/src/core/strKit"
+	"github.com/richelieu42/go-scales/src/core/intKit"
 )
 
 func main() {
-	str := strKit.ToString(nil)
-	fmt.Println(str)
-	str1, err := strKit.ToStringE(nil)
-	fmt.Println(str1, err)
+	v := intKit.ToInt(nil)
+	fmt.Println(v)
+	v1, err := intKit.ToIntE(nil)
+	fmt.Println(v1, err)
 }

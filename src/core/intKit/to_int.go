@@ -6,10 +6,20 @@ import (
 	"strconv"
 )
 
+// ToInt
+/*
+e.g.
+(nil) => 0
+*/
 func ToInt(obj interface{}) int {
 	return cast.ToInt(obj)
 }
 
+// ToIntE
+/*
+e.g.
+(nil) => 0, nil
+*/
 func ToIntE(obj interface{}) (int, error) {
 	return cast.ToIntE(obj)
 }
