@@ -3,6 +3,7 @@ package boolKit
 import (
 	"github.com/spf13/cast"
 	"strconv"
+	"strings"
 )
 
 // BoolToString 类型转换: bool => string
@@ -15,8 +16,8 @@ func BoolToString(b bool) string {
 PS: 参考了 strconv.ParseBool()、Java hutool中的BooleanUtil.toBoolean().
 */
 func StringToBool(str string) bool {
-	switch str {
-	case "1", "t", "T", "true", "TRUE", "True", "yes", "y", "ok", "on", "是", "对", "真", "對", "√":
+	switch strings.ToLower(str) {
+	case "1", "t", "true", "yes", "y", "ok", "on", "是", "对", "真", "對", "√":
 		return true
 	default:
 		return false
