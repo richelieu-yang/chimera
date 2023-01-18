@@ -37,7 +37,7 @@ func TestRedisStore(t *testing.T) {
 	if err != nil {
 		panic(err)
 	}
-	defer store.Close()
+	//defer store.Close()
 	// 自定义: Redis中的key的前缀
 	store.KeyPrefix(redisKeyPrefix)
 	// 自定义: cookie的配置
