@@ -12,7 +12,7 @@ func BoolToString(b bool) string {
 
 // StringToBool 类型转换: string => bool
 /*
-PS: 参考了 strconv.ParseBool()、hutool中的BooleanUtil.toBoolean().
+PS: 参考了 strconv.ParseBool()、Java hutool中的BooleanUtil.toBoolean().
 */
 func StringToBool(str string) bool {
 	switch str {
@@ -23,6 +23,11 @@ func StringToBool(str string) bool {
 	}
 }
 
+// ToBool
+/*
+e.g.
+(nil) => false
+*/
 func ToBool(obj interface{}) bool {
 	switch obj.(type) {
 	case string:
@@ -32,6 +37,11 @@ func ToBool(obj interface{}) bool {
 	}
 }
 
+// ToBoolE
+/*
+e.g.
+(nil) => false, nil
+*/
 func ToBoolE(obj interface{}) (bool, error) {
 	switch obj.(type) {
 	case string:

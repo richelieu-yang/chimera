@@ -2,12 +2,12 @@ package main
 
 import (
 	"fmt"
-	"github.com/richelieu42/go-scales/src/core/intKit"
+	"github.com/richelieu42/go-scales/src/core/boolKit"
 )
 
 func main() {
-	v := intKit.ToInt(nil)
+	v := boolKit.ToBool(nil)
 	fmt.Println(v)
-	v1, err := intKit.ToIntE(nil)
+	v1, err := boolKit.ToBoolE(nil)
 	fmt.Println(v1, err)
 }
