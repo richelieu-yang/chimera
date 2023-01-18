@@ -1,5 +1,10 @@
 package mapKit
 
+import (
+	"github.com/richelieu42/go-scales/src/core/intKit"
+	"github.com/richelieu42/go-scales/src/core/strKit"
+)
+
 // Contains 判断 map实例 中是否存在 指定的key
 /*
 @param m 可以为nil（此时返回值固定为false）
@@ -52,4 +57,23 @@ func Remove[K comparable, V any](m map[K]V, key K) (V, bool) {
 		delete(m, key)
 	}
 	return value, exist
+}
+
+func GetString[K comparable, V any](m map[K]V, key K) (string, error) {
+	obj, exist := m[key]
+	if !exist {
+		// 不存在对应key的情况下，返回零值
+		return "", nil
+	}
+
+	return strKit.ToStringE(obj)
+}
+
+func GetInt[K comparable, V any](m map[K]V, key K) (int, error) {
+	obj, exist := m[key]
+	if !exist {
+		// 不存在对应key的情况下，返回零值
+		return 0, nil
+	}
+	return intKit.ToIntE(obj)
 }

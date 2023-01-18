@@ -6,21 +6,28 @@ import (
 	"strconv"
 )
 
-func ParseToInt(obj interface{}) (int, error) {
-	switch obj.(type) {
-	case string:
-		return ParseStringToInt(obj.(string))
-	default:
-		return cast.ToIntE(obj)
-	}
+func ToInt(obj interface{}) int {
+	return cast.ToInt(obj)
 }
 
-func ParseToIntWithDefault(obj interface{}, def int) int {
-	i, err := ParseToInt(obj)
-	if err != nil {
-		return def
-	}
-	return i
+func ToIntE(obj interface{}) (int, error) {
+	return cast.ToIntE(obj)
+}
+
+func ToInt32(obj interface{}) int32 {
+	return cast.ToInt32(obj)
+}
+
+func ToInt32E(obj interface{}) (int32, error) {
+	return cast.ToInt32E(obj)
+}
+
+func ToInt64(obj interface{}) int64 {
+	return cast.ToInt64(obj)
+}
+
+func ToInt64E(obj interface{}) (int64, error) {
+	return cast.ToInt64E(obj)
 }
 
 // ParseStringToInt 类型转换: string => int
