@@ -19,25 +19,21 @@ func RegisterHandlersToRoute(group IGroup, route string, methods []string, handl
 		return
 	}
 
-	if len(methods) > 0 {
-		// 接收指定类型method的请求
-		for _, httpMethod := range methods {
-			group.Handle(httpMethod, route, handlers...)
-		}
-		return
+	// (1) Any
+	if len(methods) == 0 {
+		group.Any(route, handlers...)
 	}
-	// 接收所有类型method的请求
-	group.Any(route, handlers...)
+	// (2) 指定类型的method
+	for _, method := range methods {
+		group.Handle(method, route, handlers...)
+	}
+	return
 }
 
 // RegisterHandlersToRoutes 将多个相同的处理器，注册到多个路由
 func RegisterHandlersToRoutes(group IGroup, routes []string, methods []string, handlers ...gin.HandlerFunc) {
-	if len(handlers) == 0 {
-		return
-	}
-
-	for _, relativePath := range routes {
-		RegisterHandlersToRoute(group, relativePath, methods, handlers...)
+	for _, route := range routes {
+		RegisterHandlersToRoute(group, route, methods, handlers...)
 	}
 }
 
