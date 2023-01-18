@@ -6,8 +6,5 @@ import (
 )
 
 func main() {
-	v := boolKit.ToBool(nil)
-	fmt.Println(v)
-	v1, err := boolKit.ToBoolE(nil)
-	fmt.Println(v1, err)
+	fmt.Println(boolKit.BoolToString(true))
 }

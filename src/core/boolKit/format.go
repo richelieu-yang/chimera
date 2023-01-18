@@ -7,6 +7,11 @@ import (
 )
 
 // BoolToString 类型转换: bool => string
+/*
+e.g.
+(true) => 	"true"
+(false) => 	"false"
+*/
 func BoolToString(b bool) string {
 	return strconv.FormatBool(b)
 }
