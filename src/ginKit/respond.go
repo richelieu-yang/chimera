@@ -179,7 +179,7 @@ func RespondPackage(ctx *gin.Context, pack *ResponsePackage) {
 	}
 
 	// 处理"零值"的情况
-	statusCode := handleHttpStatusCode(pack.HttpStatusCode)
+	statusCode := handleHttpStatusCode(pack.StatusCode)
 
 	// (1) 文本（包括json）
 	if strKit.IsNotEmpty(pack.Text) {
