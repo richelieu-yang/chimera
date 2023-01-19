@@ -12,9 +12,9 @@ import (
 访问地址: http://localhost/test
 */
 func TestCookieStore(t *testing.T) {
-	cookieName := "session-id"
+	cookieName := "session-id1"
 
-	keyPairs := []byte("123456789")
+	keyPairs := []byte("0123456789abcdef0123456789abcdef")
 	options := &sessions.Options{
 		Path:   "/",
 		MaxAge: 1800,
