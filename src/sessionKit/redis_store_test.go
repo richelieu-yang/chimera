@@ -11,27 +11,24 @@ import (
 	"time"
 )
 
-var (
-	// Redis中的key的前缀（value为 string 类型）
-	redisKeyPrefix = "session:"
-
-	// cookie的键
-	cookieKey = "session-id"
-
-	// Redis配置（单节点）
-	options = &redis.Options{
-		Addr: "localhost:6379",
-		DB:   0,
-	}
-)
-
 // TestRedisStore
 /*
 准备工作: 启动Redis.
 访问地址: http://localhost/test
 */
 func TestRedisStore(t *testing.T) {
-	client := redis.NewClient(options)
+	// Redis中的key的前缀（value为 string 类型）
+	redisKeyPrefix := "session:"
+
+	cookieName := "session-id"
+
+	// Redis配置（单节点）
+	redisOptions := &redis.Options{
+		Addr: "localhost:6379",
+		DB:   0,
+	}
+
+	client := redis.NewClient(redisOptions)
 
 	store, err := NewRedisStore(context.TODO(), client)
 	if err != nil {
@@ -55,7 +52,7 @@ func TestRedisStore(t *testing.T) {
 	engine := gin.Default()
 	engine.Any("/test", func(ctx *gin.Context) {
 		/* (1) 获取session */
-		session, err := store.Get(ctx.Request, cookieKey)
+		session, err := store.Get(ctx.Request, cookieName)
 		if err != nil {
 			ctx.String(http.StatusOK, err.Error())
 			return
