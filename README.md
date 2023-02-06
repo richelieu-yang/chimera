@@ -12,4 +12,4 @@ go get github.com/richelieu42/go-scales
 
 ## TODOS
 更新依赖：github.com/go-redis/redis/v9 => github.com/redis/go-redis/v9
-（目前不行，因为github.com/go-redsync/redsync/v4依赖）
+（目前不行，因为 github.com/go-redsync/redsync/v4依赖 还未更新）
