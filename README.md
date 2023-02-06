@@ -11,4 +11,5 @@ PS: 如果安装失败（因为部分依赖 i/o timeout等原因），可以考�
 go get github.com/richelieu42/go-scales
 
 ## TODOS
-将redisKit中的 go-redis依赖 升级为 v9版本（正式版发布的话）.
+更新依赖：github.com/go-redis/redis/v9 => github.com/redis/go-redis/v9
+（目前不行，因为github.com/go-redsync/redsync/v4依赖）
