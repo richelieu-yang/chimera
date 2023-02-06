@@ -15,6 +15,7 @@ require (
 	github.com/gin-gonic/gin v1.8.2
 	github.com/go-redis/redis/v9 v9.0.0-rc.2
 	github.com/go-redsync/redsync/v4 v4.7.1
+	github.com/gorilla/securecookie v1.1.1
 	github.com/gorilla/sessions v1.2.1
 	github.com/gorilla/websocket v1.5.0
 	github.com/jinzhu/copier v0.3.5
@@ -69,7 +70,6 @@ require (
 	github.com/golang/protobuf v1.5.2 // indirect
 	github.com/gomodule/redigo v2.0.0+incompatible // indirect
 	github.com/google/uuid v1.3.0 // indirect
-	github.com/gorilla/securecookie v1.1.1 // indirect
 	github.com/grpc-ecosystem/grpc-gateway v1.16.0 // indirect
 	github.com/hashicorp/errwrap v1.0.0 // indirect
 	github.com/hashicorp/go-multierror v1.1.0 // indirect
