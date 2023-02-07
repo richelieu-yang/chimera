@@ -16,8 +16,8 @@ func initializeLogrusComponent() error {
 		return errorKit.Simple("config == nil")
 	}
 
-	level := logrusKit.StringToLevel(config.Level)
-	logrusKit.Initialize(level, timeKit.TimeFormat(config.TimestampFormat))
+	logrusKit.Initialize(logrusKit.StringToLevel(config.Level), timeKit.TimeFormat(config.TimestampFormat))
+
 	logrusKit.PrintBasicDetails()
 
 	logrus.Info("[COMPONENT, LOGRUS] Initialize successfully.")
