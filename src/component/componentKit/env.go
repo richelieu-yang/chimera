@@ -92,14 +92,13 @@ func InitializeEnvironment() error {
 	return nil
 }
 
-// loadEnvYaml 加载配置文件
+// loadEnvYaml 加载配置文件 env.yaml
 func loadEnvYaml() error {
 	absPath := pathKit.Join(pathKit.GetProjectDir(), consts.EnvPath)
 
 	envConfig = &EnvConfig{}
 	if err := confKit.ReadFileAs(absPath, defaultEnvMap, envConfig); err != nil {
 		envConfig = nil
-
 		return err
 	}
 
