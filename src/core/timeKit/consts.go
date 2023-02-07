@@ -24,7 +24,9 @@ const (
 	DirFormat TimeFormat = "2006-01-02T15.04.05.000"
 
 	// CommonFormat 常规的格式
-	CommonFormat TimeFormat = "2006-01-02 15:04:05.000"
+	CommonFormat TimeFormat = "2006-01-02T15:04:05.000"
+	// CommonFormat1 常规的格式1
+	CommonFormat1 TimeFormat = "2006-01-02 15:04:05.000"
 
 	// EntireFormat 完整的格式
 	EntireFormat TimeFormat = "2006-01-02 15:04:05.000Z07:00"
