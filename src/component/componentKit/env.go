@@ -75,7 +75,7 @@ func InitializeEnvironment() error {
 	}
 
 	// 先简单初始化下logrus，下面会完整地初始化logrus组件
-	logrusKit.Initialize(logrus.DebugLevel, timeKit.DirFormat)
+	logrusKit.InitializeByDefault()
 
 	if err := loadEnvYaml(); err != nil {
 		return err

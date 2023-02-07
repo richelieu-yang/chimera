@@ -62,7 +62,6 @@ func GetOutputPath(timeStr string) (string, error) {
 		if err := fileKit.MkDirs(tmp); err != nil {
 			return "", err
 		}
-
 		outputDir = tmp
 	}
 	return outputDir, nil
