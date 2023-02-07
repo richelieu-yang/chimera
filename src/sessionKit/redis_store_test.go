@@ -3,8 +3,8 @@ package sessionKit
 import (
 	"context"
 	"github.com/gin-gonic/gin"
-	"github.com/go-redis/redis/v9"
 	"github.com/gorilla/sessions"
+	"github.com/redis/go-redis/v9"
 	"github.com/richelieu42/go-scales/src/idKit"
 	"net/http"
 	"testing"
