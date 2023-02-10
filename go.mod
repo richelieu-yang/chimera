@@ -1,6 +1,6 @@
 module github.com/richelieu42/go-scales
 
-go 1.19
+go 1.20
 
 require (
 	github.com/apache/rocketmq-clients/golang v0.0.0-20230206084201-2ff904e9f3b0

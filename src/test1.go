@@ -1,9 +1,6 @@
 package main
 
-import (
-	"github.com/richelieu42/go-scales/src/log/logrusKit"
-	"github.com/sirupsen/logrus"
-)
+import "fmt"
 
 var (
 	Author    string
@@ -11,8 +8,5 @@ var (
 )
 
 func main() {
-	logrusKit.InitializeByDefault()
-
-	logrus.Infof("Author: [%s].", Author)
-	logrus.Infof("GoVersion: [%s].", GoVersion)
+	fmt.Println(666)
 }
