@@ -42,7 +42,7 @@ PS: 如果 logger.Out 被释放后继续调用 logger 进行输出，会失败�
 
 @param logPath			(1) 文件不存在，会 尝试创建父级目录 && 创建日志文件；(2) 文件存在，会将内容追加在后面
 @param formatter 		可以为nil，此时将采用默认值
-@param toConsoleFlag 	true: 输出到日志文件的同时，也输出到控制台
+@param toConsoleFlag 	true: 输出到日志文件的同时，也输出到控制台; false: 只输出到文件日志
 */
 func NewFileLogger(logPath string, formatter logrus.Formatter, level logrus.Level, toConsoleFlag bool) (*logrus.Logger, error) {
 	// 尝试创建父级目录
