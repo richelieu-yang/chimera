@@ -6,16 +6,18 @@ import (
 	"github.com/sirupsen/logrus"
 )
 
-var DefaultTextFormatter logrus.Formatter
+var DefaultTextFormatter = NewTextFormatter("")
 
-func init() {
-	DefaultTextFormatter = NewTextFormatter(timeKit.EntireFormat)
-}
-
+// NewTextFormatter
+/*
+@param timeKit.EntireFormat 可以为""，将采用默认值
+*/
 func NewTextFormatter(timestampFormat timeKit.TimeFormat) logrus.Formatter {
-	if strKit.IsEmpty(string(timestampFormat)) {
-		return DefaultTextFormatter
+	str := string(timestampFormat)
+	if strKit.IsEmpty(str) {
+		str = string(timeKit.EntireFormat)
 	}
+
 	return &logrus.TextFormatter{
 		/* 时间格式 */
 		TimestampFormat: string(timestampFormat),

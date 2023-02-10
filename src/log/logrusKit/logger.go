@@ -1,6 +1,7 @@
 package logrusKit
 
 import (
+	"github.com/richelieu42/go-scales/src/core/file/fileKit"
 	"github.com/richelieu42/go-scales/src/core/ioKit"
 	"github.com/sirupsen/logrus"
 	"io"
@@ -39,11 +40,18 @@ func NewCustomizedLogger(formatter logrus.Formatter, level logrus.Level) *logrus
 /*
 PS: 如果 logger.Out 被释放后继续调用 logger 进行输出，会失败（e.g. 控制台os.Stderr有输出: Failed to write to log, write /Users/richelieu/Downloads/a.txt: file already closed）.
 
-@param toConsoleFlag true: 输出到日志文件的同时，也输出到控制台
+@param logPath			(1) 文件不存在，会 尝试创建父级目录 && 创建日志文件；(2) 文件存在，会将内容追加在后面
+@param formatter 		可以为nil，此时将采用默认值
+@param toConsoleFlag 	true: 输出到日志文件的同时，也输出到控制台
 */
-func NewFileLogger(filePath string, formatter logrus.Formatter, level logrus.Level, toConsoleFlag bool) (*logrus.Logger, error) {
+func NewFileLogger(logPath string, formatter logrus.Formatter, level logrus.Level, toConsoleFlag bool) (*logrus.Logger, error) {
+	// 尝试创建父级目录
+	if err := fileKit.MkParentDirs(logPath); err != nil {
+		return nil, err
+	}
+
 	var out io.WriteCloser
-	out, err := os.OpenFile(filePath, os.O_RDWR|os.O_APPEND|os.O_CREATE, 0666)
+	out, err := os.OpenFile(logPath, os.O_RDWR|os.O_APPEND|os.O_CREATE, 0666)
 	if err != nil {
 		return nil, err
 	}
