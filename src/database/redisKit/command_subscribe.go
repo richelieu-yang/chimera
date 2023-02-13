@@ -11,7 +11,7 @@ import (
 命令语法:	SUBSCRIBE channel [channel ...]
 命令返回值:	接收到的信息.
 
-@param channels e.g.""
+@param channels e.g."__keyevent@0__:expired"
 */
 func (client *Client) Subscribe(ctx context.Context, channels ...string) *redis.PubSub {
 	return client.goRedisClient.Subscribe(ctx, channels...)
