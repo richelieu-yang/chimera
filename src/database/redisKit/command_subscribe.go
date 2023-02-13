@@ -5,7 +5,7 @@ import (
 	"github.com/redis/go-redis/v9"
 )
 
-// Subscribe
+// Subscribe 频道的订阅（对频道的完全匹配）.
 /*
 命令说明:	订阅给定的一个或多个频道的信息.
 命令语法:	SUBSCRIBE channel [channel ...]
@@ -15,7 +15,7 @@ func (client *Client) Subscribe(ctx context.Context, channels ...string) *redis.
 	return client.goRedisClient.Subscribe(ctx, channels...)
 }
 
-// PSubscribe
+// PSubscribe 模式的订阅（对频道的模糊匹配）.
 /*
 PS: 每个模式以 * 作为匹配符，e.g.
 	it* 匹配所有以 it 开头的频道( it.news 、 it.blog 、 it.tweets 等等)；
