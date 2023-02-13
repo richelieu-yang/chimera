@@ -29,13 +29,20 @@ func main() {
 	}
 	client, err := redisKit.NewClient(config)
 	if err != nil {
+		fmt.Println(err.Error())
 		panic(err)
 	}
 
-	pubsub := client.Subscribe(context.TODO(), "")
-	ch := pubsub.Channel()
-	//fmt.Println(client.Ping(context.TODO()))
-	for msg := range ch {
-		fmt.Println(msg.Channel, msg.Payload)
+	flag, err := client.Set(context.TODO(), "a", "b", 0)
+	if err != nil {
+		panic(err)
 	}
+	fmt.Println(flag)
+
+	//pubsub := client.Subscribe(context.TODO(), "")
+	//ch := pubsub.Channel()
+	////fmt.Println(client.Ping(context.TODO()))
+	//for msg := range ch {
+	//	fmt.Println(msg.Channel, msg.Payload)
+	//}
 }
