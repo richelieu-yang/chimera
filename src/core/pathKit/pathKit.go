@@ -171,9 +171,11 @@ func IsAbsolutePath(path string) bool {
 
 // Clean 返回等价的最短路径（清理路径）
 /*
-e.g. Mac
-("C:/a/b/../c") => "C:/a/c"
-("./1.txt") 	=> "1.txt"
+PS: 可用于去掉路径中的 "./" 、 "../" ...
+
+e.g.
+("./1.txt") 		=> "1.txt"
+("/root/.././c") 	=> "/c"
 */
 func Clean(path string) string {
 	return filepath.Clean(path)
