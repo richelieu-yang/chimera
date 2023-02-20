@@ -56,15 +56,11 @@ func NewFileLogger(logPath string, formatter logrus.Formatter, level logrus.Leve
 		return nil, err
 	}
 	if toConsoleFlag {
-		tmp, err := ioKit.WrapToWriteCloser(os.Stdout)
+		multi, err := ioKit.MultiWriteCloser(out, ioKit.NopWriteCloser(os.Stdout))
 		if err != nil {
 			return nil, err
 		}
-		mwc, err := ioKit.MultiWriteCloser(out, tmp)
-		if err != nil {
-			return nil, err
-		}
-		out = mwc
+		out = multi
 	}
 
 	logger := NewCustomizedLogger(formatter, level)
@@ -83,15 +79,11 @@ func NewRotateFileLogger(filePath string, formatter logrus.Formatter, level logr
 		return nil, err
 	}
 	if toConsoleFlag {
-		tmp, err := ioKit.WrapToWriteCloser(os.Stdout)
+		multi, err := ioKit.MultiWriteCloser(out, ioKit.NopWriteCloser(os.Stdout))
 		if err != nil {
 			return nil, err
 		}
-		mwc, err := ioKit.MultiWriteCloser(out, tmp)
-		if err != nil {
-			return nil, err
-		}
-		out = mwc
+		out = multi
 	}
 
 	logger := NewCustomizedLogger(formatter, level)

@@ -75,11 +75,8 @@ func newWithOptions(filePath string, options []rotatelogs.Option, toConsoleFlag 
 	if !toConsoleFlag {
 		return wc, nil
 	}
-	wc1, err := WrapToWriteCloser(os.Stdout)
-	if err != nil {
-		return nil, err
-	}
-	return MultiWriteCloser(wc, wc1)
+	// NopWriteCloser(os.Stdout)的意义：Close时，不要真正关闭 os.Stdout
+	return MultiWriteCloser(wc, NopWriteCloser(os.Stdout))
 }
 
 // toFilePathWithPattern
