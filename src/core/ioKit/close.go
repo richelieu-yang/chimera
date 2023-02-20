@@ -21,8 +21,8 @@ func CloseWriter(writer io.Writer) error {
 			/* 关闭 */
 			return closer.Close()
 		}
-	} else {
-		/* 未实现 io.Closer 接口，不处理，直接返回nil */
-		return nil
 	}
+
+	/* 未实现 io.Closer 接口，不处理，直接返回nil */
+	return nil
 }
