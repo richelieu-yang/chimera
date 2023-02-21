@@ -1,18 +1,29 @@
 package ioKit
 
 import (
+	"errors"
 	"io"
 	"sync"
+)
+
+var (
+	// closedError multiWriterCloser实例已经被关闭的情况下
+	closedError = errors.New("multiWriterCloser is already closed")
 )
 
 type multiWriterCloser struct {
 	lock         *sync.Mutex
 	writeClosers []io.WriteCloser
+	closed       bool
 }
 
 func (multi *multiWriterCloser) Write(p []byte) (n int, err error) {
 	multi.lock.Lock()
 	defer multi.lock.Unlock()
+
+	if multi.closed {
+		return 0, closedError
+	}
 
 	for _, w := range multi.writeClosers {
 		n, err = w.Write(p)
@@ -30,6 +41,10 @@ func (multi *multiWriterCloser) Write(p []byte) (n int, err error) {
 func (multi *multiWriterCloser) WriteString(s string) (n int, err error) {
 	multi.lock.Lock()
 	defer multi.lock.Unlock()
+
+	if multi.closed {
+		return 0, closedError
+	}
 
 	var p []byte // lazily initialized if/when needed
 	for _, w := range multi.writeClosers {
@@ -56,8 +71,13 @@ func (multi *multiWriterCloser) Close() (err error) {
 	multi.lock.Lock()
 	defer multi.lock.Unlock()
 
+	if multi.closed {
+		return closedError
+	}
+
 	defer func() {
 		multi.writeClosers = nil
+		multi.closed = true
 	}()
 
 	return CloseWriteClosers(multi.writeClosers...)
