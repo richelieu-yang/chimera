@@ -2,12 +2,10 @@ package logKit
 
 import (
 	"github.com/richelieu42/go-scales/src/core/file/fileKit"
-	"github.com/richelieu42/go-scales/src/core/ioKit"
 	"github.com/richelieu42/go-scales/src/core/strKit"
 	"io"
 	"log"
 	"os"
-	"time"
 )
 
 // NewFileLogger
@@ -27,16 +25,7 @@ func NewFileLogger(filePath, prefix string) (*log.Logger, error) {
 	}
 
 	// 此处不能关闭writer，否则日志内容将写不进去
-	//defer writer.CloseWriter()
-
-	return newLogger(writer, prefix), nil
-}
-
-func NewRotateFileLogger(logPath, prefix string, rotationTime, maxAge time.Duration) (*log.Logger, error) {
-	writer, err := ioKit.NewRotateFileWriteCloser(logPath, rotationTime, maxAge, true)
-	if err != nil {
-		return nil, err
-	}
+	//defer writer.CloseWriters()
 
 	return newLogger(writer, prefix), nil
 }
