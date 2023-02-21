@@ -3,7 +3,6 @@ package logrusKit
 import (
 	"github.com/richelieu42/go-scales/src/core/file/fileKit"
 	"github.com/richelieu42/go-scales/src/core/ioKit"
-	"github.com/rifflock/lfshook"
 	"github.com/sirupsen/logrus"
 	"io"
 	"os"
@@ -18,20 +17,16 @@ func DisposeLogger(logger *logrus.Logger) error {
 	return ioKit.CloseWriters(logger.Out)
 }
 
-// NewLogger 输出到控制台（os.Stderr）
-func NewLogger() *logrus.Logger {
-	return NewCustomizedLogger(nil, logrus.DebugLevel)
-}
-
 // NewCustomizedLogger 输出到控制台（os.Stderr）
 /*
 @param formatter 可以为nil，此时将采用默认值
 */
 func NewCustomizedLogger(formatter logrus.Formatter, level logrus.Level) *logrus.Logger {
-	logger := logrus.New()
 	if formatter == nil {
 		formatter = DefaultTextFormatter
 	}
+
+	logger := logrus.New()
 	logger.SetFormatter(formatter)
 	logger.SetLevel(level)
 	return logger
@@ -51,46 +46,57 @@ func NewFileLogger(filePath string, formatter logrus.Formatter, level logrus.Lev
 		return nil, err
 	}
 
-	var out io.WriteCloser
-	out, err := os.OpenFile(filePath, os.O_RDWR|os.O_APPEND|os.O_CREATE, 0666)
+	var writeCloser io.WriteCloser
+	writeCloser, err := os.OpenFile(filePath, os.O_RDWR|os.O_APPEND|os.O_CREATE, 0666)
 	if err != nil {
 		return nil, err
 	}
 	if toConsoleFlag {
-		out = ioKit.MultiWriteCloser(out, ioKit.NopWriteCloser(os.Stdout))
+		writeCloser = ioKit.MultiWriteCloser(writeCloser, ioKit.NopWriteCloser(os.Stdout))
 	}
 
-	logger := NewCustomizedLogger(formatter, level)
-	logger.Out = out
-	return logger, nil
+	return newFileLogger(formatter, level, writeCloser, toConsoleFlag), nil
 }
 
 // NewRotateFileLogger
 /*
 PS: 如果 logger.Out 被释放后继续调用 logger 进行输出，会失败（e.g. 控制台os.Stderr有输出: Failed to write to log, invalid argument）.
 */
-func NewRotateFileLogger(filePath string, formatter logrus.Formatter, level logrus.Level, rotationTime, maxAge time.Duration, toConsoleFlag bool) (*logrus.Logger, error) {
-	writeCloser, err := ioKit.NewRotateFileWriteCloser(filePath, rotationTime, maxAge, true)
+func NewRotateFileLogger(filePath string, formatter logrus.Formatter, level logrus.Level, rotationTime, maxAge time.Duration, softLinkFlag, toConsoleFlag bool) (*logrus.Logger, error) {
+	writeCloser, err := ioKit.NewRotateFileWriteCloser(filePath, rotationTime, maxAge, softLinkFlag)
 	if err != nil {
 		return nil, err
 	}
 
+	/* 此方法不方便 Close()，因为是通过Hook实现输出到控制台的同时也输出到文件日志 */
+	//logger := NewCustomizedLogger(formatter, level)
+	//if toConsoleFlag {
+	//	// (1) 输出到: 文件日志 + 控制台
+	//	lfsHook := lfshook.NewHook(lfshook.WriterMap{
+	//		logrus.TraceLevel: writeCloser,
+	//		logrus.DebugLevel: writeCloser,
+	//		logrus.InfoLevel:  writeCloser,
+	//		logrus.WarnLevel:  writeCloser,
+	//		logrus.ErrorLevel: writeCloser,
+	//		logrus.FatalLevel: writeCloser,
+	//		logrus.PanicLevel: writeCloser,
+	//	}, formatter)
+	//	logger.AddHook(lfsHook)
+	//} else {
+	//	// (2) 输出到: 文件日志
+	//	logger.Out = writeCloser
+	//}
+	//return logger, nil
+
+	return newFileLogger(formatter, level, writeCloser, toConsoleFlag), nil
+}
+
+// newFileLogger 复用代码
+func newFileLogger(formatter logrus.Formatter, level logrus.Level, writeCloser io.WriteCloser, toConsole bool) *logrus.Logger {
 	logger := NewCustomizedLogger(formatter, level)
-	if toConsoleFlag {
-		// (1) 输出到: 文件日志 + 控制台
-		lfsHook := lfshook.NewHook(lfshook.WriterMap{
-			logrus.TraceLevel: writeCloser,
-			logrus.DebugLevel: writeCloser,
-			logrus.InfoLevel:  writeCloser,
-			logrus.WarnLevel:  writeCloser,
-			logrus.ErrorLevel: writeCloser,
-			logrus.FatalLevel: writeCloser,
-			logrus.PanicLevel: writeCloser,
-		}, formatter)
-		logger.AddHook(lfsHook)
-	} else {
-		// (2) 输出到: 文件日志
-		logger.Out = writeCloser
+	if toConsole {
+		writeCloser = ioKit.MultiWriteCloser(writeCloser, ioKit.NopWriteCloser(os.Stdout))
 	}
-	return logger, nil
+	logger.Out = writeCloser
+	return logger
 }

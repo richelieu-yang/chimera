@@ -26,17 +26,17 @@ e.g.
 ("aaa.log", time.Second*3, time.Second*30, true) => 最多同时存在 11 个日志文件（不算替身；30 / 3 + 1 = 11）
 */
 func NewRotateFileWriteCloser(filePath string, rotationTime, maxAge time.Duration, softLinkFlag bool) (io.WriteCloser, error) {
+	/* 尝试创建父级目录 */
+	if err := fileKit.MkParentDirs(filePath); err != nil {
+		return nil, err
+	}
+
 	/* 默认值 */
 	if rotationTime <= 0 {
 		rotationTime = time.Hour * 12
 	}
 	if maxAge <= 0 {
 		maxAge = timeKit.Week
-	}
-
-	// 尝试创建父级目录
-	if err := fileKit.MkParentDirs(filePath); err != nil {
-		return nil, err
 	}
 
 	options := []rotatelogs.Option{
@@ -69,7 +69,7 @@ func NewRotateFileWriteCloser1(filePath string, rotationTime time.Duration, rota
 	return rotatelogs.New(toFilePathWithPattern(filePath), options...)
 }
 
-// toFilePathWithPattern
+// toFilePathWithPattern 复用代码
 /*
 e.g. Mac M1
 ("/Users/richelieu/Downloads/111.log") => "111(2022-11-28 15：50：40).log"
