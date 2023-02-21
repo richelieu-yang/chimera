@@ -3,8 +3,8 @@ module github.com/richelieu42/go-scales
 go 1.19
 
 require (
-	github.com/apache/rocketmq-clients/golang v0.0.0-20230213073722-c377e94606f5
-	github.com/dablelv/go-huge-util v0.0.31
+	github.com/apache/rocketmq-clients/golang v0.0.0-20230217164207-d4e28689af93
+	github.com/dablelv/go-huge-util v0.0.32
 	github.com/deckarep/golang-set/v2 v2.1.0
 	github.com/disintegration/imaging v1.6.2
 	github.com/emersion/go-imap v1.2.1
