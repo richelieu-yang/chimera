@@ -84,7 +84,8 @@ func Get[K comparable, V any](m map[K]V, key K) V {
 @param m 可以为nil
 */
 func GetString[K comparable, V any](m map[K]V, key K) (string, error) {
-	return strKit.ToStringE(Get(m, key))
+	value := Get(m, key)
+	return strKit.ToStringE(value)
 }
 
 // GetInt
@@ -92,7 +93,8 @@ func GetString[K comparable, V any](m map[K]V, key K) (string, error) {
 @param m 可以为nil
 */
 func GetInt[K comparable, V any](m map[K]V, key K) (int, error) {
-	return intKit.ToIntE(Get(m, key))
+	value := Get(m, key)
+	return intKit.ToIntE(value)
 }
 
 // GetBool
@@ -100,5 +102,6 @@ func GetInt[K comparable, V any](m map[K]V, key K) (int, error) {
 @param m 可以为nil
 */
 func GetBool[K comparable, V any](m map[K]V, key K) (bool, error) {
-	return boolKit.ToBoolE(Get(m, key))
+	value := Get(m, key)
+	return boolKit.ToBoolE(value)
 }
