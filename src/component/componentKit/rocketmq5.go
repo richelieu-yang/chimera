@@ -6,12 +6,12 @@ import (
 	"github.com/richelieu42/go-scales/src/mq/rocketmq5Kit"
 )
 
-// NewProducer
+// NewProducerOfRocketmq5
 /*
 @param logConfig 可以为nil
 @return rmq_client.Producer实例要手动调用 Start()!!!
 */
-func NewProducer(logConfig *rocketmq5Kit.LogConfig) (rmq_client.Producer, error) {
+func NewProducerOfRocketmq5(logConfig *rocketmq5Kit.LogConfig) (rmq_client.Producer, error) {
 	config, err := GetRocketmq5Config()
 	if err != nil {
 		return nil, err
@@ -19,16 +19,15 @@ func NewProducer(logConfig *rocketmq5Kit.LogConfig) (rmq_client.Producer, error)
 	if config == nil {
 		return nil, errorKit.Simple("config == nil")
 	}
-
 	return rocketmq5Kit.NewProducer(logConfig, config)
 }
 
-// NewSimpleConsumer
+// NewSimpleConsumerOfRocketmq5
 /*
 @param logConfig 可以为nil
 @return rmq_client.SimpleConsumer实例要手动调用 Start()!!!
 */
-func NewSimpleConsumer(logConfig *rocketmq5Kit.LogConfig, consumerGroup, topic, tag string) (rmq_client.SimpleConsumer, error) {
+func NewSimpleConsumerOfRocketmq5(logConfig *rocketmq5Kit.LogConfig, consumerGroup, topic, tag string) (rmq_client.SimpleConsumer, error) {
 	config, err := GetRocketmq5Config()
 	if err != nil {
 		return nil, err
@@ -36,6 +35,5 @@ func NewSimpleConsumer(logConfig *rocketmq5Kit.LogConfig, consumerGroup, topic, 
 	if config == nil {
 		return nil, errorKit.Simple("config == nil")
 	}
-
 	return rocketmq5Kit.NewSimpleConsumer(logConfig, config, consumerGroup, topic, tag)
 }
