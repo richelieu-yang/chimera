@@ -1,6 +1,7 @@
 package mapKit
 
 import (
+	"github.com/richelieu42/go-scales/src/core/boolKit"
 	"github.com/richelieu42/go-scales/src/core/intKit"
 	"github.com/richelieu42/go-scales/src/core/strKit"
 )
@@ -19,6 +20,7 @@ func Contains[K comparable, V any](m map[K]V, key K) bool {
 
 // ContainKeys 判断 map实例 中是否存在 所有指定的key
 /*
+@param m 可以为nil（此时返回值固定为false）
 @param keys 可以一个key都不传，此时将固定返回true
 */
 func ContainKeys[K comparable, V any](m map[K]V, keys ...K) bool {
@@ -48,6 +50,8 @@ func GetKeySlice[K comparable, V any](m map[K]V) []K {
 /*
 PS: 可能会修改传参m（移除的话），因为它是map类型.
 
+@param m 	可以为nil
+@param key	可以在传参m中不存在
 @return 被移除出map的条目的值（存在的话） + 传参m是否包含传参key
 */
 func Remove[K comparable, V any](m map[K]V, key K) (V, bool) {
@@ -89,4 +93,12 @@ func GetString[K comparable, V any](m map[K]V, key K) (string, error) {
 */
 func GetInt[K comparable, V any](m map[K]V, key K) (int, error) {
 	return intKit.ToIntE(Get(m, key))
+}
+
+// GetBool
+/*
+@param m 可以为nil
+*/
+func GetBool[K comparable, V any](m map[K]V, key K) (bool, error) {
+	return boolKit.ToBoolE(Get(m, key))
 }
