@@ -3,7 +3,6 @@ package rocketmq5Kit
 import (
 	"context"
 	rmq_client "github.com/apache/rocketmq-clients/golang"
-	"github.com/richelieu42/go-scales/src/core/errorKit"
 )
 
 // NewProducer
@@ -46,10 +45,6 @@ func SendMessage(producer rmq_client.Producer, topic string, body []byte, tag *s
 Deprecated: 此方法仅供参考.
 */
 func SendMessageForSendReceipts(producer rmq_client.Producer, topic string, body []byte, tag *string, keys ...string) ([]*rmq_client.SendReceipt, error) {
-	if producer == nil {
-		return nil, errorKit.Simple("producer == nil")
-	}
-
 	msg := &rmq_client.Message{
 		Topic: topic,
 		Body:  body,
@@ -59,9 +54,5 @@ func SendMessageForSendReceipts(producer rmq_client.Producer, topic string, body
 	}
 	msg.SetKeys(keys...)
 
-	respSlice, err := producer.Send(context.TODO(), msg)
-	if err != nil {
-		return nil, err
-	}
-	return respSlice, nil
+	return producer.Send(context.TODO(), msg)
 }
