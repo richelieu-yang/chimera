@@ -67,21 +67,26 @@ func Set[K comparable, V any](m map[K]V, key K, value V) {
 	m[key] = value
 }
 
-func GetString[K comparable, V any](m map[K]V, key K) (string, error) {
-	obj, exist := m[key]
-	if !exist {
-		// 不存在对应key的情况下，返回零值
-		return "", nil
-	}
-
-	return strKit.ToStringE(obj)
+// Get
+/*
+@param m 可以为nil
+*/
+func Get[K comparable, V any](m map[K]V, key K) V {
+	return m[key]
 }
 
+// GetString
+/*
+@param m 可以为nil
+*/
+func GetString[K comparable, V any](m map[K]V, key K) (string, error) {
+	return strKit.ToStringE(Get(m, key))
+}
+
+// GetInt
+/*
+@param m 可以为nil
+*/
 func GetInt[K comparable, V any](m map[K]V, key K) (int, error) {
-	obj, exist := m[key]
-	if !exist {
-		// 不存在对应key的情况下，返回零值
-		return 0, nil
-	}
-	return intKit.ToIntE(obj)
+	return intKit.ToIntE(Get(m, key))
 }
