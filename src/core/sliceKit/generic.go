@@ -70,7 +70,7 @@ func Merge[T comparable](slices ...[]T) []T {
 
 // RemoveDuplicate 切片实例去重.
 /*
-PS: 并不会改变传参s的内容（因为只是获取切片s的内容，并未修改）.
+PS: 并不会改变 传参s 的内容（因为只是获取切片s的内容，并未修改）.
 
 Golang数组去重&切片去重: https://www.cnblogs.com/enumx/p/12323081.html
 通过map实现去重: https://mp.weixin.qq.com/s/tvy9L-pb_8WFWAmA9u-bMg

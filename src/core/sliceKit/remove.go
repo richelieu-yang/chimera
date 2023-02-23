@@ -73,16 +73,16 @@ func RemoveLast[T any](s []T) (s1 []T, item T, ok bool) {
 
 // Remove 移除元素
 /*
-@param s	可以为nil
-@param item	可以为nil
-@param args slice中存在多个传参item的情况下，是否全部移除？默认: false
+@param s			可以为nil
+@param item			可以为nil
+@param entireArgs 	slice中存在多个传参item的情况下，是否全部移除？默认: false
 @return 第1个返回值: 移除后的slice（也有可能没变）; 第2个返回值: 是否移除了元素？
 */
-func Remove[T comparable](s []T, item T, args ...bool) ([]T, bool) {
+func Remove[T comparable](s []T, item T, entireArgs ...bool) ([]T, bool) {
 	var judge RemoveJudge[T]
 
 	// 默认: false
-	entire := GetFirstItemWithDefault(false, args...)
+	entire := GetFirstItemWithDefault(false, entireArgs...)
 	if entire {
 		// 移除所有item（slice允许内部元素重复）
 		judge = func(ele T) (removeFlag bool, interrupt bool) {
