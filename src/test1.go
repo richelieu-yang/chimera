@@ -1,17 +1,26 @@
 package main
 
 import (
-	"fmt"
-	"github.com/richelieu42/go-scales/src/core/mapKit"
+	"github.com/richelieu42/go-scales/src/log/logrusKit"
+	"github.com/sirupsen/logrus"
 )
 
 func main() {
-	m := map[string]interface{}{
-		"a": 0,
-		"b": 1,
-		"c": 2,
+	logger, err := logrusKit.NewFileLogger("aaa.txt", nil, logrus.DebugLevel, false)
+	if err != nil {
+		panic(err)
 	}
 
-	fmt.Println(mapKit.Remove(m, "b")) // 1 true
-	fmt.Println(m)                     // map[a:0 c:2]
+	logger.Info(666)
+
+	//for i := 0; i < 3; i++ {
+	//	logger.Info(i)
+	//	time.Sleep(time.Second)
+	//}
+	//
+	//go func() {
+	//	logger.Panic("ym")
+	//}()
+	//
+	//select {}
 }

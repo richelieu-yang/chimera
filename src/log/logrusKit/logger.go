@@ -51,9 +51,6 @@ func NewFileLogger(filePath string, formatter logrus.Formatter, level logrus.Lev
 	if err != nil {
 		return nil, err
 	}
-	if toConsoleFlag {
-		writeCloser = ioKit.MultiWriteCloser(writeCloser, ioKit.NopWriteCloser(os.Stdout))
-	}
 
 	return newFileLogger(formatter, level, writeCloser, toConsoleFlag), nil
 }
