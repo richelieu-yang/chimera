@@ -205,7 +205,7 @@ func IsNotEmpty[T any](s []T) bool {
 
 // Contains 切片s是否包含元素t？（区分大小写，因为使用"=="比较）
 /*
-@param s 如果为nil，返回值必定为 false
+@param s 可以为nil（此时返回值必定为false）
 */
 func Contains[T comparable](s []T, t T) bool {
 	for _, ele := range s {
