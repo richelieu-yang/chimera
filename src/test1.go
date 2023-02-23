@@ -2,14 +2,16 @@ package main
 
 import (
 	"fmt"
-	"time"
+	"github.com/richelieu42/go-scales/src/core/mapKit"
 )
 
 func main() {
-	go func() {
-		time.Sleep(time.Second)
-		panic("p")
-	}()
-	time.Sleep(time.Second * 3)
-	fmt.Println("================")
+	m := map[string]interface{}{
+		"a": 0,
+		"b": 1,
+		"c": 2,
+	}
+
+	fmt.Println(mapKit.Remove(m, "b"))
+	fmt.Println(m)
 }

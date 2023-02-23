@@ -49,7 +49,7 @@ func GetKeySlice[K comparable, V any](m map[K]V) []K {
 // Remove
 /*
 PS:
-(1) 可能会修改传参m（移除的话），因为它是map类型；
+(1) 可能会修改传参m（移除条目的话），因为它是map类型；
 (2) 命名参考了 java.util.Map .
 
 @param m 	可以为nil
