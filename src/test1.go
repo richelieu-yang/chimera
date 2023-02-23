@@ -6,7 +6,7 @@ import (
 )
 
 func main() {
-	logger, err := logrusKit.NewFileLogger("aaa.txt", nil, logrus.DebugLevel, false)
+	logger, err := logrusKit.NewFileLogger("aaa.txt", nil, logrus.DebugLevel, true)
 	if err != nil {
 		panic(err)
 	}
