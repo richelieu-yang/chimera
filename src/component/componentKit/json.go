@@ -13,7 +13,7 @@ import (
 @param msgProcessor	可以为nil，对响应结构体中的message进行二开，比如可以加上: 是哪台服务响应的
 @param respProcess	可以为nil，对响应结构体进行二开，以修改序列化为json字符串时的key
 */
-func InitializeJsonComponent(messageFilePath string, messageProcessor jsonKit.MessageProcessor, respProcessor jsonKit.ResponseProcessor) error {
+func InitializeJsonComponent(messageFilePath string, messageHook jsonKit.MessageHook, responseHook jsonKit.ResponseHook) error {
 	if strKit.IsEmpty(messageFilePath) {
 		logrus.Warn("[COMPONENT, JSON] messageFilePath is empty.")
 	} else {
@@ -22,8 +22,8 @@ func InitializeJsonComponent(messageFilePath string, messageProcessor jsonKit.Me
 		}
 	}
 
-	jsonKit.SetMsgProcessor(messageProcessor)
-	jsonKit.SetRespProcessor(respProcessor)
+	jsonKit.SetMessageHook(messageHook)
+	jsonKit.SetResponseHook(responseHook)
 
 	logrus.Info("[COMPONENT, JSON] Initialize successfully.")
 	return nil

@@ -1,29 +1,29 @@
 package jsonKit
 
 type (
-	MessageProcessor func(code string, message string, data interface{}) string
+	MessageHook func(code string, message string, data interface{}) string
 
-	ResponseProcessor func(resp *Response) any
+	ResponseHook func(resp *Response) any
 )
 
-// 根据 code、message、data 返回一个 新的message
-var msgProcessor MessageProcessor
+// 根据 code、message、data，返回一个 新的message
+var messageHook MessageHook
 
 // 可用于修改响应对象属性的key值
-var responseProcessor ResponseProcessor
+var responseHook ResponseHook
 
-func SetMsgProcessor(processor MessageProcessor) {
-	msgProcessor = processor
+func SetMessageHook(hook MessageHook) {
+	messageHook = hook
 }
 
 func ClearMsgProcessor() {
-	msgProcessor = nil
+	messageHook = nil
 }
 
-func SetRespProcessor(processor ResponseProcessor) {
-	responseProcessor = processor
+func SetResponseHook(hook ResponseHook) {
+	responseHook = hook
 }
 
 func ClearRespProcessor() {
-	responseProcessor = nil
+	responseHook = nil
 }

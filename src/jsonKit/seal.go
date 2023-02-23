@@ -28,13 +28,10 @@ func SealFully(api jsoniter.API, code, message string, data interface{}, msgArgs
 	message = getFinalMessage(code, message, data, msgArgs...)
 	resp := &Response{Code: code, Message: message, Data: data}
 
-	var obj any
-	if responseProcessor != nil {
-		obj = responseProcessor(resp)
-	} else {
-		obj = resp
+	if responseHook == nil {
+		return MarshalToStringWithJsoniterApi(api, resp)
 	}
-	return MarshalToStringWithJsoniterApi(api, obj)
+	return MarshalToStringWithJsoniterApi(api, responseHook(resp))
 }
 
 func getFinalMessage(code, msg string, data interface{}, msgArgs ...interface{}) string {
@@ -44,8 +41,8 @@ func getFinalMessage(code, msg string, data interface{}, msgArgs ...interface{})
 	if strKit.IsNotEmpty(msg) && msgArgs != nil {
 		msg = fmt.Sprintf(msg, msgArgs...)
 	}
-	if msgProcessor != nil {
-		msg = msgProcessor(code, msg, data)
+	if messageHook != nil {
+		msg = messageHook(code, msg, data)
 	}
 	return msg
 }
