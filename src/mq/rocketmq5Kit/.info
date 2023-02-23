@@ -1,0 +1,1 @@
+业务中，如果同时存在Consumer和Producer，建议把他们的初始化放在不同的包内.（以防: import cycle）
