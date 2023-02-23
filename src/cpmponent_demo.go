@@ -41,7 +41,7 @@ func main() {
 	recoveryMiddleware := gin.CustomRecovery(func(c *gin.Context, err any) {
 		// TODO: gin处理请求时发生panic的情况，在此处进行相应的处理（比如响应json给前端）
 	})
-	if err := componentKit.InitializeGinComponent(recoveryMiddleware, routeBusiness); err != nil {
+	if err := componentKit.InitializeGinComponent(recoveryMiddleware, business1); err != nil {
 		errorKit.PanicByError(err)
 	}
 }
@@ -53,7 +53,7 @@ func business() error {
 }
 
 // 业务逻辑2: 绑定路由...
-func routeBusiness(engine *gin.Engine) error {
+func business1(engine *gin.Engine) error {
 	// test
 	engine.Any("/test.act", func(ctx *gin.Context) {
 		ctx.String(http.StatusOK, time.Now().UTC().Format(time.RFC3339))

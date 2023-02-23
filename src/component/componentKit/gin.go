@@ -15,9 +15,9 @@ import (
 PS: 由于会阻塞当前goroutine，建议在业务的最后调用此方法.
 
 @param recoveryMiddleware 	可以为nil，将采用默认值 gin.Recovery()
-@param businessLogic 		可以为nil；用于添加业务逻辑，可以在此回调函数内：设置Gin的模式（gin.SetMode()）、对"中间件"和"路由"进行定制化处理...
+@param businessLogic 		可以为nil；会在启动Gin服务前调用（非nil的话）
 */
-func InitializeGinComponent(recoveryMiddleware gin.HandlerFunc, businessLogic func(engine *gin.Engine) error) error {
+func InitializeGinComponent(recoveryMiddleware gin.HandlerFunc, business func(engine *gin.Engine) error) error {
 	config, err := GetGinConfig()
 	if err != nil {
 		return err
@@ -41,7 +41,7 @@ func InitializeGinComponent(recoveryMiddleware gin.HandlerFunc, businessLogic fu
 		return err
 	}
 
-	/* Gin的模式，默认debug模式，后续可以在 businessLogic 里面调整 */
+	/* Gin的模式，默认debug模式，后续可以在 business 里面调整 */
 	gin.SetMode(gin.DebugMode)
 
 	/* 日志颜色 */
@@ -65,9 +65,9 @@ func InitializeGinComponent(recoveryMiddleware gin.HandlerFunc, businessLogic fu
 		return err
 	}
 
-	/* businessLogic */
-	if businessLogic != nil {
-		if err := businessLogic(engine); err != nil {
+	/* business */
+	if business != nil {
+		if err := business(engine); err != nil {
 			return err
 		}
 	}
