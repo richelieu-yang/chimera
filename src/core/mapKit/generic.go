@@ -55,6 +55,16 @@ PS:
 @param m 	可以为nil
 @param key	可以在传参m中不存在
 @return 被移除出map的条目的值（存在的话） + 传参m是否包含传参key
+
+e.g.
+	m := map[string]interface{}{
+		"a": 0,
+		"b": 1,
+		"c": 2,
+	}
+
+	fmt.Println(mapKit.Remove(m, "b")) // 1 true
+	fmt.Println(m)                     // map[a:0 c:2]
 */
 func Remove[K comparable, V any](m map[K]V, key K) (V, bool) {
 	value, exist := m[key]

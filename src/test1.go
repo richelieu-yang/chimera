@@ -12,6 +12,6 @@ func main() {
 		"c": 2,
 	}
 
-	fmt.Println(mapKit.Remove(m, "b"))
-	fmt.Println(m)
+	fmt.Println(mapKit.Remove(m, "b")) // 1 true
+	fmt.Println(m)                     // map[a:0 c:2]
 }
