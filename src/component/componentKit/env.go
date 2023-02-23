@@ -1,6 +1,7 @@
 package componentKit
 
 import (
+	"fmt"
 	"github.com/richelieu42/go-scales/src/confKit"
 	"github.com/richelieu42/go-scales/src/consts"
 	"github.com/richelieu42/go-scales/src/core/errorKit"
@@ -62,6 +63,19 @@ func GetIp() (string, error) {
 		return "", EnvNotLoadedError
 	}
 	return envConfig.Ip, nil
+}
+
+// GetAddress 获取当前服务的地址
+func GetAddress() (string, error) {
+	ip, err := GetIp()
+	if err != nil {
+		return "", err
+	}
+	ginConfig, err := GetGinConfig()
+	if err != nil {
+		return "", err
+	}
+	return fmt.Sprintf("%s:%d", ip, ginConfig.Port), nil
 }
 
 // InitializeEnvironment 加载 env.yaml; 初始化组件: logrus、runtime
