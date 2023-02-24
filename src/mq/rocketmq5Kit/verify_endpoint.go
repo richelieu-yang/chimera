@@ -41,6 +41,13 @@ func TestEndpoint(endpoint, topic string) (finalErr error) {
 		fmt.Sprintf("%s_%s_%s", ulid, timeStr, "$3"),
 	}
 
+	if strKit.IsEmpty(endpoint) {
+		return errorKit.Simple("param endpoint is empty")
+	}
+	if strKit.IsEmpty(topic) {
+		return errorKit.Simple("param topic is empty")
+	}
+
 	config := &rmq_client.Config{
 		Endpoint: endpoint,
 	}
@@ -174,9 +181,11 @@ LOOP:
 				}
 			}
 
-			/* 提前结束（未知错误） */
-			consumerErr = errorKit.Wrap(err, "consumer meets an unprocessed error")
-			break LOOP
+			///* 提前结束（未知错误） */
+			//consumerErr = errorKit.Wrap(err, "consumer meets an unprocessed error")
+			//break LOOP
+
+			continue
 		}
 
 		// ack message

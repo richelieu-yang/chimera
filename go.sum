@@ -45,6 +45,8 @@ github.com/aliyun/alibaba-cloud-sdk-go v1.61.18 h1:zOVTBdCKFd9JbCKz9/nt+FovbjPFm
 github.com/aliyun/alibaba-cloud-sdk-go v1.61.18/go.mod h1:v8ESoHo4SyHmuB4b1tJqDHxfTGEciD+yhvOU/5s1Rfk=
 github.com/apache/rocketmq-clients/golang v0.0.0-20230217164207-d4e28689af93 h1:E3fEvIlgv1UWPR/gr4yAx2b78VT1CHo/NmowYAFv5cs=
 github.com/apache/rocketmq-clients/golang v0.0.0-20230217164207-d4e28689af93/go.mod h1:wtbEvUkAKHlc3h4FU8AZw0w+plDI8kGtmSPNAPGQahw=
+github.com/apache/rocketmq-clients/golang v0.0.0-20230223151433-520bd4f2c12d h1:oYy47aEKxzADJowFLbJ6uQQZ/pqJV7UupFKKOMLcIqs=
+github.com/apache/rocketmq-clients/golang v0.0.0-20230223151433-520bd4f2c12d/go.mod h1:wtbEvUkAKHlc3h4FU8AZw0w+plDI8kGtmSPNAPGQahw=
 github.com/benbjohnson/clock v1.3.0 h1:ip6w0uFQkncKQ979AypyG0ER7mqUSBdKLOgAle/AT8A=
 github.com/bsm/ginkgo/v2 v2.5.0 h1:aOAnND1T40wEdAtkGSkvSICWeQ8L3UASX7YVCqQx+eQ=
 github.com/bsm/ginkgo/v2 v2.5.0/go.mod h1:AiKlXPm7ItEHNc/2+OkrNG4E0ITzojb9/xWzvQ9XZ9w=
@@ -459,6 +461,8 @@ golang.org/x/exp v0.0.0-20200207192155-f17229e696bd/go.mod h1:J/WKrq2StrnmMY6+EH
 golang.org/x/exp v0.0.0-20200224162631-6cc2880d07d6/go.mod h1:3jZMyOhIsHpP37uCMkUooju7aAi5cS1Q23tOzKc+0MU=
 golang.org/x/exp v0.0.0-20230213192124-5e25df0256eb h1:PaBZQdo+iSDyHT053FjUCgZQ/9uqVwPOcl7KSWhKn6w=
 golang.org/x/exp v0.0.0-20230213192124-5e25df0256eb/go.mod h1:CxIveKay+FTh1D0yPZemJVgC/95VzuuOLq5Qi4xnoYc=
+golang.org/x/exp v0.0.0-20230223210539-50820d90acfd h1:wtFuj4DoOcAdb82Zh2PI90xiaqgp7maYA7KxjQXVtkY=
+golang.org/x/exp v0.0.0-20230223210539-50820d90acfd/go.mod h1:CxIveKay+FTh1D0yPZemJVgC/95VzuuOLq5Qi4xnoYc=
 golang.org/x/image v0.0.0-20190227222117-0694c2d4d067/go.mod h1:kZ7UVZpmo3dzQBMxlp+ypCbDeSB+sBbTgSJuh5dn5js=
 golang.org/x/image v0.0.0-20190802002840-cff245a6509b/go.mod h1:FeLwcggjj3mMvU+oOTbSwawSJRM1uh48EjtB4UJZlP0=
 golang.org/x/image v0.0.0-20191009234506-e7c1f5e7dbb8/go.mod h1:FeLwcggjj3mMvU+oOTbSwawSJRM1uh48EjtB4UJZlP0=
