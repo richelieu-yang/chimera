@@ -6,12 +6,12 @@ import (
 	rmq_client "github.com/apache/rocketmq-clients/golang"
 	"github.com/apache/rocketmq-clients/golang/protocol/v2"
 	"github.com/richelieu42/go-scales/src/core/errorKit"
-	"github.com/richelieu42/go-scales/src/core/file/fileKit"
 	"github.com/richelieu42/go-scales/src/core/pathKit"
 	"github.com/richelieu42/go-scales/src/core/sliceKit"
 	"github.com/richelieu42/go-scales/src/core/strKit"
 	"github.com/richelieu42/go-scales/src/core/timeKit"
 	"github.com/richelieu42/go-scales/src/idKit"
+	"github.com/richelieu42/go-scales/src/jsonKit"
 	"github.com/richelieu42/go-scales/src/log/logrusKit"
 	"github.com/sirupsen/logrus"
 	"google.golang.org/grpc/codes"
@@ -20,8 +20,8 @@ import (
 )
 
 var (
-	producerTimeout = time.Millisecond * 300
-	consumerTimeout = time.Second * 3
+	producerTimeout = time.Millisecond * 500
+	consumerTimeout = time.Second * 10
 )
 
 // TestEndpoint 测试RocketMQ5服务是否启动正常.
@@ -31,6 +31,26 @@ var (
 @return 如果为nil，说明 RocketMQ5服务 正常启动
 */
 func TestEndpoint(endpoint, topic string) (finalErr error) {
+	if strKit.IsEmpty(endpoint) {
+		return errorKit.Simple("param endpoint is empty")
+	}
+	if strKit.IsEmpty(topic) {
+		return errorKit.Simple("param topic is empty")
+	}
+
+	/* logger */
+	tempDir, err := pathKit.GetTempDirOfGoScales()
+	if err != nil {
+		return err
+	}
+	logName := fmt.Sprintf("rocketmq5_%s.log", idKit.NewULID())
+	logPath := pathKit.Join(tempDir, logName)
+	logger, err := logrusKit.NewFileLogger(logPath, nil, logrus.DebugLevel, false)
+	if err != nil {
+		return err
+	}
+	defer logrusKit.DisposeLogger(logger)
+
 	/* texts */
 	timeStr := timeKit.FormatCurrentTime()
 	ulid := idKit.NewULID()
@@ -41,77 +61,57 @@ func TestEndpoint(endpoint, topic string) (finalErr error) {
 		fmt.Sprintf("%s_%s_%s", ulid, timeStr, "$3"),
 	}
 
-	if strKit.IsEmpty(endpoint) {
-		return errorKit.Simple("param endpoint is empty")
-	}
-	if strKit.IsEmpty(topic) {
-		return errorKit.Simple("param topic is empty")
-	}
-
-	config := &rmq_client.Config{
-		Endpoint: endpoint,
-	}
-
-	/* log */
-	tempDir, err := pathKit.GetTempDirOfGoScales()
+	/* print */
+	logger.Infof("endpoint: [%s].", endpoint)
+	logger.Infof("topic: [%s].", topic)
+	json, err := jsonKit.MarshalToStringWithIndent(texts)
 	if err != nil {
-		return errorKit.Wrap(err, "fail to get temporary directory")
+		return err
 	}
-	logName := fmt.Sprintf("rocketmq5_test_%s_%s_%s.log", endpoint, topic, timeStr)
-	// 文件名不支持":"（无论是Mac还是Windows）
-	logName = strKit.ReplaceAll(logName, ":", "：")
-	logPath := pathKit.Join(tempDir, logName)
-	var logConfig = &LogConfig{
+	logger.Infof("texts: %v.", json)
+
+	//defer func() {
+	//	if finalErr != nil {
+	//		finalErr = errorKit.Wrap(finalErr, "log path: %s", logPath)
+	//	} else {
+	//		// 通过测试的话，删除日志文件
+	//		_ = fileKit.Delete(logPath)
+	//	}
+	//}()
+
+	mqLogConfig := &LogConfig{
 		ToConsole: false,
 		LogDir:    tempDir,
 		LogName:   logName,
 	}
-	logger, err := logrusKit.NewFileLogger(logPath, nil, logrus.DebugLevel, false)
-	if err != nil {
-		return errorKit.Wrap(err, "fail to new logger with logPath(%s)", logPath)
+	mqConfig := &rmq_client.Config{
+		Endpoint: endpoint,
 	}
-	logger.Infof("endpoint: [%s].", endpoint)
-	logger.Infof("topic: [%s].", topic)
-	defer func() {
-		_ = logrusKit.DisposeLogger(logger)
 
-		if finalErr != nil {
-			finalErr = errorKit.Wrap(finalErr, "log path: %s", logPath)
-		} else {
-			// 通过测试的话，删除日志文件
-			_ = fileKit.Delete(logPath)
-		}
-	}()
-
-	/* Producer */
-	producer, err := NewProducer(logConfig, config)
+	/* producer */
+	producer, err := NewProducer(mqLogConfig, mqConfig)
 	if err != nil {
-		finalErr = errorKit.Wrap(err, "fail to new producer")
-		return
+		return err
 	}
 	if err := producer.Start(); err != nil {
-		finalErr = errorKit.Wrap(err, "fail to start producer")
-		return
+		return err
 	}
 	defer producer.GracefulStop()
 
-	/* Consumer */
-	consumerGroup := fmt.Sprintf("simpleConsumer-group-%s-%s", topic, idKit.NewULID())
-	simpleConsumer, err := NewSimpleConsumer(logConfig, config, consumerGroup, topic, "*")
+	/* consumer */
+	consumer, err := NewSimpleConsumer(mqLogConfig, mqConfig, fmt.Sprintf("%s-%s", topic, idKit.NewULID()), topic, "*")
 	if err != nil {
-		finalErr = errorKit.Wrap(err, "fail to new simple consumer")
-		return
+		return err
 	}
-	if err := simpleConsumer.Start(); err != nil {
-		finalErr = errorKit.Wrap(err, "fail to start simple consumer")
-		return
+	if err := consumer.Start(); err != nil {
+		return err
 	}
-	defer simpleConsumer.GracefulStop()
+	defer consumer.GracefulStop()
 
 	consumerCtx, cancel := context.WithTimeout(context.TODO(), consumerTimeout)
 	defer cancel()
 
-	/* 启动Producer */
+	/* start producer */
 	var producerErr error
 	go func() {
 		defer func() {
@@ -151,14 +151,18 @@ func TestEndpoint(endpoint, topic string) (finalErr error) {
 
 	}()
 
-	/* 启动Consumer */
+	/* start consumer */
 	var consumerErr error
 	// 拷贝，不修改texts
 	var text1 = sliceKit.Copy(texts)
 LOOP:
 	for {
-		mvs, err := simpleConsumer.Receive(consumerCtx, MaxMessageNum, InvisibleDuration)
+		mvs, err := consumer.Receive(consumerCtx, MaxMessageNum, InvisibleDuration)
 		if err != nil {
+			logger.WithFields(logrus.Fields{
+				"error": err.Error(),
+			}).Warn("fail to receive")
+
 			// 时间到
 			if s, ok := status.FromError(err); ok {
 				switch s.Code() {
@@ -190,7 +194,7 @@ LOOP:
 
 		// ack message
 		for _, mv := range mvs {
-			err := simpleConsumer.Ack(context.TODO(), mv)
+			err := consumer.Ack(context.TODO(), mv)
 			if err != nil {
 				/* 提前结束（确认消息） */
 				consumerErr = errorKit.Wrap(err, "consumer fails to ack message")
