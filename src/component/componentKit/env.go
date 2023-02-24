@@ -35,7 +35,7 @@ var (
 	defaultEnvMap = map[string]interface{}{
 		// logrus
 		"logrus.level":           "debug",
-		"logrus.timestampFormat": string(timeKit.EntireFormat),
+		"logrus.timestampFormat": string(timeKit.FormatEntire),
 
 		// gin
 		"gin.port":            80,
@@ -119,7 +119,7 @@ func loadEnvYaml() error {
 	/* 优化配置文件 */
 	envConfig.Redis.Simplify()
 
-	logrusKit.Initialize(logrus.DebugLevel, timeKit.EntireFormat)
+	logrusKit.Initialize(logrus.DebugLevel, timeKit.FormatEntire)
 	json, _ := jsonKit.MarshalWithIndent(envConfig)
 	logrus.Infof("[COMPONENT, ENV] environment:\n%s", json)
 

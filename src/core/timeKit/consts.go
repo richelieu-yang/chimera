@@ -20,24 +20,24 @@ CST: 中国标准时间(UTC+8)
 MST: 北美山区标准时间(UTC-7)
 */
 const (
-	// DirFormat 用于作为目录名（或者其中的一部分）
-	DirFormat TimeFormat = "2006-01-02T15.04.05.000"
+	// FormatDefault 参考"format.go"
+	FormatDefault TimeFormat = "2006-01-02 15:04:05.999999999 -0700 MST"
 
-	// CommonFormat 常规的格式
-	CommonFormat TimeFormat = "2006-01-02T15:04:05.000"
-	// CommonFormat1 常规的格式1
-	CommonFormat1 TimeFormat = "2006-01-02 15:04:05.000"
+	// FormatDir 用于作为目录名（或者其中的一部分）
+	FormatDir TimeFormat = "2006-01-02T15.04.05.000"
 
-	// EntireFormat 完整的格式
-	EntireFormat TimeFormat = "2006-01-02 15:04:05.000Z07:00"
+	// FormatCommon 常规的格式
+	FormatCommon TimeFormat = "2006-01-02T15:04:05.000"
+	// FormatCommon1 常规的格式1
+	FormatCommon1 TimeFormat = "2006-01-02 15:04:05.000"
+
+	// FormatEntire 完整的格式
+	FormatEntire TimeFormat = "2006-01-02 15:04:05.000Z07:00"
 
 	FormatA TimeFormat = "2006-01-02 15:04:05"
 	FormatB TimeFormat = "2006-01-02 3:04:05.000 PM Mon Jan"
 	FormatC TimeFormat = "3:04:05.000 PM Mon Jan"
 
-	// NetworkFormat 网络的格式
-	NetworkFormat TimeFormat = "Mon, 02 Jan 2006 15:04:05 MST"
-
-	// DefaultFormat 参考"format.go"
-	DefaultFormat TimeFormat = "2006-01-02 15:04:05.999999999 -0700 MST"
+	// FormatNetwork 网络的格式
+	FormatNetwork TimeFormat = "Mon, 02 Jan 2006 15:04:05 MST"
 )

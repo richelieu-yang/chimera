@@ -32,7 +32,7 @@ logrus.Infof("os:\r%s", osKit.OS)
 logrus.Info("--------------------------------")
 */
 func InitializeByDefault() {
-	Initialize(logrus.DebugLevel, timeKit.CommonFormat)
+	Initialize(logrus.DebugLevel, timeKit.FormatCommon)
 }
 
 func OnDebugChanged() {

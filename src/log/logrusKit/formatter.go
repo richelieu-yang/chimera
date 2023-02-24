@@ -10,12 +10,12 @@ var DefaultTextFormatter = NewTextFormatter("")
 
 // NewTextFormatter
 /*
-@param timeKit.EntireFormat 可以为""，将采用默认值
+@param timeKit.FormatEntire 可以为""，将采用默认值
 */
 func NewTextFormatter(timestampFormat timeKit.TimeFormat) logrus.Formatter {
 	str := string(timestampFormat)
 	if strKit.IsEmpty(str) {
-		str = string(timeKit.EntireFormat)
+		str = string(timeKit.FormatEntire)
 	}
 
 	return &logrus.TextFormatter{

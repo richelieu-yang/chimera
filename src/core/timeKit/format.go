@@ -13,7 +13,7 @@ e.g.
 ("") 	=> ""
 */
 func FormatCurrentTime(formats ...TimeFormat) string {
-	format := sliceKit.GetFirstItemWithDefault(CommonFormat, formats...)
+	format := sliceKit.GetFirstItemWithDefault(FormatCommon, formats...)
 
 	return FormatTimeToString(time.Now(), format)
 }
