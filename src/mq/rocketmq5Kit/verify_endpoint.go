@@ -103,7 +103,7 @@ func VerifyEndpoint(endpoint, topic string) error {
 	logger.Infof("texts: %v.", json)
 
 	// test
-	logrus.Infof("logPath: [%s].", logPath)
+	logrus.Debugf("logPath: [%s].", logPath)
 
 	producerCh := make(chan error, 1)
 	consumerCh := make(chan error, 1)
@@ -168,17 +168,17 @@ func VerifyEndpoint(endpoint, topic string) error {
 					continue
 				}
 
-				logger.WithFields(logrus.Fields{
-					"text": text,
-				}).Info("[CONSUMER] Receive and ack a message.")
-
 				var ok bool
 				texts, ok = sliceKit.Remove(texts, text)
-				if ok {
-					if sliceKit.IsEmpty(texts) {
-						consumerCh <- nil
-						return
-					}
+				logger.WithFields(logrus.Fields{
+					"valid": ok,
+					"left":  len(texts),
+					"text":  text,
+				}).Info("[CONSUMER] Receive and ack a message.")
+
+				if ok && sliceKit.IsEmpty(texts) {
+					consumerCh <- nil
+					return
 				}
 			}
 		}
@@ -222,6 +222,8 @@ func VerifyEndpoint(endpoint, topic string) error {
 
 	if err != nil {
 		err = errorKit.Wrap(err, "log path: [%s]", logPath)
+		logger.Errorf("%+v", err)
+		return err
 	}
-	return err
+	return nil
 }
