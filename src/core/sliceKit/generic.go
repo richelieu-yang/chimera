@@ -215,3 +215,18 @@ func Contains[T comparable](s []T, t T) bool {
 	}
 	return false
 }
+
+// Index
+/*
+@return 如果不存在于切片实例中的话，返回-1
+*/
+func Index[T comparable](s []T, item T) int {
+	index := -1
+	for i, ele := range s {
+		if ele == item {
+			index = i
+			break
+		}
+	}
+	return index
+}

@@ -23,7 +23,7 @@ var (
 	// producerTimeout 单次推送消息的timeout
 	producerTimeout = time.Millisecond * 500
 	// verifyTimeout 验证的最长timeout
-	verifyTimeout = time.Second * 10
+	verifyTimeout = time.Second * 6
 )
 
 // VerifyEndpoint 测试RocketMQ5服务是否启动正常.
@@ -55,6 +55,9 @@ func VerifyEndpoint(endpoint, topic string) error {
 		fmt.Sprintf("%s_%s_%s", ulid, timeStr, "$0"),
 		fmt.Sprintf("%s_%s_%s", ulid, timeStr, "$1"),
 		fmt.Sprintf("%s_%s_%s", ulid, timeStr, "$2"),
+		fmt.Sprintf("%s_%s_%s", ulid, timeStr, "$3"),
+		fmt.Sprintf("%s_%s_%s", ulid, timeStr, "$4"),
+		fmt.Sprintf("%s_%s_%s", ulid, timeStr, "$5"),
 	}
 
 	mqLogConfig := &LogConfig{
@@ -111,6 +114,7 @@ func VerifyEndpoint(endpoint, topic string) error {
 	defer cancel()
 
 	/* consumer works */
+	textsCopy := sliceKit.Copy(texts)
 	go func() {
 		defer func() {
 			logger.Info("[Consumer] Goroutine ends.")
@@ -169,14 +173,15 @@ func VerifyEndpoint(endpoint, topic string) error {
 				}
 
 				var ok bool
-				texts, ok = sliceKit.Remove(texts, text)
+				textsCopy, ok = sliceKit.Remove(textsCopy, text)
+				left := len(textsCopy)
 				logger.WithFields(logrus.Fields{
 					"valid": ok,
-					"left":  len(texts),
+					"left":  left,
 					"text":  text,
 				}).Info("[CONSUMER] Receive and ack a message.")
-
-				if ok && sliceKit.IsEmpty(texts) {
+				if left == 0 {
+					// 成功收到所有预期消息
 					consumerCh <- nil
 					return
 				}
@@ -194,6 +199,8 @@ func VerifyEndpoint(endpoint, topic string) error {
 		time.Sleep(time.Second)
 
 		for _, text := range texts {
+			logrus.Debug(text)
+
 			msg := &rmq_client.Message{
 				Topic: topic,
 				Body:  []byte(text),
