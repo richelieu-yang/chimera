@@ -2,14 +2,28 @@ package main
 
 import (
 	"fmt"
-	"github.com/richelieu42/go-scales/src/core/sliceKit"
+	"reflect"
+	"unsafe"
 )
 
-func main() {
-	texts := []string{"0", "1", "2"}
-	fmt.Println(texts) // [0 1 2]
+type Person struct {
+	name string
+	age  int
+}
 
-	texts1, _ := sliceKit.Remove(texts, "1")
-	fmt.Println(texts)  // [0 2 2]
-	fmt.Println(texts1) // [0 2]
+func main() {
+	p := &Person{
+		name: "Alice",
+		age:  25,
+	}
+	v := reflect.ValueOf(p).Elem()
+	field := v.FieldByName("name")
+	ptr := (*string)(unsafe.Pointer(field.UnsafeAddr()))
+
+	// get
+	fmt.Println(*ptr) // Alice
+
+	// set
+	*ptr = "Ccc"
+	fmt.Println(p.name) // Ccc
 }
