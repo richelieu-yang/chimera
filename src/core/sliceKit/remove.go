@@ -74,7 +74,7 @@ func RemoveLast[T any](s []T) (s1 []T, item T, ok bool) {
 // Remove 移除元素
 /*
 PS:
-(1) 可能会修改传参s！！！（因为截取）
+(1) 可能会修改传参s！！！（因为截取；）
 (2) 切片实例s中，存在多个item的话，仅会移除第一个.
 
 e.g.
@@ -93,74 +93,3 @@ func Remove[T comparable](s []T, item T) ([]T, bool) {
 	}
 	return append(s[:index], s[index+1:]...), true
 }
-
-//// Remove 移除元素
-///*
-//@param s			可以为nil
-//@param item			可以为nil
-//@param entireArgs 	slice中存在多个传参item的情况下，是否全部移除？默认: false
-//@return 第1个返回值: 移除后的slice（也有可能没变）; 第2个返回值: 是否移除了元素？
-//
-//e.g.
-//	texts := []string{"0", "1", "2"}
-//	fmt.Println(texts) // [0 1 2]
-//
-//	texts1, _ := sliceKit.Remove(texts, "1")
-//	fmt.Println(texts)  // [0 2 2]
-//	fmt.Println(texts1) // [0 2]
-//*/
-//func Remove[T comparable](s []T, item T, entireArgs ...bool) ([]T, bool) {
-//	DeepCopy()
-//
-//	var judge RemoveJudge[T]
-//
-//	// 默认: false
-//	entire := GetFirstItemWithDefault(false, entireArgs...)
-//	if entire {
-//		// 移除所有item（slice允许内部元素重复）
-//		judge = func(ele T) (removeFlag bool, interrupt bool) {
-//			removeFlag = ele == item
-//			interrupt = false
-//			return
-//		}
-//	} else {
-//		// 只移除第1个item
-//		judge = func(ele T) (removeFlag bool, interrupt bool) {
-//			removeFlag = ele == item
-//			interrupt = removeFlag
-//			return
-//		}
-//	}
-//	return RemoveByCondition(s, judge)
-//}
-//
-//// RemoveByCondition
-///*
-//@param s 		可以为nil
-//@param judge 	可以为nil，此时将不删除任何元素
-//*/
-//func RemoveByCondition[T comparable](s []T, judge RemoveJudge[T]) ([]T, bool) {
-//	removeFlag := false
-//
-//	if judge != nil {
-//		for i := 0; i < len(s); {
-//			ele := s[i]
-//
-//			remove, interrupt := judge(ele)
-//			if remove {
-//				// 删除s中下标为i的元素
-//				s = append(s[:i], s[i+1:]...)
-//				removeFlag = true
-//				if interrupt {
-//					break
-//				}
-//			} else {
-//				if interrupt {
-//					break
-//				}
-//				i++
-//			}
-//		}
-//	}
-//	return s, removeFlag
-//}
