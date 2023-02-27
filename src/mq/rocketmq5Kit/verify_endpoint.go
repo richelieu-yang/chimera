@@ -20,8 +20,10 @@ import (
 )
 
 var (
+	// producerTimeout 单次推送消息的timeout
 	producerTimeout = time.Millisecond * 500
-	consumerTimeout = time.Second * 10
+	// verifyTimeout 验证的最长timeout
+	verifyTimeout = time.Second * 10
 )
 
 // VerifyEndpoint 测试RocketMQ5服务是否启动正常.
@@ -30,7 +32,7 @@ var (
 @param topic 	用于测试的topic（理论上，此topic仅用于测试，不能同时用于业务，因为测试发的消息无意义）
 @return 如果为nil，说明 RocketMQ5服务 正常启动
 */
-func VerifyEndpoint(endpoint, topic string) (finalErr error) {
+func VerifyEndpoint(endpoint, topic string) error {
 	if strKit.IsEmpty(endpoint) {
 		return errorKit.Simple("param endpoint is empty")
 	}
@@ -58,7 +60,6 @@ func VerifyEndpoint(endpoint, topic string) (finalErr error) {
 		fmt.Sprintf("%s_%s_%s", ulid, timeStr, "$0"),
 		fmt.Sprintf("%s_%s_%s", ulid, timeStr, "$1"),
 		fmt.Sprintf("%s_%s_%s", ulid, timeStr, "$2"),
-		fmt.Sprintf("%s_%s_%s", ulid, timeStr, "$3"),
 	}
 
 	/* print */
@@ -69,15 +70,6 @@ func VerifyEndpoint(endpoint, topic string) (finalErr error) {
 		return err
 	}
 	logger.Infof("texts: %v.", json)
-
-	//defer func() {
-	//	if finalErr != nil {
-	//		finalErr = errorKit.Wrap(finalErr, "log path: %s", logPath)
-	//	} else {
-	//		// 通过测试的话，删除日志文件
-	//		_ = fileKit.Delete(logPath)
-	//	}
-	//}()
 
 	mqLogConfig := &LogConfig{
 		ToConsole: false,
@@ -108,129 +100,120 @@ func VerifyEndpoint(endpoint, topic string) (finalErr error) {
 	}
 	defer consumer.GracefulStop()
 
-	consumerCtx, cancel := context.WithTimeout(context.TODO(), consumerTimeout)
+	producerCh := make(chan error, 1)
+	consumerCh := make(chan error, 1)
+	consumerCtx, cancel := context.WithCancel(context.TODO())
 	defer cancel()
 
+	/* start consumer */
+	go func() {
+		defer func() {
+			logger.Info("[Consumer] Goroutine ends.")
+		}()
+
+		for {
+			time.Sleep(time.Millisecond * 100)
+
+			mvs, err := consumer.Receive(consumerCtx, MaxMessageNum, InvisibleDuration)
+			if err != nil {
+				// 时间到
+				if s, ok := status.FromError(err); ok {
+					switch s.Code() {
+					case codes.Canceled:
+						consumerCh <- err
+						return
+						//case codes.Canceled:
+						//	/* 提前结束（被取消） */
+						//	break LOOP
+						//case codes.DeadlineExceeded:
+						//	/* 超时结束 */
+						//	consumerErr = errorKit.Simple("consumer fails to receive all messages(count: %d) within timeout(%s), missing(%d)", len(texts), verifyTimeout.String(), len(text1))
+						//	break LOOP
+					}
+				}
+
+				if errRpcStatus, ok := rmq_client.AsErrRpcStatus(err); ok {
+					switch errRpcStatus.Code {
+					case int32(v2.Code_MESSAGE_NOT_FOUND):
+						// 没有新消息
+					default:
+						logger.WithFields(logrus.Fields{
+							"code":  errRpcStatus.Code,
+							"error": err.Error(),
+						}).Warn("[Consumer] Fail to receive.")
+					}
+				} else {
+					logger.WithFields(logrus.Fields{
+						"error": err.Error(),
+					}).Warn("[Consumer] Fail to receive.")
+				}
+				continue
+			}
+
+			// ack message
+			for _, mv := range mvs {
+				text := string(mv.GetBody())
+
+				err := consumer.Ack(context.TODO(), mv)
+				if err != nil {
+					logger.WithFields(logrus.Fields{
+						"text":  text,
+						"error": err.Error(),
+					}).Error("[Consumer] Fail to ack.")
+					continue
+				}
+
+				logger.WithFields(logrus.Fields{
+					"text": text,
+				}).Info("[CONSUMER] Receive and ack a message.")
+
+				var ok bool
+				texts, ok = sliceKit.Remove(texts, text)
+				if ok {
+					if sliceKit.IsEmpty(texts) {
+						consumerCh <- nil
+						return
+					}
+				}
+			}
+		}
+	}()
+
 	/* start producer */
-	var producerErr error
 	go func() {
 		defer func() {
 			logger.Info("[Producer] Goroutine ends.")
 		}()
 
-		// 等100ms，以确保: producer发消息时，consumer已经开始收消息了（以免丢失消息: 明明producer发了，但consumer却没收到）
-		time.Sleep(time.Millisecond * 100)
+		// 等一会，以确保: producer发消息时，consumer已经开始收消息了（以免丢失消息: 明明producer发了，但consumer却没收到）
+		time.Sleep(time.Second)
 
-		var err error
 		for _, text := range texts {
 			msg := &rmq_client.Message{
 				Topic: topic,
 				Body:  []byte(text),
 			}
 			ctx, _ := context.WithTimeout(context.TODO(), producerTimeout)
-			_, err = producer.Send(ctx, msg)
+			_, err := producer.Send(ctx, msg)
 			if err != nil {
-				err = errorKit.Wrap(err, "fail to send message")
-				break
+				err = errorKit.Wrap(err, "[Producer] Fail to send message(%s).", text)
+				producerCh <- err
+				return
 			}
-
 			logger.WithFields(logrus.Fields{
 				"text": text,
 			}).Info("[Producer] Send message successfully.")
 		}
-
-		if err != nil {
-			producerErr = err
-			cancel()
-			logger.Infof("[Producer] Invoke cancel() with error: %+v", err)
-			return
-		}
-		logger.WithFields(logrus.Fields{
-			"count": len(texts),
-		}).Info("[Producer] Send all messages successfully.")
-
+		logger.Info("[Producer] Send all messages successfully.")
 	}()
 
-	/* start consumer */
-	var consumerErr error
-	// 拷贝，不修改texts
-	var text1 = sliceKit.Copy(texts)
-LOOP:
-	for {
-		mvs, err := consumer.Receive(consumerCtx, MaxMessageNum, InvisibleDuration)
-		if err != nil {
-			logger.WithFields(logrus.Fields{
-				"error": err.Error(),
-			}).Warn("fail to receive")
-
-			// 时间到
-			if s, ok := status.FromError(err); ok {
-				switch s.Code() {
-				case codes.Canceled:
-					/* 提前结束（被取消） */
-					break LOOP
-				case codes.DeadlineExceeded:
-					/* 超时结束 */
-					consumerErr = errorKit.Simple("consumer fails to receive all messages(count: %d) within timeout(%s), missing(%d)", len(texts), consumerTimeout.String(), len(text1))
-					break LOOP
-				}
-			}
-
-			if errRpcStatus, ok := rmq_client.AsErrRpcStatus(err); ok {
-				switch errRpcStatus.Code {
-				case int32(v2.Code_MESSAGE_NOT_FOUND):
-					// 每次收消息间有一定的间隔
-					time.Sleep(time.Millisecond * 100)
-					continue
-				}
-			}
-
-			///* 提前结束（未知错误） */
-			//consumerErr = errorKit.Wrap(err, "consumer meets an unprocessed error")
-			//break LOOP
-
-			continue
-		}
-
-		// ack message
-		for _, mv := range mvs {
-			err := consumer.Ack(context.TODO(), mv)
-			if err != nil {
-				/* 提前结束（确认消息） */
-				consumerErr = errorKit.Wrap(err, "consumer fails to ack message")
-				break LOOP
-			}
-			text := string(mv.GetBody())
-
-			logger.WithFields(logrus.Fields{
-				"text": text,
-			}).Info("[CONSUMER] Receive a message.")
-
-			var ok bool
-			text1, ok = sliceKit.Remove(text1, text)
-			if ok {
-				if sliceKit.IsEmpty(text1) {
-					/* 提前结束（已收到所有消息） */
-					consumerErr = nil
-					break LOOP
-				}
-			}
-		}
-
-		// 每次收消息间有一定的间隔
-		time.Sleep(time.Millisecond * 100)
+	select {
+	case err := <-producerCh:
+		return err
+	case err := <-consumerCh:
+		// 此处err可能为nil（说明验证通过）
+		return err
+	case <-time.After(verifyTimeout):
+		return errorKit.Simple("fail to pass validation within timeout(%v)", verifyTimeout)
 	}
-
-	if producerErr != nil {
-		logger.Errorf("Fail to pass test, producerErr: %+v", producerErr)
-		finalErr = producerErr
-		return
-	}
-	if consumerErr != nil {
-		logger.Errorf("Fail to pass test, consumerErr: %+v", consumerErr)
-		finalErr = consumerErr
-		return
-	}
-	logger.Info("Pass test.")
-	return
 }
