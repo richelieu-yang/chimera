@@ -96,7 +96,7 @@ func VerifyEndpoint(endpoint, topic string) error {
 		return errorKit.Wrap(err, "fail to new consumer")
 	}
 	if err := consumer.Start(); err != nil {
-		return errorKit.Wrap(err, "fail to start consumer")
+		return errorKit.Wrap(err, "fail to start consumer with topic(%s)", topic)
 	}
 	defer consumer.GracefulStop()
 
