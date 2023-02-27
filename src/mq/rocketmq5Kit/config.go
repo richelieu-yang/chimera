@@ -8,6 +8,13 @@ import (
 	"github.com/richelieu42/go-scales/src/core/strKit"
 )
 
+type (
+	Config struct {
+		*rmq_client.Config
+		TopicToVerify string
+	}
+)
+
 var (
 	defaultCredentials = &credentials.SessionCredentials{
 		AccessKey:    "",

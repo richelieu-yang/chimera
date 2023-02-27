@@ -10,7 +10,7 @@ func main() {
 	logrusKit.InitializeByDefault()
 
 	logrus.Info("start")
-	err := rocketmq5Kit.TestEndpoint("localhost:8081", "test")
+	err := rocketmq5Kit.VerifyEndpoint("localhost:8081", "test")
 	if err != nil {
 		panic(err)
 	}

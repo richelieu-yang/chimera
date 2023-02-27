@@ -24,13 +24,13 @@ var (
 	consumerTimeout = time.Second * 10
 )
 
-// TestEndpoint 测试RocketMQ5服务是否启动正常.
+// VerifyEndpoint 测试RocketMQ5服务是否启动正常.
 /*
 @param endpoint 用于测试的RocketMQ5服务的endpoint
 @param topic 	用于测试的topic（理论上，此topic仅用于测试，不能同时用于业务，因为测试发的消息无意义）
 @return 如果为nil，说明 RocketMQ5服务 正常启动
 */
-func TestEndpoint(endpoint, topic string) (finalErr error) {
+func VerifyEndpoint(endpoint, topic string) (finalErr error) {
 	if strKit.IsEmpty(endpoint) {
 		return errorKit.Simple("param endpoint is empty")
 	}

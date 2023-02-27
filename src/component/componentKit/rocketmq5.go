@@ -6,6 +6,22 @@ import (
 	"github.com/richelieu42/go-scales/src/mq/rocketmq5Kit"
 )
 
+func Initialize() error {
+	config, err := GetRocketmq5Config()
+	if err != nil {
+		return err
+	}
+	if config == nil {
+		return errorKit.Simple("config == nil")
+	}
+
+	if err := rocketmq5Kit.VerifyEndpoint(config.Endpoint, config.TopicToVerify); err != nil {
+		return errorKit.Wrap(err, "fail to verify endpoint(%s) with topic(%s)", config.Endpoint, config.TopicToVerify)
+	}
+
+	return nil
+}
+
 // NewProducerOfRocketmq5
 /*
 !!!: 返回的 rmq_client.Producer 实例要手动调用 Start()（error为nil的情况）.
@@ -20,7 +36,8 @@ func NewProducerOfRocketmq5(logConfig *rocketmq5Kit.LogConfig) (rmq_client.Produ
 	if config == nil {
 		return nil, errorKit.Simple("config == nil")
 	}
-	return rocketmq5Kit.NewProducer(logConfig, config)
+
+	return rocketmq5Kit.NewProducer(logConfig, config.Config)
 }
 
 // NewSimpleConsumerOfRocketmq5
@@ -37,5 +54,5 @@ func NewSimpleConsumerOfRocketmq5(logConfig *rocketmq5Kit.LogConfig, consumerGro
 	if config == nil {
 		return nil, errorKit.Simple("config == nil")
 	}
-	return rocketmq5Kit.NewSimpleConsumer(logConfig, config, consumerGroup, topic, tag)
+	return rocketmq5Kit.NewSimpleConsumer(logConfig, config.Config, consumerGroup, topic, tag)
 }

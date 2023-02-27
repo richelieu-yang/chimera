@@ -11,10 +11,9 @@ import (
 	"github.com/richelieu42/go-scales/src/ginKit"
 	"github.com/richelieu42/go-scales/src/jsonKit"
 	"github.com/richelieu42/go-scales/src/log/logrusKit"
+	"github.com/richelieu42/go-scales/src/mq/rocketmq5Kit"
 	"github.com/sirupsen/logrus"
 	"time"
-
-	rmq_client "github.com/apache/rocketmq-clients/golang"
 )
 
 type (
@@ -26,7 +25,7 @@ type (
 		Gin     *ginKit.GinConfig
 		Redis   *redisKit.RedisConfig
 
-		RocketMQ5 *rmq_client.Config
+		RocketMQ5 *rocketmq5Kit.Config
 	}
 )
 
@@ -179,7 +178,7 @@ func GetRedisConfig() (*redisKit.RedisConfig, error) {
 /*
 @return 两个返回值有可能都为nil（因为没有默认值）
 */
-func GetRocketmq5Config() (*rmq_client.Config, error) {
+func GetRocketmq5Config() (*rocketmq5Kit.Config, error) {
 	if envConfig == nil {
 		return nil, EnvNotLoadedError
 	}
