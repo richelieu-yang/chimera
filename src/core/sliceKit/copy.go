@@ -2,38 +2,6 @@ package sliceKit
 
 import "github.com/richelieu42/go-scales/src/copyKit"
 
-// Copy1 浅克隆（浅拷贝）
-/*
-Deprecated: 并不是我想要的"浅拷贝".
-
-e.g.
-	s0 := []string{"0", "1", "2"}
-	s1 := sliceKit.Copy1(s0)
-
-	s0[0] = "3"
-	fmt.Println(s0) // [3 1 2]
-	fmt.Println(s1) // [3 1 2]
-*/
-func Copy1[T any](src []T) []T {
-	return append(src)
-}
-
-// Copy2 浅克隆（浅拷贝）
-/*
-Deprecated: 并不是我想要的"浅拷贝".
-
-e.g.
-	s0 := []string{"0", "1", "2"}
-	s1 := sliceKit.Copy2(s0)
-
-	s0[0] = "3"
-	fmt.Println(s0) // [3 1 2]
-	fmt.Println(s1) // [3 1 2]
-*/
-func Copy2[T any](src []T) []T {
-	return src[:]
-}
-
 // Copy 浅克隆（浅拷贝）
 /*
 参考:
@@ -57,6 +25,38 @@ func Copy[T any](src []T) []T {
 	dolly := make([]T, len(src))
 	copy(dolly, src)
 	return dolly
+}
+
+// Copy1 浅克隆（浅拷贝）
+/*
+Deprecated: 并不是我想要的"浅拷贝".
+
+e.g.
+	s0 := []string{"0", "1", "2"}
+	s1 := sliceKit.Copy1(s0)
+
+	s1[0] = "3"
+	fmt.Println(s0) // [3 1 2]
+	fmt.Println(s1) // [3 1 2]
+*/
+func Copy1[T any](src []T) []T {
+	return append(src)
+}
+
+// Copy2 浅克隆（浅拷贝）
+/*
+Deprecated: 并不是我想要的"浅拷贝".
+
+e.g.
+	s0 := []string{"0", "1", "2"}
+	s1 := sliceKit.Copy2(s0)
+
+	s1[0] = "3"
+	fmt.Println(s0) // [3 1 2]
+	fmt.Println(s1) // [3 1 2]
+*/
+func Copy2[T any](src []T) []T {
+	return src[:]
 }
 
 // DeepCopy 深拷贝
