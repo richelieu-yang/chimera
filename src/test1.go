@@ -7,9 +7,9 @@ import (
 
 func main() {
 	s0 := []string{"0", "1", "2"}
-	s1 := sliceKit.Copy2(s0)
+	s1 := sliceKit.Copy(s0)
 
 	s1[0] = "3"
-	fmt.Println(s0) // [3 1 2]
-	fmt.Println(s1) // [3 1 2]
+	fmt.Println(s0)
+	fmt.Println(s1)
 }
