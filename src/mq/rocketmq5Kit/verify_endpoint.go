@@ -40,18 +40,13 @@ func VerifyEndpoint(endpoint, topic string) error {
 		return errorKit.Simple("param topic is empty")
 	}
 
-	/* logger */
+	/* log */
 	tempDir, err := pathKit.GetTempDirOfGoScales()
 	if err != nil {
 		return err
 	}
-	logName := fmt.Sprintf("rocketmq5_%s.log", idKit.NewULID())
+	logName := fmt.Sprintf("rocketmq5_%s_%s.log", topic, idKit.NewULID())
 	logPath := pathKit.Join(tempDir, logName)
-	logger, err := logrusKit.NewFileLogger(logPath, nil, logrus.DebugLevel, false)
-	if err != nil {
-		return err
-	}
-	defer logrusKit.DisposeLogger(logger)
 
 	/* texts */
 	timeStr := timeKit.FormatCurrentTime()
@@ -62,15 +57,6 @@ func VerifyEndpoint(endpoint, topic string) error {
 		fmt.Sprintf("%s_%s_%s", ulid, timeStr, "$2"),
 	}
 
-	/* print */
-	logger.Infof("endpoint: [%s].", endpoint)
-	logger.Infof("topic: [%s].", topic)
-	json, err := jsonKit.MarshalToStringWithIndent(texts)
-	if err != nil {
-		return err
-	}
-	logger.Infof("texts: %v.", json)
-
 	mqLogConfig := &LogConfig{
 		ToConsole: false,
 		LogDir:    tempDir,
@@ -79,16 +65,6 @@ func VerifyEndpoint(endpoint, topic string) error {
 	mqConfig := &rmq_client.Config{
 		Endpoint: endpoint,
 	}
-
-	/* producer */
-	producer, err := NewProducer(mqLogConfig, mqConfig)
-	if err != nil {
-		return errorKit.Wrap(err, "fail to new producer")
-	}
-	if err := producer.Start(); err != nil {
-		return errorKit.Wrap(err, "fail to start producer")
-	}
-	defer producer.GracefulStop()
 
 	/* consumer */
 	consumer, err := NewSimpleConsumer(mqLogConfig, mqConfig, fmt.Sprintf("%s-%s", topic, idKit.NewULID()), topic, "*")
@@ -100,12 +76,41 @@ func VerifyEndpoint(endpoint, topic string) error {
 	}
 	defer consumer.GracefulStop()
 
+	/* producer */
+	producer, err := NewProducer(mqLogConfig, mqConfig)
+	if err != nil {
+		return errorKit.Wrap(err, "fail to new producer")
+	}
+	if err := producer.Start(); err != nil {
+		return errorKit.Wrap(err, "fail to start producer")
+	}
+	defer producer.GracefulStop()
+
+	/* logger and print */
+	logger, err := logrusKit.NewFileLogger(logPath, nil, logrus.DebugLevel, false)
+	if err != nil {
+		return err
+	}
+	defer func() {
+		_ = logrusKit.DisposeLogger(logger)
+	}()
+	json, err := jsonKit.MarshalToStringWithIndent(texts)
+	if err != nil {
+		return err
+	}
+	logger.Infof("endpoint: [%s].", endpoint)
+	logger.Infof("topic: [%s].", topic)
+	logger.Infof("texts: %v.", json)
+
+	// test
+	logrus.Infof("logPath: [%s].", logPath)
+
 	producerCh := make(chan error, 1)
 	consumerCh := make(chan error, 1)
 	consumerCtx, cancel := context.WithCancel(context.TODO())
 	defer cancel()
 
-	/* start consumer */
+	/* consumer works */
 	go func() {
 		defer func() {
 			logger.Info("[Consumer] Goroutine ends.")
@@ -179,7 +184,7 @@ func VerifyEndpoint(endpoint, topic string) error {
 		}
 	}()
 
-	/* start producer */
+	/* producer works */
 	go func() {
 		defer func() {
 			logger.Info("[Producer] Goroutine ends.")
@@ -208,12 +213,15 @@ func VerifyEndpoint(endpoint, topic string) error {
 	}()
 
 	select {
-	case err := <-producerCh:
-		return err
-	case err := <-consumerCh:
+	case err = <-producerCh:
+	case err = <-consumerCh:
 		// 此处err可能为nil（说明验证通过）
-		return err
 	case <-time.After(verifyTimeout):
-		return errorKit.Simple("fail to pass validation within timeout(%v)", verifyTimeout)
+		err = errorKit.Simple("fail to pass validation within timeout(%v)", verifyTimeout)
 	}
+
+	if err != nil {
+		err = errorKit.Wrap(err, "log path: [%s]", logPath)
+	}
+	return err
 }
