@@ -6,16 +6,10 @@ import (
 )
 
 func main() {
-	old := []string{"0", "1", "2"}
-	texts := sliceKit.Copy2(old)
+	s0 := []string{"0", "1", "2"}
+	s1 := sliceKit.Copy(s0)
 
-	texts[0] = "3"
-
-	fmt.Println(old)
-	fmt.Println(texts)
-
-	//texts1, _ := sliceKit.Remove(texts, "1")
-	//fmt.Println(old)    // [0 2 2]
-	//fmt.Println(texts)  // [0 2 2]
-	//fmt.Println(texts1) // [0 2]
+	s1[0] = "3"
+	fmt.Println(s0) // [0 1 2]
+	fmt.Println(s1) // [3 1 2]
 }
