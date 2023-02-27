@@ -117,9 +117,9 @@ func VerifyEndpoint(endpoint, topic string) error {
 			logger.Info("[Consumer] Goroutine ends.")
 		}()
 
-		for {
-			textsCopy := sliceKit.Copy(texts)
+		textsCopy := sliceKit.Copy(texts)
 
+		for {
 			time.Sleep(time.Millisecond * 100)
 
 			mvs, err := consumer.Receive(consumerCtx, MaxMessageNum, InvisibleDuration)
