@@ -83,20 +83,20 @@ func VerifyEndpoint(endpoint, topic string) error {
 	/* producer */
 	producer, err := NewProducer(mqLogConfig, mqConfig)
 	if err != nil {
-		return err
+		return errorKit.Wrap(err, "fail to new producer")
 	}
 	if err := producer.Start(); err != nil {
-		return err
+		return errorKit.Wrap(err, "fail to start producer")
 	}
 	defer producer.GracefulStop()
 
 	/* consumer */
 	consumer, err := NewSimpleConsumer(mqLogConfig, mqConfig, fmt.Sprintf("%s-%s", topic, idKit.NewULID()), topic, "*")
 	if err != nil {
-		return err
+		return errorKit.Wrap(err, "fail to new consumer")
 	}
 	if err := consumer.Start(); err != nil {
-		return err
+		return errorKit.Wrap(err, "fail to start consumer")
 	}
 	defer consumer.GracefulStop()
 
