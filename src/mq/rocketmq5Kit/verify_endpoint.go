@@ -117,8 +117,7 @@ func VerifyEndpoint(endpoint, topic string) error {
 			logger.Info("[Consumer] Goroutine ends.")
 		}()
 
-		textsCopy, _ := sliceKit.DeepCopy(texts)
-
+		duplicate := sliceKit.Copy(texts)
 		for {
 			time.Sleep(time.Millisecond * 100)
 
@@ -172,8 +171,8 @@ func VerifyEndpoint(endpoint, topic string) error {
 				}
 
 				var ok bool
-				textsCopy, ok = sliceKit.Remove(textsCopy, text)
-				left := len(textsCopy)
+				duplicate, ok = sliceKit.Remove(duplicate, text)
+				left := len(duplicate)
 				logger.WithFields(logrus.Fields{
 					"valid": ok,
 					"left":  left,
