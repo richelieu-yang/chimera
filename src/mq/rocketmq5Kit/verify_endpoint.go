@@ -180,6 +180,8 @@ func VerifyEndpoint(endpoint, topic string) error {
 				}).Info("[CONSUMER] Receive and ack a message.")
 				if left == 0 {
 					// 成功收到所有预期消息
+					logger.Info("[CONSUMER] Receive and ack all messages.")
+
 					consumerCh <- nil
 					return
 				}
