@@ -40,13 +40,22 @@ func VerifyEndpoint(endpoint, topic string) error {
 		return errorKit.Simple("param topic is empty")
 	}
 
-	/* log */
+	/* logger */
 	tempDir, err := pathKit.GetTempDirOfGoScales()
 	if err != nil {
 		return err
 	}
 	logName := fmt.Sprintf("rocketmq5_%s_%s.log", topic, idKit.NewULID())
 	logPath := pathKit.Join(tempDir, logName)
+	logger, err := logrusKit.NewFileLogger(logPath, nil, logrus.DebugLevel, false)
+	if err != nil {
+		return err
+	}
+	defer func() {
+		_ = logrusKit.DisposeLogger(logger)
+	}()
+	logger.Infof("endpoint: [%s].", endpoint)
+	logger.Infof("topic: [%s].", topic)
 
 	/* texts */
 	timeStr := timeKit.FormatCurrentTime()
@@ -59,6 +68,11 @@ func VerifyEndpoint(endpoint, topic string) error {
 		fmt.Sprintf("%s_%s_%s", ulid, timeStr, "$4"),
 		fmt.Sprintf("%s_%s_%s", ulid, timeStr, "$5"),
 	}
+	json, err := jsonKit.MarshalToStringWithIndent(texts)
+	if err != nil {
+		return err
+	}
+	logger.Infof("texts: %v.", json)
 
 	mqLogConfig := &LogConfig{
 		ToConsole: false,
@@ -89,22 +103,6 @@ func VerifyEndpoint(endpoint, topic string) error {
 	}
 	defer producer.GracefulStop()
 
-	/* logger and print */
-	logger, err := logrusKit.NewFileLogger(logPath, nil, logrus.DebugLevel, false)
-	if err != nil {
-		return err
-	}
-	defer func() {
-		_ = logrusKit.DisposeLogger(logger)
-	}()
-	json, err := jsonKit.MarshalToStringWithIndent(texts)
-	if err != nil {
-		return err
-	}
-	logger.Infof("endpoint: [%s].", endpoint)
-	logger.Infof("topic: [%s].", topic)
-	logger.Infof("texts: %v.", json)
-
 	// test
 	logrus.Debugf("logPath: [%s].", logPath)
 
@@ -114,13 +112,14 @@ func VerifyEndpoint(endpoint, topic string) error {
 	defer cancel()
 
 	/* consumer works */
-	textsCopy := sliceKit.Copy(texts)
 	go func() {
 		defer func() {
 			logger.Info("[Consumer] Goroutine ends.")
 		}()
 
 		for {
+			textsCopy := sliceKit.Copy(texts)
+
 			time.Sleep(time.Millisecond * 100)
 
 			mvs, err := consumer.Receive(consumerCtx, MaxMessageNum, InvisibleDuration)
@@ -214,7 +213,7 @@ func VerifyEndpoint(endpoint, topic string) error {
 			}
 			logger.WithFields(logrus.Fields{
 				"text": text,
-			}).Info("[Producer] Send message successfully.")
+			}).Info("[Producer] Send a message successfully.")
 		}
 		logger.Info("[Producer] Send all messages successfully.")
 	}()

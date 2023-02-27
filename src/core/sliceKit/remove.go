@@ -74,8 +74,16 @@ func RemoveLast[T any](s []T) (s1 []T, item T, ok bool) {
 // Remove 移除元素
 /*
 PS:
-(1) 不会修改传参s.
+(1) 可能会修改传参s！！！（因为截取）
 (2) 切片实例s中，存在多个item的话，仅会移除第一个.
+
+e.g.
+	texts := []string{"0", "1", "2"}
+	fmt.Println(texts) // [0 1 2]
+
+	texts1, _ := sliceKit.Remove(texts, "1")
+	fmt.Println(texts)  // [0 2 2]
+	fmt.Println(texts1) // [0 2]
 */
 func Remove[T comparable](s []T, item T) ([]T, bool) {
 	index := Index(s, item)
