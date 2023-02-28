@@ -4,6 +4,7 @@ import (
 	rmq_client "github.com/apache/rocketmq-clients/golang"
 	"github.com/richelieu42/go-scales/src/core/errorKit"
 	"github.com/richelieu42/go-scales/src/mq/rocketmq5Kit"
+	"github.com/sirupsen/logrus"
 )
 
 func InitializeRocketMQ5Component() error {
@@ -19,6 +20,7 @@ func InitializeRocketMQ5Component() error {
 		return errorKit.Wrap(err, "fail to verify endpoint(%s) with topic(%s)", config.Endpoint, config.TopicToVerify)
 	}
 
+	logrus.Info("[COMPONENT, ROCKETMQ5] Initialize successfully.")
 	return nil
 }
 
@@ -37,7 +39,7 @@ func NewProducerOfRocketmq5(logConfig *rocketmq5Kit.LogConfig) (rmq_client.Produ
 		return nil, errorKit.Simple("config == nil")
 	}
 
-	return rocketmq5Kit.NewProducer(logConfig, config.Config)
+	return rocketmq5Kit.NewProducer(logConfig, &config.Config)
 }
 
 // NewSimpleConsumerOfRocketmq5
@@ -54,5 +56,5 @@ func NewSimpleConsumerOfRocketmq5(logConfig *rocketmq5Kit.LogConfig, consumerGro
 	if config == nil {
 		return nil, errorKit.Simple("config == nil")
 	}
-	return rocketmq5Kit.NewSimpleConsumer(logConfig, config.Config, consumerGroup, topic, tag)
+	return rocketmq5Kit.NewSimpleConsumer(logConfig, &config.Config, consumerGroup, topic, tag)
 }

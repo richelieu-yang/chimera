@@ -10,7 +10,7 @@ import (
 
 type (
 	Config struct {
-		*rmq_client.Config
+		rmq_client.Config
 		TopicToVerify string
 	}
 )
