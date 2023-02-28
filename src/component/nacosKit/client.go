@@ -105,7 +105,7 @@ func newClientConfig(config *NacosConfig, outputDir string, level NacosLogLevel)
 		// 日志存储路径
 		LogDir: logDir,
 		// 日志默认级别，值必须是：debug,info,warn,error，默认值是info
-		LogLevel: string(*level),
+		LogLevel: *level,
 
 		/* Richelieu: 由于依赖更新，下面两个属性被移除 */
 		//// 日志轮转周期，比如：30m, 1h, 24h, 默认是24h

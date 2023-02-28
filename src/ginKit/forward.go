@@ -20,7 +20,7 @@ type (
 		// 一般为："http"（包括ws协议）、"https"
 		Scheme string
 		// 可以为 nil，也可以通过 GetReqUrlPathForForward() 获取
-		ReqUrlPath *strKit.String
+		ReqUrlPath *string
 		// 拼成字符串，放在url中
 		ExtraQuery map[string]string
 	}
@@ -57,7 +57,7 @@ func ForwardRequest(ctx *gin.Context, params ForwardParams, errorLogger *log.Log
 
 		// req.URL.Param1
 		if reqUrlPath != nil {
-			req.URL.Path = reqUrlPath.GetValue()
+			req.URL.Path = *reqUrlPath
 		}
 
 		// req.URL.Param1
@@ -74,7 +74,7 @@ func ForwardRequest(ctx *gin.Context, params ForwardParams, errorLogger *log.Log
 	return err
 }
 
-func GetReqUrlPathForForward(req *http.Request, contextPath string) *strKit.String {
+func GetReqUrlPathForForward(req *http.Request, contextPath string) *string {
 	contextPath = httpKit.PolyfillContextPath(contextPath)
 	switch contextPath {
 	case "":
@@ -86,7 +86,7 @@ func GetReqUrlPathForForward(req *http.Request, contextPath string) *strKit.Stri
 		if strKit.StartWith(tmp, contextPath) {
 			tmp = strKit.SubAfter(tmp, len(contextPath))
 			tmp = strKit.PrependIfMissing(tmp, "/")
-			return strKit.NewString(tmp)
+			return strKit.GetStringPtr(tmp)
 		}
 		return nil
 	}
