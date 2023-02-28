@@ -24,7 +24,7 @@ func CanDial(ip string, port int) (bool, error) {
 判断指定ip和port能否连通（在指定时限内）.
 */
 func CanDialWithTimeout(ip string, port int, timeout time.Duration) (bool, error) {
-	address := ToAddressString(ip, port)
+	address := JoinHostnameAndPort(ip, port)
 	conn, err := net.DialTimeout("tcp", address, timeout)
 	if err != nil {
 		return false, err

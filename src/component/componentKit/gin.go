@@ -77,5 +77,5 @@ func InitializeGinComponent(recoveryMiddleware gin.HandlerFunc, business func(en
 		会阻塞当前协程（一般是main程）；
 		Richelieu: 此处也可以选择通过 goroutine 来启动gin服务，但个人感觉没这个必要.
 	*/
-	return engine.Run(netKit.ToAddressString(config.Host, config.Port))
+	return engine.Run(netKit.JoinHostnameAndPort(config.Host, config.Port))
 }

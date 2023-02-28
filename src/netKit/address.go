@@ -17,19 +17,19 @@ import (
 
 type (
 	Address struct {
-		// HostName 也可以是ip
-		HostName string
+		// Hostname 也可以是ip
+		Hostname string
 		Port     int
 	}
 )
 
 func (addr *Address) String() string {
-	return fmt.Sprintf("%s:%d", addr.HostName, addr.Port)
+	return fmt.Sprintf("%s:%d", addr.Hostname, addr.Port)
 }
 
-func ToAddressString(hostName string, port int) string {
+func JoinHostnameAndPort(hostname string, port int) string {
 	addr := &Address{
-		HostName: hostName,
+		Hostname: hostname,
 		Port:     port,
 	}
 	return addr.String()
@@ -67,19 +67,19 @@ func ParseToAddress(str string) (*Address, error) {
 	arr := strKit.Split(tmp, ":")
 	switch len(arr) {
 	case 1:
-		hostName := arr[0]
+		hostname := arr[0]
 		port, err := getDefaultPortByScheme(scheme)
 		if err != nil {
 			return nil, err
 		}
 		return &Address{
-			HostName: hostName,
+			Hostname: hostname,
 			Port:     port,
 		}, nil
 	case 2:
-		hostName := arr[0]
+		hostname := arr[0]
 		portStr := arr[1]
-		if strKit.IsAllEmpty(hostName, portStr) {
+		if strKit.IsAllEmpty(hostname, portStr) {
 			return nil, errorKit.Simple("invalid str(%s)", str)
 		}
 
@@ -95,7 +95,7 @@ func ParseToAddress(str string) (*Address, error) {
 		}
 
 		return &Address{
-			HostName: hostName,
+			Hostname: hostname,
 			Port:     port,
 		}, nil
 	default:
