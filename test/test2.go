@@ -6,15 +6,15 @@ import (
 )
 
 func main() {
-	u, err := urlKit.Parse("http://localhost:8080/go?a=123&b=456")
+	u, err := urlKit.Parse("localhost:8080")
 	if err != nil {
 		panic(err)
 	}
-	fmt.Println(u.RawQuery) // a=123&b=456
-
-	m, err := urlKit.ParseQuery(u.RawQuery)
-	if err != nil {
-		panic(err)
-	}
-	fmt.Println(m) // map[a:[123] b:[456]]
+	fmt.Println(u.Scheme)     // http
+	fmt.Println(u.Host)       // localhost:8080
+	fmt.Println(u.Hostname()) // localhost
+	fmt.Println(u.Port())     // 8080
+	fmt.Println(u.Path)       // /go
+	fmt.Println(u.RawQuery)   // a=123&b=456
+	fmt.Println(u.Query())    // map[a:[123] b:[456]]
 }

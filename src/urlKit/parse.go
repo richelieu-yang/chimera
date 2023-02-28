@@ -2,8 +2,12 @@ package urlKit
 
 import "net/url"
 
-// Parse 解析url
+// Parse 解析url（http、https、rtsp、rtmp等协议）
 /*
+参考: https://blog.csdn.net/zhuyuqiang1238/article/details/121807708
+
+@param rawURL !!!不能是如下格式: "localhost:8080"
+
 e.g.
 	u, err := urlKit.Parse("http://localhost:8080/go?a=123&b=456")
 	if err != nil {
