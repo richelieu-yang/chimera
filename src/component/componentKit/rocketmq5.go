@@ -6,7 +6,7 @@ import (
 	"github.com/richelieu42/go-scales/src/mq/rocketmq5Kit"
 )
 
-func Initialize() error {
+func InitializeRocketMQ5Component() error {
 	config, err := GetRocketmq5Config()
 	if err != nil {
 		return err
