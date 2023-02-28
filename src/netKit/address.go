@@ -12,6 +12,7 @@ import (
 	"fmt"
 	"github.com/richelieu42/go-scales/src/core/errorKit"
 	"github.com/richelieu42/go-scales/src/core/strKit"
+	"net"
 	"strconv"
 )
 
@@ -28,11 +29,13 @@ func (addr *Address) String() string {
 }
 
 func JoinHostnameAndPort(hostname string, port int) string {
-	addr := &Address{
-		Hostname: hostname,
-		Port:     port,
-	}
-	return addr.String()
+	//addr := &Address{
+	//	Hostname: hostname,
+	//	Port:     port,
+	//}
+	//return addr.String()
+
+	return net.JoinHostPort(hostname, strconv.Itoa(port))
 }
 
 // ParseToAddress
