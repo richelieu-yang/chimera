@@ -2,12 +2,11 @@ package main
 
 import (
 	"fmt"
-	"github.com/richelieu42/go-scales/src/core/strKit"
+	"github.com/richelieu42/go-scales/src/netKit"
 )
 
 func main() {
-	s := strKit.Split("123-", "-")
-	fmt.Println(s)
+	fmt.Println(netKit.ParseToAddress("https://blog.csdn.net/weixin_52428496/article/details/110159938"))
 
 	//u, err := urlKit.Parse("Http://localhost:8080/go?a=123&b=456")
 	//if err != nil {
