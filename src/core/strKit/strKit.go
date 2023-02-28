@@ -114,6 +114,7 @@ func Join(elements []string, sep string) string {
 e.g.
 ("", "-") 		=> []（长度为1；唯一的元素为""）
 ("-", "-")		=> []string{"", ""}
+("123-", "-")	=> []string{"123", ""}
 e.g.1
 ("hello world!", "") => [h e l l o   w o r l d !]
 ("1-2-3", "-") 	=> [1 2 3]（长度为3）

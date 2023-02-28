@@ -128,7 +128,7 @@ func newServerConfigs(config *NacosConfig) ([]constant.ServerConfig, error) {
 
 	configs := make([]constant.ServerConfig, 0, length)
 	for _, addr := range addresses {
-		info, err := netKit.ParseStringToAddress(addr)
+		info, err := netKit.ParseToAddress(addr)
 		if err != nil {
 			return nil, err
 		}

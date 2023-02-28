@@ -34,5 +34,5 @@ type (
 )
 
 func (gc *GinConfig) GetAddress() string {
-	return netKit.JoinHostPort(gc.Host, gc.Port)
+	return netKit.ToAddressString(gc.Host, gc.Port)
 }
