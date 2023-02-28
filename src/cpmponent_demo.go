@@ -14,12 +14,19 @@ func main() {
 		errorKit.PanicByError(err)
 	}
 
-	if err := business(); err != nil {
-		errorKit.PanicByError(err)
+	{
+		if err := business(); err != nil {
+			errorKit.PanicByError(err)
+		}
 	}
 
 	// redis组件（可选）
 	if err := componentKit.InitializeRedisComponent(); err != nil {
+		errorKit.PanicByError(err)
+	}
+
+	// RocketMQ5组件（可选）
+	if err := componentKit.InitializeRocketMQ5Component(); err != nil {
 		errorKit.PanicByError(err)
 	}
 
@@ -37,8 +44,10 @@ func main() {
 		errorKit.PanicByError(err)
 	}
 
-	if err := business1(); err != nil {
-		errorKit.PanicByError(err)
+	{
+		if err := business1(); err != nil {
+			errorKit.PanicByError(err)
+		}
 	}
 
 	// gin组件（可选）
