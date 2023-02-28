@@ -103,8 +103,8 @@ func VerifyEndpoint(endpoint, topic string) error {
 	}
 	defer producer.GracefulStop()
 
-	// test
-	logrus.Debugf("logPath: [%s].", logPath)
+	//// test
+	//logrus.Debugf("logPath: [%s].", logPath)
 
 	producerCh := make(chan error, 1)
 	consumerCh := make(chan error, 1)
@@ -199,8 +199,6 @@ func VerifyEndpoint(endpoint, topic string) error {
 		time.Sleep(time.Second)
 
 		for _, text := range texts {
-			logrus.Debug(text)
-
 			msg := &rmq_client.Message{
 				Topic: topic,
 				Body:  []byte(text),
