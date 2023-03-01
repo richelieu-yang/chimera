@@ -32,7 +32,7 @@ func GetNestedField(ptr interface{}, fieldNames ...string) (reflect.Value, error
 				参考: 	https://www.codenong.com/50098624/
 				以避免: 	panic: reflect: call of reflect.Value.FieldByName on ptr Value
 			*/
-			//v = reflect.Indirect(v)
+			v = reflect.Indirect(v)
 		}
 		v = v.FieldByName(name)
 	}
