@@ -2,6 +2,7 @@ package reflectKit
 
 import (
 	"fmt"
+	"github.com/richelieu42/go-scales/src/core/errorKit"
 	"reflect"
 	"unsafe"
 )
@@ -16,6 +17,26 @@ PS:
 */
 func GetField(ptr interface{}, fieldName string) reflect.Value {
 	return reflect.ValueOf(ptr).Elem().FieldByName(fieldName)
+}
+
+// GetNestedField 获取（层层嵌套的）字段
+func GetNestedField(ptr interface{}, fieldNames ...string) (reflect.Value, error) {
+	if fieldNames == nil {
+		return reflect.Value{}, errorKit.Simple("fieldNames == nil")
+	}
+
+	v := reflect.ValueOf(ptr).Elem()
+	for i, name := range fieldNames {
+		if i > 0 {
+			/*
+				参考: 	https://www.codenong.com/50098624/
+				以避免: 	panic: reflect: call of reflect.Value.FieldByName on ptr Value
+			*/
+			//v = reflect.Indirect(v)
+		}
+		v = v.FieldByName(name)
+	}
+	return v, nil
 }
 
 // SetField
