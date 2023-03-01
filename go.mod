@@ -3,7 +3,7 @@ module github.com/richelieu42/go-scales
 go 1.20
 
 require (
-	github.com/apache/rocketmq-clients/golang v0.0.0-20230227041819-7cd8cf634bb8
+	github.com/apache/rocketmq-clients/golang v0.0.0-20230301024107-0002cc5a3f90
 	github.com/dablelv/go-huge-util v0.0.32
 	github.com/deckarep/golang-set/v2 v2.1.0
 	github.com/disintegration/imaging v1.6.2
@@ -33,7 +33,7 @@ require (
 	github.com/redis/go-redis/v9 v9.0.2
 	github.com/robfig/cron/v3 v3.0.1
 	github.com/satori/go.uuid v1.2.0
-	github.com/shirou/gopsutil/v3 v3.23.1
+	github.com/shirou/gopsutil/v3 v3.23.2
 	github.com/shopspring/decimal v1.3.1
 	github.com/sirupsen/logrus v1.9.0
 	github.com/spf13/cast v1.5.0
