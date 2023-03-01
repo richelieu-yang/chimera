@@ -1,1 +1,2 @@
-业务中，如果同时存在Consumer和Producer，建议把他们的初始化放在不同的包内.（以防: import cycle）
+(1) 业务中，如果同时存在Consumer和Producer，建议把他们的初始化放在不同的包内（以防: import cycle）.
+(2) Consumer和Producer的客户端日志可以输出到同一日志文件中（甚至还能搞个logrus.Logger也输出到该日志文件中，比如verify_endpoint.go；当然也可以到不同的日志文件中）.
