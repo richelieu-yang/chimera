@@ -49,10 +49,14 @@ func NewSimpleConsumer(logConfig *LogConfig, config *rmq_client.Config, consumer
 
 	config.ConsumerGroup = consumerGroup
 
-	return rmq_client.NewSimpleConsumer(config,
+	consumer, err := rmq_client.NewSimpleConsumer(config,
 		rmq_client.WithAwaitDuration(AwaitDuration),
 		rmq_client.WithSubscriptionExpressions(map[string]*rmq_client.FilterExpression{
 			topic: rmq_client.NewFilterExpression(tag),
 		}),
 	)
+	if err == nil {
+		consumer, err = polyfillConsumer(consumer, config.Endpoint)
+	}
+	return consumer, err
 }

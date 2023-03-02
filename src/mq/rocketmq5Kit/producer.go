@@ -22,7 +22,11 @@ func NewProducer(logConfig *LogConfig, config *rmq_client.Config) (rmq_client.Pr
 	if err != nil {
 		return nil, err
 	}
-	return rmq_client.NewProducer(config)
+	producer, err := rmq_client.NewProducer(config)
+	if err == nil {
+		producer, err = polyfillProducer(producer, config.Endpoint)
+	}
+	return producer, err
 }
 
 // SendMessage

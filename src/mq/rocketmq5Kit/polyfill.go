@@ -29,7 +29,11 @@ func polyfillProducer(producer rmq_client.Producer, endpointsStr string) (rmq_cl
 	return producer, nil
 }
 
-func polyfillConsumer(consumer rmq_client.Consumer, endpointsStr string) (rmq_client.Consumer, error) {
+// polyfillConsumer
+/*
+Deprecated: 临时方法，因为官方依赖不支持连接RocketMQ5集群（pkg/utils/utils.go）
+*/
+func polyfillConsumer(consumer rmq_client.SimpleConsumer, endpointsStr string) (rmq_client.SimpleConsumer, error) {
 	s := strKit.Split(endpointsStr, ";")
 	if len(s) < 2 {
 		return consumer, nil
