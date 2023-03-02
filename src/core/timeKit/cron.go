@@ -8,7 +8,7 @@ import (
 
 // NewCron
 /*
-@param spec 可参考"Golang - 1.docx"
+@param spec "@every 10s" || "@every 1m"，更多可参考"Golang - 1.docx"
 
 @return 第1个返回值: 可以调用 Run() 或 Start() 以启动.（Run()会阻塞调用此方法的goroutine；Start()不会阻塞）
 */
