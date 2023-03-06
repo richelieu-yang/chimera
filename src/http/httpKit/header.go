@@ -34,3 +34,8 @@ Safari浏览器: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605
 func GetUserAgent(header http.Header) string {
 	return GetHeader(header, "User-Agent")
 }
+
+// GetOrigin 获取请求的Origin
+func GetOrigin(header http.Header) string {
+	return GetHeader(header, "Origin")
+}
