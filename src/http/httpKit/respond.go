@@ -25,6 +25,10 @@ const (
 
 // Status 设置响应的http状态码
 /*
+PS:
+(1) 不建议多次设置 http状态码；
+(2) 如果多次设置的话，感觉 第一次设置的值 会生效.
+
 @param code -1: 不设置http状态码
 */
 func Status(w http.ResponseWriter, code int) {
