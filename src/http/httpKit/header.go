@@ -48,8 +48,22 @@ func SetHeader(header http.Header, key, value string) {
 	header.Set(key, value)
 }
 
+// GetHeader
+/*
+e.g.
+
+*/
 func GetHeader(header http.Header, key string) string {
 	return header.Get(key)
+}
+
+// GetHeaderValues
+/*
+e.g.
+
+*/
+func GetHeaderValues(header http.Header, key string) []string {
+	return header.Values(key)
 }
 
 func DelHeader(header http.Header, key string) {
