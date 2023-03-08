@@ -33,6 +33,7 @@ func Status(w http.ResponseWriter, code int) {
 */
 func RespondString(w http.ResponseWriter, code int, format string, values ...any) error {
 	data := strKit.StringToBytes(fmt.Sprintf(format, values...))
+
 	return RespondData(w, code, PlainContentType, data)
 }
 
@@ -45,6 +46,7 @@ func RespondJson(w http.ResponseWriter, code int, obj any) error {
 	if err != nil {
 		return err
 	}
+
 	return RespondData(w, code, JsonContentType, data)
 }
 
