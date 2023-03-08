@@ -11,7 +11,7 @@ type (
 		// 数值
 		Number float64
 		// 单位
-		Unit *sizeUnit
+		Unit *Unit
 	}
 )
 
@@ -19,7 +19,7 @@ type (
 /*
 @param targetUnit 可以为nil，将使用默认单位
 */
-func (size *DataSize) ConvertToTargetUint(targetUnit *sizeUnit) *DataSize {
+func (size *DataSize) ConvertToTargetUint(targetUnit *Unit) *DataSize {
 	if size.Unit.GetValue() == targetUnit.GetValue() {
 		return size
 	}
@@ -42,7 +42,7 @@ func (size *DataSize) GetByteValue() uint64 {
 func (size *DataSize) ToSuitableUint() *DataSize {
 	bytes := size.GetByteValue()
 
-	var unit *sizeUnit
+	var unit *Unit
 	if bytes < KB.GetValue() {
 		unit = B
 	} else if bytes < MB.GetValue() {

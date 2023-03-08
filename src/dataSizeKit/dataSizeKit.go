@@ -28,7 +28,7 @@ func ParseStringToDataSize(sizeStr string) (*DataSize, error) {
 	str = strKit.ToUpper(str)
 	str = strKit.AppendIfMissing(str, "B")
 
-	var unit *sizeUnit
+	var unit *Unit
 	if strKit.EndWith(str, TB.String()) {
 		unit = TB
 	} else if strKit.EndWith(str, GB.String()) {
