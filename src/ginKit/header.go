@@ -25,9 +25,7 @@ func DelHeader(ctx *gin.Context, key string) {
 
 // SetCacheControlNoCache 实际上是有缓存的）浏览器对请求回来的response做缓存，但是每次在向客户端（浏览器）提供响应数据时，缓存都要向服务器评估缓存响应的有效性。
 /*
-PS:
-(1) 一般情况下， "no-cache" 就够了；
-(2) 详见"Web.docx".
+PS: 详见"Web.docx".
 */
 func SetCacheControlNoCache(ctx *gin.Context) {
 	SetHeader(ctx, "Cache-Control", "no-cache")
