@@ -9,7 +9,7 @@ import (
 func main() {
 	for i := 0; i < 1000; i++ {
 		go func() {
-			fmt.Println(randomKit.Float64(2))
+			fmt.Println(randomKit.Bool())
 		}()
 	}
 	time.Sleep(time.Second * 3)
