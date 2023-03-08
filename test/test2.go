@@ -2,7 +2,7 @@ package main
 
 import (
 	"fmt"
-	"reflect"
+	"github.com/richelieu42/go-scales/src/http/httpKit"
 )
 
 type MyInt int
@@ -11,25 +11,16 @@ type Bean struct {
 }
 
 func main() {
-	var i int
-	var j MyInt
-	i = int(j) // 必须强转
+	header := make(map[string][]string)
 
-	typeI := reflect.TypeOf(i)
-	fmt.Println("type of i:", typeI.String()) // type of i: int
-	fmt.Println("kind of i:", typeI.Kind())   // kind of i: int
+	fmt.Println(header) // map[]
+	httpKit.AddHeader(header, "k", "0")
+	fmt.Println(header) // map[K:[0]]
+	httpKit.AddHeader(header, "k", "1")
+	fmt.Println(header) // map[K:[0 1]]
 
-	typeJ := reflect.TypeOf(j)
-	fmt.Println("type of j:", typeJ.String()) // type of j: main.MyInt
-	fmt.Println("kind of j:", typeJ.Kind())   // kind of j: int
-
-	b := Bean{}
-	tmp := reflect.TypeOf(b)
-	fmt.Println("type of b:", tmp.String()) // type of b: main.Bean
-	fmt.Println("kind of b:", tmp.Kind())   // kind of b: struct
-
-	b1 := &Bean{}
-	tmp1 := reflect.TypeOf(b1)
-	fmt.Println("type of b1:", tmp1.String()) // type of b1: *main.Bean
-	fmt.Println("kind of b1:", tmp1.Kind())   // kind of b1: ptr
+	httpKit.SetHeader(header, "k", "2")
+	fmt.Println(header) // map[K:[2]]
+	httpKit.SetHeader(header, "k", "")
+	fmt.Println(header) // map[]
 }

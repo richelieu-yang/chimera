@@ -19,7 +19,7 @@ func AddHeader(ctx *gin.Context, key, value string) {
 	ctx.Writer.Header().Add(key, value)
 }
 
-func RemoveHeader(ctx *gin.Context, key string) {
+func DelHeader(ctx *gin.Context, key string) {
 	ctx.Writer.Header().Del(key)
 }
 

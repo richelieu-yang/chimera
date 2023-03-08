@@ -7,20 +7,51 @@ package httpKit
 
 import "net/http"
 
+// AddHeader
+/*
+e.g.
+	header := make(map[string][]string)
+
+	fmt.Println(header)					// map[]
+	httpKit.AddHeader(header, "k", "0")
+	fmt.Println(header)					// map[K:[0]]
+	httpKit.AddHeader(header, "k", "1")
+	fmt.Println(header)					// map[K:[0 1]]
+*/
+func AddHeader(header http.Header, key, value string) {
+	header.Add(key, value)
+}
+
+// SetHeader
+/*
+e.g.
+	header := make(map[string][]string)
+
+	fmt.Println(header) 				// map[]
+	httpKit.AddHeader(header, "k", "0")
+	fmt.Println(header) 				// map[K:[0]]
+	httpKit.AddHeader(header, "k", "1")
+	fmt.Println(header) 				// map[K:[0 1]]
+
+	httpKit.SetHeader(header, "k", "2")
+	fmt.Println(header) 				// map[K:[2]]
+	httpKit.SetHeader(header, "k", "")
+	fmt.Println(header) 				// map[]
+*/
+func SetHeader(header http.Header, key, value string) {
+	if value == "" {
+		DelHeader(header, key)
+		return
+	}
+	header.Set(key, value)
+}
+
 func GetHeader(header http.Header, key string) string {
 	return header.Get(key)
 }
 
-func GetHeaderValues(header http.Header, key string) []string {
-	return header.Values(key)
-}
-
-func SetHeader(header http.Header, key, value string) {
-	header.Set(key, value)
-}
-
-func AddHeader(header http.Header, key, value string) {
-	header.Add(key, value)
+func DelHeader(header http.Header, key string) {
+	header.Del(key)
 }
 
 // GetUserAgent 获取http请求头中"User Agent"的值.
