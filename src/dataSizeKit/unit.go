@@ -1,5 +1,33 @@
 package dataSizeKit
 
+var (
+	// B 1
+	B = &Unit{
+		value: 1,
+		str:   "B",
+	}
+	// KB 1024
+	KB = &Unit{
+		value: 1 << 10,
+		str:   "KB",
+	}
+	// MB 1048576
+	MB = &Unit{
+		value: 1 << 20,
+		str:   "MB",
+	}
+	// GB 1073741824
+	GB = &Unit{
+		value: 1 << 30,
+		str:   "GB",
+	}
+	// TB 1099511627776
+	TB = &Unit{
+		value: 1 << 40,
+		str:   "TB",
+	}
+)
+
 type Unit struct {
 	value uint64
 	str   string
@@ -17,26 +45,3 @@ func (su *Unit) String() string {
 	}
 	return su.str
 }
-
-var (
-	B = &Unit{
-		value: 1,
-		str:   "B",
-	}
-	KB = &Unit{
-		value: 1024,
-		str:   "KB",
-	}
-	MB = &Unit{
-		value: 1048576,
-		str:   "MB",
-	}
-	GB = &Unit{
-		value: 1073741824,
-		str:   "GB",
-	}
-	TB = &Unit{
-		value: 1099511627776,
-		str:   "TB",
-	}
-)
