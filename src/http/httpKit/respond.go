@@ -1,11 +1,18 @@
 package httpKit
 
 import (
+	"fmt"
 	"github.com/richelieu42/go-scales/src/core/file/fileKit"
 	"github.com/richelieu42/go-scales/src/core/strKit"
+	"github.com/richelieu42/go-scales/src/jsonKit"
 	"net/http"
 	"net/url"
 	"unicode"
+)
+
+const (
+	PlainContentType = "text/plain; charset=utf-8"
+	JsonContentType  = "application/json; charset=utf-8"
 )
 
 // Status 设置响应的http状态码
@@ -13,15 +20,25 @@ func Status(w http.ResponseWriter, code int) {
 	w.WriteHeader(code)
 }
 
-// RespondText TODO: 参考gin
-func RespondText(w http.ResponseWriter, code int, format string, values ...any) error {
-
-	return nil
+// RespondString
+/*
+参考: gin里面的 Context.String() .
+*/
+func RespondString(w http.ResponseWriter, code int, format string, values ...any) error {
+	data := strKit.StringToBytes(fmt.Sprintf(format, values...))
+	return RespondData(w, code, PlainContentType, data)
 }
 
-// RespondJson TODO: 参考gin
-func RespondJson(w http.ResponseWriter) error {
-	return nil
+// RespondJson
+/*
+参考: gin里面的 Context.JSON() .
+*/
+func RespondJson(w http.ResponseWriter, code int, obj any) error {
+	data, err := jsonKit.Marshal(obj)
+	if err != nil {
+		return err
+	}
+	return RespondData(w, code, JsonContentType, data)
 }
 
 // RespondFile 响应文件
