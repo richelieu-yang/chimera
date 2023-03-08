@@ -25,6 +25,9 @@ const (
 
 // Status 设置响应的http状态码
 func Status(w http.ResponseWriter, code int) {
+	if code <= 0 {
+		return
+	}
 	w.WriteHeader(code)
 }
 
@@ -83,7 +86,7 @@ func RespondFile(w http.ResponseWriter, r *http.Request, code int, filePath, fil
 	} else {
 		w.Header().Set("Content-Disposition", `attachment; filename*=UTF-8''`+url.QueryEscape(fileName))
 	}
-	
+
 	http.ServeFile(w, r, filePath)
 	return nil
 }
