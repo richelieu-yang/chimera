@@ -48,10 +48,11 @@ func SetHeader(header http.Header, key, value string) {
 	header.Set(key, value)
 }
 
-// GetHeader 存在多个值的话，返回第一个
+// GetHeader
 /*
-e.g.
+PS: 存在多个值的话（[]string），返回第一个值.
 
+@param key 不存在对应值的话，将返回 ""
 */
 func GetHeader(header http.Header, key string) string {
 	return header.Get(key)
@@ -59,8 +60,7 @@ func GetHeader(header http.Header, key string) string {
 
 // GetHeaderValues
 /*
-e.g.
-
+@param key 不存在对应值的话，将返回 nil
 */
 func GetHeaderValues(header http.Header, key string) []string {
 	return header.Values(key)

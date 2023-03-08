@@ -19,5 +19,6 @@ func main() {
 	fmt.Println(header) // map[K:[0 1]]
 
 	// get
-	fmt.Println(httpKit.GetHeader(header, "k")) // 0
+	fmt.Println(httpKit.GetHeaderValues(header, "k"))  // 0
+	fmt.Println(httpKit.GetHeaderValues(header, "k1")) // 0
 }
