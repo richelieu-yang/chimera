@@ -85,6 +85,7 @@ func RespondData(w http.ResponseWriter, code int, contentType string, data []byt
 	Status(w, code)
 
 	writeContentType(w, []string{contentType})
+
 	if !bodyAllowedForStatus(code) {
 		return nil
 	}
