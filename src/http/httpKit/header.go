@@ -48,7 +48,7 @@ func SetHeader(header http.Header, key, value string) {
 	header.Set(key, value)
 }
 
-// GetHeader
+// GetHeader 存在多个值的话，返回第一个
 /*
 e.g.
 

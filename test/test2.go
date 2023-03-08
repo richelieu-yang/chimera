@@ -13,11 +13,11 @@ type Bean struct {
 func main() {
 	header := make(map[string][]string)
 
-	fmt.Println(header) // map[]
+	// add
 	httpKit.AddHeader(header, "k", "0")
-	fmt.Println(header) // map[K:[0]]
 	httpKit.AddHeader(header, "k", "1")
 	fmt.Println(header) // map[K:[0 1]]
 
-	fmt.Println(httpKit.GetHeader(header, "k"))
+	// get
+	fmt.Println(httpKit.GetHeader(header, "k")) // 0
 }

@@ -85,7 +85,9 @@ func Set[K comparable, V any](m map[K]V, key K, value V) {
 
 // Get
 /*
-@param m 可以为nil
+
+@param m 	可以为nil
+@param key	如果不存在与 传参key 对应的值，将返回值类型的零值
 */
 func Get[K comparable, V any](m map[K]V, key K) V {
 	return m[key]
