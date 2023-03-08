@@ -24,6 +24,9 @@ const (
 )
 
 // Status 设置响应的http状态码
+/*
+@param code -1: 不设置http状态码
+*/
 func Status(w http.ResponseWriter, code int) {
 	if code <= 0 {
 		return
