@@ -7,6 +7,7 @@ import (
 	"github.com/richelieu42/go-scales/src/jsonKit"
 	"net/http"
 	"net/url"
+	"path/filepath"
 	"unicode"
 )
 
@@ -55,31 +56,34 @@ func RespondJson(w http.ResponseWriter, code int, obj any) error {
 参考: gin里面的 Context.File() 和 Context.FileAttachment() .
 
 @param filePath 文件路径
-@param fileName 文件名（可以为""，可以与 传参filePath 里的不同）
+@param fileName 文件名（可以为""，此时将从 传参filePath 中获取）
 @return 如果不为nil，建议输出到控制台
 */
 func RespondFile(w http.ResponseWriter, r *http.Request, code int, filePath, fileName string) error {
 	if err := fileKit.AssertExistAndIsFile(filePath); err != nil {
 		return err
 	}
+	if fileName == "" {
+		fileName = filepath.Base(filePath)
+	}
 
 	Status(w, code)
-	if strKit.IsNotEmpty(fileName) {
-		// https://stackoverflow.com/questions/53069040/checking-a-string-contains-only-ascii-characters
-		isASCII := func(s string) bool {
-			for i := 0; i < len(s); i++ {
-				if s[i] > unicode.MaxASCII {
-					return false
-				}
+
+	// https://stackoverflow.com/questions/53069040/checking-a-string-contains-only-ascii-characters
+	isASCII := func(s string) bool {
+		for i := 0; i < len(s); i++ {
+			if s[i] > unicode.MaxASCII {
+				return false
 			}
-			return true
 		}
-		if isASCII(fileName) {
-			w.Header().Set("Content-Disposition", `attachment; filename="`+fileName+`"`)
-		} else {
-			w.Header().Set("Content-Disposition", `attachment; filename*=UTF-8''`+url.QueryEscape(fileName))
-		}
+		return true
 	}
+	if isASCII(fileName) {
+		w.Header().Set("Content-Disposition", `attachment; filename="`+fileName+`"`)
+	} else {
+		w.Header().Set("Content-Disposition", `attachment; filename*=UTF-8''`+url.QueryEscape(fileName))
+	}
+	
 	http.ServeFile(w, r, filePath)
 	return nil
 }
