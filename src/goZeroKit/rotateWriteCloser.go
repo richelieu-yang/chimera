@@ -30,6 +30,14 @@ PS:
 @param maxSize 		单位: MB
 @param maxBackups	备份数量的上限
 @param compress		如果设置为true，compress前后各会输出一条信息（logx.Infof、logx.Errorf）
+
+e.g. Mac环境
+	("test.log", "-", 1, 10, 3, true)
+	4个文件:
+		test.log
+		test-2023-03-10T16/50/11+08/00.log.gz
+		test-2023-03-10T16/50/10+08/00.log.gz
+		test-2023-03-10T16/50/09+08/00.log.gz
 */
 func NewSizeLimitRotateRuleWriteCloser(filePath, delimiter string, days, maxSize, maxBackups int, compress bool) (io.WriteCloser, error) {
 	if days <= 0 {
