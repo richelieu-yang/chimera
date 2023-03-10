@@ -9,10 +9,13 @@ import (
 /*
 PS:
 (1) 不可重入锁；
-(2) 更多详见"Redis分布式锁（多语言）.docx".
-(3) 写入Redis中的键，默认TTL为8s，可以通过 redsync.WithExpiry() 返回的 redsync.Option实例 来修改.
+(2) 更多详见"Redis分布式锁（多语言）.docx"；
+(3) 写入Redis中的键，默认TTL为8s.
 
 @param name 建议以 "mutex:" 为前缀
+
+e.g. 将TTL修改为30s
+NewDistributedMutex("name", redsync.WithExpiry(time.Second * 30))
 */
 func (client *Client) NewDistributedMutex(name string, options ...redsync.Option) *redsync.Mutex {
 	pool := goredis.NewPool(client.goRedisClient) // or, pool := redigo.NewPool(...)
