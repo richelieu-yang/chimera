@@ -10,6 +10,7 @@ import (
 PS:
 (1) 不可重入锁；
 (2) 更多详见"Redis分布式锁（多语言）.docx".
+(3) 写入Redis中的键，默认TTL为8s，可以通过 redsync.WithExpiry() 返回的 redsync.Option实例 来修改.
 
 @param name 建议以 "mutex:" 为前缀
 */

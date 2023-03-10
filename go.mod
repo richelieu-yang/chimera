@@ -3,7 +3,7 @@ module github.com/richelieu42/go-scales
 go 1.20
 
 require (
-	github.com/apache/rocketmq-clients/golang v0.0.0-20230307084411-738133d3f513
+	github.com/apache/rocketmq-clients/golang v0.0.0-20230309015945-196ac25d35e8
 	github.com/dablelv/go-huge-util v0.0.33
 	github.com/deckarep/golang-set/v2 v2.2.0
 	github.com/disintegration/imaging v1.6.2
