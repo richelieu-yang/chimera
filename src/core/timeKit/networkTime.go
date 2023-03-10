@@ -8,9 +8,9 @@ import (
 
 var networkTimeSources = []string{
 	"http://www.ntsc.ac.cn",
-	"http://www.taobao.com",
+	//"http://www.taobao.com",
 	"http://www.baidu.com",
-	"http://www.360.cn",
+	//"http://www.360.cn",
 }
 
 // GetNetworkTime 获取网络时间.
