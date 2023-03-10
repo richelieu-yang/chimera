@@ -24,7 +24,11 @@ func NewDailyRotateRuleWriteCloser(filePath, delimiter string, days int, compres
 
 // NewSizeLimitRotateRuleWriteCloser
 /*
-@param maxSize 单位: MB
+PS:
+(1) 最多生成文件的数量: maxBackups + 1(filePath)
+
+@param maxSize 		单位: MB
+@param maxBackups	备份数量的上限
 */
 func NewSizeLimitRotateRuleWriteCloser(filePath, delimiter string, days, maxSize, maxBackups int, compress bool) (io.WriteCloser, error) {
 	if days <= 0 {
@@ -40,7 +44,7 @@ func NewSizeLimitRotateRuleWriteCloser(filePath, delimiter string, days, maxSize
 
 	rule := logx.NewSizeLimitRotateRule(
 		filePath,
-		filePath,
+		delimiter,
 		days,
 		maxSize,
 		maxBackups,
