@@ -2,25 +2,20 @@ package main
 
 import (
 	"fmt"
-	"github.com/zeromicro/go-zero/core/logx"
+	"github.com/richelieu42/go-scales/src/goZeroKit"
 )
 
 func main() {
-	filename := "./test.log"
-	logger, err1 := logx.NewLogger(
-		filename,
-		logx.DefaultRotateRule(
-			filename,
-			"-",
-			1,
-			true,
-		),
-		true,
-	)
-	if err1 != nil {
-		panic(err1)
+	wc, err := goZeroKit.NewSizeLimitRotateRuleWriteCloser("cyy.log", "-", 1, 10, 3, false)
+	if err != nil {
+		panic(err)
 	}
-	defer logger.Close()
 
-	fmt.Println(logger.Write([]byte("cyy\n")))
+	for {
+		_, err := wc.Write([]byte("qwdqwdq1wdqwdqwd4684986489649864948qwdqwd强无敌群无多群无多\n"))
+		if err != nil {
+			fmt.Println(err.Error())
+			break
+		}
+	}
 }
