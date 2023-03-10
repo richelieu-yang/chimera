@@ -6,7 +6,7 @@ import (
 )
 
 func main() {
-	wc, err := goZeroKit.NewSizeLimitRotateRuleWriteCloser("cyy.log", "-", 1, 10, 3, false)
+	wc, err := goZeroKit.NewSizeLimitRotateRuleWriteCloser("test.log", "-", 1, 10, 3, true)
 	if err != nil {
 		panic(err)
 	}
