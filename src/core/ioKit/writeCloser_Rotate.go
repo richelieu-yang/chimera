@@ -12,6 +12,8 @@ import (
 
 // NewRotateFileWriteCloser rotationTime && maxAge
 /*
+Deprecated: 建立使用 writeCloser_RotateRule.go 里面的.
+
 PS:
 (0) 写是线程安全的；
 (1) patternPath: 附带pattern的文件路径，e.g. "d:/test/test.%Y-%m-%d %H_%M_%S.log"
@@ -50,6 +52,9 @@ func NewRotateFileWriteCloser(filePath string, rotationTime, maxAge time.Duratio
 }
 
 // NewRotateFileWriteCloser1 rotationTime && rotationCount
+/*
+Deprecated: 建立使用 writeCloser_RotateRule.go 里面的.
+*/
 func NewRotateFileWriteCloser1(filePath string, rotationTime time.Duration, rotationCount int, softLinkFlag bool) (io.WriteCloser, error) {
 	/* 默认值 */
 	if rotationTime <= 0 {

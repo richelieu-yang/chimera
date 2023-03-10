@@ -1,4 +1,4 @@
-package goZeroKit
+package ioKit
 
 import (
 	"github.com/richelieu42/go-scales/src/core/errorKit"
