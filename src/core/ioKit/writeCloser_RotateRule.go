@@ -7,11 +7,15 @@ import (
 	"io"
 )
 
+const (
+	defaultDelimiter = "-"
+)
+
 func NewDailyRotateRuleWriteCloser(filePath, delimiter string, days int, compress bool) (io.WriteCloser, error) {
 	if days <= 0 {
 		return nil, errorKit.Simple("invalid days(%d)", days)
 	}
-	delimiter = strKit.EmptyToDefault(delimiter, "-")
+	delimiter = strKit.EmptyToDefault(delimiter, defaultDelimiter)
 
 	rule := logx.DefaultRotateRule(
 		filePath,
@@ -50,7 +54,7 @@ func NewSizeLimitRotateRuleWriteCloser(filePath, delimiter string, days, maxSize
 	if maxBackups <= 0 {
 		return nil, errorKit.Simple("invalid maxBackups(%d)", maxBackups)
 	}
-	delimiter = strKit.EmptyToDefault(delimiter, "-")
+	delimiter = strKit.EmptyToDefault(delimiter, defaultDelimiter)
 
 	rule := logx.NewSizeLimitRotateRule(
 		filePath,
