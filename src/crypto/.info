@@ -16,6 +16,12 @@ goEncrypt:
 
 
 
+TODO:
+(1) 可以参考 go-zero 中的core/codec: 其中有gzip、rsa、aesecb.
+
+
+
+
 
 
 
