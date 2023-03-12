@@ -27,6 +27,10 @@ e.g.1
 ("test.log") 						=> "test.log"
 (""/Users/richelieu/Downloads"") 	=> "Downloads"
 ("c:/a/c/aaa.doc") 					=> "aaa.doc"
+
+e.g.2
+("/Users/richelieu/START")	=> "START"
+("/Users/richelieu/START/")	=> "START"
 */
 func GetName(nameOrPath string) string {
 	//return path.Base(nameOrPath)
