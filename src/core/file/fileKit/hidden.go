@@ -16,14 +16,17 @@ import (
 (1) 获取文件名（以防传参为路径）
 (2) 判断文件名是否以"."开头
 
-@param 文件（或目录）的 path 或 name
+PS:
+(1) 传参path 对应的文件或目录必须存在，否则返回error.
 
-e.g.
-("") => false, nil
+@param 文件（或目录）的 path 或 name
 */
 func IsHidden(path string) (bool, error) {
-	name := filepath.Base(path)
+	if err := AssertExist(path); err != nil {
+		return false, err
+	}
 
+	name := filepath.Base(path)
 	switch name {
 	case ".":
 		fallthrough
