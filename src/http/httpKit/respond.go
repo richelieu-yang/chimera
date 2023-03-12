@@ -109,7 +109,7 @@ func RespondFile(w http.ResponseWriter, r *http.Request, code int, filePath, fil
 */
 func RespondData(w http.ResponseWriter, code int, contentType string, data []byte) error {
 	if strKit.IsEmpty(contentType) {
-		contentType = GetMimeType(data)
+		contentType = GetContentType(data)
 	}
 
 	Status(w, code)

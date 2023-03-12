@@ -43,7 +43,7 @@ func GetBase64OfWebImage(url string) (string, error) {
 }
 
 func EncodeToBase64String(data []byte) (string, error) {
-	mimeType := httpKit.GetMimeType(data)
+	mimeType := httpKit.GetContentType(data)
 	switch mimeType {
 	case "image/jpeg":
 		fallthrough

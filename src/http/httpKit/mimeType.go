@@ -2,13 +2,14 @@ package httpKit
 
 import "net/http"
 
-// GetMimeType 获取 MimeType
+// GetContentType 获取 ContentType(即MimeType).
 /*
 @return 保底 "application/octet-stream"
 
 e.g.
-([]byte{}) => "text/plain; charset=utf-8"
+([]byte(nil))	=> "text/plain; charset=utf-8"
+([]byte{}) 		=> "text/plain; charset=utf-8"
 */
-func GetMimeType(data []byte) string {
+func GetContentType(data []byte) string {
 	return http.DetectContentType(data)
 }

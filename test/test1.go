@@ -6,7 +6,8 @@ import (
 )
 
 func main() {
-	fmt.Println(httpKit.GetMimeType([]byte{}))
+	str := httpKit.GetContentType([]byte(nil))
+	fmt.Println(str)
 
 	//f, err := os.Create("c.log")
 	//if err != nil {
