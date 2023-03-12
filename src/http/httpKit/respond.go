@@ -108,7 +108,9 @@ func RespondFile(w http.ResponseWriter, r *http.Request, code int, filePath, fil
 @return 如果不为nil，建议输出到控制台
 */
 func RespondData(w http.ResponseWriter, code int, contentType string, data []byte) error {
-	contentType = strKit.EmptyToDefault(contentType, OctetStreamContentType, true)
+	if strKit.IsEmpty(contentType) {
+		contentType = GetMimeType(data)
+	}
 
 	Status(w, code)
 
