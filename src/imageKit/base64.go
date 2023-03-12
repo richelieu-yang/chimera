@@ -6,6 +6,7 @@ import (
 	"github.com/richelieu42/go-scales/src/core/file/fileKit"
 	"github.com/richelieu42/go-scales/src/crypto/base64Kit"
 	"github.com/richelieu42/go-scales/src/http/httpClientKit"
+	"github.com/richelieu42/go-scales/src/http/httpKit"
 	"regexp"
 )
 
@@ -42,7 +43,7 @@ func GetBase64OfWebImage(url string) (string, error) {
 }
 
 func EncodeToBase64String(data []byte) (string, error) {
-	mimeType := fileKit.GetMimeType(data)
+	mimeType := httpKit.GetMimeType(data)
 	switch mimeType {
 	case "image/jpeg":
 		fallthrough
