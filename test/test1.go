@@ -2,16 +2,30 @@ package main
 
 import (
 	"fmt"
-	"github.com/richelieu42/go-scales/src/http/httpKit"
+	"github.com/richelieu42/go-scales/src/core/file/fileKit"
+	"path/filepath"
 )
 
 func main() {
-	str := httpKit.GetContentType([]byte(nil))
-	fmt.Println(str)
+	//path := ""
+	//
+	//fmt.Println(IsHidden(path))
 
-	//f, err := os.Create("c.log")
-	//if err != nil {
-	//	panic(err)
-	//}
-	//syscall.CloseOnExec(int(f.Fd()))
+	fmt.Println(fileKit.GetName(""))
+	fmt.Println(fileKit.GetName(" "))  // " "
+	fmt.Println(fileKit.GetName("  ")) // "  "
+	fmt.Println(fileKit.GetName("."))
+	fmt.Println(fileKit.GetName("./"))
+	fmt.Println(fileKit.GetName("../"))
+
+}
+
+// IsHidden 文件（或目录）是否隐藏？
+/*
+e.g.
+("") => false, nil
+*/
+func IsHidden(path string) (bool, error) {
+	name := filepath.Base(path)
+	return name[0:1] == ".", nil
 }

@@ -16,6 +16,14 @@ PS:
 @param pathOfFile 文件名 或 路径（相对||绝对）
 
 e.g.
+("") 		=> "."
+(" ") 		=> " "（1个空格）
+("  ") 		=> "  "（2个空格）
+(".") 		=> "."
+("./") 		=> "."
+("../") 	=> ".."
+
+e.g.1
 ("test.log") 						=> "test.log"
 (""/Users/richelieu/Downloads"") 	=> "Downloads"
 ("c:/a/c/aaa.doc") 					=> "aaa.doc"
