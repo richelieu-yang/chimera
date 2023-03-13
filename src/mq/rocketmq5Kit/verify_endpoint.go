@@ -103,7 +103,7 @@ func VerifyEndpoint(endpoint, topic string) error {
 	}
 	defer producer.GracefulStop()
 
-	//// test
+	// test
 	//logrus.Debugf("logPath: [%s].", logPath)
 
 	producerCh := make(chan error, 1)
