@@ -18,6 +18,7 @@ func polyfillProducer(producer rmq_client.Producer, endpointsStr string) (rmq_cl
 		return producer, nil
 	}
 
+	// pSetting/endpoints
 	v, err := reflectKit.GetNestedField(producer, "pSetting", "endpoints")
 	if err != nil {
 		return nil, err
@@ -26,6 +27,17 @@ func polyfillProducer(producer rmq_client.Producer, endpointsStr string) (rmq_cl
 	if err := reviseEndpoints(endpoints, s); err != nil {
 		return nil, err
 	}
+
+	// cli/accessPoint
+	v, err = reflectKit.GetNestedField(producer, "cli", "accessPoint")
+	if err != nil {
+		return nil, err
+	}
+	endpoints = (*v2.Endpoints)(v.UnsafePointer())
+	if err := reviseEndpoints(endpoints, s); err != nil {
+		return nil, err
+	}
+
 	return producer, nil
 }
 
@@ -39,6 +51,7 @@ func polyfillConsumer(consumer rmq_client.SimpleConsumer, endpointsStr string) (
 		return consumer, nil
 	}
 
+	// scSettings/endpoints
 	v, err := reflectKit.GetNestedField(consumer, "scSettings", "endpoints")
 	if err != nil {
 		return nil, err
@@ -47,6 +60,17 @@ func polyfillConsumer(consumer rmq_client.SimpleConsumer, endpointsStr string) (
 	if err := reviseEndpoints(endpoints, s); err != nil {
 		return nil, err
 	}
+
+	// cli/accessPoint
+	v, err = reflectKit.GetNestedField(consumer, "cli", "accessPoint")
+	if err != nil {
+		return nil, err
+	}
+	endpoints = (*v2.Endpoints)(v.UnsafePointer())
+	if err := reviseEndpoints(endpoints, s); err != nil {
+		return nil, err
+	}
+
 	return consumer, nil
 }
 
