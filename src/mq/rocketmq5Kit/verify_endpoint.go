@@ -104,7 +104,7 @@ func VerifyEndpoint(endpoint, topic string) error {
 	defer producer.GracefulStop()
 
 	// test
-	//logrus.Debugf("logPath: [%s].", logPath)
+	//logrus.Infof("logPath: [%s].", logPath)
 
 	producerCh := make(chan error, 1)
 	consumerCh := make(chan error, 1)
