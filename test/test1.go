@@ -1,21 +1,18 @@
 package main
 
 import (
-	"github.com/richelieu42/go-scales/src/core/setKit"
+	"github.com/sirupsen/logrus"
+	"time"
 )
 
-type Bean struct {
-	Id int
-}
-
 func main() {
-	b0 := &Bean{Id: 0}
-	b1 := &Bean{Id: 0}
-	b2 := &Bean{Id: 0}
+	ch := make(chan struct{})
+	go func() {
+		time.Sleep(1 * time.Second)
+		close(ch)
+	}()
 
-	set := setKit.NewSet(false, b0, b1)
-	set.Add(b0)
-	set.Add(b1)
-	set.Add(b2)
-	set.Remove(b1)
+	logrus.Info("脑子好像进...")
+	<-ch
+	logrus.Info("煎鱼了！")
 }
