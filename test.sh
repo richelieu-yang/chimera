@@ -1,4 +1,4 @@
-#!/usr/bin/expect -f
+#!/usr/bin/env bash
 
 
 echo "------------------------"
