@@ -45,6 +45,8 @@ github.com/aliyun/alibaba-cloud-sdk-go v1.61.18 h1:zOVTBdCKFd9JbCKz9/nt+FovbjPFm
 github.com/aliyun/alibaba-cloud-sdk-go v1.61.18/go.mod h1:v8ESoHo4SyHmuB4b1tJqDHxfTGEciD+yhvOU/5s1Rfk=
 github.com/apache/rocketmq-clients/golang v0.0.0-20230310090104-72657ee59fca h1:2MNi2/22Rgk0AzjCSbt4O//VQUVLwKCUPTjio7wSZ/E=
 github.com/apache/rocketmq-clients/golang v0.0.0-20230310090104-72657ee59fca/go.mod h1:wtbEvUkAKHlc3h4FU8AZw0w+plDI8kGtmSPNAPGQahw=
+github.com/apache/rocketmq-clients/golang v0.0.0-20230315040807-513de8f3eaa8 h1:iabkHWaOEmujDhaGnfvY6FiPx9dmb88KtfLJLtwIB7g=
+github.com/apache/rocketmq-clients/golang v0.0.0-20230315040807-513de8f3eaa8/go.mod h1:wtbEvUkAKHlc3h4FU8AZw0w+plDI8kGtmSPNAPGQahw=
 github.com/benbjohnson/clock v1.3.0 h1:ip6w0uFQkncKQ979AypyG0ER7mqUSBdKLOgAle/AT8A=
 github.com/bsm/ginkgo/v2 v2.5.0 h1:aOAnND1T40wEdAtkGSkvSICWeQ8L3UASX7YVCqQx+eQ=
 github.com/bsm/ginkgo/v2 v2.5.0/go.mod h1:AiKlXPm7ItEHNc/2+OkrNG4E0ITzojb9/xWzvQ9XZ9w=
@@ -74,6 +76,8 @@ github.com/cncf/udpa/go v0.0.0-20201120205902-5459f2c99403/go.mod h1:WmhPx2Nbnht
 github.com/creack/pty v1.1.9/go.mod h1:oKZEueFk5CKHvIhNR5MUki03XCEU+Q6VDXinZuGJ33E=
 github.com/dablelv/go-huge-util v0.0.33 h1:5YCp7EJIuWamAxkSw1bd8pWkqwXdO1XCXaXfKL5WC10=
 github.com/dablelv/go-huge-util v0.0.33/go.mod h1:rlxL8zQtGVTvhjQY0LqaTJusfAqdSKDTFDMVYNmPCB4=
+github.com/dablelv/go-huge-util v0.0.34 h1:1LmEsp4qayWcRo84OLcOjBLWYe0RGTll2JUjgvIeaNQ=
+github.com/dablelv/go-huge-util v0.0.34/go.mod h1:1+/sxW7uLpPWr0Fko8vQqPkdu9vd+1pOI7xI/Zo+az0=
 github.com/davecgh/go-spew v1.1.0/go.mod h1:J7Y8YcW2NihsgmVo/mv3lAwl/skON4iLHjSsI+c5H38=
 github.com/davecgh/go-spew v1.1.1 h1:vj9j/u1bqnvCEfJOwUhtlOARqs3+rkHYY13jYWTU97c=
 github.com/davecgh/go-spew v1.1.1/go.mod h1:J7Y8YcW2NihsgmVo/mv3lAwl/skON4iLHjSsI+c5H38=
@@ -81,6 +85,8 @@ github.com/dchest/siphash v1.2.3 h1:QXwFc8cFOR2dSa/gE6o/HokBMWtLUaNDVd+22aKHeEA=
 github.com/dchest/siphash v1.2.3/go.mod h1:0NvQU092bT0ipiFN++/rXm69QG9tVxLAlQHIXMPAkHc=
 github.com/deckarep/golang-set/v2 v2.2.0 h1:2pMQd3Soi6qfw7E5MMKaEh5W5ES18bW3AbFFnGl6LgQ=
 github.com/deckarep/golang-set/v2 v2.2.0/go.mod h1:VAky9rY/yGXJOLEDv3OMci+7wtDpOF4IN+y82NBOac4=
+github.com/deckarep/golang-set/v2 v2.3.0 h1:qs18EKUfHm2X9fA50Mr/M5hccg2tNnVqsiBImnyDs0g=
+github.com/deckarep/golang-set/v2 v2.3.0/go.mod h1:VAky9rY/yGXJOLEDv3OMci+7wtDpOF4IN+y82NBOac4=
 github.com/dgryski/go-rendezvous v0.0.0-20200823014737-9f7001d12a5f h1:lO4WD4F/rVNCu3HqELle0jiPLLBs70cWOduZpkS1E78=
 github.com/dgryski/go-rendezvous v0.0.0-20200823014737-9f7001d12a5f/go.mod h1:cuUVRXasLTGF7a8hSLbxyZXjz+1KgoB3wDUb6vlszIc=
 github.com/disintegration/imaging v1.6.2 h1:w1LecBlG2Lnp8B3jk5zSuNqd7b4DXhcjwek1ei82L+c=
@@ -477,6 +483,8 @@ golang.org/x/exp v0.0.0-20200207192155-f17229e696bd/go.mod h1:J/WKrq2StrnmMY6+EH
 golang.org/x/exp v0.0.0-20200224162631-6cc2880d07d6/go.mod h1:3jZMyOhIsHpP37uCMkUooju7aAi5cS1Q23tOzKc+0MU=
 golang.org/x/exp v0.0.0-20230310171629-522b1b587ee0 h1:LGJsf5LRplCck6jUCH3dBL2dmycNruWNF5xugkSlfXw=
 golang.org/x/exp v0.0.0-20230310171629-522b1b587ee0/go.mod h1:CxIveKay+FTh1D0yPZemJVgC/95VzuuOLq5Qi4xnoYc=
+golang.org/x/exp v0.0.0-20230314191032-db074128a8ec h1:pAv+d8BM2JNnNctsLJ6nnZ6NqXT8N4+eauvZSb3P0I0=
+golang.org/x/exp v0.0.0-20230314191032-db074128a8ec/go.mod h1:CxIveKay+FTh1D0yPZemJVgC/95VzuuOLq5Qi4xnoYc=
 golang.org/x/image v0.0.0-20190227222117-0694c2d4d067/go.mod h1:kZ7UVZpmo3dzQBMxlp+ypCbDeSB+sBbTgSJuh5dn5js=
 golang.org/x/image v0.0.0-20190802002840-cff245a6509b/go.mod h1:FeLwcggjj3mMvU+oOTbSwawSJRM1uh48EjtB4UJZlP0=
 golang.org/x/image v0.0.0-20191009234506-e7c1f5e7dbb8/go.mod h1:FeLwcggjj3mMvU+oOTbSwawSJRM1uh48EjtB4UJZlP0=
