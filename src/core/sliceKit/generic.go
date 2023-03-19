@@ -180,29 +180,6 @@ func GetFirstItemWithDefault[T any](def T, args ...T) T {
 	return def
 }
 
-func EmptyToNil[T any](s []T) []T {
-	if IsEmpty(s) {
-		return nil
-	}
-	return s
-}
-
-// IsEmpty
-/*
-@param s 可以为nil
-*/
-func IsEmpty[T any](s []T) bool {
-	return len(s) == 0
-}
-
-// IsNotEmpty
-/*
-@param s 可以为nil
-*/
-func IsNotEmpty[T any](s []T) bool {
-	return len(s) > 0
-}
-
 // Contains 切片s是否包含元素t？（区分大小写，因为使用"=="比较）
 /*
 @param s 可以为nil（此时返回值必定为false）
