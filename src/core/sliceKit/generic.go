@@ -86,7 +86,7 @@ func Uniq[T comparable](s []T) []T {
 /*
 @param s			可以为nil
 @param predicate	(1) 传参s中的某一元素是否通过？通过则加入到返回的slice实例中
-					(2) 不能为nil，否则会导致panic: runtime error: invalid memory address or nil pointer dereference
+					(2) 不能为nil，会导致panic: runtime error: invalid memory address or nil pointer dereference
 @return 			必定不为nil（保底为空的slice实例）
 
 e.g.
