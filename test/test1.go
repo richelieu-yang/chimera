@@ -2,10 +2,11 @@ package main
 
 import (
 	"fmt"
-	"github.com/richelieu42/go-scales/src/core/sliceKit"
+	"github.com/richelieu42/go-scales/src/core/mathKit"
 )
 
 func main() {
-	m := sliceKit.SliceToMap[string, string, string]([]string{"0", "1"}, nil)
-	fmt.Println(m) // map[key0:value0 key1:value1]
+	fmt.Println(mathKit.Clamp(0, -10, 10))
+	fmt.Println(mathKit.Clamp(-42, -10, 10))
+	fmt.Println(mathKit.Clamp(42, -10, 10))
 }

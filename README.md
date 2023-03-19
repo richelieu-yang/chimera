@@ -11,3 +11,4 @@ PS: 如果安装失败（因为部分依赖 i/o timeout等原因），可以考�
 go get github.com/richelieu42/go-scales
 
 ## TODOS
+Golang.wps中的"samber/lo".
