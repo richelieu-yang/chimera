@@ -6,10 +6,10 @@ import (
 )
 
 func main() {
-	s := []int{0, 1, 2, 3, 4, 5}
-	m := sliceKit.Group[int, int](s, func(i int) int {
+	s0 := []int{0, 1, 2, 3, 4, 5}
+	s1 := sliceKit.UniqBy[int, int](s0, func(i int) int {
 		return i % 3
 	})
-	fmt.Println(s) // [0 1 2 3 4 5]
-	fmt.Println(m) // map[0:[0 3] 1:[1 4] 2:[2 5]]
+	fmt.Println(s0)
+	fmt.Println(s1)
 }
