@@ -4,6 +4,7 @@ import (
 	"github.com/richelieu42/go-scales/src/core/boolKit"
 	"github.com/richelieu42/go-scales/src/core/intKit"
 	"github.com/richelieu42/go-scales/src/core/strKit"
+	"github.com/samber/lo"
 )
 
 // Contains 判断 map实例 中是否存在 指定的key.
@@ -117,4 +118,22 @@ func GetInt[K comparable, V any](m map[K]V, key K) (int, error) {
 func GetBool[K comparable, V any](m map[K]V, key K) (bool, error) {
 	value := Get(m, key)
 	return boolKit.ToBoolE(value)
+}
+
+// Keys creates an array of the map keys.
+/*
+@param m	可以为nil
+@return 	保底空的slice实例
+*/
+func Keys[K comparable, V any](m map[K]V) []K {
+	return lo.Keys(m)
+}
+
+// Values creates an array of the map values.
+/*
+@param m	可以为nil
+@return 	保底空的slice实例
+*/
+func Values[K comparable, V any](m map[K]V) []V {
+	return lo.Values(m)
 }
