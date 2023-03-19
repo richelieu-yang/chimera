@@ -11,11 +11,11 @@ import (
 	"github.com/nacos-group/nacos-sdk-go/clients/naming_client"
 	"github.com/nacos-group/nacos-sdk-go/common/constant"
 	"github.com/nacos-group/nacos-sdk-go/vo"
-	"github.com/richelieu42/go-scales/src/core/errorKit"
-	"github.com/richelieu42/go-scales/src/core/file/fileKit"
-	"github.com/richelieu42/go-scales/src/core/pathKit"
-	"github.com/richelieu42/go-scales/src/mainControl"
-	"github.com/richelieu42/go-scales/src/netKit"
+	"github.com/richelieu42/chimera/src/core/errorKit"
+	"github.com/richelieu42/chimera/src/core/file/fileKit"
+	"github.com/richelieu42/chimera/src/core/pathKit"
+	"github.com/richelieu42/chimera/src/mainControl"
+	"github.com/richelieu42/chimera/src/netKit"
 )
 
 // NewNamingClient 服务发现客户端

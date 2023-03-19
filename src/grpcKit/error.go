@@ -1,7 +1,7 @@
 package grpcKit
 
 import (
-	"github.com/richelieu42/go-scales/src/core/errorKit"
+	"github.com/richelieu42/chimera/src/core/errorKit"
 	"google.golang.org/grpc/codes"
 	"google.golang.org/grpc/status"
 )

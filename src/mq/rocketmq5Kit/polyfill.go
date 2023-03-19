@@ -3,9 +3,9 @@ package rocketmq5Kit
 import (
 	rmq_client "github.com/apache/rocketmq-clients/golang"
 	v2 "github.com/apache/rocketmq-clients/golang/protocol/v2"
-	"github.com/richelieu42/go-scales/src/core/strKit"
-	"github.com/richelieu42/go-scales/src/netKit"
-	"github.com/richelieu42/go-scales/src/reflectKit"
+	"github.com/richelieu42/chimera/src/core/strKit"
+	"github.com/richelieu42/chimera/src/netKit"
+	"github.com/richelieu42/chimera/src/reflectKit"
 )
 
 // polyfillProducer

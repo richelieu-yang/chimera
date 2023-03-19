@@ -3,9 +3,9 @@ package ginKit
 import (
 	"github.com/gin-contrib/gzip"
 	"github.com/gin-gonic/gin"
-	"github.com/richelieu42/go-scales/src/core/sliceKit"
-	"github.com/richelieu42/go-scales/src/core/strKit"
-	"github.com/richelieu42/go-scales/src/http/refererKit"
+	"github.com/richelieu42/chimera/src/core/sliceKit"
+	"github.com/richelieu42/chimera/src/core/strKit"
+	"github.com/richelieu42/chimera/src/http/refererKit"
 )
 
 // AttachCommonMiddlewares 绑定一些常用的中间件.

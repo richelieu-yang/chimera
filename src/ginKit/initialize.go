@@ -2,8 +2,8 @@ package ginKit
 
 import (
 	"github.com/gin-gonic/gin"
-	"github.com/richelieu42/go-scales/src/log/logrusKit"
-	"github.com/richelieu42/go-scales/src/mainControl"
+	"github.com/richelieu42/chimera/src/log/logrusKit"
+	"github.com/richelieu42/chimera/src/mainControl"
 	"github.com/sirupsen/logrus"
 )
 

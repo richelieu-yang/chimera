@@ -1,7 +1,7 @@
 package sliceKit
 
 import (
-	"github.com/richelieu42/go-scales/src/core/strKit"
+	"github.com/richelieu42/chimera/src/core/strKit"
 	"strings"
 )
 

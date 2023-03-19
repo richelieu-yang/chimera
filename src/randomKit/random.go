@@ -5,7 +5,7 @@
 package randomKit
 
 import (
-	"github.com/richelieu42/go-scales/src/core/floatKit"
+	"github.com/richelieu42/chimera/src/core/floatKit"
 	"math/rand"
 	"time"
 )

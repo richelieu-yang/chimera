@@ -2,9 +2,9 @@ package refererKit
 
 import (
 	"github.com/gin-gonic/gin"
-	"github.com/richelieu42/go-scales/src/core/regexpKit"
-	"github.com/richelieu42/go-scales/src/core/sliceKit"
-	"github.com/richelieu42/go-scales/src/core/strKit"
+	"github.com/richelieu42/chimera/src/core/regexpKit"
+	"github.com/richelieu42/chimera/src/core/sliceKit"
+	"github.com/richelieu42/chimera/src/core/strKit"
 	"regexp"
 )
 

@@ -12,8 +12,8 @@ import (
 	"github.com/nacos-group/nacos-sdk-go/clients/config_client"
 	"github.com/nacos-group/nacos-sdk-go/model"
 	"github.com/nacos-group/nacos-sdk-go/vo"
-	"github.com/richelieu42/go-scales/src/core/errorKit"
-	"github.com/richelieu42/go-scales/src/core/strKit"
+	"github.com/richelieu42/chimera/src/core/errorKit"
+	"github.com/richelieu42/chimera/src/core/strKit"
 )
 
 // PublishConfig 发布配置

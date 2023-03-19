@@ -2,7 +2,7 @@ package mapKit
 
 import (
 	"github.com/mohae/deepcopy"
-	"github.com/richelieu42/go-scales/src/core/errorKit"
+	"github.com/richelieu42/chimera/src/core/errorKit"
 )
 
 // Clone 浅拷贝.

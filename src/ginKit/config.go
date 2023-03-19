@@ -1,8 +1,8 @@
 package ginKit
 
 import (
-	"github.com/richelieu42/go-scales/src/http/refererKit"
-	"github.com/richelieu42/go-scales/src/netKit"
+	"github.com/richelieu42/chimera/src/http/refererKit"
+	"github.com/richelieu42/chimera/src/netKit"
 )
 
 type (

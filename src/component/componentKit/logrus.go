@@ -1,9 +1,9 @@
 package componentKit
 
 import (
-	"github.com/richelieu42/go-scales/src/core/errorKit"
-	"github.com/richelieu42/go-scales/src/core/timeKit"
-	"github.com/richelieu42/go-scales/src/log/logrusKit"
+	"github.com/richelieu42/chimera/src/core/errorKit"
+	"github.com/richelieu42/chimera/src/core/timeKit"
+	"github.com/richelieu42/chimera/src/log/logrusKit"
 	"github.com/sirupsen/logrus"
 )
 

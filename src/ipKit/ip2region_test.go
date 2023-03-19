@@ -1,7 +1,7 @@
 package ipKit
 
 import (
-	"github.com/richelieu42/go-scales/src/core/pathKit"
+	"github.com/richelieu42/chimera/src/core/pathKit"
 	"github.com/sirupsen/logrus"
 	"testing"
 )

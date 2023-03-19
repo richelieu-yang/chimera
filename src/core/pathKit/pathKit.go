@@ -9,9 +9,9 @@ filepath标准库的使用可以参考: https://www.cnblogs.com/jkko123/p/692396
 package pathKit
 
 import (
-	"github.com/richelieu42/go-scales/src/core/file/fileKit"
-	"github.com/richelieu42/go-scales/src/core/strKit"
-	"github.com/richelieu42/go-scales/src/core/timeKit"
+	"github.com/richelieu42/chimera/src/core/file/fileKit"
+	"github.com/richelieu42/chimera/src/core/strKit"
+	"github.com/richelieu42/chimera/src/core/timeKit"
 	"path/filepath"
 )
 

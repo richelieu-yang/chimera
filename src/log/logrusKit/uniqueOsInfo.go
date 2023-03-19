@@ -3,7 +3,7 @@
 package logrusKit
 
 import (
-	"github.com/richelieu42/go-scales/src/core/osKit"
+	"github.com/richelieu42/chimera/src/core/osKit"
 	"github.com/sirupsen/logrus"
 )
 

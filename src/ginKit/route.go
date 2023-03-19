@@ -4,9 +4,9 @@ package ginKit
 
 import (
 	"github.com/gin-gonic/gin"
-	"github.com/richelieu42/go-scales/src/core/file/fileKit"
-	"github.com/richelieu42/go-scales/src/core/pathKit"
-	"github.com/richelieu42/go-scales/src/resources"
+	"github.com/richelieu42/chimera/src/core/file/fileKit"
+	"github.com/richelieu42/chimera/src/core/pathKit"
+	"github.com/richelieu42/chimera/src/resources"
 	"net/http"
 )
 

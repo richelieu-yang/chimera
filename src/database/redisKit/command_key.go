@@ -3,7 +3,7 @@ package redisKit
 import (
 	"context"
 	"github.com/redis/go-redis/v9"
-	"github.com/richelieu42/go-scales/src/core/sliceKit"
+	"github.com/richelieu42/chimera/src/core/sliceKit"
 	"sync"
 	"time"
 )

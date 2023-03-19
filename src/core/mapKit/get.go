@@ -1,9 +1,9 @@
 package mapKit
 
 import (
-	"github.com/richelieu42/go-scales/src/core/boolKit"
-	"github.com/richelieu42/go-scales/src/core/intKit"
-	"github.com/richelieu42/go-scales/src/core/strKit"
+	"github.com/richelieu42/chimera/src/core/boolKit"
+	"github.com/richelieu42/chimera/src/core/intKit"
+	"github.com/richelieu42/chimera/src/core/strKit"
 )
 
 // Get

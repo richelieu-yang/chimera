@@ -3,8 +3,8 @@ package jsonKit
 import (
 	"fmt"
 	jsoniter "github.com/json-iterator/go"
-	"github.com/richelieu42/go-scales/src/core/strKit"
-	"github.com/richelieu42/go-scales/src/msgKit"
+	"github.com/richelieu42/chimera/src/core/strKit"
+	"github.com/richelieu42/chimera/src/msgKit"
 )
 
 // Seal

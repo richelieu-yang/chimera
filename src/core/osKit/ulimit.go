@@ -3,9 +3,9 @@
 package osKit
 
 import (
-	"github.com/richelieu42/go-scales/src/cmdKit"
-	"github.com/richelieu42/go-scales/src/core/errorKit"
-	"github.com/richelieu42/go-scales/src/core/intKit"
+	"github.com/richelieu42/chimera/src/cmdKit"
+	"github.com/richelieu42/chimera/src/core/errorKit"
+	"github.com/richelieu42/chimera/src/core/intKit"
 )
 
 // GetMaxOpenFiles 同一时间最多可开启的文件数

@@ -1,7 +1,7 @@
 package zapKit
 
 import (
-	"github.com/richelieu42/go-scales/src/core/file/fileKit"
+	"github.com/richelieu42/chimera/src/core/file/fileKit"
 	"go.uber.org/zap"
 	"go.uber.org/zap/zapcore"
 	"gopkg.in/natefinch/lumberjack.v2"

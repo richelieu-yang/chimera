@@ -2,9 +2,9 @@ package runtimeKit
 
 import (
 	"fmt"
-	"github.com/richelieu42/go-scales/src/core/errorKit"
-	"github.com/richelieu42/go-scales/src/core/floatKit"
-	"github.com/richelieu42/go-scales/src/dataSizeKit"
+	"github.com/richelieu42/chimera/src/core/errorKit"
+	"github.com/richelieu42/chimera/src/core/floatKit"
+	"github.com/richelieu42/chimera/src/dataSizeKit"
 	"github.com/shirou/gopsutil/v3/disk"
 )
 

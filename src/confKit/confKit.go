@@ -10,10 +10,10 @@ package confKit
 
 import (
 	"github.com/mitchellh/mapstructure"
-	"github.com/richelieu42/go-scales/src/core/errorKit"
-	"github.com/richelieu42/go-scales/src/core/file/fileKit"
-	"github.com/richelieu42/go-scales/src/core/ioKit"
-	"github.com/richelieu42/go-scales/src/core/pointerKit"
+	"github.com/richelieu42/chimera/src/core/errorKit"
+	"github.com/richelieu42/chimera/src/core/file/fileKit"
+	"github.com/richelieu42/chimera/src/core/ioKit"
+	"github.com/richelieu42/chimera/src/core/pointerKit"
 	"github.com/spf13/viper"
 )
 

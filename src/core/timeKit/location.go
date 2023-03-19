@@ -1,7 +1,7 @@
 package timeKit
 
 import (
-	"github.com/richelieu42/go-scales/src/core/errorKit"
+	"github.com/richelieu42/chimera/src/core/errorKit"
 	"time"
 )
 

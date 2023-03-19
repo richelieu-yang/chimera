@@ -1,7 +1,7 @@
 package excelKit
 
 import (
-	"github.com/richelieu42/go-scales/src/core/file/fileKit"
+	"github.com/richelieu42/chimera/src/core/file/fileKit"
 	"github.com/xuri/excelize/v2"
 )
 

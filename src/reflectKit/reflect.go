@@ -2,7 +2,7 @@ package reflectKit
 
 import (
 	"fmt"
-	"github.com/richelieu42/go-scales/src/core/errorKit"
+	"github.com/richelieu42/chimera/src/core/errorKit"
 	"reflect"
 	"unsafe"
 )

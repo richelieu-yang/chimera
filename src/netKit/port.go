@@ -1,8 +1,8 @@
 package netKit
 
 import (
-	"github.com/richelieu42/go-scales/src/core/errorKit"
-	"github.com/richelieu42/go-scales/src/core/sliceKit"
+	"github.com/richelieu42/chimera/src/core/errorKit"
+	"github.com/richelieu42/chimera/src/core/sliceKit"
 	"time"
 )
 

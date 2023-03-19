@@ -2,7 +2,7 @@ package pathKit
 
 import (
 	"github.com/mitchellh/go-homedir"
-	"github.com/richelieu42/go-scales/src/core/userKit"
+	"github.com/richelieu42/chimera/src/core/userKit"
 )
 
 // GetHomeDir 获取当前用户的home dir（当前用户主目录）

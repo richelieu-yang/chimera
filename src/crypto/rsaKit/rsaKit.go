@@ -11,8 +11,8 @@ import (
 	"bytes"
 	"crypto/rand"
 	"crypto/rsa"
-	"github.com/richelieu42/go-scales/src/crypto/base64Kit"
-	"github.com/richelieu42/go-scales/src/resources"
+	"github.com/richelieu42/chimera/src/crypto/base64Kit"
+	"github.com/richelieu42/chimera/src/resources"
 	"github.com/sirupsen/logrus"
 )
 

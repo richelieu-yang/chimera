@@ -2,9 +2,9 @@ package httpKit
 
 import (
 	"fmt"
-	"github.com/richelieu42/go-scales/src/core/file/fileKit"
-	"github.com/richelieu42/go-scales/src/core/strKit"
-	"github.com/richelieu42/go-scales/src/jsonKit"
+	"github.com/richelieu42/chimera/src/core/file/fileKit"
+	"github.com/richelieu42/chimera/src/core/strKit"
+	"github.com/richelieu42/chimera/src/jsonKit"
 	"net/http"
 	"net/url"
 	"path/filepath"

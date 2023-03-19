@@ -1,6 +1,6 @@
 package sliceKit
 
-import "github.com/richelieu42/go-scales/src/copyKit"
+import "github.com/richelieu42/chimera/src/copyKit"
 
 // Copy 浅克隆（浅拷贝）
 /*

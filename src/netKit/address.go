@@ -10,8 +10,8 @@ package netKit
 
 import (
 	"fmt"
-	"github.com/richelieu42/go-scales/src/core/errorKit"
-	"github.com/richelieu42/go-scales/src/core/strKit"
+	"github.com/richelieu42/chimera/src/core/errorKit"
+	"github.com/richelieu42/chimera/src/core/strKit"
 	"net"
 	"strconv"
 )

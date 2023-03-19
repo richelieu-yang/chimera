@@ -1,13 +1,13 @@
 package logrusKit
 
 import (
-	"github.com/richelieu42/go-scales/src/core/errorKit"
-	"github.com/richelieu42/go-scales/src/core/osKit"
-	"github.com/richelieu42/go-scales/src/core/pathKit"
-	"github.com/richelieu42/go-scales/src/core/runtimeKit"
-	"github.com/richelieu42/go-scales/src/core/timeKit"
-	"github.com/richelieu42/go-scales/src/core/userKit"
-	"github.com/richelieu42/go-scales/src/ipKit"
+	"github.com/richelieu42/chimera/src/core/errorKit"
+	"github.com/richelieu42/chimera/src/core/osKit"
+	"github.com/richelieu42/chimera/src/core/pathKit"
+	"github.com/richelieu42/chimera/src/core/runtimeKit"
+	"github.com/richelieu42/chimera/src/core/timeKit"
+	"github.com/richelieu42/chimera/src/core/userKit"
+	"github.com/richelieu42/chimera/src/ipKit"
 	"github.com/sirupsen/logrus"
 )
 

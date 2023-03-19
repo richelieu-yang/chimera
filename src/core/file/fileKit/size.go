@@ -1,7 +1,7 @@
 package fileKit
 
 import (
-	"github.com/richelieu42/go-scales/src/dataSizeKit"
+	"github.com/richelieu42/chimera/src/dataSizeKit"
 	"os"
 	"path/filepath"
 )

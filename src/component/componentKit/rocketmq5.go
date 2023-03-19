@@ -2,8 +2,8 @@ package componentKit
 
 import (
 	rmq_client "github.com/apache/rocketmq-clients/golang"
-	"github.com/richelieu42/go-scales/src/core/errorKit"
-	"github.com/richelieu42/go-scales/src/mq/rocketmq5Kit"
+	"github.com/richelieu42/chimera/src/core/errorKit"
+	"github.com/richelieu42/chimera/src/mq/rocketmq5Kit"
 	"github.com/sirupsen/logrus"
 )
 

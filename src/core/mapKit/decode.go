@@ -2,7 +2,7 @@ package mapKit
 
 import (
 	"github.com/mitchellh/mapstructure"
-	"github.com/richelieu42/go-scales/src/core/pointerKit"
+	"github.com/richelieu42/chimera/src/core/pointerKit"
 )
 
 // Decode 将 通用的map[string]interface{} 解码到对应的 Go结构体中 ，或者执行相反的操作。

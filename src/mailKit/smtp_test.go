@@ -2,8 +2,8 @@ package mailKit
 
 import (
 	"fmt"
-	"github.com/richelieu42/go-scales/src/core/intKit"
-	"github.com/richelieu42/go-scales/src/core/timeKit"
+	"github.com/richelieu42/chimera/src/core/intKit"
+	"github.com/richelieu42/chimera/src/core/timeKit"
 	"testing"
 )
 

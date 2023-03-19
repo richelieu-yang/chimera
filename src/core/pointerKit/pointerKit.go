@@ -3,7 +3,7 @@ package pointerKit
 import (
 	"fmt"
 	"github.com/modern-go/reflect2"
-	"github.com/richelieu42/go-scales/src/core/strKit"
+	"github.com/richelieu42/chimera/src/core/strKit"
 	"reflect"
 )
 

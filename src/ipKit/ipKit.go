@@ -1,7 +1,7 @@
 package ipKit
 
 import (
-	"github.com/richelieu42/go-scales/src/ipKit/ipType"
+	"github.com/richelieu42/chimera/src/ipKit/ipType"
 	"net"
 )
 

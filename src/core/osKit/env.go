@@ -1,7 +1,7 @@
 package osKit
 
 import (
-	"github.com/richelieu42/go-scales/src/core/sliceKit"
+	"github.com/richelieu42/chimera/src/core/sliceKit"
 	"os"
 )
 

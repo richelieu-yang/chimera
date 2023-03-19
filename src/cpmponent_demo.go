@@ -2,8 +2,8 @@ package main
 
 import (
 	"github.com/gin-gonic/gin"
-	"github.com/richelieu42/go-scales/src/component/componentKit"
-	"github.com/richelieu42/go-scales/src/core/errorKit"
+	"github.com/richelieu42/chimera/src/component/componentKit"
+	"github.com/richelieu42/chimera/src/core/errorKit"
 	"net/http"
 	"time"
 )

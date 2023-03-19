@@ -2,10 +2,10 @@ package baiduOcrKit
 
 import (
 	"fmt"
-	"github.com/richelieu42/go-scales/src/core/errorKit"
-	"github.com/richelieu42/go-scales/src/core/strKit"
-	"github.com/richelieu42/go-scales/src/http/httpClientKit"
-	"github.com/richelieu42/go-scales/src/jsonKit"
+	"github.com/richelieu42/chimera/src/core/errorKit"
+	"github.com/richelieu42/chimera/src/core/strKit"
+	"github.com/richelieu42/chimera/src/http/httpClientKit"
+	"github.com/richelieu42/chimera/src/jsonKit"
 	"sync"
 	"time"
 )

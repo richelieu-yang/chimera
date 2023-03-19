@@ -1,6 +1,6 @@
 package nacosKit
 
-import "github.com/richelieu42/go-scales/src/core/strKit"
+import "github.com/richelieu42/chimera/src/core/strKit"
 
 type (
 	NacosLogLevel *string

@@ -25,7 +25,7 @@ import (
 	"errors"
 	"fmt"
 	errors2 "github.com/pkg/errors"
-	"github.com/richelieu42/go-scales/src/funcKit"
+	"github.com/richelieu42/chimera/src/funcKit"
 )
 
 // Simple 新建error（指针；不会携带堆栈信息）

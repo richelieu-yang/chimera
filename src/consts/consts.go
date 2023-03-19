@@ -4,7 +4,7 @@
 */
 package consts
 
-import "github.com/richelieu42/go-scales/src/core/osKit"
+import "github.com/richelieu42/chimera/src/core/osKit"
 
 // ColonInFileName （文件名中的）冒号
 var ColonInFileName string

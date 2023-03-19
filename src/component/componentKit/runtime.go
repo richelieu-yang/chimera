@@ -1,9 +1,9 @@
 package componentKit
 
 import (
-	"github.com/richelieu42/go-scales/src/core/runtimeKit"
-	"github.com/richelieu42/go-scales/src/core/strKit"
-	"github.com/richelieu42/go-scales/src/dataSizeKit"
+	"github.com/richelieu42/chimera/src/core/runtimeKit"
+	"github.com/richelieu42/chimera/src/core/strKit"
+	"github.com/richelieu42/chimera/src/dataSizeKit"
 	"github.com/sirupsen/logrus"
 )
 

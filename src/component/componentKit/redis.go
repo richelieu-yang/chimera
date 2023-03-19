@@ -1,8 +1,8 @@
 package componentKit
 
 import (
-	"github.com/richelieu42/go-scales/src/core/errorKit"
-	"github.com/richelieu42/go-scales/src/database/redisKit"
+	"github.com/richelieu42/chimera/src/core/errorKit"
+	"github.com/richelieu42/chimera/src/database/redisKit"
 	"github.com/sirupsen/logrus"
 )
 

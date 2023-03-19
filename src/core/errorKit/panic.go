@@ -1,7 +1,7 @@
 package errorKit
 
 import (
-	"github.com/richelieu42/go-scales/src/funcKit"
+	"github.com/richelieu42/chimera/src/funcKit"
 	"github.com/sirupsen/logrus"
 )
 

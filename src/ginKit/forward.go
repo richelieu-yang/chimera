@@ -2,11 +2,11 @@ package ginKit
 
 import (
 	"github.com/gin-gonic/gin"
-	"github.com/richelieu42/go-scales/src/core/mapKit"
-	"github.com/richelieu42/go-scales/src/core/strKit"
-	"github.com/richelieu42/go-scales/src/http/httpKit"
-	"github.com/richelieu42/go-scales/src/netKit"
-	"github.com/richelieu42/go-scales/src/urlKit"
+	"github.com/richelieu42/chimera/src/core/mapKit"
+	"github.com/richelieu42/chimera/src/core/strKit"
+	"github.com/richelieu42/chimera/src/http/httpKit"
+	"github.com/richelieu42/chimera/src/netKit"
+	"github.com/richelieu42/chimera/src/urlKit"
 	"log"
 	"net/http"
 	"net/http/httputil"

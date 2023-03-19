@@ -2,8 +2,8 @@ package imageKit
 
 import (
 	"github.com/disintegration/imaging"
-	"github.com/richelieu42/go-scales/src/core/errorKit"
-	"github.com/richelieu42/go-scales/src/core/file/fileKit"
+	"github.com/richelieu42/chimera/src/core/errorKit"
+	"github.com/richelieu42/chimera/src/core/file/fileKit"
 )
 
 // ConvertImageType 图片格式转换（图片类型转换）

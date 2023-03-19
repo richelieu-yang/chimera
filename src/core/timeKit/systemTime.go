@@ -2,8 +2,8 @@ package timeKit
 
 import (
 	"fmt"
-	"github.com/richelieu42/go-scales/src/cmdKit"
-	"github.com/richelieu42/go-scales/src/core/strKit"
+	"github.com/richelieu42/chimera/src/cmdKit"
+	"github.com/richelieu42/chimera/src/core/strKit"
 	"time"
 )
 

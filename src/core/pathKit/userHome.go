@@ -1,7 +1,7 @@
 package pathKit
 
 import (
-	"github.com/richelieu42/go-scales/src/core/userKit"
+	"github.com/richelieu42/chimera/src/core/userKit"
 )
 
 func GetUserHomePath() string {

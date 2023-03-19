@@ -3,9 +3,9 @@ package mailKit
 import (
 	"fmt"
 	"github.com/jordan-wright/email"
-	"github.com/richelieu42/go-scales/src/consts"
-	"github.com/richelieu42/go-scales/src/core/errorKit"
-	"github.com/richelieu42/go-scales/src/core/strKit"
+	"github.com/richelieu42/chimera/src/consts"
+	"github.com/richelieu42/chimera/src/core/errorKit"
+	"github.com/richelieu42/chimera/src/core/strKit"
 	"net/smtp"
 	"sync"
 	"time"

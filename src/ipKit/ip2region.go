@@ -2,9 +2,9 @@ package ipKit
 
 import (
 	"github.com/lionsoul2014/ip2region/binding/golang/xdb"
-	"github.com/richelieu42/go-scales/src/consts"
-	"github.com/richelieu42/go-scales/src/core/file/fileKit"
-	"github.com/richelieu42/go-scales/src/core/pathKit"
+	"github.com/richelieu42/chimera/src/consts"
+	"github.com/richelieu42/chimera/src/core/file/fileKit"
+	"github.com/richelieu42/chimera/src/core/pathKit"
 	"sync"
 )
 

@@ -3,8 +3,8 @@ package copyKit
 import (
 	"github.com/jinzhu/copier"
 	"github.com/mohae/deepcopy"
-	"github.com/richelieu42/go-scales/src/core/errorKit"
-	"github.com/richelieu42/go-scales/src/core/interfaceKit"
+	"github.com/richelieu42/chimera/src/core/errorKit"
+	"github.com/richelieu42/chimera/src/core/interfaceKit"
 )
 
 // DeepCopyStruct 深拷贝结构体

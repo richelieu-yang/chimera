@@ -1,7 +1,7 @@
 package funcKit
 
 import (
-	"github.com/richelieu42/go-scales/src/consts/key"
+	"github.com/richelieu42/chimera/src/consts/key"
 	"runtime"
 	"strings"
 )
@@ -65,7 +65,7 @@ func GetCallerNameWithSkip(skip int) string {
 // processFuncName 处理特殊情况: 包名太长的情况
 /*
 e.g.
-("github.com/richelieu42/go-scales/src/core/file/fileKit.AssertExistAndIsFile") = > "fileKit.AssertExistAndIsFile"
+("github.com/richelieu42/chimera/src/core/file/fileKit.AssertExistAndIsFile") = > "fileKit.AssertExistAndIsFile"
 */
 func processFuncName(name string) string {
 	//if !strings.HasSuffix(name, "/") {

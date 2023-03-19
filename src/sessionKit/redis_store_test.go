@@ -5,7 +5,7 @@ import (
 	"github.com/gin-gonic/gin"
 	"github.com/gorilla/sessions"
 	"github.com/redis/go-redis/v9"
-	"github.com/richelieu42/go-scales/src/idKit"
+	"github.com/richelieu42/chimera/src/idKit"
 	"net/http"
 	"testing"
 	"time"

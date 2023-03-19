@@ -3,9 +3,9 @@ package rocketmq5Kit
 import (
 	rmq_client "github.com/apache/rocketmq-clients/golang"
 	"github.com/apache/rocketmq-clients/golang/credentials"
-	"github.com/richelieu42/go-scales/src/copyKit"
-	"github.com/richelieu42/go-scales/src/core/errorKit"
-	"github.com/richelieu42/go-scales/src/core/strKit"
+	"github.com/richelieu42/chimera/src/copyKit"
+	"github.com/richelieu42/chimera/src/core/errorKit"
+	"github.com/richelieu42/chimera/src/core/strKit"
 )
 
 type (

@@ -10,9 +10,9 @@ package aesKit
 import (
 	"crypto/aes"
 	"crypto/cipher"
-	"github.com/richelieu42/go-scales/src/core/errorKit"
-	"github.com/richelieu42/go-scales/src/core/strKit"
-	"github.com/richelieu42/go-scales/src/crypto/base64Kit"
+	"github.com/richelieu42/chimera/src/core/errorKit"
+	"github.com/richelieu42/chimera/src/core/strKit"
+	"github.com/richelieu42/chimera/src/crypto/base64Kit"
 )
 
 // EncryptToString 加密流程: 明文 => 密文 => base64字符串

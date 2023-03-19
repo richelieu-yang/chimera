@@ -3,7 +3,7 @@ package md5Kit
 import (
 	"crypto/md5"
 	"encoding/hex"
-	"github.com/richelieu42/go-scales/src/core/file/fileKit"
+	"github.com/richelieu42/chimera/src/core/file/fileKit"
 	"io"
 	"os"
 )
