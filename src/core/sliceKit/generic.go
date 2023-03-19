@@ -82,39 +82,21 @@ func Uniq[T comparable](s []T) []T {
 	return lo.Uniq(s)
 }
 
-// RemoveDuplicate 切片实例去重.
+// Filter 过滤
 /*
-PS: 并不会改变 传参s 的内容（因为只是获取切片s的内容，并未修改）.
-
-Golang数组去重&切片去重: https://www.cnblogs.com/enumx/p/12323081.html
-通过map实现去重: https://mp.weixin.qq.com/s/tvy9L-pb_8WFWAmA9u-bMg
+@param s			可以为nil
+@param predicate	(1) 传参s中的某一元素是否通过？通过则加入到返回的slice实例中
+					(2) 不能为nil，否则会导致panic: runtime error: invalid memory address or nil pointer dereference
+@return 			必定不为nil（保底为空的slice实例）
 
 e.g.
-[false true hello true false world] => [hello true false world]
+	s := sliceKit.Filter([]int{0, 1, 2, 3}, func(item int, index int) bool {
+		return item >= 2
+	})
+	fmt.Println(s) // [2 3]
 */
-func RemoveDuplicate[T comparable](s []T) []T {
-	length := len(s)
-	if length <= 1 {
-		return s
-	}
-
-	// 一个新的切片实例
-	rst := make([]T, 0, length)
-	for i := 0; i < length; i++ {
-		repeat := false
-		ele := s[i]
-
-		for j := i + 1; j < length; j++ {
-			if ele == s[j] {
-				repeat = true
-				break
-			}
-		}
-		if !repeat {
-			rst = append(rst, ele)
-		}
-	}
-	return rst
+func Filter[V any](s []V, predicate func(item V, index int) bool) []V {
+	return lo.Filter(s, predicate)
 }
 
 // Shuffle 随机打乱切片

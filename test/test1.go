@@ -6,6 +6,8 @@ import (
 )
 
 func main() {
-	s := sliceKit.Uniq([]interface{}{0, 1, 2, 0, "1", "2", "1"})
-	fmt.Println(s)
+	s := sliceKit.Filter([]int{0, 1, 2, 3}, func(item int, index int) bool {
+		return item >= 2
+	})
+	fmt.Println(s) // [2 3]
 }
