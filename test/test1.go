@@ -3,11 +3,12 @@ package main
 import (
 	"fmt"
 	"github.com/richelieu42/go-scales/src/core/sliceKit"
+	"strconv"
 )
 
 func main() {
-	s := sliceKit.Filter([]int{0, 1, 2, 3}, func(item int, index int) bool {
-		return item >= 2
+	s := sliceKit.ConvertElementTypeInParallel([]int{0, 1, 2, 3}, func(item int, index int) string {
+		return "0x" + strconv.Itoa(item)
 	})
-	fmt.Println(s) // [2 3]
+	fmt.Println(s) // [0x0 0x1 0x2 0x3]
 }
