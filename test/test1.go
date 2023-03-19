@@ -7,8 +7,8 @@ import (
 )
 
 func main() {
-	s0 := []string{"0", "1", "2", "3"}
-	s1 := sliceKit.Shuffle(s0)
+	var s0 []string = nil
+	s1 := sliceKit.Reverse(s0)
 
 	fmt.Println(s0)
 	fmt.Println(s1)

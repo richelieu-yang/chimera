@@ -113,19 +113,16 @@ func Shuffle[T any](s []T) []T {
 
 // Reverse 反转切片
 /*
-PS: 可能会修改传参s！！！
-参考: https://mp.weixin.qq.com/s/tvy9L-pb_8WFWAmA9u-bMg
+PS: 会改变传参s的内容.
+
+@param s 可以为nil
 
 e.g.
-[] 	=> []
-nil => nil
+(nil) 							=> nil
+([]string{"0", "1", "2", "3"}) 	=> [3 2 1 0]
 */
 func Reverse[T any](s []T) []T {
-	for i := len(s)/2 - 1; i >= 0; i-- {
-		pos := len(s) - 1 - i
-		s[i], s[pos] = s[pos], s[i]
-	}
-	return s
+	return lo.Reverse(s)
 }
 
 // Swap 交换切片实例中两个元素的值
