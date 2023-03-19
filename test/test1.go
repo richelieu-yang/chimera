@@ -3,12 +3,15 @@ package main
 import (
 	"fmt"
 	"github.com/richelieu42/go-scales/src/core/sliceKit"
-	"strconv"
+	"unsafe"
 )
 
 func main() {
-	s := sliceKit.ConvertElementTypeInParallel([]int{0, 1, 2, 3}, func(item int, index int) string {
-		return "0x" + strconv.Itoa(item)
-	})
-	fmt.Println(s) // [0x0 0x1 0x2 0x3]
+	s0 := []string{"0", "1", "2", "3"}
+	s1 := sliceKit.Shuffle(s0)
+
+	fmt.Println(s0)
+	fmt.Println(s1)
+	fmt.Println(unsafe.Pointer(&s0))
+	fmt.Println(unsafe.Pointer(&s1))
 }

@@ -2,8 +2,6 @@ package sliceKit
 
 import (
 	"github.com/samber/lo"
-	"math/rand"
-	"time"
 )
 
 // Get 根据下标获取slice中的元素
@@ -101,27 +99,16 @@ func Filter[V any](s []V, predicate func(item V, index int) bool) []V {
 
 // Shuffle 随机打乱切片
 /*
-PS:
-(1) 可能会修改传参s！！！
-(2) 想要打乱元素，我们必须引入随机数，然后再交换元素；
-(3) 小概率没打乱切片实例.
+PS: 会改变传参s的内容.
+
+@param s 可以为nil
 
 e.g.
-[1 2 3 45 7 0 ccc true false] => [true 2 ccc 1 false 0 3 7 45]
+[string](nil) => nil
+[]string{"0", "1", "2", "3"} => [2 0 3 1]
 */
-func Shuffle[T any](s []T) {
-	length := len(s)
-	if length > 1 {
-		// seed random for changing order of elements
-		random := rand.New(rand.NewSource(time.Now().UnixNano()))
-
-		for i := length - 1; i > 0; i-- {
-			// [0, i + 1)范围内的随机整数
-			j := random.Intn(i + 1)
-			// 交换值
-			s[i], s[j] = s[j], s[i]
-		}
-	}
+func Shuffle[T any](s []T) []T {
+	return lo.Shuffle(s)
 }
 
 // Reverse 反转切片
