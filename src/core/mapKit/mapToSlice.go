@@ -11,8 +11,8 @@ import "github.com/samber/lo"
 
 e.g.
 	s := mapKit.MapToSlice[string, string, string](map[string]string{"1": "a"}, func(key string, value string) string {
-			return key + value
-		})
+		return key + value
+	})
 	fmt.Println(s) // [1a]
 */
 func MapToSlice[K comparable, V any, R any](m map[K]V, transform func(key K, value V) R) []R {
