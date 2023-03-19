@@ -1,6 +1,7 @@
 package sliceKit
 
 import (
+	"github.com/samber/lo"
 	"math/rand"
 	"time"
 )
@@ -66,6 +67,19 @@ func Merge[T comparable](slices ...[]T) []T {
 		}
 	}
 	return rst
+}
+
+// Uniq 去重
+/*
+@param s 	可以为nil
+@return		必定不为nil（保底为空的slice实例）
+
+e.g.
+	s := sliceKit.Uniq([]interface{}{0, 1, 2, 0, "1", "2", "1"})
+	fmt.Println(s)	// [0 1 2 1 2]（前3个为int类型，后2个为string类型）
+*/
+func Uniq[T comparable](s []T) []T {
+	return lo.Uniq(s)
 }
 
 // RemoveDuplicate 切片实例去重.
