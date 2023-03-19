@@ -6,10 +6,10 @@ import (
 )
 
 func main() {
-	s0 := []int{0, 1, 2, 3, 4, 5}
-	s1 := sliceKit.UniqBy[int, int](s0, func(i int) int {
-		return i % 3
-	})
-	fmt.Println(s0)
-	fmt.Println(s1)
+	s0 := []int{1, 2, 3, 4}
+	sum := sliceKit.Reduce[int, int](s0, func(agg int, item int, _ int) int {
+		return agg + item
+	}, 0)
+	fmt.Println(s0)  // [1 2 3 4]
+	fmt.Println(sum) // 10
 }
