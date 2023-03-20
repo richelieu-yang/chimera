@@ -10,7 +10,7 @@ import (
 	"time"
 )
 
-// NewRotateFileWriteCloser maxAge
+// NewRotateFileWriteCloser 超时根据maxAge
 /*
 PS:
 (0) 写是线程安全的；
@@ -49,7 +49,7 @@ func NewRotateFileWriteCloser(filePath string, rotationTime, maxAge time.Duratio
 	return rotatelogs.New(getFilePattern(filePath), options...)
 }
 
-// NewRotateFileWriteCloserWithCount rotationCount
+// NewRotateFileWriteCloserWithCount 超时根据rotationCount
 func NewRotateFileWriteCloserWithCount(filePath string, rotationTime time.Duration, rotationCount int, softLinkFlag bool) (io.WriteCloser, error) {
 	/* 默认值 */
 	if rotationTime <= 0 {
