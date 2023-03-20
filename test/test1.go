@@ -4,22 +4,29 @@ import (
 	"fmt"
 	"github.com/richelieu42/chimera/src/core/ioKit"
 	"github.com/sirupsen/logrus"
+	"time"
 )
 
 func main() {
-	wc, err := ioKit.NewDailyRotateRuleWriteCloser("a.log", "-", 1, false)
-	//wc, err := ioKit.NewSizeLimitRotateRuleWriteCloser("/Users/richelieu/Downloads", "-", 1, 10, 10, false)
+	wc, err := ioKit.NewRotateFileWriteCloser("/Users/richelieu/Downloads/c.log", time.Hour, time.Hour*12, false)
+	//wc, err := ioKit.NewDailyRotateRuleWriteCloser("/Users/richelieu/Downloads/c.log", "-", 1, false)
 	if err != nil {
 		fmt.Println(err.Error())
 		logrus.Fatal(err)
 	}
-	if _, err := wc.Write([]byte("123")); err != nil {
+	if _, err := wc.Write([]byte("123\n")); err != nil {
 		logrus.Fatal(err)
 	}
-	if _, err := wc.Write([]byte("456")); err != nil {
+	if _, err := wc.Write([]byte("456\n")); err != nil {
 		logrus.Fatal(err)
 	}
 	logrus.Info("------------------")
 
-	wc.Close()
+	logger := logrus.New()
+	logger.Out = wc
+	logger.Info("789")
+
+	//_ = wc.Close()
+
+	//time.Sleep(time.Second * 3)
 }

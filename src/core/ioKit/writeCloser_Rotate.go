@@ -2,18 +2,16 @@ package ioKit
 
 import (
 	rotatelogs "github.com/lestrrat-go/file-rotatelogs"
-	"github.com/richelieu42/chimera/src/consts"
 	"github.com/richelieu42/chimera/src/core/file/fileKit"
 	"github.com/richelieu42/chimera/src/core/pathKit"
 	"github.com/richelieu42/chimera/src/core/timeKit"
 	"io"
+	"runtime"
 	"time"
 )
 
 // NewRotateFileWriteCloser rotationTime && maxAge
 /*
-Deprecated: 建立使用 writeCloser_RotateRule.go 里面的.
-
 PS:
 (0) 写是线程安全的；
 (1) patternPath: 附带pattern的文件路径，e.g. "d:/test/test.%Y-%m-%d %H_%M_%S.log"
@@ -52,9 +50,6 @@ func NewRotateFileWriteCloser(filePath string, rotationTime, maxAge time.Duratio
 }
 
 // NewRotateFileWriteCloser1 rotationTime && rotationCount
-/*
-Deprecated: 建立使用 writeCloser_RotateRule.go 里面的.
-*/
 func NewRotateFileWriteCloser1(filePath string, rotationTime time.Duration, rotationCount int, softLinkFlag bool) (io.WriteCloser, error) {
 	/* 默认值 */
 	if rotationTime <= 0 {
@@ -77,7 +72,7 @@ func NewRotateFileWriteCloser1(filePath string, rotationTime time.Duration, rota
 // toFilePathWithPattern 复用代码
 /*
 e.g. Mac M1
-("/Users/richelieu/Downloads/111.log") => "111(2022-11-28 15：50：40).log"
+("/Users/richelieu/Downloads/111.log") => "111(2022-11-28T15-50-40).log"
 */
 func toFilePathWithPattern(filePath string) string {
 	dir := pathKit.GetParentDir(filePath)
@@ -85,6 +80,19 @@ func toFilePathWithPattern(filePath string) string {
 	suffix := fileKit.GetSuffix(filePath)
 
 	// Windows 和 Mac 的文件名不支持":"
-	timePattern := "(%Y-%m-%d %H" + consts.ColonInFileName + "%M" + consts.ColonInFileName + "%S)"
+	var timePattern string
+	switch runtime.GOOS {
+	case "windows":
+		fallthrough
+	case "darwin":
+		// windows || darwin
+		timePattern = "(%Y-%m-%dT%H-%M-%S)"
+	case "linux":
+		fallthrough
+	default:
+		// linux
+		timePattern = "(%Y-%m-%dT%H:%M:%S)"
+	}
+
 	return pathKit.Join(dir, prefix+timePattern+suffix)
 }
