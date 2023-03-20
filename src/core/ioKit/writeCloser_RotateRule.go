@@ -11,6 +11,12 @@ const (
 	defaultDelimiter = "-"
 )
 
+// NewDailyRotateRuleWriteCloser
+/*
+@param filePath	会自动创建父级目录；
+				文件不存在: 会创建；
+				文件已存在: (1)是个文件，会append；(2)是个目录，会返回error(e.g. open /Users/richelieu/Downloads: is a directory)
+*/
 func NewDailyRotateRuleWriteCloser(filePath, delimiter string, days int, compress bool) (io.WriteCloser, error) {
 	if days <= 0 {
 		return nil, errorKit.Simple("invalid days(%d)", days)
@@ -31,7 +37,9 @@ func NewDailyRotateRuleWriteCloser(filePath, delimiter string, days int, compres
 PS:
 (1) 最多生成文件的数量: maxBackups + 1(filePath)
 
-@param filePath		会自动创建父级目录；文件不存在会创建；文件已存在会append
+@param filePath		会自动创建父级目录；
+					文件不存在: 会创建；
+					文件已存在: (1)是个文件，会append；(2)是个目录，会返回error(e.g. open /Users/richelieu/Downloads: is a directory)
 @param delimiter	分隔符
 @param maxSize 		单位: MB
 @param maxBackups	备份数量的上限

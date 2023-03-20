@@ -86,7 +86,7 @@ e.g.
 	fmt.Println(texts1) // [0 2]
 */
 func Remove[T comparable](s []T, item T) ([]T, bool) {
-	index := Index(s, item)
+	index := IndexOf(s, item)
 	if index == -1 {
 		// 如果元素不存在于切片中，返回原始切片
 		return s, false
