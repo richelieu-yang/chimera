@@ -20,7 +20,7 @@ func NewClient(config *Config) (pulsar.Client, error) {
 	url := UrlPrefix + sliceKit.Join(tmp, ",")
 
 	var logger log.Logger
-	//logPath := strKit.Trim(config.LogPath)
+	//logPath := strKit.Trim(config.LogDir)
 	//if strKit.IsNotEmpty(logPath) {
 	//	if err := fileKit.MkParentDirs(logPath); err != nil {
 	//		return nil, err
