@@ -26,11 +26,6 @@ e.g.
 ("aaa.log", time.Second*3, time.Second*30, true) => 最多同时存在 11 个日志文件（不算替身；30 / 3 + 1 = 11）
 */
 func NewRotateFileWriteCloser(filePath string, rotationTime, maxAge time.Duration, softLinkFlag bool) (io.WriteCloser, error) {
-	/* 尝试创建父级目录 */
-	if err := fileKit.MkParentDirs(filePath); err != nil {
-		return nil, err
-	}
-
 	/* 默认值 */
 	if rotationTime <= 0 {
 		rotationTime = time.Hour * 12
@@ -46,7 +41,8 @@ func NewRotateFileWriteCloser(filePath string, rotationTime, maxAge time.Duratio
 	if softLinkFlag {
 		options = append(options, rotatelogs.WithLinkName(filePath))
 	}
-	return rotatelogs.New(getFilePattern(filePath), options...)
+
+	return newRotateFileWriteCloser(filePath, options)
 }
 
 // NewRotateFileWriteCloserWithCount 超时根据: rotationCount
@@ -66,7 +62,20 @@ func NewRotateFileWriteCloserWithCount(filePath string, rotationTime time.Durati
 	if softLinkFlag {
 		options = append(options, rotatelogs.WithLinkName(filePath))
 	}
-	return rotatelogs.New(getFilePattern(filePath), options...)
+
+	return newRotateFileWriteCloser(filePath, options)
+}
+
+func newRotateFileWriteCloser(filePath string, options []rotatelogs.Option) (io.WriteCloser, error) {
+	if err := fileKit.MkParentDirs(filePath); err != nil {
+		return nil, err
+	}
+	if err := fileKit.AssertNotExistOrIsFile(filePath); err != nil {
+		return nil, err
+	}
+
+	pattern := getFilePattern(filePath)
+	return rotatelogs.New(pattern, options...)
 }
 
 // getFilePattern 复用代码

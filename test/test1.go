@@ -8,7 +8,7 @@ import (
 )
 
 func main() {
-	wc, err := ioKit.NewRotateFileWriteCloser("/Users/richelieu/Downloads/c.log", time.Hour, time.Hour*12, true)
+	wc, err := ioKit.NewRotateFileWriteCloser("/Users/richelieu/Downloads/1", time.Hour, time.Hour*12, true)
 	//wc, err := ioKit.NewDailyRotateRuleWriteCloser("/Users/richelieu/Downloads/c.log", "-", 1, false)
 	if err != nil {
 		fmt.Println(err.Error())
