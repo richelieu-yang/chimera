@@ -50,7 +50,7 @@ func NewRotateFileWriteCloser(filePath string, rotationTime, maxAge time.Duratio
 }
 
 // NewRotateFileWriteCloserWithCount 超时根据: rotationCount
-func NewRotateFileWriteCloserWithCount(filePath string, rotationTime time.Duration, rotationCount int, softLinkFlag bool) (io.WriteCloser, error) {
+func NewRotateFileWriteCloserWithCount(filePath string, rotationTime time.Duration, rotationCount uint, softLinkFlag bool) (io.WriteCloser, error) {
 	/* 默认值 */
 	if rotationTime <= 0 {
 		rotationTime = time.Hour * 12
@@ -61,7 +61,7 @@ func NewRotateFileWriteCloserWithCount(filePath string, rotationTime time.Durati
 
 	options := []rotatelogs.Option{
 		rotatelogs.WithRotationTime(rotationTime),
-		rotatelogs.WithRotationCount(uint(rotationCount)),
+		rotatelogs.WithRotationCount(rotationCount),
 	}
 	if softLinkFlag {
 		options = append(options, rotatelogs.WithLinkName(filePath))
