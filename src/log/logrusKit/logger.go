@@ -17,11 +17,11 @@ func DisposeLogger(logger *logrus.Logger) error {
 	return ioKit.CloseWriters(logger.Out)
 }
 
-// NewCustomizedLogger 输出到控制台（os.Stderr）
+// NewLogger 输出到控制台（os.Stderr）
 /*
-@param formatter 可以为nil，此时将采用默认值
+@param formatter 可以为nil(此时将采用默认值)
 */
-func NewCustomizedLogger(formatter logrus.Formatter, level logrus.Level) *logrus.Logger {
+func NewLogger(formatter logrus.Formatter, level logrus.Level) *logrus.Logger {
 	if formatter == nil {
 		formatter = DefaultTextFormatter
 	}
@@ -66,7 +66,7 @@ func NewRotateFileLogger(filePath string, formatter logrus.Formatter, level logr
 	}
 
 	/* 此方法不方便 Close()，因为是通过Hook实现输出到控制台的同时也输出到文件日志 */
-	//logger := NewCustomizedLogger(formatter, level)
+	//logger := NewLogger(formatter, level)
 	//if toConsoleFlag {
 	//	// (1) 输出到: 文件日志 + 控制台
 	//	lfsHook := lfshook.NewHook(lfshook.WriterMap{
@@ -90,7 +90,7 @@ func NewRotateFileLogger(filePath string, formatter logrus.Formatter, level logr
 
 // newFileLogger 复用代码
 func newFileLogger(formatter logrus.Formatter, level logrus.Level, writeCloser io.WriteCloser, toConsole bool) *logrus.Logger {
-	logger := NewCustomizedLogger(formatter, level)
+	logger := NewLogger(formatter, level)
 	if toConsole {
 		writeCloser = ioKit.MultiWriteCloser(writeCloser, ioKit.NopWriteCloser(os.Stdout))
 	}
