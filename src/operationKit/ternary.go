@@ -12,9 +12,9 @@ golang三目运算的实现 https://www.cnblogs.com/GetcharZp/p/15172602.html
 @param rst0 true 条件下的返回值
 @param rst1 false条件下的返回值
 */
-func Ternary[T any](flag bool, rst0, rst1 T) T {
+func Ternary[T any](flag bool, trueRst, falseRst T) T {
 	if flag {
-		return rst0
+		return trueRst
 	}
-	return rst1
+	return falseRst
 }
