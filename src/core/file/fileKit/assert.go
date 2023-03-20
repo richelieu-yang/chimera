@@ -19,7 +19,7 @@ func AssertExist(path string) error {
 func AssertNotExistOrIsFile(path string) error {
 	if Exist(path) && IsDir(path) {
 		// 此处的1是为了跳过当前函数的调用
-		return errorKit.SimpleWithExtraSkip(1, "[Assertion failed] path(%s) exists but is a directory", path)
+		return errorKit.SimpleWithExtraSkip(1, "[Assertion failed] path(%s) exists but it isn't a file", path)
 	}
 	return nil
 }
@@ -31,7 +31,7 @@ func AssertNotExistOrIsFile(path string) error {
 func AssertNotExistOrIsDir(path string) error {
 	if Exist(path) && IsFile(path) {
 		// 此处的1是为了跳过当前函数的调用
-		return errorKit.SimpleWithExtraSkip(1, "[Assertion failed] path(%s) exists but is a file", path)
+		return errorKit.SimpleWithExtraSkip(1, "[Assertion failed] path(%s) exists but it isn't a directory", path)
 	}
 	return nil
 }
