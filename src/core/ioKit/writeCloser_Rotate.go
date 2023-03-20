@@ -10,7 +10,7 @@ import (
 	"time"
 )
 
-// NewRotateFileWriteCloser rotationTime && maxAge
+// NewRotateFileWriteCloser maxAge
 /*
 PS:
 (0) 写是线程安全的；
@@ -46,11 +46,11 @@ func NewRotateFileWriteCloser(filePath string, rotationTime, maxAge time.Duratio
 	if softLinkFlag {
 		options = append(options, rotatelogs.WithLinkName(filePath))
 	}
-	return rotatelogs.New(toFilePathWithPattern(filePath), options...)
+	return rotatelogs.New(getFilePattern(filePath), options...)
 }
 
-// NewRotateFileWriteCloser1 rotationTime && rotationCount
-func NewRotateFileWriteCloser1(filePath string, rotationTime time.Duration, rotationCount int, softLinkFlag bool) (io.WriteCloser, error) {
+// NewRotateFileWriteCloserWithCount rotationCount
+func NewRotateFileWriteCloserWithCount(filePath string, rotationTime time.Duration, rotationCount int, softLinkFlag bool) (io.WriteCloser, error) {
 	/* 默认值 */
 	if rotationTime <= 0 {
 		rotationTime = time.Hour * 12
@@ -66,15 +66,15 @@ func NewRotateFileWriteCloser1(filePath string, rotationTime time.Duration, rota
 	if softLinkFlag {
 		options = append(options, rotatelogs.WithLinkName(filePath))
 	}
-	return rotatelogs.New(toFilePathWithPattern(filePath), options...)
+	return rotatelogs.New(getFilePattern(filePath), options...)
 }
 
-// toFilePathWithPattern 复用代码
+// getFilePattern 复用代码
 /*
 e.g. Mac M1
 ("/Users/richelieu/Downloads/111.log") => "111(2022-11-28T15-50-40).log"
 */
-func toFilePathWithPattern(filePath string) string {
+func getFilePattern(filePath string) string {
 	dir := pathKit.GetParentDir(filePath)
 	prefix := fileKit.GetPrefix(filePath)
 	suffix := fileKit.GetSuffix(filePath)
