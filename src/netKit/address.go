@@ -49,7 +49,7 @@ func ParseToAddress(str string) (*Address, error) {
 	tmp := strKit.Trim(str)
 	tmp = strKit.ReplaceAll(tmp, "\\", "/")
 	if strKit.IsEmpty(tmp) {
-		return nil, errorKit.Simple("str(\"%s\") is invalid", str)
+		return nil, errorKit.Simple("invalid str(%s)", str)
 	}
 
 	var scheme string
@@ -73,7 +73,7 @@ func ParseToAddress(str string) (*Address, error) {
 		hostname := arr[0]
 		port, err := getDefaultPortByScheme(scheme)
 		if err != nil {
-			return nil, err
+			return nil, errorKit.Wrap(err, "invalid str(%s)", str)
 		}
 		return &Address{
 			Hostname: hostname,
@@ -94,7 +94,7 @@ func ParseToAddress(str string) (*Address, error) {
 			port, err = strconv.Atoi(portStr)
 		}
 		if err != nil {
-			return nil, err
+			return nil, errorKit.Wrap(err, "invalid str(%s)", str)
 		}
 
 		return &Address{
