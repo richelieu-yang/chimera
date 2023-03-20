@@ -11,7 +11,7 @@ const (
 	defaultDelimiter = "-"
 )
 
-// NewDailyRotateRuleWriteCloser
+// NewDailyRotateRuleWriteCloser 调用了go-zero中的方法.
 /*
 Deprecated: 调用完 Write() 后立即调用 Close() || 进程退出，Write的内容可能不会立即保存到文件中，导致丢失.
 
@@ -34,7 +34,7 @@ func NewDailyRotateRuleWriteCloser(filePath, delimiter string, days int, compres
 	return logx.NewLogger(filePath, rule, compress)
 }
 
-// NewSizeLimitRotateRuleWriteCloser
+// NewSizeLimitRotateRuleWriteCloser 调用了go-zero中的方法.
 /*
 Deprecated: 调用完 Write() 后立即调用 Close() || 进程退出，Write的内容可能不会立即保存到文件中，导致丢失.
 
