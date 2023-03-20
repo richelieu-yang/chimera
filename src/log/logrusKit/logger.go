@@ -36,7 +36,8 @@ func NewLogger(formatter logrus.Formatter, level logrus.Level) *logrus.Logger {
 /*
 PS: 如果 logger.Out 被释放后继续调用 logger 进行输出，会失败（e.g. 控制台os.Stderr有输出: Failed to write to log, write /Users/richelieu/Downloads/a.txt: file already closed）.
 
-@param filePath			(1) 会尝试创建父级目录
+@param filePath			内部会做处理:
+						(1) 会尝试创建父级目录
 						(2) 文件不存在，会自动创建
 						(3) 文件存在：是个文件，追加在最后；是个目录，返回error
 @param formatter 		可以为nil，此时将采用默认值
@@ -62,7 +63,8 @@ func NewFileLogger(filePath string, formatter logrus.Formatter, level logrus.Lev
 /*
 PS: 如果 logger.Out 被释放后继续调用 logger 进行输出，会失败（e.g. 控制台os.Stderr有输出: Failed to write to log, invalid argument）.
 
-@param filePath	(1) 会尝试创建父级目录
+@param filePath	内部会做处理:
+				(1) 会尝试创建父级目录
 				(2) 文件不存在，会自动创建
 				(3) 文件存在：是个文件，追加在最后；是个目录，返回error
 */
