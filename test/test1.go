@@ -1,17 +1,15 @@
 package main
 
 import (
-	"fmt"
 	"github.com/richelieu42/chimera/src/core/ioKit"
 	"github.com/sirupsen/logrus"
 	"time"
 )
 
 func main() {
-	wc, err := ioKit.NewRotateFileWriteCloser("/Users/richelieu/Downloads", time.Hour, time.Hour*12, true)
+	wc, err := ioKit.NewRotateFileWriteCloser("/Users/richelieu/Downloads/c.log", time.Hour, time.Hour*12, true)
 	//wc, err := ioKit.NewDailyRotateRuleWriteCloser("/Users/richelieu/Downloads/c.log", "-", 1, false)
 	if err != nil {
-		fmt.Println(err.Error())
 		logrus.Fatal(err)
 	}
 	if _, err := wc.Write([]byte("123\n")); err != nil {
