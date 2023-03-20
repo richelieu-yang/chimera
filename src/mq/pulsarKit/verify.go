@@ -88,7 +88,7 @@ func VerifyPulsar(client pulsar.Client, topic string, printArgs ...bool) error {
 					"left":  left,
 					"valid": ok,
 					"text":  string(cMsg.Payload()),
-				}).Error("[Consumer] receive a message")
+				}).Info("[Consumer] receive a message")
 				if left == 0 {
 					successCh <- struct{}{}
 					break
@@ -97,7 +97,7 @@ func VerifyPulsar(client pulsar.Client, topic string, printArgs ...bool) error {
 				logger.WithFields(logrus.Fields{
 					"valid": ok,
 					"text":  string(cMsg.Payload()),
-				}).Error("[Consumer] receive a message")
+				}).Info("[Consumer] receive a message")
 			}
 		}
 	}()
