@@ -41,26 +41,27 @@ PS: 如果 logger.Out 被释放后继续调用 logger 进行输出，会失败�
 @param toConsoleFlag 	true: 输出到日志文件的同时，也输出到控制台; false: 只输出到文件日志
 */
 func NewFileLogger(filePath string, formatter logrus.Formatter, level logrus.Level, toConsoleFlag bool) (*logrus.Logger, error) {
-	// 尝试创建父级目录
 	if err := fileKit.MkParentDirs(filePath); err != nil {
 		return nil, err
 	}
+	if err := fileKit.AssertNotExistOrIsFile(filePath); err != nil {
+		return nil, err
+	}
 
-	var writeCloser io.WriteCloser
-	writeCloser, err := os.OpenFile(filePath, os.O_RDWR|os.O_APPEND|os.O_CREATE, 0666)
+	wc, err := os.OpenFile(filePath, os.O_RDWR|os.O_APPEND|os.O_CREATE, 0666)
 	if err != nil {
 		return nil, err
 	}
 
-	return newFileLogger(formatter, level, writeCloser, toConsoleFlag), nil
+	return newFileLogger(formatter, level, wc, toConsoleFlag), nil
 }
 
 // NewRotateFileLogger
 /*
 PS: 如果 logger.Out 被释放后继续调用 logger 进行输出，会失败（e.g. 控制台os.Stderr有输出: Failed to write to log, invalid argument）.
 */
-func NewRotateFileLogger(filePath string, formatter logrus.Formatter, level logrus.Level, rotationTime, maxAge time.Duration, softLinkFlag, toConsoleFlag bool) (*logrus.Logger, error) {
-	writeCloser, err := ioKit.NewRotateFileWriteCloser(filePath, rotationTime, maxAge, softLinkFlag)
+func NewRotateFileLogger(filePath string, rotationTime, maxAge time.Duration, softLinkFlag bool, formatter logrus.Formatter, level logrus.Level, toConsoleFlag bool) (*logrus.Logger, error) {
+	wc, err := ioKit.NewRotateFileWriteCloser(filePath, rotationTime, maxAge, softLinkFlag)
 	if err != nil {
 		return nil, err
 	}
@@ -70,22 +71,22 @@ func NewRotateFileLogger(filePath string, formatter logrus.Formatter, level logr
 	//if toConsoleFlag {
 	//	// (1) 输出到: 文件日志 + 控制台
 	//	lfsHook := lfshook.NewHook(lfshook.WriterMap{
-	//		logrus.TraceLevel: writeCloser,
-	//		logrus.DebugLevel: writeCloser,
-	//		logrus.InfoLevel:  writeCloser,
-	//		logrus.WarnLevel:  writeCloser,
-	//		logrus.ErrorLevel: writeCloser,
-	//		logrus.FatalLevel: writeCloser,
-	//		logrus.PanicLevel: writeCloser,
+	//		logrus.TraceLevel: wc,
+	//		logrus.DebugLevel: wc,
+	//		logrus.InfoLevel:  wc,
+	//		logrus.WarnLevel:  wc,
+	//		logrus.ErrorLevel: wc,
+	//		logrus.FatalLevel: wc,
+	//		logrus.PanicLevel: wc,
 	//	}, formatter)
 	//	logger.AddHook(lfsHook)
 	//} else {
 	//	// (2) 输出到: 文件日志
-	//	logger.Out = writeCloser
+	//	logger.Out = wc
 	//}
 	//return logger, nil
 
-	return newFileLogger(formatter, level, writeCloser, toConsoleFlag), nil
+	return newFileLogger(formatter, level, wc, toConsoleFlag), nil
 }
 
 // newFileLogger 复用代码
