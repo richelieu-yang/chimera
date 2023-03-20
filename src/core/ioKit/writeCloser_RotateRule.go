@@ -13,7 +13,7 @@ const (
 
 // NewDailyRotateRuleWriteCloser
 /*
-Deprecated: 调用完 Write() 后立即调用 Close() || 进程退出，Write的内容可能不会立即保存到文件中而丢失.
+Deprecated: 调用完 Write() 后立即调用 Close() || 进程退出，Write的内容可能不会立即保存到文件中，导致丢失.
 
 @param filePath	会自动创建父级目录；
 				文件不存在: 会创建；
@@ -36,7 +36,7 @@ func NewDailyRotateRuleWriteCloser(filePath, delimiter string, days int, compres
 
 // NewSizeLimitRotateRuleWriteCloser
 /*
-Deprecated: 调用完 Write() 后立即调用 Close() || 进程退出，Write的内容可能不会立即保存到文件中而丢失.
+Deprecated: 调用完 Write() 后立即调用 Close() || 进程退出，Write的内容可能不会立即保存到文件中，导致丢失.
 
 PS: 最多生成文件的数量: maxBackups + 1(filePath)
 
