@@ -20,7 +20,7 @@ func Join(s []string, sep string) string {
 
 // RemoveEmpty
 /*
-@param trimArgs 是否先对每个元素进行trim操作？默认：false
+@param trimArgs 是否 先 对每个元素进行trim操作？默认：false
 
 e.g.
 (nil) 			=> nil
