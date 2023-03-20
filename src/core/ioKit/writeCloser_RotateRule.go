@@ -32,6 +32,7 @@ PS:
 (1) 最多生成文件的数量: maxBackups + 1(filePath)
 
 @param filePath		会自动创建父级目录；文件不存在会创建；文件已存在会append
+@param delimiter	分隔符
 @param maxSize 		单位: MB
 @param maxBackups	备份数量的上限
 @param compress		如果设置为true，compress前后各会输出一条信息（logx.Infof、logx.Errorf）
