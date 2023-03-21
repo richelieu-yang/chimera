@@ -32,7 +32,6 @@ func VerifyPulsar(client pulsar.Client, topic string, printArgs ...bool) error {
 
 	var timeLimit = time.Second * 10
 	var sendTimeout = time.Second
-	//var sendTimeout = time.Nanosecond
 
 	timeStr := timeKit.FormatCurrentTime()
 	ulid := idKit.NewULID()

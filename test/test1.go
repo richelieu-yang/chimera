@@ -1,16 +1,23 @@
 package main
 
 import (
-	"github.com/richelieu42/chimera/src/log/logrusKit"
 	"github.com/sirupsen/logrus"
+	"time"
 )
 
 func main() {
-	logger := logrusKit.NewLogger(nil, logrus.PanicLevel)
+	ch := make(chan int)
 
-	logger.Trace("Trace")
-	logger.Debug("Debug")
-	logger.Info("Info")
-	logger.Warn("Warn")
-	logger.Error("Error")
+	logrus.Info("------")
+
+	go func() {
+		time.Sleep(time.Second)
+		logrus.Info("[goroutine] close starts")
+		close(ch)
+		logrus.Info("[goroutine] close ends")
+	}()
+
+	logrus.Info("write starts")
+	ch <- 1 // panic: send on closed channel
+	logrus.Info("write ends")
 }
