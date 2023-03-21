@@ -18,6 +18,7 @@ func SetTag(pMsg *pulsar.ProducerMessage, tag string) {
 // GetTag
 /*
 @param msg	不能为nil
+@return 可能为""
 */
 func GetTag(msg pulsar.Message) string {
 	return mapKit.Get(msg.Properties(), key.Tag)
