@@ -30,20 +30,6 @@ func ContainKeys[K comparable, V any](m map[K]V, keys ...K) bool {
 	return true
 }
 
-// GetKeySlice 获取map实例中的所有key
-/*
-@param m 	如果为 nil 或 空的map实例，将返回nil
-@return 	非nil的slice实例（len >= 0）
-*/
-func GetKeySlice[K comparable, V any](m map[K]V) []K {
-	s := make([]K, 0, len(m))
-
-	for key := range m {
-		s = append(s, key)
-	}
-	return s
-}
-
 // Remove
 /*
 PS:

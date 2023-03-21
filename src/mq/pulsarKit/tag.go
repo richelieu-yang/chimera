@@ -2,15 +2,23 @@ package pulsarKit
 
 import (
 	"github.com/apache/pulsar-client-go/pulsar"
+	"github.com/richelieu42/chimera/src/consts/key"
 	"github.com/richelieu42/chimera/src/core/mapKit"
 )
 
+// SetTag
+/*
+@param pMsg	不能为nil
+@param tag	可以为""
+*/
 func SetTag(pMsg *pulsar.ProducerMessage, tag string) {
-	m := pMsg.Properties
-
-	mapKit.Set()
+	pMsg.Properties = mapKit.SetSafely(pMsg.Properties, key.Tag, tag)
 }
 
+// GetTag
+/*
+@param msg	不能为nil
+*/
 func GetTag(msg pulsar.Message) string {
-
+	return mapKit.Get(msg.Properties(), key.Tag)
 }
