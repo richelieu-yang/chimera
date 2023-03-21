@@ -63,10 +63,14 @@ func VerifyPulsar(client pulsar.Client, topic string, printArgs ...bool) error {
 	}
 	defer producer.Close()
 
-	var successCh = make(chan struct{}, 1)
-	var errCh0 = make(chan error, 1)
-	var errCh1 = make(chan error, 1)
+	var ch = make(chan struct{}, 1)
+	var consumerErrCh = make(chan error, 1)
+	var producerErrCh = make(chan error, 1)
 
+	ctx, cancel := context.WithCancel(context.TODO())
+	defer cancel()
+
+	/* consumer */
 	go func() {
 		defer func() {
 			logger.Info("[Consumer] goroutine ends")
@@ -75,19 +79,22 @@ func VerifyPulsar(client pulsar.Client, topic string, printArgs ...bool) error {
 		s := sliceKit.Copy(texts)
 
 		for {
-			msg, err := consumer.Receive(context.TODO())
+			msg, err := consumer.Receive(ctx)
 			if err != nil {
+				err = errorKit.Wrap(err, "fail to receive")
 				logger.WithFields(logrus.Fields{
 					"error": err.Error(),
 				}).Info("[Consumer] fail to receive")
-				errCh0 <- err
+				consumerErrCh <- err
 				break
 			}
 			if err := consumer.Ack(msg); err != nil {
+				err = errorKit.Wrap(err, "fail to ack")
 				logger.WithFields(logrus.Fields{
 					"error": err.Error(),
 				}).Info("[Consumer] fail to ack")
-				continue
+				consumerErrCh <- err
+				break
 			}
 
 			var ok bool
@@ -101,40 +108,13 @@ func VerifyPulsar(client pulsar.Client, topic string, printArgs ...bool) error {
 			}).Info("[Consumer] receive a message")
 
 			if ok && left == 0 {
-				successCh <- struct{}{}
+				ch <- struct{}{}
 				break
 			}
 		}
 	}()
 
-	//for cMsg := range consumer.Chan() {
-	//	if err := consumer.Ack(cMsg); err != nil {
-	//		logger.WithFields(logrus.Fields{
-	//			"text": string(cMsg.Payload()),
-	//		}).Error("[Consumer] fail to ack")
-	//		continue
-	//	}
-	//	str := string(cMsg.Payload())
-	//	var ok bool
-	//	if s, ok = sliceKit.Remove(s, str); ok {
-	//		left := len(s)
-	//		logger.WithFields(logrus.Fields{
-	//			"left":  left,
-	//			"valid": ok,
-	//			"text":  string(cMsg.Payload()),
-	//		}).Info("[Consumer] receive a message")
-	//		if left == 0 {
-	//			successCh <- struct{}{}
-	//			break
-	//		}
-	//	} else {
-	//		logger.WithFields(logrus.Fields{
-	//			"valid": ok,
-	//			"text":  string(cMsg.Payload()),
-	//		}).Info("[Consumer] receive a message")
-	//	}
-	//}
-
+	/* producer */
 	go func() {
 		defer func() {
 			logger.Info("[Producer] goroutine ends")
@@ -151,23 +131,26 @@ func VerifyPulsar(client pulsar.Client, topic string, printArgs ...bool) error {
 				return err
 			}()
 			if err != nil {
+				err = errorKit.Wrap(err, "fail to send")
 				logger.WithFields(logrus.Fields{
 					"text":  text,
 					"error": err.Error(),
-				}).Error("[Producer] fail to send a message")
-				errCh1 <- err
+				}).Error("[Producer] fail to send")
+				producerErrCh <- err
 				break
 			}
 			logger.WithFields(logrus.Fields{
 				"text": text,
-			}).Info("[Producer] send a message")
+			}).Info("[Producer] succeeded to send")
 		}
 	}()
 
 	select {
-	case <-successCh:
+	case <-ch:
 		return nil
-	case err := <-errCh1:
+	case err := <-producerErrCh:
+		return err
+	case err := <-consumerErrCh:
 		return err
 	case <-time.After(timeLimit):
 		return errorKit.Simple("fail to get all messages within time limit(%s)", timeLimit)
