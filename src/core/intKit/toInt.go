@@ -40,16 +40,15 @@ func ToInt64E(obj interface{}) (int64, error) {
 	return cast.ToInt64E(obj)
 }
 
-// ParseStringToInt 类型转换: string => int
-func ParseStringToInt(str string) (int, error) {
+// StringToInt 类型转换: string => int
+func StringToInt(str string) (int, error) {
 	str = strKit.RemoveSpace(str)
-
 	return strconv.Atoi(str)
 }
 
-// ParseStringToIntWithDefault 类型转换: string => int
-func ParseStringToIntWithDefault(str string, def int) int {
-	i, err := ParseStringToInt(str)
+// StringToIntWithDefault 类型转换: string => int
+func StringToIntWithDefault(str string, def int) int {
+	i, err := StringToInt(str)
 	if err != nil {
 		return def
 	}

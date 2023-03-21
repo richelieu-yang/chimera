@@ -74,17 +74,7 @@ func (c *paramCapture) GetBoolParam(ctx *gin.Context, key string, def bool) bool
 
 func (c *paramCapture) GetIntParam(ctx *gin.Context, key string, def int) int {
 	str := c.GetParam(ctx, key)
-	return intKit.ParseStringToIntWithDefault(str, def)
-}
-
-func (c *paramCapture) GetInt32Param(ctx *gin.Context, key string, def int32) int32 {
-	str := c.GetParam(ctx, key)
-	return intKit.ParseStringToInt32WithDefault(str, def)
-}
-
-func (c *paramCapture) GetInt64Param(ctx *gin.Context, key string, def int64) int64 {
-	str := c.GetParam(ctx, key)
-	return intKit.ParseStringToInt64WithDefault(str, def)
+	return intKit.StringToIntWithDefault(str, def)
 }
 
 func (c *paramCapture) GetFloat32Param(ctx *gin.Context, key string, def float32) float32 {
