@@ -18,7 +18,10 @@ func ToInt(obj interface{}) int {
 // ToIntE
 /*
 e.g.
-(nil) => 0, nil
+(nil) 	=> 0 <nil>
+(false)	=> 0 <nil>
+(true)	=> 1 <nil>
+("")	=> 0 unable to cast "" of type string to int64
 */
 func ToIntE(obj interface{}) (int, error) {
 	return cast.ToIntE(obj)
