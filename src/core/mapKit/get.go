@@ -33,6 +33,24 @@ func GetInt[K comparable, V any](m map[K]V, key K) (int, error) {
 	return intKit.ToIntE(value)
 }
 
+// GetInt32
+/*
+@param m 可以为nil
+*/
+func GetInt32[K comparable, V any](m map[K]V, key K) (int32, error) {
+	value := Get(m, key)
+	return intKit.ToInt32E(value)
+}
+
+// GetInt64
+/*
+@param m 可以为nil
+*/
+func GetInt64[K comparable, V any](m map[K]V, key K) (int64, error) {
+	value := Get(m, key)
+	return intKit.ToInt64E(value)
+}
+
 // GetBool
 /*
 @param m 可以为nil
