@@ -16,6 +16,9 @@ import (
 )
 
 // VerifyPulsar 简单地验证 Pulsar服务 是否启动成功
+/*
+TODO: Pulsar服务未启动的情况下，创建Consumer和Producer会失败，但耗时超过1min，后续要处理.
+*/
 func VerifyPulsar(client pulsar.Client, topic string, printArgs ...bool) error {
 	if client == nil {
 		return errorKit.Simple("client == nil")
