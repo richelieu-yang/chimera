@@ -1,10 +1,13 @@
 package main
 
 import (
-	"fmt"
-	"github.com/richelieu42/chimera/src/funcKit"
+	"github.com/redis/go-redis/v9"
+	"github.com/richelieu42/chimera/src/assertKit"
+	"github.com/richelieu42/chimera/src/core/errorKit"
 )
 
 func main() {
-	fmt.Println(funcKit.GetCaller(1))
+	var err error = redis.Nil
+	err = errorKit.Wrap(err, "cyy")
+	assertKit.Must(err)
 }

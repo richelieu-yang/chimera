@@ -9,6 +9,8 @@ import (
 // GetCaller
 /*
 参考: go-zero中的logx/util.go.
+
+@param callDepth 必须满足: >=0，实际使用中: >=1
 */
 func GetCaller(callDepth int) string {
 	_, file, line, ok := runtime.Caller(callDepth)
