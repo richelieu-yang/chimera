@@ -4,8 +4,6 @@ import (
 	"github.com/apache/pulsar-client-go/pulsar"
 	"github.com/apache/pulsar-client-go/pulsar/log"
 	"github.com/richelieu42/chimera/src/core/errorKit"
-	"github.com/richelieu42/chimera/src/core/file/fileKit"
-	"github.com/richelieu42/chimera/src/core/pathKit"
 	"github.com/richelieu42/chimera/src/core/sliceKit"
 	"github.com/richelieu42/chimera/src/core/strKit"
 	"github.com/richelieu42/chimera/src/log/logrusKit"
@@ -18,20 +16,17 @@ func NewClient(config *Config) (pulsar.Client, error) {
 		return nil, errorKit.Simple("config == nil")
 	}
 
+	/* url */
 	tmp, err := netKit.ProcessAddresses(config.Addresses)
 	if err != nil {
 		return nil, err
 	}
 	url := UrlPrefix + sliceKit.Join(tmp, ",")
 
-	// pulsar客户端的日志输出
+	/* logger */
 	var logger log.Logger
-	logDir := strKit.Trim(config.LogDir)
-	if strKit.IsNotEmpty(logDir) {
-		if err := fileKit.MkParentDirs(logDir); err != nil {
-			return nil, err
-		}
-		logPath := pathKit.Join(logDir, ClientLogName)
+	logPath := config.LogPath
+	if strKit.IsNotEmpty(logPath) {
 		fileLogger, err := logrusKit.NewFileLogger(logPath, nil, logrus.DebugLevel, false)
 		if err != nil {
 			return nil, err
