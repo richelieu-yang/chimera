@@ -13,7 +13,7 @@ import (
 */
 func Must(err error) {
 	if err != nil {
-		log.Fatalf("fatal with caller(%s) and error:\n%+v", funcKit.GetCaller(2), err)
+		log.Fatalf("[FATAL] caller(%s) and error:\n%+v", funcKit.GetCaller(2), err)
 
 		//logrus.WithFields(logrus.Fields{
 		//	"caller": funcKit.GetCaller(2),

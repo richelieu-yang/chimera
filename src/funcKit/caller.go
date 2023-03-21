@@ -17,7 +17,6 @@ func GetCaller(callDepth int) string {
 	if !ok {
 		return ""
 	}
-
 	return prettyCaller(file, line)
 }
 

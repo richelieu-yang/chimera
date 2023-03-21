@@ -8,6 +8,6 @@ import (
 
 func main() {
 	var err error = redis.Nil
-	err = errorKit.Wrap(err, "cyy")
+	err = errorKit.Wrap(err, "Redis错误")
 	assertKit.Must(err)
 }
