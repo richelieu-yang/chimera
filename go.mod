@@ -4,7 +4,7 @@ go 1.20
 
 require (
 	github.com/apache/pulsar-client-go v0.9.0
-	github.com/apache/rocketmq-clients/golang v0.0.0-20230317082249-514056c2f986
+	github.com/apache/rocketmq-clients/golang v0.0.0-20230321063829-41bfbcf6130d
 	github.com/dablelv/go-huge-util v0.0.35
 	github.com/deckarep/golang-set/v2 v2.3.0
 	github.com/disintegration/imaging v1.6.2
@@ -33,7 +33,7 @@ require (
 	github.com/pkg/errors v0.9.1
 	github.com/redis/go-redis/v9 v9.0.2
 	github.com/robfig/cron/v3 v3.0.1
-	github.com/samber/lo v1.37.0
+	github.com/samber/lo v1.38.1
 	github.com/satori/go.uuid v1.2.0
 	github.com/shirou/gopsutil/v3 v3.23.2
 	github.com/shopspring/decimal v1.3.1
@@ -44,7 +44,7 @@ require (
 	github.com/xuri/excelize/v2 v2.7.0
 	github.com/zeromicro/go-zero v1.5.0
 	go.uber.org/zap v1.24.0
-	golang.org/x/exp v0.0.0-20230315142452-642cacee5cc0
+	golang.org/x/exp v0.0.0-20230321023759-10a507213a29
 	golang.org/x/text v0.8.0
 	google.golang.org/grpc v1.53.0
 	gopkg.in/natefinch/lumberjack.v2 v2.2.1
