@@ -1,13 +1,13 @@
 package main
 
 import (
-	"github.com/redis/go-redis/v9"
-	"github.com/richelieu42/chimera/src/assertKit"
-	"github.com/richelieu42/chimera/src/core/errorKit"
+	"github.com/richelieu42/chimera/src/mq/pulsarKit"
 )
 
 func main() {
-	var err error = redis.Nil
-	err = errorKit.Wrap(err, "Redis错误")
-	assertKit.Must(err)
+	pulsarKit.MustSetUp(&pulsarKit.Config{
+		Addresses:      nil,
+		LogPath:        "",
+		TopicForVerify: "",
+	})
 }
