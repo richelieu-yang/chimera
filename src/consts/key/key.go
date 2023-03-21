@@ -21,4 +21,6 @@ const (
 	UUID       = "uuid"
 
 	UNKNOWN = "unknown"
+
+	Tag = "tag"
 )
