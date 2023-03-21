@@ -15,7 +15,7 @@ import (
 	"time"
 )
 
-// VerifyPulsar 验证 Pulsar服务 是否启动成功
+// VerifyPulsar 简单地验证 Pulsar服务 是否启动成功
 func VerifyPulsar(client pulsar.Client, topic string, printArgs ...bool) error {
 	if client == nil {
 		return errorKit.Simple("client == nil")
