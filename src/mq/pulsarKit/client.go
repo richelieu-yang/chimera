@@ -44,7 +44,7 @@ func NewClient(config *Config) (pulsar.Client, error) {
 
 	topic := config.TopicForVerify
 	if strKit.IsNotEmpty(topic) {
-		if err := VerifySimply(client, topic); err != nil {
+		if err := Verify(client, topic); err != nil {
 			return nil, err
 		}
 	}

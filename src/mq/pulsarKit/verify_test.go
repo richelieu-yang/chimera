@@ -13,6 +13,6 @@ func TestVerifyPulsar(t *testing.T) {
 	assert.Nil(t, err)
 	assert.NotNil(t, client)
 
-	err = VerifySimply(client, "test1", true)
+	err = Verify(client, "test1", true)
 	assert.Nil(t, err)
 }
