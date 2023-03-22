@@ -1,6 +1,7 @@
 package pulsarKit
 
 import (
+	"context"
 	"github.com/apache/pulsar-client-go/pulsar"
 	"github.com/richelieu42/chimera/src/assertKit"
 	"github.com/richelieu42/chimera/src/core/errorKit"
@@ -27,16 +28,16 @@ func SetUp(pulsarConfig *Config) (err error) {
 	return err
 }
 
-func NewProducer(options pulsar.ProducerOptions, logPath string) (*Producer, error) {
+func NewProducer(ctx context.Context, options pulsar.ProducerOptions, logPath string) (*Producer, error) {
 	if config == nil {
 		return nil, NotSetupError
 	}
-	return NewProducerOriginally(config.Addresses, options, logPath)
+	return NewProducerOriginally(ctx, config.Addresses, options, logPath)
 }
 
-func NewConsumer(options pulsar.ConsumerOptions, logPath string) (*Consumer, error) {
+func NewConsumer(ctx context.Context, options pulsar.ConsumerOptions, logPath string) (*Consumer, error) {
 	if config == nil {
 		return nil, NotSetupError
 	}
-	return NewConsumerOriginally(config.Addresses, options, logPath)
+	return NewConsumerOriginally(ctx, config.Addresses, options, logPath)
 }
