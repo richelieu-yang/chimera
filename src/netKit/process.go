@@ -5,6 +5,10 @@ import (
 	"github.com/richelieu42/chimera/src/core/sliceKit"
 )
 
+// ProcessAddresses
+/*
+@return 如果第二个返回值为nil，那么 len(第一个返回值) > 0
+*/
 func ProcessAddresses(addresses []string) ([]string, error) {
 	if len(addresses) == 0 {
 		return nil, errorKit.Simple("len(addresses) == 0")

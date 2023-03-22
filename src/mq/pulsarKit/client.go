@@ -3,7 +3,6 @@ package pulsarKit
 import (
 	"github.com/apache/pulsar-client-go/pulsar"
 	"github.com/apache/pulsar-client-go/pulsar/log"
-	"github.com/richelieu42/chimera/src/core/errorKit"
 	"github.com/richelieu42/chimera/src/core/sliceKit"
 	"github.com/richelieu42/chimera/src/core/strKit"
 	"github.com/richelieu42/chimera/src/log/logrusKit"
@@ -11,13 +10,9 @@ import (
 	"github.com/sirupsen/logrus"
 )
 
-func NewClient(config *Config) (pulsar.Client, error) {
-	if config == nil {
-		return nil, errorKit.Simple("config == nil")
-	}
-
+func NewClient(addresses []string, logPath string) (pulsar.Client, error) {
 	/* url */
-	tmp, err := netKit.ProcessAddresses(config.Addresses)
+	tmp, err := netKit.ProcessAddresses(addresses)
 	if err != nil {
 		return nil, err
 	}
@@ -25,7 +20,6 @@ func NewClient(config *Config) (pulsar.Client, error) {
 
 	/* logger */
 	var logger log.Logger
-	logPath := config.LogPath
 	if strKit.IsNotEmpty(logPath) {
 		fileLogger, err := logrusKit.NewFileLogger(logPath, nil, logrus.DebugLevel, false)
 		if err != nil {
@@ -40,13 +34,6 @@ func NewClient(config *Config) (pulsar.Client, error) {
 	})
 	if err != nil {
 		return nil, err
-	}
-
-	topic := config.TopicForVerify
-	if strKit.IsNotEmpty(topic) {
-		if err := Verify(client, topic); err != nil {
-			return nil, err
-		}
 	}
 
 	return client, nil

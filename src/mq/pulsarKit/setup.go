@@ -11,21 +11,18 @@ var client pulsar.Client
 var setupOnce sync.Once
 
 func MustSetUp(config *Config) {
-	err := SetUp(config)
-	assertKit.Must(err)
+	assertKit.Must(SetUp(config))
 }
 
-func SetUp(config *Config) error {
-	var err error
-
+func SetUp(config *Config) (err error) {
 	setupOnce.Do(func() {
-		client, err = NewClient(config)
+		client, err = NewClient1(config)
 	})
 
 	if err != nil {
-		return errorKit.Wrap(err, "fail to set up")
+		err = errorKit.Wrap(err, "fail to set up")
 	}
-	return nil
+	return err
 }
 
 // GetClient
