@@ -6,6 +6,30 @@ import (
 	"strings"
 )
 
+// GetEntireCaller
+/*
+e.g.
+(1) => "pulsarKit/ccc.go:9:Test"
+*/
+func GetEntireCaller(callDepth int) string {
+	pc, file, line, ok := runtime.Caller(callDepth)
+	if !ok {
+		return ""
+	}
+	return prettyCaller(file, line) + ":" + prettyFuncName(pc)
+}
+
+func prettyFuncName(pc uintptr) string {
+	// e.g."github.com/richelieu42/chimera/src/core/file/fileKit.AssertExistAndIsFile"
+	funcName := runtime.FuncForPC(pc).Name()
+
+	index := strings.LastIndex(funcName, ".")
+	if index != -1 {
+		funcName = funcName[index+1:]
+	}
+	return funcName
+}
+
 // GetCaller
 /*
 参考: go-zero中的logx/util.go.
