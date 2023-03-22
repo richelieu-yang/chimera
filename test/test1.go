@@ -24,6 +24,11 @@ func main() {
 	}
 	logrus.Info(consumer)
 
-	producer, err := pulsarKit.NewProducerOriginally(ctx, addresses, pulsar.ProducerOptions{}, "")
-
+	//producer, err := pulsarKit.NewProducerOriginally(ctx, addresses, pulsar.ProducerOptions{
+	//	Topic:            "test",
+	//}, "")
+	//if err != nil {
+	//	logrus.Fatal(err)
+	//}
+	//logrus.Info(producer)
 }
