@@ -23,18 +23,52 @@ func (c *Consumer) Close() {
 PS: 目标Pulsar服务未启动的情况下，如果ctx不加以限制，要过约 1min 才会返回error（期间客户端日志有connection refused输出）.
 */
 func NewConsumerOriginally(ctx context.Context, addresses []string, options pulsar.ConsumerOptions, logPath string) (*Consumer, error) {
-	client, err := NewClient(addresses, logPath)
-	if err != nil {
-		return nil, errorKit.Wrap(err, "fail to new client")
-	}
+	var client pulsar.Client
+	var consumer pulsar.Consumer
 
-	consumer, err := client.Subscribe(options)
-	if err != nil {
-		return nil, errorKit.Wrap(err, "fail to subscribe")
-	}
+	// 写入nil: 新建Consumer成功
+	errCh := make(chan error, 1)
 
-	return &Consumer{
-		Client:   client,
-		Consumer: consumer,
-	}, nil
+	go func() {
+		var err error
+		client, err = NewClient(addresses, logPath)
+		if err != nil {
+			err = errorKit.Wrap(err, "fail to new client")
+			errCh <- err
+			return
+		}
+		consumer, err = client.Subscribe(options)
+		if err != nil {
+			err = errorKit.Wrap(err, "fail to subscribe")
+			errCh <- err
+			return
+		}
+
+		select {
+		case <-ctx.Done():
+			// 新建Consumer成功之前，ctx已经 超时 或 被取消 了
+			if consumer == nil {
+				consumer.Close()
+			}
+			if client == nil {
+				client.Close()
+			}
+			errCh <- ctx.Err()
+		default:
+			errCh <- nil
+		}
+	}()
+
+	select {
+	case <-ctx.Done():
+		return nil, ctx.Err()
+	case err := <-errCh:
+		if err != nil {
+			return nil, err
+		}
+		return &Consumer{
+			Client:   client,
+			Consumer: consumer,
+		}, nil
+	}
 }
