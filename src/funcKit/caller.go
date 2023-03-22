@@ -9,14 +9,14 @@ import (
 // GetEntireCaller
 /*
 e.g.
-(1) => "pulsarKit/ccc.go:9:Test"
+(1) => test/test1.go:26 testFunc()
 */
 func GetEntireCaller(callDepth int) string {
 	pc, file, line, ok := runtime.Caller(callDepth)
 	if !ok {
 		return ""
 	}
-	return prettyCaller(file, line) + ":" + prettyFuncName(pc)
+	return fmt.Sprintf("%s %s()", prettyCaller(file, line), prettyFuncName(pc))
 }
 
 func prettyFuncName(pc uintptr) string {
@@ -37,7 +37,7 @@ func prettyFuncName(pc uintptr) string {
 @param callDepth 必须满足: >=0，实际使用中: >=1
 
 e.g.
-(1)	=> "pulsarKit/ccc.go:9"
+(1)	=> "test/test1.go:27"
 */
 func GetCaller(callDepth int) string {
 	_, file, line, ok := runtime.Caller(callDepth)
