@@ -122,7 +122,6 @@ func _verify(logger *logrus.Logger, topic, consumerLogPath, producerLogPath stri
 		}()
 
 		s := sliceKit.Copy(texts)
-
 		for {
 			msg, err := consumer.Receive(consumerCtx)
 			if err != nil {
