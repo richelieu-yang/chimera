@@ -7,7 +7,7 @@ import (
 
 func TestSetUp(t *testing.T) {
 	pulsarConfig := &Config{
-		Addresses: []string{"localhost:6650"},
+		Addresses: []string{"127.0.0.1:6650"},
 		VerifyConfig: &VerifyConfig{
 			Topic: "test",
 			Print: true,

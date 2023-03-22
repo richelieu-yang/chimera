@@ -115,7 +115,7 @@ If err is nil, Wrap returns nil.
 @param format 建议首字母小写，且最后面不要加标点符号，否则"%v"输出会比较难看（%v: message在左边；%+v: message在下边）
 */
 func Wrap(err error, format string, args ...interface{}) error {
-	format = funcKit.AddFuncInfoToString(format, 1)
+	format = fmt.Sprintf("[%s] %s", funcKit.GetEntireCaller(2), format)
 
 	return errors2.Wrapf(err, format, args...)
 }
@@ -128,7 +128,7 @@ If err is nil, WithMessage returns nil.
 %+v：	message在下面。
 */
 func WithMessage(err error, format string, args ...interface{}) error {
-	format = funcKit.AddFuncInfoToString(format, 1)
+	format = fmt.Sprintf("[%s] %s", funcKit.GetEntireCaller(2), format)
 
 	return errors2.WithMessagef(err, format, args...)
 }

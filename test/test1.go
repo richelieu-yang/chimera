@@ -1,28 +1,25 @@
 package main
 
 import (
-	"fmt"
-	"github.com/richelieu42/chimera/src/funcKit"
+	"context"
+	"github.com/apache/pulsar-client-go/pulsar"
+	"github.com/richelieu42/chimera/src/mq/pulsarKit"
+	"github.com/sirupsen/logrus"
+	"time"
 )
 
 func main() {
-	testFunc()
-	//addresses := []string{"localhost:6650"}
-	//
-	//ctx, cancel := context.WithTimeout(context.TODO(), time.Second*10)
-	//defer cancel()
-	//consumer, err := pulsarKit.NewConsumerOriginally(ctx, addresses, pulsar.ConsumerOptions{
-	//	Topic:            "test",
-	//	SubscriptionName: "my-sub1",
-	//	Type:             pulsar.Exclusive,
-	//}, "")
-	//if err != nil {
-	//	logrus.Fatal(err)
-	//}
-	//logrus.Info(consumer)
-}
+	addresses := []string{"localhost:6650"}
 
-func testFunc() {
-	fmt.Println(funcKit.GetEntireCaller(1))
-	fmt.Println(funcKit.GetCaller(1))
+	ctx, cancel := context.WithTimeout(context.TODO(), time.Second*10)
+	defer cancel()
+	consumer, err := pulsarKit.NewConsumerOriginally(ctx, addresses, pulsar.ConsumerOptions{
+		Topic:            "test",
+		SubscriptionName: "my-sub1",
+		Type:             pulsar.Exclusive,
+	}, "")
+	if err != nil {
+		logrus.Fatal(err)
+	}
+	logrus.Info(consumer)
 }
