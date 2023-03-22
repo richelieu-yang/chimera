@@ -114,7 +114,7 @@ func _verify(verifyConfig *VerifyConfig, logger *logrus.Logger, consumerLogPath,
 	defer cancel()
 	go func() {
 		defer func() {
-			logger.Info("[Consumer] goroutine ends")
+			logger.Info("[Verify, Consumer] goroutine ends")
 		}()
 
 		s := sliceKit.Copy(texts)
@@ -125,7 +125,7 @@ func _verify(verifyConfig *VerifyConfig, logger *logrus.Logger, consumerLogPath,
 				err = errorKit.Wrap(err, "fail to receive")
 				logger.WithFields(logrus.Fields{
 					"error": err.Error(),
-				}).Info("[Consumer] fail to receive")
+				}).Info("[Verify, Consumer] fail to receive")
 				consumerErrCh <- err
 				break
 			}
@@ -133,7 +133,7 @@ func _verify(verifyConfig *VerifyConfig, logger *logrus.Logger, consumerLogPath,
 				err = errorKit.Wrap(err, "fail to ack")
 				logger.WithFields(logrus.Fields{
 					"error": err.Error(),
-				}).Info("[Consumer] fail to ack")
+				}).Info("[Verify, Consumer] fail to ack")
 				consumerErrCh <- err
 				break
 			}
@@ -146,10 +146,10 @@ func _verify(verifyConfig *VerifyConfig, logger *logrus.Logger, consumerLogPath,
 				"left":  left,
 				"valid": ok,
 				"text":  text,
-			}).Info("[Consumer] receive a message")
+			}).Info("[Verify, Consumer] receive a message")
 
 			if ok && left == 0 {
-				logger.Info("[Consumer] receive all messages!")
+				logger.Info("[Verify, Consumer] receive all messages!")
 				ch <- struct{}{}
 				break
 			}
@@ -159,7 +159,7 @@ func _verify(verifyConfig *VerifyConfig, logger *logrus.Logger, consumerLogPath,
 	/* producer */
 	go func() {
 		defer func() {
-			logger.Info("[Producer] goroutine ends")
+			logger.Info("[Verify, Producer] goroutine ends")
 		}()
 
 		for _, text := range texts {
@@ -177,13 +177,13 @@ func _verify(verifyConfig *VerifyConfig, logger *logrus.Logger, consumerLogPath,
 				logger.WithFields(logrus.Fields{
 					"text":  text,
 					"error": err.Error(),
-				}).Error("[Producer] fail to send")
+				}).Error("[Verify, Producer] fail to send")
 				producerErrCh <- err
 				break
 			}
 			logger.WithFields(logrus.Fields{
 				"text": text,
-			}).Info("[Producer] succeeded to send")
+			}).Info("[Verify, Producer] succeeded to send")
 		}
 	}()
 
