@@ -1,19 +1,34 @@
 package main
 
 import (
-	"fmt"
-	"github.com/richelieu42/chimera/src/core/errorKit"
-	"io"
+	"context"
+	"github.com/apache/pulsar-client-go/pulsar"
+	"github.com/richelieu42/chimera/src/mq/pulsarKit"
+	"github.com/sirupsen/logrus"
+	"time"
 )
 
 func main() {
-	err := io.EOF
-	err = errorKit.WithLocationInfo(err)
+	addresses := []string{"localhost:6650"}
 
-	// test/test1.go:11|main: EOF
-	fmt.Printf("%v\n", err)
-	// EOF
-	// test/test1.go:11|main
-	fmt.Printf("%+v\n", err)
+	ctx, cancel := context.WithTimeout(context.TODO(), time.Second*10)
+	defer cancel()
 
+	//consumer, err := pulsarKit.NewConsumerOriginally(ctx, addresses, pulsar.ConsumerOptions{
+	//	Topic:            "test",
+	//	SubscriptionName: "my-sub1",
+	//	Type:             pulsar.Exclusive,
+	//}, "")
+	//if err != nil {
+	//	logrus.Fatal(err)
+	//}
+	//logrus.Info(consumer)
+
+	producer, err := pulsarKit.NewProducerOriginally(ctx, addresses, pulsar.ProducerOptions{
+		Topic: "test",
+	}, "")
+	if err != nil {
+		logrus.Fatal(err)
+	}
+	logrus.Info(producer)
 }

@@ -115,7 +115,7 @@ If err is nil, Wrap returns nil.
 @param format 建议首字母小写，且最后面不要加标点符号，否则"%v"输出会比较难看（%v: message在左边；%+v: message在下边）
 */
 func Wrap(err error, format string, args ...interface{}) error {
-	format = fmt.Sprintf("[%s] %s", funcKit.GetEntireCaller(2), format)
+	format = funcKit.GetEntireCaller(2) + " " + format
 
 	return errors2.Wrapf(err, format, args...)
 }
@@ -126,9 +126,20 @@ WithMessage annotates err with a new message.
 If err is nil, WithMessage returns nil.
 %v：	message在左边；
 %+v：	message在下面。
+
+e.g.
+	var err error = redis.Nil
+	err = errorKit.WithMessage(err, "message")
+
+	//test/test2.go:11|main message: redis: nil
+	fmt.Printf("%v\n", err)
+
+	//redis: nil
+	//test/test2.go:11|main message
+	fmt.Printf("%+v\n", err)
 */
 func WithMessage(err error, format string, args ...interface{}) error {
-	format = fmt.Sprintf("[%s] %s", funcKit.GetEntireCaller(2), format)
+	format = funcKit.GetEntireCaller(2) + " " + format
 
 	return errors2.WithMessagef(err, format, args...)
 }
