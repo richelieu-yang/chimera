@@ -17,30 +17,55 @@ import (
 	"time"
 )
 
+const (
+	// verifyConnectTimeout 创建Consumer或Producer的超时时间
+	verifyConnectTimeout = time.Second * 10
+
+	// verifyReceiveTimeLimit 接受消息的时限
+	verifyReceiveTimeLimit = time.Second * 10
+
+	// verifySendTimeout 单次发送消息的超时时间
+	verifySendTimeout = time.Second
+)
+
 // verify 简单地验证 Pulsar服务 是否启动成功
 func verify(verifyConfig *VerifyConfig) (err error) {
 	dir, _ := pathKit.GetChimeraTempDir()
 	timeStr := timeKit.FormatCurrentTime(timeKit.FormatFileName)
 	consumerLogPath := pathKit.Join(dir, fmt.Sprintf("pulsar_verify_consumer_%s.log", timeStr))
 	producerLogPath := pathKit.Join(dir, fmt.Sprintf("pulsar_verify_producer_%s.log", timeStr))
+
+	// 是否打印日志到控制台？
+	printFlag := verifyConfig.Print
+	cLogger := logrusKit.NewLogger(nil, operationKit.Ternary(printFlag, logrus.DebugLevel, logrus.PanicLevel))
+	cLogger.Infof("[Verify] consumerLogPath: [%s].", consumerLogPath)
+	cLogger.Infof("[Verify] producerLogPath: [%s].", producerLogPath)
+
 	defer func() {
 		if err == nil {
-			// 验证成功，删掉客户端日志文件
-			_ = fileKit.Delete(consumerLogPath)
-			_ = fileKit.Delete(producerLogPath)
+			// 验证成功的情况下，删掉客户端日志文件
+			if err := fileKit.Delete(consumerLogPath); err != nil {
+				cLogger.WithFields(logrus.Fields{
+					"error": err.Error(),
+				}).Error("[Verify] fail to delete consumerLogPath")
+			} else {
+				cLogger.Info("[Verify] delete consumerLogPath")
+			}
+			if err := fileKit.Delete(producerLogPath); err != nil {
+				cLogger.WithFields(logrus.Fields{
+					"error": err.Error(),
+				}).Error("[Verify] fail to delete producerLogPath")
+			} else {
+				cLogger.Info("[Verify] delete producerLogPath")
+			}
 		}
 	}()
 
-	err = _verify(verifyConfig, consumerLogPath, producerLogPath)
+	err = _verify(verifyConfig, cLogger, consumerLogPath, producerLogPath)
 	return
 }
 
-func _verify(verifyConfig *VerifyConfig, consumerLogPath, producerLogPath string) error {
-	// 接受消息的时限
-	var receiveTimeLimit = time.Second * 10
-	// 单次发送消息的超时时间
-	var sendTimeout = time.Second
-
+func _verify(verifyConfig *VerifyConfig, logger *logrus.Logger, consumerLogPath, producerLogPath string) error {
 	if verifyConfig == nil {
 		// 不验证
 		return nil
@@ -50,11 +75,6 @@ func _verify(verifyConfig *VerifyConfig, consumerLogPath, producerLogPath string
 		// 不验证
 		return nil
 	}
-	// 是否打印日志到控制台？
-	printFlag := verifyConfig.Print
-	logger := logrusKit.NewLogger(nil, operationKit.Ternary(printFlag, logrus.DebugLevel, logrus.PanicLevel))
-	logger.Infof("[Consumer] log path: [%s].", consumerLogPath)
-	logger.Infof("[Producer] log path: [%s].", producerLogPath)
 
 	timeStr := timeKit.FormatCurrentTime()
 	ulid := idKit.NewULID()
@@ -78,7 +98,7 @@ func _verify(verifyConfig *VerifyConfig, consumerLogPath, producerLogPath string
 	defer consumer.Close()
 	producer, err := NewProducer(context.TODO(), pulsar.ProducerOptions{
 		Topic:       topic,
-		SendTimeout: sendTimeout,
+		SendTimeout: verifySendTimeout,
 	}, producerLogPath)
 	if err != nil {
 		return err
@@ -147,7 +167,7 @@ func _verify(verifyConfig *VerifyConfig, consumerLogPath, producerLogPath string
 				Payload: []byte(text),
 			}
 			err := func() error {
-				ctx, cancel := context.WithTimeout(context.TODO(), sendTimeout)
+				ctx, cancel := context.WithTimeout(context.TODO(), verifySendTimeout)
 				defer cancel()
 				_, err := producer.Send(ctx, pMsg)
 				return err
@@ -174,7 +194,7 @@ func _verify(verifyConfig *VerifyConfig, consumerLogPath, producerLogPath string
 		return err
 	case err := <-consumerErrCh:
 		return err
-	case <-time.After(receiveTimeLimit):
-		return errorKit.Simple("fail to get all messages within time limit(%s)", receiveTimeLimit)
+	case <-time.After(verifyReceiveTimeLimit):
+		return errorKit.Simple("fail to get all messages within time limit(%s)", verifyReceiveTimeLimit)
 	}
 }
