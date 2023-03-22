@@ -50,7 +50,7 @@ func NewConsumerOriginally(ctx context.Context, addresses []string, options puls
 
 		select {
 		case <-ctx.Done():
-			// 新建Consumer成功之前，ctx已经 超时 或 被取消 了
+			// 新建Consumer成功之前，ctx已经 超时 或 被取消 了，此时需要释放资源
 			if consumer == nil {
 				consumer.Close()
 			}
