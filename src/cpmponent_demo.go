@@ -3,30 +3,30 @@ package main
 import (
 	"github.com/gin-gonic/gin"
 	"github.com/richelieu42/chimera/src/component/componentKit"
-	"github.com/richelieu42/chimera/src/core/errorKit"
+	"github.com/sirupsen/logrus"
 	"net/http"
 	"time"
 )
 
 func main() {
 	if err := componentKit.InitializeEnvironment(); err != nil {
-		errorKit.PanicByError(err)
+		logrus.Panic(err)
 	}
 
 	{
 		if err := business(); err != nil {
-			errorKit.PanicByError(err)
+			logrus.Panic(err)
 		}
 	}
 
 	// redis组件（可选）
 	if err := componentKit.InitializeRedisComponent(); err != nil {
-		errorKit.PanicByError(err)
+		logrus.Panic(err)
 	}
 
 	// RocketMQ5组件（可选）
 	if err := componentKit.InitializeRocketMQ5Component(); err != nil {
-		errorKit.PanicByError(err)
+		logrus.Panic(err)
 	}
 
 	//// json组件（可选）
@@ -40,12 +40,12 @@ func main() {
 	//	return resp
 	//}
 	//if err := componentKit.InitializeJsonComponent(messageFilePath, messageHook, responseHook); err != nil {
-	//	errorKit.PanicByError(err)
+	//	logrus.Panic(err)
 	//}
 
 	{
 		if err := business1(); err != nil {
-			errorKit.PanicByError(err)
+			logrus.Panic(err)
 		}
 	}
 
@@ -54,7 +54,7 @@ func main() {
 		// TODO: gin处理请求时发生panic的情况，在此处进行相应的处理（比如响应json给前端）
 	})
 	if err := componentKit.InitializeGinComponent(recoveryMiddleware, business2); err != nil {
-		errorKit.PanicByError(err)
+		logrus.Panic(err)
 	}
 }
 
