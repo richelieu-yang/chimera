@@ -60,7 +60,7 @@ func NewConsumerOriginally(ctx context.Context, addresses []string, options puls
 			if client == nil {
 				client.Close()
 			}
-			errCh <- errorKit.Wrap(ctx.Err(), "fail to new consumer")
+			errCh <- ctx.Err()
 		default:
 			errCh <- nil
 		}
@@ -68,7 +68,7 @@ func NewConsumerOriginally(ctx context.Context, addresses []string, options puls
 
 	select {
 	case <-ctx.Done():
-		return nil, errorKit.Wrap(ctx.Err(), "fail to new consumer")
+		return nil, ctx.Err()
 	case err := <-errCh:
 		if err != nil {
 			return nil, err

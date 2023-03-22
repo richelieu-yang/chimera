@@ -14,21 +14,21 @@ func main() {
 	ctx, cancel := context.WithTimeout(context.TODO(), time.Second*10)
 	defer cancel()
 
-	consumer, err := pulsarKit.NewConsumerOriginally(ctx, addresses, pulsar.ConsumerOptions{
-		Topic:            "test",
-		SubscriptionName: "my-sub1",
-		Type:             pulsar.Exclusive,
-	}, "")
-	if err != nil {
-		logrus.Fatal(err)
-	}
-	logrus.Info(consumer)
-
-	//producer, err := pulsarKit.NewProducerOriginally(ctx, addresses, pulsar.ProducerOptions{
+	//consumer, err := pulsarKit.NewConsumerOriginally(ctx, addresses, pulsar.ConsumerOptions{
 	//	Topic:            "test",
+	//	SubscriptionName: "my-sub1",
+	//	Type:             pulsar.Exclusive,
 	//}, "")
 	//if err != nil {
 	//	logrus.Fatal(err)
 	//}
-	//logrus.Info(producer)
+	//logrus.Info(consumer)
+
+	producer, err := pulsarKit.NewProducerOriginally(ctx, addresses, pulsar.ProducerOptions{
+		Topic: "test",
+	}, "")
+	if err != nil {
+		logrus.Fatal(err)
+	}
+	logrus.Info(producer)
 }
