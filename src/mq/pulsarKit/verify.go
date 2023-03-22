@@ -84,7 +84,7 @@ func _verify(logger *logrus.Logger, topic, consumerLogPath, producerLogPath stri
 		Type:             pulsar.Exclusive,
 	}, consumerLogPath)
 	if err != nil {
-		return err
+		return errorKit.WithLocationInfo(err)
 	}
 	defer consumer.Close()
 
@@ -95,7 +95,7 @@ func _verify(logger *logrus.Logger, topic, consumerLogPath, producerLogPath stri
 		SendTimeout: sendTimeout,
 	}, producerLogPath)
 	if err != nil {
-		return err
+		return errorKit.WithLocationInfo(err)
 	}
 	defer producer.Close()
 
