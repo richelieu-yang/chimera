@@ -20,7 +20,7 @@ func NewTextFormatter(timestampFormat timeKit.TimeFormat) logrus.Formatter {
 
 	return &logrus.TextFormatter{
 		/* 时间格式 */
-		TimestampFormat: string(timestampFormat),
+		TimestampFormat: str,
 		/* 禁止显示时间 */
 		DisableTimestamp: false,
 		/* 显示完整时间 */
