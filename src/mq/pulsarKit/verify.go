@@ -76,6 +76,29 @@ func _verify(verifyConfig *VerifyConfig, logger *logrus.Logger, consumerLogPath,
 		return nil
 	}
 
+	ctx0, cancel := context.WithTimeout(context.TODO(), connectTimeout)
+	defer cancel()
+	consumer, err := NewConsumer(ctx0, pulsar.ConsumerOptions{
+		Topic:            topic,
+		SubscriptionName: idKit.NewULID(),
+		Type:             pulsar.Exclusive,
+	}, consumerLogPath)
+	if err != nil {
+		return err
+	}
+	defer consumer.Close()
+
+	ctx1, cancel := context.WithTimeout(context.TODO(), connectTimeout)
+	defer cancel()
+	producer, err := NewProducer(ctx1, pulsar.ProducerOptions{
+		Topic:       topic,
+		SendTimeout: sendTimeout,
+	}, producerLogPath)
+	if err != nil {
+		return err
+	}
+	defer producer.Close()
+
 	timeStr := timeKit.FormatCurrentTime()
 	ulid := idKit.NewULID()
 	texts := []string{
@@ -86,25 +109,6 @@ func _verify(verifyConfig *VerifyConfig, logger *logrus.Logger, consumerLogPath,
 		fmt.Sprintf("%s&&%s&&%s", ulid, timeStr, "$4"),
 		fmt.Sprintf("%s&&%s&&%s", ulid, timeStr, "$5"),
 	}
-
-	consumer, err := NewConsumer(context.TODO(), pulsar.ConsumerOptions{
-		Topic:            topic,
-		SubscriptionName: ulid,
-		Type:             pulsar.Exclusive,
-	}, consumerLogPath)
-	if err != nil {
-		return err
-	}
-	defer consumer.Close()
-	producer, err := NewProducer(context.TODO(), pulsar.ProducerOptions{
-		Topic:       topic,
-		SendTimeout: sendTimeout,
-	}, producerLogPath)
-	if err != nil {
-		return err
-	}
-	defer producer.Close()
-
 	var ch = make(chan struct{}, 1)
 	var consumerErrCh = make(chan error, 1)
 	var producerErrCh = make(chan error, 1)
