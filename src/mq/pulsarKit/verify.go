@@ -75,6 +75,7 @@ func _verify(verifyConfig *VerifyConfig, consumerLogPath, producerLogPath string
 	if err != nil {
 		return err
 	}
+	defer consumer.Close()
 	producer, err := NewProducer(pulsar.ProducerOptions{
 		Topic:       topic,
 		SendTimeout: sendTimeout,
@@ -82,6 +83,7 @@ func _verify(verifyConfig *VerifyConfig, consumerLogPath, producerLogPath string
 	if err != nil {
 		return err
 	}
+	defer producer.Close()
 
 	var ch = make(chan struct{}, 1)
 	var consumerErrCh = make(chan error, 1)
