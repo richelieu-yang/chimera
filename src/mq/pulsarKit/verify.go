@@ -53,6 +53,8 @@ func _verify(verifyConfig *VerifyConfig, consumerLogPath, producerLogPath string
 	// 是否打印日志到控制台？
 	printFlag := verifyConfig.Print
 	logger := logrusKit.NewLogger(nil, operationKit.Ternary(printFlag, logrus.DebugLevel, logrus.PanicLevel))
+	logger.Infof("[Consumer] log path: [%s].", consumerLogPath)
+	logger.Infof("[Producer] log path: [%s].", producerLogPath)
 
 	timeStr := timeKit.FormatCurrentTime()
 	ulid := idKit.NewULID()
@@ -85,10 +87,9 @@ func _verify(verifyConfig *VerifyConfig, consumerLogPath, producerLogPath string
 	var consumerErrCh = make(chan error, 1)
 	var producerErrCh = make(chan error, 1)
 
-	ctx, cancel := context.WithCancel(context.TODO())
-	defer cancel()
-
 	/* consumer */
+	consumerCtx, cancel := context.WithCancel(context.TODO())
+	defer cancel()
 	go func() {
 		defer func() {
 			logger.Info("[Consumer] goroutine ends")
@@ -97,7 +98,7 @@ func _verify(verifyConfig *VerifyConfig, consumerLogPath, producerLogPath string
 		s := sliceKit.Copy(texts)
 
 		for {
-			msg, err := consumer.Receive(ctx)
+			msg, err := consumer.Receive(consumerCtx)
 			if err != nil {
 				err = errorKit.Wrap(err, "fail to receive")
 				logger.WithFields(logrus.Fields{
