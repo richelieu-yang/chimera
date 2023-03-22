@@ -28,6 +28,10 @@ func SetUp(pulsarConfig *Config) (err error) {
 	return err
 }
 
+// NewProducer
+/*
+@param logPath 客户端的日志输出（为空则输出到控制台）
+*/
 func NewProducer(ctx context.Context, options pulsar.ProducerOptions, logPath string) (*Producer, error) {
 	if config == nil {
 		return nil, NotSetupError
@@ -35,6 +39,10 @@ func NewProducer(ctx context.Context, options pulsar.ProducerOptions, logPath st
 	return NewProducerOriginally(ctx, config.Addresses, options, logPath)
 }
 
+// NewConsumer
+/*
+@param logPath 客户端的日志输出（为空则输出到控制台）
+*/
 func NewConsumer(ctx context.Context, options pulsar.ConsumerOptions, logPath string) (*Consumer, error) {
 	if config == nil {
 		return nil, NotSetupError
