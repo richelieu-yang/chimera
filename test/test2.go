@@ -1,14 +1,12 @@
 package main
 
 import (
-	"github.com/sirupsen/logrus"
-	"os/user"
+	"fmt"
+	"github.com/redis/go-redis/v9"
+	"github.com/richelieu42/chimera/src/assertKit"
 )
 
 func main() {
-	u, err := user.Current()
-	if err != nil {
-		logrus.Fatal(err)
-	}
-	logrus.Info(u.HomeDir)
+	err := assertKit.Nil(redis.Nil, "name")
+	fmt.Println(err.Error())
 }

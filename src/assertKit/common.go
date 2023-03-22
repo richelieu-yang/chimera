@@ -11,7 +11,7 @@ func NotNil(obj interface{}, variableName string) error {
 	return nil
 }
 
-func IsNil(obj interface{}, variableName string) error {
+func Nil(obj interface{}, variableName string) error {
 	if obj != nil {
 		return errorKit.SimpleWithExtraSkip(1, "[Assertion failed] variable(name: %s) isn't nil", variableName)
 	}
