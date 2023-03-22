@@ -20,7 +20,7 @@ func (p *Producer) Close() {
 	}
 }
 
-func NewProducerOriginally(addresses []string, logPath string, options pulsar.ProducerOptions) (*Producer, error) {
+func NewProducerOriginally(addresses []string, options pulsar.ProducerOptions, logPath string) (*Producer, error) {
 	client, err := NewClient(addresses, logPath)
 	if err != nil {
 		return nil, err

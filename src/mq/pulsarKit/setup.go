@@ -7,31 +7,36 @@ import (
 	"sync"
 )
 
-var client pulsar.Client
 var setupOnce sync.Once
+var config *Config
 
 func MustSetUp(config *Config) {
 	assertKit.Must(SetUp(config))
 }
 
-func SetUp(config *Config) (err error) {
+func SetUp(pulsarConfig *Config) (err error) {
+	if pulsarConfig == nil {
+		return errorKit.Simple("pulsarConfig == nil")
+	}
+
 	setupOnce.Do(func() {
-		client, err = NewClient1(config)
+		config = pulsarConfig
+		err = verify(config.VerifyConfig)
 	})
 
-	if err != nil {
-		err = errorKit.Wrap(err, "fail to set up")
-	}
 	return err
 }
 
-// GetClient
-/*
-PS: 必须先成功调用 SetUp || MustSetUp.
-*/
-func GetClient() (pulsar.Client, error) {
-	if client == nil {
+func NewProducer(options pulsar.ProducerOptions, logPath string) (*Producer, error) {
+	if config == nil {
 		return nil, NotSetupError
 	}
-	return client, nil
+	return NewProducerOriginally(config.Addresses, options, logPath)
+}
+
+func NewConsumer(options pulsar.ConsumerOptions, logPath string) (*Consumer, error) {
+	if config == nil {
+		return nil, NotSetupError
+	}
+	return NewConsumerOriginally(config.Addresses, options, logPath)
 }

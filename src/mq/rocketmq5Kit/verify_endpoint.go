@@ -41,7 +41,7 @@ func VerifyEndpoint(endpoint, topic string) error {
 	}
 
 	/* logger */
-	tempDir, err := pathKit.GetTempDirOfGoScales()
+	tempDir, err := pathKit.GetChimeraTempDir()
 	if err != nil {
 		return err
 	}

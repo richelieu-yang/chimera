@@ -3,9 +3,15 @@ package pulsarKit
 type (
 	Config struct {
 		// Addresses Broker地址
-		Addresses []string
+		Addresses []string `json:"addresses"`
 
-		// TopicForVerify 用于验证"pulsar服务是否正常启动"的topic（为空则不测试）
-		TopicForVerify string
+		VerifyConfig *VerifyConfig `json:"_verify"`
+	}
+
+	VerifyConfig struct {
+		// Topic 用于验证"pulsar服务是否正常启动"的topic
+		Topic string `json:"topic"`
+		// Print 验证的输出是否打印到控制台？
+		Print bool `json:"print"`
 	}
 )

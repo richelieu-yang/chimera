@@ -5,7 +5,7 @@ import (
 	"os"
 )
 
-// GetTempDir 默认返回: 系统的临时目录
+// GetTempDir 获取系统的临时目录.
 /*
 e.g.
 Windows: 	"C:\Users\Lenovo\AppData\Local\Temp"
@@ -15,13 +15,13 @@ func GetTempDir() string {
 	return os.TempDir()
 }
 
-// GetTempDirOfGoScales go-scales专属的临时目录
+// GetChimeraTempDir 获取chimera的专属临时目录
 /*
-e.g.
-() => "/var/folders/4_/33p_vn057msfh2nvgx6hwv_40000gn/T/$$go-scales", nil
+e.g. Mac
+() => "/var/folders/4_/33p_vn057msfh2nvgx6hwv_40000gn/T/$$chimera", nil
 */
-func GetTempDirOfGoScales() (string, error) {
-	dir := Join(GetTempDir(), "$$go-scales")
+func GetChimeraTempDir() (string, error) {
+	dir := Join(GetTempDir(), "$$chimera")
 	err := fileKit.MkDirs(dir)
 	return dir, err
 }

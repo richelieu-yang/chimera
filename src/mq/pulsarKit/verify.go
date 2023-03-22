@@ -5,6 +5,8 @@ import (
 	"fmt"
 	"github.com/apache/pulsar-client-go/pulsar"
 	"github.com/richelieu42/chimera/src/core/errorKit"
+	"github.com/richelieu42/chimera/src/core/file/fileKit"
+	"github.com/richelieu42/chimera/src/core/pathKit"
 	"github.com/richelieu42/chimera/src/core/sliceKit"
 	"github.com/richelieu42/chimera/src/core/strKit"
 	"github.com/richelieu42/chimera/src/core/timeKit"
@@ -15,26 +17,42 @@ import (
 	"time"
 )
 
-// Verify 简单地验证 Pulsar服务 是否启动成功
-/*
-TODO: Pulsar服务未启动的情况下，创建Consumer和Producer会失败，但耗时太长（超过1min），后续要处理.
-*/
-func Verify(client pulsar.Client, topic string, printArgs ...bool) error {
-	if client == nil {
-		return errorKit.Simple("client == nil")
-	}
-	if strKit.IsEmpty(topic) {
-		return errorKit.Simple("topic is empty")
-	}
-	if strKit.IsBlank(topic) {
-		return errorKit.Simple("topic is blank")
-	}
+// verify 简单地验证 Pulsar服务 是否启动成功
+func verify(verifyConfig *VerifyConfig) (err error) {
+	dir, _ := pathKit.GetChimeraTempDir()
+	timeStr := timeKit.FormatCurrentTime(timeKit.FormatDir)
+	consumerLogPath := pathKit.Join(dir, fmt.Sprintf("pulsar_verify_consumer_%s.log", timeStr))
+	producerLogPath := pathKit.Join(dir, fmt.Sprintf("pulsar_verify_producer_%s.log", timeStr))
+	defer func() {
+		if err == nil {
+			// 验证成功，删掉客户端日志文件
+			_ = fileKit.Delete(consumerLogPath)
+			_ = fileKit.Delete(producerLogPath)
+		}
+	}()
 
-	printFlag := sliceKit.GetFirstItemWithDefault(false, printArgs...)
-	logger := logrusKit.NewLogger(nil, operationKit.Ternary(printFlag, logrus.DebugLevel, logrus.PanicLevel))
+	err = _verify(verifyConfig, consumerLogPath, producerLogPath)
+	return
+}
 
-	var timeLimit = time.Second * 10
+func _verify(verifyConfig *VerifyConfig, consumerLogPath, producerLogPath string) error {
+	// 接受消息的时限
+	var receiveTimeLimit = time.Second * 10
+	// 单次发送消息的超时时间
 	var sendTimeout = time.Second
+
+	if verifyConfig == nil {
+		// 不验证
+		return nil
+	}
+	topic := verifyConfig.Topic
+	if strKit.IsEmpty(topic) || strKit.IsBlank(topic) {
+		// 不验证
+		return nil
+	}
+	// 是否打印日志到控制台？
+	printFlag := verifyConfig.Print
+	logger := logrusKit.NewLogger(nil, operationKit.Ternary(printFlag, logrus.DebugLevel, logrus.PanicLevel))
 
 	timeStr := timeKit.FormatCurrentTime()
 	ulid := idKit.NewULID()
@@ -47,24 +65,21 @@ func Verify(client pulsar.Client, topic string, printArgs ...bool) error {
 		fmt.Sprintf("%s&&%s&&%s", ulid, timeStr, "$5"),
 	}
 
-	consumer, err := client.Subscribe(pulsar.ConsumerOptions{
+	consumer, err := NewConsumer(pulsar.ConsumerOptions{
 		Topic:            topic,
 		SubscriptionName: ulid,
 		Type:             pulsar.Exclusive,
-	})
+	}, consumerLogPath)
 	if err != nil {
-		return errorKit.Wrap(err, "fail to create a consumer")
+		return err
 	}
-	defer consumer.Close()
-
-	producer, err := client.CreateProducer(pulsar.ProducerOptions{
+	producer, err := NewProducer(pulsar.ProducerOptions{
 		Topic:       topic,
 		SendTimeout: sendTimeout,
-	})
+	}, producerLogPath)
 	if err != nil {
-		return errorKit.Wrap(err, "fail to create a producer")
+		return err
 	}
-	defer producer.Close()
 
 	var ch = make(chan struct{}, 1)
 	var consumerErrCh = make(chan error, 1)
@@ -155,7 +170,7 @@ func Verify(client pulsar.Client, topic string, printArgs ...bool) error {
 		return err
 	case err := <-consumerErrCh:
 		return err
-	case <-time.After(timeLimit):
-		return errorKit.Simple("fail to get all messages within time limit(%s)", timeLimit)
+	case <-time.After(receiveTimeLimit):
+		return errorKit.Simple("fail to get all messages within time limit(%s)", receiveTimeLimit)
 	}
 }

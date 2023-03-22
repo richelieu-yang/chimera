@@ -20,7 +20,7 @@ func (c *Consumer) Close() {
 	}
 }
 
-func NewConsumerOriginally(addresses []string, logPath string, options pulsar.ConsumerOptions) (*Consumer, error) {
+func NewConsumerOriginally(addresses []string, options pulsar.ConsumerOptions, logPath string) (*Consumer, error) {
 	client, err := NewClient(addresses, logPath)
 	if err != nil {
 		return nil, err
