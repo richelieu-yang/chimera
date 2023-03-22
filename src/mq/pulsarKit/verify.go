@@ -18,14 +18,14 @@ import (
 )
 
 const (
-	// verifyConnectTimeout 创建Consumer或Producer的超时时间
-	verifyConnectTimeout = time.Second * 10
+	// connectTimeout 创建Consumer（或Producer）的超时时间
+	connectTimeout = time.Second * 10
 
-	// verifyReceiveTimeLimit 接受消息的时限
-	verifyReceiveTimeLimit = time.Second * 10
+	// receiveTimeout 接受消息的超时时间
+	receiveTimeout = time.Second * 10
 
-	// verifySendTimeout 单次发送消息的超时时间
-	verifySendTimeout = time.Second
+	// sendTimeout 单次发送消息的超时时间
+	sendTimeout = time.Second
 )
 
 // verify 简单地验证 Pulsar服务 是否启动成功
@@ -98,7 +98,7 @@ func _verify(verifyConfig *VerifyConfig, logger *logrus.Logger, consumerLogPath,
 	defer consumer.Close()
 	producer, err := NewProducer(context.TODO(), pulsar.ProducerOptions{
 		Topic:       topic,
-		SendTimeout: verifySendTimeout,
+		SendTimeout: sendTimeout,
 	}, producerLogPath)
 	if err != nil {
 		return err
@@ -167,7 +167,7 @@ func _verify(verifyConfig *VerifyConfig, logger *logrus.Logger, consumerLogPath,
 				Payload: []byte(text),
 			}
 			err := func() error {
-				ctx, cancel := context.WithTimeout(context.TODO(), verifySendTimeout)
+				ctx, cancel := context.WithTimeout(context.TODO(), sendTimeout)
 				defer cancel()
 				_, err := producer.Send(ctx, pMsg)
 				return err
@@ -194,7 +194,7 @@ func _verify(verifyConfig *VerifyConfig, logger *logrus.Logger, consumerLogPath,
 		return err
 	case err := <-consumerErrCh:
 		return err
-	case <-time.After(verifyReceiveTimeLimit):
-		return errorKit.Simple("fail to get all messages within time limit(%s)", verifyReceiveTimeLimit)
+	case <-time.After(receiveTimeout):
+		return errorKit.Simple("fail to get all messages within time limit(%s)", receiveTimeout)
 	}
 }
