@@ -5,7 +5,7 @@ type (
 		// Addresses Broker地址
 		Addresses []string `json:"addresses"`
 
-		VerifyConfig *VerifyConfig `json:"_verify"`
+		VerifyConfig *VerifyConfig `json:"verify"`
 	}
 
 	VerifyConfig struct {
