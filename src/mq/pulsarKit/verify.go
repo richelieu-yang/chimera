@@ -30,6 +30,16 @@ const (
 
 // verify 简单地验证 Pulsar服务 是否启动成功
 func verify(verifyConfig *VerifyConfig) (err error) {
+	if verifyConfig == nil {
+		// 不验证
+		return nil
+	}
+	topic := verifyConfig.Topic
+	if strKit.IsEmpty(topic) || strKit.IsBlank(topic) {
+		// 不验证
+		return nil
+	}
+
 	dir, _ := pathKit.GetChimeraTempDir()
 	timeStr := timeKit.FormatCurrentTime(timeKit.FormatFileName)
 	consumerLogPath := pathKit.Join(dir, fmt.Sprintf("pulsar_verify_consumer_%s.log", timeStr))
@@ -61,21 +71,11 @@ func verify(verifyConfig *VerifyConfig) (err error) {
 		}
 	}()
 
-	err = _verify(verifyConfig, cLogger, consumerLogPath, producerLogPath)
+	err = _verify(cLogger, topic, consumerLogPath, producerLogPath)
 	return
 }
 
-func _verify(verifyConfig *VerifyConfig, logger *logrus.Logger, consumerLogPath, producerLogPath string) error {
-	if verifyConfig == nil {
-		// 不验证
-		return nil
-	}
-	topic := verifyConfig.Topic
-	if strKit.IsEmpty(topic) || strKit.IsBlank(topic) {
-		// 不验证
-		return nil
-	}
-
+func _verify(logger *logrus.Logger, topic, consumerLogPath, producerLogPath string) error {
 	ctx0, cancel := context.WithTimeout(context.TODO(), connectTimeout)
 	defer cancel()
 	consumer, err := NewConsumer(ctx0, pulsar.ConsumerOptions{
