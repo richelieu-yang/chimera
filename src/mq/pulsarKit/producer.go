@@ -14,12 +14,8 @@ type (
 )
 
 func (p *Producer) Close() {
-	if p.Producer != nil {
-		p.Producer.Close()
-	}
-	if p.Client != nil {
-		p.Client.Close()
-	}
+	p.Producer.Close()
+	p.Client.Close()
 }
 
 // NewProducerOriginally

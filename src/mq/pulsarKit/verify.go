@@ -67,7 +67,7 @@ func _verify(verifyConfig *VerifyConfig, consumerLogPath, producerLogPath string
 		fmt.Sprintf("%s&&%s&&%s", ulid, timeStr, "$5"),
 	}
 
-	consumer, err := NewConsumer(pulsar.ConsumerOptions{
+	consumer, err := NewConsumer(context.TODO(), pulsar.ConsumerOptions{
 		Topic:            topic,
 		SubscriptionName: ulid,
 		Type:             pulsar.Exclusive,
@@ -76,7 +76,7 @@ func _verify(verifyConfig *VerifyConfig, consumerLogPath, producerLogPath string
 		return err
 	}
 	defer consumer.Close()
-	producer, err := NewProducer(pulsar.ProducerOptions{
+	producer, err := NewProducer(context.TODO(), pulsar.ProducerOptions{
 		Topic:       topic,
 		SendTimeout: sendTimeout,
 	}, producerLogPath)
