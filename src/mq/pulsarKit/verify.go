@@ -125,7 +125,7 @@ func _verify(logger *logrus.Logger, topic, consumerLogPath, producerLogPath stri
 		for {
 			msg, err := consumer.Receive(consumerCtx)
 			if err != nil {
-				err = errorKit.Wrap(err, "fail to receive")
+				err = errorKit.WithLocationInfo(err)
 				logger.WithFields(logrus.Fields{
 					"error": err.Error(),
 				}).Info("[Verify, Consumer] fail to receive")
@@ -133,7 +133,7 @@ func _verify(logger *logrus.Logger, topic, consumerLogPath, producerLogPath stri
 				break
 			}
 			if err := consumer.Ack(msg); err != nil {
-				err = errorKit.Wrap(err, "fail to ack")
+				err = errorKit.WithLocationInfo(err)
 				logger.WithFields(logrus.Fields{
 					"error": err.Error(),
 				}).Info("[Verify, Consumer] fail to ack")
@@ -176,7 +176,7 @@ func _verify(logger *logrus.Logger, topic, consumerLogPath, producerLogPath stri
 				return err
 			}()
 			if err != nil {
-				err = errorKit.Wrap(err, "fail to send")
+				err = errorKit.WithLocationInfo(err)
 				logger.WithFields(logrus.Fields{
 					"text":  text,
 					"error": err.Error(),
