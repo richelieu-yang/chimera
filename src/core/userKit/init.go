@@ -1,7 +1,7 @@
 package userKit
 
 import (
-	"github.com/richelieu42/chimera/src/core/errorKit"
+	"github.com/sirupsen/logrus"
 	"os/user"
 )
 
@@ -13,11 +13,18 @@ func init() {
 
 	u, err = user.Current()
 	if err != nil {
-		errorKit.Panic("[SCALES] user.Current() fails, error: %+v", err)
+		logrus.WithFields(logrus.Fields{
+			"error": err.Error(),
+		}).Fatal("fail to get current user information")
 	}
 
-	userHomeDir, err = getUserHomeDir()
-	if err != nil {
-		errorKit.Panic("[SCALES] userHomeDir is invalid, error: %+v", err)
-	}
+	userHomeDir = u.HomeDir
+	//userHomeDir, err = getUserHomeDir()
+	//if err != nil {
+	//	logrus.WithFields(logrus.Fields{
+	//		"error": err.Error(),
+	//	}).Fatal("")
+	//
+	//	errorKit.Panic("[SCALES] userHomeDir is invalid, error: %+v", err)
+	//}
 }

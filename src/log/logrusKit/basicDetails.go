@@ -1,7 +1,6 @@
 package logrusKit
 
 import (
-	"github.com/richelieu42/chimera/src/core/errorKit"
 	"github.com/richelieu42/chimera/src/core/osKit"
 	"github.com/richelieu42/chimera/src/core/pathKit"
 	"github.com/richelieu42/chimera/src/core/runtimeKit"
@@ -79,7 +78,9 @@ func PrintBasicDetails() {
 
 	// mac
 	if macAddresses, err := runtimeKit.GetMacAddresses(); err != nil {
-		errorKit.Panic("fail to get mac addresses, error:\n%+v", err)
+		logrus.WithFields(logrus.Fields{
+			"error": err.Error(),
+		}).Fatal("fail to get mac addresses")
 	} else {
 		logrus.Infof("[SCALES, MAC] mac addresses: [%v].", macAddresses)
 	}
@@ -93,7 +94,9 @@ func PrintBasicDetails() {
 
 	// memory
 	if info, err := runtimeKit.GetMemoryStat(); err != nil {
-		errorKit.Panic("fail to get memory stat, error:\n%+v", err)
+		logrus.WithFields(logrus.Fields{
+			"error": err.Error(),
+		}).Fatal("fail to get memory stat")
 	} else {
 		logrus.Infof("[SCALES, MEMORY] memory stat: [%s].", info)
 	}

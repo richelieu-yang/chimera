@@ -2,7 +2,6 @@ package userKit
 
 import (
 	"github.com/mitchellh/go-homedir"
-	"github.com/richelieu42/chimera/src/core/file/fileKit"
 )
 
 func GetName() string {
@@ -31,13 +30,5 @@ func getUserHomeDir() (string, error) {
 	//	userHomeDir = os.Getenv("HOME")
 	//}
 
-	userHomeDir, err := homedir.Dir()
-	if err != nil {
-		return "", err
-	}
-
-	if err := fileKit.AssertExistAndIsDir(userHomeDir); err != nil {
-		return "", err
-	}
-	return userHomeDir, nil
+	return homedir.Dir()
 }

@@ -5,8 +5,8 @@
 package runtimeKit
 
 import (
-	"github.com/richelieu42/chimera/src/core/errorKit"
 	"github.com/shirou/gopsutil/v3/host"
+	"github.com/sirupsen/logrus"
 	"runtime"
 )
 
@@ -25,7 +25,9 @@ func init() {
 	var err error
 	hostInfo, err = host.Info()
 	if err != nil {
-		errorKit.Panic("fail to get host info, error:\n%+v", err)
+		logrus.WithFields(logrus.Fields{
+			"error": err.Error(),
+		}).Fatal("fail to get host info")
 	}
 }
 
