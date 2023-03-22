@@ -133,6 +133,24 @@ func WithMessage(err error, format string, args ...interface{}) error {
 	return errors2.WithMessagef(err, format, args...)
 }
 
+// WithLocationInfo 附带调用此方法的caller的信息
+/*
+e.g.
+	err := io.EOF
+	err = errorKit.WithLocationInfo(err)
+
+	// test/test1.go:11|main: EOF
+	fmt.Printf("%v\n", err)
+
+	// EOF
+	// test/test1.go:11|main
+	fmt.Printf("%+v\n", err)
+*/
+func WithLocationInfo(err error) error {
+	info := funcKit.GetEntireCaller(2)
+	return errors2.WithMessage(err, info)
+}
+
 // Cause 获取传参err的root error（错误的根因）.
 /*
 (1) If the error does not implement Cause, the original error will be returned.（返回最原始的错误）
