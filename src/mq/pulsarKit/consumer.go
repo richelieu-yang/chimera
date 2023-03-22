@@ -14,8 +14,12 @@ type (
 )
 
 func (c *Consumer) Close() {
-	c.Consumer.Close()
-	c.Client.Close()
+	if c.Consumer != nil {
+		c.Consumer.Close()
+	}
+	if c.Client != nil {
+		c.Client.Close()
+	}
 }
 
 // NewConsumerOriginally
