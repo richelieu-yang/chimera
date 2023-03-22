@@ -30,7 +30,7 @@ import (
 
 // Simple 新建error（指针；不会携带堆栈信息）
 func Simple(format string, args ...interface{}) error {
-	format = funcKit.AddFuncInfoToString(format, 1)
+	format = funcKit.GetEntireCaller(2) + " " + format
 
 	return errors.New(fmt.Sprintf(format, args...))
 }
@@ -40,8 +40,7 @@ func Simple(format string, args ...interface{}) error {
 @param extraSkip 额外跳过的层数（>= 0）
 */
 func SimpleWithExtraSkip(extraSkip int, format string, args ...interface{}) error {
-	// 1: 当前函数这一层
-	format = funcKit.AddFuncInfoToString(format, extraSkip+1)
+	format = funcKit.GetEntireCaller(2+extraSkip) + " " + format
 
 	return errors.New(fmt.Sprintf(format, args...))
 }
@@ -58,7 +57,7 @@ fmt.Println(err == err)  	// true
 fmt.Println(err == err1) 	// false（因为内存地址不一样）
 */
 func New(format string, args ...interface{}) error {
-	format = funcKit.AddFuncInfoToString(format, 1)
+	format = funcKit.GetEntireCaller(2) + " " + format
 
 	return errors2.Errorf(format, args...)
 }
@@ -68,8 +67,7 @@ func New(format string, args ...interface{}) error {
 @param extraSkip 额外跳过的层数
 */
 func NewWithExtraSkip(extraSkip int, format string, args ...interface{}) error {
-	// 1: 当前函数这一层
-	format = funcKit.AddFuncInfoToString(format, extraSkip+1)
+	format = funcKit.GetEntireCaller(2+extraSkip) + " " + format
 
 	return errors2.Errorf(format, args...)
 }
