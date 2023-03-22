@@ -23,8 +23,8 @@ const (
 	// FormatDefault 参考"format.go"
 	FormatDefault TimeFormat = "2006-01-02 15:04:05.999999999 -0700 MST"
 
-	// FormatDir 用于作为目录名（或者其中的一部分）
-	FormatDir TimeFormat = "2006-01-02T15.04.05.000"
+	// FormatFileName 用于作为文件名（或目录名）的一部分
+	FormatFileName TimeFormat = "2006-01-02T15.04.05.000"
 
 	// FormatCommon 常规的格式
 	FormatCommon TimeFormat = "2006-01-02T15:04:05.000"

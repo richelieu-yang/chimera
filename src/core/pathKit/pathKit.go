@@ -56,7 +56,7 @@ func Glob(pattern string) (matches []string, err error) {
 func GetOutputPath(timeStr string) (string, error) {
 	if strKit.IsEmpty(outputDir) {
 		if strKit.IsEmpty(timeStr) {
-			timeStr = timeKit.FormatCurrentTime(timeKit.FormatDir)
+			timeStr = timeKit.FormatCurrentTime(timeKit.FormatFileName)
 		}
 		tmp := Join(GetProjectDir(), "out", "BootTime_"+timeStr)
 		if err := fileKit.MkDirs(tmp); err != nil {

@@ -20,7 +20,7 @@ import (
 // verify 简单地验证 Pulsar服务 是否启动成功
 func verify(verifyConfig *VerifyConfig) (err error) {
 	dir, _ := pathKit.GetChimeraTempDir()
-	timeStr := timeKit.FormatCurrentTime(timeKit.FormatDir)
+	timeStr := timeKit.FormatCurrentTime(timeKit.FormatFileName)
 	consumerLogPath := pathKit.Join(dir, fmt.Sprintf("pulsar_verify_consumer_%s.log", timeStr))
 	producerLogPath := pathKit.Join(dir, fmt.Sprintf("pulsar_verify_producer_%s.log", timeStr))
 	defer func() {
