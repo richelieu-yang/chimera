@@ -41,6 +41,7 @@ func NewProducer(ctx context.Context, options pulsar.ProducerOptions, logPath st
 
 // NewConsumer
 /*
+@param options 至少需要为 Topic、SubscriptionName、Type 属性复制
 @param logPath 客户端的日志输出（为空则输出到控制台）
 */
 func NewConsumer(ctx context.Context, options pulsar.ConsumerOptions, logPath string) (*Consumer, error) {
