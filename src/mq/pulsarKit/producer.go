@@ -2,6 +2,7 @@ package pulsarKit
 
 import (
 	"github.com/apache/pulsar-client-go/pulsar"
+	"github.com/richelieu42/chimera/src/core/errorKit"
 )
 
 type (
@@ -23,12 +24,12 @@ func (p *Producer) Close() {
 func NewProducerOriginally(addresses []string, options pulsar.ProducerOptions, logPath string) (*Producer, error) {
 	client, err := NewClient(addresses, logPath)
 	if err != nil {
-		return nil, err
+		return nil, errorKit.Wrap(err, "fail to new client")
 	}
 
 	producer, err := client.CreateProducer(options)
 	if err != nil {
-		return nil, err
+		return nil, errorKit.Wrap(err, "fail to create producer")
 	}
 
 	return &Producer{

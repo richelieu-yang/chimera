@@ -2,6 +2,7 @@ package pulsarKit
 
 import (
 	"github.com/apache/pulsar-client-go/pulsar"
+	"github.com/richelieu42/chimera/src/core/errorKit"
 )
 
 type (
@@ -23,12 +24,12 @@ func (c *Consumer) Close() {
 func NewConsumerOriginally(addresses []string, options pulsar.ConsumerOptions, logPath string) (*Consumer, error) {
 	client, err := NewClient(addresses, logPath)
 	if err != nil {
-		return nil, err
+		return nil, errorKit.Wrap(err, "fail to new client")
 	}
 
 	consumer, err := client.Subscribe(options)
 	if err != nil {
-		return nil, err
+		return nil, errorKit.Wrap(err, "fail to subscribe")
 	}
 
 	return &Consumer{
