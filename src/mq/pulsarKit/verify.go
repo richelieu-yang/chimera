@@ -127,6 +127,7 @@ func _verify(verifyConfig *VerifyConfig, consumerLogPath, producerLogPath string
 			}).Info("[Consumer] receive a message")
 
 			if ok && left == 0 {
+				logger.Info("[Consumer] receive all messages!")
 				ch <- struct{}{}
 				break
 			}
