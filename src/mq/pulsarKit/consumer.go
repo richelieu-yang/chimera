@@ -40,13 +40,13 @@ func NewConsumerOriginally(ctx context.Context, addresses []string, options puls
 		var err error
 		client, err = NewClient(addresses, logPath)
 		if err != nil {
-			err = errorKit.Wrap(err, "fail to new client")
+			err = errorKit.WithLocationInfo(err)
 			errCh <- err
 			return
 		}
 		consumer, err = client.Subscribe(options)
 		if err != nil {
-			err = errorKit.Wrap(err, "fail to subscribe")
+			err = errorKit.WithLocationInfo(err)
 			errCh <- err
 			return
 		}
@@ -60,7 +60,7 @@ func NewConsumerOriginally(ctx context.Context, addresses []string, options puls
 			if client == nil {
 				client.Close()
 			}
-			errCh <- ctx.Err()
+			errCh <- errorKit.WithLocationInfo(ctx.Err())
 		default:
 			errCh <- nil
 		}
@@ -68,7 +68,7 @@ func NewConsumerOriginally(ctx context.Context, addresses []string, options puls
 
 	select {
 	case <-ctx.Done():
-		return nil, ctx.Err()
+		return nil, errorKit.WithLocationInfo(ctx.Err())
 	case err := <-errCh:
 		if err != nil {
 			return nil, err
