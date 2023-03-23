@@ -35,7 +35,7 @@ func (client *Client) GetGoRedisClient() redis.UniversalClient {
 */
 func NewClient(config *Config) (*Client, error) {
 	if config == nil {
-		return nil, errorKit.Simple("config is nil")
+		return nil, errorKit.Simple("config == nil")
 	}
 
 	var opts *redis.UniversalOptions

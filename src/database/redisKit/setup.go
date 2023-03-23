@@ -2,18 +2,24 @@ package redisKit
 
 import (
 	"github.com/richelieu42/chimera/src/assertKit"
-	"github.com/richelieu42/chimera/src/core/errorKit"
+	"github.com/zeromicro/go-zero/core/logx"
+	"sync"
 )
+
+var client *Client
+var setupOnce sync.Once
 
 func MustSetUp(config *Config) {
 	err := SetUp(config)
 	assertKit.Must(err)
 }
 
-func SetUp(config *Config) error {
-	if config == nil {
-		return errorKit.Simple("config == nil")
-	}
+func SetUp(config *Config) (err error) {
+	setupOnce.Do(func() {
+		client, err = NewClient(config)
+	})
 
-	return nil
+	logx.SetUp()
+
+	return
 }

@@ -17,13 +17,17 @@ func MustSetUp(config *Config) {
 }
 
 func SetUp(pulsarConfig *Config) (err error) {
-	if pulsarConfig == nil {
-		return errorKit.Simple("pulsarConfig == nil")
-	}
-
 	setupOnce.Do(func() {
 		config = pulsarConfig
-		err = verify(config.VerifyConfig)
+
+		if config == nil {
+			err = errorKit.Simple("pulsarConfig == nil")
+		} else {
+			err = verify(config.VerifyConfig)
+		}
+		if err != nil {
+			config = nil
+		}
 	})
 
 	return err
