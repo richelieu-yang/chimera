@@ -101,9 +101,11 @@ func Join(eles ...string) string {
 	return filepath.Join(eles...)
 }
 
-// Split 分割路径中的目录与文件
+// Split 分割路径中的目录与文件.
 /*
-("d:/a/b/c.docx") => "d:/a/b/", "c.docx"
+e.g. Mac
+("/Users/richelieu/Downloads/") => "/Users/richelieu/Downloads/", ""
+("/Users/richelieu/Downloads") 	=> "/Users/richelieu/", "Downloads"
 */
 func Split(path string) (dir, file string) {
 	return filepath.Split(path)

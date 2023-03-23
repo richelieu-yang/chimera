@@ -1,23 +1,22 @@
 package main
 
 import (
-	"github.com/richelieu42/chimera/src/core/ioKit"
 	"github.com/sirupsen/logrus"
+	"path"
+	"runtime"
+	"strings"
 )
 
 func main() {
-	writeCloser, err := ioKit.NewLumberjackWriteCloser("/Users/richelieu/Downloads/a.log", 1, 10, 7, true, false)
-	if err != nil {
-		logrus.Fatal(err)
+	l := logrus.New()
+	l.SetReportCaller(true)
+	l.Formatter = &logrus.JSONFormatter{
+		CallerPrettyfier: func(f *runtime.Frame) (string, string) {
+			s := strings.Split(f.Function, ".")
+			funcName := s[len(s)-1]
+			_, fileName := path.Split(f.File)
+			return funcName, fileName
+		},
 	}
-
-	//for {
-	//	_, _ = writeCloser.Write([]byte(idKit.NewULID() + "\r\n"))
-	//	time.Sleep(time.Second)
-	//}
-
-	_, _ = writeCloser.Write([]byte("0\n"))
-	_, _ = writeCloser.Write([]byte("1\n"))
-	_, _ = writeCloser.Write([]byte("2\n"))
-	_, _ = writeCloser.Write([]byte("3\n"))
+	l.Info("example of custom format caller")
 }
