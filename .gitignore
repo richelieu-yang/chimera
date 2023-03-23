@@ -17,7 +17,6 @@
 
 .idea
 /src/test.go
-/test1
 *.log
 *.gz
 
@@ -25,3 +24,4 @@
 **/.DS_Store
 .DS_Store?
 
+test1-*
