@@ -1,35 +1,13 @@
 package main
 
-import (
-	"gopkg.in/natefinch/lumberjack.v2"
-)
+import "github.com/natefinch/lumberjack"
 
 func main() {
-	lumberJackLogger := &lumberjack.Logger{
-		Filename:   "logs/a/rocketmq_client_go.log",
-		MaxSize:    maxFileSize,
-		MaxBackups: maxFileIndex,
-		Compress:   false,
+	&lumberjack.Logger{
+		Filename:   "/var/log/myapp/foo.log",
+		MaxSize:    500, // megabytes
+		MaxBackups: 3,
+		MaxAge:     28,   //days
+		Compress:   true, // disabled by default
 	}
-
-	//maxFileIndex := 10
-	//maxFileSize := 1073741824
-	//lumberJackLogger := &lumberjack.Logger{
-	//	Filename:   "logs/a/rocketmq_client_go.log",
-	//	MaxSize:    maxFileSize,
-	//	MaxBackups: maxFileIndex,
-	//	Compress:   false,
-	//}
-	//writeSyncer := zapcore.AddSync(lumberJackLogger)
-	//
-	//encoder := getEncoder()
-	//
-	//var atomicLevel = zap.NewAtomicLevel()
-	//atomicLevel.SetLevel(zap.InfoLevel)
-	//
-	//core := zapcore.NewCore(encoder, writeSyncer, atomicLevel)
-	//logger := zap.New(core, zap.AddCaller())
-	//sugarBaseLogger := logger.Sugar()
-	//
-	//sugarBaseLogger.Infof("[TEST] %d", 666)
 }
