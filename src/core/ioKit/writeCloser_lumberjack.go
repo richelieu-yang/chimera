@@ -1,6 +1,7 @@
 package ioKit
 
 import (
+	"github.com/richelieu42/chimera/src/core/file/fileKit"
 	"gopkg.in/natefinch/lumberjack.v2"
 	"io"
 )
@@ -23,7 +24,14 @@ go语言的日志滚动(rolling)记录器——lumberjack
 @param localTime	（默认使用UTC时间）是否使用本地时间戳？
 @param compress		（默认: false）对backup的日志是否进行压缩
 */
-func NewLumberjackWriteCloser(filePath string, maxSize, maxBackups, maxAge int, localTime, compress bool) io.WriteCloser {
+func NewLumberjackWriteCloser(filePath string, maxSize, maxBackups, maxAge int, localTime, compress bool) (io.WriteCloser, error) {
+	if err := fileKit.MkParentDirs(filePath); err != nil {
+		return nil, err
+	}
+	if err := fileKit.AssertNotExistOrIsFile(filePath); err != nil {
+		return nil, err
+	}
+
 	return &lumberjack.Logger{
 		Filename:   filePath,
 		MaxSize:    maxSize,
@@ -31,5 +39,5 @@ func NewLumberjackWriteCloser(filePath string, maxSize, maxBackups, maxAge int, 
 		MaxAge:     maxAge,
 		LocalTime:  localTime,
 		Compress:   compress,
-	}
+	}, nil
 }
