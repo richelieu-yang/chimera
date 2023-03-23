@@ -24,11 +24,10 @@ func AttachCommonMiddlewares(engine *gin.Engine, middlewareConfig *MiddlewareCon
 	engine.Use(gin.Logger())
 
 	// recovery(necessary)
-	if recoveryMiddleware != nil {
-		engine.Use(recoveryMiddleware)
-	} else {
-		engine.Use(gin.Recovery())
+	if recoveryMiddleware == nil {
+		recoveryMiddleware = gin.Recovery()
 	}
+	engine.Use(recoveryMiddleware)
 
 	if middlewareConfig != nil {
 		// cors
