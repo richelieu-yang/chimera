@@ -6,9 +6,8 @@ import (
 )
 
 func main() {
-	fmt.Println(sliceKit.IsSorted[int](nil))
-	fmt.Println(sliceKit.IsSorted([]string{}))
-	fmt.Println(sliceKit.IsSorted([]string{"b"}))
-	fmt.Println(sliceKit.IsSorted([]string{"b", "a"}))
-	fmt.Println(sliceKit.IsSorted([]int{0, 1, 9, 100}))
+	flag := sliceKit.IsSortedByKey([]string{"a", "aa", "bb", "ccc"}, func(s string) int {
+		return len(s)
+	})
+	fmt.Println(flag) // true
 }

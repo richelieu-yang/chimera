@@ -71,6 +71,9 @@ func SortComplexSlice(data sort.Interface, args ...bool) sort.Interface {
 
 // IsSorted 传参切片实例是否有序？
 /*
+@param s 	(1) 可以为nil
+			(2) 如果 len(s) <= 1 ，返回值一定为true
+
 e.g.
 [int](nil)				=> true
 ([]string{})			=> true
@@ -78,6 +81,21 @@ e.g.
 ([]string{"b", "a"})	=> false
 ([]int{0, 1, 9, 100})	=> true
 */
-func IsSorted[T constraints.Ordered](collection []T) bool {
-	return lo.IsSorted(collection)
+func IsSorted[T constraints.Ordered](s []T) bool {
+	return lo.IsSorted(s)
+}
+
+// IsSortedByKey 传参切片实例是否有序？
+/*
+@param s 	(1) 可以为nil
+			(2) 如果 len(s) <= 1 ，返回值一定为true
+
+e.g.
+	flag := sliceKit.IsSortedByKey([]string{"a", "aa", "bb", "ccc"}, func(s string) int {
+		return len(s)
+	})
+	fmt.Println(flag) // true
+*/
+func IsSortedByKey[T any, K constraints.Ordered](s []T, iteratee func(item T) K) bool {
+	return lo.IsSortedByKey(s, iteratee)
 }
