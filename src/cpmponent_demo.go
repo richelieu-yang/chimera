@@ -19,11 +19,6 @@ func main() {
 		}
 	}
 
-	// redis组件（可选）
-	if err := componentKit.InitializeRedisComponent(); err != nil {
-		logrus.Panic(err)
-	}
-
 	// RocketMQ5组件（可选）
 	if err := componentKit.InitializeRocketMQ5Component(); err != nil {
 		logrus.Panic(err)
