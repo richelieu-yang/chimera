@@ -25,6 +25,7 @@ func SetUp(pulsarConfig *Config) (err error) {
 		} else {
 			err = verify(config.VerifyConfig)
 		}
+
 		if err != nil {
 			config = nil
 		}

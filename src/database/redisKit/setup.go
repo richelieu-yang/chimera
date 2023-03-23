@@ -2,7 +2,6 @@ package redisKit
 
 import (
 	"github.com/richelieu42/chimera/src/assertKit"
-	"github.com/zeromicro/go-zero/core/logx"
 	"sync"
 )
 
@@ -17,9 +16,11 @@ func MustSetUp(config *Config) {
 func SetUp(config *Config) (err error) {
 	setupOnce.Do(func() {
 		client, err = NewClient(config)
-	})
 
-	logx.SetUp()
+		if err != nil {
+			client = nil
+		}
+	})
 
 	return
 }
