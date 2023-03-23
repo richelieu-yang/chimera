@@ -19,5 +19,5 @@ func main() {
 	_, _ = writeCloser.Write([]byte("0\n"))
 	_, _ = writeCloser.Write([]byte("1\n"))
 	_, _ = writeCloser.Write([]byte("2\n"))
-	_, _ = writeCloser.Write([]byte("3"))
+	_, _ = writeCloser.Write([]byte("3\n"))
 }
