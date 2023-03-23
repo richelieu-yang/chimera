@@ -1,6 +1,7 @@
 package sliceKit
 
 import (
+	"github.com/samber/lo"
 	"golang.org/x/exp/constraints"
 	"sort"
 )
@@ -66,4 +67,17 @@ func SortComplexSlice(data sort.Interface, args ...bool) sort.Interface {
 	}
 	// 此时返回值必定不为nil
 	return data
+}
+
+// IsSorted 传参切片实例是否有序？
+/*
+e.g.
+[int](nil)				=> true
+([]string{})			=> true
+([]string{"b"})			=> true
+([]string{"b", "a"})	=> false
+([]int{0, 1, 9, 100})	=> true
+*/
+func IsSorted[T constraints.Ordered](collection []T) bool {
+	return lo.IsSorted(collection)
 }
