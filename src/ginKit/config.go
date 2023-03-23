@@ -6,7 +6,7 @@ import (
 )
 
 type (
-	GinConfig struct {
+	Config struct {
 		Host string
 		Port int
 		/*
@@ -33,6 +33,6 @@ type (
 	}
 )
 
-func (gc *GinConfig) GetAddress() string {
+func (gc *Config) GetAddress() string {
 	return netKit.JoinHostnameAndPort(gc.Host, gc.Port)
 }

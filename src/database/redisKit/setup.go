@@ -1,16 +1,18 @@
 package redisKit
 
 import (
-	"github.com/richelieu42/chimera/src/assertKit"
+	"github.com/sirupsen/logrus"
 	"sync"
 )
 
-var client *Client
 var setupOnce sync.Once
+var client *Client
 
 func MustSetUp(config *Config) {
 	err := SetUp(config)
-	assertKit.Must(err)
+	if err != nil {
+		logrus.Fatal(err)
+	}
 }
 
 func SetUp(config *Config) (err error) {

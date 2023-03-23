@@ -3,8 +3,8 @@ package pulsarKit
 import (
 	"context"
 	"github.com/apache/pulsar-client-go/pulsar"
-	"github.com/richelieu42/chimera/src/assertKit"
 	"github.com/richelieu42/chimera/src/core/errorKit"
+	"github.com/sirupsen/logrus"
 	"sync"
 )
 
@@ -13,7 +13,9 @@ var config *Config
 
 func MustSetUp(config *Config) {
 	err := SetUp(config)
-	assertKit.Must(err)
+	if err != nil {
+		logrus.Fatal(err)
+	}
 }
 
 func SetUp(pulsarConfig *Config) (err error) {
