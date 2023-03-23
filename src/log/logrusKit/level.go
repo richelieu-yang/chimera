@@ -16,6 +16,7 @@ func SetLevel(logger *logrus.Logger, level logrus.Level) {
 	}
 }
 
+// StringToLevel string => logrus.Level
 func StringToLevel(str string) logrus.Level {
 	switch strKit.ToLower(str) {
 	case "trace":
