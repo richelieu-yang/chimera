@@ -1,7 +1,6 @@
 package mailKit
 
 import (
-	"fmt"
 	"github.com/richelieu42/chimera/src/core/intKit"
 	"github.com/richelieu42/chimera/src/core/timeKit"
 	"testing"
@@ -28,5 +27,4 @@ func TestSendMail(t *testing.T) {
 			panic(err)
 		}
 	}
-	fmt.Println("-------------------------------------------------")
 }
