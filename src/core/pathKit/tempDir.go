@@ -1,6 +1,7 @@
 package pathKit
 
 import (
+	"github.com/richelieu42/chimera/src/consts"
 	"github.com/richelieu42/chimera/src/core/file/fileKit"
 	"os"
 )
@@ -15,13 +16,13 @@ func GetTempDir() string {
 	return os.TempDir()
 }
 
-// GetChimeraTempDir 获取chimera的专属临时目录
+// GetUniqueTempDir 获取 本依赖 的专属临时目录.
 /*
 e.g. Mac
 () => "/var/folders/4_/33p_vn057msfh2nvgx6hwv_40000gn/T/$$chimera", nil
 */
-func GetChimeraTempDir() (string, error) {
-	dir := Join(GetTempDir(), "$$chimera")
+func GetUniqueTempDir() (string, error) {
+	dir := Join(GetTempDir(), "$$"+consts.OwnName)
 	err := fileKit.MkDirs(dir)
 	return dir, err
 }

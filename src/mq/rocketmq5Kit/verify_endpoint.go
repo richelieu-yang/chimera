@@ -41,7 +41,7 @@ func VerifyEndpoint(endpoint, topic string) error {
 	}
 
 	/* logger */
-	tempDir, err := pathKit.GetChimeraTempDir()
+	tempDir, err := pathKit.GetUniqueTempDir()
 	if err != nil {
 		return err
 	}

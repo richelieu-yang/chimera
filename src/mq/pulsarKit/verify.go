@@ -40,7 +40,7 @@ func verify(verifyConfig *VerifyConfig) (err error) {
 		return nil
 	}
 
-	dir, _ := pathKit.GetChimeraTempDir()
+	dir, _ := pathKit.GetUniqueTempDir()
 	timeStr := timeKit.FormatCurrentTime(timeKit.FormatFileName)
 	consumerLogPath := pathKit.Join(dir, fmt.Sprintf("pulsar_verify_consumer_%s.log", timeStr))
 	producerLogPath := pathKit.Join(dir, fmt.Sprintf("pulsar_verify_producer_%s.log", timeStr))

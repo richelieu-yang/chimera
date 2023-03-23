@@ -5,8 +5,8 @@
 package consts
 
 const (
-	// Name 本库（项目）的名字
-	Name = "go-scales"
+	// OwnName 本库（项目）的名字
+	OwnName = "chimera"
 
 	Ip2RegionXdb = "scales-config/ip2region.xdb"
 )

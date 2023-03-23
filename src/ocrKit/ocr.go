@@ -44,7 +44,7 @@ func GetText(imgPath string, languages ...string) (string, error) {
 		return "", err
 	}
 
-	tempDir, err := pathKit.GetChimeraTempDir()
+	tempDir, err := pathKit.GetUniqueTempDir()
 	if err != nil {
 		return "", err
 	}
