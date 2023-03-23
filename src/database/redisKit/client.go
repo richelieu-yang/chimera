@@ -20,13 +20,14 @@ func (client *Client) GetMode() Mode {
 	return client.mode
 }
 
+// GetGoRedisClient 返回go-redis客户端
 func (client *Client) GetGoRedisClient() redis.UniversalClient {
 	return client.core
 }
 
 // NewClient 新建一个go-redis客户端（内置连接池，调用方无需额外考虑并发问题）
 /*
-！！！：每一个命令都会重新取得一个连接，执行后立即回收，而且回收到资源池的顺序类似于堆. https://www.cnblogs.com/yangqi7/p/13289232.html
+!!!: 每一个命令都会重新取得一个连接，执行后立即回收，而且回收到资源池的顺序类似于堆. https://www.cnblogs.com/yangqi7/p/13289232.html
 
 连接哨兵集群的demo: https://blog.csdn.net/supery071/article/details/109491404
 
