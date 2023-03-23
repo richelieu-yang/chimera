@@ -7,6 +7,8 @@ import (
 )
 
 func main() {
+	sliceKit.IndexOf()
+
 	s := sliceKit.FilterAndRevise([]string{"cpu", "gpu", "mouse", "keyboard"}, func(item string, index int) (string, bool) {
 		if strings.HasSuffix(item, "pu") {
 			return "right-" + item, true
