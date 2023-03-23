@@ -149,13 +149,6 @@ func GetRelativePath(basePath, targetPath string) (string, error) {
 }
 
 // GetAbsolutePath 获取的绝对路径(传参path相对于当前路径(os.Getwd())).
-/*
-e.g. Windows
-("./1.txt") => "E:\GolandProjects\go-scales\1.txt", nil
-
-e.g.1 Mac
-("a/b/c.xlsx") => "/Users/richelieu/GolandProjects/go-scales/a/b/c.xlsx"
-*/
 func GetAbsolutePath(path string) (string, error) {
 	return filepath.Abs(path)
 }
