@@ -21,7 +21,7 @@ type (
 		Ip string
 
 		Runtime *RuntimeConfig
-		Logrus  *logrusKit.LogrusConfig
+		Logrus  *logrusKit.Config
 		Gin     *ginKit.GinConfig
 		Redis   *redisKit.Config
 
@@ -145,7 +145,7 @@ func GetRuntimeConfig() (*RuntimeConfig, error) {
 /*
 @return 两个返回值中必定有一个不为nil（因为有默认值）
 */
-func GetLogrusConfig() (*logrusKit.LogrusConfig, error) {
+func GetLogrusConfig() (*logrusKit.Config, error) {
 	if envConfig == nil {
 		return nil, EnvNotLoadedError
 	}
@@ -161,17 +161,6 @@ func GetGinConfig() (*ginKit.GinConfig, error) {
 		return nil, EnvNotLoadedError
 	}
 	return envConfig.Gin, nil
-}
-
-// GetRedisConfig
-/*
-@return 两个返回值有可能都为nil（因为没有默认值）
-*/
-func GetRedisConfig() (*redisKit.Config, error) {
-	if envConfig == nil {
-		return nil, EnvNotLoadedError
-	}
-	return envConfig.Redis, nil
 }
 
 // GetRocketmq5Config

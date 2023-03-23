@@ -1,7 +1,7 @@
 package logrusKit
 
 type (
-	LogrusConfig struct {
+	Config struct {
 		Level           string
 		TimestampFormat string
 	}
