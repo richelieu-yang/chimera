@@ -27,8 +27,8 @@ func SetUp(config *Config) (err error) {
 
 // GetClient
 /*
-
- */
+前提: 成功调用 SetUp() || MustSetUp().
+*/
 func GetClient() (*Client, error) {
 	if client == nil {
 		return nil, NotSetupError
