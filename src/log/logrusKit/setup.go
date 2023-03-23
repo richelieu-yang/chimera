@@ -15,8 +15,15 @@ func SetUp(config *Config) {
 				PrintBasic: true,
 			}
 		}
+
+		/* formatter */
+		formatter := NewTextFormatter("")
+		logrus.SetFormatter(formatter)
+
+		/* level */
 		level := StringToLevel(config.Level)
 		logrus.SetLevel(level)
+
 		if config.PrintBasic {
 			PrintBasicDetails()
 		}

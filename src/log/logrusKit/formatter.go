@@ -10,17 +10,16 @@ var DefaultTextFormatter = NewTextFormatter("")
 
 // NewTextFormatter
 /*
-@param timeKit.FormatEntire 可以为""，将采用默认值
+@param timestampFormat 可以为""（将采用默认值）
 */
-func NewTextFormatter(timestampFormat timeKit.TimeFormat) logrus.Formatter {
-	str := string(timestampFormat)
-	if strKit.IsEmpty(str) {
-		str = string(timeKit.FormatEntire)
+func NewTextFormatter(timestampFormat string) logrus.Formatter {
+	if strKit.IsEmpty(timestampFormat) {
+		timestampFormat = string(timeKit.FormatEntire)
 	}
 
 	return &logrus.TextFormatter{
 		/* 时间格式 */
-		TimestampFormat: str,
+		TimestampFormat: timestampFormat,
 		/* 禁止显示时间 */
 		DisableTimestamp: false,
 		/* 显示完整时间 */
