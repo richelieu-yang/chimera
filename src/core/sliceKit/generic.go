@@ -130,15 +130,16 @@ func GetFirstItemWithDefault[T any](def T, args ...T) T {
 	return def
 }
 
-// Contains 切片s是否包含元素t？（区分大小写，因为使用"=="比较）
+// Compact 去除零值.
 /*
-@param s 可以为nil（此时返回值必定为false）
+@param s 可以为nil；不会修改传参s
+@return 必定不为nil（保底为空的slice实例）
+
+e.g.
+	s := []string{"", "foo", "", "bar", ""}
+	s1 := sliceKit.Compact[string](s)
+	fmt.Println(s1) 	// [foo bar]
 */
-func Contains[T comparable](s []T, t T) bool {
-	for _, ele := range s {
-		if t == ele {
-			return true
-		}
-	}
-	return false
+func Compact[T comparable](s []T) []T {
+	return lo.Compact(s)
 }
