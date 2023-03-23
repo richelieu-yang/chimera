@@ -1,9 +1,5 @@
 package userKit
 
-import (
-	"github.com/mitchellh/go-homedir"
-)
-
 func GetName() string {
 	return u.Name
 }
@@ -23,12 +19,12 @@ func GetUserHomeDir() string {
 	return userHomeDir
 }
 
-func getUserHomeDir() (string, error) {
-	//// os.Getenv("user.home")可能会返回""，比如在Mac环境下
-	//userHomeDir := os.Getenv("user.home")
-	//if userHomeDir == "" {
-	//	userHomeDir = os.Getenv("HOME")
-	//}
-
-	return homedir.Dir()
-}
+//func getUserHomeDir() (string, error) {
+//	//// os.Getenv("user.home")可能会返回""，比如在Mac环境下
+//	//userHomeDir := os.Getenv("user.home")
+//	//if userHomeDir == "" {
+//	//	userHomeDir = os.Getenv("HOME")
+//	//}
+//
+//	return homedir.Dir()
+//}

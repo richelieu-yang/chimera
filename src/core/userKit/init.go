@@ -13,18 +13,7 @@ func init() {
 
 	u, err = user.Current()
 	if err != nil {
-		logrus.WithFields(logrus.Fields{
-			"error": err.Error(),
-		}).Fatal("fail to get current user information")
+		logrus.Fatal(err)
 	}
-
 	userHomeDir = u.HomeDir
-	//userHomeDir, err = getUserHomeDir()
-	//if err != nil {
-	//	logrus.WithFields(logrus.Fields{
-	//		"error": err.Error(),
-	//	}).Fatal("")
-	//
-	//	errorKit.Panic("[SCALES] userHomeDir is invalid, error: %+v", err)
-	//}
 }
