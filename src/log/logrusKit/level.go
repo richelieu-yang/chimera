@@ -33,6 +33,7 @@ func StringToLevel(str string) logrus.Level {
 	case "debug":
 		fallthrough
 	default:
+		// 默认
 		return logrus.DebugLevel
 	}
 }

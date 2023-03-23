@@ -2,7 +2,7 @@ package logrusKit
 
 type (
 	Config struct {
-		Level           string
-		TimestampFormat string
+		Level      string `json:"level"`
+		PrintBasic bool   `json:"printBasic"`
 	}
 )

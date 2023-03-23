@@ -21,7 +21,6 @@ type (
 		Ip string
 
 		Runtime *RuntimeConfig
-		Logrus  *logrusKit.Config
 		Gin     *ginKit.GinConfig
 		Redis   *redisKit.Config
 
@@ -139,17 +138,6 @@ func GetRuntimeConfig() (*RuntimeConfig, error) {
 		return nil, EnvNotLoadedError
 	}
 	return envConfig.Runtime, nil
-}
-
-// GetLogrusConfig
-/*
-@return 两个返回值中必定有一个不为nil（因为有默认值）
-*/
-func GetLogrusConfig() (*logrusKit.Config, error) {
-	if envConfig == nil {
-		return nil, EnvNotLoadedError
-	}
-	return envConfig.Logrus, nil
 }
 
 // GetGinConfig
