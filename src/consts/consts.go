@@ -8,7 +8,5 @@ const (
 	// Name 本库（项目）的名字
 	Name = "go-scales"
 
-	EnvPath = "scales-config/env.yaml"
-
 	Ip2RegionXdb = "scales-config/ip2region.xdb"
 )
