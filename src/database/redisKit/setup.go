@@ -24,3 +24,14 @@ func SetUp(config *Config) (err error) {
 
 	return
 }
+
+// GetClient
+/*
+
+ */
+func GetClient() (*Client, error) {
+	if client == nil {
+		return nil, NotSetupError
+	}
+	return client, nil
+}
