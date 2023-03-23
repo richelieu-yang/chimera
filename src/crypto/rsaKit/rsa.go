@@ -16,20 +16,16 @@ import (
 	"github.com/sirupsen/logrus"
 )
 
-// DefaultPublicKey 默认公钥
-//
-//goland:noinspection GoUnusedGlobalVariable
-var DefaultPublicKey []byte
+var (
+	// DefaultPublicKey 默认公钥
+	DefaultPublicKey []byte
 
-// DefaultPrivateKey 默认私钥
-//
-//goland:noinspection GoUnusedGlobalVariable
-var DefaultPrivateKey []byte
+	// DefaultPrivateKey 默认私钥
+	DefaultPrivateKey []byte
 
-// DefaultPassword 默认私钥的密码
-//
-//goland:noinspection GoUnusedGlobalVariable
-var DefaultPassword = []byte("Y3l5")
+	// DefaultPassword 默认私钥的密码
+	DefaultPassword = []byte("Y3l5")
+)
 
 func init() {
 	var err error
@@ -38,13 +34,13 @@ func init() {
 	path = "resources/crypto/rsa/pub.pem"
 	DefaultPublicKey, err = resources.Asset(path)
 	if err != nil {
-		logrus.Panicf("[SCALES, RSA] Fail to get inner resource(path: %s).", path)
+		logrus.Fatal(err)
 	}
 
 	path = "resources/crypto/rsa/pri.pem"
 	DefaultPrivateKey, err = resources.Asset(path)
 	if err != nil {
-		logrus.Panicf("[SCALES, RSA] Fail to get inner resource(path: %s).", path)
+		logrus.Fatal(err)
 	}
 }
 
