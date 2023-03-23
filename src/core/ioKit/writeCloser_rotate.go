@@ -12,6 +12,8 @@ import (
 
 // NewRotateFileWriteCloser 超时根据: maxAge
 /*
+Deprecated: 推荐使用 NewLumberjackWriteCloser().
+
 PS:
 (0) 写是线程安全的；
 (1) patternPath: 附带pattern的文件路径，e.g. "d:/test/test.%Y-%m-%d %H_%M_%S.log"
@@ -46,6 +48,9 @@ func NewRotateFileWriteCloser(filePath string, rotationTime, maxAge time.Duratio
 }
 
 // NewRotateFileWriteCloserWithCount 超时根据: rotationCount
+/*
+Deprecated: 推荐使用 NewLumberjackWriteCloser().
+*/
 func NewRotateFileWriteCloserWithCount(filePath string, rotationTime time.Duration, rotationCount uint, softLinkFlag bool) (io.WriteCloser, error) {
 	/* 默认值 */
 	if rotationTime <= 0 {
