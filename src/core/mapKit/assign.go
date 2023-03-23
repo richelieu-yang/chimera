@@ -9,7 +9,7 @@ import (
 PS: 存在key相同的情况，以最右边的为准.
 
 @param maps (1) 可以为nil
-			(2) 内部可以有nil
+			(2) 内部可以有nil（甚至全是nil）
 			(3) 不会修改其中任何一个map实例
 @return 保底为空的map实例（不为nil）
 

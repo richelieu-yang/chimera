@@ -3,6 +3,7 @@ package msgKit
 import (
 	"github.com/richelieu42/chimera/src/confKit"
 	"github.com/richelieu42/chimera/src/core/file/fileKit"
+	"github.com/richelieu42/chimera/src/core/mapKit"
 )
 
 /*
@@ -41,9 +42,7 @@ func Read(data []byte, fileType string) error {
 }
 
 func UpdateMsgMap(m map[string]string) {
-	for code, msg := range m {
-		msgMap[code] = msg
-	}
+	msgMap = mapKit.Merge(msgMap, m)
 }
 
 func GetMsg(code string) string {
