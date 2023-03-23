@@ -19,3 +19,13 @@ e.g.
 func Filter[V any](s []V, predicate func(item V, index int) bool) []V {
 	return lo.Filter(s, predicate)
 }
+
+// FilterMap
+/*
+@param s		可以为nil
+@param callback 不能为nil
+@return 必定不为nil（保底为空的slice实例）
+*/
+func FilterMap[T any, R any](s []T, callback func(item T, index int) (R, bool)) []R {
+	return lo.FilterMap(s, callback)
+}
