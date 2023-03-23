@@ -1,34 +1,10 @@
 package main
 
 import (
-	"context"
-	"github.com/apache/pulsar-client-go/pulsar"
-	"github.com/richelieu42/chimera/src/mq/pulsarKit"
-	"github.com/sirupsen/logrus"
-	"time"
+	"github.com/redis/go-redis/v9"
+	"github.com/richelieu42/chimera/src/assertKit"
 )
 
 func main() {
-	addresses := []string{"localhost:6650"}
-
-	ctx, cancel := context.WithTimeout(context.TODO(), time.Second*10)
-	defer cancel()
-
-	//consumer, err := pulsarKit.NewConsumerOriginally(ctx, addresses, pulsar.ConsumerOptions{
-	//	Topic:            "test",
-	//	SubscriptionName: "my-sub1",
-	//	Type:             pulsar.Exclusive,
-	//}, "")
-	//if err != nil {
-	//	logrus.Fatal(err)
-	//}
-	//logrus.Info(consumer)
-
-	producer, err := pulsarKit.NewProducerOriginally(ctx, addresses, pulsar.ProducerOptions{
-		Topic: "test",
-	}, "")
-	if err != nil {
-		logrus.Fatal(err)
-	}
-	logrus.Info(producer)
+	assertKit.Must(redis.Nil)
 }

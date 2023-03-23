@@ -2,7 +2,7 @@ package assertKit
 
 import (
 	"github.com/richelieu42/chimera/src/funcKit"
-	"log"
+	"github.com/sirupsen/logrus"
 )
 
 // Must
@@ -13,10 +13,8 @@ import (
 */
 func Must(err error) {
 	if err != nil {
-		log.Fatalf("[FATAL] caller(%s) and error:\n%+v", funcKit.GetCaller(2), err)
-
-		//logrus.WithFields(logrus.Fields{
-		//	"caller": funcKit.GetCaller(2),
-		//}).Fatalf("%+v", err)
+		logrus.WithFields(logrus.Fields{
+			"caller": funcKit.GetCaller(2),
+		}).Fatalf("error:\n%+v", err)
 	}
 }

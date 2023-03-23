@@ -12,7 +12,8 @@ var setupOnce sync.Once
 var config *Config
 
 func MustSetUp(config *Config) {
-	assertKit.Must(SetUp(config))
+	err := SetUp(config)
+	assertKit.Must(err)
 }
 
 func SetUp(pulsarConfig *Config) (err error) {
