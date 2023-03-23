@@ -17,8 +17,6 @@ func MonitorExitSignal() {
 
 	go func() {
 		sig := <-c
-
-		logrus.Warnf("[SCALES] Get a signal(%s), program will exit.", sig.String())
-		ExitWithCode(1)
+		logrus.Fatalf("signal: [%s]", sig.String())
 	}()
 }
