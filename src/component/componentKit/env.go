@@ -23,7 +23,7 @@ type (
 		Runtime *RuntimeConfig
 		Logrus  *logrusKit.LogrusConfig
 		Gin     *ginKit.GinConfig
-		Redis   *redisKit.RedisConfig
+		Redis   *redisKit.Config
 
 		RocketMQ5 *rocketmq5Kit.Config
 	}
@@ -167,7 +167,7 @@ func GetGinConfig() (*ginKit.GinConfig, error) {
 /*
 @return 两个返回值有可能都为nil（因为没有默认值）
 */
-func GetRedisConfig() (*redisKit.RedisConfig, error) {
+func GetRedisConfig() (*redisKit.Config, error) {
 	if envConfig == nil {
 		return nil, EnvNotLoadedError
 	}

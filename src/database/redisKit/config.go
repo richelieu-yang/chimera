@@ -1,7 +1,7 @@
 package redisKit
 
 type (
-	RedisConfig struct {
+	Config struct {
 		UserName string
 		Password string
 
@@ -42,8 +42,8 @@ type (
 	}
 )
 
-// Simplify 简化，去掉与 RedisConfig.Mode 无关的配置
-func (rc *RedisConfig) Simplify() {
+// Simplify 简化，去掉与 Config.Mode 无关的配置
+func (rc *Config) Simplify() {
 	if rc == nil {
 		return
 	}

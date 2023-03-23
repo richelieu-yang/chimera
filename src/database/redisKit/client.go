@@ -32,7 +32,7 @@ func (client *Client) GetGoRedisClient() redis.UniversalClient {
 
 @return cluster模式下，第1个返回值的类型: *redis.ClusterClient
 */
-func NewClient(config *RedisConfig) (*Client, error) {
+func NewClient(config *Config) (*Client, error) {
 	if config == nil {
 		return nil, errorKit.Simple("config is nil")
 	}
@@ -79,7 +79,7 @@ func NewClient(config *RedisConfig) (*Client, error) {
 	return client, nil
 }
 
-func newBaseOptions(config *RedisConfig) *redis.UniversalOptions {
+func newBaseOptions(config *Config) *redis.UniversalOptions {
 	return &redis.UniversalOptions{
 		MinIdleConns: 32,
 		PoolSize:     128,
@@ -90,7 +90,7 @@ func newBaseOptions(config *RedisConfig) *redis.UniversalOptions {
 }
 
 // newSingleNodeOptions 单点模式
-func newSingleNodeOptions(config *RedisConfig) (*redis.UniversalOptions, error) {
+func newSingleNodeOptions(config *Config) (*redis.UniversalOptions, error) {
 	c := config.SingleNodeConfig
 	if c == nil {
 		return nil, errorKit.Simple("SingleNodeConfig is nil")
@@ -105,12 +105,12 @@ func newSingleNodeOptions(config *RedisConfig) (*redis.UniversalOptions, error) 
 }
 
 // newMasterSlaverOptions 主从模式
-func newMasterSlaverOptions(config *RedisConfig) (*redis.UniversalOptions, error) {
+func newMasterSlaverOptions(config *Config) (*redis.UniversalOptions, error) {
 	return nil, errorKit.Simple("mode(%d) is unsupported now", config.Mode)
 }
 
 // newSentinelOptions 哨兵模式
-func newSentinelOptions(config *RedisConfig) (*redis.UniversalOptions, error) {
+func newSentinelOptions(config *Config) (*redis.UniversalOptions, error) {
 	c := config.SentinelConfig
 	if c == nil {
 		return nil, errorKit.Simple("SentinelConfig is nil")
@@ -130,7 +130,7 @@ func newSentinelOptions(config *RedisConfig) (*redis.UniversalOptions, error) {
 }
 
 // newClusterOptions cluster模式
-func newClusterOptions(config *RedisConfig) (*redis.UniversalOptions, error) {
+func newClusterOptions(config *Config) (*redis.UniversalOptions, error) {
 	c := config.ClusterConfig
 	if c == nil {
 		return nil, errorKit.Simple("ClusterConfig is nil")
