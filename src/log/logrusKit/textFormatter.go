@@ -14,6 +14,11 @@ import (
 PS: 外部在调用此方法后，建议调用: Logger.SetReportCaller(true)!!!
 
 @param timestampFormat 可以为""（将采用默认值）
+
+e.g. 日志输出
+time=2023-03-23 16:46:23.398+08:00 level=info msg=[CHIMERA, PROCESS] pid: [8579]. func=PrintBasicDetails(logrusKit/basicDetails.go:17)
+time=2023-03-23 16:46:23.398+08:00 level=info msg=[CHIMERA, OS] os: [darwin]. func=PrintBasicDetails(logrusKit/basicDetails.go:20)
+time=2023-03-23 16:46:23.398+08:00 level=info msg=[CHIMERA, OS] arch: [arm64]. func=PrintBasicDetails(logrusKit/basicDetails.go:21)
 */
 func NewTextFormatter(timestampFormat string) logrus.Formatter {
 	if strKit.IsEmpty(timestampFormat) {
@@ -47,6 +52,11 @@ func NewTextFormatter(timestampFormat string) logrus.Formatter {
 			} else {
 				fileName = fmt.Sprintf("%s:%d", f.File, f.Line)
 			}
+
+			// 把 file属性 整合到 func属性 里
+			funcName = fmt.Sprintf("%s(%s)", funcName, fileName)
+			// 不输出 file属性
+			fileName = ""
 
 			return funcName, fileName
 		},
