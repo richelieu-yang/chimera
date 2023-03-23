@@ -16,17 +16,19 @@ func DisposeLogger(logger *logrus.Logger) error {
 	return ioKit.CloseWriters(logger.Out)
 }
 
-// NewLogger 输出到控制台（os.Stderr）
+// NewLogger 输出到控制台（os.Stderr） + TextFormatter
 /*
 @param formatter 可以为nil(此时将采用默认值)
 */
 func NewLogger(formatter logrus.Formatter, level logrus.Level) *logrus.Logger {
-	if formatter == nil {
-		formatter = DefaultTextFormatter
-	}
-
 	logger := logrus.New()
+
+	if formatter == nil {
+		formatter = NewTextFormatter("")
+	}
 	logger.SetFormatter(formatter)
+	logger.SetReportCaller(true)
+
 	logger.SetLevel(level)
 	return logger
 }

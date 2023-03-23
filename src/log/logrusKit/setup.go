@@ -16,11 +16,10 @@ func SetUp(config *Config) {
 			}
 		}
 
-		/* formatter */
 		formatter := NewTextFormatter("")
 		logrus.SetFormatter(formatter)
+		logrus.SetReportCaller(true)
 
-		/* level */
 		level := StringToLevel(config.Level)
 		logrus.SetLevel(level)
 
