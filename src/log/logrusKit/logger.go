@@ -65,6 +65,6 @@ func newFileLogger(formatter logrus.Formatter, level logrus.Level, writeCloser i
 	if toConsole {
 		writeCloser = ioKit.MultiWriteCloser(writeCloser, ioKit.NopWriteCloser(os.Stdout))
 	}
-	logger.Out = writeCloser
+	logger.SetOutput(writeCloser)
 	return logger
 }
