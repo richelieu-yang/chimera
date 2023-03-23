@@ -8,7 +8,7 @@ import (
 /*
 PS: 存在key相同的情况，以最右边的为准.
 
-@param maps 可以为nil
+@param maps 可以为nil; 内部可以有nil
 @return 保底为空的map实例（不为nil）
 
 e.g.
