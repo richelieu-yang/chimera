@@ -1,6 +1,12 @@
 package redisKit
 
-import "testing"
+import (
+	"context"
+	"github.com/richelieu42/chimera/src/core/timeKit"
+	"github.com/richelieu42/chimera/src/idKit"
+	"github.com/stretchr/testify/assert"
+	"testing"
+)
 
 func TestSetUp(t *testing.T) {
 	config := &Config{
@@ -13,4 +19,11 @@ func TestSetUp(t *testing.T) {
 		},
 	}
 	MustSetUp(config)
+
+	key := idKit.NewULID()
+	value := timeKit.FormatCurrentTime()
+	_, err := client.Set(context.TODO(), key, value, 0)
+	assert.Nil(t, err)
+	_, err = client.Del(context.TODO(), key)
+	assert.Nil(t, err)
 }
