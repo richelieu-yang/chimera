@@ -2,14 +2,14 @@ package main
 
 import (
 	"fmt"
-	"github.com/richelieu42/chimera/src/core/mapKit"
+	"github.com/richelieu42/chimera/src/core/sliceKit"
 )
 
 func main() {
-	m := mapKit.Merge[string, int](
-		map[string]int{"a": 1, "b": 2},
-		map[string]int{"b": 3, "c": 4},
-		map[string]int{"b": 5},
-	)
-	fmt.Println(m) // map[a:1 b:5 c:4]
+	s0 := []int{0, 1, 2, 3}
+	s1 := sliceKit.Filter(s0, func(item int, index int) bool {
+		return item >= 2
+	})
+	fmt.Println(s0) // [0 1 2 3]
+	fmt.Println(s1) // [2 3]
 }

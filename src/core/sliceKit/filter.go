@@ -2,10 +2,11 @@ package sliceKit
 
 import "github.com/samber/lo"
 
-// Filter 过滤
+// Filter 过滤.
 /*
-@param s			可以为nil
-@param predicate	(1) 传参s中的某一元素是否通过？通过则加入到返回的slice实例中
+@param s			(1) 可以为nil
+					(2) 不会修改传参s
+@param predicate	(1) true: 该元素加到返回的slice实例中
 					(2) 不能为nil，会导致panic: runtime error: invalid memory address or nil pointer dereference
 @return 必定不为nil（保底为空的slice实例）
 
