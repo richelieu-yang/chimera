@@ -15,6 +15,6 @@ func Must(err error) {
 	if err != nil {
 		logrus.WithFields(logrus.Fields{
 			"caller": funcKit.GetCaller(2),
-		}).Fatalf("error:\n%+v", err)
+		}).Fatal(err)
 	}
 }

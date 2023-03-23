@@ -41,13 +41,13 @@ func NewClient(config *Config) (*Client, error) {
 	var opts *redis.UniversalOptions
 	var err error
 	switch config.Mode {
-	case SingleNodeMode:
+	case ModeSingleNode:
 		opts, err = newSingleNodeOptions(config)
-	case MasterSlaverMode:
+	case ModeMasterSlaver:
 		opts, err = newMasterSlaverOptions(config)
-	case SentinelMode:
+	case ModeSentinel:
 		opts, err = newSentinelOptions(config)
-	case ClusterMode:
+	case ModeCluster:
 		opts, err = newClusterOptions(config)
 	default:
 		err = errorKit.Simple("mode(%d) is invalid", config.Mode)

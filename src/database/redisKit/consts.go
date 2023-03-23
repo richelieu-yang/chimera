@@ -6,12 +6,12 @@ type (
 )
 
 const (
-	// SingleNodeMode 单点集群
-	SingleNodeMode Mode = 0
-	// MasterSlaverMode 主从集群
-	MasterSlaverMode Mode = 1
-	// SentinelMode 哨兵集群
-	SentinelMode Mode = 2
-	// ClusterMode cluster集群
-	ClusterMode Mode = 3
+	// ModeSingleNode 单点集群
+	ModeSingleNode Mode = 0
+	// ModeMasterSlaver 主从集群
+	ModeMasterSlaver Mode = 1
+	// ModeSentinel 哨兵集群
+	ModeSentinel Mode = 2
+	// ModeCluster cluster集群
+	ModeCluster Mode = 3
 )

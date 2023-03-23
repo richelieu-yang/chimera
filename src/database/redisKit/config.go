@@ -49,19 +49,19 @@ func (rc *Config) Simplify() {
 	}
 
 	switch rc.Mode {
-	case SingleNodeMode:
+	case ModeSingleNode:
 		rc.MasterSlaverConfig = nil
 		rc.SentinelConfig = nil
 		rc.ClusterConfig = nil
-	case MasterSlaverMode:
+	case ModeMasterSlaver:
 		rc.SingleNodeConfig = nil
 		rc.SentinelConfig = nil
 		rc.ClusterConfig = nil
-	case SentinelMode:
+	case ModeSentinel:
 		rc.SingleNodeConfig = nil
 		rc.MasterSlaverConfig = nil
 		rc.ClusterConfig = nil
-	case ClusterMode:
+	case ModeCluster:
 		rc.SingleNodeConfig = nil
 		rc.MasterSlaverConfig = nil
 		rc.SentinelConfig = nil
