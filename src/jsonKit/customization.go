@@ -12,7 +12,7 @@ var messageHook MessageHook
 // 可用于修改响应对象属性的key值
 var responseHook ResponseHook
 
-func SetMessageHook(hook MessageHook) {
+func SetMsgHook(hook MessageHook) {
 	messageHook = hook
 }
 
@@ -20,7 +20,7 @@ func ClearMsgProcessor() {
 	messageHook = nil
 }
 
-func SetResponseHook(hook ResponseHook) {
+func SetRespHook(hook ResponseHook) {
 	responseHook = hook
 }
 
