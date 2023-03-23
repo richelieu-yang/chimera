@@ -20,12 +20,23 @@ func Filter[V any](s []V, predicate func(item V, index int) bool) []V {
 	return lo.Filter(s, predicate)
 }
 
-// FilterMap
+// FilterAndRevise 过滤（可额外处理满足条件的元素）.
 /*
 @param s		可以为nil
-@param callback 不能为nil
+@param callback (1) 不能为nil
+				(2) 第2个返回值: 是否满足过滤条件？
+				(3) 第2个返回值 == true的情况下，将第1个返回值加到返回的slice实例中.
 @return 必定不为nil（保底为空的slice实例）
+
+e.g.
+	s := sliceKit.FilterAndRevise([]string{"cpu", "gpu", "mouse", "keyboard"}, func(item string, index int) (string, bool) {
+		if strings.HasSuffix(item, "pu") {
+			return "right-" + item, true
+		}
+		return "", false
+	})
+	fmt.Println(s) // [right-cpu right-gpu]
 */
-func FilterMap[T any, R any](s []T, callback func(item T, index int) (R, bool)) []R {
+func FilterAndRevise[T any, R any](s []T, callback func(item T, index int) (R, bool)) []R {
 	return lo.FilterMap(s, callback)
 }
