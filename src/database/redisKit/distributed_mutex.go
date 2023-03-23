@@ -18,7 +18,7 @@ e.g. 将TTL修改为30s
 NewDistributedMutex("name", redsync.WithExpiry(time.Second * 30))
 */
 func (client *Client) NewDistributedMutex(name string, options ...redsync.Option) *redsync.Mutex {
-	pool := goredis.NewPool(client.goRedisClient) // or, pool := redigo.NewPool(...)
+	pool := goredis.NewPool(client.core) // or, pool := redigo.NewPool(...)
 	sync := redsync.New(pool)
 	return sync.NewMutex(name, options...)
 }

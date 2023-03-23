@@ -25,7 +25,7 @@ PS:
 	("myhash", map[string]interface{}{"key1": "value1", "key2": "value2"})
 */
 func (client *Client) HSet(ctx context.Context, key string, values ...interface{}) (int64, error) {
-	intCmd := client.goRedisClient.HSet(ctx, key, values...)
+	intCmd := client.core.HSet(ctx, key, values...)
 	return intCmd.Result()
 }
 
@@ -47,7 +47,7 @@ PS:
 @param key 如果db中不存在，会自动创建
 */
 func (client *Client) HSetNX(ctx context.Context, key, field string, value interface{}) (bool, error) {
-	boolCmd := client.goRedisClient.HSetNX(ctx, key, field, value)
+	boolCmd := client.core.HSetNX(ctx, key, field, value)
 	return boolCmd.Result()
 }
 
@@ -58,7 +58,7 @@ func (client *Client) HSetNX(ctx context.Context, key, field string, value inter
 命令返回值:	返回给定字段的值。如果给定的字段或 key 不存在时，返回 nil 。
 */
 func (client *Client) HGet(ctx context.Context, key, field string) (string, error) {
-	stringCmd := client.goRedisClient.HGet(ctx, key, field)
+	stringCmd := client.core.HGet(ctx, key, field)
 	return stringCmd.Result()
 }
 
@@ -71,7 +71,7 @@ func (client *Client) HGet(ctx context.Context, key, field string) (string, erro
 命令返回值:	以列表形式返回哈希表的字段及字段值。 若 key 不存在，返回空列表。
 */
 func (client *Client) HGetAll(ctx context.Context, key string) (map[string]string, error) {
-	mapStringStringCmd := client.goRedisClient.HGetAll(ctx, key)
+	mapStringStringCmd := client.core.HGetAll(ctx, key)
 	return mapStringStringCmd.Result()
 }
 
@@ -82,16 +82,16 @@ func (client *Client) HGetAll(ctx context.Context, key string) (map[string]strin
 命令返回值:	被成功删除字段的数量，不包括被忽略的字段。
 */
 func (client *Client) HDel(ctx context.Context, key string, fields ...string) (int64, error) {
-	intCmd := client.goRedisClient.HDel(ctx, key, fields...)
+	intCmd := client.core.HDel(ctx, key, fields...)
 	return intCmd.Result()
 }
 
 func (client *Client) HKeys(ctx context.Context, key string) ([]string, error) {
-	stringSliceCmd := client.goRedisClient.HKeys(ctx, key)
+	stringSliceCmd := client.core.HKeys(ctx, key)
 	return stringSliceCmd.Result()
 }
 
 func (client *Client) HScan(ctx context.Context, key string, cursor uint64, match string, count int64) ([]string, uint64, error) {
-	scanCmd := client.goRedisClient.HScan(ctx, key, cursor, match, count)
+	scanCmd := client.core.HScan(ctx, key, cursor, match, count)
 	return scanCmd.Result()
 }

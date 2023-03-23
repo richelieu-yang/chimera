@@ -14,7 +14,7 @@ import (
 @param channels e.g."__keyevent@0__:expired"
 */
 func (client *Client) Subscribe(ctx context.Context, channels ...string) *redis.PubSub {
-	return client.goRedisClient.Subscribe(ctx, channels...)
+	return client.core.Subscribe(ctx, channels...)
 }
 
 // PSubscribe 模式的订阅（对频道的模糊匹配，通过*）.
@@ -30,7 +30,7 @@ PS: 每个模式以 * 作为匹配符，e.g.
 @param patterns e.g."__keyevent@*__:expired"
 */
 func (client *Client) PSubscribe(ctx context.Context, patterns ...string) *redis.PubSub {
-	return client.goRedisClient.PSubscribe(ctx, patterns...)
+	return client.core.PSubscribe(ctx, patterns...)
 }
 
 // SSubscribe
@@ -38,5 +38,5 @@ func (client *Client) PSubscribe(ctx context.Context, patterns ...string) *redis
 TODO: 目前还未在网上找到"ssubscribe"命令的相关说明,
 */
 func (client *Client) SSubscribe(ctx context.Context, channels ...string) *redis.PubSub {
-	return client.goRedisClient.SSubscribe(ctx, channels...)
+	return client.core.SSubscribe(ctx, channels...)
 }

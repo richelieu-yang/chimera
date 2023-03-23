@@ -13,7 +13,7 @@ Redis 列表(List): https://www.runoob.com/redis/redis-lists.html
 @param key 不存在的话，会自动创建此key
 */
 func (client *Client) LPush(ctx context.Context, key string, values ...interface{}) (int64, error) {
-	return client.goRedisClient.LPush(ctx, key, values...).Result()
+	return client.core.LPush(ctx, key, values...).Result()
 }
 
 // LPushX 将一个或多个值插入到列表头部
@@ -25,7 +25,7 @@ PS:
 @return key不存在的话，将返回 (0, nil)
 */
 func (client *Client) LPushX(ctx context.Context, key string, values ...interface{}) (int64, error) {
-	return client.goRedisClient.LPushX(ctx, key, values...).Result()
+	return client.core.LPushX(ctx, key, values...).Result()
 }
 
 // LPop 移除并返回列表的第一个元素
@@ -35,5 +35,5 @@ PS: 如果移除后列表为空。将删除该key.
 @return key不存在的情况，将返回 ("", redis.Nil)
 */
 func (client *Client) LPop(ctx context.Context, key string) (string, error) {
-	return client.goRedisClient.LPop(ctx, key).Result()
+	return client.core.LPop(ctx, key).Result()
 }

@@ -9,13 +9,13 @@ import "context"
 命令返回值: 	总是返回 OK .
 */
 func (client *Client) FlushDB(ctx context.Context) (string, error) {
-	statusCmd := client.goRedisClient.FlushDB(ctx)
+	statusCmd := client.core.FlushDB(ctx)
 	return statusCmd.Result()
 }
 
 // FlushDBAsync 异步地.
 func (client *Client) FlushDBAsync(ctx context.Context) (string, error) {
-	statusCmd := client.goRedisClient.FlushDBAsync(ctx)
+	statusCmd := client.core.FlushDBAsync(ctx)
 	return statusCmd.Result()
 }
 
@@ -26,13 +26,13 @@ func (client *Client) FlushDBAsync(ctx context.Context) (string, error) {
 命令返回值:	总是返回 OK .
 */
 func (client *Client) FlushAll(ctx context.Context) (string, error) {
-	statusCmd := client.goRedisClient.FlushAll(ctx)
+	statusCmd := client.core.FlushAll(ctx)
 	return statusCmd.Result()
 }
 
 // FlushAllAsync 异步地.
 func (client *Client) FlushAllAsync(ctx context.Context) (string, error) {
-	statusCmd := client.goRedisClient.FlushAllAsync(ctx)
+	statusCmd := client.core.FlushAllAsync(ctx)
 	return statusCmd.Result()
 }
 
@@ -43,6 +43,6 @@ func (client *Client) FlushAllAsync(ctx context.Context) (string, error) {
 命令返回值:	当前数据库的 key 的数量.
 */
 func (client *Client) DBSize(ctx context.Context) (int64, error) {
-	intCmd := client.goRedisClient.DBSize(ctx)
+	intCmd := client.core.DBSize(ctx)
 	return intCmd.Result()
 }

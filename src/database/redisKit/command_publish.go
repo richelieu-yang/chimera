@@ -11,6 +11,6 @@ import "context"
 命令返回值:	接收到信息的订阅者数量.
 */
 func (client *Client) Publish(ctx context.Context, channel string, message interface{}) (int64, error) {
-	cmd := client.goRedisClient.Publish(ctx, channel, message)
+	cmd := client.core.Publish(ctx, channel, message)
 	return cmd.Result()
 }
