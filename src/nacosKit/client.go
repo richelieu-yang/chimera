@@ -133,7 +133,7 @@ func newServerConfigs(config *NacosConfig) ([]constant.ServerConfig, error) {
 			return nil, err
 		}
 		configs = append(configs, constant.ServerConfig{
-			IpAddr:      info.Host,
+			IpAddr:      info.Hostname,
 			Port:        uint64(info.Port),
 			ContextPath: "/nacos",
 			Scheme:      "http",
