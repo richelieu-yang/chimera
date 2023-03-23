@@ -2,12 +2,13 @@ package main
 
 import (
 	"fmt"
-	"github.com/richelieu42/chimera/src/core/sliceKit"
+	"github.com/richelieu42/chimera/src/core/mapKit"
 )
 
 func main() {
-	flag := sliceKit.IsSortedByKey([]string{"a", "aa", "bb", "ccc"}, func(s string) int {
-		return len(s)
-	})
-	fmt.Println(flag) // true
+	m := mapKit.Merge[string, int](
+		map[string]int{"a": 1, "b": 2},
+		map[string]int{"b": 3, "c": 4},
+	)
+	fmt.Println(m) // map[a:1 b:3 c:4]
 }
