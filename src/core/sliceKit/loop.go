@@ -14,6 +14,8 @@ func ForEach[T any](s []T, iteratee func(item T, index int)) {
 
 // ForEachInParallel 遍历
 /*
+!!!: 多协程，并发.
+
 @param s		可以为nil
 @param iteratee	不能为nil
 */
