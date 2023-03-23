@@ -49,7 +49,7 @@ func ForwardRequest(ctx *gin.Context, params ForwardParams, errorLogger *log.Log
 	scheme := strKit.EmptyToDefault(params.Scheme, "http", true)
 	addr := params.Address.String()
 	reqUrlPath := params.ReqUrlPath
-	extraQuery := mapKit.MergeSS(baseExtraQuery, params.ExtraQuery)
+	extraQuery := mapKit.Merge(baseExtraQuery, params.ExtraQuery)
 
 	director := func(req *http.Request) {
 		req.URL.Scheme = scheme
