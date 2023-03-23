@@ -13,7 +13,7 @@ var searcher *xdb.Searcher
 
 var lock = new(sync.Mutex)
 
-// GetRegionByIp
+// GetRegion
 /*
 IP地址查询 - 在线工具（可以查看本机的外网ip）: https://tool.lu/ip/
 
@@ -25,7 +25,7 @@ e.g.
 ("10.0.9.141") 		=> ("0|0|0|内网IP|内网IP", nil)
 ("218.90.174.146") 	=> ("中国|0|江苏省|无锡市|电信", nil)
 */
-func GetRegionByIp(ip string) (string, error) {
+func GetRegion(ip string) (string, error) {
 	if err := assignToSearcher(); err != nil {
 		return "", err
 	}

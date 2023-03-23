@@ -52,7 +52,7 @@ func PrintBasicDetails() {
 		logrus.Infof("[CHIMERA, IP] local ip(for reference only): [%s].", ip)
 
 		//// ip2region
-		//if region, err := ipKit.GetRegionByIp(ip); err != nil {
+		//if region, err := ipKit.GetRegion(ip); err != nil {
 		//	logrus.Warnf("[CHIMERA, IP] fail to get region of local ip, error: %v", err)
 		//} else {
 		//	logrus.Infof("[CHIMERA, IP] region: [%s].", region)
