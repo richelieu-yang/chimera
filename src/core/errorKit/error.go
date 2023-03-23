@@ -47,14 +47,11 @@ func SimpleWithExtraSkip(extraSkip int, format string, args ...interface{}) erro
 
 // New 新建error（指针；会携带堆栈信息）
 /*
-@param format ！！！推荐使用格式"{包名}: {错误的具体信息}"，e.g. "scales-strKit: param is invalid"
-@return 每次都会返回一个新的指针
-
 e.g. 返回值为什么是指针（详见 errors.Errorf）
-err := errorKit.Simple("123")
-err1 := errorKit.Simple("123")
-fmt.Println(err == err)  	// true
-fmt.Println(err == err1) 	// false（因为内存地址不一样）
+	err := errorKit.Simple("123")
+	err1 := errorKit.Simple("123")
+	fmt.Println(err == err)  	// true
+	fmt.Println(err == err1) 	// false（因为内存地址不一样）
 */
 func New(format string, args ...interface{}) error {
 	format = funcKit.GetEntireCaller(2) + " " + format
