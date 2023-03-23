@@ -7,9 +7,10 @@ import (
 
 // Sort （简单数据类型）排序
 /*
-@param s 	可以为nil，将返回nil
-@param args true: 降序；false: 升序（默认）
-@return 	可能为nil
+@param s 		可以为nil，将返回nil
+@param descArgs true: 降序
+				false: 升序（默认）
+@return 可能为nil
 
 e.g.
 [int](nil)    	 				=> nil
@@ -17,9 +18,9 @@ e.g.
 ([]int{0, 1, 9, 8, 1}) 		 	=> [0 1 1 8 9]
 ([]int{0, 1, 9, 8, 1}, true) 	=> [9 8 1 1 0]
 */
-func Sort[T constraints.Ordered](s []T, args ...bool) []T {
+func Sort[T constraints.Ordered](s []T, descArgs ...bool) []T {
 	var less func(i, j int) bool
-	byDescending := GetFirstItemWithDefault(false, args...)
+	byDescending := GetFirstItemWithDefault(false, descArgs...)
 	if byDescending {
 		// 降序
 		less = func(i, j int) bool {
