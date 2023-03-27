@@ -7,9 +7,9 @@ import (
 )
 
 var networkTimeSources = []string{
+	"http://www.baidu.com",
 	"http://www.ntsc.ac.cn",
 	//"http://www.taobao.com",
-	"http://www.baidu.com",
 	//"http://www.360.cn",
 }
 
