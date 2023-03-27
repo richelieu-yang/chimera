@@ -1,26 +1,35 @@
-APP=test1
+app=test1
+path=test/test1.go
 
-all: windows mac-m1 linux
+all: windows-amd64 darwin-arm64 linux-amd64 linux-arm64 linux-loong64 linux-mips64 linux-mips64le
 
-#build:
-#	@go build -tags=jsoniter -o ${APP} src/main.go
-#	@echo "build命令结束"
+windows-amd64:
+	@rm -rf $(app)-windows-amd64.exe
+	@CGO_ENABLED=0 GOOS=windows GOARCH=amd64 go build -tags=jsoniter -o $(app)-windows-amd64.exe $(path)
+	@upx -9 $(app)-windows-amd64.exe
 
-mac-m1:
-	@rm -rf $(APP)-darwin-arm64
-	@CGO_ENABLED=0 GOOS=darwin GOARCH=arm64 go build -tags=jsoniter -o $(APP)-darwin-arm64 test/test1.go
+darwin-arm64:
+	@rm -rf $(app)-darwin-arm64
+	@CGO_ENABLED=0 GOOS=darwin GOARCH=arm64 go build -tags=jsoniter -o $(app)-darwin-arm64 $(path)
 
-windows:
-	@rm -rf $(APP)-windows-amd64.exe
-	@CGO_ENABLED=0 GOOS=windows GOARCH=amd64 go build -tags=jsoniter -o $(APP)-windows-amd64.exe test/test1.go
-	@upx -9 $(APP)-windows-amd64.exe
+linux-amd64:
+	@rm -rf $(app)-linux-amd64
+	@CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build -tags=jsoniter -o $(app)-linux-amd64 $(path)
+	@upx -9 $(app)-linux-amd64
 
-linux:
-	@rm -rf $(APP)-linux-amd64
-	@CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build -tags=jsoniter -o $(APP)-linux-amd64 test/test1.go
-	@upx -9 $(APP)-linux-amd64
+linux-arm64:
+	@rm -rf $(app)-linux-arm64
+	@CGO_ENABLED=0 GOOS=linux GOARCH=arm64 go build -tags=jsoniter -o $(app)-linux-arm64 $(path)
+	@upx -9 $(app)-linux-arm64
 
-ccc:
-	@A=1
-	@echo $A
-	@echo ""
+linux-mips64:
+	@rm -rf $(app)-linux-mips64
+	@CGO_ENABLED=0 GOOS=linux GOARCH=mips64 go build -tags=jsoniter -o $(app)-linux-mips64 $(path)
+
+linux-mips64le:
+	@rm -rf $(app)-linux-mips64le
+	@CGO_ENABLED=0 GOOS=linux GOARCH=mips64le go build -tags=jsoniter -o $(app)-linux-mips64le $(path)
+
+linux-loong64:
+	@rm -rf $(app)-linux-loong64
+	@CGO_ENABLED=0 GOOS=linux GOARCH=loong64 go build -tags=jsoniter -o $(app)-linux-loong64 $(path)
