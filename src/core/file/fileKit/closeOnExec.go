@@ -1,8 +1,8 @@
 package fileKit
 
 import (
+	"github.com/zeromicro/go-zero/core/fs"
 	"os"
-	"syscall"
 )
 
 // CloseOnExec makes sure closing the file on process forking.
@@ -10,8 +10,5 @@ import (
 参考: go-zero中 fs.CloseOnExec.
 */
 func CloseOnExec(f *os.File) {
-	if f == nil {
-		return
-	}
-	syscall.CloseOnExec(int(f.Fd()))
+	fs.CloseOnExec(f)
 }
