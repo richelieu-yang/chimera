@@ -17,6 +17,8 @@ func MustSetUp(config *Config, recoveryMiddleware gin.HandlerFunc, businessLogic
 
 // SetUp
 /*
+PS: 正常执行的情况下，此方法会阻塞调用的协程.
+
 @param recoveryMiddleware 	可以为nil（将采用默认值 gin.Recovery()）
 @param businessLogic 		可以为nil；业务逻辑，可以在其中进行 路由绑定 等操作...
 */
