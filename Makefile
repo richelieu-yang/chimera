@@ -19,3 +19,8 @@ linux:
 	@rm -rf $(APP)-linux-amd64
 	@CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build -tags=jsoniter -o $(APP)-linux-amd64 test/test1.go
 	@upx -9 $(APP)-linux-amd64
+
+ccc:
+	@A=1
+	@echo $A
+	@echo ""

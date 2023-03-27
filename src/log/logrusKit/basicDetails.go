@@ -47,21 +47,21 @@ func PrintBasicDetails() {
 
 	// ip
 	if ip, err := ipKit.GetOutboundIP(); err != nil {
-		logrus.Warnf("[CHIMERA, IP] fail to get local ip, error: %v", err)
+		logrus.WithFields(logrus.Fields{
+			"error": err.Error(),
+		}).Warn("[CHIMERA, IP] fail to get local ip")
 	} else {
 		logrus.Infof("[CHIMERA, IP] local ip(for reference only): [%s].", ip)
-
-		//// ip2region
-		//if region, err := ipKit.GetRegion(ip); err != nil {
-		//	logrus.Warnf("[CHIMERA, IP] fail to get region of local ip, error: %v", err)
-		//} else {
-		//	logrus.Infof("[CHIMERA, IP] region: [%s].", region)
-		//}
 	}
 
 	// host
-	hostInfo := runtimeKit.GetHostInfo()
-	logrus.Infof("[CHIMERA, HOST] host name: [%s].", hostInfo.Hostname)
+	if hostInfo, err := runtimeKit.GetHostInfo(); err != nil {
+		logrus.WithFields(logrus.Fields{
+			"error": err.Error(),
+		}).Warn("[CHIMERA, HOST] fail to get host info")
+	} else {
+		logrus.Infof("[CHIMERA, HOST] host name: [%s].", hostInfo.Hostname)
+	}
 
 	// cpu
 	if cpuId, err := runtimeKit.GetCpuId(); err != nil {
@@ -84,13 +84,6 @@ func PrintBasicDetails() {
 	} else {
 		logrus.Infof("[CHIMERA, MAC] mac addresses: [%v].", macAddresses)
 	}
-
-	//// disk
-	//if stat, err := runtimeKit.GetDiskStat(); err != nil {
-	//	errorKit.Panic("fail to get disk stat, error:\n%+v", err)
-	//} else {
-	//	logrus.Infof("[CHIMERA, DISK] disk stat: [%s].", stat.String())
-	//}
 
 	// memory
 	if info, err := runtimeKit.GetMemoryStat(); err != nil {
