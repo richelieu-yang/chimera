@@ -7,6 +7,7 @@ import (
 	"github.com/richelieu42/chimera/src/core/timeKit"
 	"github.com/richelieu42/chimera/src/core/userKit"
 	"github.com/richelieu42/chimera/src/ipKit"
+	"github.com/shirou/gopsutil/v3/docker"
 	"github.com/sirupsen/logrus"
 )
 
@@ -96,7 +97,13 @@ func PrintBasicDetails() {
 
 	// docker
 	if dockerIds, err := runtimeKit.GetDockerIdList(); err != nil {
-		logrus.Warnf("[CHIMERA, DOCKER] Fail to get docker id list, error: %v", err)
+		if err == docker.ErrDockerNotAvailable {
+			logrus.Info("[CHIMERA, DOCKER] docker isn't available")
+		} else {
+			logrus.WithFields(logrus.Fields{
+				"error": err.Error(),
+			}).Warn("[CHIMERA, DOCKER] Fail to get docker id list")
+		}
 	} else {
 		logrus.Infof("[CHIMERA, DOCKER] docker id list: %v.", dockerIds)
 	}
