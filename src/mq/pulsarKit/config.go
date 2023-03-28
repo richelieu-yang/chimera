@@ -12,6 +12,6 @@ type (
 		// Topic 用于验证"pulsar服务是否正常启动"的topic
 		Topic string `json:"topic"`
 		// Print 是否输出 验证日志 到控制台？
-		Print bool `json:"print"`
+		Print bool `json:"print,default=false"`
 	}
 )
