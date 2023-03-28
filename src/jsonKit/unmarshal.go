@@ -7,9 +7,10 @@ import (
 	"github.com/richelieu42/chimera/src/core/strKit"
 )
 
-// Unmarshal ！！！：要注意传参data长度为0的情况，会报错
+// Unmarshal
 /**
-@param ptr 	类型只能为指针（pointer），且不能为nil
+@param data 必须满足条件: len(data) > 0
+@param ptr 	[不能为nil] 必须是指针类型（pointer）
 */
 func Unmarshal(data []byte, ptr interface{}) error {
 	if len(data) == 0 {
@@ -25,6 +26,10 @@ func Unmarshal(data []byte, ptr interface{}) error {
 	return jsoniter.Unmarshal(data, ptr)
 }
 
+// UnmarshalToMap
+/*
+@param data 必须满足条件: len(data) > 0
+*/
 func UnmarshalToMap(data []byte) (map[string]interface{}, error) {
 	m := make(map[string]interface{})
 	err := Unmarshal(data, &m)
