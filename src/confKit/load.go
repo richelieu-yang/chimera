@@ -7,7 +7,7 @@ import (
 
 // MustLoad 读取配置文件并反序列化为 指定结构体指针ptr
 /*
-!!!: 结构体可以参考 go-zero/rest/config.go中的RestConf，可以通过tag控制配置的值（默认值、范围...）
+!!!: 结构体可以参考 go-zero/rest/config.go中的RestConf，可以通过tag控制配置的值（默认值default、范围range、可选optional...）
 
 @param ptr	（不能为nil）结构体实例的指针
 @param opts e.g. conf.UseEnv()
