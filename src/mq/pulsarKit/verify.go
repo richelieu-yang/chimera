@@ -118,7 +118,7 @@ func _verify(logger *logrus.Logger, topic, consumerLogPath, producerLogPath stri
 	defer cancel()
 	go func() {
 		defer func() {
-			logger.Info("[Verify, Consumer] goroutine ends")
+			logger.Info("[Pulsar, Verify, Consumer] goroutine ends")
 		}()
 
 		s := sliceKit.Copy(texts)
@@ -128,7 +128,7 @@ func _verify(logger *logrus.Logger, topic, consumerLogPath, producerLogPath stri
 				err = errorKit.WithLocationInfo(err)
 				logger.WithFields(logrus.Fields{
 					"error": err.Error(),
-				}).Info("[Verify, Consumer] fail to receive")
+				}).Info("[Pulsar, Verify, Consumer] fail to receive")
 				consumerErrCh <- err
 				break
 			}
@@ -136,7 +136,7 @@ func _verify(logger *logrus.Logger, topic, consumerLogPath, producerLogPath stri
 				err = errorKit.WithLocationInfo(err)
 				logger.WithFields(logrus.Fields{
 					"error": err.Error(),
-				}).Info("[Verify, Consumer] fail to ack")
+				}).Info("[Pulsar, Verify, Consumer] fail to ack")
 				consumerErrCh <- err
 				break
 			}
@@ -149,10 +149,10 @@ func _verify(logger *logrus.Logger, topic, consumerLogPath, producerLogPath stri
 				"left":  left,
 				"valid": ok,
 				"text":  text,
-			}).Info("[Verify, Consumer] receive a message")
+			}).Info("[Pulsar, Verify, Consumer] receive a message")
 
 			if ok && left == 0 {
-				logger.Info("[Verify, Consumer] receive all messages!")
+				logger.Info("[Pulsar, Verify, Consumer] receive all messages!")
 				ch <- struct{}{}
 				break
 			}
@@ -162,7 +162,7 @@ func _verify(logger *logrus.Logger, topic, consumerLogPath, producerLogPath stri
 	/* producer */
 	go func() {
 		defer func() {
-			logger.Info("[Verify, Producer] goroutine ends")
+			logger.Info("[Pulsar, Verify, Producer] goroutine ends")
 		}()
 
 		for _, text := range texts {
@@ -180,13 +180,13 @@ func _verify(logger *logrus.Logger, topic, consumerLogPath, producerLogPath stri
 				logger.WithFields(logrus.Fields{
 					"text":  text,
 					"error": err.Error(),
-				}).Error("[Verify, Producer] fail to send")
+				}).Error("[Pulsar, Verify, Producer] fail to send")
 				producerErrCh <- err
 				break
 			}
 			logger.WithFields(logrus.Fields{
 				"text": text,
-			}).Info("[Verify, Producer] succeeded to send")
+			}).Info("[Pulsar, Verify, Producer] succeeded to send")
 		}
 	}()
 
