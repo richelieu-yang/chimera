@@ -20,16 +20,14 @@ func MustSetUp(config *Config) {
 
 func SetUp(pulsarConfig *Config) (err error) {
 	setupOnce.Do(func() {
-		config = pulsarConfig
-
-		if config == nil {
+		if pulsarConfig == nil {
 			err = errorKit.Simple("pulsarConfig == nil")
 		} else {
-			err = verify(config.VerifyConfig)
+			err = verify(pulsarConfig.VerifyConfig)
 		}
 
-		if err != nil {
-			config = nil
+		if err == nil {
+			config = pulsarConfig
 		}
 	})
 
