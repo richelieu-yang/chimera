@@ -43,6 +43,7 @@ require (
 	github.com/stretchr/testify v1.8.2
 	github.com/xuri/excelize/v2 v2.7.0
 	github.com/zeromicro/go-zero v1.5.0
+	github.com/zeromicro/zero-contrib/logx/logrusx v0.0.0-20230212061721-86dbe4a9e613
 	go.uber.org/zap v1.24.0
 	golang.org/x/exp v0.0.0-20230321023759-10a507213a29
 	golang.org/x/text v0.8.0
@@ -131,7 +132,6 @@ require (
 	github.com/xuri/efp v0.0.0-20220603152613-6918739fd470 // indirect
 	github.com/xuri/nfp v0.0.0-20220409054826-5e722a1d9e22 // indirect
 	github.com/yusufpapurcu/wmi v1.2.2 // indirect
-	github.com/zeromicro/zero-contrib/logx/logrusx v0.0.0-20230212061721-86dbe4a9e613 // indirect
 	go.opencensus.io v0.24.0 // indirect
 	go.opentelemetry.io/otel v1.14.0 // indirect
 	go.opentelemetry.io/otel/trace v1.14.0 // indirect
@@ -151,5 +151,6 @@ require (
 	google.golang.org/genproto v0.0.0-20230123190316-2c411cf9d197 // indirect
 	google.golang.org/protobuf v1.28.2-0.20220831092852-f930b1dc76e8 // indirect
 	gopkg.in/ini.v1 v1.67.0 // indirect
+	gopkg.in/yaml.v2 v2.4.0 // indirect
 	gopkg.in/yaml.v3 v3.0.1 // indirect
 )
