@@ -7,6 +7,10 @@ import (
 
 var setupOnce sync.Once
 
+// SetUp
+/*
+@param config 可以为nil
+*/
 func SetUp(config *Config) {
 	setupOnce.Do(func() {
 		if config == nil {
