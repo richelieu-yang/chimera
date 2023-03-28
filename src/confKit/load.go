@@ -20,11 +20,11 @@ e.g. 结构体属性的tag（https://www.w3cschool.cn/gozero/gozero-eo623nm5.htm
 	json:"age,range=[0:120]"
 */
 func MustLoad(path string, ptr any, opts ...conf.Option) {
-	if err := load(path, ptr, opts...); err != nil {
+	if err := Load(path, ptr, opts...); err != nil {
 		logrus.Fatal(err)
 	}
 }
 
-func load(path string, ptr any, opts ...conf.Option) error {
+func Load(path string, ptr any, opts ...conf.Option) error {
 	return conf.Load(path, ptr, opts...)
 }

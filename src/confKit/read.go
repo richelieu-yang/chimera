@@ -19,6 +19,8 @@ import (
 
 // ReadAs 读取配置文本内容，并反序列化.
 /*
+Deprecated: 推荐使用 Load || MustLoad.
+
 @param configType 	配置文件的类型（不区分大小写，详见viper.go）："yaml", "yml", "json", "toml", "hcl", "tfvars", "dotenv", "env", "properties", "props", "prop", "ini"
 @param defaultMap 	默认值，可以为nil
 @param ptr			指针，且不能为nil
@@ -44,6 +46,8 @@ func ReadAs(data []byte, configType string, defaultMap map[string]interface{}, p
 
 // ReadFileAs 读取配置文件，并反序列化.
 /*
+Deprecated: 推荐使用 Load || MustLoad.
+
 PS:
 (1) 配置文件 和 defaultMap 中，key首字母的大小写无所谓，都支持；
 (2) 支持配置文件的格式：JSON, TOML, HCL, .env, .yaml, .properties.
