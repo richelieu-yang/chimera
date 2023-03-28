@@ -9,7 +9,8 @@ import (
 /*
 !!!: 结构体可以参考 go-zero/rest/config.go中的RestConf，可以通过tag控制配置的值（默认值default、范围range、可选optional...）
 
-@param ptr	（不能为nil）结构体实例的指针
+@param path	配置文件的路径（推荐使用.yaml）
+@param ptr	[不能为nil] 结构体实例的指针
 @param opts e.g. conf.UseEnv()
 
 e.g. 结构体属性的tag（https://www.w3cschool.cn/gozero/gozero-eo623nm5.html）
