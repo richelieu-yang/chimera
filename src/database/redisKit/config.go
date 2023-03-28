@@ -2,33 +2,33 @@ package redisKit
 
 type (
 	Config struct {
-		UserName string
-		Password string
+		UserName string `json:"userName"`
+		Password string `json:"password"`
 
-		Mode Mode
+		Mode Mode `json:"mode"`
 
-		SingleNodeConfig   *SingleNodeConfig
-		MasterSlaverConfig *MasterSlaverConfig
-		SentinelConfig     *SentinelConfig
-		ClusterConfig      *ClusterConfig
+		SingleNodeConfig   *SingleNodeConfig   `json:"singleNodeConfig"`
+		MasterSlaverConfig *MasterSlaverConfig `json:"masterSlaverConfig"`
+		SentinelConfig     *SentinelConfig     `json:"sentinelConfig"`
+		ClusterConfig      *ClusterConfig      `json:"clusterConfig"`
 	}
 
 	SingleNodeConfig struct {
-		// host:port address.
-		Addr string
-		// Database to be selected after connecting to the server.
-		DB int
+		// Addr host:port address.
+		Addr string `json:"addr"`
+		// DB Database to be selected after connecting to the server.
+		DB int `json:"db"`
 	}
 
 	MasterSlaverConfig struct {
 	}
 
 	SentinelConfig struct {
-		// The master name.
-		MasterName string
-		// A seed list of host:port addresses of sentinel nodes.
-		SentinelAddrs []string
-		DB            int
+		// MasterName The master name.
+		MasterName string `json:"masterName"`
+		// SentinelAddrs A seed list of host:port addresses of sentinel nodes.
+		SentinelAddrs []string `json:"sentinelAddrs"`
+		DB            int      `json:"db"`
 	}
 
 	ClusterConfig struct {
@@ -38,7 +38,7 @@ type (
 			可以是: 所有的 master 的地址，
 			也可以是: 所有的 master + slave 的地址（推荐）.
 		*/
-		Addrs []string
+		Addrs []string `json:"addrs"`
 	}
 )
 
