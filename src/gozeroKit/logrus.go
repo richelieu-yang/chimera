@@ -7,7 +7,7 @@ import (
 	"github.com/zeromicro/zero-contrib/logx/logrusx"
 )
 
-// SetLogrusWriter 与第三方日志库logrus集成
+// SetLogrusWriter go-zero与第三方日志库logrus集成
 /*
 @param formatter 可以为nil
 */
