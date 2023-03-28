@@ -11,6 +11,12 @@ import (
 
 @param ptr	（不能为nil）结构体实例的指针
 @param opts e.g. conf.UseEnv()
+
+e.g. 结构体属性的tag（https://www.w3cschool.cn/gozero/gozero-eo623nm5.html）
+	json:"name,optional"
+	json:"gender,options=male|female"
+	json:"gender,default=male"
+	json:"age,range=[0:120]"
 */
 func MustLoad(path string, ptr any, opts ...conf.Option) {
 	if err := load(path, ptr, opts...); err != nil {
