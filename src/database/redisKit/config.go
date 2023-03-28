@@ -2,10 +2,10 @@ package redisKit
 
 type (
 	Config struct {
-		UserName string `json:"userName"`
-		Password string `json:"password"`
+		UserName string `json:"userName,optional"`
+		Password string `json:"password,optional"`
 
-		Mode Mode `json:"mode"`
+		Mode Mode `json:"mode,default=0,options=0|2|3"`
 
 		SingleNodeConfig   *SingleNodeConfig   `json:"singleNodeConfig"`
 		MasterSlaverConfig *MasterSlaverConfig `json:"masterSlaverConfig"`
@@ -17,7 +17,7 @@ type (
 		// Addr host:port address.
 		Addr string `json:"addr"`
 		// DB Database to be selected after connecting to the server.
-		DB int `json:"db"`
+		DB int `json:"db,default=0"`
 	}
 
 	MasterSlaverConfig struct {
@@ -25,10 +25,10 @@ type (
 
 	SentinelConfig struct {
 		// MasterName The master name.
-		MasterName string `json:"masterName"`
+		MasterName string `json:"masterName,default=mymaster"`
 		// SentinelAddrs A seed list of host:port addresses of sentinel nodes.
 		SentinelAddrs []string `json:"sentinelAddrs"`
-		DB            int      `json:"db"`
+		DB            int      `json:"db,default=0"`
 	}
 
 	ClusterConfig struct {
