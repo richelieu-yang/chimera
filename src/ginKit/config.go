@@ -7,7 +7,7 @@ import (
 type (
 	Config struct {
 		Host string `json:"host,optional"`
-		Port int
+		Port int    `json:"port,default=80"`
 		/*
 			日志的颜色（默认true）
 			true: 	强制设置日志颜色
