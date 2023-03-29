@@ -9,7 +9,7 @@ import (
 /*
 !!!:
 (1) 结构体可以参考 go-zero/rest/config.go中的RestConf，可以通过tag控制配置的值（默认值default、范围range、可选optional...）
-(2) 值为数组时要注意（要么有值，要么全注释掉），以免返回error.
+(2) 值为数组时要注意（要么有值(size > 0)，要么全注释掉），以免返回error.
 
 @param path	配置文件的路径（推荐使用.yaml）
 @param ptr	[不能为nil] 结构体实例的指针
