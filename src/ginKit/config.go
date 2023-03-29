@@ -6,22 +6,22 @@ import (
 
 type (
 	Config struct {
-		Host string
+		Host string `json:"host,optional"`
 		Port int
 		/*
 			日志的颜色（默认true）
 			true: 	强制设置日志颜色
 			false: 	禁止日志颜色
 		*/
-		Colorful   bool
+		Colorful   bool `json:"colorful,default=true"`
 		Middleware *MiddlewareConfig
 	}
 
 	MiddlewareConfig struct {
-		Gzip          bool
-		XFrameOptions string
+		Gzip          bool   `json:"gzip,default=true"`
+		XFrameOptions string `json:"xFrameOptions,optional"`
 		Cors          *CorsConfig
-		Referer       []*refererKit.RefererVerifierBuilder
+		Referer       []*refererKit.RefererVerifierBuilder `json:"referer,optional"`
 	}
 
 	// CorsConfig cors（跨源资源共享）的配置
