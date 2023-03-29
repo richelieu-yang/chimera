@@ -31,7 +31,7 @@ func (builder *RefererVerifierBuilder) Build() (*RefererVerifier, error) {
 	serverNames := builder.ServerNames
 	// 优化 serverNames
 	serverNames = sliceKit.RemoveEmpty(serverNames, true)
-	serverNames = sliceKit.RemoveDuplicate(serverNames)
+	serverNames = sliceKit.Uniq(serverNames)
 	refererRegexps := make([]*regexp.Regexp, 0, len(serverNames))
 	for _, serverName := range serverNames {
 		var tmp *regexp.Regexp
