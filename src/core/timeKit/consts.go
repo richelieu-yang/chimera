@@ -32,7 +32,8 @@ const (
 	FormatCommon1 TimeFormat = "2006-01-02 15:04:05.000"
 
 	// FormatEntire 完整的格式
-	FormatEntire TimeFormat = "2006-01-02 15:04:05.000Z07:00"
+	FormatEntire  TimeFormat = "2006-01-02 15:04:05.000Z07:00"
+	FormatEntire1 TimeFormat = "2006-01-02T15:04:05.000Z07:00"
 
 	FormatA TimeFormat = "2006-01-02 15:04:05"
 	FormatB TimeFormat = "2006-01-02 3:04:05.000 PM Mon Jan"

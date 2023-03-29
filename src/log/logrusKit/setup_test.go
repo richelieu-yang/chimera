@@ -1,6 +1,9 @@
 package logrusKit
 
-import "testing"
+import (
+	"github.com/sirupsen/logrus"
+	"testing"
+)
 
 func TestSetUp(t *testing.T) {
 	SetUp(&Config{
@@ -8,4 +11,8 @@ func TestSetUp(t *testing.T) {
 		PrintBasic: true,
 	})
 
+	DisableQuoteTemporarily(nil, func() {
+		logrus.Info("1\n2\n3\n")
+	})
+	logrus.Info("1\n2\n3\n")
 }

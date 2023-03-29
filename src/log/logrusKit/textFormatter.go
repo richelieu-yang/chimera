@@ -22,7 +22,7 @@ time=2023-03-23 16:46:23.398+08:00 level=info msg=[CHIMERA, OS] arch: [arm64]. f
 */
 func NewTextFormatter(timestampFormat string) logrus.Formatter {
 	if strKit.IsEmpty(timestampFormat) {
-		timestampFormat = string(timeKit.FormatEntire)
+		timestampFormat = string(timeKit.FormatEntire1)
 	}
 
 	return &logrus.TextFormatter{
@@ -37,8 +37,9 @@ func NewTextFormatter(timestampFormat string) logrus.Formatter {
 		DisableColors: true,
 		ForceColors:   false,
 
-		DisableQuote:     true,
-		ForceQuote:       false,
+		DisableQuote: false,
+		ForceQuote:   true,
+
 		QuoteEmptyFields: false,
 
 		CallerPrettyfier: func(f *runtime.Frame) (funcName string, fileName string) {
