@@ -13,14 +13,14 @@ type (
 			true: 	强制设置日志颜色
 			false: 	禁止日志颜色
 		*/
-		Colorful   bool `json:"colorful,default=true"`
-		Middleware *MiddlewareConfig
+		Colorful   bool              `json:"colorful,default=true"`
+		Middleware *MiddlewareConfig `json:"middleware,optional"`
 	}
 
 	MiddlewareConfig struct {
-		Gzip          bool   `json:"gzip,default=true"`
-		XFrameOptions string `json:"xFrameOptions,optional"`
-		Cors          *CorsConfig
+		Gzip          bool                                 `json:"gzip,default=true"`
+		XFrameOptions string                               `json:"xFrameOptions,optional"`
+		Cors          *CorsConfig                          `json:"cors,optional"`
 		Referer       []*refererKit.RefererVerifierBuilder `json:"referer,optional"`
 	}
 
