@@ -2,7 +2,6 @@ package ginKit
 
 import (
 	"github.com/richelieu42/chimera/src/http/refererKit"
-	"github.com/richelieu42/chimera/src/netKit"
 )
 
 type (
@@ -32,7 +31,3 @@ type (
 		Origins []string
 	}
 )
-
-func (gc *Config) GetAddress() string {
-	return netKit.JoinHostnameAndPort(gc.Host, gc.Port)
-}
