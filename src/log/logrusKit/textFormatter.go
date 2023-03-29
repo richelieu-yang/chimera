@@ -20,7 +20,7 @@ time=2023-03-23 16:46:23.398+08:00 level=info msg=[CHIMERA, PROCESS] pid: [8579]
 time=2023-03-23 16:46:23.398+08:00 level=info msg=[CHIMERA, OS] os: [darwin]. func=PrintBasicDetails(logrusKit/basicDetails.go:20)
 time=2023-03-23 16:46:23.398+08:00 level=info msg=[CHIMERA, OS] arch: [arm64]. func=PrintBasicDetails(logrusKit/basicDetails.go:21)
 */
-func NewTextFormatter(timestampFormat string) logrus.Formatter {
+func NewTextFormatter(timestampFormat string) *logrus.TextFormatter {
 	if strKit.IsEmpty(timestampFormat) {
 		timestampFormat = string(timeKit.FormatEntire1)
 	}
