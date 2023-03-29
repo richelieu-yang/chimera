@@ -26,8 +26,6 @@ type (
 
 	// CorsConfig cors（跨源资源共享）的配置
 	CorsConfig struct {
-		// 是否对cors进行配置？
-		Access  bool
 		Origins []string
 	}
 )
