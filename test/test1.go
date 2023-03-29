@@ -8,7 +8,7 @@ import (
 )
 
 func main() {
-	var formatter *logrus.TextFormatter = logrusKit.NewTextFormatter("")
+	var formatter = logrusKit.NewTextFormatter("")
 
 	formatter1, err := copyKit.DeepCopy(formatter)
 	if err != nil {

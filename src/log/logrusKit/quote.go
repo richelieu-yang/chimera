@@ -32,26 +32,26 @@ func DisableQuoteTemporarily(logger *logrus.Logger, callback func()) {
 	}
 }
 
-func DisableQuote(logger *logrus.Logger) {
-	if logger == nil {
-		logger = logrus.StandardLogger()
-	}
-
-	textFormatter, ok := logger.Formatter.(*logrus.TextFormatter)
-	if ok {
-		textFormatter.DisableQuote = true
-		textFormatter.ForceQuote = false
-	}
-}
-
-func EnableQuote(logger *logrus.Logger) {
-	if logger == nil {
-		logger = logrus.StandardLogger()
-	}
-
-	textFormatter, ok := logger.Formatter.(*logrus.TextFormatter)
-	if ok {
-		textFormatter.DisableQuote = false
-		textFormatter.ForceQuote = true
-	}
-}
+//func DisableQuote(logger *logrus.Logger) {
+//	if logger == nil {
+//		logger = logrus.StandardLogger()
+//	}
+//
+//	textFormatter, ok := logger.Formatter.(*logrus.TextFormatter)
+//	if ok {
+//		textFormatter.DisableQuote = true
+//		textFormatter.ForceQuote = false
+//	}
+//}
+//
+//func EnableQuote(logger *logrus.Logger) {
+//	if logger == nil {
+//		logger = logrus.StandardLogger()
+//	}
+//
+//	textFormatter, ok := logger.Formatter.(*logrus.TextFormatter)
+//	if ok {
+//		textFormatter.DisableQuote = false
+//		textFormatter.ForceQuote = true
+//	}
+//}
