@@ -1,6 +1,6 @@
 package httpKit
 
-// Proxy 代理请求（请求转发）
+// Proxy 代理请求（反向代理，请求转发）
 /*
 Deprecated: 待实现.
 
