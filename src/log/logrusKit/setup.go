@@ -16,7 +16,7 @@ func SetUp(config *Config) {
 		if config == nil {
 			config = &Config{
 				Level:      "debug",
-				PrintBasic: true,
+				PrintBasic: false,
 			}
 		}
 

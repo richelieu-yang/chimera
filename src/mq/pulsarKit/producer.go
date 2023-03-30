@@ -4,6 +4,7 @@ import (
 	"context"
 	"github.com/apache/pulsar-client-go/pulsar"
 	"github.com/richelieu42/chimera/src/core/errorKit"
+	"time"
 )
 
 type (
@@ -12,6 +13,12 @@ type (
 		pulsar.Producer
 	}
 )
+
+func (p *Producer) SendWithTimeout(pMsg *pulsar.ProducerMessage, timeout time.Duration) (pulsar.MessageID, error) {
+	ctx, cancel := context.WithTimeout(context.TODO(), timeout)
+	defer cancel()
+	return p.Send(ctx, pMsg)
+}
 
 func (p *Producer) Close() {
 	if p.Producer != nil {
