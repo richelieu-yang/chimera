@@ -25,6 +25,7 @@ func DisableQuoteTemporarily(logger *logrus.Logger, callback func()) {
 
 		callback()
 
+		// restore
 		textFormatter.DisableQuote = flag
 		textFormatter.ForceQuote = flag1
 	} else {
