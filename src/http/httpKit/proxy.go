@@ -42,6 +42,7 @@ func Proxy1() error {
 !!!: 如果两个地址，一个有contextPath(""和"/"等价)一个没有，需要注意参数path；其他情况参数path直接传nil即可.
 
 @param errLogger 	可以为nil，但不建议这么干，因为错误会输出到控制台（通过 log.Printf()），不利于错误定位
+@param scheme 		"http" || "https"
 @param addr 		e.g."127.0.0.1:8888"
 @param reqUrlPath 	[可以为nil]
 @param extraQuery 	[可以为nil]
@@ -57,13 +58,9 @@ func Proxy(w http.ResponseWriter, r *http.Request, errorLogger *log.Logger, sche
 	director := func(req *http.Request) {
 		req.URL.Scheme = scheme
 		req.URL.Host = addr
-
-		// req.URL.Param1
 		if reqUrlPath != nil {
 			req.URL.Path = *reqUrlPath
 		}
-
-		// req.URL.Param1
 		req.URL.RawQuery = urlKit.CombineQueryString(req.URL.RawQuery, urlKit.ToQueryString(extraQuery))
 	}
 	proxy := &httputil.ReverseProxy{
