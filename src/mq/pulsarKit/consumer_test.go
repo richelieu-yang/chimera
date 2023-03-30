@@ -3,6 +3,7 @@ package pulsarKit
 import (
 	"context"
 	"github.com/apache/pulsar-client-go/pulsar"
+	"github.com/richelieu42/chimera/src/core/file/fileKit"
 	"github.com/richelieu42/chimera/src/idKit"
 	"github.com/richelieu42/chimera/src/log/logrusKit"
 	"github.com/sirupsen/logrus"
@@ -14,7 +15,10 @@ import (
 func TestNewConsumerOriginally(t *testing.T) {
 	address := []string{"192.168.80.27:6650", "192.168.80.42:6650", "192.168.80.43:6650"}
 	topic := "test"
+
 	logPath := "logs/pulsar-consumer.log"
+	err := fileKit.Delete(logPath)
+	assert.Nil(t, err)
 
 	ctx, cancel := context.WithTimeout(context.Background(), time.Second*6)
 	defer cancel()

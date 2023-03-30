@@ -4,6 +4,7 @@ import (
 	"context"
 	"fmt"
 	"github.com/apache/pulsar-client-go/pulsar"
+	"github.com/richelieu42/chimera/src/core/file/fileKit"
 	"github.com/richelieu42/chimera/src/log/logrusKit"
 	"github.com/sirupsen/logrus"
 	"github.com/stretchr/testify/assert"
@@ -14,8 +15,11 @@ import (
 func TestNewProducerOriginally(t *testing.T) {
 	address := []string{"192.168.80.27:6650", "192.168.80.42:6650", "192.168.80.43:6650"}
 	topic := "test"
-	logPath := "logs/pulsar-producer.log"
 	sendTimeout := time.Second * 3
+
+	logPath := "logs/pulsar-producer.log"
+	err := fileKit.Delete(logPath)
+	assert.Nil(t, err)
 
 	ctx, cancel := context.WithTimeout(context.Background(), time.Second*6)
 	defer cancel()
