@@ -14,6 +14,8 @@ import (
 func TestNewConsumerOriginally(t *testing.T) {
 	address := []string{"192.168.80.27:6650", "192.168.80.42:6650", "192.168.80.43:6650"}
 	topic := "test"
+	logPath := "logs/pulsar-consumer.log"
+
 	ctx, cancel := context.WithTimeout(context.Background(), time.Second*6)
 	defer cancel()
 
@@ -21,7 +23,7 @@ func TestNewConsumerOriginally(t *testing.T) {
 		Topic:            topic,
 		SubscriptionName: idKit.NewULID(),
 		Type:             pulsar.Exclusive,
-	}, "logs/pulsar-consumer.log")
+	}, logPath)
 	assert.Nil(t, err)
 
 	logrusKit.SetUp(&logrusKit.Config{

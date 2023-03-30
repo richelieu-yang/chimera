@@ -14,14 +14,16 @@ import (
 func TestNewProducerOriginally(t *testing.T) {
 	address := []string{"192.168.80.27:6650", "192.168.80.42:6650", "192.168.80.43:6650"}
 	topic := "test"
+	logPath := "logs/pulsar-producer.log"
 	sendTimeout := time.Second * 3
+
 	ctx, cancel := context.WithTimeout(context.Background(), time.Second*6)
 	defer cancel()
 
 	producer, err := NewProducerOriginally(ctx, address, pulsar.ProducerOptions{
 		Topic:       topic,
 		SendTimeout: sendTimeout,
-	}, "logs/pulsar-producer.log")
+	}, logPath)
 	assert.Nil(t, err)
 
 	logrusKit.SetUp(&logrusKit.Config{
@@ -39,6 +41,10 @@ func TestNewProducerOriginally(t *testing.T) {
 			logrus.WithFields(logrus.Fields{
 				"error": err.Error(),
 			}).Error("[PRODUCER] fail to send")
+		} else {
+			logrus.WithFields(logrus.Fields{
+				"text": text,
+			}).Info("[PRODUCER] ")
 		}
 	}
 }
