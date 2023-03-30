@@ -48,7 +48,7 @@ func TestNewProducerOriginally(t *testing.T) {
 		} else {
 			logrus.WithFields(logrus.Fields{
 				"text": text,
-			}).Info("[PRODUCER] ")
+			}).Info("[PRODUCER] manager to send")
 		}
 	}
 }
