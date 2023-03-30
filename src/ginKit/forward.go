@@ -34,7 +34,7 @@ func SetBaseExtraQuery(m map[string]string) {
 
 // ForwardRequest 请求转发（http请求、websocket请求...）
 /*
-！！！：如果两个地址，一个有contextPath(""和"/"等价)一个没有，需要注意参数path；其他情况参数path直接传nil即可.
+!!!: 如果两个地址，一个有contextPath(""和"/"等价)一个没有，需要注意参数path；其他情况参数path直接传nil即可.
 
 @param errLogger 可以为nil，但不建议这么干，因为错误会输出到控制台（通过 log.Printf()），不利于错误定位
 @return 可能是 context.Canceled（可以用==进行比较）
