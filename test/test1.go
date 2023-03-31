@@ -10,8 +10,8 @@ import (
 
 func main() {
 	router := gin.New()
-	router.GET("group/test", func(c *gin.Context) {
-		err := httpKit.Proxy(c.Writer, c.Request, nil, "http", "127.0.0.1:8889", strKit.GetStringPtr("/group1/test1"), nil)
+	router.GET("/test", func(c *gin.Context) {
+		err := httpKit.Proxy(c.Writer, c.Request, nil, "http", "127.0.0.1:80", strKit.GetStringPtr("/ws/connect"), nil)
 		if err != nil {
 			c.String(http.StatusOK, err.Error())
 		}
@@ -22,9 +22,9 @@ func main() {
 		logrus.Panic(err)
 	}
 	// 方法2
-	server := &http.Server{
-		Addr:    "0.0.0.0:10679",
-		Handler: router,
-	}
-	_ = server.ListenAndServeTLS("./certs/server.cer", "./certs/server.key")
+	//server := &http.Server{
+	//	Addr:    "0.0.0.0:10679",
+	//	Handler: router,
+	//}
+	//_ = server.ListenAndServeTLS("./certs/server.cer", "./certs/server.key")
 }

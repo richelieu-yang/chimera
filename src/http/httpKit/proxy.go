@@ -45,6 +45,9 @@ scheme="http" addr="127.0.0.1:8889" reqUrlPath=strKit.GetStringPtr("/test1")
 
 e.g.3	将 https://127.0.0.1:8888/group/test 转发给 http://127.0.0.1:8889/group1/test1
 scheme="http" addr="127.0.0.1:8889" reqUrlPath=strKit.GetStringPtr("/group1/test1")
+
+e.g.4	将 wss://127.0.0.1:8888/test 转发给 ws://127.0.0.1:80/ws/connect
+scheme="http" addr="127.0.0.1:80" reqUrlPath=strKit.GetStringPtr("/ws/connect")
 */
 func Proxy(w http.ResponseWriter, r *http.Request, errorLogger *log.Logger, scheme, addr string, reqUrlPath *string, extraQuery map[string]string) (err error) {
 	scheme = strKit.EmptyToDefault(scheme, "http", true)
