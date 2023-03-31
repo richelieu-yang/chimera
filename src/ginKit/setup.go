@@ -4,25 +4,25 @@ import (
 	"github.com/gin-gonic/gin"
 	"github.com/richelieu42/chimera/src/core/errorKit"
 	"github.com/richelieu42/chimera/src/log/logrusKit"
-	"github.com/richelieu42/chimera/src/netKit"
 	"github.com/sirupsen/logrus"
+	"net/http"
 )
 
 func MustSetUp(config *Config, recoveryMiddleware gin.HandlerFunc, businessLogic func(engine *gin.Engine) error) {
-	err := SetUp(config, recoveryMiddleware, businessLogic)
+	err := setUp(config, recoveryMiddleware, businessLogic)
 	if err != nil {
 		logrus.Fatal(err)
 	}
 }
 
-// SetUp
+// setUp
 /*
 PS: 正常执行的情况下，此方法会阻塞调用的协程.
 
 @param recoveryMiddleware 	可以为nil（将采用默认值 gin.Recovery()）
 @param businessLogic 		可以为nil；业务逻辑，可以在其中进行 路由绑定 等操作...
 */
-func SetUp(config *Config, recoveryMiddleware gin.HandlerFunc, businessLogic func(engine *gin.Engine) error) error {
+func setUp(config *Config, recoveryMiddleware gin.HandlerFunc, businessLogic func(engine *gin.Engine) error) error {
 	if config == nil {
 		return errorKit.Simple("config == nil")
 	}
@@ -51,10 +51,16 @@ func SetUp(config *Config, recoveryMiddleware gin.HandlerFunc, businessLogic fun
 			return err
 		}
 	}
-	/*
-		启动服务:
-		会阻塞当前协程（一般是main程）；
-		Richelieu: 此处也可以选择通过 goroutine 来启动gin服务，但个人感觉没这个必要.
-	*/
-	return engine.Run(netKit.JoinHostnameAndPort(config.Host, config.Port))
+
+	go func() {
+		server := &http.Server{
+			Addr:    ":8888",
+			Handler: engine.Handler(),
+		}
+		if err := server.ListenAndServe(); err != nil {
+			logrus.Fatal(engine)
+		}
+	}()
+
+	select {}
 }
