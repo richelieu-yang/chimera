@@ -10,8 +10,8 @@ import (
 
 func main() {
 	router := gin.New()
-	router.GET("/test", func(c *gin.Context) {
-		err := httpKit.Proxy(c.Writer, c.Request, nil, "http", "127.0.0.1:8889", strKit.GetStringPtr("test1"), nil)
+	router.GET("group/test", func(c *gin.Context) {
+		err := httpKit.Proxy(c.Writer, c.Request, nil, "http", "127.0.0.1:8889", strKit.GetStringPtr("/group1/test1"), nil)
 		if err != nil {
 			c.String(http.StatusOK, err.Error())
 		}
