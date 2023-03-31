@@ -4,8 +4,8 @@ import (
 	"github.com/gin-gonic/gin"
 	"github.com/richelieu42/chimera/src/core/errorKit"
 	"github.com/richelieu42/chimera/src/log/logrusKit"
+	"github.com/richelieu42/chimera/src/netKit"
 	"github.com/sirupsen/logrus"
-	"net/http"
 )
 
 func MustSetUp(config *Config, recoveryMiddleware gin.HandlerFunc, businessLogic func(engine *gin.Engine) error) {
@@ -52,12 +52,17 @@ func setUp(config *Config, recoveryMiddleware gin.HandlerFunc, businessLogic fun
 		}
 	}
 
+	// https server
+	sslConfig := config.Ssl
 	go func() {
-		server := &http.Server{
-			Addr:    ":8888",
-			Handler: engine.Handler(),
+		if err := engine.RunTLS(netKit.JoinHostnameAndPort(config.Host, sslConfig.Port), sslConfig.CertFile, sslConfig.KeyFile); err != nil {
+			logrus.Fatal(engine)
 		}
-		if err := server.ListenAndServe(); err != nil {
+	}()
+
+	// http server
+	go func() {
+		if err := engine.Run(netKit.JoinHostnameAndPort(config.Host, config.Port)); err != nil {
 			logrus.Fatal(engine)
 		}
 	}()

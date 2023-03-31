@@ -7,14 +7,15 @@ import (
 type (
 	Config struct {
 		Host string `json:"host,optional"`
-		Port int    `json:"port,default=80"`
+		Port int    `json:"port,optional"`
 		/*
 			日志的颜色（默认true）
 			true: 	强制设置日志颜色
 			false: 	禁止日志颜色
 		*/
-		Colorful   bool              `json:"colorful,default=true"`
-		Middleware *MiddlewareConfig `json:"middleware,optional"`
+		Colorful   bool `json:"colorful,default=true"`
+		Middleware *MiddlewareConfig
+		Ssl        *SslConfig `json:"ssl"`
 	}
 
 	MiddlewareConfig struct {
@@ -27,5 +28,11 @@ type (
 	// CorsConfig cors（跨源资源共享）的配置
 	CorsConfig struct {
 		Origins []string `json:"origins,optional"`
+	}
+
+	SslConfig struct {
+		CertFile string `json:"certFile"`
+		KeyFile  string `json:"keyFile"`
+		Port     int    `json:"port,optional"`
 	}
 )
