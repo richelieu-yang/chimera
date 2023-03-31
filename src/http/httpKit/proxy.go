@@ -58,6 +58,13 @@ e.g.	将 https://127.0.0.1:8888/test 转发给 http://127.0.0.1:8889/test
 传参不能是：
 (1) scheme=http addr=127.0.0.1:8889 reqUrlPath=&"test" （400 Bad Request）
 
+e.g.1	将 https://127.0.0.1:8888/test 转发给 http://127.0.0.1:8889/test1
+传参可以是：
+(1)
+(2)
+传参不能是：
+(1)
+(2)
 */
 func Proxy(w http.ResponseWriter, r *http.Request, errorLogger *log.Logger, scheme, addr string, reqUrlPath *string, extraQuery map[string]string) (err error) {
 	scheme = strKit.EmptyToDefault(scheme, "http", true)
