@@ -1,6 +1,7 @@
 package httpKit
 
 import (
+	"github.com/richelieu42/chimera/src/core/errorKit"
 	"github.com/richelieu42/chimera/src/core/strKit"
 	"github.com/richelieu42/chimera/src/netKit"
 	"github.com/richelieu42/chimera/src/urlKit"
@@ -52,8 +53,16 @@ e.g.
 如果请求转发的目标有效，但处理此请求需要花费大量时间（比如20+min），此时如果请求的客户端终端了请求（e.g.浏览器页面被直接关闭了），将返回 context.Canceled.
 */
 func Proxy(w http.ResponseWriter, r *http.Request, errorLogger *log.Logger, scheme, addr string, reqUrlPath *string, extraQuery map[string]string) (err error) {
-	// scheme默认"http"
 	scheme = strKit.EmptyToDefault(scheme, "http", true)
+	switch scheme {
+	case "https":
+	case "http":
+	default:
+		return errorKit.Simple("invalid scheme: %s", scheme)
+	}
+	if strKit.IsEmpty(addr) {
+		return errorKit.Simple("addr is empty")
+	}
 
 	director := func(req *http.Request) {
 		req.URL.Scheme = scheme

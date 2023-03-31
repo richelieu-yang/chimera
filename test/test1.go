@@ -2,16 +2,20 @@ package main
 
 import (
 	"github.com/gin-gonic/gin"
+	"github.com/richelieu42/chimera/src/http/httpKit"
 	"github.com/sirupsen/logrus"
+	"net/http"
 )
 
 func main() {
 	router := gin.New()
-	router.GET("/ws/connect", func(c *gin.Context) {
-		c.JSON(200, gin.H{
-			"message": "success",
-		})
+	router.GET("/test", func(c *gin.Context) {
+		err := httpKit.Proxy(c.Writer, c.Request, nil, "http", "127.0.0.1:8889", nil, nil)
+		if err != nil {
+			c.String(http.StatusOK, err.Error())
+		}
 	})
+
 	// 可以直接用
 	if err := router.RunTLS("0.0.0.0:8888", "ssl.pem", "ssl.key"); err != nil {
 		logrus.Panic(err)
