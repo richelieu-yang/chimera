@@ -45,12 +45,24 @@ func Proxy1() error {
 @param errLogger 	可以为nil，但不建议这么干，因为错误会输出到控制台（通过 log.Printf()），不利于错误定位
 @param scheme 		"http" || "https"
 @param addr 		e.g."127.0.0.1:8888"
-@param reqUrlPath 	[可以为nil]
-@param extraQuery 	[可以为nil]
+@param reqUrlPath 	可以为nil（此时不修改 req.URL.Path）
+@param extraQuery 	可以为nil
 @return 可能是 context.Canceled（可以用==进行比较）
 
 e.g.
 如果请求转发的目标有效，但处理此请求需要花费大量时间（比如20+min），此时如果请求的客户端终端了请求（e.g.浏览器页面被直接关闭了），将返回 context.Canceled.
+
+e.g.1 addr有效，reqUrlPath非nil但事实上不存在该路由的情况
+(1) 返回值为nil；
+(2) 客户端得到404.
+
+e.g.2 将 https://127.0.0.1:8888/test 转发给 http://127.0.0.1:8889/test
+传参可以是：
+(1) scheme=http addr=127.0.0.1:8889 reqUrlPath=nil
+(2) scheme=http addr=127.0.0.1:8889 reqUrlPath=&"/test"
+传参不可以是：
+(1) scheme=http addr=127.0.0.1:8889 reqUrlPath=&"test"
+
 */
 func Proxy(w http.ResponseWriter, r *http.Request, errorLogger *log.Logger, scheme, addr string, reqUrlPath *string, extraQuery map[string]string) (err error) {
 	scheme = strKit.EmptyToDefault(scheme, "http", true)
