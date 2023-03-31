@@ -16,10 +16,14 @@ func main() {
 		}
 	})
 
-	// 可以直接用
+	// 方法1
 	if err := router.RunTLS("0.0.0.0:8888", "ssl.pem", "ssl.key"); err != nil {
 		logrus.Panic(err)
 	}
-	//server := &http.Server{Addr: "0.0.0.0:10679", Handler: router}
-	//_ = server.ListenAndServeTLS("./certs/server.cer", "./certs/server.key")
+	// 方法2
+	server := &http.Server{
+		Addr:    "0.0.0.0:10679",
+		Handler: router,
+	}
+	_ = server.ListenAndServeTLS("./certs/server.cer", "./certs/server.key")
 }
