@@ -43,7 +43,8 @@ func Proxy1() error {
 @param errLogger 	可以为nil，但不建议这么干，因为错误会输出到控制台（通过 log.Printf()），不利于错误定位
 @param scheme 		"http" || "https"
 @param addr 		e.g."127.0.0.1:8888"
-@param reqUrlPath 	可以为nil（此时不修改 req.URL.Path）
+@param reqUrlPath 	(1) 可以为nil（此时不修改 req.URL.Path）
+					(2) 非nil的话，个人感觉: 字符串的第一个字符应该是"/"
 @param extraQuery 	可以为nil
 @return 可能是 context.Canceled（可以用==进行比较）
 
@@ -60,11 +61,9 @@ e.g.	将 https://127.0.0.1:8888/test 转发给 http://127.0.0.1:8889/test
 
 e.g.1	将 https://127.0.0.1:8888/test 转发给 http://127.0.0.1:8889/test1
 传参可以是：
-(1)
-(2)
+(1) scheme=http addr=127.0.0.1:8889 reqUrlPath=&"/test1"
 传参不能是：
-(1)
-(2)
+(1) scheme=http addr=127.0.0.1:8889 reqUrlPath=&"test1"
 */
 func Proxy(w http.ResponseWriter, r *http.Request, errorLogger *log.Logger, scheme, addr string, reqUrlPath *string, extraQuery map[string]string) (err error) {
 	scheme = strKit.EmptyToDefault(scheme, "http", true)

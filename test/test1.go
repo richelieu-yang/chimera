@@ -2,6 +2,7 @@ package main
 
 import (
 	"github.com/gin-gonic/gin"
+	"github.com/richelieu42/chimera/src/core/strKit"
 	"github.com/richelieu42/chimera/src/http/httpKit"
 	"github.com/sirupsen/logrus"
 	"net/http"
@@ -10,7 +11,7 @@ import (
 func main() {
 	router := gin.New()
 	router.GET("/test", func(c *gin.Context) {
-		err := httpKit.Proxy(c.Writer, c.Request, nil, "http", "127.0.0.1:8889", nil, nil)
+		err := httpKit.Proxy(c.Writer, c.Request, nil, "http", "127.0.0.1:8889", strKit.GetStringPtr("test1"), nil)
 		if err != nil {
 			c.String(http.StatusOK, err.Error())
 		}
