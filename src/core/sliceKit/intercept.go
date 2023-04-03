@@ -7,7 +7,7 @@ golang2021数据格式（23）切片截取 https://baijiahao.baidu.com/s?id=1711
 
 PS:
 (1) 不存在越界 && s != nil（包括len(s) == 0） 的情况下，如果from == to，将返回空的slice实例（非nil）.
-(2) from > to，会导致 panic: runtime error: slice bounds out of range [1:0]
+(2) from > to || 下标越界，会导致 panic: runtime error: slice bounds out of range [1:0]
 
 @param s	可以为nil（将返回nil）
 @param from	取值范围: [0, len(s))]
