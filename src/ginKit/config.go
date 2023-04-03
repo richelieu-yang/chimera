@@ -15,7 +15,7 @@ type (
 		*/
 		Colorful   bool `json:"colorful,default=true"`
 		Middleware *MiddlewareConfig
-		Ssl        *SslConfig `json:"ssl"`
+		Ssl        *SslConfig
 	}
 
 	MiddlewareConfig struct {
@@ -36,3 +36,8 @@ type (
 		Port     int    `json:"port,optional"`
 	}
 )
+
+func (config *Config) check() error {
+
+	return nil
+}
