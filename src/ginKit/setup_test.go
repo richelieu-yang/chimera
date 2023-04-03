@@ -8,7 +8,7 @@ import (
 
 func TestMustSetUp(t *testing.T) {
 	config := &Config{
-		Port:       8000,
+		Port:       80,
 		Colorful:   true,
 		Middleware: nil,
 		SSL: &SslConfig{
