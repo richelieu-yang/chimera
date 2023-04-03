@@ -1,6 +1,9 @@
 package ginKit
 
 import (
+	"github.com/richelieu42/chimera/src/core/errorKit"
+	"github.com/richelieu42/chimera/src/core/file/fileKit"
+	"github.com/richelieu42/chimera/src/core/strKit"
 	"github.com/richelieu42/chimera/src/http/refererKit"
 )
 
@@ -15,7 +18,7 @@ type (
 		*/
 		Colorful   bool              `json:"colorful,default=true"`
 		Middleware *MiddlewareConfig `json:"middleware,optional"`
-		Ssl        *SslConfig        `json:"ssl,optional"`
+		SSL        *SslConfig        `json:"ssl,optional"`
 	}
 
 	MiddlewareConfig struct {
@@ -37,7 +40,36 @@ type (
 	}
 )
 
-func (config *Config) check() error {
+func (config *Config) Check() error {
+	if config == nil {
+		return errorKit.Simple("config == nil")
+	}
+
+	// ssl
+	sslConfig := config.SSL
+	if sslConfig != nil {
+		if sslConfig.Port == -1 || strKit.HasEmpty(sslConfig.CertFile, sslConfig.KeyFile) {
+			sslConfig = nil
+		} else {
+			if err := fileKit.AssertExistAndIsFile(sslConfig.CertFile); err != nil {
+				return err
+			}
+			if err := fileKit.AssertExistAndIsFile(sslConfig.KeyFile); err != nil {
+				return err
+			}
+		}
+	}
+
+	// http port
+	if config.Port != -1 {
+		if sslConfig != nil && config.Port == sslConfig.Port {
+			return errorKit.Simple("http port and https port are same(%d)", config.Port)
+		}
+	} else {
+		if sslConfig == nil {
+			return errorKit.Simple("both http port and https port are invalid")
+		}
+	}
 
 	return nil
 }

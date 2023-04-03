@@ -16,5 +16,7 @@ func main() {
 	config := &Config{}
 	confKit.MustLoad("chimera-lib/env.yaml", config)
 
-	logrus.Info(config)
+	ginConfig := config.Gin
+
+	logrus.Info(ginConfig)
 }

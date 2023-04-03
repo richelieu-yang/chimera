@@ -11,7 +11,7 @@ func TestMustSetUp(t *testing.T) {
 		Port:       8000,
 		Colorful:   true,
 		Middleware: nil,
-		Ssl: &SslConfig{
+		SSL: &SslConfig{
 			CertFile: "/Users/richelieu/GolandProjects/chimera/ssl.pem",
 			KeyFile:  "/Users/richelieu/GolandProjects/chimera/ssl.key",
 			Port:     443,
