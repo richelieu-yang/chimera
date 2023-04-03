@@ -23,10 +23,8 @@ func SetUp(config *Config) {
 		formatter := NewTextFormatter("")
 		logrus.SetFormatter(formatter)
 		logrus.SetReportCaller(true)
-
 		level := StringToLevel(config.Level)
 		logrus.SetLevel(level)
-
 		if config.PrintBasic {
 			PrintBasicDetails()
 		}
