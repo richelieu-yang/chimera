@@ -2,22 +2,20 @@ package sliceKit
 
 // RemoveByIndex 根据下标删除指定元素.
 /*
-Deprecated: 可能会修改传参s.
-
 PS:
 (0) 也可以用于移除"第一个"或"最后一个"个元素；
 (1) 为什么要有两个返回值且第一个是slice？因为 append() 并不会修改传参slice，返回的是一个新的slice.
 (2) 调用此方法后，必须第一时间将 第一个返回值 赋值给 传进来的那个slice变量！！！
 
-@param s		可以为nil
+@param s		(1) 可以为nil
+				(2) 不会修改传参s
 @param index 	下标（索引），取值范围: [0, length)
-@return 移除后的slice + 被移除的元素 + 是否成功移除？（主要是针对nil的情况）
 
-e.g.	反例
+e.g.
 	s := []int{0, 1, 2, 3}
 	s1, item, ok := sliceKit.RemoveByIndex(s, 2)
 
-	fmt.Println(s)    // [0 1 3 3]（传参被修改了）
+	fmt.Println(s)    // [0 1 2 3]
 	fmt.Println(s1)   // [0 1 3]
 	fmt.Println(item) // 2
 	fmt.Println(ok)   // true
@@ -29,8 +27,13 @@ func RemoveByIndex[T any](s []T, index int) (s1 []T, item T, ok bool) {
 	}
 
 	item = s[index]
-	// !!!: 下面一行代码执行后，会修改外部的slice
-	s1 = append(s[:index], s[index+1:]...)
+
+	//// !!!: 下面一行代码执行后，会修改外部的slice
+	//s1 = append(s[:index], s[index+1:]...)
+
+	s1 = append(s1, s[:index]...)
+	s1 = append(s1, s[index+1:]...)
+
 	ok = true
 	return
 }
@@ -82,11 +85,8 @@ func RemoveLast[T any](s []T) (s1 []T, item T, ok bool) {
 
 // Remove 移除元素.
 /*
-Deprecated: 可能会修改传参s!!!
-
 PS:
-(1) 可能会修改传参s!!!（因为截取；想绝对不修改传参s的话，可以在调用此方法前对传参s进行拷贝（深浅拷贝由类型T决定，e.g.[]string用浅拷贝就行了），然后将副本作为传参）
-(2) 切片实例s中，存在多个item的话，仅会移除第一个.
+(1) 切片实例s中，存在多个item的话，仅会移除第一个.
 
 e.g.	反例
 	texts := []string{"0", "1", "2"}
@@ -102,5 +102,7 @@ func Remove[T comparable](s []T, item T) ([]T, bool) {
 		// 如果元素不存在于切片中，返回原始切片
 		return s, false
 	}
-	return append(s[:index], s[index+1:]...), true
+
+	s, _, ok := RemoveByIndex(s, index)
+	return s, ok
 }
