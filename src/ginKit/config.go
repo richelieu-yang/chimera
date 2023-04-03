@@ -34,12 +34,13 @@ type (
 	}
 
 	SslConfig struct {
-		CertFile string `json:"certFile"`
-		KeyFile  string `json:"keyFile"`
+		CertFile string `json:"certFile,optional"`
+		KeyFile  string `json:"keyFile,optional"`
 		Port     int    `json:"port,default=-1,range=[-1:65535]"`
 	}
 )
 
+// Check 先简单验证下配置.
 func (config *Config) Check() error {
 	if config == nil {
 		return errorKit.Simple("config == nil")
