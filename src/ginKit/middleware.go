@@ -37,8 +37,8 @@ func AttachCommonMiddlewares(engine *gin.Engine, middlewareConfig *MiddlewareCon
 			if corsConfig != nil {
 				origins = corsConfig.Origins
 			}
-			// 去除无效项
 			origins = sliceKit.RemoveEmpty(origins, true)
+			origins = sliceKit.Uniq(origins)
 
 			engine.Use(NewCorsMiddleware(origins))
 		}

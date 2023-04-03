@@ -15,6 +15,9 @@ func NewOpenCorsMiddleware() gin.HandlerFunc {
 /*
 @param origins 	(1) origin白名单（可以为nil）
 				(2) 支持wildcard（*）
+
+e.g.
+传参: []string{"https://*.github.com", "https://api.*", "http://*", "https://facebook.com", "*.golang.org"}
 */
 func NewCorsMiddleware(origins []string) gin.HandlerFunc {
 	config := newCorsConfig(origins)
