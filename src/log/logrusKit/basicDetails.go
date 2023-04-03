@@ -65,26 +65,26 @@ func PrintBasicDetails() {
 	}
 
 	// cpu
-	if cpuId, err := runtimeKit.GetCpuId(); err != nil {
-		logrus.Warnf("[CHIMERA, CPU] fail to get cpu id, error: %v", err)
-	} else {
-		logrus.Infof("[CHIMERA, CPU] cpu id: [%s].", cpuId)
-	}
-	logrus.Infof("[CHIMERA, CPU] available processors: [%d].", runtimeKit.GetCpuNumber())
-	if cpuPercent, err := runtimeKit.GetCpuPercent(); err != nil {
+	//if cpuId, err := runtimeKit.GetCpuId(); err != nil {
+	//	logrus.Warnf("[CHIMERA, CPU] fail to get cpu id, error: %v", err)
+	//} else {
+	//	logrus.Infof("[CHIMERA, CPU] cpu id: [%s].", cpuId)
+	//}
+	logrus.Infof("[CHIMERA, CPU] cpu number: [%d].", runtimeKit.GetCPUNumber())
+	if cpuPercent, err := runtimeKit.GetCPUPercent(); err != nil {
 		logrus.Warnf("[CHIMERA, CPU] fail to get cpu percent, error: %v", err)
 	} else {
 		logrus.Infof("[CHIMERA, CPU] usage: [%.2f]%%.", cpuPercent)
 	}
 
-	// mac
-	if macAddresses, err := runtimeKit.GetMacAddresses(); err != nil {
-		logrus.WithFields(logrus.Fields{
-			"error": err.Error(),
-		}).Fatal("fail to get mac addresses")
-	} else {
-		logrus.Infof("[CHIMERA, MAC] mac addresses: [%v].", macAddresses)
-	}
+	//// mac
+	//if macAddresses, err := runtimeKit.GetMacAddresses(); err != nil {
+	//	logrus.WithFields(logrus.Fields{
+	//		"error": err.Error(),
+	//	}).Fatal("fail to get mac addresses")
+	//} else {
+	//	logrus.Infof("[CHIMERA, MAC] mac addresses: [%v].", macAddresses)
+	//}
 
 	// memory
 	if info, err := runtimeKit.GetMemoryStat(); err != nil {

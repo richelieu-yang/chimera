@@ -6,12 +6,13 @@ import (
 	"time"
 )
 
-func GetCpuNumber() int {
+// GetCPUNumber returns the number of logical CPUs usable by the current process.
+func GetCPUNumber() int {
 	return runtime.NumCPU()
 }
 
-// GetCpuPercent CPU使用率
-func GetCpuPercent() (float64, error) {
+// GetCPUPercent CPU使用率
+func GetCPUPercent() (float64, error) {
 	percent, err := cpu.Percent(time.Second, false)
 	if err != nil {
 		return 0, err
