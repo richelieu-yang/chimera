@@ -21,7 +21,7 @@ e.g.	结构体属性的tag（https://www.w3cschool.cn/gozero/gozero-eo623nm5.htm
 	json:"gender,default=male"
 	json:"age,range=[0:120]"
 
-e.g.	组合多个tag
+e.g.1	组合多个tag
 	Port     int    `json:"port,optional,range=[-1:65535]"`
 	Port     int    `json:"port,default=-1,range=[-1:65535]"`
 */
