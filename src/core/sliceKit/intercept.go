@@ -6,9 +6,9 @@ package sliceKit
 golang2021数据格式（23）切片截取 https://baijiahao.baidu.com/s?id=1711198159326157378
 
 PS:
-(1) 不存在越界的情况下，如果from == to，将返回空的slice实例（非nil）.
+(1) 不存在越界 && s != nil（包括len(s) == 0） 的情况下，如果from == to，将返回空的slice实例（非nil）.
 
-@param s	可以为nil
+@param s	可以为nil（将返回nil）
 @param from	取值范围: [0, len(s))]
 @param to	取值范围: [0, len(s))]
 @return	(1) 可能为nil（当传参s为nil时）
@@ -30,6 +30,13 @@ e.g.1	不存在越界的情况下，如果from == to，将返回空的slice实�
 	s1 := sliceKit.Intercept(s, len(s), len(s))
 	fmt.Println(s1)        // []
 	fmt.Println(s1 != nil) // true
+
+e.g.2
+	var s []int = []int{}
+	s1 := sliceKit.Intercept(s, 0, 0)
+
+	fmt.Println(s1)
+	fmt.Println(s1 != nil)
 */
 func Intercept[T any](s []T, from, to int, maxArgs ...int) []T {
 	if len(s) == 0 {

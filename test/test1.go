@@ -2,11 +2,12 @@ package main
 
 import (
 	"fmt"
+	"github.com/richelieu42/chimera/src/core/sliceKit"
 )
 
 func main() {
 	var s []int = []int{}
-	s1 := s[0:0]
+	s1 := sliceKit.Intercept(s, 0, 0)
 
 	fmt.Println(s1)
 	fmt.Println(s1 != nil)
