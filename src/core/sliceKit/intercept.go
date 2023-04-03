@@ -1,6 +1,6 @@
 package sliceKit
 
-// Intercept 截取切片实例
+// Intercept 截取.
 /*
 参考:
 golang2021数据格式（23）切片截取 https://baijiahao.baidu.com/s?id=1711198159326157378
