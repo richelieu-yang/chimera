@@ -7,7 +7,7 @@ import (
 type (
 	Config struct {
 		Host string `json:"host,optional"`
-		Port int    `json:"port,optional"`
+		Port int    `json:"port,optional,range=[-1,65535]"`
 		/*
 			日志的颜色（默认true）
 			true: 	强制设置日志颜色
@@ -33,7 +33,7 @@ type (
 	SslConfig struct {
 		CertFile string `json:"certFile"`
 		KeyFile  string `json:"keyFile"`
-		Port     int    `json:"port,optional"`
+		Port     int    `json:"port,optional,range=[-1,65535]"`
 	}
 )
 
