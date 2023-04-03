@@ -13,7 +13,8 @@ func NewOpenCorsMiddleware() gin.HandlerFunc {
 
 // NewCorsMiddleware 新建一个cors中间件.
 /*
-@param origins origin白名单，可以为nil
+@param origins 	(1) origin白名单（可以为nil）
+				(2) 支持wildcard（*）
 */
 func NewCorsMiddleware(origins []string) gin.HandlerFunc {
 	config := newCorsConfig(origins)
