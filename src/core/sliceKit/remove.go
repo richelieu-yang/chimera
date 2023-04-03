@@ -2,7 +2,7 @@ package sliceKit
 
 // RemoveByIndex 根据下标删除指定元素.
 /*
-Deprecated: 考虑性能的场景下，不建议直接调用此方法（此方法仅供展示传参规范）.
+Deprecated: 可能会修改传参s.
 
 PS:
 (0) 也可以用于移除"第一个"或"最后一个"个元素；
@@ -13,7 +13,7 @@ PS:
 @param index 	下标（索引），取值范围: [0, length)
 @return 移除后的slice + 被移除的元素 + 是否成功移除？（主要是针对nil的情况）
 
-e.g.
+e.g.	反例
 	s := []int{0, 1, 2, 3}
 	s1, item, ok := sliceKit.RemoveByIndex(s, 2)
 
