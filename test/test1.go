@@ -2,15 +2,17 @@ package main
 
 import (
 	"fmt"
-	"github.com/richelieu42/chimera/src/core/sliceKit"
+	"unsafe"
 )
 
 func main() {
 	s := []int{0, 1, 2, 3}
-	s1, item, ok := sliceKit.RemoveByIndex(s, 2)
+	s1 := s[1:]
 
-	fmt.Println(s)    // [0 1 2 3]
-	fmt.Println(s1)   // [0 1 3]
-	fmt.Println(item) // 2
-	fmt.Println(ok)   // true
+	fmt.Println(s, unsafe.Pointer(&s))
+	fmt.Println(s1, unsafe.Pointer(&s1))
+
+	s1[2] = 9
+	fmt.Println(s, unsafe.Pointer(&s))
+	fmt.Println(s1, unsafe.Pointer(&s1))
 }

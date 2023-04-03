@@ -30,7 +30,6 @@ func RemoveByIndex[T any](s []T, index int) (s1 []T, item T, ok bool) {
 
 	//// !!!: 下面一行代码执行后，会修改外部的slice
 	//s1 = append(s[:index], s[index+1:]...)
-
 	s1 = append(s1, s[:index]...)
 	s1 = append(s1, s[index+1:]...)
 
