@@ -1,11 +1,9 @@
 package main
 
-import "fmt"
+import "github.com/richelieu42/chimera/src/core/sliceKit"
 
 func main() {
-	var s []int = nil
-	fmt.Println(s[:] == nil)
-	fmt.Println(s[:0] == nil)
-	fmt.Println(s[0:] == nil)
-	fmt.Println(s[0:0] == nil)
+	s := []int{0, 1, 2, 3}
+
+	sliceKit.Remove()
 }
