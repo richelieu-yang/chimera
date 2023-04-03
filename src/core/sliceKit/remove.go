@@ -12,6 +12,15 @@ PS:
 @param s		可以为nil
 @param index 	下标（索引），取值范围: [0, length)
 @return 移除后的slice + 被移除的元素 + 是否成功移除？（主要是针对nil的情况）
+
+e.g.
+	s := []int{0, 1, 2, 3}
+	s1, item, ok := sliceKit.RemoveByIndex(s, 2)
+
+	fmt.Println(s)    // [0 1 3 3]（传参被修改了）
+	fmt.Println(s1)   // [0 1 3]
+	fmt.Println(item) // 2
+	fmt.Println(ok)   // true
 */
 func RemoveByIndex[T any](s []T, index int) (s1 []T, item T, ok bool) {
 	if len(s) == 0 {
