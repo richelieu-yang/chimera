@@ -30,7 +30,6 @@ func RemoveEmpty(s []string, trimArgs ...bool) []string {
 	if s == nil {
 		return nil
 	}
-
 	trimFlag := GetFirstItemWithDefault(false, trimArgs...)
 
 	rst := make([]string, 0, len(s))
@@ -43,7 +42,6 @@ func RemoveEmpty(s []string, trimArgs ...bool) []string {
 		}
 	} else {
 		for _, str := range s {
-			//str = strKit.Trim(str)
 			if strKit.IsNotEmpty(str) {
 				rst = append(rst, str)
 			}
