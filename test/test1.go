@@ -6,8 +6,8 @@ import (
 )
 
 func main() {
-	var s []int = []int{}
-	s1 := sliceKit.Intercept(s, 0, 0)
+	var s []int = []int{0, 1, 2, 3}
+	s1 := sliceKit.Intercept(s, 1, 0)
 
 	fmt.Println(s1)
 	fmt.Println(s1 != nil)
