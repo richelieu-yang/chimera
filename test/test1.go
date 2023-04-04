@@ -1,13 +1,17 @@
 package main
 
-import "fmt"
+import (
+	"fmt"
+	"github.com/richelieu42/chimera/src/core/sliceKit"
+)
 
 func main() {
-	var s []int = nil
+	s := []int{0, 1, 2, 3, 4, 5}
+	s1 := sliceKit.Drop(s, 2)
+	fmt.Println(s)  // [0 1 2 3 4 5]
+	fmt.Println(s1) // [2 3 4 5]
 
-	fmt.Println(s[:] == nil)   // true
-	fmt.Println(s[0:] == nil)  // true
-	fmt.Println(s[:0] == nil)  // true
-	fmt.Println(s[0:0] == nil) // true
-	fmt.Println(s[1:1] == nil) // panic: runtime error: slice bounds out of range [:1] with capacity 0
+	s1[0] = 9
+	fmt.Println(s)  // [0 1 2 3 4 5]
+	fmt.Println(s1) // [9 3 4 5]
 }
