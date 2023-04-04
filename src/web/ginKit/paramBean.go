@@ -5,7 +5,7 @@ import (
 	"github.com/richelieu42/chimera/src/core/boolKit"
 	"github.com/richelieu42/chimera/src/core/floatKit"
 	"github.com/richelieu42/chimera/src/core/intKit"
-	"github.com/richelieu42/chimera/src/http/httpKit"
+	"github.com/richelieu42/chimera/src/web/httpKit"
 	"io/ioutil"
 	"mime/multipart"
 	"strings"

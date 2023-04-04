@@ -4,9 +4,9 @@ import (
 	"fmt"
 	"github.com/richelieu42/chimera/src/core/errorKit"
 	"github.com/richelieu42/chimera/src/core/file/fileKit"
-	"github.com/richelieu42/chimera/src/http/httpClientKit"
 	"github.com/richelieu42/chimera/src/jsonKit"
 	"github.com/richelieu42/chimera/src/urlKit"
+	"github.com/richelieu42/chimera/src/web/httpClientKit"
 )
 
 const (

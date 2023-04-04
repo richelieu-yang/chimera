@@ -5,7 +5,7 @@ import (
 	"github.com/gin-gonic/gin"
 	"github.com/richelieu42/chimera/src/core/sliceKit"
 	"github.com/richelieu42/chimera/src/core/strKit"
-	"github.com/richelieu42/chimera/src/http/refererKit"
+	"github.com/richelieu42/chimera/src/web/refererKit"
 )
 
 // AttachCommonMiddlewares 绑定一些常用的中间件.

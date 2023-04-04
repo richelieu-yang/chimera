@@ -5,8 +5,8 @@ import (
 	"github.com/richelieu42/chimera/src/core/errorKit"
 	"github.com/richelieu42/chimera/src/core/file/fileKit"
 	"github.com/richelieu42/chimera/src/crypto/base64Kit"
-	"github.com/richelieu42/chimera/src/http/httpClientKit"
-	"github.com/richelieu42/chimera/src/http/httpKit"
+	"github.com/richelieu42/chimera/src/web/httpClientKit"
+	"github.com/richelieu42/chimera/src/web/httpKit"
 	"regexp"
 )
 

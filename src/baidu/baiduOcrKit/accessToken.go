@@ -4,8 +4,8 @@ import (
 	"fmt"
 	"github.com/richelieu42/chimera/src/core/errorKit"
 	"github.com/richelieu42/chimera/src/core/strKit"
-	"github.com/richelieu42/chimera/src/http/httpClientKit"
 	"github.com/richelieu42/chimera/src/jsonKit"
+	"github.com/richelieu42/chimera/src/web/httpClientKit"
 	"sync"
 	"time"
 )
