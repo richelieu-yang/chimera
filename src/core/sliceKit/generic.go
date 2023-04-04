@@ -83,9 +83,10 @@ func Shuffle[T any](s []T) []T {
 
 // Reverse 反转切片.
 /*
-PS: 会改变传参s的内容.
+Deprecated: This helper is mutable. This behavior might change in v2.0.0.
 
-@param s 可以为nil
+@param s (1)可以为nil (2)可能会改变传参s的内容.
+@return 可能为nil
 
 e.g.
 (nil) 							=> nil
