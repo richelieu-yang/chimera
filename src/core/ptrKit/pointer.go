@@ -8,7 +8,12 @@ import "github.com/samber/lo"
 
 e.g.
 	ptr := ptrKit.ToPtr("hello world")
-	fmt.Println(ptr) // 0x140000105e0
+	fmt.Println(ptr) 	// 0x140000105e0
+e.g.1
+	ptr := ptrKit.ToPtr[interface{}](nil)
+	fmt.Println(ptr)                     // 0x1400010c5c0
+	fmt.Println(ptr == nil)              // false
+	fmt.Println(interfaceKit.IsNil(ptr)) // false
 */
 func ToPtr[T any](x T) *T {
 	return lo.ToPtr(x)
