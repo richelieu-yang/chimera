@@ -6,12 +6,10 @@ import (
 )
 
 func main() {
-	s := []int{0, 1, 2, 3, 4, 5}
-	s1 := sliceKit.Drop(s, 2)
-	fmt.Println(s)  // [0 1 2 3 4 5]
-	fmt.Println(s1) // [2 3 4 5]
-
-	s1[0] = 9
-	fmt.Println(s)  // [0 1 2 3 4 5]
-	fmt.Println(s1) // [9 3 4 5]
+	s := []string{"a", "aa", "aaa", "aa", "aa"}
+	s1 := sliceKit.DropRightWhile(s, func(val string) bool {
+		return len(val) <= 2
+	})
+	fmt.Println(s)  // [a aa aaa aa aa]
+	fmt.Println(s1) // [aaa aa aa]
 }

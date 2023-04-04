@@ -34,7 +34,16 @@ func DropRight[T any](collection []T, n int) []T {
 
 // DropWhile
 /*
+@param collection (1)可以为nil (2)此传参不会被修改
+@return 不为nil，len >= 0
+
 e.g.
+	s := []string{"a", "aa", "aaa", "aa", "aa"}
+	s1 := sliceKit.DropWhile(s, func(val string) bool {
+		return len(val) <= 2
+	})
+	fmt.Println(s)  // [a aa aaa aa aa]
+	fmt.Println(s1) // [aaa aa aa]
 */
 func DropWhile[T any](collection []T, predicate func(item T) bool) []T {
 	return lo.DropWhile(collection, predicate)
@@ -42,7 +51,16 @@ func DropWhile[T any](collection []T, predicate func(item T) bool) []T {
 
 // DropRightWhile
 /*
+@param collection (1)可以为nil (2)此传参不会被修改
+@return 不为nil，len >= 0
+
 e.g.
+	s := []string{"a", "aa", "aaa", "aa", "aa"}
+	s1 := sliceKit.DropRightWhile(s, func(val string) bool {
+		return len(val) <= 2
+	})
+	fmt.Println(s)  // [a aa aaa aa aa]
+	fmt.Println(s1) // [aaa aa aa]
 */
 func DropRightWhile[T any](collection []T, predicate func(item T) bool) []T {
 	return lo.DropRightWhile(collection, predicate)
