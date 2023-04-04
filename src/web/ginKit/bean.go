@@ -19,7 +19,7 @@ type (
 			PS: 使用 FilePath 的情况下， FileName 是可选的，为空的话会自己从 FilePath 中截取
 		*/
 		FileName string
-		
+
 		Error error
 	}
 )
