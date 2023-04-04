@@ -10,11 +10,11 @@ import (
 	"regexp"
 )
 
-// GetBase64OfImage (硬盘上的)图片 => base64字符串
+// GetImageBase64 (硬盘上的)图片 => base64字符串
 /*
 参考: golang 将图片生成Base64 https://blog.csdn.net/weixin_40292098/article/details/126029489
 */
-func GetBase64OfImage(imagePath string) (string, error) {
+func GetImageBase64(imagePath string) (string, error) {
 	if err := fileKit.AssertExistAndIsFile(imagePath); err != nil {
 		return "", err
 	}
@@ -26,13 +26,13 @@ func GetBase64OfImage(imagePath string) (string, error) {
 	return EncodeToBase64String(imageData)
 }
 
-// GetBase64OfWebImage 网络图片 => base64字符串
+// GetWebImageBase64 网络图片 => base64字符串
 /*
 参考: golang 将图片生成Base64 https://blog.csdn.net/weixin_40292098/article/details/126029489
 
 @param url e.g."https://img.redocn.com/sheying/20150507/pugongying_4267498.jpg"
 */
-func GetBase64OfWebImage(url string) (string, error) {
+func GetWebImageBase64(url string) (string, error) {
 	// 先获取网络图片的内容
 	imageData, err := httpClientKit.SimpleGet(url, nil)
 	if err != nil {
