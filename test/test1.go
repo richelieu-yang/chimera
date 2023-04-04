@@ -2,15 +2,13 @@ package main
 
 import (
 	"fmt"
-	"github.com/samber/lo"
+	"github.com/richelieu42/chimera/src/core/ptrKit"
 )
 
 func main() {
-	lo.ToPtr()
-
-	m := map[string]int{}
-	m["boy"] = 0
-	// 就地更新
-	m["boy"]++
-	fmt.Println(m["boy"]) // 1
+	str := "测试test"
+	value := ptrKit.FromPtr(&str)
+	fmt.Println(value) // "测试test"
+	value = ptrKit.FromPtr[string](nil)
+	fmt.Println(value) // ""
 }
