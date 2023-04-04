@@ -108,13 +108,13 @@ func Remove[T comparable](s []T, item T) ([]T, bool) {
 	return s, ok
 }
 
-// RemoveElements 移除不满足条件的元素（返回的是一个新的slice实例）.
+// RemoveBy 移除不满足条件的元素（返回的是一个新的slice实例）.
 /*
 @param s 			可以为nil
 @param predicate	(1)不能为nil (2)返回值为true: 移除当前元素
 @return (1)非nil (2)len>=0
 */
-func RemoveElements[T comparable](s []T, predicate func(element T) bool) []T {
+func RemoveBy[T comparable](s []T, predicate func(element T) bool) []T {
 	result := make([]T, 0, len(s))
 
 	for _, element := range s {
