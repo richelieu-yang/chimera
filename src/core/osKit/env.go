@@ -7,7 +7,7 @@ import (
 
 // GetEnv （带默认值地）获取系统环境变量.
 /*
-@param 	可以为""
+@param key 可以为""
 @return 可能为""
 
 e.g.
