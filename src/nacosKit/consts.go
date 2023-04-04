@@ -1,14 +1,14 @@
 package nacosKit
 
-import "github.com/richelieu42/chimera/src/core/strKit"
+import "github.com/richelieu42/chimera/src/core/ptrKit"
 
 type (
 	NacosLogLevel *string
 )
 
 var (
-	DebugLevel = strKit.GetStringPtr("debug")
-	InfoLevel  = strKit.GetStringPtr("info")
-	WarnLevel  = strKit.GetStringPtr("warn")
-	ErrorLevel = strKit.GetStringPtr("error")
+	DebugLevel = ptrKit.ToPtr("debug")
+	InfoLevel  = ptrKit.ToPtr("info")
+	WarnLevel  = ptrKit.ToPtr("warn")
+	ErrorLevel = ptrKit.ToPtr("error")
 )
