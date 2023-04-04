@@ -2,10 +2,14 @@ package ptrKit
 
 import "github.com/samber/lo"
 
-// ToPtr
+// ToPtr Returns a pointer copy of value.
 /*
+@param x 可以为nil（但需要指定类型T）
 
- */
+e.g.
+	ptr := ptrKit.ToPtr("hello world")
+	fmt.Println(ptr) // 0x140000105e0
+*/
 func ToPtr[T any](x T) *T {
 	return lo.ToPtr(x)
 }
