@@ -1,22 +1,33 @@
 package idKit
 
 import (
+	"github.com/gofrs/uuid/v5"
 	"github.com/richelieu42/chimera/src/core/strKit"
-	uuid "github.com/satori/go.uuid"
 )
 
 // NewUUID uuid v4
 /*
-@return e.g. "fd794d5a-4e7d-456d-a9e4-e377bf00f0a0"
+e.g.
+() => 3064040f-b626-4d23-9d5d-de220e337d7a <nil>
 */
-func NewUUID() string {
-	return uuid.NewV4().String()
+func NewUUID() (string, error) {
+	id, err := uuid.NewV4()
+	if err != nil {
+		return "", err
+	}
+	return id.String(), nil
 }
 
 // NewSimpleUUID uuid v4
 /**
-@return e.g. "e28351058d0c446b85e3d7896c87078b"
+e.g.
+() => a5140372dabd46f8bc3814b659d40708 <nil>
 */
-func NewSimpleUUID() string {
-	return strKit.ReplaceAll(NewUUID(), "-", "")
+func NewSimpleUUID() (string, error) {
+	id, err := NewUUID()
+	if err != nil {
+		return "", err
+	}
+	id = strKit.ReplaceAll(id, "-", "")
+	return id, nil
 }
