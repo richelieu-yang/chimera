@@ -3,6 +3,7 @@ package jsonKit
 import (
 	jsoniter "github.com/json-iterator/go"
 	"github.com/richelieu42/chimera/src/core/errorKit"
+	"github.com/richelieu42/chimera/src/core/ptrKit"
 	"github.com/richelieu42/chimera/src/core/strKit"
 )
 
