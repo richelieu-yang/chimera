@@ -1,7 +1,6 @@
 package intKit
 
 import (
-	"github.com/richelieu42/chimera/src/core/strKit"
 	"github.com/spf13/cast"
 	"strconv"
 )
@@ -45,7 +44,7 @@ func ToInt64E(obj interface{}) (int64, error) {
 
 // StringToInt 类型转换: string => int
 func StringToInt(str string) (int, error) {
-	str = strKit.RemoveSpace(str)
+	//str = strKit.RemoveSpace(str)
 	return strconv.Atoi(str)
 }
 
