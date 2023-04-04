@@ -3,7 +3,7 @@ module github.com/richelieu42/chimera
 go 1.20
 
 require (
-	github.com/apache/pulsar-client-go v0.9.0
+	github.com/apache/pulsar-client-go v0.10.0
 	github.com/apache/rocketmq-clients/golang v0.0.0-20230321063829-41bfbcf6130d
 	github.com/dablelv/go-huge-util v0.0.36
 	github.com/deckarep/golang-set/v2 v2.3.0
@@ -22,7 +22,7 @@ require (
 	github.com/jordan-wright/email v4.0.1-0.20210109023952-943e75fe5223+incompatible
 	github.com/json-iterator/go v1.1.12
 	github.com/lestrrat-go/file-rotatelogs v2.4.0+incompatible
-	github.com/lionsoul2014/ip2region/binding/golang v0.0.0-20230205110531-05840c74e63c
+	github.com/lionsoul2014/ip2region/binding/golang v0.0.0-20230403015023-b609e27f253c
 	github.com/matoous/go-nanoid/v2 v2.0.0
 	github.com/mitchellh/go-homedir v1.1.0
 	github.com/mitchellh/mapstructure v1.5.0

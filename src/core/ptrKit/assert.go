@@ -1,4 +1,4 @@
-package pointerKit
+package ptrKit
 
 import "github.com/richelieu42/chimera/src/core/errorKit"
 

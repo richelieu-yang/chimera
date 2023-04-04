@@ -13,7 +13,7 @@ import (
 	"github.com/richelieu42/chimera/src/core/errorKit"
 	"github.com/richelieu42/chimera/src/core/file/fileKit"
 	"github.com/richelieu42/chimera/src/core/ioKit"
-	"github.com/richelieu42/chimera/src/core/pointerKit"
+	"github.com/richelieu42/chimera/src/core/ptrKit"
 	"github.com/spf13/viper"
 )
 
@@ -76,7 +76,7 @@ func checkParamPtr(ptr interface{}) error {
 	if ptr == nil {
 		return errorKit.Simple("ptr is nil")
 	}
-	if !pointerKit.IsPointer(ptr) {
+	if !ptrKit.IsPointer(ptr) {
 		return errorKit.Simple("ptr isn't a pointer")
 	}
 	return nil

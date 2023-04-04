@@ -2,14 +2,15 @@ package main
 
 import (
 	"fmt"
-	"github.com/richelieu42/chimera/src/core/sliceKit"
+	"github.com/samber/lo"
 )
 
 func main() {
-	s := []string{"a", "aa", "aaa", "aa", "aa"}
-	s1 := sliceKit.DropRightWhile(s, func(val string) bool {
-		return len(val) <= 2
-	})
-	fmt.Println(s)  // [a aa aaa aa aa]
-	fmt.Println(s1) // [aaa aa aa]
+	lo.ToPtr()
+
+	m := map[string]int{}
+	m["boy"] = 0
+	// 就地更新
+	m["boy"]++
+	fmt.Println(m["boy"]) // 1
 }

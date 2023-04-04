@@ -2,7 +2,6 @@ package mapKit
 
 import (
 	"github.com/mitchellh/mapstructure"
-	"github.com/richelieu42/chimera/src/core/pointerKit"
 )
 
 // Decode 将 通用的map[string]interface{} 解码到对应的 Go结构体中 ，或者执行相反的操作。
@@ -15,7 +14,7 @@ PS:
 @param output 	必须是（map或结构体的）指针
 */
 func Decode(input interface{}, output interface{}) error {
-	if err := pointerKit.AssertPointer(output, "output"); err != nil {
+	if err := ptrKit.AssertPointer(output, "output"); err != nil {
 		return err
 	}
 	return mapstructure.Decode(input, output)
