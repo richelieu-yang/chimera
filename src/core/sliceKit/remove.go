@@ -87,6 +87,8 @@ func RemoveLast[T any](s []T) (s1 []T, item T, ok bool) {
 PS:
 (1) 切片实例s中，存在多个item的话，仅会移除第一个.
 
+@param s (1)可以为nil (2)不会修改传参s
+
 e.g.	反例
 	texts := []string{"0", "1", "2"}
 	fmt.Println(texts) // [0 1 2]
@@ -104,4 +106,21 @@ func Remove[T comparable](s []T, item T) ([]T, bool) {
 
 	s, _, ok := RemoveByIndex(s, index)
 	return s, ok
+}
+
+// RemoveElements 移除不满足条件的元素（返回的是一个新的slice实例）.
+/*
+@param s 			可以为nil
+@param predicate	(1)不能为nil (2)返回值为true: 移除当前元素
+@return (1)非nil (2)len>=0
+*/
+func RemoveElements[T comparable](s []T, predicate func(element T) bool) []T {
+	result := make([]T, 0, len(s))
+
+	for _, element := range s {
+		if !predicate(element) {
+			result = append(result, element)
+		}
+	}
+	return result
 }
