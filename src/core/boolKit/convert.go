@@ -2,19 +2,8 @@ package boolKit
 
 import (
 	"github.com/spf13/cast"
-	"strconv"
 	"strings"
 )
-
-// BoolToString 类型转换: bool => string
-/*
-e.g.
-(true) => 	"true"
-(false) => 	"false"
-*/
-func BoolToString(b bool) string {
-	return strconv.FormatBool(b)
-}
 
 // StringToBool 类型转换: string => bool
 /*
@@ -57,7 +46,7 @@ func ToBoolE(obj interface{}) (bool, error) {
 	}
 }
 
-func ParseToBoolWithDefault(src interface{}, def bool) bool {
+func ToBoolWithDefault(src interface{}, def bool) bool {
 	flag, err := ToBoolE(src)
 	if err != nil {
 		return def

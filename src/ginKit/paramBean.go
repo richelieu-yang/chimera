@@ -69,7 +69,7 @@ func (c *paramCapture) GetParamFromPost(ctx *gin.Context, key string) string {
 
 func (c *paramCapture) GetBoolParam(ctx *gin.Context, key string, def bool) bool {
 	str := c.GetParam(ctx, key)
-	return boolKit.ParseToBoolWithDefault(str, def)
+	return boolKit.ToBoolWithDefault(str, def)
 }
 
 func (c *paramCapture) GetIntParam(ctx *gin.Context, key string, def int) int {
