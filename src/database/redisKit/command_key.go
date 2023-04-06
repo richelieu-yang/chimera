@@ -2,6 +2,7 @@ package redisKit
 
 import (
 	"context"
+	"github.com/redis/go-redis/v9"
 	"github.com/richelieu42/chimera/v2/src/core/sliceKit"
 	"sync"
 	"time"
