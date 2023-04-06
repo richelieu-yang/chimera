@@ -23,4 +23,5 @@ func main() {
 	//logrus.Info(humanize.Bytes(uint64(length)))
 
 	logrus.Info(dataSizeKit.ToReadableStringWithSI(78848))
+	logrus.Info(dataSizeKit.ToReadableStringWithIEC(78848))
 }
