@@ -114,7 +114,7 @@ func RespondData(w http.ResponseWriter, code int, contentType string, data []byt
 
 	Status(w, code)
 
-	writeContentType(w, []string{contentType})
+	setContentType(w, []string{contentType})
 
 	if !bodyAllowedForStatus(code) {
 		return nil
@@ -123,12 +123,11 @@ func RespondData(w http.ResponseWriter, code int, contentType string, data []byt
 	return err
 }
 
-// writeContentType
+// setContentType
 /*
-PS:
-(1) copy from gin/render/render.go
+PS: copy from gin/render/render.go
 */
-func writeContentType(w http.ResponseWriter, value []string) {
+func setContentType(w http.ResponseWriter, value []string) {
 	header := w.Header()
 	if val := header["Content-Type"]; len(val) == 0 {
 		header["Content-Type"] = value
