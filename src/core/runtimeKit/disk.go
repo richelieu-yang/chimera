@@ -31,9 +31,9 @@ e.g.
 */
 func (stat DiskStat) String() string {
 	return fmt.Sprintf("free: %s, used: %s, total: %s, free percent: %.2f%%",
-		dataSizeKit.ToReadableStringWithSI(stat.Free),
-		dataSizeKit.ToReadableStringWithSI(stat.Used),
-		dataSizeKit.ToReadableStringWithSI(stat.Total),
+		dataSizeKit.ToReadableStringWithIEC(stat.Free),
+		dataSizeKit.ToReadableStringWithIEC(stat.Used),
+		dataSizeKit.ToReadableStringWithIEC(stat.Total),
 		stat.GetFreePercent(),
 	)
 }
