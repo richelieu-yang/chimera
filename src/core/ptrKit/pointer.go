@@ -4,12 +4,12 @@ import "github.com/samber/lo"
 
 // ToPtr Returns a pointer copy of value.
 /*
-@param x 可以为nil（但需要指定类型T）
+@param x 可以为nil（但需要指定类型T，且这么干貌似没意义）
 
 e.g.
 	ptr := ptrKit.ToPtr("hello world")
 	fmt.Println(ptr) 	// 0x140000105e0
-e.g.1
+e.g.1 x == nil的情况
 	ptr := ptrKit.ToPtr[interface{}](nil)
 	fmt.Println(ptr)                     // 0x1400010c5c0
 	fmt.Println(ptr == nil)              // false
