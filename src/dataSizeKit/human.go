@@ -2,22 +2,6 @@ package dataSizeKit
 
 import "github.com/dustin/go-humanize"
 
-// ToReadableStringWithSI
-/*
-PS:
-(1) 采用SI标准（国际单位制；https://blog.csdn.net/bioitee/article/details/120797739）.
-(2) 1KB == 1000
-(3) 采用此标准: Mac的访达...
-
-@param s 单位: 字节(bytes)
-
-e.g.
-	(78848) => "79 kB"
-*/
-func ToReadableStringWithSI(s uint64) string {
-	return humanize.Bytes(s)
-}
-
 // ToReadableStringWithIEC
 /*
 PS:
@@ -32,4 +16,20 @@ e.g.
 */
 func ToReadableStringWithIEC(s uint64) string {
 	return humanize.IBytes(s)
+}
+
+// ToReadableStringWithSI
+/*
+PS:
+(1) 采用SI标准（国际单位制；https://blog.csdn.net/bioitee/article/details/120797739）.
+(2) 1KB == 1000
+(3) 采用此标准: Mac的访达...
+
+@param s 单位: 字节(bytes)
+
+e.g.
+	(78848) => "79 kB"
+*/
+func ToReadableStringWithSI(s uint64) string {
+	return humanize.Bytes(s)
 }
