@@ -2,18 +2,12 @@ package main
 
 import (
 	"fmt"
+	"github.com/richelieu42/chimera/v2/src/dataSizeKit"
 )
 
-type DemoError struct {
-}
-
-func (de *DemoError) Error() string {
-	return "DemoError"
-}
-
 func main() {
-	var err error = nil
-	var obj interface{} = nil
-
-	fmt.Println(err == obj)
+	fmt.Println(dataSizeKit.ParseString("42MB"))
+	fmt.Println(dataSizeKit.ParseString("42 MB"))
+	fmt.Println(dataSizeKit.ParseString("42mib"))
+	fmt.Println(dataSizeKit.ParseString("42 mib"))
 }
