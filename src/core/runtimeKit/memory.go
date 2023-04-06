@@ -22,10 +22,10 @@ func (stat MemoryStat) GetAvailablePercent() float64 {
 
 func (stat MemoryStat) String() string {
 	return fmt.Sprintf("available: %s, free: %s, used: %s, total: %s, available percent: %.2f%%",
-		dataSizeKit.ToReadableDataSizeString(stat.Available),
-		dataSizeKit.ToReadableDataSizeString(stat.Free),
-		dataSizeKit.ToReadableDataSizeString(stat.Used),
-		dataSizeKit.ToReadableDataSizeString(stat.Total),
+		dataSizeKit.ToReadableStringWithSI(stat.Available),
+		dataSizeKit.ToReadableStringWithSI(stat.Free),
+		dataSizeKit.ToReadableStringWithSI(stat.Used),
+		dataSizeKit.ToReadableStringWithSI(stat.Total),
 		stat.GetAvailablePercent(),
 	)
 }
