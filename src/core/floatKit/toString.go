@@ -17,7 +17,7 @@ func FormatFloat32ToString(f float32, fmt byte, prec int) string {
 			(3) "e": -d.dddde±dd，十进制指数
 			(4) "E": -d.ddddE±dd，十进制指数
 			(5) "g": 指数很大时用"e"格式，否则"f"格式
-			(6) "G"（指数很大时用"E"格式，否则"f"格式
+			(6) "G": 指数很大时用"E"格式，否则"f"格式
 @param prec (1) 如果传参fmt为"f"、"e"、"E"，它表示小数点后的数字个数
 			(2) 如果传参fmt为"g"、"G"，它控制总的数字个数
 			(3) -1: 使用"最少数量但又必需"的数字来表示传参f
