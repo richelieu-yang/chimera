@@ -4,6 +4,7 @@ import "github.com/dustin/go-humanize"
 
 // ParseString
 /*
+@param str 同时支持"IEC标准"和"SI标准"
 @return 第一个返回值的单位: 字节(bytes)
 
 e.g.
