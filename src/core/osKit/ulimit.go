@@ -20,6 +20,7 @@ func GetMaxOpenFiles() (int, error) {
 	if err != nil {
 		return 0, err
 	}
+	// e.g. "122880\n" => "122880"
 	str = strKit.Trim(str)
 
 	i, err := intKit.StringToInt(str)
@@ -56,6 +57,7 @@ func GetUserMaxProcesses() (int, error) {
 	if err != nil {
 		return 0, err
 	}
+	// e.g."5333\n" => "5333"
 	str = strKit.Trim(str)
 
 	i, err := intKit.StringToInt(str)
