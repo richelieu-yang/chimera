@@ -30,7 +30,8 @@ func FormatFloat64ToString(f float64, fmt byte, prec int) string {
 /*
 PS:
 (1) 十进制；
-(2) 去掉后面的无意义的"0".
+(2) 去掉后面的无意义的"0"；
+(3) 同类的方法: humanize.Ftoa().
 
 e.g.
 (2.24)			=> "2.24"
