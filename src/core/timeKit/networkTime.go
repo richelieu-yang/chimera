@@ -52,7 +52,7 @@ func getNetworkTimeBySource(source string) (time.Time, error) {
 	}()
 
 	timeString := resp.Header.Get("Date")
-	t, err := ParseStringToTime(string(FormatNetwork), timeString)
+	t, err := ParseTimeString(string(FormatNetwork), timeString)
 	if err != nil {
 		return time.Time{}, err
 	}

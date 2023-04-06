@@ -2,12 +2,19 @@ package main
 
 import (
 	"fmt"
-	"github.com/richelieu42/chimera/v2/src/dataSizeKit"
+	"time"
 )
 
 func main() {
-	fmt.Println(dataSizeKit.ParseString("42MB"))
-	fmt.Println(dataSizeKit.ParseString("42 MB"))
-	fmt.Println(dataSizeKit.ParseString("42mib"))
-	fmt.Println(dataSizeKit.ParseString("42 mib"))
+	//t := time.Now()
+	//fmt.Println(humanize.Time(t))
+
+	// Add 时间相加
+	now := time.Now()
+
+	// 10分钟前
+	m, _ := time.ParseDuration("-10m")
+	m1 := now.Add(m)
+	fmt.Println(m1)
+
 }
