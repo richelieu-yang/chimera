@@ -6,7 +6,7 @@ import (
 	"github.com/richelieu42/chimera/v2/src/core/floatKit"
 	"github.com/richelieu42/chimera/v2/src/core/intKit"
 	"github.com/richelieu42/chimera/v2/src/web/httpKit"
-	"io/ioutil"
+	"io"
 	"mime/multipart"
 	"strings"
 )
@@ -52,7 +52,7 @@ func (c *paramCapture) GetParamFromPost(ctx *gin.Context, key string) string {
 		// 重构body
 		var bodyBytes []byte
 		if req.Body != nil {
-			bodyBytes, _ = ioutil.ReadAll(req.Body)
+			bodyBytes, _ = io.ReadAll(req.Body)
 		}
 		reader := strings.NewReader(string(bodyBytes))
 		req.Body = &httpKit.Repeat{Reader: reader, Offset: 0}
@@ -111,7 +111,7 @@ func (c *paramCapture) GetFormFileContent(ctx *gin.Context, key string) ([]byte,
 		return nil, "", err
 	}
 	defer file.Close()
-	content, err := ioutil.ReadAll(file)
+	content, err := io.ReadAll(file)
 	if err != nil {
 		return nil, "", err
 	}

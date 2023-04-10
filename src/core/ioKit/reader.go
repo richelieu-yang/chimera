@@ -4,7 +4,6 @@ import (
 	"bufio"
 	"bytes"
 	"io"
-	"io/ioutil"
 	"os"
 	"strings"
 )
@@ -37,6 +36,5 @@ func ToBufioReader(reader io.Reader) *bufio.Reader {
 
 // ReadFromReader 读取io.Reader的内容（io.Reader => []byte）
 func ReadFromReader(reader io.Reader) ([]byte, error) {
-	return ioutil.ReadAll(reader)
-	//return io.ReadAll(reader)
+	return io.ReadAll(reader)
 }
