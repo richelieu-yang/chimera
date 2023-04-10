@@ -18,22 +18,21 @@ func ObtainGetParam(ctx *gin.Context, key string) string {
 
 func ObtainPostParam(ctx *gin.Context, key string, safeArgs ...bool) string {
 	safe := sliceKit.GetFirstItemWithDefault(false, safeArgs...)
-	if safe {
+	if safe && ctx.Request.Body != nil {
 		/* Golang中比较坑的一点：如果不通过此方法获取post参数，如果涉及转发请求，接收方取参数会有问题. */
 		// (1) 重构body
-		req := ctx.Request
-		var bodyBytes []byte
-		if req.Body != nil {
-			bodyBytes, _ = io.ReadAll(req.Body)
-		}
+		bodyBytes, _ := io.ReadAll(ctx.Request.Body)
+		//if err != nil {
+		//	return nil, "", err
+		//}
 		reader := strings.NewReader(string(bodyBytes))
-		req.Body = &httpKit.Repeat{
+		ctx.Request.Body = &httpKit.Repeat{
 			Reader: reader,
 			Offset: 0,
 		}
 		defer func() {
 			// (2) 重置body（否则转发请求会失败）
-			req.Body.(*httpKit.Repeat).Reset()
+			ctx.Request.Body.(*httpKit.Repeat).Reset()
 		}()
 	}
 
@@ -90,26 +89,21 @@ TODO: 待验证：form表单上传文件，传参safeArgs是否有必要?
 */
 func ObtainFormFileContent(ctx *gin.Context, key string, safeArgs ...bool) ([]byte, string, error) {
 	safe := sliceKit.GetFirstItemWithDefault(false, safeArgs...)
-	if safe {
+	if safe && ctx.Request.Body != nil {
 		/* Golang中比较坑的一点：如果不通过此方法获取post参数，如果涉及转发请求，接收方取参数会有问题. */
 		// (1) 重构body
-		req := ctx.Request
-		var bodyBytes []byte
-		if req.Body != nil {
-			var err error
-			bodyBytes, err = io.ReadAll(req.Body)
-			if err != nil {
-				return nil, "", err
-			}
+		bodyBytes, err := io.ReadAll(ctx.Request.Body)
+		if err != nil {
+			return nil, "", err
 		}
 		reader := strings.NewReader(string(bodyBytes))
-		req.Body = &httpKit.Repeat{
+		ctx.Request.Body = &httpKit.Repeat{
 			Reader: reader,
 			Offset: 0,
 		}
 		defer func() {
 			// (2) 重置body（否则转发请求会失败）
-			req.Body.(*httpKit.Repeat).Reset()
+			ctx.Request.Body.(*httpKit.Repeat).Reset()
 		}()
 	}
 
