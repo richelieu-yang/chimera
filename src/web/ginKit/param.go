@@ -35,14 +35,6 @@ func GetIntParam(ctx *gin.Context, key string, def int) int {
 	return UnsafeParamCapture.GetIntParam(ctx, key, def)
 }
 
-//func GetInt32Param(ctx *gin.Context, key string, def int32) int32 {
-//	return UnsafeParamCapture.GetInt32Param(ctx, key, def)
-//}
-//
-//func GetInt64Param(ctx *gin.Context, key string, def int64) int64 {
-//	return UnsafeParamCapture.GetInt64Param(ctx, key, def)
-//}
-
 func GetFloat32Param(ctx *gin.Context, key string, def float32) float32 {
 	return UnsafeParamCapture.GetFloat32Param(ctx, key, def)
 }
