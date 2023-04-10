@@ -8,20 +8,23 @@ import "github.com/richelieu42/chimera/v2/src/copyKit"
 golang复制切片的方法（避免操作同一底层数组） https://blog.csdn.net/weixin_43970884/article/details/126051345
 
 @param src 	可以为nil
+@return 保底为len==0的slice实例
 
-e.g.
+e.g.	浅拷贝
 	s0 := []string{"0", "1", "2"}
 	s1 := sliceKit.Copy(s0)
 
 	s1[0] = "3"
 	fmt.Println(s0) // [0 1 2]
 	fmt.Println(s1) // [3 1 2]
+
+e.g.1	传参为nil
+	s := sliceKit.Copy([]int(nil))
+	fmt.Println(s)        // []
+	fmt.Println(len(s))   // 0
+	fmt.Println(s != nil) // true
 */
 func Copy[T any](src []T) []T {
-	if src == nil {
-		return nil
-	}
-
 	dolly := make([]T, len(src))
 	copy(dolly, src)
 	return dolly
