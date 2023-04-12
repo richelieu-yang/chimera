@@ -60,7 +60,7 @@ func attachMiddlewares(engine *gin.Engine, config *MiddlewareConfig, recoveryMid
 		if config.BodyLimit != -1 {
 			engine.Use(func(ctx *gin.Context) {
 				if ctx.Request.Body != nil {
-					ctx.Request.Body = http.MaxBytesReader(ctx.Writer, ctx.Request.Body, config.BodyLimit<<20+128)
+					ctx.Request.Body = http.MaxBytesReader(ctx.Writer, ctx.Request.Body, config.BodyLimit<<20+256)
 				}
 			})
 		}
