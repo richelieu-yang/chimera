@@ -9,10 +9,15 @@ import (
 	"io"
 )
 
+// ObtainGetParam 从url获取参数
 func ObtainGetParam(ctx *gin.Context, key string) string {
 	return ctx.Query(key)
 }
 
+// ObtainPostParam
+/*
+支持的Content-Type: multipart/form-data、x-www-form-urlencoded ...
+*/
 func ObtainPostParam(ctx *gin.Context, key string) string {
 	return ctx.PostForm(key)
 }
