@@ -8,15 +8,15 @@ import (
 	"github.com/richelieu42/chimera/v2/src/web/refererKit"
 )
 
-// AttachCommonMiddlewares 绑定一些常用的中间件.
-func AttachCommonMiddlewares(engine *gin.Engine, middlewareConfig *MiddlewareConfig, recoveryMiddleware gin.HandlerFunc) error {
+// attachCommonMiddlewares 绑定一些常用的中间件.
+func attachCommonMiddlewares(engine *gin.Engine, config *MiddlewareConfig, recoveryMiddleware gin.HandlerFunc) error {
 	// gzip
 	/*
 		PS:
 		(1) 必须在 recoveryMiddleware 前面，为了万无一失还是放在最前面吧；
 		(2) gzip会使得响应头中的 Content-Length 不生效.
 	*/
-	if middlewareConfig != nil && middlewareConfig.Gzip {
+	if config != nil && config.Gzip {
 		engine.Use(gzip.Gzip(gzip.BestSpeed))
 	}
 
@@ -29,11 +29,11 @@ func AttachCommonMiddlewares(engine *gin.Engine, middlewareConfig *MiddlewareCon
 	}
 	engine.Use(recoveryMiddleware)
 
-	if middlewareConfig != nil {
+	if config != nil {
 		// cors
 		{
 			var origins []string
-			corsConfig := middlewareConfig.Cors
+			corsConfig := config.Cors
 			if corsConfig != nil {
 				origins = corsConfig.Origins
 			}
@@ -45,7 +45,7 @@ func AttachCommonMiddlewares(engine *gin.Engine, middlewareConfig *MiddlewareCon
 
 		// referer（必须在cors中间件后面）
 		{
-			refererConfig := middlewareConfig.Referer
+			refererConfig := config.Referer
 			if refererConfig != nil {
 				middleware, err := refererKit.NewGinRefererMiddleware(refererConfig)
 				if err != nil {
@@ -55,11 +55,16 @@ func AttachCommonMiddlewares(engine *gin.Engine, middlewareConfig *MiddlewareCon
 			}
 		}
 
+		// bodyLimit
+		if config.BodyLimit != -1 {
+
+		}
+
 		// others
 		engine.Use(func(ctx *gin.Context) {
-			if strKit.IsNotEmpty(middlewareConfig.XFrameOptions) {
+			if strKit.IsNotEmpty(config.XFrameOptions) {
 				// e.g.不能被嵌入到任何iframe或frame中
-				ctx.Header("X-Frame-Options", middlewareConfig.XFrameOptions)
+				ctx.Header("X-Frame-Options", config.XFrameOptions)
 			}
 			// 解决漏洞: 未启用Web浏览器XSS保护
 			ctx.Header("X-XSS-Protection", "1;mode=block")

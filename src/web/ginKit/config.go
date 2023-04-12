@@ -22,6 +22,7 @@ type (
 	}
 
 	MiddlewareConfig struct {
+		BodyLimit     int32                                `json:"bodyLimit,default=-1,range=[-1,10000]"`
 		Gzip          bool                                 `json:"gzip,default=false"`
 		XFrameOptions string                               `json:"xFrameOptions,optional"`
 		Cors          *CorsConfig                          `json:"cors,optional"`
@@ -40,8 +41,7 @@ type (
 	}
 )
 
-// Check 先简单验证下配置.
-func (config *Config) Check() error {
+func (config *Config) CheckAndPolyfill() error {
 	if config == nil {
 		return errorKit.Simple("config == nil")
 	}
@@ -68,7 +68,15 @@ func (config *Config) Check() error {
 		}
 	} else {
 		if sslConfig == nil {
-			return errorKit.Simple("both http port and https port are invalid")
+			return errorKit.Simple("both http port and https port are invalid(-1)")
+		}
+	}
+
+	// Middleware
+	middleware := config.Middleware
+	if middleware != nil {
+		if middleware.BodyLimit == 0 {
+			middleware.BodyLimit = 1
 		}
 	}
 
