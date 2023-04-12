@@ -9,7 +9,9 @@ import (
 
 // MakeRequestBodySeekable
 /*
-与 Proxy() 搭配使用.
+PS:
+(1) 某个路由涉及代理（请求转发）的话，需要在handler里面首先调用此方法.
+(2) 与 Proxy() 搭配使用.
 */
 func MakeRequestBodySeekable(r *http.Request) error {
 	if r.Body == nil {
