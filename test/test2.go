@@ -21,13 +21,18 @@ func main() {
 
 	ginKit.MustSetUp(c.Gin, nil, func(engine *gin.Engine) error {
 		engine.POST("/test", func(ctx *gin.Context) {
+			err := httpKit.MakeRequestBodySeekable(ctx.Request)
+			if err != nil {
+				ctx.String(http.StatusInternalServerError, err.Error())
+				return
+			}
+
 			str := ginKit.ObtainParam(ctx, "cyy")
 			logrus.Info(str)
 
-			err := httpKit.Proxy(ctx.Writer, ctx.Request, nil, "http", "127.0.0.1", nil, nil)
+			err = httpKit.Proxy(ctx.Writer, ctx.Request, nil, "http", "127.0.0.1:8888", nil, nil)
 			if err != nil {
 				ctx.String(http.StatusInternalServerError, err.Error())
-				logrus.Errorf("eee %v", err.Error())
 				return
 			}
 		})
