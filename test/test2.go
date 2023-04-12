@@ -6,6 +6,8 @@ import (
 	"github.com/richelieu42/chimera/v2/src/confKit"
 	"github.com/richelieu42/chimera/v2/src/dataSizeKit"
 	"github.com/richelieu42/chimera/v2/src/web/ginKit"
+	"github.com/richelieu42/chimera/v2/src/web/httpKit"
+	"github.com/sirupsen/logrus"
 	"net/http"
 )
 
@@ -18,6 +20,18 @@ func main() {
 	confKit.MustLoad("/Users/richelieu/GolandProjects/chimera/chimera-lib/env.yaml", c)
 
 	ginKit.MustSetUp(c.Gin, nil, func(engine *gin.Engine) error {
+		engine.POST("/test", func(ctx *gin.Context) {
+			str := ginKit.ObtainParam(ctx, "cyy")
+			logrus.Info(str)
+
+			err := httpKit.Proxy(ctx.Writer, ctx.Request, nil, "http", "127.0.0.1", nil, nil)
+			if err != nil {
+				ctx.String(http.StatusInternalServerError, err.Error())
+				logrus.Errorf("eee %v", err.Error())
+				return
+			}
+		})
+
 		engine.POST("/upload", func(ctx *gin.Context) {
 			file, err := ctx.FormFile("file")
 			if err != nil {

@@ -27,6 +27,8 @@ PS:
 (1) 支持代理的协议: https、http、wss、ws...
 (2) 如果请求转发的目标有效，但处理此请求需要花费大量时间（比如20+min），此时如果请求的客户端终端了请求（e.g.浏览器页面被直接关闭了），将返回 context.Canceled.
 (3) addr有效，reqUrlPath非nil但事实上不存在该路由的情况，返回值为nil && 原始客户端得到404（404 page not found）.
+(4) 代理请求前，如果读取了Request.Body的内容但不恢复（即重置其内容），将直接返回error（e.g.net/http: HTTP/1.x transport connection broken: http: ContentLength=161 with Body length 0）.
+	且目标方不会收到请求.（TODO: 很奇怪，会走两遍，第二次返回的error为: context canceled）
 
 e.g.	将 https://127.0.0.1:8888/test 转发给 http://127.0.0.1:8889/test
 传参可以是：

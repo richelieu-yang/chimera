@@ -8,13 +8,15 @@ import (
 
 func main() {
 	config := &ginKit.Config{
-		Port:       8088,
+		Port:       8888,
 		Colorful:   true,
 		Middleware: nil,
 	}
 	ginKit.MustSetUp(config, nil, func(engine *gin.Engine) error {
 		engine.Any("/test", func(ctx *gin.Context) {
-			ctx.String(http.StatusOK, "ok")
+			str := ginKit.ObtainParam(ctx, "cyy")
+
+			ctx.String(http.StatusOK, str)
 		})
 		return nil
 	})
