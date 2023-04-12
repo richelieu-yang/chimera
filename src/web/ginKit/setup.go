@@ -42,6 +42,9 @@ func setUp(config *Config, recoveryMiddleware gin.HandlerFunc, businessLogic fun
 	gin.DefaultWriter = logger.Out
 
 	engine := NewEngine()
+	// 默认32MiB，并不涉及"限制上传文件的大小"
+	engine.MaxMultipartMemory = 32 << 20
+
 	// middleware
 	if err := AttachCommonMiddlewares(engine, config.Middleware, recoveryMiddleware); err != nil {
 		return err
