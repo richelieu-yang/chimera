@@ -1,15 +1,37 @@
 package main
 
 import (
-	"fmt"
-	"github.com/richelieu42/chimera/v2/src/core/timeKit"
-	"time"
+	"bytes"
+	"github.com/sirupsen/logrus"
+	"io"
+	"net/http"
 )
 
 func main() {
-	fmt.Println(timeKit.ToRelativeString(time.Now().Add(time.Hour * 16)))
-	fmt.Println(timeKit.ToRelativeString(time.Now().Add(-time.Hour * 16)))
-	fmt.Println(timeKit.ToRelativeString(time.Now().Add(time.Hour * 24 * 21)))
-	fmt.Println(timeKit.ToRelativeString(time.Now().Add(time.Hour*24*21 + time.Second)))
+	http.MaxBytesReader()
 
+	r := bytes.NewReader([]byte("0123456789"))
+	b := make([]byte, 1)
+	_, err := r.Read(b)
+	if err != nil {
+		logrus.Fatal(err)
+	}
+	logrus.Info(string(b))
+
+	b, err = io.ReadAll(r)
+	if err != nil {
+		logrus.Fatal(err)
+	}
+	logrus.Info(string(b))
+
+	_, err = r.Seek(0, io.SeekStart)
+	if err != nil {
+		logrus.Fatal(err)
+	}
+
+	b, err = io.ReadAll(r)
+	if err != nil {
+		logrus.Fatal(err)
+	}
+	logrus.Info(string(b))
 }

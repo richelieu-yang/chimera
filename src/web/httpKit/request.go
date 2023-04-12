@@ -44,13 +44,15 @@ func GetRequestUrl(req *http.Request) string {
 	url := req.URL
 
 	/* scheme */
-	scheme := url.Scheme
-	if strKit.IsEmpty(scheme) {
+	var scheme string
+	if strKit.IsEmpty(url.Scheme) {
 		if websocket.IsWebSocketUpgrade(req) {
 			scheme = operationKit.Ternary(req.TLS != nil, "wss", "ws")
 		} else {
 			scheme = operationKit.Ternary(req.TLS != nil, "https", "http")
 		}
+	} else {
+		scheme = url.Scheme
 	}
 
 	/* host */
