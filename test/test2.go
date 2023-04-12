@@ -1,37 +1,41 @@
 package main
 
 import (
-	"bytes"
-	"github.com/sirupsen/logrus"
-	"io"
+	"fmt"
+	"github.com/gin-gonic/gin"
+	"github.com/richelieu42/chimera/v2/src/confKit"
+	"github.com/richelieu42/chimera/v2/src/dataSizeKit"
+	"github.com/richelieu42/chimera/v2/src/web/ginKit"
 	"net/http"
 )
 
+type config struct {
+	Gin *ginKit.Config
+}
+
 func main() {
-	http.MaxBytesReader()
+	c := &config{}
+	confKit.MustLoad("/Users/richelieu/GolandProjects/chimera/chimera-lib/env.yaml", c)
 
-	r := bytes.NewReader([]byte("0123456789"))
-	b := make([]byte, 1)
-	_, err := r.Read(b)
-	if err != nil {
-		logrus.Fatal(err)
-	}
-	logrus.Info(string(b))
+	ginKit.MustSetUp(c.Gin, nil, func(engine *gin.Engine) error {
+		engine.Any("/test", func(ctx *gin.Context) {
+			ctx.String(http.StatusOK, "ok")
+		})
 
-	b, err = io.ReadAll(r)
-	if err != nil {
-		logrus.Fatal(err)
-	}
-	logrus.Info(string(b))
+		engine.POST("/upload", func(ctx *gin.Context) {
+			file, err := ctx.FormFile("file")
+			if err != nil {
+				if mbe, ok := err.(*http.MaxBytesError); ok {
+					ctx.String(http.StatusRequestEntityTooLarge, mbe.Error())
+					return
+				}
+				ctx.String(http.StatusOK, err.Error())
+				return
+			}
 
-	_, err = r.Seek(0, io.SeekStart)
-	if err != nil {
-		logrus.Fatal(err)
-	}
+			ctx.String(http.StatusOK, fmt.Sprintf("'%s'(%s) uploaded!", file.Filename, dataSizeKit.ToReadableStringWithIEC(uint64(file.Size))))
+		})
 
-	b, err = io.ReadAll(r)
-	if err != nil {
-		logrus.Fatal(err)
-	}
-	logrus.Info(string(b))
+		return nil
+	})
 }

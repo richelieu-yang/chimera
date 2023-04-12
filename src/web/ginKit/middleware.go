@@ -6,6 +6,7 @@ import (
 	"github.com/richelieu42/chimera/v2/src/core/sliceKit"
 	"github.com/richelieu42/chimera/v2/src/core/strKit"
 	"github.com/richelieu42/chimera/v2/src/web/refererKit"
+	"net/http"
 )
 
 // attachCommonMiddlewares 绑定一些常用的中间件.
@@ -57,7 +58,11 @@ func attachCommonMiddlewares(engine *gin.Engine, config *MiddlewareConfig, recov
 
 		// bodyLimit
 		if config.BodyLimit != -1 {
-
+			engine.Use(func(ctx *gin.Context) {
+				if ctx.Request.Body != nil {
+					ctx.Request.Body = http.MaxBytesReader(ctx.Writer, ctx.Request.Body, config.BodyLimit<<20+128)
+				}
+			})
 		}
 
 		// others

@@ -22,7 +22,7 @@ type (
 	}
 
 	MiddlewareConfig struct {
-		BodyLimit     int32                                `json:"bodyLimit,default=-1,range=[-1,10000]"`
+		BodyLimit     int64                                `json:"bodyLimit,default=-1,range=[-1:10000]"`
 		Gzip          bool                                 `json:"gzip,default=false"`
 		XFrameOptions string                               `json:"xFrameOptions,optional"`
 		Cors          *CorsConfig                          `json:"cors,optional"`

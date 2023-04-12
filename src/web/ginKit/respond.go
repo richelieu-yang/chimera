@@ -132,7 +132,7 @@ func RespondPdfContentToPrint(ctx *gin.Context, httpStatusCode int, pdfContent [
 	RespondFileContent(ctx, httpStatusCode, "", "application/pdf; charset=UTF-8", pdfContent)
 }
 
-func RespondError(ctx *gin.Context, httpStatusCode int, err error) {
+func RespondError(ctx *gin.Context, statusCode int, err error) {
 	var message string
 	if err != nil {
 		message = err.Error()
@@ -140,9 +140,11 @@ func RespondError(ctx *gin.Context, httpStatusCode int, err error) {
 		message = "err == nil"
 	}
 
-	httpStatusCode = handleHttpStatusCode(httpStatusCode)
+	if statusCode <= 0 {
+		statusCode = http.StatusInternalServerError
+	}
 	json, _ := jsonKit.SealFully(nil, "error", message, nil)
-	RespondText(ctx, httpStatusCode, json)
+	RespondText(ctx, statusCode, json)
 }
 
 func RespondPanic(ctx *gin.Context, err any) {
@@ -182,9 +184,20 @@ func RespondPackage(ctx *gin.Context, pack *ResponsePackage) {
 		return
 	}
 
-	// 处理"零值"的情况
-	statusCode := handleHttpStatusCode(pack.StatusCode)
+	statusCode := pack.StatusCode
 
+	// (0) 错误(error)
+	if pack.Error != nil {
+		if statusCode <= 0 {
+			statusCode = http.StatusInternalServerError
+		}
+		RespondError(ctx, statusCode, pack.Error)
+		return
+	}
+
+	if statusCode <= 0 {
+		statusCode = http.StatusOK
+	}
 	// (1) 文本（包括json）
 	if strKit.IsNotEmpty(pack.Text) {
 		RespondText(ctx, statusCode, pack.Text)
@@ -203,18 +216,6 @@ func RespondPackage(ctx *gin.Context, pack *ResponsePackage) {
 		RespondFileContent(ctx, statusCode, pack.FileName, pack.ContentType, pack.FileContent)
 		return
 	}
-	// (4) 错误(error)
-	if pack.Error != nil {
-		RespondError(ctx, statusCode, pack.Error)
-		return
-	}
 
 	ctx.Status(statusCode)
-}
-
-func handleHttpStatusCode(code int) int {
-	if code <= 0 {
-		code = http.StatusOK
-	}
-	return code
 }
