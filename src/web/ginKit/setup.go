@@ -50,7 +50,7 @@ func setUp(config *Config, recoveryMiddleware gin.HandlerFunc, businessLogic fun
 	engine.MaxMultipartMemory = 32 << 20
 
 	// middleware
-	if err := attachCommonMiddlewares(engine, config.Middleware, recoveryMiddleware); err != nil {
+	if err := attachMiddlewares(engine, config.Middleware, recoveryMiddleware); err != nil {
 		return err
 	}
 

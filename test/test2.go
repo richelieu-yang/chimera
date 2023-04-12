@@ -18,21 +18,17 @@ func main() {
 	confKit.MustLoad("/Users/richelieu/GolandProjects/chimera/chimera-lib/env.yaml", c)
 
 	ginKit.MustSetUp(c.Gin, nil, func(engine *gin.Engine) error {
-		engine.Any("/test", func(ctx *gin.Context) {
-			ctx.String(http.StatusOK, "ok")
-		})
-
 		engine.POST("/upload", func(ctx *gin.Context) {
 			file, err := ctx.FormFile("file")
 			if err != nil {
 				if mbe, ok := err.(*http.MaxBytesError); ok {
+					// http状态码: 413（由于请求实体过大，服务器无法处理，因此拒绝请求）
 					ctx.String(http.StatusRequestEntityTooLarge, mbe.Error())
 					return
 				}
 				ctx.String(http.StatusOK, err.Error())
 				return
 			}
-
 			ctx.String(http.StatusOK, fmt.Sprintf("'%s'(%s) uploaded!", file.Filename, dataSizeKit.ToReadableStringWithIEC(uint64(file.Size))))
 		})
 

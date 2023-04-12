@@ -9,8 +9,8 @@ import (
 	"net/http"
 )
 
-// attachCommonMiddlewares 绑定一些常用的中间件.
-func attachCommonMiddlewares(engine *gin.Engine, config *MiddlewareConfig, recoveryMiddleware gin.HandlerFunc) error {
+// attachMiddlewares 绑定一些常用的中间件.
+func attachMiddlewares(engine *gin.Engine, config *MiddlewareConfig, recoveryMiddleware gin.HandlerFunc) error {
 	// gzip
 	/*
 		PS:
