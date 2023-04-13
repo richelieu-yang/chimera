@@ -4,42 +4,42 @@ import (
 	"io"
 )
 
-// NopReadCloser
-/*
-PS: 返回值调用Close()将什么都不会做，直接返回nil.
-*/
-func NopReadCloser(reader io.Reader) io.ReadCloser {
-	return io.NopCloser(reader)
-}
-
-type nopWriteCloser struct {
+type nopCloserToWriter struct {
 	io.Writer
 }
 
-func (nopWriteCloser) Close() error {
+func (nopCloserToWriter) Close() error {
 	return nil
 }
 
-// NopWriteCloser
+type nopCloserToReadSeeker struct {
+	io.ReadSeeker
+}
+
+func (nopCloserToReadSeeker) Close() error {
+	return nil
+}
+
+// NopCloserToReader
 /*
 PS: 返回值调用Close()将什么都不会做，直接返回nil.
 */
-func NopWriteCloser(writer io.Writer) io.WriteCloser {
-	return &nopWriteCloser{
+func NopCloserToReader(reader io.Reader) io.ReadCloser {
+	return io.NopCloser(reader)
+}
+
+// NopCloserToWriter
+/*
+PS: 返回值调用Close()将什么都不会做，直接返回nil.
+*/
+func NopCloserToWriter(writer io.Writer) io.WriteCloser {
+	return &nopCloserToWriter{
 		writer,
 	}
 }
 
-type nopReadSeekCloser struct {
-	io.ReadSeeker
-}
-
-func (nopReadSeekCloser) Close() error {
-	return nil
-}
-
-func NopReadSeekCloser(readSeeker io.ReadSeeker) io.ReadSeekCloser {
-	return &nopReadSeekCloser{
+func NopCloserToReadSeeker(readSeeker io.ReadSeeker) io.ReadSeekCloser {
+	return &nopCloserToReadSeeker{
 		ReadSeeker: readSeeker,
 	}
 }

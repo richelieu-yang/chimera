@@ -1,43 +1,58 @@
 package main
 
 import (
-	"bufio"
 	"bytes"
-	"github.com/gin-gonic/gin"
-	"github.com/richelieu42/chimera/v2/src/web/ginKit"
+	"github.com/sirupsen/logrus"
 	"io"
-	"net/http"
-	"os"
 )
 
 func main() {
-	os.File{}
-	io.SeekStart
-	io.SeekCurrent
-	io.SeekEnd
+	//os.File{}
+	//bytes.Buffer{}
+	//bytes.Reader{}
+	//reader := strings.Reader
+	//reader.Reset()
 
-	io.Seeker()
+	//http.Request{}
+	//
+	//io.ReaderAt()
+	//
+	//bufio.Reader{}
+	//
+	//bufio.Writer{}
+	//
+	//bufio.ReadWriter{}
 
-	bytes.NewBuffer()
-	bytes.NewBufferString()
+	//bufio.NewScanner()
+	//
+	//http.MaxBytesReader()
 
-	http.MaxBytesReader()
+	//bufio.NewReader()
+	//bufio.NewReaderSize()
 
-	bufio.Reader{}
-
-	bytes.Buffer{}
-
-	config := &ginKit.Config{
-		Port:       8888,
-		Colorful:   true,
-		Middleware: nil,
+	r := bytes.NewReader([]byte("0123456789"))
+	b := make([]byte, 1)
+	_, err := r.Read(b)
+	if err != nil {
+		logrus.Fatal(err)
 	}
-	ginKit.MustSetUp(config, nil, func(engine *gin.Engine) error {
-		engine.Any("/test", func(ctx *gin.Context) {
-			str := ginKit.ObtainParam(ctx, "cyy")
+	logrus.Info(string(b)) // time="2023-04-13T13:32:38+08:00" level=info msg=0
 
-			ctx.String(http.StatusOK, str)
-		})
-		return nil
-	})
+	b, err = io.ReadAll(r)
+	if err != nil {
+		logrus.Fatal(err)
+	}
+	logrus.Info(string(b)) // time="2023-04-13T13:32:38+08:00" level=info msg=123456789
+
+	// 指向最前端
+	_, err = r.Seek(0, io.SeekStart)
+	if err != nil {
+		logrus.Fatal(err)
+	}
+
+	b, err = io.ReadAll(r)
+	if err != nil {
+		logrus.Fatal(err)
+	}
+	logrus.Info(string(b)) // time="2023-04-13T13:32:38+08:00" level=info msg=0123456789
 }

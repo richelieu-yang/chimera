@@ -28,6 +28,6 @@ func MakeRequestBodySeekable(r *http.Request) error {
 		return err
 	}
 	readSeeker := bytes.NewReader(data)
-	r.Body = ioKit.NopReadSeekCloser(readSeeker)
+	r.Body = ioKit.NopCloserToReadSeeker(readSeeker)
 	return nil
 }
