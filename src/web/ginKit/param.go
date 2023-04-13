@@ -64,7 +64,7 @@ func ObtainFloat64Param(ctx *gin.Context, key string) (float64, error) {
 	return floatKit.ToFloat64E(value)
 }
 
-// ObtainFormFileContent form请求，根据 传参key 获取文件的字节流
+// ObtainFormFileContent form请求，根据 传参key 获取文件的字节流.（单文件上传）
 /*
 @return 文件内容 + 文件名 + 错误
 */
