@@ -2,57 +2,26 @@ package main
 
 import (
 	"bytes"
+	"github.com/richelieu42/chimera/v2/src/core/ioKit"
 	"github.com/sirupsen/logrus"
-	"io"
+	"net/http"
+	"strings"
 )
 
 func main() {
-	//os.File{}
-	//bytes.Buffer{}
-	//bytes.Reader{}
-	//reader := strings.Reader
-	//reader.Reset()
+	bytes.NewReader()
 
-	//http.Request{}
-	//
-	//io.ReaderAt()
-	//
-	//bufio.Reader{}
-	//
-	//bufio.Writer{}
-	//
-	//bufio.ReadWriter{}
+	reader := strings.NewReader("test")
+	readCloser := ioKit.NopCloserToReader(reader)
+	readCloser = http.MaxBytesReader(nil, readCloser, 2)
 
-	//bufio.NewScanner()
-	//
-	//http.MaxBytesReader()
-
-	//bufio.NewReader()
-	//bufio.NewReaderSize()
-
-	r := bytes.NewReader([]byte("0123456789"))
-	b := make([]byte, 1)
-	_, err := r.Read(b)
+	data := make([]byte, 3)
+	_, err := readCloser.Read(data)
 	if err != nil {
-		logrus.Fatal(err)
+		if mbe, ok := err.(*http.MaxBytesError); ok {
+			logrus.Infof("*http.MaxBytesError: %s", mbe.Error())
+		} else {
+			logrus.Fatal(err)
+		}
 	}
-	logrus.Info(string(b)) // time="2023-04-13T13:32:38+08:00" level=info msg=0
-
-	b, err = io.ReadAll(r)
-	if err != nil {
-		logrus.Fatal(err)
-	}
-	logrus.Info(string(b)) // time="2023-04-13T13:32:38+08:00" level=info msg=123456789
-
-	// 指向最前端
-	_, err = r.Seek(0, io.SeekStart)
-	if err != nil {
-		logrus.Fatal(err)
-	}
-
-	b, err = io.ReadAll(r)
-	if err != nil {
-		logrus.Fatal(err)
-	}
-	logrus.Info(string(b)) // time="2023-04-13T13:32:38+08:00" level=info msg=0123456789
 }
