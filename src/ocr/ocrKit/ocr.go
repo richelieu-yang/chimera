@@ -48,7 +48,10 @@ func GetText(imgPath string, languages ...string) (string, error) {
 	if err != nil {
 		return "", err
 	}
-	uuid := idKit.NewUUID()
+	uuid, err := idKit.NewUUID()
+	if err != nil {
+		return "", err
+	}
 	filePath := pathKit.Join(tempDir, uuid+".txt")
 	defer fileKit.Delete(filePath)
 
