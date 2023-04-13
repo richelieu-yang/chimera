@@ -3,11 +3,13 @@ package timeKit
 import (
 	"github.com/sirupsen/logrus"
 	"testing"
+	"time"
 )
 
 func TestNewCron(t *testing.T) {
-	c, _, err := NewCron("@every 1m", func() {
-		logrus.Info("---")
+	logrus.Info(time.Now())
+	c, _, err := NewCron("@every 10s", func() {
+		logrus.Info(time.Now())
 	})
 	if err != nil {
 		logrus.Panic(err)
