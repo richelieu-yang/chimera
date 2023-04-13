@@ -2,6 +2,7 @@ package mailKit
 
 import (
 	"crypto/tls"
+	"github.com/emersion/go-imap"
 	id "github.com/emersion/go-imap-id"
 	"github.com/emersion/go-imap/client"
 	"github.com/richelieu42/chimera/v2/src/core/errorKit"
