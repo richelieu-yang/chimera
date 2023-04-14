@@ -75,6 +75,8 @@ func loadOptions(options ...LumberjackOption) *lumberjackOptions {
 
 // NewLumberjackWriteCloser
 /*
+参考: https://github.com/natefinch/lumberjack
+
 PS:
 (1) 仅配置 filePath 的情况下，超过100MB就rotate一下，保留所有文件，不压缩.
 (2) 传参可以参考下 NewLumberjackWriteCloser1.
