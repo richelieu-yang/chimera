@@ -11,11 +11,18 @@ import (
 @param options 				可以不传
 
 e.g.
-	logger, err := logrusKit.NewLumberjackLogger([]ioKit.LumberjackOption{ioKit.WithFilePath("a.log"), ioKit.WithConsole(true)})
+	logger, err := logrusKit.NewLumberjackLogger([]ioKit.LumberjackOption{
+		ioKit.WithFilePath("a.log"),
+		ioKit.WithConsole(true),
+		//ioKit.WithMaxSize(1),
+		ioKit.WithCompress(true),
+	})
 	if err != nil {
 		logrus.Fatal(err)
 	}
-	logger.Info(666)
+	for {
+		logger.Info(666)
+	}
 */
 func NewLumberjackLogger(lumberjackOptions []ioKit.LumberjackOption, options ...LoggerOption) (*logrus.Logger, error) {
 	output, err := ioKit.NewLumberjackWriteCloser(lumberjackOptions...)
