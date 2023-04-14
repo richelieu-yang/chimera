@@ -59,6 +59,10 @@ func loadOptions(options ...LoggerOption) *loggerOptions {
 	return opts
 }
 
+// NewBasicLogger
+/*
+@param options 可以什么都不传
+*/
 func NewBasicLogger(options ...LoggerOption) *logrus.Logger {
 	opts := loadOptions(options...)
 

@@ -1,7 +1,9 @@
 package ioKit
 
 import (
+	"github.com/richelieu42/chimera/v2/src/core/errorKit"
 	"github.com/richelieu42/chimera/v2/src/core/file/fileKit"
+	"github.com/richelieu42/chimera/v2/src/core/strKit"
 	"gopkg.in/natefinch/lumberjack.v2"
 	"io"
 	"os"
@@ -9,6 +11,7 @@ import (
 
 type (
 	lumberjackOptions struct {
+		filePath   string
 		maxSize    int
 		maxAge     int
 		maxBackups int
@@ -19,6 +22,12 @@ type (
 
 	LumberjackOption func(opts *lumberjackOptions)
 )
+
+func WithFilePath(filePath string) LumberjackOption {
+	return func(opts *lumberjackOptions) {
+		opts.filePath = filePath
+	}
+}
 
 func WithMaxSize(maxSize int) LumberjackOption {
 	return func(opts *lumberjackOptions) {
@@ -64,17 +73,26 @@ func loadOptions(options ...LumberjackOption) *lumberjackOptions {
 	return opts
 }
 
-func NewLumberjackWriteCloser(filePath string, options ...LumberjackOption) (io.WriteCloser, error) {
-	if err := fileKit.MkParentDirs(filePath); err != nil {
+// NewLumberjackWriteCloser
+/*
+@param options 至少要配置 filePath
+*/
+func NewLumberjackWriteCloser(options ...LumberjackOption) (io.WriteCloser, error) {
+	opts := loadOptions(options...)
+
+	/* check and polyfill */
+	if strKit.IsEmpty(opts.filePath) {
+		return nil, errorKit.Simple("filePath mustn't be empty")
+	}
+	if err := fileKit.MkParentDirs(opts.filePath); err != nil {
 		return nil, err
 	}
-	if err := fileKit.AssertNotExistOrIsFile(filePath); err != nil {
+	if err := fileKit.AssertNotExistOrIsFile(opts.filePath); err != nil {
 		return nil, err
 	}
 
-	opts := loadOptions(options...)
 	var writeCloser io.WriteCloser = &lumberjack.Logger{
-		Filename:   filePath,
+		Filename:   opts.filePath,
 		MaxSize:    opts.maxSize,
 		MaxBackups: opts.maxBackups,
 		MaxAge:     opts.maxAge,
