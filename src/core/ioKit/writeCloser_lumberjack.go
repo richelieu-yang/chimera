@@ -75,7 +75,7 @@ func loadOptions(options ...LumberjackOption) *lumberjackOptions {
 
 // NewLumberjackWriteCloser
 /*
-@param options 至少要配置 filePath
+@param options 必须要配置: filePath
 */
 func NewLumberjackWriteCloser(options ...LumberjackOption) (io.WriteCloser, error) {
 	opts := loadOptions(options...)
