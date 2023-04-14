@@ -8,7 +8,7 @@ import (
 // NewLumberjackLogger
 /*
 @param lumberjackOptions 	不能为nil（至少要配置filePath）
-@param options 				可以不传
+@param options 				可以不传（此时为nil）
 
 e.g.
 	logger, err := logrusKit.NewLumberjackLogger([]ioKit.LumberjackOption{
