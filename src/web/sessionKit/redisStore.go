@@ -38,7 +38,7 @@ type RedisStore struct {
 
 	// sessionTimeoutWhenMaxAgeZero
 	/*
-		Richelieu: 当 MaxAge == 0 时，后端session的有效期.
+		Richelieu: 当 maxAge == 0 时，后端session的有效期.
 
 		PS:
 		(1) 单位为秒（s）；
@@ -107,15 +107,15 @@ func (s *RedisStore) New(r *http.Request, name string) (*sessions.Session, error
 
 // Save adds a single session to the response.
 //
-// If the Options.MaxAge of the session is <= 0 then the session file will be
+// If the Options.maxAge of the session is <= 0 then the session file will be
 // deleted from the store. With this process it enforces the properly
 // session cookie handling so no need to trust in the cookie management in the
 // web browser.
 func (s *RedisStore) Save(r *http.Request, w http.ResponseWriter, session *sessions.Session) error {
 	// Delete if max-age is <= 0
 
-	// Richelieu: MaxAge == 0时，将生成cookie和存储到Redis中.
-	//if session.Options.MaxAge <= 0 {
+	// Richelieu: maxAge == 0时，将生成cookie和存储到Redis中.
+	//if session.Options.maxAge <= 0 {
 	if session.Options.MaxAge < 0 {
 		if err := s.delete(r.Context(), session); err != nil {
 			return err
@@ -171,7 +171,7 @@ func (s *RedisStore) save(ctx context.Context, session *sessions.Session) error 
 		return err
 	}
 
-	// Richelieu: MaxAge == 0时，将使用 sessionTimeoutWhenMaxAgeZero 属性
+	// Richelieu: maxAge == 0时，将使用 sessionTimeoutWhenMaxAgeZero 属性
 	var expiration time.Duration
 	if session.Options.MaxAge == 0 {
 		expiration = s.sessionTimeoutWhenMaxAgeZero

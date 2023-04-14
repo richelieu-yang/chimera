@@ -13,7 +13,7 @@ import (
 */
 func SetLogrusWriter(formatter logrus.Formatter) {
 	if formatter == nil {
-		formatter = logrusKit.NewTextFormatter("")
+		formatter = logrusKit.DefaultTextFormatter
 	}
 
 	writer := logrusx.NewLogrusWriter(func(logger *logrus.Logger) {

@@ -2,7 +2,6 @@ package ginKit
 
 import (
 	"github.com/gin-gonic/gin"
-	"github.com/richelieu42/chimera/v2/src/log/logrusKit"
 	"github.com/richelieu42/chimera/v2/src/netKit"
 	"github.com/sirupsen/logrus"
 )
@@ -37,9 +36,9 @@ func setUp(config *Config, recoveryMiddleware gin.HandlerFunc, businessLogic fun
 		// 禁止日志颜色
 		gin.DisableConsoleColor()
 	}
-	// 通过logrus输出Gin的日志. Richelieu：从目前表现来看，虽然gin和logrus都可以设置颜色，但在此处,只要gin允许了，logrus的logger是否允许就无效了
-	logger := logrusKit.NewLogger(nil, logrus.DebugLevel)
-	gin.DefaultWriter = logger.Out
+	// 通过logrus输出Gin的日志.
+	// Richelieu：从目前表现来看，虽然gin和logrus都可以设置颜色，但在此处,只要gin允许了，logrus的logger是否允许就无效了
+	gin.DefaultWriter = logrus.StandardLogger().Out
 
 	engine := NewEngine()
 	/*

@@ -2,13 +2,14 @@ package ioKit
 
 import (
 	"errors"
+	"github.com/richelieu42/chimera/v2/src/core/sliceKit"
 	"io"
 	"sync"
 )
 
 var (
 	// closedError multiWriterCloser实例已经被关闭的情况下
-	closedError = errors.New("multiWriterCloser is already closed")
+	closedError = errors.New("multiWriterCloser has already been closed")
 )
 
 type multiWriterCloser struct {
@@ -80,7 +81,11 @@ func (multi *multiWriterCloser) Close() (err error) {
 		multi.closed = true
 	}()
 
-	return CloseWriteClosers(multi.writeClosers...)
+	// 修改元素类型(io.WriteCloser => io.Closer)
+	closers := sliceKit.ConvertElementType(multi.writeClosers, func(item io.WriteCloser, _ int) io.Closer {
+		return item
+	})
+	return CloseCloser(closers...)
 }
 
 // MultiWriteCloser

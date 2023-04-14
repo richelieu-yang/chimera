@@ -111,7 +111,7 @@ func newClientConfig(config *NacosConfig, outputDir string, level NacosLogLevel)
 		//// 日志轮转周期，比如：30m, 1h, 24h, 默认是24h
 		//RotateTime: "24h",
 		//// 日志最大文件数，默认3
-		//MaxAge: 3,
+		//maxAge: 3,
 	}, nil
 }
 

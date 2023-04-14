@@ -9,6 +9,10 @@ import (
 	"strings"
 )
 
+var (
+	DefaultTextFormatter = NewTextFormatter("")
+)
+
 // NewTextFormatter
 /*
 PS: 外部在调用此方法后，建议调用: Logger.SetReportCaller(true)!!!

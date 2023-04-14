@@ -13,24 +13,7 @@ func DisposeLogger(logger *logrus.Logger) error {
 	if logger == nil {
 		return nil
 	}
-	return ioKit.CloseWriters(logger.Out)
-}
-
-// NewLogger 输出到控制台（os.Stderr） + TextFormatter
-/*
-@param formatter 可以为nil(此时将采用默认值)
-*/
-func NewLogger(formatter logrus.Formatter, level logrus.Level) *logrus.Logger {
-	logger := logrus.New()
-
-	if formatter == nil {
-		formatter = NewTextFormatter("")
-	}
-	logger.SetFormatter(formatter)
-	logger.SetReportCaller(true)
-
-	logger.SetLevel(level)
-	return logger
+	return ioKit.TryToClose(logger.Out)
 }
 
 // NewFileLogger
@@ -61,7 +44,7 @@ func NewFileLogger(filePath string, formatter logrus.Formatter, level logrus.Lev
 
 // newFileLogger 复用代码
 func newFileLogger(formatter logrus.Formatter, level logrus.Level, writeCloser io.WriteCloser, toConsole bool) *logrus.Logger {
-	logger := NewLogger(formatter, level)
+	logger := NewBasicLogger(WithLevel(level), WithFormatter(formatter))
 	if toConsole {
 		writeCloser = ioKit.MultiWriteCloser(writeCloser, ioKit.NopCloserToWriter(os.Stdout))
 	}
