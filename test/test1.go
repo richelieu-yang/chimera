@@ -7,9 +7,16 @@ import (
 )
 
 func main() {
-	logger, err := logrusKit.NewLumberjackLogger([]ioKit.LumberjackOption{ioKit.WithFilePath("a.log"), ioKit.WithConsole(true)})
+	logger, err := logrusKit.NewLumberjackLogger([]ioKit.LumberjackOption{
+		ioKit.WithFilePath("a.log"),
+		ioKit.WithConsole(true),
+		//ioKit.WithMaxSize(1),
+		ioKit.WithCompress(true),
+	})
 	if err != nil {
 		logrus.Fatal(err)
 	}
-	logger.Info(666)
+	for {
+		logger.Info(666)
+	}
 }

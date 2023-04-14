@@ -75,6 +75,10 @@ func loadOptions(options ...LumberjackOption) *lumberjackOptions {
 
 // NewLumberjackWriteCloser
 /*
+PS:
+(1) 仅配置 filePath 的情况下，超过100MB就rotate一下，保留所有文件，不压缩.
+(2) 传参可以参考下 NewLumberjackWriteCloser1.
+
 @param options 必须要配置: filePath
 */
 func NewLumberjackWriteCloser(options ...LumberjackOption) (io.WriteCloser, error) {
@@ -107,7 +111,7 @@ func NewLumberjackWriteCloser(options ...LumberjackOption) (io.WriteCloser, erro
 
 // NewLumberjackWriteCloser1
 /*
-Deprecated: Use NewLumberjackWriteCloser instead.
+Deprecated: Use NewLumberjackWriteCloser instead. 唯一作用: 看如何传参.
 
 PS:
 (1) lumberjack: 日志切割组件.一般情况下，lumberjack配合其他日志库，实现日志的滚动(rolling)记录.
@@ -128,7 +132,7 @@ go语言的日志滚动(rolling)记录器——lumberjack
 @param maxBackups	旧日志保存的最大数量，默认保存所有旧日志文件
 @param maxAge		[单位: days] 旧日志保存的最大天数，默认保存所有旧日志文件
 @param localTime	[默认使用UTC时间] 是否使用本地时间戳？
-@param compress		[默认: false] 对backup的日志是否进行压缩
+@param compress		[默认: false] 对backup的日志是否进行压缩？（压缩实际上是打成压缩包，文件名最后加上".gz"）
 */
 func NewLumberjackWriteCloser1(filePath string, maxSize, maxBackups, maxAge int, localTime, compress bool) (io.WriteCloser, error) {
 	if err := fileKit.MkParentDirs(filePath); err != nil {
