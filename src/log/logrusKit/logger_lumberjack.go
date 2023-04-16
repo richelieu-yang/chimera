@@ -7,6 +7,8 @@ import (
 
 // NewLumberjackLogger
 /*
+Deprecated: 建议组合使用 ioKit.NewLumberjackWriteCloser() && logrusKit.NewLogger()
+
 @param lumberjackOptions 	不能为nil（至少要配置filePath）
 @param options 				可以不传（此时为nil）
 

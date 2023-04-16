@@ -5,7 +5,7 @@ go 1.20
 require (
 	github.com/apache/pulsar-client-go v0.10.0
 	github.com/apache/rocketmq-clients/golang v0.0.0-20230321063829-41bfbcf6130d
-	github.com/dablelv/go-huge-util v0.0.37
+	github.com/dablelv/go-huge-util v0.0.39
 	github.com/deckarep/golang-set/v2 v2.3.0
 	github.com/disintegration/imaging v1.6.2
 	github.com/dustin/go-humanize v1.0.1
@@ -23,7 +23,7 @@ require (
 	github.com/jordan-wright/email v4.0.1-0.20210109023952-943e75fe5223+incompatible
 	github.com/json-iterator/go v1.1.12
 	github.com/lestrrat-go/file-rotatelogs v2.4.0+incompatible
-	github.com/lionsoul2014/ip2region/binding/golang v0.0.0-20230403015023-b609e27f253c
+	github.com/lionsoul2014/ip2region/binding/golang v0.0.0-20230415042440-a5e3d8259ae0
 	github.com/matoous/go-nanoid/v2 v2.0.0
 	github.com/mitchellh/go-homedir v1.1.0
 	github.com/mitchellh/mapstructure v1.5.0
@@ -31,7 +31,6 @@ require (
 	github.com/mohae/deepcopy v0.0.0-20170929034955-c48cc78d4826
 	github.com/nacos-group/nacos-sdk-go v1.1.4
 	github.com/oklog/ulid/v2 v2.1.0
-	github.com/panjf2000/ants v1.3.0
 	github.com/pkg/errors v0.9.1
 	github.com/redis/go-redis/v9 v9.0.3
 	github.com/robfig/cron/v3 v3.0.1
@@ -43,7 +42,7 @@ require (
 	github.com/spf13/viper v1.15.0
 	github.com/stretchr/testify v1.8.2
 	github.com/zeromicro/go-zero v1.5.1
-	github.com/zeromicro/zero-contrib/logx/logrusx v0.0.0-20230408110737-bbf87df8ebcb
+	github.com/zeromicro/zero-contrib/logx/logrusx v0.0.0-20230416020257-7efb88e94a7f
 	go.uber.org/zap v1.24.0
 	golang.org/x/exp v0.0.0-20230321023759-10a507213a29
 	golang.org/x/text v0.9.0
@@ -109,8 +108,6 @@ require (
 	github.com/modern-go/concurrent v0.0.0-20180306012644-bacd9c7ef1dd // indirect
 	github.com/mtibben/percent v0.2.1 // indirect
 	github.com/natefinch/lumberjack v2.0.0+incompatible // indirect
-	github.com/natefinch/lumberjack/v3 v3.0.0-alpha // indirect
-	github.com/panjf2000/ants/v2 v2.7.2 // indirect
 	github.com/pelletier/go-toml/v2 v2.0.7 // indirect
 	github.com/pierrec/lz4 v2.6.1+incompatible // indirect
 	github.com/pmezard/go-difflib v1.0.0 // indirect
