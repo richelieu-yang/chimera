@@ -48,7 +48,7 @@ func verify(verifyConfig *VerifyConfig) (err error) {
 	// 是否打印日志到控制台？
 	printFlag := verifyConfig.Print
 	level := operationKit.Ternary(printFlag, logrus.DebugLevel, logrus.PanicLevel)
-	cLogger := logrusKit.NewBasicLogger(logrusKit.WithLevel(level))
+	cLogger := logrusKit.NewLogger(logrusKit.WithLevel(level))
 	cLogger.Infof("[Verify] consumerLogPath: [%s].", consumerLogPath)
 	cLogger.Infof("[Verify] producerLogPath: [%s].", producerLogPath)
 

@@ -36,7 +36,7 @@ func NewFileLogger(filePath string, formatter logrus.Formatter, level logrus.Lev
 
 // newFileLogger 复用代码
 func newFileLogger(formatter logrus.Formatter, level logrus.Level, writeCloser io.WriteCloser, toConsole bool) *logrus.Logger {
-	logger := NewBasicLogger(WithLevel(level), WithFormatter(formatter))
+	logger := NewLogger(WithLevel(level), WithFormatter(formatter))
 	if toConsole {
 		writeCloser = ioKit.MultiWriteCloser(writeCloser, ioKit.NopCloserToWriter(os.Stdout))
 	}
