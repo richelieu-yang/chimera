@@ -1,0 +1,4 @@
+TODO: bytes标准库
+
+bytes.TrimPrefix
+bytes.IndexByte
