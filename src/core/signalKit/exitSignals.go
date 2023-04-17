@@ -17,10 +17,13 @@ var (
 		syscall.SIGUSR1,
 		syscall.SIGUSR2,
 		syscall.SIGINT,
+		// e.g.kill ${pid}
 		syscall.SIGTERM,
 		syscall.SIGTSTP,
 		syscall.SIGQUIT,
+		// 无条件结束程序（不能被捕获、阻塞或忽略）
 		syscall.SIGSTOP,
+		// 停止进程（不能被捕获、阻塞或忽略）	e.g.kill -9 ${pid}
 		syscall.SIGKILL,
 	}
 )

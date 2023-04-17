@@ -5,8 +5,8 @@ import (
 	"os"
 )
 
-// PID 当前进程的id
-var PID = os.Getpid()
+// PID 当前进程的id.
+var PID int = os.Getpid()
 
 // PidExists 判断 传参pid 对应的进程是否存在
 /*

@@ -20,9 +20,9 @@ func MonitorExitSignal(exitFunc func(os.Signal)) {
 
 		logrus.WithField("signal", sig.String()).Warn("receive a signal and this process will exit")
 		if exitFunc != nil {
-			logrus.Debug(" exitFunc starts")
+			logrus.Debug("exitFunc starts")
 			exitFunc(sig)
-			logrus.Debug(" exitFunc ends")
+			logrus.Debug("exitFunc ends")
 		}
 		os.Exit(0)
 	}()
