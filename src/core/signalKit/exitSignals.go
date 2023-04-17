@@ -17,7 +17,7 @@ var (
 		syscall.SIGUSR1,
 		syscall.SIGUSR2,
 		syscall.SIGINT,
-		// e.g.kill ${pid}
+		// e.g.kill ${pid} || kill -15 ${pid}
 		syscall.SIGTERM,
 		syscall.SIGTSTP,
 		syscall.SIGQUIT,
