@@ -23,6 +23,10 @@ func DecodeURIComponent(text string) (string, error) {
 	return url.QueryUnescape(text)
 }
 
+// ToQueryString
+/*
+@param m 会对值进行 编码 操作
+*/
 func ToQueryString(m map[string]string) string {
 	var str string
 
