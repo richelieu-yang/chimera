@@ -8,6 +8,8 @@ import (
 
 // MonitorExitSignal 监听退出信号（拦截关闭信号）
 /*
+缺陷: 部分信号（e.g. syscall.SIGSTOP、syscall.SIGKILL）无法被拦截.
+
 @param exitFunc (1) 可以为nil
 				(2) 一般用于清理痕迹（毁尸灭迹）
 */
