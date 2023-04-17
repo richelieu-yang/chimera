@@ -5,9 +5,13 @@ import (
 	"github.com/richelieu42/chimera/v2/src/core/ioKit"
 	"github.com/richelieu42/chimera/v2/src/log/logrusKit"
 	"github.com/sirupsen/logrus"
+	"syscall"
 )
 
 func main() {
+
+	syscall.SIGHUP
+
 	ants.Release
 
 	logger, err := logrusKit.NewLumberjackLogger([]ioKit.LumberjackOption{

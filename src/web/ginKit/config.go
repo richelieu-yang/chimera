@@ -41,7 +41,7 @@ type (
 	}
 )
 
-func (config *Config) CheckAndPolyfill() error {
+func (config *Config) Check() error {
 	if config == nil {
 		return errorKit.Simple("config == nil")
 	}
@@ -69,14 +69,6 @@ func (config *Config) CheckAndPolyfill() error {
 	} else {
 		if sslConfig == nil {
 			return errorKit.Simple("both http port and https port are invalid(-1)")
-		}
-	}
-
-	// Middleware
-	middleware := config.Middleware
-	if middleware != nil {
-		if middleware.BodyLimit == 0 {
-			middleware.BodyLimit = 1
 		}
 	}
 
