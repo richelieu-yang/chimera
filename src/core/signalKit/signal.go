@@ -24,6 +24,6 @@ func MonitorExitSignal(exitFunc func(os.Signal)) {
 			exitFunc(sig)
 			logrus.Debug("exitFunc ends")
 		}
-		os.Exit(1)
+		os.Exit(0)
 	}()
 }
