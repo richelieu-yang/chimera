@@ -1,10 +1,9 @@
-package osKit
+package signalKit
 
 import (
 	"github.com/sirupsen/logrus"
 	"os"
 	"os/signal"
-	"syscall"
 )
 
 // MonitorExitSignal 监听退出信号（拦截关闭信号）
@@ -13,15 +12,17 @@ import (
 				(2)
 */
 func MonitorExitSignal(exitFunc func(os.Signal)) {
-	c := make(chan os.Signal, 1)
-	signal.Notify(c, syscall.SIGHUP, syscall.SIGINT, syscall.SIGTERM, syscall.SIGQUIT)
+	ch := make(chan os.Signal, 1)
+	signal.Notify(ch, exitSignals...)
 
 	go func() {
-		sig := <-c
+		sig := <-ch
 
 		logrus.WithField("signal", sig.String()).Warn("receive a signal and this process will exit")
 		if exitFunc != nil {
+			logrus.Debug(" exitFunc starts")
 			exitFunc(sig)
+			logrus.Debug(" exitFunc ends")
 		}
 		os.Exit(0)
 	}()
