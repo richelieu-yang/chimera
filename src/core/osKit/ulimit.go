@@ -49,8 +49,8 @@ func GetMaxOpenFiles() (int, error) {
 // GetUserMaxProcesses 用户最多可开启的程序数目
 /*
 PS:
-仅支持Mac、Linux环境；
-Process: 进程.
+(1) 仅支持Mac、Linux环境；
+(2) Process: 进程.
 */
 func GetUserMaxProcesses() (int, error) {
 	str, err := cmdKit.ExecuteToString("sh", "-c", "ulimit -u")
