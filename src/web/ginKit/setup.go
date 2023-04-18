@@ -29,6 +29,11 @@ func setUp(config *Config, recoveryMiddleware gin.HandlerFunc, businessLogic fun
 	// Gin的模式，默认debug模式，后续可以在 businessLogic 里面调整
 	gin.SetMode(gin.DebugMode)
 
+	/*
+		gin框架中如何让日志文字带颜色输出？
+			https://mp.weixin.qq.com/s/eHtIC5egDoqx4LdAvcE5Qw
+		PS: 如果 gin.ForceConsoleColor() 和 gin.DisableConsoleColor() 都不调用，那么默认是在终端中输出日志是带颜色的，输出到其他地方是不带颜色的.
+	*/
 	if config.Colorful {
 		// 强制日志带颜色输出（无论是在终端还是其他输出设备）
 		gin.ForceConsoleColor()
