@@ -28,14 +28,15 @@ func setUp(config *Config, recoveryMiddleware gin.HandlerFunc, businessLogic fun
 
 	// Gin的模式，默认debug模式，后续可以在 businessLogic 里面调整
 	gin.SetMode(gin.DebugMode)
-	// 日志颜色
+
 	if config.Colorful {
-		// 强制设置日志颜色
+		// 强制日志带颜色输出（无论是在终端还是其他输出设备）
 		gin.ForceConsoleColor()
 	} else {
-		// 禁止日志颜色
+		// 禁用日志带颜色输出
 		gin.DisableConsoleColor()
 	}
+
 	// 通过logrus输出Gin的日志.
 	// Richelieu：从目前表现来看，虽然gin和logrus都可以设置颜色，但在此处,只要gin允许了，logrus的logger是否允许就无效了
 	gin.DefaultWriter = logrus.StandardLogger().Out

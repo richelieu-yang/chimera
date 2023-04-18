@@ -12,9 +12,7 @@ type (
 		Host string `json:"host,optional"`
 		Port int    `json:"port,default=-1,range=[-1:65535]"`
 		/*
-			日志的颜色（默认true）
-			true: 	强制设置日志颜色
-			false: 	禁止日志颜色
+			日志带颜色输出?（默认true）
 		*/
 		Colorful   bool              `json:"colorful,default=true"`
 		Middleware *MiddlewareConfig `json:"middleware,optional"`

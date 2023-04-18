@@ -42,7 +42,7 @@ require (
 	github.com/spf13/viper v1.15.0
 	github.com/stretchr/testify v1.8.2
 	github.com/zeromicro/go-zero v1.5.1
-	github.com/zeromicro/zero-contrib/logx/logrusx v0.0.0-20230416020257-7efb88e94a7f
+	github.com/zeromicro/zero-contrib/logx/logrusx v0.0.0-20230417153749-41a096d45fc8
 	go.uber.org/zap v1.24.0
 	golang.org/x/exp v0.0.0-20230321023759-10a507213a29
 	golang.org/x/text v0.9.0
@@ -108,7 +108,6 @@ require (
 	github.com/modern-go/concurrent v0.0.0-20180306012644-bacd9c7ef1dd // indirect
 	github.com/mtibben/percent v0.2.1 // indirect
 	github.com/natefinch/lumberjack v2.0.0+incompatible // indirect
-	github.com/panjf2000/ants/v2 v2.7.2 // indirect
 	github.com/pelletier/go-toml/v2 v2.0.7 // indirect
 	github.com/pierrec/lz4 v2.6.1+incompatible // indirect
 	github.com/pmezard/go-difflib v1.0.0 // indirect
