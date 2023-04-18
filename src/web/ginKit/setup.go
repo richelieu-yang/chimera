@@ -57,7 +57,8 @@ func setUp(config *Config, recoveryMiddleware gin.HandlerFunc, businessLogic fun
 
 	// pprof
 	if config.Pprof != nil && config.Pprof.Access {
-		pprof.Register(engine)
+		// 不使用： pprof.DefaultPrefix
+		pprof.Register(engine, "/pprof")
 	}
 
 	// middleware
