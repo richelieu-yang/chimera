@@ -8,7 +8,8 @@ import (
 // MustLoad 读取配置文件并反序列化为 指定结构体指针ptr
 /*
 !!!:
-(1) 结构体可以参考 go-zero/rest/config.go中的RestConf，可以通过tag控制配置的值（默认值default、范围range、可选optional...；可以组合）
+(0) 所有字段首字母大写 && 有json tag;
+(1) 结构体可以参考 go-zero的 rest.RestConf，可以通过tag控制配置的值（默认值default、范围range、可选optional...；可以组合）
 (2) 值为数组时要注意（要么有值(size > 0)，要么全注释掉），以免返回error.
 
 @param path	配置文件的路径（推荐使用.yaml）
@@ -26,6 +27,7 @@ e.g.1	组合多个tag
 	Port     int    `json:"port,default=-1,range=[-1:65535]"`
 */
 func MustLoad(path string, ptr any, opts ...conf.Option) {
+
 	if err := Load(path, ptr, opts...); err != nil {
 		logrus.Fatal(err)
 	}

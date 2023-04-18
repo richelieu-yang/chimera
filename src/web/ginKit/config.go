@@ -15,8 +15,9 @@ type (
 			日志带颜色输出?（默认true）
 		*/
 		Colorful   bool              `json:"colorful,default=true"`
-		Middleware *MiddlewareConfig `json:"middleware,optional"`
-		SSL        *SslConfig        `json:"ssl,optional"`
+		Middleware *MiddlewareConfig `json:"middleware"`
+		SSL        *SslConfig        `json:"ssl"`
+		Pprof      *PprofConfig      `json:"pprof"`
 	}
 
 	MiddlewareConfig struct {
@@ -25,6 +26,11 @@ type (
 		XFrameOptions string                               `json:"xFrameOptions,optional"`
 		Cors          *CorsConfig                          `json:"cors,optional"`
 		Referer       []*refererKit.RefererVerifierBuilder `json:"referer,optional"`
+	}
+
+	PprofConfig struct {
+		// Access 是否提供pprof相关的路由访问?
+		Access bool `json:"access,default=false"`
 	}
 
 	// CorsConfig cors（跨源资源共享）的配置

@@ -14,6 +14,7 @@ require (
 	github.com/emersion/go-message v0.16.0
 	github.com/gin-contrib/cors v1.4.0
 	github.com/gin-contrib/gzip v0.0.6
+	github.com/gin-contrib/pprof v1.4.0
 	github.com/gin-gonic/gin v1.9.0
 	github.com/go-redsync/redsync/v4 v4.8.1
 	github.com/gorilla/securecookie v1.1.1
