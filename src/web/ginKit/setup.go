@@ -91,14 +91,12 @@ func setUp(config *Config, recoveryMiddleware gin.HandlerFunc, businessLogic fun
 
 	// https server
 	sslConfig := config.SSL
-	if sslConfig.Port != -1 {
-		if sslConfig != nil {
-			go func() {
-				if err := engine.RunTLS(netKit.JoinHostnameAndPort(config.Host, sslConfig.Port), sslConfig.CertFile, sslConfig.KeyFile); err != nil {
-					logrus.Fatal(engine)
-				}
-			}()
-		}
+	if sslConfig != nil && sslConfig.Port != -1 {
+		go func() {
+			if err := engine.RunTLS(netKit.JoinHostnameAndPort(config.Host, sslConfig.Port), sslConfig.CertFile, sslConfig.KeyFile); err != nil {
+				logrus.Fatal(engine)
+			}
+		}()
 	}
 
 	select {}
