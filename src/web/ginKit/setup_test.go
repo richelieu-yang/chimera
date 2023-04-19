@@ -17,7 +17,7 @@ func TestMustSetUp(t *testing.T) {
 	}
 	c := &config{}
 
-	confKit.MustLoad("/Users/richelieu/GolandProjects/chimera/chimera-lib/env.yaml", c)
+	confKit.MustLoad("/Users/richelieu/GolandProjects/chimera/chimera-lib/config.yaml", c)
 	MustSetUp(c.Gin, nil, func(engine *gin.Engine) error {
 		engine.Any("/test", func(ctx *gin.Context) {
 			ctx.String(http.StatusOK, "ok")
