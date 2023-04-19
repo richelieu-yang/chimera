@@ -125,13 +125,13 @@ func proxy(w http.ResponseWriter, r *http.Request, scheme, addr string, errorLog
 		}
 		req.URL.RawQuery = urlKit.CombineQueryString(req.URL.RawQuery, urlKit.ToQueryString(extraQuery))
 	}
-	proxy := &httputil.ReverseProxy{
+	reverseProxy := &httputil.ReverseProxy{
 		Director: director,
 		ErrorLog: errorLogger,
 		ErrorHandler: func(rw http.ResponseWriter, req *http.Request, e error) {
 			err = e
 		},
 	}
-	proxy.ServeHTTP(w, r)
+	reverseProxy.ServeHTTP(w, r)
 	return err
 }
