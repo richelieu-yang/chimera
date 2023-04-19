@@ -9,11 +9,10 @@ import (
 
 type (
 	Config struct {
-		Host           string   `json:"host,optional"`
-		Port           int      `json:"port,default=-1,range=[-1:65535]"`
-		Colorful       bool     `json:"colorful,default=true"`
-		Pprof          bool     `json:"pprof,default=false"`
-		TrustedProxies []string `json:"trustedProxies,optional"`
+		Host     string `json:"host,optional"`
+		Port     int    `json:"port,default=-1,range=[-1:65535]"`
+		Colorful bool   `json:"colorful,default=true"`
+		Pprof    bool   `json:"pprof,default=false"`
 
 		Middleware *MiddlewareConfig `json:"middleware"`
 		SSL        *SslConfig        `json:"ssl"`

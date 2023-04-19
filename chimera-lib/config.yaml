@@ -9,11 +9,6 @@ gin:
   port: 80
   # 日志带颜色输出?（默认true）
   colorful: true
-  # 受信任的代理（默认信任所有代理，即[]string{"0.0.0.0/0", "::/0"}）
-#  trustedProxies:
-#    - 0.0.0.0/0
-#    - ::/0
-#    - 172.19.10.12
   # 是否开启pprof路由？（默认true）PS: 只应该在性能测试的时候才在代码中引入pprof.
   pprof: false
   middleware:

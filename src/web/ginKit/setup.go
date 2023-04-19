@@ -3,7 +3,6 @@ package ginKit
 import (
 	"github.com/gin-contrib/pprof"
 	"github.com/gin-gonic/gin"
-	"github.com/richelieu42/chimera/v2/src/core/sliceKit"
 	"github.com/richelieu42/chimera/v2/src/netKit"
 	"github.com/sirupsen/logrus"
 )
@@ -59,14 +58,6 @@ func setUp(config *Config, recoveryMiddleware gin.HandlerFunc, businessLogic fun
 	// pprof
 	if config.Pprof {
 		pprof.Register(engine, pprof.DefaultPrefix) // 等价于 pprof.Register(engine)
-	}
-
-	// trusted proxies
-	s := sliceKit.Uniq(config.TrustedProxies)
-	if len(s) > 0 {
-		if err := engine.SetTrustedProxies(s); err != nil {
-			return err
-		}
 	}
 
 	// middleware
