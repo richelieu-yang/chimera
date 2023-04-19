@@ -10,13 +10,56 @@ import (
 	"net/http/httputil"
 )
 
+type (
+	proxyOptions struct {
+		errorLogger *log.Logger
+		reqUrlPath  *string
+		extraQuery  map[string]string
+	}
+
+	ProxyOption func(opts *proxyOptions)
+)
+
+func WithErrorLogger(errorLogger *log.Logger) ProxyOption {
+	return func(opts *proxyOptions) {
+		opts.errorLogger = errorLogger
+	}
+}
+
+func WithReqUrlPath(reqUrlPath *string) ProxyOption {
+	return func(opts *proxyOptions) {
+		opts.reqUrlPath = reqUrlPath
+	}
+}
+
+func WithExtraQuery(extraQuery map[string]string) ProxyOption {
+	return func(opts *proxyOptions) {
+		opts.extraQuery = extraQuery
+	}
+}
+
+func loadOptions(options ...ProxyOption) *proxyOptions {
+	opts := &proxyOptions{}
+	for _, option := range options {
+		option(opts)
+	}
+	return opts
+}
+
 // Proxy 代理请求（反向代理，请求转发）.
+func Proxy(w http.ResponseWriter, r *http.Request, scheme, addr string, options ...ProxyOption) error {
+	opts := loadOptions(options...)
+	return proxy(w, r, scheme, addr, opts.errorLogger, opts.reqUrlPath, opts.extraQuery)
+}
+
 /*
 @param errLogger 	可以为nil，但不建议这么干，因为错误会输出到控制台（通过 log.Printf()），不利于错误定位
 @param scheme 		"http" || "https"
 @param addr 		e.g."127.0.0.1:8888"
 @param reqUrlPath 	(1) 可以为nil（此时不修改 req.URL.Path）
-					(2) 非nil的话，个人感觉: 字符串的第一个字符应该是"/"
+
+	(2) 非nil的话，个人感觉: 字符串的第一个字符应该是"/"
+
 @param extraQuery 	可以为nil
 @return 可能是 context.Canceled（可以用==进行比较）
 
@@ -28,6 +71,7 @@ PS:
 (2) 如果请求转发的目标有效，但处理此请求需要花费大量时间（比如20+min），此时如果请求的客户端终端了请求（e.g.浏览器页面被直接关闭了），将返回 context.Canceled.
 (3) addr有效，reqUrlPath非nil但事实上不存在该路由的情况，返回值为nil && 原始客户端得到404（404 page not found）.
 (4) 代理请求前，如果读取了Request.Body的内容但不恢复（即重置其内容），将直接返回error（e.g.net/http: HTTP/1.x transport connection broken: http: ContentLength=161 with Body length 0）.
+
 	且目标方不会收到请求.（TODO: 很奇怪，会走两遍，第二次返回的error为: context canceled）
 
 e.g.	将 https://127.0.0.1:8888/test 转发给 http://127.0.0.1:8889/test
@@ -52,7 +96,7 @@ scheme="http" addr="127.0.0.1:8889" reqUrlPath=ptrKit.ToPtr("/group1/test1")
 e.g.4	将 wss://127.0.0.1:8888/test 转发给 ws://127.0.0.1:80/ws/connect
 scheme="http" addr="127.0.0.1:80" reqUrlPath=ptrKit.ToPtr("/ws/connect")
 */
-func Proxy(w http.ResponseWriter, r *http.Request, errorLogger *log.Logger, scheme, addr string, reqUrlPath *string, extraQuery map[string]string) error {
+func proxy(w http.ResponseWriter, r *http.Request, scheme, addr string, errorLogger *log.Logger, reqUrlPath *string, extraQuery map[string]string) error {
 	// 重置 Request.Body（r.Body可以为nil）
 	if seeker, ok := r.Body.(io.Seeker); ok {
 		_, err := seeker.Seek(0, io.SeekStart)

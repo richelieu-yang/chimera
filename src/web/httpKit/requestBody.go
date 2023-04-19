@@ -10,7 +10,7 @@ import (
 // MakeRequestBodySeekable
 /*
 PS:
-(1) 一般与 Proxy() 搭配使用.
+(1) 一般与 proxy() 搭配使用.
 (2) 某个路由涉及代理（请求转发）的话，需要在handler里面首先调用此方法.
 
 */

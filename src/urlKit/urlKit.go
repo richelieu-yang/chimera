@@ -26,6 +26,10 @@ func DecodeURIComponent(text string) (string, error) {
 // ToQueryString
 /*
 @param m 会对值进行 编码 操作
+@return 可能为""
+
+e.g.
+	(nil) => ""
 */
 func ToQueryString(m map[string]string) string {
 	var str string
