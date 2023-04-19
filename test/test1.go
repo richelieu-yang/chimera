@@ -8,6 +8,7 @@ import (
 
 func main() {
 	engine := gin.Default()
+
 	pprof.Register(engine)
 	if err := engine.Run(":8080"); err != nil {
 		logrus.Fatal(err)
