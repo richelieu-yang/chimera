@@ -59,7 +59,7 @@ func (config *Config) Check() error {
 		}
 	}
 
-	// http port
+	// ports(http && https)
 	if config.Port != -1 {
 		if sslConfig != nil && config.Port == sslConfig.Port {
 			return errorKit.Simple("http port and https port are same(%d)", config.Port)
