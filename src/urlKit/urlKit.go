@@ -1,9 +1,6 @@
 package urlKit
 
-import (
-	"github.com/richelieu42/chimera/v2/src/core/strKit"
-	"net/url"
-)
+import "net/url"
 
 // EncodeURIComponent 编码
 /*
@@ -21,40 +18,4 @@ e.g.
 */
 func DecodeURIComponent(text string) (string, error) {
 	return url.QueryUnescape(text)
-}
-
-// ToQueryString
-/*
-@param m 会对值进行 编码 操作
-@return 可能为""
-
-e.g.
-	(nil) => ""
-*/
-func ToQueryString(m map[string]string) string {
-	var str string
-
-	for k, v := range m {
-		if strKit.IsAllNotEmpty(k, v) {
-			if strKit.IsNotEmpty(str) {
-				str += "&"
-			}
-			str += k + "=" + EncodeURIComponent(v)
-		}
-	}
-	return str
-}
-
-func CombineQueryString(strings ...string) string {
-	var qs string
-
-	for _, str := range strings {
-		if strKit.IsNotEmpty(str) {
-			if strKit.IsNotEmpty(qs) {
-				qs += "&"
-			}
-			qs += str
-		}
-	}
-	return qs
 }

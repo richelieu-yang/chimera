@@ -14,11 +14,19 @@ type (
 	proxyOptions struct {
 		errorLogger *log.Logger
 		reqUrlPath  *string
-		extraQuery  map[string]string
+		queryParams map[string]string
 	}
 
 	ProxyOption func(opts *proxyOptions)
 )
+
+func loadOptions(options ...ProxyOption) *proxyOptions {
+	opts := &proxyOptions{}
+	for _, option := range options {
+		option(opts)
+	}
+	return opts
+}
 
 func WithErrorLogger(errorLogger *log.Logger) ProxyOption {
 	return func(opts *proxyOptions) {
@@ -32,24 +40,16 @@ func WithReqUrlPath(reqUrlPath *string) ProxyOption {
 	}
 }
 
-func WithExtraQuery(extraQuery map[string]string) ProxyOption {
+func WithQueryParams(queryParams map[string]string) ProxyOption {
 	return func(opts *proxyOptions) {
-		opts.extraQuery = extraQuery
+		opts.queryParams = queryParams
 	}
-}
-
-func loadOptions(options ...ProxyOption) *proxyOptions {
-	opts := &proxyOptions{}
-	for _, option := range options {
-		option(opts)
-	}
-	return opts
 }
 
 // Proxy 代理请求（反向代理，请求转发）.
 func Proxy(w http.ResponseWriter, r *http.Request, scheme, addr string, options ...ProxyOption) error {
 	opts := loadOptions(options...)
-	return proxy(w, r, scheme, addr, opts.errorLogger, opts.reqUrlPath, opts.extraQuery)
+	return proxy(w, r, scheme, addr, opts.errorLogger, opts.reqUrlPath, opts.queryParams)
 }
 
 // proxy
@@ -59,7 +59,7 @@ func Proxy(w http.ResponseWriter, r *http.Request, scheme, addr string, options 
 @param addr 		e.g."127.0.0.1:8888"
 @param reqUrlPath 	(1) 可以为nil（此时不修改 req.URL.Path）
 					(2) 非nil的话，个人感觉: 字符串的第一个字符应该是"/"
-@param extraQuery 	可以为nil
+@param queryParams 	可以为nil
 @return 可能是 context.Canceled（可以用 == 进行比较）
 
 更多可参考:
@@ -95,7 +95,7 @@ scheme="http" addr="127.0.0.1:8889" reqUrlPath=ptrKit.ToPtr("/group1/test1")
 e.g.4	将 wss://127.0.0.1:8888/test 转发给 ws://127.0.0.1:80/ws/connect
 scheme="http" addr="127.0.0.1:80" reqUrlPath=ptrKit.ToPtr("/ws/connect")
 */
-func proxy(w http.ResponseWriter, r *http.Request, scheme, addr string, errorLogger *log.Logger, reqUrlPath *string, extraQuery map[string]string) error {
+func proxy(w http.ResponseWriter, r *http.Request, scheme, addr string, errorLogger *log.Logger, reqUrlPath *string, queryParams map[string]string) error {
 	// 重置 Request.Body（r.Body可以为nil）
 	if seeker, ok := r.Body.(io.Seeker); ok {
 		_, err := seeker.Seek(0, io.SeekStart)
@@ -122,7 +122,7 @@ func proxy(w http.ResponseWriter, r *http.Request, scheme, addr string, errorLog
 		if reqUrlPath != nil {
 			req.URL.Path = *reqUrlPath
 		}
-		req.URL.RawQuery = urlKit.CombineQueryString(req.URL.RawQuery, urlKit.ToQueryString(extraQuery))
+		req.URL.RawQuery = urlKit.CombineQueryString(req.URL.RawQuery, urlKit.ToQueryString(queryParams))
 	}
 	reverseProxy := &httputil.ReverseProxy{
 		Director: director,

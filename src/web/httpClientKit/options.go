@@ -17,7 +17,7 @@ type (
 		timeout time.Duration
 		// safe 默认false
 		safe       bool
-		getParams  map[string]string
+		urlParams  map[string]string
 		postParams map[string]string
 	}
 
@@ -58,13 +58,13 @@ func WithSafe(safe bool) Option {
 	}
 }
 
-// WithGetParams
+// WithUrlParams
 /*
 适用于: GET、POST
 */
-func WithGetParams(getParams map[string]string) Option {
+func WithUrlParams(urlParams map[string]string) Option {
 	return func(opts *options) {
-		opts.getParams = getParams
+		opts.urlParams = urlParams
 	}
 }
 
