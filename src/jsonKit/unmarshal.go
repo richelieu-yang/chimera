@@ -2,8 +2,8 @@ package jsonKit
 
 import (
 	jsoniter "github.com/json-iterator/go"
+	"github.com/richelieu42/chimera/v2/src/assertKit"
 	"github.com/richelieu42/chimera/v2/src/core/errorKit"
-	"github.com/richelieu42/chimera/v2/src/core/ptrKit"
 	"github.com/richelieu42/chimera/v2/src/core/strKit"
 )
 
@@ -19,7 +19,7 @@ func Unmarshal(data []byte, ptr interface{}) error {
 		}
 		return errorKit.Simple("len(data) == 0")
 	}
-	if err := ptrKit.AssertPointer(ptr, "ptr"); err != nil {
+	if err := assertKit.Pointer(ptr, "ptr"); err != nil {
 		return err
 	}
 
@@ -48,7 +48,7 @@ func UnmarshalFromString(str string, ptr interface{}) error {
 	if err := strKit.AssertNotEmpty(str, "str"); err != nil {
 		return err
 	}
-	if err := ptrKit.AssertPointer(ptr, "ptr"); err != nil {
+	if err := assertKit.Pointer(ptr, "ptr"); err != nil {
 		return err
 	}
 
