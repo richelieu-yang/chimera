@@ -15,10 +15,10 @@ const (
 type (
 	options struct {
 		timeout time.Duration
-		// safe 默认false
-		safe       bool
-		urlParams  map[string]string
-		postParams map[string]string
+		// safe 默认false（即使客户的url以https开头&&证书非法，请求也能成功）
+		safe        bool
+		queryParams map[string]string
+		postParams  map[string]string
 	}
 
 	Option func(opts *options)
@@ -58,13 +58,13 @@ func WithSafe(safe bool) Option {
 	}
 }
 
-// WithUrlParams
+// WithQueryParams
 /*
 适用于: GET、POST
 */
-func WithUrlParams(urlParams map[string]string) Option {
+func WithQueryParams(queryParams map[string]string) Option {
 	return func(opts *options) {
-		opts.urlParams = urlParams
+		opts.queryParams = queryParams
 	}
 }
 

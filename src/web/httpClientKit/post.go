@@ -33,7 +33,7 @@ func PostForResponse(url string, options ...Option) (*http.Response, error) {
 	if err := assertKit.AssertHttpUrl(url); err != nil {
 		return nil, err
 	}
-	url = urlKit.AttachQueryParamsToUrl(url, opts.urlParams)
+	url = urlKit.AttachQueryParamsToUrl(url, opts.queryParams)
 
 	// payload
 	payload := strings.NewReader(urlKit.ToBodyString(opts.postParams))

@@ -32,7 +32,7 @@ func GetForResponse(url string, options ...Option) (*http.Response, error) {
 	if err := assertKit.AssertHttpUrl(url); err != nil {
 		return nil, err
 	}
-	url = urlKit.AttachQueryParamsToUrl(url, opts.urlParams)
+	url = urlKit.AttachQueryParamsToUrl(url, opts.queryParams)
 
 	// req
 	req, err := http.NewRequest("GET", url, nil)
