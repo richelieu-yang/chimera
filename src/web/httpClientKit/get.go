@@ -1,7 +1,6 @@
 package httpClientKit
 
 import (
-	"crypto/tls"
 	"github.com/richelieu42/chimera/v2/src/assertKit"
 	"github.com/richelieu42/chimera/v2/src/urlKit"
 	"io"
@@ -34,14 +33,7 @@ func GetForResponse(url string, options ...Option) (*http.Response, error) {
 	}
 	url = urlKit.AttachQueryParamsToUrl(url, opts.urlParams)
 
-	client := &http.Client{
-		Timeout: opts.timeout,
-		Transport: &http.Transport{
-			TLSClientConfig: &tls.Config{
-				InsecureSkipVerify: !opts.safe,
-			},
-		},
-	}
+	client := newHttpClient(opts.timeout, opts.safe)
 	req, err := http.NewRequest("GET", url, nil)
 	if err != nil {
 		return nil, err
