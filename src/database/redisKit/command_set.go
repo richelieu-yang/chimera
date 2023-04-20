@@ -37,6 +37,11 @@ func (client *Client) SMembers(ctx context.Context, key string) ([]string, error
 	return client.core.SMembers(ctx, key).Result()
 }
 
+// SIsMember 判断 member元素 是否是 key对应集合 的成员？
+func (client *Client) SIsMember(ctx context.Context, key string, member interface{}) (bool, error) {
+	return client.core.SIsMember(ctx, key, member).Result()
+}
+
 // SMembersMap
 /*
 Deprecated: 当 SMEMBERS命令 被用于处理一个大的数据库时，它可能会阻塞服务器达数秒之久。
