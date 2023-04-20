@@ -122,7 +122,7 @@ func proxy(w http.ResponseWriter, r *http.Request, scheme, addr string, errorLog
 		if reqUrlPath != nil {
 			req.URL.Path = *reqUrlPath
 		}
-		req.URL.RawQuery = urlKit.CombineQueryString(req.URL.RawQuery, urlKit.ToQueryString(queryParams))
+		req.URL.RawQuery = urlKit.AttachQueryParamsToUrl(req.URL.RawQuery, queryParams)
 	}
 	reverseProxy := &httputil.ReverseProxy{
 		Director: director,

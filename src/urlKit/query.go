@@ -48,17 +48,3 @@ func AttachQueryParamsToUrl(url string, queryParams map[string]string) string {
 	}
 	return url + "&" + queryStr
 }
-
-func CombineQueryString(strings ...string) string {
-	var qs string
-
-	for _, str := range strings {
-		if strKit.IsNotEmpty(str) {
-			if strKit.IsNotEmpty(qs) {
-				qs += "&"
-			}
-			qs += str
-		}
-	}
-	return qs
-}
