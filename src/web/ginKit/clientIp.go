@@ -11,6 +11,9 @@ gin框架中设置信任代理IP并获取远程客户端IP
 	https://www.cnblogs.com/mayanan/p/15703234.html
 gin获取用户请求IP
 	https://blog.csdn.net/weixin_45867397/article/details/122849424
+
+e.g.
+	访问url为"http://localhost/test"，返回值则为"::1"
 */
 func GetClientIp(ctx *gin.Context) string {
 	/*

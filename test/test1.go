@@ -6,5 +6,8 @@ import (
 )
 
 func main() {
-	fmt.Println(assertKit.AssertHttpUrl("https:/github.com/go-playground/validator"))
+	fmt.Println(assertKit.AssertIPv4("192.168.9.254"))
+	fmt.Println(assertKit.AssertIPv4("127.0.0.1"))
+	fmt.Println(assertKit.AssertIPv4("localhost"))
+	fmt.Println(assertKit.AssertIPv4("::1"))
 }

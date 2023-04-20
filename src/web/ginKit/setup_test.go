@@ -20,7 +20,7 @@ func TestMustSetUp(t *testing.T) {
 	confKit.MustLoad("/Users/richelieu/GolandProjects/chimera/chimera-lib/config.yaml", c)
 	MustSetUp(c.Gin, nil, func(engine *gin.Engine) error {
 		engine.Any("/test", func(ctx *gin.Context) {
-			ctx.String(http.StatusOK, "ok")
+			ctx.String(http.StatusOK, ctx.ClientIP())
 		})
 
 		engine.Any("/upload", func(ctx *gin.Context) {
