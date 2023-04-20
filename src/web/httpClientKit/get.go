@@ -9,10 +9,27 @@ import (
 )
 
 func Get(url string, options ...Option) (int, []byte, error) {
+	resp, err := GetForResponse(url, options...)
+	if err != nil {
+		return 0, nil, err
+	}
+	defer resp.Body.Close()
+	data, err := io.ReadAll(resp.Body)
+	if err != nil {
+		return 0, nil, err
+	}
+	return resp.StatusCode, data, nil
+}
+
+// GetForResponse
+/*
+@return !!!: 第一个返回值如果不为nil的话，一般来说需要手动调用 "resp.Body.Close()".
+*/
+func GetForResponse(url string, options ...Option) (*http.Response, error) {
 	opts := loadOptions(options...)
 
 	if err := assertKit.AssertHttpUrl(url); err != nil {
-		return 0, nil, err
+		return nil, err
 	}
 	url = urlKit.AttachQueryParamsToUrl(url, opts.urlParams)
 
@@ -26,18 +43,8 @@ func Get(url string, options ...Option) (int, []byte, error) {
 	}
 	req, err := http.NewRequest("GET", url, nil)
 	if err != nil {
-		return 0, nil, err
+		return nil, err
 	}
 
-	// 通用部分: 发请求 && 读取响应内容
-	resp, err := client.Do(req)
-	if err != nil {
-		return 0, nil, err
-	}
-	defer resp.Body.Close()
-	data, err := io.ReadAll(resp.Body)
-	if err != nil {
-		return 0, nil, err
-	}
-	return resp.StatusCode, data, nil
+	return send(client, req)
 }
