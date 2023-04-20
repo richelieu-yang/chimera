@@ -1,1 +1,1 @@
-本包（assertKit）所使用的其他包，严禁使用assertKit包，否则会导致import cycle.
+!!!: 本包（assertKit）所使用的其他包中，严禁使用assertKit包，否则会导致import cycle.
