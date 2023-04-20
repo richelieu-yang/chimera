@@ -43,6 +43,7 @@ func PostForResponse(url string, options ...Option) (*http.Response, error) {
 	if err != nil {
 		return nil, err
 	}
+	//req.Header.Set("Content-Type", "application/x-www-form-urlencoded; charset=utf-8")
 	req.Header.Add("Content-Type", "application/x-www-form-urlencoded")
 	req.Header.Add("Content-Type", "charset=utf-8")
 
