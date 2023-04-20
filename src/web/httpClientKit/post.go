@@ -15,6 +15,7 @@ func Post(url string, options ...Option) (int, []byte, error) {
 		return 0, nil, err
 	}
 	defer resp.Body.Close()
+
 	data, err := io.ReadAll(resp.Body)
 	if err != nil {
 		return 0, nil, err
