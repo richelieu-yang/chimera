@@ -4,7 +4,6 @@ import (
 	jsoniter "github.com/json-iterator/go"
 	"github.com/richelieu42/chimera/v2/src/assertKit"
 	"github.com/richelieu42/chimera/v2/src/core/errorKit"
-	"github.com/richelieu42/chimera/v2/src/core/strKit"
 )
 
 // Unmarshal
@@ -45,7 +44,7 @@ func UnmarshalToMap(data []byte) (map[string]interface{}, error) {
 @param obj 	只能为指针（pointer），且不能为nil
 */
 func UnmarshalFromString(str string, ptr interface{}) error {
-	if err := strKit.AssertNotEmpty(str, "str"); err != nil {
+	if err := assertKit.NotEmpty(str, "str"); err != nil {
 		return err
 	}
 	if err := assertKit.Pointer(ptr, "ptr"); err != nil {

@@ -1,6 +1,7 @@
 package httpClientKit
 
 import (
+	"github.com/richelieu42/chimera/v2/src/assertKit"
 	"github.com/richelieu42/chimera/v2/src/core/mapKit"
 	"github.com/richelieu42/chimera/v2/src/core/strKit"
 	"io"
@@ -72,7 +73,7 @@ func Post(url string, params map[string]string) (int, []byte, error) {
 @param contentType	可以为""
 */
 func post(url string, body io.Reader, contentType string) (statusCode int, data []byte, err error) {
-	if err = strKit.AssertNotBlank(url, "url"); err != nil {
+	if err = assertKit.NotBlank(url, "url"); err != nil {
 		return
 	}
 

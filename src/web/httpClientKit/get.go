@@ -1,6 +1,7 @@
 package httpClientKit
 
 import (
+	"github.com/richelieu42/chimera/v2/src/assertKit"
 	"github.com/richelieu42/chimera/v2/src/core/mapKit"
 	"github.com/richelieu42/chimera/v2/src/core/strKit"
 	"github.com/richelieu42/chimera/v2/src/urlKit"
@@ -47,7 +48,7 @@ func Get1(url string, params map[string]string) (int, []byte, error) {
 }
 
 func get1(url string) (statusCode int, data []byte, err error) {
-	if err = strKit.AssertNotBlank(url, "url"); err != nil {
+	if err = assertKit.NotBlank(url, "url"); err != nil {
 		return
 	}
 
