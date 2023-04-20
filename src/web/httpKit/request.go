@@ -24,8 +24,8 @@ func GetProto(req *http.Request) string {
 	return req.Proto
 }
 
-// OverridePostRequestBody 覆盖POST请求的请求体.
-func OverridePostRequestBody(req *http.Request, m map[string]string) {
+// OverrideRequestBody 覆盖请求body.
+func OverrideRequestBody(req *http.Request, m map[string]string) {
 	content := urlKit.ToQueryString(m)
 	reader := strings.NewReader(content)
 
