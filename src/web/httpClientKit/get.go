@@ -24,12 +24,12 @@ func Get(url string, options ...Option) (int, []byte, error) {
 			},
 		},
 	}
-	request, err := http.NewRequest("GET", url, nil)
+	req, err := http.NewRequest("GET", url, nil)
 	if err != nil {
 		return 0, nil, err
 	}
 
-	resp, err := client.Do(request)
+	resp, err := client.Do(req)
 	if err != nil {
 		return 0, nil, err
 	}
