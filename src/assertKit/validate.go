@@ -30,6 +30,14 @@ func AssertHttpUrl(httpUrl string) error {
 	return nil
 }
 
+// AssertIPv4
+/*
+e.g.
+	("192.168.9.254")	=> nil
+	("127.0.0.1")	 	=> nil
+	("localhost")	 	=> test/test1.go:11|main [Assertion failed] ipv4(localhost) is invalid(Key: '' Error:Field validation for '' failed on the 'ipv4' tag)
+	("::1")	 			=> test/test1.go:12|main [Assertion failed] ipv4(::1) is invalid(Key: '' Error:Field validation for '' failed on the 'ipv4' tag)
+*/
 func AssertIPv4(ipv4 string) error {
 	validate := validator.New()
 	err := validate.Var(ipv4, "required,ipv4")
