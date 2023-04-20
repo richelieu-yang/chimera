@@ -29,7 +29,7 @@ func Post(url string, params map[string]string) (int, []byte, error) {
 //@param params 可以为nil
 //*/
 //func UploadFile(url string, params map[string]string, fileKey, filePath string) (statusCode int, data []byte, err error) {
-//	if err = fileKit.AssertExistAndIsFile(filePath); err != nil {
+//	if err = fileKit.ExistAndIsFile(filePath); err != nil {
 //		return
 //	}
 //
