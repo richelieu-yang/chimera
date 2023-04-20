@@ -2,7 +2,6 @@ package ioKit
 
 import (
 	rotatelogs "github.com/lestrrat-go/file-rotatelogs"
-	"github.com/richelieu42/chimera/v2/src/assertKit"
 	"github.com/richelieu42/chimera/v2/src/core/file/fileKit"
 	"github.com/richelieu42/chimera/v2/src/core/pathKit"
 	"github.com/richelieu42/chimera/v2/src/core/timeKit"
@@ -76,7 +75,7 @@ func newRotateFileWriteCloser(filePath string, options []rotatelogs.Option) (io.
 	if err := fileKit.MkParentDirs(filePath); err != nil {
 		return nil, err
 	}
-	if err := assertKit.NotExistOrIsFile(filePath); err != nil {
+	if err := fileKit.AssertNotExistOrIsFile(filePath); err != nil {
 		return nil, err
 	}
 

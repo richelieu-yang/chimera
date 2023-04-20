@@ -1,7 +1,6 @@
 package ioKit
 
 import (
-	"github.com/richelieu42/chimera/v2/src/assertKit"
 	"github.com/richelieu42/chimera/v2/src/core/errorKit"
 	"github.com/richelieu42/chimera/v2/src/core/file/fileKit"
 	"github.com/richelieu42/chimera/v2/src/core/strKit"
@@ -94,7 +93,7 @@ func NewLumberjackWriteCloser(options ...LumberjackOption) (io.WriteCloser, erro
 	if err := fileKit.MkParentDirs(opts.filePath); err != nil {
 		return nil, err
 	}
-	if err := assertKit.NotExistOrIsFile(opts.filePath); err != nil {
+	if err := fileKit.AssertNotExistOrIsFile(opts.filePath); err != nil {
 		return nil, err
 	}
 
@@ -141,7 +140,7 @@ func NewLumberjackWriteCloser1(filePath string, maxSize, maxBackups, maxAge int,
 	if err := fileKit.MkParentDirs(filePath); err != nil {
 		return nil, err
 	}
-	if err := assertKit.NotExistOrIsFile(filePath); err != nil {
+	if err := fileKit.AssertNotExistOrIsFile(filePath); err != nil {
 		return nil, err
 	}
 
