@@ -1,71 +1,42 @@
 package httpClientKit
 
 import (
+	"crypto/tls"
 	"github.com/richelieu42/chimera/v2/src/assertKit"
-	"github.com/richelieu42/chimera/v2/src/core/mapKit"
-	"github.com/richelieu42/chimera/v2/src/core/strKit"
 	"github.com/richelieu42/chimera/v2/src/urlKit"
 	"io"
 	"net/http"
 )
 
-func Get(url string, options ...Option) (code int, data []byte, err error) {
+func Get(url string, options ...Option) (int, []byte, error) {
 	opts := loadOptions(options...)
 
-}
-
-// Get1 发送GET请求（可用于下载文件等场景）
-/*
-@param params 	请求参数，可以为nil
-@return 		http状态码 + 响应内容 + error
-
-参考: golang 将图片生成Base64 https://blog.csdn.net/weixin_40292098/article/details/126029489
-*/
-func Get1(url string, params map[string]string) (int, []byte, error) {
-	// 参数加到url上
-	callback := func(str string) string {
-		return urlKit.EncodeURIComponent(str)
+	if err := assertKit.AssertHttpUrl(url); err != nil {
+		return 0, nil, err
 	}
-	paramStr := mapKit.JoinSS(params, "&", "=", callback, callback)
-	if strKit.IsNotEmpty(paramStr) {
-		count := strKit.Count(url, "?")
-		switch count {
-		case 0:
-			url += "?" + paramStr
-		case 1:
-			if strKit.EndWith(url, "?") {
-				url += paramStr
-			} else {
-				url += "&" + paramStr
-			}
-		default:
-			url += "&" + paramStr
-		}
+	url = urlKit.AttachQueryParamsToUrl(url, opts.urlParams)
+
+	client := &http.Client{
+		Timeout: opts.timeout,
+		Transport: &http.Transport{
+			TLSClientConfig: &tls.Config{
+				InsecureSkipVerify: !opts.safe,
+			},
+		},
 	}
-
-	// 发请求
-	return get1(url)
-}
-
-func get1(url string) (statusCode int, data []byte, err error) {
-	if err = assertKit.NotBlank(url, "url"); err != nil {
-		return
-	}
-
-	client := newClient()
 	request, err := http.NewRequest("GET", url, nil)
 	if err != nil {
-		return
+		return 0, nil, err
 	}
+
 	resp, err := client.Do(request)
 	if err != nil {
-		return
+		return 0, nil, err
 	}
 	defer resp.Body.Close()
-	data, err = io.ReadAll(resp.Body)
+	data, err := io.ReadAll(resp.Body)
 	if err != nil {
-		return
+		return 0, nil, err
 	}
-	statusCode = resp.StatusCode
-	return
+	return resp.StatusCode, data, nil
 }
