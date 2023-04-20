@@ -31,6 +31,7 @@ func Post(url string, options ...Option) (int, []byte, error) {
 		return 0, nil, err
 	}
 	req.Header.Add("Content-Type", "application/x-www-form-urlencoded;charset=utf-8")
+
 	resp, err := client.Do(req)
 	if err != nil {
 		return 0, nil, err
