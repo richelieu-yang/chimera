@@ -28,16 +28,18 @@ func Get(url string, options ...Option) (int, []byte, error) {
 func GetForResponse(url string, options ...Option) (*http.Response, error) {
 	opts := loadOptions(options...)
 
+	// req
 	if err := assertKit.AssertHttpUrl(url); err != nil {
 		return nil, err
 	}
 	url = urlKit.AttachQueryParamsToUrl(url, opts.urlParams)
-
-	client := newHttpClient(opts.timeout, opts.safe)
 	req, err := http.NewRequest("GET", url, nil)
 	if err != nil {
 		return nil, err
 	}
+
+	// client
+	client := newHttpClient(opts.timeout, opts.safe)
 
 	return send(client, req)
 }
