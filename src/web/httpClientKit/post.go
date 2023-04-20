@@ -8,18 +8,6 @@ import (
 	"strings"
 )
 
-// SimplePost 额外处理了http状态码
-func SimplePost(url string, params map[string]string) ([]byte, error) {
-	statusCode, data, err := Post(url, params)
-	if err != nil {
-		return nil, err
-	}
-	if err = AssertHttpStatusCodeSuccessful(statusCode); err != nil {
-		return nil, err
-	}
-	return data, nil
-}
-
 // Post
 /*
 @param params 	请求参数，可以为nil

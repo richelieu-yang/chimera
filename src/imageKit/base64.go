@@ -34,7 +34,7 @@ func GetImageBase64(imagePath string) (string, error) {
 */
 func GetWebImageBase64(url string) (string, error) {
 	// 先获取网络图片的内容
-	imageData, err := httpClientKit.SimpleGet(url, nil)
+	_, imageData, err := httpClientKit.Get(url, nil)
 	if err != nil {
 		return "", err
 	}

@@ -8,18 +8,6 @@ import (
 	"net/http"
 )
 
-// SimpleGet 额外处理了http状态码
-func SimpleGet(url string, params map[string]string) ([]byte, error) {
-	statusCode, data, err := Get(url, params)
-	if err != nil {
-		return nil, err
-	}
-	if err = AssertHttpStatusCodeSuccessful(statusCode); err != nil {
-		return nil, err
-	}
-	return data, nil
-}
-
 // Get 发送GET请求（可用于下载文件等场景）
 /*
 @param params 	请求参数，可以为nil
