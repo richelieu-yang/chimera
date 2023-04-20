@@ -35,11 +35,11 @@ func PostForResponse(url string, options ...Option) (*http.Response, error) {
 	}
 	url = urlKit.AttachQueryParamsToUrl(url, opts.urlParams)
 
-	// body
-	body := strings.NewReader(urlKit.ToBodyString(opts.postParams))
+	// payload
+	payload := strings.NewReader(urlKit.ToBodyString(opts.postParams))
 
 	// req
-	req, err := http.NewRequest("POST", url, body)
+	req, err := http.NewRequest("POST", url, payload)
 	if err != nil {
 		return nil, err
 	}

@@ -39,9 +39,10 @@ func UploadForResponse(url string, fileParams map[string]string, options ...Opti
 	}
 	url = urlKit.AttachQueryParamsToUrl(url, opts.urlParams)
 
-	// body
+	// payload
 	payload := &bytes.Buffer{}
 	writer := multipart.NewWriter(payload)
+	// 可能会多次关闭 multipart.Writer实例
 	defer writer.Close()
 	for k, v := range opts.postParams {
 		// PS: 此处无需对v进行编码操作
