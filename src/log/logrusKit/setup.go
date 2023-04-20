@@ -29,7 +29,8 @@ func SetUp(config *Config) (err error) {
 
 		logrus.SetFormatter(DefaultTextFormatter)
 		logrus.SetReportCaller(true)
-		level, err := ParseLevel(config.Level)
+		var level logrus.Level
+		level, err = ParseLevel(config.Level)
 		if err != nil {
 			return
 		}

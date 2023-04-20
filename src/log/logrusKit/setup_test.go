@@ -5,9 +5,9 @@ import (
 	"testing"
 )
 
-func TestSetUp(t *testing.T) {
-	SetUp(&Config{
-		Level:      "",
+func TestMustSetUp(t *testing.T) {
+	MustSetUp(&Config{
+		Level:      "debug",
 		PrintBasic: true,
 	})
 
