@@ -1,46 +1,92 @@
 package httpClientKit
 
-//// UploadFile 上传单个文件
-///*
-//TODO: 待验证及测试，以及和上面的方法一起抽出通用代码.
-//
-//@param params 可以为nil
-//*/
-//func UploadFile(url string, params map[string]string, fileKey, filePath string) (statusCode int, data []byte, err error) {
-//	if err = fileKit.ExistAndIsFile(filePath); err != nil {
-//		return
-//	}
-//
-//	// fileKey默认值: "file"
-//	fileKey = strKit.EmptyToDefault(fileKey, "file")
-//
-//	// body
-//	body := &bytes.Buffer{}
-//	writer := multipart.NewWriter(body)
-//	for k, v := range params {
-//		// 此处无需对k、v进行编码处理
-//		err = writer.WriteField(k, v)
-//		if err != nil {
-//			return
-//		}
-//	}
-//	file, err := os.Open(filePath)
-//	if err != nil {
-//		return
-//	}
-//	defer file.Close()
-//	formPart, err := writer.CreateFormFile(fileKey, fileKit.GetName(filePath))
-//	if err != nil {
-//		return
-//	}
-//	_, err = io.Copy(formPart, file)
-//	if err != nil {
-//		return
-//	}
-//	err = writer.Close()
-//	if err != nil {
-//		return
-//	}
-//
-//	return post(url, body, writer.FormDataContentType())
-//}
+import (
+	"bytes"
+	"github.com/richelieu42/chimera/v2/src/assertKit"
+	"github.com/richelieu42/chimera/v2/src/core/file/fileKit"
+	"github.com/richelieu42/chimera/v2/src/urlKit"
+	"io"
+	"mime/multipart"
+	"net/http"
+	"os"
+)
+
+func Upload(url string, fileParams map[string]string, options ...Option) (int, []byte, error) {
+	resp, err := UploadForResponse(url, fileParams, options...)
+	if err != nil {
+		return 0, nil, err
+	}
+	defer resp.Body.Close()
+
+	data, err := io.ReadAll(resp.Body)
+	if err != nil {
+		return 0, nil, err
+	}
+	return resp.StatusCode, data, nil
+}
+
+// UploadForResponse
+/*
+@param fileParams 	(1)可以为nil或空;
+					(2)key: 键, value: 要上传文件的路径.
+*/
+func UploadForResponse(url string, fileParams map[string]string, options ...Option) (*http.Response, error) {
+	opts := loadOptions(options...)
+
+	// url
+	if err := assertKit.AssertHttpUrl(url); err != nil {
+		return nil, err
+	}
+	url = urlKit.AttachQueryParamsToUrl(url, opts.urlParams)
+
+	// body
+	payload := &bytes.Buffer{}
+	writer := multipart.NewWriter(payload)
+	defer writer.Close()
+	for k, v := range opts.postParams {
+		// PS: 此处无需对v进行编码操作
+		if err := writer.WriteField(k, v); err != nil {
+			return nil, err
+		}
+	}
+	for field, path := range fileParams {
+		if err := fileKit.AssertExistAndIsFile(path); err != nil {
+			return nil, err
+		}
+		err := func() error {
+			file, err := os.Open(path)
+			if err != nil {
+				return err
+			}
+			defer file.Close()
+			part, err := writer.CreateFormFile(field, fileKit.GetName(path))
+			if err != nil {
+				return err
+			}
+			_, err = io.Copy(part, file)
+			if err != nil {
+				return err
+			}
+			return nil
+		}()
+		if err != nil {
+			return nil, err
+		}
+	}
+	if err := writer.Close(); err != nil {
+		return nil, err
+	}
+
+	// req
+	req, err := http.NewRequest("POST", url, payload)
+	if err != nil {
+		return nil, err
+	}
+	req.Header.Add("Content-Type", writer.FormDataContentType())
+	req.Header.Add("Content-Type", "charset=utf-8")
+
+	// client
+	client := newHttpClient(opts.timeout, opts.safe)
+
+	return send(client, req)
+}

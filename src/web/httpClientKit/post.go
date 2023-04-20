@@ -29,19 +29,22 @@ func Post(url string, options ...Option) (int, []byte, error) {
 func PostForResponse(url string, options ...Option) (*http.Response, error) {
 	opts := loadOptions(options...)
 
-	// body
-	body := strings.NewReader(urlKit.ToBodyString(opts.postParams))
-
-	// req
+	// url
 	if err := assertKit.AssertHttpUrl(url); err != nil {
 		return nil, err
 	}
 	url = urlKit.AttachQueryParamsToUrl(url, opts.urlParams)
+
+	// body
+	body := strings.NewReader(urlKit.ToBodyString(opts.postParams))
+
+	// req
 	req, err := http.NewRequest("POST", url, body)
 	if err != nil {
 		return nil, err
 	}
-	req.Header.Add("Content-Type", "application/x-www-form-urlencoded;charset=utf-8")
+	req.Header.Add("Content-Type", "application/x-www-form-urlencoded")
+	req.Header.Add("Content-Type", "charset=utf-8")
 
 	// client
 	client := newHttpClient(opts.timeout, opts.safe)

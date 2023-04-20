@@ -18,13 +18,14 @@ func main() {
 
 	payload := &bytes.Buffer{}
 	writer := multipart.NewWriter(payload)
-	_ = writer.WriteField("1", "2")
-	_ = writer.WriteField("2", "4")
+	_ = writer.WriteField("1", "test")
+	_ = writer.WriteField("2", "测试")
 	_ = writer.WriteField("3", "")
 	_ = writer.WriteField("4", "")
 	file, errFile5 := os.Open("/Users/richelieu/Documents/ino/images/可达鸭.jpg")
 	defer file.Close()
-	part5, errFile5 := writer.CreateFormFile("f1", filepath.Base("/Users/richelieu/Documents/ino/images/可达鸭.jpg"))
+	part5,
+		errFile5 := writer.CreateFormFile("f1", filepath.Base("/Users/richelieu/Documents/ino/images/可达鸭.jpg"))
 	_, errFile5 = io.Copy(part5, file)
 	if errFile5 != nil {
 		fmt.Println(errFile5)
@@ -32,7 +33,8 @@ func main() {
 	}
 	file, errFile6 := os.Open("/Users/richelieu/Documents/ino/images/盟主.png")
 	defer file.Close()
-	part6, errFile6 := writer.CreateFormFile("f2", filepath.Base("/Users/richelieu/Documents/ino/images/盟主.png"))
+	part6,
+		errFile6 := writer.CreateFormFile("f2", filepath.Base("/Users/richelieu/Documents/ino/images/盟主.png"))
 	_, errFile6 = io.Copy(part6, file)
 	if errFile6 != nil {
 		fmt.Println(errFile6)
