@@ -45,7 +45,7 @@ require (
 	github.com/zeromicro/go-zero v1.5.1
 	github.com/zeromicro/zero-contrib/logx/logrusx v0.0.0-20230417153749-41a096d45fc8
 	go.uber.org/zap v1.24.0
-	golang.org/x/exp v0.0.0-20230418202329-0354be287a23
+	golang.org/x/exp v0.0.0-20230419192730-864b3d6c5c2c
 	golang.org/x/text v0.9.0
 	google.golang.org/grpc v1.54.0
 	gopkg.in/natefinch/lumberjack.v2 v2.2.1
