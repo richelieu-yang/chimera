@@ -57,7 +57,7 @@ func attachMiddlewares(engine *gin.Engine, config *MiddlewareConfig, recoveryMid
 		}
 
 		// bodyLimit
-		// TODO: 如果涉及"请求转发（代理）"，不要配置此属性，否则会导致: 有时成功，有时失败如果
+		// TODO: 如果涉及"请求转发（代理）"，转发方不要全局配置此属性，否则会导致: 有时成功，有时失败
 		if config.BodyLimit > 0 {
 			engine.Use(func(ctx *gin.Context) {
 				if ctx.Request.Body != nil {
