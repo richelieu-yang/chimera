@@ -1,18 +1,21 @@
 package main
 
 import (
+	"fmt"
 	"io"
-	"net/http"
+	"strings"
 )
 
 func main() {
-
-	http.Response{}
-
-	http.MaxBytesReader()
-
-	io.LimitedReader{
-		R: nil,
-		N: 0,
+	reader := io.LimitedReader{
+		R: strings.NewReader("0123456789abcdef"),
+		N: 6,
 	}
+	s := make([]byte, 3)
+	fmt.Println(reader.Read(s))
+	fmt.Println(string(s))
+	fmt.Println(reader.Read(s))
+	fmt.Println(string(s))
+	fmt.Println(reader.Read(s))
+	fmt.Println(string(s))
 }

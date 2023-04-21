@@ -59,15 +59,16 @@ func attachMiddlewares(engine *gin.Engine, config *MiddlewareConfig, recoveryMid
 		// bodyLimit
 		// TODO: 因为http.MaxBytesReader()，如果涉及"请求转发（代理）"，转发方不要全局配置此属性，否则会导致: 有时成功，有时代理失败（error），有时http客户端失败
 		if config.BodyLimit > 0 {
-			limit := config.BodyLimit << 20
+			limit := config.BodyLimit<<20 + 256
 			engine.Use(func(ctx *gin.Context) {
-				// 参考了echo中的 middleware.BodyLimit()
-				if ctx.Request.ContentLength > limit {
-					ctx.AbortWithStatus(http.StatusRequestEntityTooLarge)
-					return
-				}
+				//// 参考了echo中的 middleware.BodyLimit()
+				//if ctx.Request.ContentLength > limit {
+				//	ctx.AbortWithStatus(http.StatusRequestEntityTooLarge)
+				//	return
+				//}
+
 				if ctx.Request.Body != nil {
-					ctx.Request.Body = http.MaxBytesReader(ctx.Writer, ctx.Request.Body, config.BodyLimit<<20+256)
+					ctx.Request.Body = http.MaxBytesReader(ctx.Writer, ctx.Request.Body, limit)
 				}
 			})
 		}
