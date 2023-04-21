@@ -61,12 +61,15 @@ func attachMiddlewares(engine *gin.Engine, config *MiddlewareConfig, recoveryMid
 		if config.BodyLimit > 0 {
 			limit := config.BodyLimit<<20 + 256
 			engine.Use(func(ctx *gin.Context) {
-				//// 参考了echo中的 middleware.BodyLimit()
-				//if ctx.Request.ContentLength > limit {
-				//	ctx.AbortWithStatus(http.StatusRequestEntityTooLarge)
-				//	return
-				//}
+				// 参考了echo中的 middleware.BodyLimit()
 
+				// (1) Based on content length
+				if ctx.Request.ContentLength > limit {
+					ctx.AbortWithStatus(http.StatusRequestEntityTooLarge)
+					return
+				}
+
+				// (2) Based on content read
 				if ctx.Request.Body != nil {
 					ctx.Request.Body = http.MaxBytesReader(ctx.Writer, ctx.Request.Body, limit)
 				}
