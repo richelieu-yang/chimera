@@ -15,7 +15,8 @@ gin:
     # 是否开启gzip压缩（默认: false）
     gzip: false
     # 对request body的大小限制（整数; 单位: MB; 默认-1; <=0: 不做限制; >0: 进行限制）
-    bodyLimit: 46
+    # !!!: 如果涉及"请求转发（代理）"，不要配置此属性，否则会导致: 有时成功，有时失败
+#    bodyLimit: -1
     xFrameOptions:
 #    cors:
 #      # 支持的Origin(s)，即响应头中的Access-Control-Allow-Origin
@@ -40,13 +41,13 @@ gin:
 #        serverNames:
 ##          - 127.0.0.1
 #          - "*.yozo.com"
-  ssl:
-    # 证书文件
-    certFile: /Users/richelieu/GolandProjects/chimera/chimera-lib/ssl.pem
-    # key文件
-    keyFile: /Users/richelieu/GolandProjects/chimera/chimera-lib/ssl.key
-    # https端口号（默认-1）
-    port: 443
+#  ssl:
+#    # 证书文件
+#    certFile: /Users/richelieu/GolandProjects/chimera/chimera-lib/ssl.pem
+#    # key文件
+#    keyFile: /Users/richelieu/GolandProjects/chimera/chimera-lib/ssl.key
+#    # https端口号（默认-1）
+#    port: 443
 
 redis:
   userName:

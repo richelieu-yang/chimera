@@ -5,6 +5,8 @@ import (
 	"github.com/richelieu42/chimera/v2/src/confKit"
 	"github.com/richelieu42/chimera/v2/src/dataSizeKit"
 	"github.com/richelieu42/chimera/v2/src/log/logrusKit"
+	"github.com/richelieu42/chimera/v2/src/web/httpKit"
+	"net"
 	"net/http"
 	"testing"
 )
@@ -20,7 +22,14 @@ func TestMustSetUp(t *testing.T) {
 	confKit.MustLoad("/Users/richelieu/GolandProjects/chimera/chimera-lib/config.yaml", c)
 	MustSetUp(c.Gin, nil, func(engine *gin.Engine) error {
 		engine.Any("/test", func(ctx *gin.Context) {
-			ctx.String(http.StatusOK, ctx.ClientIP())
+			if err := httpKit.Proxy(ctx.Writer, ctx.Request, "http", "127.0.0.1:8001"); err != nil {
+				if ee, ok := err.(*net.OpError); ok {
+					eee := ee.Unwrap()
+					ctx.String(http.StatusInternalServerError, eee.Error())
+				} else {
+					ctx.String(http.StatusInternalServerError, err.Error())
+				}
+			}
 		})
 
 		engine.Any("/upload", func(ctx *gin.Context) {
