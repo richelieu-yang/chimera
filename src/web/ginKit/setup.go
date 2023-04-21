@@ -75,7 +75,7 @@ func setUp(config *Config, recoveryMiddleware gin.HandlerFunc, businessLogic fun
 	if config.Port != -1 {
 		go func() {
 			if err := engine.Run(netKit.JoinHostnameAndPort(config.Host, config.Port)); err != nil {
-				logrus.Fatal(engine)
+				logrus.Fatal(err)
 			}
 		}()
 	}
