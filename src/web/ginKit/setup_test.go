@@ -25,7 +25,8 @@ func TestMustSetUp(t *testing.T) {
 			if err := httpKit.Proxy(ctx.Writer, ctx.Request, "http", "127.0.0.1:8001"); err != nil {
 				if ee, ok := err.(*net.OpError); ok {
 					eee := ee.Unwrap()
-					ctx.String(http.StatusInternalServerError, eee.Error())
+					eee = eee
+					ctx.String(http.StatusInternalServerError, err.Error())
 				} else {
 					ctx.String(http.StatusInternalServerError, err.Error())
 				}
