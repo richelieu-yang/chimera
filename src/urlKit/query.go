@@ -48,3 +48,15 @@ func AttachQueryParamsToUrl(url string, queryParams map[string]string) string {
 	}
 	return url + "&" + queryStr
 }
+
+// AttachQueryParamsToRawQuery
+/*
+@param rawQuery 可能为""
+*/
+func AttachQueryParamsToRawQuery(rawQuery string, queryParams map[string]string) string {
+	tmp := ToQueryString(queryParams)
+	if strKit.IsEmpty(rawQuery) {
+		return tmp
+	}
+	return rawQuery + "&" + tmp
+}
