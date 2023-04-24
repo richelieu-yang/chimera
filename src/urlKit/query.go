@@ -31,7 +31,7 @@ func ToQueryString(queryParams map[string]string) string {
 
 // AttachQueryParamsToUrl
 /*
-@param url 也可以是: Request.URL.RawQuery
+@param url 不能是Request.URL.RawQuery
 */
 func AttachQueryParamsToUrl(url string, queryParams map[string]string) string {
 	queryStr := ToQueryString(queryParams)
