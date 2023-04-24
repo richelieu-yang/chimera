@@ -1,17 +1,14 @@
 package main
 
 import (
-	"github.com/gin-gonic/gin"
-	"github.com/sirupsen/logrus"
-	"net/http"
+	"fmt"
+	"github.com/richelieu42/chimera/v2/src/urlKit"
 )
 
 func main() {
-	engine := gin.New()
-	engine.Any("/test", func(ctx *gin.Context) {
-		ctx.String(http.StatusOK, ":8001")
-	})
-	if err := engine.Run(":8001"); err != nil {
-		logrus.Fatal(err)
+	m := map[string]string{
+		"a": "test",
+		"b": "测试",
 	}
+	fmt.Println(urlKit.ToQueryString(m)) // a=test&b=%E6%B5%8B%E8%AF%95
 }

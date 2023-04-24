@@ -11,6 +11,12 @@ import (
 
 e.g.
 	(nil) => ""
+e.g.1
+	m := map[string]string{
+		"a": "test",
+		"b": "测试",
+	}
+	fmt.Println(urlKit.ToQueryString(m)) // a=test&b=%E6%B5%8B%E8%AF%95
 */
 func ToQueryString(queryParams map[string]string) string {
 	var str string
