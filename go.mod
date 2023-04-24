@@ -3,6 +3,8 @@ module github.com/richelieu42/chimera/v2
 go 1.20
 
 require (
+	github.com/SkyAPM/go2sky v1.5.0
+	github.com/SkyAPM/go2sky-plugins/gin/v3 v3.0.0-20230423094324-2c881c0d8e6a
 	github.com/apache/pulsar-client-go v0.10.0
 	github.com/apache/rocketmq-clients/golang v0.0.0-20230321063829-41bfbcf6130d
 	github.com/dablelv/go-huge-util v0.0.41
@@ -158,4 +160,5 @@ require (
 	gopkg.in/ini.v1 v1.67.0 // indirect
 	gopkg.in/yaml.v2 v2.4.0 // indirect
 	gopkg.in/yaml.v3 v3.0.1 // indirect
+	skywalking.apache.org/repo/goapi v0.0.0-20220401015832-2c9eee9481eb // indirect
 )
