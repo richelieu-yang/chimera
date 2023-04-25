@@ -38,7 +38,7 @@ type (
 	}
 )
 
-func (config *Config) Check() error {
+func (config *Config) Verify() error {
 	if config == nil {
 		return errorKit.Simple("config == nil")
 	}

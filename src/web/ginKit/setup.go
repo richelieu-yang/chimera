@@ -23,7 +23,7 @@ PS: 正常执行的情况下，此方法会阻塞调用的协程.
 @param businessLogic 		可以为nil；业务逻辑，可以在其中进行 路由绑定 等操作...
 */
 func setUp(config *Config, recoveryMiddleware gin.HandlerFunc, businessLogic func(engine *gin.Engine) error) error {
-	if err := config.Check(); err != nil {
+	if err := config.Verify(); err != nil {
 		return err
 	}
 
