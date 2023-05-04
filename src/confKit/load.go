@@ -27,7 +27,6 @@ e.g.1	组合多个tag
 	Port     int    `json:"port,default=-1,range=[-1:65535]"`
 */
 func MustLoad(path string, ptr any, opts ...conf.Option) {
-
 	if err := Load(path, ptr, opts...); err != nil {
 		logrus.Fatal(err)
 	}
