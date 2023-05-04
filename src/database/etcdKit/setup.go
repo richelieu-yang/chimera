@@ -1,6 +1,7 @@
 package etcdKit
 
 import (
+	"context"
 	"github.com/richelieu42/chimera/v2/src/core/errorKit"
 	"github.com/sirupsen/logrus"
 	clientv3 "go.etcd.io/etcd/client/v3"
@@ -13,6 +14,7 @@ var setupOnce sync.Once
 
 func MustSetUp(config *Config) {
 	if err := setUp(config); err != nil {
+		logrus.Info(err == context.DeadlineExceeded)
 		logrus.Fatal(err)
 	}
 }
@@ -22,7 +24,7 @@ func MustSetUp(config *Config) {
 TODO: 可以参考 go-zero 中 registry.go 的 internal.DialClient.
 
 PS:
-(1) 如果 Endpoints 无效的话，会返回error.
+(1) 如果 Endpoints 无效的话，会返回error(context.DeadlineExceeded).
 */
 func setUp(config *Config) (err error) {
 	if config == nil {
