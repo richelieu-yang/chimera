@@ -2,7 +2,6 @@ package etcdKit
 
 import (
 	"context"
-	"github.com/richelieu42/chimera/v2/src/core/errorKit"
 	"github.com/sirupsen/logrus"
 	clientv3 "go.etcd.io/etcd/client/v3"
 	"sync"
@@ -27,9 +26,8 @@ PS:
 (1) 如果 Endpoints 无效，会返回error(context.DeadlineExceeded).
 */
 func setUp(config *Config) (err error) {
-	if config == nil {
-		err = errorKit.Simple("config == nil")
-		return
+	if err := config.Check(); err != nil {
+		return err
 	}
 
 	setupOnce.Do(func() {
