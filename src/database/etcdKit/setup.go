@@ -24,7 +24,7 @@ func MustSetUp(config *Config) {
 TODO: 可以参考 go-zero 中 registry.go 的 internal.DialClient.
 
 PS:
-(1) 如果 Endpoints 无效的话，会返回error(context.DeadlineExceeded).
+(1) 如果 Endpoints 无效，会返回error(context.DeadlineExceeded).
 */
 func setUp(config *Config) (err error) {
 	if config == nil {
