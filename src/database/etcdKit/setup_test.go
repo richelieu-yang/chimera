@@ -2,7 +2,6 @@ package etcdKit
 
 import (
 	"context"
-	"fmt"
 	"github.com/richelieu42/chimera/v2/src/confKit"
 	"github.com/richelieu42/chimera/v2/src/core/osKit"
 	"github.com/sirupsen/logrus"
@@ -32,5 +31,5 @@ func TestMustSetUp(t *testing.T) {
 	if err != nil {
 		logrus.Fatal(err)
 	}
-	fmt.Println(resp)
+	logrus.Info(resp.Header.GetRevision())
 }
