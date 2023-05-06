@@ -23,11 +23,11 @@ func TestMustSetUp(t *testing.T) {
 	confKit.MustLoad(path, c)
 	MustSetUp(c.Etcd)
 
-	client, err := GetClient()
+	kv, err := GetKV()
 	if err != nil {
 		logrus.Fatal(err)
 	}
-	resp, err := client.Put(context.TODO(), "k", "v")
+	resp, err := kv.Put(context.TODO(), "k", "v")
 	if err != nil {
 		logrus.Fatal(err)
 	}

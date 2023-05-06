@@ -7,7 +7,7 @@ import (
 	"time"
 )
 
-var client *clientv3.Client
+var kv clientv3.KV
 var setupOnce sync.Once
 
 func MustSetUp(config *Config) {
@@ -29,6 +29,8 @@ func setUp(config *Config) (err error) {
 	}
 
 	setupOnce.Do(func() {
+		var client *clientv3.Client
+
 		v3Config := clientv3.Config{
 			Endpoints: config.Endpoints,
 
@@ -40,13 +42,17 @@ func setUp(config *Config) (err error) {
 			PermitWithoutStream:  true,
 		}
 		client, err = clientv3.New(v3Config)
+		if err == nil {
+			// 实例化一个用于操作etcd的KV
+			kv = clientv3.NewKV(client)
+		}
 	})
 	return
 }
 
-func GetClient() (*clientv3.Client, error) {
-	if client == nil {
+func GetKV() (clientv3.KV, error) {
+	if kv == nil {
 		return nil, NotSetupError
 	}
-	return client, nil
+	return kv, nil
 }
