@@ -1,15 +1,18 @@
 package etcdKit
 
 import (
+	"context"
+	"fmt"
 	"github.com/richelieu42/chimera/v2/src/confKit"
 	"github.com/richelieu42/chimera/v2/src/core/osKit"
+	"github.com/sirupsen/logrus"
 	"testing"
 )
 
 func TestMustSetUp(t *testing.T) {
 	var path string
 	if osKit.IsWindows() {
-		path = ""
+		path = "D:\\GolandProjects\\chimera\\chimera-lib\\config.yaml"
 	} else {
 		path = "/Users/richelieu/GolandProjects/chimera/chimera-lib/config.yaml"
 	}
@@ -22,5 +25,12 @@ func TestMustSetUp(t *testing.T) {
 	MustSetUp(c.Etcd)
 
 	client, err := GetClient()
-	client.Put()
+	if err != nil {
+		logrus.Fatal(err)
+	}
+	resp, err := client.Put(context.TODO(), "k", "v")
+	if err != nil {
+		logrus.Fatal(err)
+	}
+	fmt.Println(resp)
 }

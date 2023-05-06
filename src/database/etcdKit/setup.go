@@ -1,7 +1,6 @@
 package etcdKit
 
 import (
-	"context"
 	"github.com/sirupsen/logrus"
 	clientv3 "go.etcd.io/etcd/client/v3"
 	"sync"
@@ -13,7 +12,6 @@ var setupOnce sync.Once
 
 func MustSetUp(config *Config) {
 	if err := setUp(config); err != nil {
-		logrus.Info(err == context.DeadlineExceeded)
 		logrus.Fatal(err)
 	}
 }
