@@ -5,6 +5,7 @@ import (
 	"github.com/richelieu42/chimera/v2/src/confKit"
 	"github.com/richelieu42/chimera/v2/src/core/osKit"
 	"github.com/sirupsen/logrus"
+	clientv3 "go.etcd.io/etcd/client/v3"
 	"testing"
 )
 
@@ -23,10 +24,12 @@ func TestMustSetUp(t *testing.T) {
 	confKit.MustLoad(path, c)
 	MustSetUp(c.Etcd)
 
-	kv, err := GetKV()
+	client, err := GetClient()
 	if err != nil {
 		logrus.Fatal(err)
 	}
+	kv := clientv3.NewKV(client)
+
 	resp, err := kv.Put(context.TODO(), "k", "v")
 	if err != nil {
 		logrus.Fatal(err)
