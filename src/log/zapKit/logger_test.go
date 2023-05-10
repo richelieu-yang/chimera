@@ -12,9 +12,10 @@ func TestNewLogger(t *testing.T) {
 	writer, err := ioKit.NewLumberjackWriteCloser(ioKit.WithFilePath("aaa.log"))
 	assert.Nil(t, err)
 
-	logger, err := NewLogger(writer, zap.DebugLevel)
+	logger, err := NewLogger(writer, zap.InfoLevel)
 	assert.Nil(t, err)
 
+	// 由于日志级别，下一行不会输出
 	logger.Debug("Debug")
 	logger.Info("Info")
 	logger.Warn("Warn")
