@@ -4,6 +4,7 @@ import (
 	"github.com/richelieu42/chimera/v2/src/core/file/fileKit"
 	"go.uber.org/zap"
 	"go.uber.org/zap/zapcore"
+	"gopkg.in/natefinch/lumberjack.v2"
 )
 
 // NewLogger
@@ -19,7 +20,6 @@ func NewLogger(logPath string, maxFileSize, maxFileIndex int, compress bool, lev
 	}
 
 	encoder := getEncoder()
-
 	writeSyncer := getLogWriter(logPath, maxFileSize, maxFileIndex, compress)
 
 	atomicLevel := zap.NewAtomicLevel()
