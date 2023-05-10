@@ -93,6 +93,11 @@ pulsar:
   verify:
     topic: test
     print: true
+
 etcd:
   endpoints:
     - 127.0.0.1:2379
+  # etcd客户端的日志输出（默认: 输出到控制台）
+  logPath: etcd-client.log
+
+
