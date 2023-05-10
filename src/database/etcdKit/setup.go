@@ -1,8 +1,13 @@
 package etcdKit
 
 import (
+	"github.com/richelieu42/chimera/v2/src/core/ioKit"
+	"github.com/richelieu42/chimera/v2/src/core/strKit"
+	"github.com/richelieu42/chimera/v2/src/log/zapKit"
 	"github.com/sirupsen/logrus"
 	clientv3 "go.etcd.io/etcd/client/v3"
+	"go.uber.org/zap"
+	"io"
 	"sync"
 	"time"
 )
@@ -29,8 +34,23 @@ func setUp(config *Config) (err error) {
 	}
 
 	setupOnce.Do(func() {
+		/* logger */
+		var logger *zap.Logger
+		if strKit.IsNotEmpty(config.LogPath) {
+			var writer io.Writer
+			writer, err = ioKit.NewLumberjackWriteCloser(ioKit.WithFilePath(config.LogPath))
+			if err != nil {
+				return
+			}
+			logger, err = zapKit.NewLogger(writer, zap.InfoLevel)
+			if err != nil {
+				return
+			}
+		}
+
 		v3Config := clientv3.Config{
 			Endpoints: config.Endpoints,
+			Logger:    logger,
 
 			AutoSyncInterval:     time.Minute,
 			DialTimeout:          time.Second * 5,
