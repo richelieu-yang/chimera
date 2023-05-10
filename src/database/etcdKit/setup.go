@@ -34,7 +34,7 @@ func setUp(config *Config) (err error) {
 	}
 
 	setupOnce.Do(func() {
-		/* logger */
+		/* etcd客户端日志输出 */
 		var logger *zap.Logger
 		if strKit.IsNotEmpty(config.LogPath) {
 			var writer io.Writer
