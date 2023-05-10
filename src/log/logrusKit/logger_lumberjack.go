@@ -32,6 +32,6 @@ func NewLumberjackLogger(lumberjackOptions []ioKit.LumberjackOption, options ...
 		return nil, err
 	}
 
-	options = append(options, WithOutput(output))
+	options = append(options, WithWriter(output))
 	return NewLogger(options...), nil
 }

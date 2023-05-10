@@ -11,7 +11,7 @@ type (
 		formatter    logrus.Formatter
 		reportCaller bool
 		level        logrus.Level
-		output       io.Writer
+		writer       io.Writer
 	}
 
 	LoggerOption func(opts *loggerOptions)
@@ -35,9 +35,9 @@ func WithLevel(level logrus.Level) LoggerOption {
 	}
 }
 
-func WithOutput(output io.Writer) LoggerOption {
+func WithWriter(writer io.Writer) LoggerOption {
 	return func(opts *loggerOptions) {
-		opts.output = output
+		opts.writer = writer
 	}
 }
 
@@ -46,13 +46,13 @@ func loadOptions(options ...LoggerOption) *loggerOptions {
 		formatter:    nil,
 		reportCaller: true,
 		level:        logrus.DebugLevel,
-		output:       nil,
+		writer:       nil,
 	}
 	for _, option := range options {
 		option(opts)
 	}
 
-	/* 容错，以防调用方瞎搞 */
+	/* 容错，放在下面以防调用方瞎搞 */
 	if opts.formatter == nil {
 		opts.formatter = DefaultTextFormatter
 	}
@@ -71,8 +71,8 @@ func NewLogger(options ...LoggerOption) *logrus.Logger {
 	logger.SetFormatter(opts.formatter)
 	logger.SetReportCaller(opts.reportCaller)
 	logger.SetLevel(opts.level)
-	if opts.output != nil {
-		logger.SetOutput(opts.output)
+	if opts.writer != nil {
+		logger.SetOutput(opts.writer)
 	}
 	return logger
 }
