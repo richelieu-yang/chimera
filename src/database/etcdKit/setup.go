@@ -29,8 +29,8 @@ PS:
 (1) 如果 Endpoints 无效，会返回error(context.DeadlineExceeded).
 */
 func setUp(config *Config) (err error) {
-	if err := config.Check(); err != nil {
-		return err
+	if err = config.Check(); err != nil {
+		return
 	}
 
 	setupOnce.Do(func() {
