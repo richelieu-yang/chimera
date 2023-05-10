@@ -62,7 +62,15 @@ func loadOptions(options ...LoggerOption) *loggerOptions {
 
 // NewLogger
 /*
-@param options 可以什么都不配置
+PS:
+(1) 如果希望 输出到文件 且 rotatable，可以使用 WithWriter()，详见下例.
+
+@param options 可以什么都不配置（此时输出到控制台）
+
+e.g.
+	writer, err := ioKit.NewLumberjackWriteCloser(ioKit.WithFilePath(path))
+	// process err
+	logger := NewLogger(WithWriter(writer))
 */
 func NewLogger(options ...LoggerOption) *logrus.Logger {
 	opts := loadOptions(options...)
