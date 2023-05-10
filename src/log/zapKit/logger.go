@@ -13,7 +13,6 @@ import (
 @param level 	e.g. zap.InfoLevel
 */
 func NewLogger(writer io.Writer, level zapcore.Level) (*zap.Logger, error) {
-
 	if writer == nil {
 		return nil, errorKit.Simple("writer == nil")
 	}
