@@ -136,6 +136,11 @@ go语言的日志滚动(rolling)记录器——lumberjack
 @param maxAge		[单位: days] 旧日志保存的最大天数，默认保存所有旧日志文件
 @param localTime	[默认使用UTC时间] 是否使用本地时间戳？
 @param compress		[默认: false] 对backup的日志是否进行压缩？（压缩实际上是打成压缩包，文件名最后加上".gz"）
+
+e.g. rotate
+"aaa.log"（最新的文件；当前的指向）
+"aaa-2023-05-10T08-51-01.320.log"
+"aaa-2023-05-10T08-50-51.010.log"
 */
 func NewLumberjackWriteCloser1(filePath string, maxSize, maxBackups, maxAge int, localTime, compress bool) (io.WriteCloser, error) {
 	if err := fileKit.MkParentDirs(filePath); err != nil {
