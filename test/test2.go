@@ -26,39 +26,31 @@ func main() {
 		logrus.Fatal(err)
 	}
 	defer client.Close()
-	//kv := clientv3.NewKV(client)
+	kv := clientv3.NewKV(client)
 
-	leaseGrantResponse, err := client.Grant(context.TODO(), 10)
+	key := "/test/"
+
+	// Put
+	putOp := clientv3.OpPut(key, "ccc")
+	opResp, err := kv.Do(context.TODO(), putOp)
 	if err != nil {
 		logrus.Fatal(err)
 	}
-	logrus.Infof("lease id: [%d].", leaseGrantResponse.ID)
+	logrus.Info("manager to put")
 
-	ch, err := client.KeepAlive(context.TODO(), leaseGrantResponse.ID)
+	// Get
+	getOp := clientv3.OpGet(key)
+	opResp, err = kv.Do(context.TODO(), getOp)
 	if err != nil {
 		logrus.Fatal(err)
 	}
-	go func() {
-		defer func() {
-			logrus.Info("goroutine ends")
-		}()
+	logrus.Infof("manager to get, value: [%s]", string(opResp.Get().Kvs[0].Value))
 
-		for {
-			select {
-			case keepResp := <-ch:
-				if keepResp == nil {
-					// e.g. 该租约被删除了
-					logrus.Warn("租约已失效")
-					goto END
-				}
-				logrus.WithFields(logrus.Fields{
-					"ID":  keepResp.ID,
-					"TTL": keepResp.TTL,
-				}).Info("续租成功.")
-			}
-		}
-	END:
-	}()
-
-	select {}
+	// Delete
+	delOp := clientv3.OpDelete(key)
+	opResp, err = kv.Do(context.TODO(), delOp)
+	if err != nil {
+		logrus.Fatal(err)
+	}
+	logrus.Info("manager to delete")
 }

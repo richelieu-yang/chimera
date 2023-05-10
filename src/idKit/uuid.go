@@ -1,7 +1,7 @@
 package idKit
 
 import (
-	"github.com/nacos-group/nacos-sdk-go/inner/uuid"
+	"github.com/google/uuid"
 	"github.com/richelieu42/chimera/v2/src/core/strKit"
 )
 
@@ -11,7 +11,7 @@ e.g.
 () => 3064040f-b626-4d23-9d5d-de220e337d7a <nil>
 */
 func NewUUID() (string, error) {
-	id, err := uuid.NewV4()
+	id, err := uuid.NewRandom()
 	if err != nil {
 		return "", err
 	}

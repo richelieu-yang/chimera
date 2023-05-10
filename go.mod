@@ -18,6 +18,7 @@ require (
 	github.com/gin-gonic/gin v1.9.0
 	github.com/go-playground/validator/v10 v10.13.0
 	github.com/go-redsync/redsync/v4 v4.8.1
+	github.com/google/uuid v1.3.0
 	github.com/gorilla/securecookie v1.1.1
 	github.com/gorilla/sessions v1.2.1
 	github.com/gorilla/websocket v1.5.0
@@ -92,7 +93,6 @@ require (
 	github.com/golang/mock v1.6.0 // indirect
 	github.com/golang/protobuf v1.5.3 // indirect
 	github.com/golang/snappy v0.0.4 // indirect
-	github.com/google/uuid v1.3.0 // indirect
 	github.com/grpc-ecosystem/grpc-gateway/v2 v2.15.0 // indirect
 	github.com/gsterjov/go-libsecret v0.0.0-20161001094733-a6f4afe4910c // indirect
 	github.com/hashicorp/errwrap v1.1.0 // indirect
