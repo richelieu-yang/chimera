@@ -79,7 +79,7 @@ func loadOptions(options ...LumberjackOption) *lumberjackOptions {
 
 PS:
 (0) 传参可以参考下 NewLumberjackWriteCloser1 的注释.
-(1) 仅配置 filePath 的情况: (1)超过100MB就rotate一下; (2)保留所有文件; (3)不压缩.
+(1) 仅配置 filePath 的情况: (1)超过100MB就rotate一下; (2)保留所有文件; (3)不压缩; (4)默认使用UTC时间.
 (2) 文件不存在，会自动创建；文件存在，内容会追加在最后.
 
 @param options 必须要配置: filePath
