@@ -42,21 +42,19 @@ func WithWriter(writer io.Writer) LoggerOption {
 }
 
 func loadOptions(options ...LoggerOption) *loggerOptions {
+	/* 默认值s */
 	opts := &loggerOptions{
-		formatter:    nil,
+		formatter:    DefaultTextFormatter,
 		reportCaller: true,
-		level:        logrus.DebugLevel,
-		writer:       nil,
+		// 默认: debug
+		level: logrus.DebugLevel,
+		// 默认: 输出到控制台
+		writer: nil,
 	}
+
 	for _, option := range options {
 		option(opts)
 	}
-
-	/* 容错，放在下面以防调用方瞎搞 */
-	if opts.formatter == nil {
-		opts.formatter = DefaultTextFormatter
-	}
-
 	return opts
 }
 
