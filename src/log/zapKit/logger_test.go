@@ -8,6 +8,7 @@ import (
 )
 
 func TestNewLogger(t *testing.T) {
+	// 日志文件会生成在当前.go文件的同目录下
 	writer, err := ioKit.NewLumberjackWriteCloser(ioKit.WithFilePath("aaa.log"))
 	assert.Nil(t, err)
 
