@@ -5,29 +5,30 @@ import (
 	"github.com/richelieu42/chimera/v2/src/core/strKit"
 )
 
-// NewUUID uuid v4
+// NewUUID UUIDv4
 /*
+@return 长度36
+
 e.g.
-() => 3064040f-b626-4d23-9d5d-de220e337d7a <nil>
+	() => "936eff5f-97c6-4f8b-b26d-9bab1f65ff55"
 */
-func NewUUID() (string, error) {
-	id, err := uuid.NewRandom()
-	if err != nil {
-		return "", err
-	}
-	return id.String(), nil
+func NewUUID() string {
+	return uuid.New().String()
+
+	//id, err := uuid.NewRandom()
+	//if err != nil {
+	//	return "", err
+	//}
+	//return id.String(), nil
 }
 
-// NewSimpleUUID uuid v4
-/**
+// NewSimpleUUID UUIDv4，去掉了其中所有"-"
+/*
+@return 长度32
+
 e.g.
-() => a5140372dabd46f8bc3814b659d40708 <nil>
+	() => "415ef754dc174b888b186873e093ced1"
 */
-func NewSimpleUUID() (string, error) {
-	id, err := NewUUID()
-	if err != nil {
-		return "", err
-	}
-	id = strKit.ReplaceAll(id, "-", "")
-	return id, nil
+func NewSimpleUUID() string {
+	return strKit.ReplaceAll(NewUUID(), "-", "")
 }

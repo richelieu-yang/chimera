@@ -1,17 +1,14 @@
 package main
 
 import (
-	"github.com/sirupsen/logrus"
-	"time"
+	"fmt"
+	"github.com/richelieu42/chimera/v2/src/idKit"
 )
 
 func main() {
-	timer := time.AfterFunc(time.Second*3, func() {
-		logrus.Info("time up")
-	})
-	time.Sleep(time.Second)
-	logrus.Info(timer.Stop()) // true
-	logrus.Info(timer.Stop()) // false
+	str := idKit.NewUUID()
+	fmt.Println(len(str), str)
 
-	time.Sleep(time.Second * 6)
+	str = idKit.NewSimpleUUID()
+	fmt.Println(len(str), str)
 }
