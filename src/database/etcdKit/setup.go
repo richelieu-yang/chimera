@@ -60,9 +60,6 @@ func setUp(config *Config) (err error) {
 			PermitWithoutStream:  true,
 		}
 		client, err = clientv3.New(v3Config)
-		if err != nil {
-			client = nil
-		}
 	})
 	return
 }
