@@ -60,10 +60,9 @@ func setUp(config *Config) (err error) {
 			PermitWithoutStream:  true,
 		}
 		client, err = clientv3.New(v3Config)
-		//if err == nil {
-		//	// 实例化一个用于操作etcd的KV
-		//	kv = clientv3.NewKV(client)
-		//}
+		if err != nil {
+			client = nil
+		}
 	})
 	return
 }
