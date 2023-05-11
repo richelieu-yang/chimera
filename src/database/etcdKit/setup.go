@@ -71,7 +71,7 @@ func setUp(config *Config) (err error) {
 // GetClient
 /*
 PS:
-(1) err == nil的情况下，建议调用 clientv3.NewKV() 以实例化一个用于操作etcd的KV.
+(1) 要使用 KV 的情况下，建议调用 clientv3.NewKV() 以实例化一个用于操作etcd的KV（内置错误重试机制）.
 (2) 租约相关需要用到 *clientv3.Client实例.
 */
 func GetClient() (*clientv3.Client, error) {
