@@ -15,9 +15,6 @@ func MustSetUp(config *Config) {
 
 func SetUp(config *Config) (err error) {
 	client, err = NewClient(config)
-	if err != nil {
-		client = nil
-	}
 	return
 }
 
