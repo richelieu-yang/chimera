@@ -1,7 +1,6 @@
 package pulsarKit
 
 import (
-	"github.com/stretchr/testify/assert"
 	"testing"
 )
 
@@ -15,6 +14,5 @@ func TestSetUp(t *testing.T) {
 		},
 	}
 
-	err := SetUp(pulsarConfig)
-	assert.Nil(t, err)
+	MustSetUp(pulsarConfig)
 }
