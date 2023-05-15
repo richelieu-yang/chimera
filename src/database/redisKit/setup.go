@@ -2,10 +2,8 @@ package redisKit
 
 import (
 	"github.com/sirupsen/logrus"
-	"sync"
 )
 
-var setupOnce sync.Once
 var client *Client
 
 func MustSetUp(config *Config) {
@@ -16,14 +14,10 @@ func MustSetUp(config *Config) {
 }
 
 func SetUp(config *Config) (err error) {
-	setupOnce.Do(func() {
-		client, err = NewClient(config)
-
-		if err != nil {
-			client = nil
-		}
-	})
-
+	client, err = NewClient(config)
+	if err != nil {
+		client = nil
+	}
 	return
 }
 

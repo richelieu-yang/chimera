@@ -3,6 +3,7 @@ package pulsarKit
 import (
 	"context"
 	"github.com/apache/pulsar-client-go/pulsar"
+	"github.com/panjf2000/ants/v2"
 	"github.com/richelieu42/chimera/v2/src/idKit"
 	"github.com/sirupsen/logrus"
 	"strconv"
@@ -64,6 +65,20 @@ func TestSetUp(t *testing.T) {
 	}()
 
 	/* 收消息 */
+	p, err := ants.NewPoolWithFunc(256, func(i interface{}) {
+		msg, ok := i.(pulsar.Message)
+		if !ok {
+			return
+		}
+		logrus.WithFields(logrus.Fields{
+			"id":   msg.ID().String(),
+			"text": string(msg.Payload()),
+		}).Info("[CONSUMER] receive a message")
+	})
+	if err != nil {
+		logrus.Fatal(err)
+	}
+	defer p.Release()
 	for {
 		msg, err := consumer.Receive(context.TODO())
 		if err != nil {
@@ -78,13 +93,10 @@ func TestSetUp(t *testing.T) {
 			continue
 		}
 
-		/*
-			从此处开始处理msg.
-			PS: 如果每条消息需要较长时间来进行处理，这种情况可能会导致消息处理的延后甚至是阻塞，可以考虑通过goroutine处理收到的消息.
-		*/
-		logrus.WithFields(logrus.Fields{
-			"id":   msg.ID().String(),
-			"text": string(msg.Payload()),
-		}).Info("[CONSUMER] receive a message")
+		if err := p.Invoke(msg); err != nil {
+			logrus.WithFields(logrus.Fields{
+				"error": err.Error(),
+			}).Error("[CONSUMER] fail to invoke")
+		}
 	}
 }
