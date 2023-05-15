@@ -7,7 +7,6 @@ import (
 	"github.com/richelieu42/chimera/v2/src/idKit"
 	"github.com/richelieu42/chimera/v2/src/log/logrusKit"
 	"github.com/sirupsen/logrus"
-	"github.com/stretchr/testify/assert"
 	"testing"
 	"time"
 )
@@ -18,7 +17,9 @@ func TestNewConsumerOriginally(t *testing.T) {
 
 	logPath := "logs/pulsar-consumer.log"
 	err := fileKit.Delete(logPath)
-	assert.Nil(t, err)
+	if err != nil {
+		logrus.Fatal(err)
+	}
 
 	ctx, cancel := context.WithTimeout(context.Background(), time.Second*6)
 	defer cancel()
@@ -28,9 +29,11 @@ func TestNewConsumerOriginally(t *testing.T) {
 		SubscriptionName: idKit.NewULID(),
 		Type:             pulsar.Exclusive,
 	}, logPath)
-	assert.Nil(t, err)
+	if err != nil {
+		logrus.Fatal(err)
+	}
 
-	logrusKit.SetUp(&logrusKit.Config{
+	logrusKit.MustSetUp(&logrusKit.Config{
 		Level:      "debug",
 		PrintBasic: false,
 	})

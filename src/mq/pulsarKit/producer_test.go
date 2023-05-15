@@ -30,11 +30,11 @@ func TestNewProducerOriginally(t *testing.T) {
 	}, logPath)
 	assert.Nil(t, err)
 
-	logrusKit.SetUp(&logrusKit.Config{
+	logrusKit.MustSetUp(&logrusKit.Config{
 		Level:      "debug",
 		PrintBasic: false,
 	})
-	for i := 0; i < 1000; i++ {
+	for i := 0; i < 10; i++ {
 		time.Sleep(time.Second * 3)
 
 		text := fmt.Sprintf("message-%d", i)

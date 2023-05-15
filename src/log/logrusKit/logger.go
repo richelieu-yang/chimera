@@ -44,7 +44,7 @@ func WithWriter(writer io.Writer) LoggerOption {
 func loadOptions(options ...LoggerOption) *loggerOptions {
 	/* 默认值s */
 	opts := &loggerOptions{
-		formatter:    DefaultTextFormatter,
+		formatter:    nil,
 		reportCaller: true,
 		// 默认: debug
 		level: logrus.DebugLevel,
@@ -55,6 +55,12 @@ func loadOptions(options ...LoggerOption) *loggerOptions {
 	for _, option := range options {
 		option(opts)
 	}
+
+	// 容错，以防 调用方 瞎传
+	if opts.formatter == nil {
+		opts.formatter = DefaultTextFormatter
+	}
+
 	return opts
 }
 
