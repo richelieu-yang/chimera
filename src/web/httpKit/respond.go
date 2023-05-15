@@ -5,6 +5,7 @@ import (
 	"github.com/richelieu42/chimera/v2/src/core/file/fileKit"
 	"github.com/richelieu42/chimera/v2/src/core/strKit"
 	"github.com/richelieu42/chimera/v2/src/jsonKit"
+	"github.com/richelieu42/chimera/v2/src/web/mimeTypeKit"
 	"net/http"
 	"net/url"
 	"path/filepath"
@@ -109,7 +110,7 @@ func RespondFile(w http.ResponseWriter, r *http.Request, code int, filePath, fil
 */
 func RespondData(w http.ResponseWriter, code int, contentType string, data []byte) error {
 	if strKit.IsEmpty(contentType) {
-		contentType = GetContentType(data)
+		contentType = mimeTypeKit.DetectContentType(data)
 	}
 
 	Status(w, code)
