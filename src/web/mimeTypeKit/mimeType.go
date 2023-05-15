@@ -34,6 +34,23 @@ func DetectReader(r io.Reader) (*mimetype.MIME, error) {
 	return mimetype.DetectReader(r)
 }
 
+// DetectFile
+/*
+PS: 默认limit为: 3KB（3072）.
+
+TODO: https://github.com/gabriel-vasile/mimetype
+	mimetype.SetLimit(1024*1024) // Set limit to 1MB.
+	// or
+	mimetype.SetLimit(0) // No limit, whole file content used.
+	mimetype.DetectFile("file.doc")
+
+e.g.
+	mime, _ := mimeTypeKit.DetectFile("/Users/richelieu/Desktop/未命名.wps")
+	fmt.Println(mime.String()) // application/x-ole-storage
+
+	mime, _ = mimeTypeKit.DetectFile("/Users/richelieu/Desktop/download.pdf")
+	fmt.Println(mime.String()) // application/pdf
+*/
 func DetectFile(path string) (*mimetype.MIME, error) {
 	return mimetype.DetectFile(path)
 }
