@@ -21,6 +21,10 @@ func DetectContentType(data []byte) string {
 // Detect
 /*
 mimetype库: 基于magic数的用于媒体类型和文件扩展名检测的快速的 Go 库，支持 170+ 格式.
+
+e.g.
+	mime := mimeTypeKit.Detect(nil)
+	fmt.Println(mime.String()) // "text/plain"
 */
 func Detect(in []byte) *mimetype.MIME {
 	return mimetype.Detect(in)

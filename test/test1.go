@@ -2,12 +2,10 @@ package main
 
 import (
 	"fmt"
-	"github.com/gabriel-vasile/mimetype"
+	"github.com/richelieu42/chimera/v2/src/web/mimeTypeKit"
 )
 
 func main() {
-	t := mimetype.Detect(nil)
-	fmt.Println(t)
-
-	t.
+	mime := mimeTypeKit.Detect(nil)
+	fmt.Println(mime.String()) // "text/plain"
 }
