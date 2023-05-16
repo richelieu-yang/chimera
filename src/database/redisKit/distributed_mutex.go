@@ -8,9 +8,9 @@ import (
 // NewDistributedMutex 生成Redis分布式互斥锁.
 /*
 PS:
-(1) 不可重入锁；
-(2) 更多详见"Redis分布式锁（多语言）.docx"；
-(3) 写入Redis中的键，默认TTL为8s.
+(1) 不可重入锁;
+(2) 更多详见"Redis分布式锁（多语言）.docx";
+(3) 写入Redis中的键，默认TTL为 8s.
 
 @param name 建议以 "mutex:" 为前缀
 
