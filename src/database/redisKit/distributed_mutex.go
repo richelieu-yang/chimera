@@ -19,6 +19,7 @@ PS:
 		(a) 类型: *redsync.ErrTaken; 错误内容: lock already taken, locked nodes: [0]
 		(b) redsync.ErrFailed
 	e.g.
+		PS: 尝试获取锁其实也要花一点时间.
 		默认配置下，总计重试 32 次，第0次不等待，第1~31次在开始时等待随机时间（[50, 250)ms）.
 		retry整体周期为 约4.8s（因为随机），还是获取不到则返回error.
 	e.g.1
