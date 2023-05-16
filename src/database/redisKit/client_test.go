@@ -30,7 +30,7 @@ func TestSingleNodeMode(test *testing.T) {
 	}
 
 	//for i := 0; i < 1; i++ {
-	//	s, err := scan(client.GetGoRedisClient(), context.TODO(), "*", 10)
+	//	s, err := scan(client.GetUniversalClient(), context.TODO(), "*", 10)
 	//	if err != nil {
 	//		panic(err)
 	//	}
@@ -96,7 +96,7 @@ func TestClusterMode(test *testing.T) {
 	//	fmt.Printf("====== %d\n", len(s))
 	//}
 
-	//c := client.GetGoRedisClient()
+	//c := client.GetUniversalClient()
 
 	//sc := c.Scan(context.TODO(), 0, "*", 10)
 	//iter := sc.Iterator()

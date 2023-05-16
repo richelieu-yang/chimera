@@ -11,8 +11,8 @@ type (
 	Client struct {
 		mode Mode
 
-		// core go-redis客户端
-		core redis.UniversalClient
+		// universalClient go-redis的客户端
+		universalClient redis.UniversalClient
 	}
 )
 
@@ -20,9 +20,9 @@ func (client *Client) GetMode() Mode {
 	return client.mode
 }
 
-// GetGoRedisClient 返回go-redis客户端
-func (client *Client) GetGoRedisClient() redis.UniversalClient {
-	return client.core
+// GetUniversalClient 返回go-redis客户端
+func (client *Client) GetUniversalClient() redis.UniversalClient {
+	return client.universalClient
 }
 
 // NewClient 新建一个go-redis客户端（内置连接池，调用方无需额外考虑并发问题）
@@ -64,8 +64,8 @@ func NewClient(config *Config) (*Client, error) {
 
 	goRedisClient := redis.NewUniversalClient(opts)
 	client := &Client{
-		mode: config.Mode,
-		core: goRedisClient,
+		mode:            config.Mode,
+		universalClient: goRedisClient,
 	}
 
 	// 简单测试是否Redis服务可用

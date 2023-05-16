@@ -24,7 +24,7 @@ e.g.
 传参key不存在的情况 => ("none", nil)
 */
 func (client *Client) Type(ctx context.Context, key string) (string, error) {
-	return client.core.Type(ctx, key).Result()
+	return client.universalClient.Type(ctx, key).Result()
 }
 
 // Exists
@@ -34,7 +34,7 @@ func (client *Client) Type(ctx context.Context, key string) (string, error) {
 命令返回值:	若 key 存在返回 1 ，否则返回 0.
 */
 func (client *Client) Exists(ctx context.Context, keys ...string) (bool, error) {
-	intCmd := client.core.Exists(ctx, keys...)
+	intCmd := client.universalClient.Exists(ctx, keys...)
 	i, err := intCmd.Result()
 	if err != nil {
 		return false, err
@@ -49,7 +49,7 @@ func (client *Client) Exists(ctx context.Context, keys ...string) (bool, error) 
 命令返回值:	被删除 key 的数量。
 */
 func (client *Client) Del(ctx context.Context, keys ...string) (int64, error) {
-	intCmd := client.core.Del(ctx, keys...)
+	intCmd := client.universalClient.Del(ctx, keys...)
 	return intCmd.Result()
 }
 
@@ -76,7 +76,7 @@ e.g.1 key为持久化键
 	fmt.Println(duration == -1) // true
 */
 func (client *Client) TTL(ctx context.Context, key string) (time.Duration, error) {
-	return client.core.TTL(ctx, key).Result()
+	return client.universalClient.TTL(ctx, key).Result()
 }
 
 // Expire
@@ -90,7 +90,7 @@ key不存在	=> (false, nil)
 key存在		=> (true, nil)
 */
 func (client *Client) Expire(ctx context.Context, key string, expiration time.Duration) (bool, error) {
-	boolCmd := client.core.Expire(ctx, key, expiration)
+	boolCmd := client.universalClient.Expire(ctx, key, expiration)
 	return boolCmd.Result()
 }
 
@@ -101,7 +101,7 @@ func (client *Client) Expire(ctx context.Context, key string, expiration time.Du
 命令返回值:	设置成功返回 1 。 当 key 不存在或者不能为 key 设置过期时间时(比如在低于 2.1.3 版本的 Redis 中你尝试更新 key 的过期时间)返回 0 。
 */
 func (client *Client) ExpireAt(ctx context.Context, key string, tm time.Time) (bool, error) {
-	boolCmd := client.core.ExpireAt(ctx, key, tm)
+	boolCmd := client.universalClient.ExpireAt(ctx, key, tm)
 	return boolCmd.Result()
 }
 
@@ -112,7 +112,7 @@ func (client *Client) ExpireAt(ctx context.Context, key string, tm time.Time) (b
 命令返回值:	当过期时间移除成功时，返回 1 。 如果 key 不存在或 key 没有设置过期时间，返回 0 。
 */
 func (client *Client) Persist(ctx context.Context, key string) (bool, error) {
-	boolCmd := client.core.Persist(ctx, key)
+	boolCmd := client.universalClient.Persist(ctx, key)
 	return boolCmd.Result()
 }
 
@@ -124,7 +124,7 @@ e.g.
 db为空（或者不存在与 传参match 响应的key） => ([]string{}, nil)（第一个返回值不为nil）
 */
 func (client *Client) Keys(ctx context.Context, pattern string) ([]string, error) {
-	stringSliceCmd := client.core.Keys(ctx, pattern)
+	stringSliceCmd := client.universalClient.Keys(ctx, pattern)
 	return stringSliceCmd.Result()
 }
 
@@ -143,7 +143,7 @@ e.g. db为空（|| db中不存在符合条件的key）
 (context.TODO(), 0, "*", 10) => ([]string{}, 0, nil)
 */
 func (client *Client) Scan(ctx context.Context, cursor uint64, match string, count int64) ([]string, uint64, error) {
-	scanCmd := client.core.Scan(ctx, cursor, match, count)
+	scanCmd := client.universalClient.Scan(ctx, cursor, match, count)
 	return scanCmd.Result()
 }
 
@@ -208,7 +208,7 @@ func (client *Client) ScanFully(ctx context.Context, match string, count int64) 
 	//	return keys, nil
 	//}
 
-	clusterClient, ok := client.core.(*redis.ClusterClient)
+	clusterClient, ok := client.universalClient.(*redis.ClusterClient)
 	if ok {
 		// (1) cluster集群，特殊处理（还是有小概率漏数据）
 		var keys []string
@@ -233,7 +233,7 @@ func (client *Client) ScanFully(ctx context.Context, match string, count int64) 
 		return sliceKit.Uniq(keys), nil
 	}
 	// (2) 非cluster集群，常规处理
-	return f(ctx, client.core)
+	return f(ctx, client.universalClient)
 }
 
 // RandomKey
@@ -243,7 +243,7 @@ func (client *Client) ScanFully(ctx context.Context, match string, count int64) 
 命令返回值:	当数据库不为空时，返回一个 key；当数据库为空时，返回 nil（windows 系统返回 null）.
 */
 func (client *Client) RandomKey(ctx context.Context) (string, error) {
-	stringCmd := client.core.RandomKey(ctx)
+	stringCmd := client.universalClient.RandomKey(ctx)
 	return stringCmd.Result()
 }
 
@@ -256,7 +256,7 @@ func (client *Client) RandomKey(ctx context.Context) (string, error) {
 	当 OLD_KEY_NAME 和 NEW_KEY_NAME 相同，或者 OLD_KEY_NAME 不存在时，返回一个错误。 当 NEW_KEY_NAME 已经存在时， RENAME 命令将覆盖旧值。
 */
 func (client *Client) Rename(ctx context.Context, key, newKey string) (string, error) {
-	statusCmd := client.core.Rename(ctx, key, newKey)
+	statusCmd := client.universalClient.Rename(ctx, key, newKey)
 	return statusCmd.Result()
 }
 
@@ -267,6 +267,6 @@ func (client *Client) Rename(ctx context.Context, key, newKey string) (string, e
 命令返回值:	修改成功时，返回 1 。 如果 NEW_KEY_NAME 已经存在，返回 0 。
 */
 func (client *Client) RenameNX(ctx context.Context, key, newKey string) (bool, error) {
-	boolCmd := client.core.RenameNX(ctx, key, newKey)
+	boolCmd := client.universalClient.RenameNX(ctx, key, newKey)
 	return boolCmd.Result()
 }
