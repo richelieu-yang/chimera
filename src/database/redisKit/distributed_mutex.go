@@ -11,9 +11,13 @@ PS:
 (1) 不可重入锁;
 (2) 更多详见"Redis分布式锁（多语言）.docx";
 (3) 写入Redis中键的默认TTL为: 8s.
-(4) 如果持有锁的时间 > Redis键的TTL，此时解锁将返回 false, error(类型: *redsync.ErrTaken; 错误内容: lock already taken, locked nodes: [0]);
-(5) 全部采用默认配置的情况下，锁被别人占着，你在尝试获取锁 约4.5s 后，返回error(类型: *redsync.ErrTaken; 错误内容: lock already taken, locked nodes: [0]).
-	想要修改获取锁失败后的整体等待时间，可以尝试配置 redsync.WithTries()、redsync.WithRetryDelay()、redsync.WithRetryDelayFunc().
+(4) 如果持有锁的时间 > Redis键的TTL，此时 "解锁" 将返回 false, error(类型: *redsync.ErrTaken; 错误内容: lock already taken, locked nodes: [0]);
+(5) retry（获取锁失败后等一会，再尝试获取锁）
+	相关配置: redsync.WithTries()、redsync.WithRetryDelay()、redsync.WithRetryDelayFunc()
+	e.g.
+		默认配置下，retry整体周期为 约4.5s（因为随机），还是获取不到则返回error(类型: *redsync.ErrTaken; 错误内容: lock already taken, locked nodes: [0]).
+	e.g.1
+		如果配置后，整体retry周期 > Redis中key的TTL，当上一个锁的key超时后，你就能获取到锁了（假如没有其他人也在抢锁）.
 
 @param name 建议以 "mutex:" 为前缀
 

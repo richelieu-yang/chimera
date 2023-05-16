@@ -1,6 +1,7 @@
 package main
 
 import (
+	"github.com/go-redsync/redsync/v4"
 	"github.com/richelieu42/chimera/v2/src/confKit"
 	"github.com/richelieu42/chimera/v2/src/database/redisKit"
 	"github.com/richelieu42/chimera/v2/src/log/logrusKit"
@@ -28,7 +29,7 @@ func main() {
 	go func() {
 		time.Sleep(time.Millisecond * 100)
 
-		mu := client.NewDistributedMutex("/ccc")
+		mu := client.NewDistributedMutex("/ccc", redsync.WithRetryDelay(time.Second))
 		logrus.Info("[GOROUTINE] ready to lock on")
 		if err := mu.Lock(); err != nil {
 			logrus.WithFields(logrus.Fields{
@@ -36,6 +37,12 @@ func main() {
 			}).Fatal("[GOROUTINE] fail to lock")
 		}
 		logrus.Info("[GOROUTINE] lock on")
+
+		ok, err := mu.Unlock()
+		logrus.WithFields(logrus.Fields{
+			"ok":  ok,
+			"err": err,
+		}).Info("[GOROUTINE] lock off")
 	}()
 
 	mu := client.NewDistributedMutex("/ccc")
