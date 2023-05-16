@@ -10,6 +10,8 @@ import (
 命令语法:	HEXISTS KEY_NAME FIELD_NAME
 命令返回值:	如果哈希表含有给定字段，返回 1 。 如果哈希表不含有给定字段，或 key 不存在，返回 0 。
 
+PS: key和field，只要有一个不存在，返回值必定为(false, nil).
+
 @param key		可以为""
 @param field	可以为""
 */

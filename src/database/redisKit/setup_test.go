@@ -23,10 +23,5 @@ func TestSetUp(t *testing.T) {
 		logrus.Fatal(err)
 	}
 
-	fmt.Println(client.HSet(context.TODO(), "", " ", ""))
-
-	fmt.Println(client.HExists(context.TODO(), "", " "))
-
-	fmt.Println(client.Exists(context.TODO(), ""))
-
+	fmt.Println(client.HExists(context.TODO(), "ccc1", "2"))
 }
