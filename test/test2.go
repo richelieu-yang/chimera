@@ -1,97 +1,54 @@
 package main
 
 import (
-	"context"
+	"github.com/richelieu42/chimera/v2/src/confKit"
+	"github.com/richelieu42/chimera/v2/src/database/redisKit"
 	"github.com/richelieu42/chimera/v2/src/log/logrusKit"
 	"github.com/sirupsen/logrus"
-	clientv3 "go.etcd.io/etcd/client/v3"
-	"go.etcd.io/etcd/client/v3/concurrency"
-	"sync"
-	"time"
 )
 
 func main() {
+	path := "/Users/richelieu/GolandProjects/chimera/chimera-lib/config.yaml"
+
 	logrusKit.MustSetUp(nil)
 
-	v3Config := clientv3.Config{
-		Endpoints: []string{"127.0.0.1:2379"},
-
-		AutoSyncInterval:     time.Minute,
-		DialTimeout:          time.Second * 5,
-		DialKeepAliveTime:    time.Second * 5,
-		DialKeepAliveTimeout: time.Second * 5,
-		RejectOldCluster:     true,
-		PermitWithoutStream:  true,
+	type config struct {
+		Redis *redisKit.Config `json:"redis"`
 	}
-	client, err := clientv3.New(v3Config)
+	c := &config{}
+	confKit.MustLoad(path, c)
+	redisKit.MustSetUp(c.Redis)
+
+	client, err := redisKit.GetClient()
 	if err != nil {
 		logrus.Fatal(err)
 	}
-	defer client.Close()
 
-	var wg sync.WaitGroup
+	//go func() {
+	//	time.Sleep(time.Millisecond * 100)
+	//
+	//	mu := client.NewDistributedMutex("/ccc" /*, redsync.WithRetryDelay(time.Second)*/)
+	//	logrus.Info("[GOROUTINE] ready to lock on")
+	//	if err := mu.Lock(); err != nil {
+	//		logrus.WithFields(logrus.Fields{
+	//			"error": err.Error(),
+	//		}).Fatal("[GOROUTINE] fail to lock")
+	//	}
+	//	logrus.Info("[GOROUTINE] lock on")
+	//
+	//	ok, err := mu.Unlock()
+	//	logrus.WithFields(logrus.Fields{
+	//		"ok":  ok,
+	//		"err": err,
+	//	}).Info("[GOROUTINE] lock off")
+	//}()
 
-	wg.Add(1)
-	go func() {
-		defer wg.Done()
+	mu := client.NewDistributedMutex("/ccc")
+	logrus.Info("ready to lock on")
+	if err := mu.Lock(); err != nil {
+		logrus.Fatal(err)
+	}
+	logrus.Info("lock on")
 
-		session, err := concurrency.NewSession(client)
-		if err != nil {
-			logrus.Fatal(err)
-		}
-		defer session.Close()
-		mu := concurrency.NewMutex(session, "/lock")
-
-		// 加锁
-		logrus.Info("[goroutine 0] ready to lock on")
-		if err := mu.Lock(context.TODO()); err != nil {
-			logrus.Fatal(err)
-		}
-		logrus.Info("[goroutine 0] lock on")
-
-		// 等一会
-		time.Sleep(time.Second * 3)
-
-		// 解锁
-		logrus.Info("[goroutine 0] ready to lock off")
-		if err := mu.Unlock(context.TODO()); err != nil {
-			logrus.Fatal(err)
-		}
-		logrus.Info("[goroutine 0] lock off")
-	}()
-
-	wg.Add(1)
-	go func() {
-		defer wg.Done()
-
-		session, err := concurrency.NewSession(client)
-		if err != nil {
-			logrus.Fatal(err)
-		}
-		defer session.Close()
-		mu := concurrency.NewMutex(session, "/lock")
-
-		// 等一会，让锁被抢掉
-		time.Sleep(time.Second)
-
-		// 加锁
-		logrus.Info("[goroutine 1] ready to lock on")
-		if err := mu.Lock(context.TODO()); err != nil {
-			logrus.Fatal(err)
-		}
-		logrus.Info("[goroutine 1] lock on")
-
-		// 等一会
-		time.Sleep(time.Second * 3)
-
-		// 解锁
-		logrus.Info("[goroutine 1] ready to lock off")
-		if err := mu.Unlock(context.TODO()); err != nil {
-			logrus.Fatal(err)
-		}
-		logrus.Info("[goroutine 1] lock off")
-	}()
-
-	wg.Wait()
-	logrus.Info("======")
+	select {}
 }
