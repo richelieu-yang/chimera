@@ -1,6 +1,8 @@
 package redisKit
 
 import (
+	"context"
+	"fmt"
 	"github.com/richelieu42/chimera/v2/src/confKit"
 	"github.com/sirupsen/logrus"
 	"testing"
@@ -20,5 +22,11 @@ func TestSetUp(t *testing.T) {
 	if err != nil {
 		logrus.Fatal(err)
 	}
-	logrus.Info(client != nil)
+
+	fmt.Println(client.HSet(context.TODO(), "", " ", ""))
+
+	fmt.Println(client.HExists(context.TODO(), "", " "))
+
+	fmt.Println(client.Exists(context.TODO(), ""))
+
 }

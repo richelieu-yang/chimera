@@ -9,6 +9,9 @@ import (
 命令说明:	用于查看哈希表的指定字段是否存在
 命令语法:	HEXISTS KEY_NAME FIELD_NAME
 命令返回值:	如果哈希表含有给定字段，返回 1 。 如果哈希表不含有给定字段，或 key 不存在，返回 0 。
+
+@param key		可以为""
+@param field	可以为""
 */
 func (client *Client) HExists(ctx context.Context, key, field string) (bool, error) {
 	cmd := client.universalClient.HExists(ctx, key, field)
