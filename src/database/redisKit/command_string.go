@@ -22,8 +22,8 @@ import (
 					 		redis.KeepTTL(即-1) 	保持已经存在的TTL（需要确保Redis版本 >= 6.0，否则会返回error: ERR syntax error）
 */
 func (client *Client) Set(ctx context.Context, key string, value interface{}, expiration time.Duration) (bool, error) {
-	statusCmd := client.universalClient.Set(ctx, key, value, expiration)
-	str, err := statusCmd.Result()
+	cmd := client.universalClient.Set(ctx, key, value, expiration)
+	str, err := cmd.Result()
 	if err != nil {
 		return false, err
 	}
@@ -39,8 +39,8 @@ func (client *Client) Set(ctx context.Context, key string, value interface{}, ex
 @return 第一个返回值代表: 是否设置成功
 */
 func (client *Client) SetNX(ctx context.Context, key string, value interface{}, expiration time.Duration) (bool, error) {
-	boolCmd := client.universalClient.SetNX(ctx, key, value, expiration)
-	return boolCmd.Result()
+	cmd := client.universalClient.SetNX(ctx, key, value, expiration)
+	return cmd.Result()
 }
 
 // SetEx
@@ -50,8 +50,8 @@ func (client *Client) SetNX(ctx context.Context, key string, value interface{}, 
 命令返回值:	设置成功时返回 OK 。
 */
 func (client *Client) SetEx(ctx context.Context, key string, value interface{}, expiration time.Duration) (bool, error) {
-	statusCmd := client.universalClient.SetEx(ctx, key, value, expiration)
-	str, err := statusCmd.Result()
+	cmd := client.universalClient.SetEx(ctx, key, value, expiration)
+	str, err := cmd.Result()
 	if err != nil {
 		return false, err
 	}
@@ -65,8 +65,8 @@ func (client *Client) SetEx(ctx context.Context, key string, value interface{}, 
 命令返回值:	总是返回 OK 。
 */
 func (client *Client) MSet(ctx context.Context, values ...interface{}) (bool, error) {
-	statusCmd := client.universalClient.MSet(ctx, values...)
-	str, err := statusCmd.Result()
+	cmd := client.universalClient.MSet(ctx, values...)
+	str, err := cmd.Result()
 	if err != nil {
 		return false, err
 	}
@@ -80,8 +80,8 @@ func (client *Client) MSet(ctx context.Context, values ...interface{}) (bool, er
 命令返回值:	当所有 key 都成功设置，返回 1 。 如果所有给定 key 都设置失败(至少有一个 key 已经存在)，那么返回 0 。
 */
 func (client *Client) MSetNX(ctx context.Context, values ...interface{}) (bool, error) {
-	boolCmd := client.universalClient.MSetNX(ctx, values...)
-	return boolCmd.Result()
+	cmd := client.universalClient.MSetNX(ctx, values...)
+	return cmd.Result()
 }
 
 // Get
@@ -94,7 +94,8 @@ e.g.
 当前db中不存在 传参key => ("", redis.Nil)
 */
 func (client *Client) Get(ctx context.Context, key string) (string, error) {
-	return client.universalClient.Get(ctx, key).Result()
+	cmd := client.universalClient.Get(ctx, key)
+	return cmd.Result()
 }
 
 // GetWithoutRedisNil 对 Get 进行封装（特殊处理）: 当前db中不存在传参key时，返回 ("", nil).
@@ -123,6 +124,6 @@ func (client *Client) GetWithoutRedisNil(ctx context.Context, key string) (strin
 命令返回值:	一个包含所有给定 key 的值的列表。
 */
 func (client *Client) MGet(ctx context.Context, keys ...string) ([]interface{}, error) {
-	sliceCmd := client.universalClient.MGet(ctx, keys...)
-	return sliceCmd.Result()
+	cmd := client.universalClient.MGet(ctx, keys...)
+	return cmd.Result()
 }

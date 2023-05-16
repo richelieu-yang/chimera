@@ -9,14 +9,14 @@ import "context"
 命令返回值: 	总是返回 OK .
 */
 func (client *Client) FlushDB(ctx context.Context) (string, error) {
-	statusCmd := client.universalClient.FlushDB(ctx)
-	return statusCmd.Result()
+	cmd := client.universalClient.FlushDB(ctx)
+	return cmd.Result()
 }
 
 // FlushDBAsync 异步地.
 func (client *Client) FlushDBAsync(ctx context.Context) (string, error) {
-	statusCmd := client.universalClient.FlushDBAsync(ctx)
-	return statusCmd.Result()
+	cmd := client.universalClient.FlushDBAsync(ctx)
+	return cmd.Result()
 }
 
 // FlushAll
@@ -26,14 +26,14 @@ func (client *Client) FlushDBAsync(ctx context.Context) (string, error) {
 命令返回值:	总是返回 OK .
 */
 func (client *Client) FlushAll(ctx context.Context) (string, error) {
-	statusCmd := client.universalClient.FlushAll(ctx)
-	return statusCmd.Result()
+	cmd := client.universalClient.FlushAll(ctx)
+	return cmd.Result()
 }
 
 // FlushAllAsync 异步地.
 func (client *Client) FlushAllAsync(ctx context.Context) (string, error) {
-	statusCmd := client.universalClient.FlushAllAsync(ctx)
-	return statusCmd.Result()
+	cmd := client.universalClient.FlushAllAsync(ctx)
+	return cmd.Result()
 }
 
 // DBSize
@@ -43,6 +43,6 @@ func (client *Client) FlushAllAsync(ctx context.Context) (string, error) {
 命令返回值:	当前数据库的 key 的数量.
 */
 func (client *Client) DBSize(ctx context.Context) (int64, error) {
-	intCmd := client.universalClient.DBSize(ctx)
-	return intCmd.Result()
+	cmd := client.universalClient.DBSize(ctx)
+	return cmd.Result()
 }
