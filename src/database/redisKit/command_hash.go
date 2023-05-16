@@ -4,6 +4,11 @@ import (
 	"context"
 )
 
+func (client *Client) HExists(ctx context.Context, key, field string) (bool, error) {
+	cmd := client.universalClient.HExists(ctx, key, field)
+	return cmd.Result()
+}
+
 // HSet 将哈希表 key 中的字段 field 的值设为 value
 /*
 命令说明:
@@ -25,8 +30,8 @@ PS:
 	("myhash", map[string]interface{}{"key1": "value1", "key2": "value2"})
 */
 func (client *Client) HSet(ctx context.Context, key string, values ...interface{}) (int64, error) {
-	intCmd := client.universalClient.HSet(ctx, key, values...)
-	return intCmd.Result()
+	cmd := client.universalClient.HSet(ctx, key, values...)
+	return cmd.Result()
 }
 
 // HSetNX 只有在 字段field 不存在时，设置哈希表字段的值
