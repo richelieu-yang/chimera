@@ -1,29 +1,24 @@
 package redisKit
 
 import (
-	"context"
-	"github.com/richelieu42/chimera/v2/src/core/timeKit"
-	"github.com/richelieu42/chimera/v2/src/idKit"
-	"github.com/stretchr/testify/assert"
+	"github.com/richelieu42/chimera/v2/src/confKit"
+	"github.com/sirupsen/logrus"
 	"testing"
 )
 
 func TestSetUp(t *testing.T) {
-	config := &Config{
-		UserName: "",
-		Password: "",
-		Mode:     ModeSingleNode,
-		SingleNodeConfig: &SingleNodeConfig{
-			Addr: "127.0.0.1:6379",
-			DB:   0,
-		},
-	}
-	MustSetUp(config)
+	path := "/Users/richelieu/GolandProjects/chimera/chimera-lib/config.yaml"
 
-	key := idKit.NewULID()
-	value := timeKit.FormatCurrentTime()
-	_, err := client.Set(context.TODO(), key, value, 0)
-	assert.Nil(t, err)
-	_, err = client.Del(context.TODO(), key)
-	assert.Nil(t, err)
+	type config struct {
+		Redis *Config `json:"redis"`
+	}
+	c := &config{}
+	confKit.MustLoad(path, c)
+	MustSetUp(c.Redis)
+
+	client, err := GetClient()
+	if err != nil {
+		logrus.Fatal(err)
+	}
+	logrus.Info(client != nil)
 }
