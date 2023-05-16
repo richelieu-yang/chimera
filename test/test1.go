@@ -25,9 +25,18 @@ func main() {
 		logrus.Fatal(err)
 	}
 
-	//go func() {
-	//
-	//}()
+	go func() {
+		time.Sleep(time.Millisecond * 100)
+
+		mu := client.NewDistributedMutex("/ccc")
+		logrus.Info("[GOROUTINE] ready to lock on")
+		if err := mu.Lock(); err != nil {
+			logrus.WithFields(logrus.Fields{
+				"error": err.Error(),
+			}).Fatal("[GOROUTINE] fail to lock")
+		}
+		logrus.Info("[GOROUTINE] lock on")
+	}()
 
 	mu := client.NewDistributedMutex("/ccc")
 	logrus.Info("ready to lock on")
@@ -36,11 +45,5 @@ func main() {
 	}
 	logrus.Info("lock on")
 
-	time.Sleep(time.Second * 9)
-
-	ok, err := mu.Unlock()
-	logrus.WithFields(logrus.Fields{
-		"ok":    ok,
-		"error": err,
-	}).Info("lock off")
+	select {}
 }
