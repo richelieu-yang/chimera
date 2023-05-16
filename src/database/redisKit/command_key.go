@@ -193,8 +193,8 @@ func (client *Client) ScanFully(ctx context.Context, match string, count int64) 
 	//	var cursor uint64 = 0
 	//	var keys []string
 	//
-	//	scanCmd := client.Scan(ctx, cursor, match, count)
-	//	iter := scanCmd.Iterator()
+	//	cmd := client.Scan(ctx, cursor, match, count)
+	//	iter := cmd.Iterator()
 	//	for iter.Next(ctx) {
 	//		keys = append(keys, iter.Val())
 	//	}
