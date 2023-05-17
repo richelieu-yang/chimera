@@ -2,11 +2,11 @@ package main
 
 import (
 	"fmt"
-	"sort"
+	"github.com/richelieu42/chimera/v2/src/randomKit"
 )
 
 func main() {
-	var s sort.Float64Slice = nil
-	sort.Stable(s)
-	fmt.Println(s == nil)
+	for i := 0; i < 10; i++ {
+		fmt.Println(randomKit.Int(-2, 2))
+	}
 }
