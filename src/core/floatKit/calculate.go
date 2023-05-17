@@ -125,7 +125,7 @@ func Ceil(f float64, places int32) float64 {
 // Floor 向下取整，类似于 math.Floor()，但功能更强大
 /*
 PS:
-个人感觉: x轴向左.
+(1) 个人感觉: x轴向左.
 
 e.g.
 (3.14, 1)	=> 3.1
