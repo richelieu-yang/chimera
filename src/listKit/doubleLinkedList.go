@@ -13,6 +13,8 @@ func NewDoubleLinkedList(safe ...bool) *glist.List {
 // NewDoubleLinkedListFrom 创建（带并发安全开关的）双向链表
 /*
 PS: 返回值的使用可以参考 "GoFrame.wps".
+
+@param array 可以为nil，但这么干无意义
 */
 func NewDoubleLinkedListFrom(array []interface{}, safe ...bool) *glist.List {
 	return glist.NewFrom(array, safe...)
