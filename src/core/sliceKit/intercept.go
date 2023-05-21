@@ -10,8 +10,8 @@ PS:
 (2) from > to || 下标越界，会导致 panic: runtime error: slice bounds out of range [1:0]
 
 @param s	可以为nil（将返回nil）
-@param from	取值范围: [0, len(s))]
-@param to	取值范围: [0, len(s))]
+@param from	取值范围: [0, cap(s))]
+@param to	取值范围: [0, cap(s))]
 @return	(1) 可能为nil（当传参s为nil时）
 		(2) 返回值不涉及深浅拷贝，修改会导致"同步修改"
 

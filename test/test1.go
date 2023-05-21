@@ -2,25 +2,20 @@ package main
 
 import (
 	"fmt"
-	"github.com/gogf/gf/v2/container/glist"
-	"github.com/richelieu42/chimera/v2/src/jsonKit"
 )
 
 func main() {
-	l := glist.NewFrom([]interface{}{0, 1, 2})
+	s1 := make([]int, 0, 5)
+	fmt.Println("s1切片: ", s1, len(s1), cap(s1))
 
-	// 序列化
-	json, err := jsonKit.MarshalToString(l)
-	if err != nil {
-		panic(err)
-	}
-	fmt.Println(json) // [0,1,2]
+	appendFunc1(s1)
 
-	// 反序列化
-	l1 := &glist.List{}
-	err = jsonKit.UnmarshalFromString(json, l1)
-	if err != nil {
-		panic(err)
-	}
-	fmt.Println(l1) // [0,1,2]
+	fmt.Println("s1切片: ", s1, len(s1), cap(s1))
+	fmt.Println("s1切片表达式: ", s1[:5])
+}
+
+func appendFunc1(s2 []int) {
+	//s2 = append(s2, 1, 2, 3)
+	s2 = append(s2, 1, 2, 3, 4, 5, 6, 7, 8, 9)
+	fmt.Println("s2切片: ", s2, len(s2), cap(s2))
 }
