@@ -2,7 +2,6 @@ package jsonKit
 
 import (
 	jsoniter "github.com/json-iterator/go"
-	"github.com/richelieu42/chimera/v2/src/core/errorKit"
 	"github.com/richelieu42/chimera/v2/src/core/ptrKit"
 	"github.com/richelieu42/chimera/v2/src/core/sliceKit"
 	"github.com/richelieu42/chimera/v2/src/core/strKit"
@@ -37,8 +36,8 @@ func UnmarshalFromString(ptr interface{}, str string) error {
 	if err := ptrKit.AssertNotNilAndIsPointer(ptr); err != nil {
 		return err
 	}
-	if strKit.IsEmpty(str) {
-		return errorKit.Simple("str is empty")
+	if err := strKit.AssertNotBlank(str); err != nil {
+		return err
 	}
 
 	return jsoniter.UnmarshalFromString(str, ptr)

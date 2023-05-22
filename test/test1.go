@@ -1,12 +1,13 @@
 package main
 
 import (
-	"github.com/richelieu42/chimera/v2/src/jsonKit"
+	jsoniter "github.com/json-iterator/go"
 	"github.com/sirupsen/logrus"
 )
 
 func main() {
-	if err := jsonKit.Unmarshal(nil, nil); err != nil {
+	m := make(map[string]string)
+	if err := jsoniter.UnmarshalFromString("        ", &m); err != nil {
 		logrus.Fatal(err)
 	}
 }
