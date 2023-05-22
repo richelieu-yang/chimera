@@ -48,7 +48,8 @@ func WithApi(api jsoniter.API) JsonOption {
 
 // WithIndent
 /*
-@param indent (1) 目前只能是 "" 或 多个空格（不能有其他字符）
+@param indent (0) 建议使用 "    "（4个空格）
+   			  (1) 目前只能是 "" 或 多个空格（不能有其他字符）
 			  (2) encoding/json标准库 可以用"\t"
 */
 func WithIndent(indent string) JsonOption {
