@@ -4,6 +4,7 @@ import (
 	jsoniter "github.com/json-iterator/go"
 	"github.com/richelieu42/chimera/v2/src/core/errorKit"
 	"github.com/richelieu42/chimera/v2/src/core/ptrKit"
+	"github.com/richelieu42/chimera/v2/src/core/sliceKit"
 	"github.com/richelieu42/chimera/v2/src/core/strKit"
 )
 
@@ -18,11 +19,8 @@ func Unmarshal(ptr interface{}, data []byte) error {
 	if err := ptrKit.AssertNotNilAndIsPointer(ptr); err != nil {
 		return err
 	}
-	if len(data) == 0 {
-		if data == nil {
-			return errorKit.Simple("data == nil")
-		}
-		return errorKit.Simple("len(data) == 0")
+	if err := sliceKit.AssertNotEmpty(data); err != nil {
+		return err
 	}
 
 	return jsoniter.Unmarshal(data, ptr)
