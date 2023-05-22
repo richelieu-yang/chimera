@@ -3,13 +3,14 @@ package assertKit
 import (
 	"github.com/go-playground/validator/v10"
 	"github.com/richelieu42/chimera/v2/src/core/errorKit"
+	"github.com/richelieu42/chimera/v2/src/funcKit"
 )
 
 func AssertEmail(email string) error {
 	validate := validator.New()
 	err := validate.Var(email, "required,email")
 	if err != nil {
-		return errorKit.SimpleWithExtraSkip(1, "[Assertion failed] email(%s) is invalid(%s)", email, err.Error())
+		return errorKit.SimpleWithExtraSkip(1, "[%s] email(%s) is invalid with error(%s)", funcKit.GetFuncName(1), email, err.Error())
 	}
 	return nil
 }
@@ -25,7 +26,7 @@ func AssertHttpUrl(httpUrl string) error {
 	validate := validator.New()
 	err := validate.Var(httpUrl, "required,http_url")
 	if err != nil {
-		return errorKit.SimpleWithExtraSkip(1, "[Assertion failed] httpUrl(%s) is invalid(%s)", httpUrl, err.Error())
+		return errorKit.SimpleWithExtraSkip(1, "[%s] httpUrl(%s) is invalid with error(%s)", funcKit.GetFuncName(1), httpUrl, err.Error())
 	}
 	return nil
 }
@@ -42,7 +43,7 @@ func AssertIPv4(ipv4 string) error {
 	validate := validator.New()
 	err := validate.Var(ipv4, "required,ipv4")
 	if err != nil {
-		return errorKit.SimpleWithExtraSkip(1, "[Assertion failed] ipv4(%s) is invalid(%s)", ipv4, err.Error())
+		return errorKit.SimpleWithExtraSkip(1, "[%s] ipv4(%s) is invalid with error(%s)", funcKit.GetFuncName(1), ipv4, err.Error())
 	}
 	return nil
 }
