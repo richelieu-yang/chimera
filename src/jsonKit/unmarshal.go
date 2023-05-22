@@ -53,12 +53,3 @@ func UnmarshalFromString(str string, ptr interface{}) error {
 
 	return jsoniter.UnmarshalFromString(str, ptr)
 }
-
-func UnmarshalFromStringToMap(str string) (map[string]interface{}, error) {
-	m := make(map[string]interface{})
-	err := UnmarshalFromString(str, &m)
-	if err != nil {
-		return nil, err
-	}
-	return m, nil
-}
