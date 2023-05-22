@@ -9,6 +9,9 @@ import (
 /*
 @param dest	必须是指针类型
 @param src 	指针类型 || 结构体实例
+
+e.g.
+
 */
 func Copy(dest, src interface{}) error {
 	return copier.CopyWithOption(dest, src, copier.Option{

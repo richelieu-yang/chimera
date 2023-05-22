@@ -2,8 +2,8 @@ package sliceKit
 
 // Copy 浅拷贝（浅克隆）
 /*
-参考:
-golang复制切片的方法（避免操作同一底层数组） https://blog.csdn.net/weixin_43970884/article/details/126051345
+PS: 也可以使用 copyKit.Copy().
+参考: golang复制切片的方法（避免操作同一底层数组） https://blog.csdn.net/weixin_43970884/article/details/126051345
 
 @param src 可以为nil（此时将返回空的slice实例）
 @return != nil
