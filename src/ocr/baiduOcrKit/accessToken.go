@@ -78,8 +78,9 @@ func newAccessToken() (*accessToken, error) {
 	if err != nil {
 		return nil, err
 	}
-	m, err := jsonKit.UnmarshalToMap(resp)
-	if err != nil {
+
+	m := make(map[string]interface{})
+	if err := jsonKit.Unmarshal(&m, resp); err != nil {
 		return nil, err
 	}
 

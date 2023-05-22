@@ -2,53 +2,51 @@ package jsonKit
 
 import (
 	jsoniter "github.com/json-iterator/go"
-	"github.com/richelieu42/chimera/v2/src/assertKit"
 	"github.com/richelieu42/chimera/v2/src/core/errorKit"
+	"github.com/richelieu42/chimera/v2/src/core/ptrKit"
+	"github.com/richelieu42/chimera/v2/src/core/strKit"
 )
 
-// Unmarshal
-/**
-@param data 必须满足条件: len(data) > 0
-@param ptr 	[不能为nil] 必须是指针类型（pointer）
+// Unmarshal 反序列化.
+/*
+@param ptr 	(1) 不能为nil
+			(2) 指针类型
+@param data	必要条件: len(data) > 0（包含: 不能为nil）
 */
-func Unmarshal(data []byte, ptr interface{}) error {
+func Unmarshal(ptr interface{}, data []byte) error {
+	/* 传参检查 */
+	if ptr == nil {
+		return errorKit.Simple("ptr == nil")
+	}
+	if !ptrKit.IsPointer(ptr) {
+		return errorKit.Simple("type(%T) of ptr isn't pointer", ptr)
+	}
 	if len(data) == 0 {
 		if data == nil {
 			return errorKit.Simple("data == nil")
 		}
 		return errorKit.Simple("len(data) == 0")
 	}
-	if err := assertKit.Pointer(ptr, "ptr"); err != nil {
-		return err
-	}
 
 	return jsoniter.Unmarshal(data, ptr)
 }
 
-// UnmarshalToMap
+// UnmarshalFromString 反序列化.
 /*
-@param data 必须满足条件: len(data) > 0
+@param ptr 	(1) 不能为nil
+			(2) 指针类型
+@param str	不能为空字符串("")
 */
-func UnmarshalToMap(data []byte) (map[string]interface{}, error) {
-	m := make(map[string]interface{})
-	err := Unmarshal(data, &m)
-	if err != nil {
-		return nil, err
+func UnmarshalFromString(ptr interface{}, str string) error {
+	/* 传参检查 */
+	if ptr == nil {
+		return errorKit.Simple("ptr == nil")
 	}
-	return m, nil
-}
-
-// UnmarshalFromString
-/*
-@param str	!!!: 不能为空字符串("")，否则会报错
-@param obj 	只能为指针（pointer），且不能为nil
-*/
-func UnmarshalFromString(str string, ptr interface{}) error {
-	if err := assertKit.NotEmpty(str, "str"); err != nil {
-		return err
+	if !ptrKit.IsPointer(ptr) {
+		return errorKit.Simple("type(%T) of ptr isn't pointer", ptr)
 	}
-	if err := assertKit.Pointer(ptr, "ptr"); err != nil {
-		return err
+	if strKit.IsEmpty(str) {
+		return errorKit.Simple("str is empty")
 	}
 
 	return jsoniter.UnmarshalFromString(str, ptr)

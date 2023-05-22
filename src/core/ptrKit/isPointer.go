@@ -7,10 +7,19 @@ import (
 	"reflect"
 )
 
-// IsPointer
+// IsPointer 传参的类型是否为指针？
 /*
+PS: 传参的值无影响，即使其为nil.
+
+@param obj 可以为nil
+
 e.g.
-(nil) => false
+	type bean struct {
+	}
+	var b *bean = nil
+	fmt.Println(ptrKit.IsPointer(b)) 				// true（类型为指针，虽然值为nil）
+
+	fmt.Println(ptrKit.IsPointer(interface{}(nil))) // false
 */
 func IsPointer(obj interface{}) bool {
 	// 参数obj为nil的话，变量v不为nil
