@@ -29,9 +29,11 @@ func processConfig(baseConfig *rmq_client.Config) (*rmq_client.Config, error) {
 	}
 
 	// 深拷贝，为了不修改传参baseConfig
-	config, err := copyKit.DeepCopy(baseConfig)
-	if err != nil {
-		return nil, err
+	var config *rmq_client.Config
+	obj := copyKit.DeepCopy(baseConfig)
+	config, ok := obj.(*rmq_client.Config)
+	if !ok {
+		return nil, errorKit.Simple("fail to deepcopy baseConfig")
 	}
 
 	if strKit.IsEmpty(config.Endpoint) {
