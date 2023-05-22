@@ -28,6 +28,7 @@ type (
 
 	// CorsConfig cors（跨源资源共享）的配置
 	CorsConfig struct {
+		Access  bool     `json:"access,default=false"`
 		Origins []string `json:"origins,optional"`
 	}
 
