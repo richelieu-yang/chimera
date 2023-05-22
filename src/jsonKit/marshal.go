@@ -26,6 +26,23 @@ func Marshal(obj interface{}, options ...JsonOption) ([]byte, error) {
 e.g.
 	(nil) 	=> "null", nil
 	("") 	=> "\"\"", nil
+
+e.g.1
+	m := map[string]interface{}{
+		"a": "0",
+		"b": "1",
+	}
+
+	str, _ := jsonKit.MarshalToString(m)
+	fmt.Println(str)
+	// {"a":"0","b":"1"}
+
+	str, _ = jsonKit.MarshalToString(m, jsonKit.WithIndent("    "))
+	fmt.Println(str)
+	//{
+	//	"a": "0",
+	//	"b": "1"
+	//}
 */
 func MarshalToString(obj interface{}, options ...JsonOption) (string, error) {
 	opts := loadOptions(options...)

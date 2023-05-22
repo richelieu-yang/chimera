@@ -1,25 +1,9 @@
 package main
 
-import (
-	jsoniter "github.com/json-iterator/go"
-	"github.com/sirupsen/logrus"
-)
+import "fmt"
 
 func main() {
-	m := map[string]interface{}{
-		"a": "0",
-		"b": "1",
-	}
-
-	data, err := jsoniter.ConfigCompatibleWithStandardLibrary.MarshalIndent(m, "", "")
-	if err != nil {
-		logrus.Fatal(err)
-	}
-	logrus.Info(string(data))
-
-	data, err = jsoniter.ConfigCompatibleWithStandardLibrary.Marshal(m)
-	if err != nil {
-		logrus.Fatal(err)
-	}
-	logrus.Info(string(data))
+	var data []byte = nil
+	fmt.Println(string(data))
+	fmt.Println(string(data) == "")
 }
