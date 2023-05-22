@@ -7,7 +7,7 @@ import (
 
 func AssertNotNil(obj interface{}) error {
 	if obj == nil {
-		return errorKit.Simple("[%s] obj == nil", funcKit.GetFuncName(1))
+		return errorKit.SimpleWithExtraSkip(1, "[%s] obj == nil", funcKit.GetFuncName(1))
 	}
 	return nil
 }
