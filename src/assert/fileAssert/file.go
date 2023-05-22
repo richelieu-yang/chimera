@@ -33,7 +33,7 @@ func AssertNotExistOrIsFile(path string) error {
 	}
 
 	if fileKit.Exist(path) && fileKit.IsDir(path) {
-		return errorKit.SimpleWithExtraSkip(1, "[%s] path(%s) exists but is a directory", funcKit.GetFuncName(1), path)
+		return errorKit.SimpleWithExtraSkip(1, "[%s] path(%s) exists but it is a directory", funcKit.GetFuncName(1), path)
 	}
 	return nil
 }
@@ -49,7 +49,7 @@ func AssertNotExistOrIsDir(path string) error {
 	}
 
 	if fileKit.Exist(path) && fileKit.IsFile(path) {
-		return errorKit.SimpleWithExtraSkip(1, "[%s] path(%s) exists but is a file", funcKit.GetFuncName(1), path)
+		return errorKit.SimpleWithExtraSkip(1, "[%s] path(%s) exists but it is a file", funcKit.GetFuncName(1), path)
 	}
 	return nil
 }
@@ -67,7 +67,7 @@ func AssertExistAndIsFile(path string) error {
 		return errorKit.SimpleWithExtraSkip(1, "[%s] path(%s) doesn't exist", funcKit.GetFuncName(1), path)
 	}
 	if fileKit.IsDir(path) {
-		return errorKit.SimpleWithExtraSkip(1, "[%s] path(%s) exists but is a directory", funcKit.GetFuncName(1), path)
+		return errorKit.SimpleWithExtraSkip(1, "[%s] path(%s) exists but it is a directory", funcKit.GetFuncName(1), path)
 	}
 	return nil
 }
@@ -85,7 +85,7 @@ func AssertExistAndIsDir(path string) error {
 		return errorKit.SimpleWithExtraSkip(1, "[%s] path(%s) doesn't exist", funcKit.GetFuncName(1), path)
 	}
 	if fileKit.IsFile(path) {
-		return errorKit.SimpleWithExtraSkip(1, "[%s] path(%s) exists but is a file", funcKit.GetFuncName(1), path)
+		return errorKit.SimpleWithExtraSkip(1, "[%s] path(%s) exists but it is a file", funcKit.GetFuncName(1), path)
 	}
 	return nil
 }

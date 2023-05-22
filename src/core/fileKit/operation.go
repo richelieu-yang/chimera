@@ -1,7 +1,7 @@
 package fileKit
 
 import (
-	"github.com/richelieu42/chimera/v2/src/assert/fileAssert"
+	"github.com/richelieu42/chimera/v2/src/core/errorKit"
 	"os"
 	"path/filepath"
 )
@@ -17,9 +17,10 @@ pattern: "tempfile_test*.xyz" 	=> 临时文件的文件名: "tempfile_test361767
 */
 func NewTemporaryFile(dirPath, pattern string) (*os.File, error) {
 	// check dirPath
-	if err := fileAssert.AssertNotExistOrIsDir(dirPath); err != nil {
-		return nil, err
+	if Exist(dirPath) && IsFile(dirPath) {
+		return nil, errorKit.Simple("dirPath(%s) exists but it is a file", dirPath)
 	}
+
 	if err := MkDirs(dirPath); err != nil {
 		return nil, err
 	}
@@ -33,29 +34,29 @@ PS: 如果文件已经存在，会覆盖掉它.
 */
 func NewFile(filePath string) (*os.File, error) {
 	// 检查 filePath
-	if err := fileAssert.AssertNotExistOrIsFile(filePath); err != nil {
-		return nil, err
+	if Exist(filePath) && IsDir(filePath) {
+		return nil, errorKit.Simple("filePath(%s) exists but it is a directory", filePath)
 	}
+
 	if err := MkParentDirs(filePath); err != nil {
 		return nil, err
 	}
-
 	return os.Create(filePath)
 }
 
 // WriteToFile 将数据（字节流）写到文件中.
 /*
-@param target 目标文件的路径（不存在的话，会创建一个新的文件；存在且是个文件的话，会覆盖掉旧的（并不会加到该文件的最后面））
+@param dest 目标文件的路径（不存在的话，会创建一个新的文件；存在且是个文件的话，会覆盖掉旧的（并不会加到该文件的最后面））
 */
 func WriteToFile(data []byte, dest string) error {
 	// 检查 dest
-	if err := fileAssert.AssertNotExistOrIsFile(dest); err != nil {
-		return err
+	if Exist(dest) && IsDir(dest) {
+		return errorKit.Simple("dest(%s) exists but it is a directory", dest)
 	}
+
 	if err := MkParentDirs(dest); err != nil {
 		return err
 	}
-
 	return os.WriteFile(dest, data, os.ModePerm)
 }
 
@@ -74,14 +75,14 @@ func Delete(path string) error {
 
 // EmptyDir 清空目录：删掉目录中的文件和子目录（递归），但该目录本身不会被删掉.
 /*
-@param dirPath 可以不存在，此时将返回nil
+@param dirPath 可以不存在（此时将返回nil）
 */
 func EmptyDir(dirPath string) error {
 	if NotExist(dirPath) {
 		return nil
 	}
-	if err := fileAssert.AssertExistAndIsDir(dirPath); err != nil {
-		return err
+	if IsFile(dirPath) {
+		return errorKit.Simple("dirPath(%s) exists but it is a file", dirPath)
 	}
 
 	// 遍历目录
