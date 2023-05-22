@@ -2,9 +2,9 @@ package jsonKit
 
 import (
 	jsoniter "github.com/json-iterator/go"
+	"github.com/richelieu42/chimera/v2/src/assert/ptrAssert"
+	"github.com/richelieu42/chimera/v2/src/assert/sliceAssert"
 	"github.com/richelieu42/chimera/v2/src/assert/strAssert"
-	"github.com/richelieu42/chimera/v2/src/core/ptrKit"
-	"github.com/richelieu42/chimera/v2/src/core/sliceKit"
 )
 
 // Unmarshal 反序列化.
@@ -15,10 +15,10 @@ import (
 */
 func Unmarshal(ptr interface{}, data []byte) error {
 	/* 传参检查 */
-	if err := ptrKit.AssertNotNilAndIsPointer(ptr); err != nil {
+	if err := ptrAssert.AssertNotNilAndIsPointer(ptr); err != nil {
 		return err
 	}
-	if err := sliceKit.AssertNotEmpty(data); err != nil {
+	if err := sliceAssert.AssertNotEmpty(data); err != nil {
 		return err
 	}
 
@@ -33,7 +33,7 @@ func Unmarshal(ptr interface{}, data []byte) error {
 */
 func UnmarshalFromString(ptr interface{}, str string) error {
 	/* 传参检查 */
-	if err := ptrKit.AssertNotNilAndIsPointer(ptr); err != nil {
+	if err := ptrAssert.AssertNotNilAndIsPointer(ptr); err != nil {
 		return err
 	}
 	if err := strAssert.AssertStringNotBlank(str); err != nil {

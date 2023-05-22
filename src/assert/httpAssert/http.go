@@ -1,4 +1,4 @@
-package httpKit
+package httpAssert
 
 import (
 	"github.com/go-playground/validator/v10"
