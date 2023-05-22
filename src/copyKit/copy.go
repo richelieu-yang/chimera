@@ -3,8 +3,6 @@ package copyKit
 import (
 	"github.com/gogf/gf/v2/util/gutil"
 	"github.com/jinzhu/copier"
-	"github.com/richelieu42/chimera/v2/src/core/errorKit"
-	"github.com/richelieu42/chimera/v2/src/core/interfaceKit"
 )
 
 // Copy 浅拷贝
@@ -19,21 +17,15 @@ func Copy(dest, src interface{}) error {
 // DeepCopy 深拷贝
 /*
 PS:
-(1) github.com/mohae/deepcopy 虽然效果一样，但不推荐使用（star少; 最后更新时间2017）.
+(1) github.com/mohae/deepcopy 虽然效果一样，但不推荐使用（star少; 最后更新时间2017）
+(2) unable to copy unexported fields in a struct (lowercase field names)
+
+@param src 可以为nil（此时将返回nil）
+@return The returned value will need to be asserted to the correct type.（需要手动断言）
 
 e.g.
 
 */
-func DeepCopy[T any](src T) (dest T, err error) {
-	if interfaceKit.IsNil(src) {
-		return
-	}
-
-	obj := gutil.Copy(src)
-	var ok bool
-	if dest, ok = obj.(T); ok {
-		return
-	}
-	err = errorKit.Simple("different types of src(%T) and dest(%T) are different", src, obj)
-	return
+func DeepCopy(src interface{}) interface{} {
+	return gutil.Copy(src)
 }
