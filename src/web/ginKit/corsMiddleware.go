@@ -21,16 +21,6 @@ e.g.
 	传参: []string{"https://*.github.com", "https://api.*", "http://*", "https://facebook.com", "*.golang.org"}
 */
 func NewCorsMiddleware(origins []string) gin.HandlerFunc {
-	config := newCorsConfig(origins)
-	return cors.New(config)
-}
-
-// newCorsConfig
-/*
-@param origins origin白名单，可以为nil（任意origin都通过）
-@return cors依赖的配置
-*/
-func newCorsConfig(origins []string) cors.Config {
 	config := cors.Config{
 		AllowMethods:     []string{"GET", "POST", "OPTIONS"},
 		AllowHeaders:     []string{"Origin", "Content-Length", "Content-Type", "Authorization"},
@@ -49,5 +39,5 @@ func newCorsConfig(origins []string) cors.Config {
 			return true
 		}
 	}
-	return config
+	return cors.New(config)
 }

@@ -34,9 +34,8 @@ func attachMiddlewares(engine *gin.Engine, config *MiddlewareConfig, recoveryMid
 		// cors
 		{
 			var origins []string
-			corsConfig := config.Cors
-			if corsConfig != nil {
-				origins = corsConfig.Origins
+			if config.Cors != nil {
+				origins = config.Cors.Origins
 			}
 			origins = sliceKit.RemoveEmpty(origins, true)
 			origins = sliceKit.Uniq(origins)

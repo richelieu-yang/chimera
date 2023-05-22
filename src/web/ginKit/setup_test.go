@@ -4,11 +4,7 @@ import (
 	"github.com/gin-gonic/gin"
 	"github.com/richelieu42/chimera/v2/src/confKit"
 	"github.com/richelieu42/chimera/v2/src/core/osKit"
-	"github.com/richelieu42/chimera/v2/src/dataSizeKit"
 	"github.com/richelieu42/chimera/v2/src/log/logrusKit"
-	"github.com/richelieu42/chimera/v2/src/web/httpKit"
-	"github.com/sirupsen/logrus"
-	"net"
 	"net/http"
 	"testing"
 )
@@ -30,27 +26,17 @@ func TestMustSetUp(t *testing.T) {
 	confKit.MustLoad(path, c)
 	MustSetUp(c.Gin, nil, func(engine *gin.Engine) error {
 		engine.Any("/test", func(ctx *gin.Context) {
-			logrus.Info(ctx.Request.URL.RawQuery)
-
-			if err := httpKit.Proxy(ctx.Writer, ctx.Request, "http", "127.0.0.1:8001"); err != nil {
-				if ee, ok := err.(*net.OpError); ok {
-					eee := ee.Unwrap()
-					eee = eee
-					ctx.String(http.StatusInternalServerError, err.Error())
-				} else {
-					ctx.String(http.StatusInternalServerError, err.Error())
-				}
-			}
+			ctx.String(http.StatusOK, "hello")
 		})
 
-		engine.Any("/upload", func(ctx *gin.Context) {
-			fileHeader, err := ctx.FormFile("file")
-			if err != nil {
-				ctx.String(http.StatusInternalServerError, err.Error())
-				return
-			}
-			ctx.String(http.StatusOK, dataSizeKit.ToReadableStringWithIEC(uint64(fileHeader.Size)))
-		})
+		//engine.Any("/upload", func(ctx *gin.Context) {
+		//	fileHeader, err := ctx.FormFile("file")
+		//	if err != nil {
+		//		ctx.String(http.StatusInternalServerError, err.Error())
+		//		return
+		//	}
+		//	ctx.String(http.StatusOK, dataSizeKit.ToReadableStringWithIEC(uint64(fileHeader.Size)))
+		//})
 
 		return nil
 	})
