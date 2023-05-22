@@ -7,10 +7,8 @@ import (
 
 // GetFuncName
 /*
-@param callDepth 必须满足: >=0，实际使用中: >=1
-
-e.g.
-(1) => 调用此函数的函数的函数名（不含包名）
+@param callDepth 	(1) 必须满足: >=0，实际使用中: >=1
+					(2) 如果callDepth == 1，则返回 调用此函数的函数的函数名（不含包名）
 */
 func GetFuncName(callDepth int) string {
 	pc, _, _, ok := runtime.Caller(callDepth)
