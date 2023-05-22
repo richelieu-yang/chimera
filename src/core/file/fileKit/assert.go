@@ -2,6 +2,8 @@ package fileKit
 
 import (
 	"github.com/richelieu42/chimera/v2/src/core/errorKit"
+	"github.com/richelieu42/chimera/v2/src/core/strKit"
+	"github.com/richelieu42/chimera/v2/src/funcKit"
 )
 
 // AssertExist
@@ -9,41 +11,44 @@ import (
 @param path 文件（或目录）的路径
 */
 func AssertExist(path string) error {
-	return assertExist(path, 1)
+	if strKit.IsBlank(path) {
+		return errorKit.SimpleWithExtraSkip(1, "[%s] path(%s) is blank", funcKit.GetFuncName(1), path)
+	}
+
+	if !Exist(path) {
+		return errorKit.SimpleWithExtraSkip(1, "[%s] path(%s) doesn't exist", funcKit.GetFuncName(1), path)
+	}
+	return nil
 }
 
 // AssertNotExistOrIsFile
 /*
-@return 返回nil（通过断言）的情况: 不存在 || 存在但是个文件
+通过的情况: 	不存在 || 存在但是个文件
+不通过的情况:	存在但是个目录
 */
 func AssertNotExistOrIsFile(path string) error {
+	if strKit.IsBlank(path) {
+		return errorKit.SimpleWithExtraSkip(1, "[%s] path(%s) is blank", funcKit.GetFuncName(1), path)
+	}
+
 	if Exist(path) && IsDir(path) {
-		// 此处的1是为了跳过当前函数的调用
-		return errorKit.SimpleWithExtraSkip(1, "[Assertion failed] path(%s) exists but it isn't a file", path)
+		return errorKit.SimpleWithExtraSkip(1, "[%s] path(%s) exists but is a directory", funcKit.GetFuncName(1), path)
 	}
 	return nil
 }
 
 // AssertNotExistOrIsDir
 /*
-@return 返回nil（通过断言）的情况: 不存在 || 存在但是个目录
+通过的情况: 	不存在 || 存在但是个目录
+不通过的情况:	存在但是个文件
 */
 func AssertNotExistOrIsDir(path string) error {
-	if Exist(path) && IsFile(path) {
-		// 此处的1是为了跳过当前函数的调用
-		return errorKit.SimpleWithExtraSkip(1, "[Assertion failed] path(%s) exists but it isn't a directory", path)
+	if strKit.IsBlank(path) {
+		return errorKit.SimpleWithExtraSkip(1, "[%s] path(%s) is blank", funcKit.GetFuncName(1), path)
 	}
-	return nil
-}
 
-// assertExist
-/*
-@param extraSkip 必须>=1
-*/
-func assertExist(path string, extraSkip int) error {
-	if !Exist(path) {
-		// 此处的1是为了跳过当前函数的调用
-		return errorKit.SimpleWithExtraSkip(1+extraSkip, "[Assertion failed] path(%s) doesn't exist", path)
+	if Exist(path) && IsFile(path) {
+		return errorKit.SimpleWithExtraSkip(1, "[%s] path(%s) exists but is a file", funcKit.GetFuncName(1), path)
 	}
 	return nil
 }
@@ -53,11 +58,15 @@ func assertExist(path string, extraSkip int) error {
 @return 如果path存在且是个文件，返回nil
 */
 func AssertExistAndIsFile(path string) error {
-	if err := assertExist(path, 1); err != nil {
-		return err
+	if strKit.IsBlank(path) {
+		return errorKit.SimpleWithExtraSkip(1, "[%s] path(%s) is blank", funcKit.GetFuncName(1), path)
 	}
-	if !IsFile(path) {
-		return errorKit.SimpleWithExtraSkip(1, "[Assertion failed] path(%s) exists but not a file", path)
+
+	if !Exist(path) {
+		return errorKit.SimpleWithExtraSkip(1, "[%s] path(%s) doesn't exist", funcKit.GetFuncName(1), path)
+	}
+	if IsDir(path) {
+		return errorKit.SimpleWithExtraSkip(1, "[%s] path(%s) exists but is a directory", funcKit.GetFuncName(1), path)
 	}
 	return nil
 }
@@ -67,11 +76,15 @@ func AssertExistAndIsFile(path string) error {
 @return 如果path存在且是个目录，返回nil
 */
 func AssertExistAndIsDir(path string) error {
-	if err := assertExist(path, 1); err != nil {
-		return err
+	if strKit.IsBlank(path) {
+		return errorKit.SimpleWithExtraSkip(1, "[%s] path(%s) is blank", funcKit.GetFuncName(1), path)
 	}
-	if !IsDir(path) {
-		return errorKit.SimpleWithExtraSkip(1, "[Assertion failed] path(%s) exists but not a directory", path)
+
+	if !Exist(path) {
+		return errorKit.SimpleWithExtraSkip(1, "[%s] path(%s) doesn't exist", funcKit.GetFuncName(1), path)
+	}
+	if IsFile(path) {
+		return errorKit.SimpleWithExtraSkip(1, "[%s] path(%s) exists but is a file", funcKit.GetFuncName(1), path)
 	}
 	return nil
 }
