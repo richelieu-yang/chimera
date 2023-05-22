@@ -2,28 +2,38 @@ package main
 
 import (
 	"fmt"
+	jsoniter "github.com/json-iterator/go"
 	"github.com/richelieu42/chimera/v2/src/copyKit"
+	"github.com/richelieu42/chimera/v2/src/jsonKit"
 )
 
+type Bean struct {
+	Id int
+}
+
 func main() {
-	a, err := copyKit.DeepCopy[interface{}](nil)
+	b := &Bean{
+		Id: 666,
+	}
+	src := map[string]interface{}{
+		"b":   false,
+		"tmp": b,
+	}
+	dest, err := copyKit.DeepCopy(src)
 	if err != nil {
 		panic(err)
 	}
-	fmt.Println(a)
-	fmt.Println(a == nil) // true
 
-	b, err := copyKit.DeepCopy[[]int](nil)
-	if err != nil {
-		panic(err)
-	}
-	fmt.Println(b)
-	fmt.Println(b == nil) // true
+	// {"b":false,"tmp":{"Id":666}} <nil>
+	fmt.Println(jsonKit.MarshalToString(src, jsonKit.WithApi(jsoniter.ConfigCompatibleWithStandardLibrary)))
+	// {"b":false,"tmp":{"Id":666}} <nil>
+	fmt.Println(jsonKit.MarshalToString(dest, jsonKit.WithApi(jsoniter.ConfigCompatibleWithStandardLibrary)))
 
-	c, err := copyKit.DeepCopy[map[string]interface{}](nil)
-	if err != nil {
-		panic(err)
-	}
-	fmt.Println(c)
-	fmt.Println(c == nil) // true
+	src["b"] = true
+	b.Id = 777
+
+	// {"b":true,"tmp":{"Id":777}} <nil>
+	fmt.Println(jsonKit.MarshalToString(src, jsonKit.WithApi(jsoniter.ConfigCompatibleWithStandardLibrary)))
+	// {"b":false,"tmp":{"Id":666}} <nil>
+	fmt.Println(jsonKit.MarshalToString(dest, jsonKit.WithApi(jsoniter.ConfigCompatibleWithStandardLibrary)))
 }
