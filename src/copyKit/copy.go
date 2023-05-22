@@ -9,8 +9,10 @@ import (
 
 // Copy 浅拷贝
 /*
-@param dest	必须是指针类型
-@param src 	指针类型 || 结构体实例
+@param dest	(1) 如果为nil，将返回error
+			(2) 必须是指针类型
+@param src 	(1) 如果为nil，将返回error
+			(2) 指针类型 || 结构体实例
 
 e.g.
 	b := &Bean{
