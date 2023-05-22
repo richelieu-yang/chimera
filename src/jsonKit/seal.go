@@ -2,7 +2,6 @@ package jsonKit
 
 import (
 	"fmt"
-	jsoniter "github.com/json-iterator/go"
 	"github.com/richelieu42/chimera/v2/src/core/strKit"
 	"github.com/richelieu42/chimera/v2/src/msgKit"
 )
@@ -51,22 +50,18 @@ func Seal(code string, msgArgs ...interface{}) string {
 }
 
 func SealWithData(code string, data interface{}, msgArgs ...interface{}) string {
-	json, _ := SealFully(jsoniter.ConfigDefault, code, "", data, msgArgs...)
+	json, _ := SealFully(code, "", data, msgArgs...)
 	return json
 }
 
-func SealFully(api jsoniter.API, code, message string, data interface{}, msgArgs ...interface{}) (json string, err error) {
-	if api == nil {
-		api = jsoniter.ConfigDefault
-	}
-
+func SealFully(code, message string, data interface{}, msgArgs ...interface{}) (json string, err error) {
 	message = getFinalMessage(code, message, data, msgArgs...)
 	resp := &Response{Code: code, Message: message, Data: data}
 
 	if responseHook == nil {
-		return MarshalToStringWithJsoniterApi(api, resp)
+		return MarshalToString(resp)
 	}
-	return MarshalToStringWithJsoniterApi(api, responseHook(resp))
+	return MarshalToString(responseHook(resp))
 }
 
 func getFinalMessage(code, msg string, data interface{}, msgArgs ...interface{}) string {
