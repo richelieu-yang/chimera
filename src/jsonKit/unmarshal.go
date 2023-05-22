@@ -15,11 +15,8 @@ import (
 */
 func Unmarshal(ptr interface{}, data []byte) error {
 	/* 传参检查 */
-	if ptr == nil {
-		return errorKit.Simple("ptr == nil")
-	}
-	if !ptrKit.IsPointer(ptr) {
-		return errorKit.Simple("type(%T) of ptr isn't pointer", ptr)
+	if err := ptrKit.AssertNotNilAndIsPointer(ptr); err != nil {
+		return err
 	}
 	if len(data) == 0 {
 		if data == nil {
@@ -39,11 +36,8 @@ func Unmarshal(ptr interface{}, data []byte) error {
 */
 func UnmarshalFromString(ptr interface{}, str string) error {
 	/* 传参检查 */
-	if ptr == nil {
-		return errorKit.Simple("ptr == nil")
-	}
-	if !ptrKit.IsPointer(ptr) {
-		return errorKit.Simple("type(%T) of ptr isn't pointer", ptr)
+	if err := ptrKit.AssertNotNilAndIsPointer(ptr); err != nil {
+		return err
 	}
 	if strKit.IsEmpty(str) {
 		return errorKit.Simple("str is empty")

@@ -5,8 +5,8 @@ import (
 	"github.com/richelieu42/chimera/v2/src/funcKit"
 )
 
-// AssertNotNilPointer 断言传参 (1)值非nil; (2)类型为指针
-func AssertNotNilPointer(ptr interface{}) error {
+// AssertNotNilAndIsPointer 断言传参 (1)值非nil; (2)类型为指针
+func AssertNotNilAndIsPointer(ptr interface{}) error {
 	if ptr == nil {
 		return errorKit.SimpleWithExtraSkip(1, "[%s] ptr == nil", funcKit.GetFuncName(1))
 	}

@@ -15,7 +15,7 @@ PS:
 @param output 	必须是（map或结构体的）指针
 */
 func Decode(input interface{}, output interface{}) error {
-	if err := ptrKit.AssertNotNilPointer(output); err != nil {
+	if err := ptrKit.AssertNotNilAndIsPointer(output); err != nil {
 		return err
 	}
 
