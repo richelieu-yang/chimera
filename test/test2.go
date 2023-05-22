@@ -1,13 +1,37 @@
 package main
 
-import "fmt"
+import (
+	"fmt"
+	"github.com/gogf/gf/v2/util/gutil"
+	jsoniter "github.com/json-iterator/go"
+	"github.com/richelieu42/chimera/v2/src/jsonKit"
+)
+
+type Bean struct {
+	Id int
+}
 
 func main() {
-	s := make([]int, 0, 5)
-	fmt.Println(s[:4]) // [0 0 0 0]
-	fmt.Println(s[:5]) // [0 0 0 0 0]
-	fmt.Println(s[0:0])
-	fmt.Println(s[0:0] != nil)
-	fmt.Println(s[0:0])
-	fmt.Println(s[5:5] != nil)
+	b := &Bean{
+		Id: 666,
+	}
+	src := map[string]interface{}{
+		"b":   false,
+		"tmp": b,
+	}
+	var dest map[string]interface{}
+	dest = DeepCopy(src).(map[string]interface{})
+
+	fmt.Println(src)
+	fmt.Println(dest)
+
+	src["b"] = true
+	b.Id = 777
+
+	fmt.Println(jsonKit.MarshalToStringWithJsoniterApi(jsoniter.ConfigCompatibleWithStandardLibrary, src))
+	fmt.Println(jsonKit.MarshalToStringWithJsoniterApi(jsoniter.ConfigCompatibleWithStandardLibrary, dest))
+}
+
+func DeepCopy(src interface{}) interface{} {
+	return gutil.Copy(src)
 }

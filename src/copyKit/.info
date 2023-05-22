@@ -1,0 +1,1 @@
+可以参考 GoFrame 中的 deepcopy.Copy()（但由于是internal包，外部不能调用）.

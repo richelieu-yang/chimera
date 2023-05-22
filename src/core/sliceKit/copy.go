@@ -1,7 +1,5 @@
 package sliceKit
 
-import "github.com/richelieu42/chimera/v2/src/copyKit"
-
 // Copy 浅克隆（浅拷贝）
 /*
 参考:
@@ -62,31 +60,31 @@ func Copy2[T any](src []T) []T {
 	return src[:]
 }
 
-// DeepCopy 深拷贝
-/*
-e.g.
-	([]string(nil)) => (nil, nil)
-
-e.g.1
-	s := []*Bean{{Id: 0}, {Id: 1}}
-	s1, err := sliceKit.DeepCopy(s)
-	if err != nil {
-		panic(err)
-	}
-
-	fmt.Printf("%p\n", &s)   // 0x1400000c048
-	fmt.Printf("%p\n", s[0]) // 0x140000220a0
-	fmt.Printf("%p\n", s[1]) // 0x140000220a8
-
-	fmt.Println("==================")
-
-	fmt.Printf("%p\n", &s1)   // 0x1400000c060
-	fmt.Printf("%p\n", s1[0]) // 0x140000220b0
-	fmt.Printf("%p\n", s1[1]) // 0x140000220d8
-*/
-func DeepCopy[T any](src []T) ([]T, error) {
-	return copyKit.DeepCopy(src)
-}
+//// DeepCopy 深拷贝
+///*
+//e.g.
+//	([]string(nil)) => (nil, nil)
+//
+//e.g.1
+//	s := []*Bean{{Id: 0}, {Id: 1}}
+//	s1, err := sliceKit.DeepCopy(s)
+//	if err != nil {
+//		panic(err)
+//	}
+//
+//	fmt.Printf("%p\n", &s)   // 0x1400000c048
+//	fmt.Printf("%p\n", s[0]) // 0x140000220a0
+//	fmt.Printf("%p\n", s[1]) // 0x140000220a8
+//
+//	fmt.Println("==================")
+//
+//	fmt.Printf("%p\n", &s1)   // 0x1400000c060
+//	fmt.Printf("%p\n", s1[0]) // 0x140000220b0
+//	fmt.Printf("%p\n", s1[1]) // 0x140000220d8
+//*/
+//func DeepCopy[T any](src []T) ([]T, error) {
+//	return copyKit.DeepCopy(src)
+//}
 
 // CopyToDest 将src的元素复制到dest中（可能会修改dest的内容，但dest的内存地址不变！！！）
 /*
