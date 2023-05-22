@@ -21,17 +21,17 @@ gin:
     xFrameOptions:
     cors:
       # cors配置是否生效？false: 下面的origins配置将无效
-#      access: true
+      access: true
       # 支持的Origin(s)，即响应头中的Access-Control-Allow-Origin
       # (1) 默认: 支持所有的Origin（即动态支持请求的Origin，并非"*"）
       # (2) 支持通配符"*"
-      origins: []
-#        - https://*.github.com
-#        - https://api.*
-#        - http://*
-#        - https://facebook.com
-#        - *.golang.org
-#    # referer验证（referer: 来源; 参考了nginx的referer配置）
+#      origins:
+#        - "https://*.github.com"
+#        - "https://api.*"
+#        - "http://*"
+#        - "*.golang.org"
+#        - "https://facebook.com"
+    # referer验证（referer: 来源; 参考了nginx的referer配置）
 #    referer:
 #      -
 #        # 对路由的正则判断（不满足则默认通过该referer验证）
