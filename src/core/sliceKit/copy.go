@@ -15,12 +15,6 @@ e.g.	浅拷贝
 	s1[0] = "3"
 	fmt.Println(s0) // [0 1 2]
 	fmt.Println(s1) // [3 1 2]
-
-e.g.1	传参为nil
-	s := sliceKit.Copy([]int(nil))
-	fmt.Println(s)        // []
-	fmt.Println(len(s))   // 0
-	fmt.Println(s != nil) // true
 */
 func Copy[T any](src []T) []T {
 	dest := make([]T, len(src))
