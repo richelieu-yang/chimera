@@ -1,6 +1,6 @@
 package sliceKit
 
-// Copy 浅克隆（浅拷贝）
+// Copy 浅拷贝（浅克隆）
 /*
 参考:
 golang复制切片的方法（避免操作同一底层数组） https://blog.csdn.net/weixin_43970884/article/details/126051345
@@ -8,13 +8,13 @@ golang复制切片的方法（避免操作同一底层数组） https://blog.csd
 @param src 可以为nil（此时将返回空的slice实例）
 @return != nil
 
-e.g.	浅拷贝
-	s0 := []string{"0", "1", "2"}
-	s1 := sliceKit.Copy(s0)
+e.g.
+	src := []string{"0", "1", "2"}
+	dest := sliceKit.Copy(src)
 
-	s1[0] = "3"
-	fmt.Println(s0) // [0 1 2]
-	fmt.Println(s1) // [3 1 2]
+	src[0] = "a"
+	fmt.Println(src)  // [a 1 2]
+	fmt.Println(dest) // [0 1 2]
 */
 func Copy[T any](src []T) []T {
 	dest := make([]T, len(src))
