@@ -5,8 +5,8 @@ package sliceKit
 参考:
 golang复制切片的方法（避免操作同一底层数组） https://blog.csdn.net/weixin_43970884/article/details/126051345
 
-@param src 	可以为nil
-@return 保底为len==0的slice实例
+@param src 可以为nil（此时将返回空的slice实例）
+@return != nil
 
 e.g.	浅拷贝
 	s0 := []string{"0", "1", "2"}
@@ -23,68 +23,10 @@ e.g.1	传参为nil
 	fmt.Println(s != nil) // true
 */
 func Copy[T any](src []T) []T {
-	dolly := make([]T, len(src))
-	copy(dolly, src)
-	return dolly
+	dest := make([]T, len(src))
+	copy(dest, src)
+	return dest
 }
-
-// Copy1 浅克隆（浅拷贝）
-/*
-Deprecated: 并不是我想要的"浅拷贝".
-
-e.g.
-	s0 := []string{"0", "1", "2"}
-	s1 := sliceKit.Copy1(s0)
-
-	s1[0] = "3"
-	fmt.Println(s0) // [3 1 2]
-	fmt.Println(s1) // [3 1 2]
-*/
-func Copy1[T any](src []T) []T {
-	return append(src)
-}
-
-// Copy2 浅克隆（浅拷贝）
-/*
-Deprecated: 并不是我想要的"浅拷贝".
-
-e.g.
-	s0 := []string{"0", "1", "2"}
-	s1 := sliceKit.Copy2(s0)
-
-	s1[0] = "3"
-	fmt.Println(s0) // [3 1 2]
-	fmt.Println(s1) // [3 1 2]
-*/
-func Copy2[T any](src []T) []T {
-	return src[:]
-}
-
-//// DeepCopy 深拷贝
-///*
-//e.g.
-//	([]string(nil)) => (nil, nil)
-//
-//e.g.1
-//	s := []*Bean{{Id: 0}, {Id: 1}}
-//	s1, err := sliceKit.DeepCopy(s)
-//	if err != nil {
-//		panic(err)
-//	}
-//
-//	fmt.Printf("%p\n", &s)   // 0x1400000c048
-//	fmt.Printf("%p\n", s[0]) // 0x140000220a0
-//	fmt.Printf("%p\n", s[1]) // 0x140000220a8
-//
-//	fmt.Println("==================")
-//
-//	fmt.Printf("%p\n", &s1)   // 0x1400000c060
-//	fmt.Printf("%p\n", s1[0]) // 0x140000220b0
-//	fmt.Printf("%p\n", s1[1]) // 0x140000220d8
-//*/
-//func DeepCopy[T any](src []T) ([]T, error) {
-//	return copyKit.DeepCopy(src)
-//}
 
 // CopyToDest 将src的元素复制到dest中（可能会修改dest的内容，但dest的内存地址不变！！！）
 /*
