@@ -1,0 +1,1 @@
+为避免import cycle，单独抽出来.
