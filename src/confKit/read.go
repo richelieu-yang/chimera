@@ -10,8 +10,8 @@ package confKit
 
 import (
 	"github.com/mitchellh/mapstructure"
+	"github.com/richelieu42/chimera/v2/src/assert/fileAssert"
 	"github.com/richelieu42/chimera/v2/src/core/errorKit"
-	"github.com/richelieu42/chimera/v2/src/core/file/fileKit"
 	"github.com/richelieu42/chimera/v2/src/core/ioKit"
 	"github.com/richelieu42/chimera/v2/src/core/ptrKit"
 	"github.com/spf13/viper"
@@ -83,7 +83,7 @@ func checkParamPtr(ptr interface{}) error {
 }
 
 func readFile(filePath string, defaultMap map[string]interface{}) (*viper.Viper, error) {
-	if err := fileKit.AssertExistAndIsFile(filePath); err != nil {
+	if err := fileAssert.AssertExistAndIsFile(filePath); err != nil {
 		return nil, err
 	}
 

@@ -2,7 +2,7 @@ package httpKit
 
 import (
 	"fmt"
-	"github.com/richelieu42/chimera/v2/src/core/file/fileKit"
+	"github.com/richelieu42/chimera/v2/src/assert/fileAssert"
 	"github.com/richelieu42/chimera/v2/src/core/strKit"
 	"github.com/richelieu42/chimera/v2/src/jsonKit"
 	"github.com/richelieu42/chimera/v2/src/web/mimeTypeKit"
@@ -74,7 +74,7 @@ func RespondJson(w http.ResponseWriter, code int, obj any) error {
 @return 如果不为nil，建议输出到控制台
 */
 func RespondFile(w http.ResponseWriter, r *http.Request, code int, filePath, fileName string) error {
-	if err := fileKit.AssertExistAndIsFile(filePath); err != nil {
+	if err := fileAssert.AssertExistAndIsFile(filePath); err != nil {
 		return err
 	}
 	if fileName == "" {

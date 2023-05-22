@@ -1,8 +1,8 @@
 package httpClientKit
 
 import (
+	"github.com/richelieu42/chimera/v2/src/assert/httpAssert"
 	"github.com/richelieu42/chimera/v2/src/urlKit"
-	"github.com/richelieu42/chimera/v2/src/web/httpKit"
 	"io"
 	"net/http"
 )
@@ -29,7 +29,7 @@ func GetForResponse(url string, options ...Option) (*http.Response, error) {
 	opts := loadOptions(options...)
 
 	// url
-	if err := httpKit.AssertHttpUrl(url); err != nil {
+	if err := httpAssert.AssertHttpUrl(url); err != nil {
 		return nil, err
 	}
 	url = urlKit.AttachQueryParamsToUrl(url, opts.queryParams)

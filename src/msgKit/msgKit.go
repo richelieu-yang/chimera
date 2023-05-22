@@ -1,8 +1,8 @@
 package msgKit
 
 import (
+	"github.com/richelieu42/chimera/v2/src/assert/fileAssert"
 	"github.com/richelieu42/chimera/v2/src/confKit"
-	"github.com/richelieu42/chimera/v2/src/core/file/fileKit"
 	"github.com/richelieu42/chimera/v2/src/core/mapKit"
 )
 
@@ -17,7 +17,7 @@ var msgMap = make(map[string]string)
 @param filePath 建议是 .properties后缀 的文件
 */
 func ReadFile(filePath string) error {
-	if err := fileKit.AssertExistAndIsFile(filePath); err != nil {
+	if err := fileAssert.AssertExistAndIsFile(filePath); err != nil {
 		return err
 	}
 

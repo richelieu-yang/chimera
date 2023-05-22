@@ -1,6 +1,7 @@
 package ocrKit
 
 import (
+	"github.com/richelieu42/chimera/v2/src/assert/fileAssert"
 	"github.com/richelieu42/chimera/v2/src/cmdKit"
 	"github.com/richelieu42/chimera/v2/src/core/errorKit"
 	"github.com/richelieu42/chimera/v2/src/core/file/fileKit"
@@ -15,7 +16,7 @@ import (
 //!!!: 使用此函数，必须确保"CGO_ENABLED=1"，否则go run或go build会报错: undefined: gosseract.NewClient
 //*/
 //func GetText1(imgPath string, languages ...string) (string, error) {
-//	if err := fileKit.AssertExistAndIsFile(imgPath); err != nil {
+//	if err := fileAssert.AssertExistAndIsFile(imgPath); err != nil {
 //		return "", err
 //	}
 //
@@ -40,7 +41,7 @@ PS:
 (3) 识别并不精确，有些图片可能识别不到文本（e.g.图片很小且就一两个字符）.
 */
 func GetText(imgPath string, languages ...string) (string, error) {
-	if err := fileKit.AssertExistAndIsFile(imgPath); err != nil {
+	if err := fileAssert.AssertExistAndIsFile(imgPath); err != nil {
 		return "", err
 	}
 
@@ -48,10 +49,7 @@ func GetText(imgPath string, languages ...string) (string, error) {
 	if err != nil {
 		return "", err
 	}
-	uuid, err := idKit.NewUUID()
-	if err != nil {
-		return "", err
-	}
+	uuid := idKit.NewUUID()
 	filePath := pathKit.Join(tempDir, uuid+".txt")
 	defer fileKit.Delete(filePath)
 

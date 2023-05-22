@@ -1,7 +1,7 @@
 package logrusKit
 
 import (
-	"github.com/richelieu42/chimera/v2/src/core/file/fileKit"
+	"github.com/richelieu42/chimera/v2/src/assert/fileAssert"
 	"github.com/richelieu42/chimera/v2/src/core/ioKit"
 	"github.com/stretchr/testify/assert"
 	"testing"
@@ -19,6 +19,6 @@ func TestNewLogger(t *testing.T) {
 	logger = NewLogger(WithWriter(writer))
 	logger.Info("to rotatable file")
 
-	err = fileKit.AssertExistAndIsFile(path)
+	err = fileAssert.AssertExistAndIsFile(path)
 	assert.Nil(t, err)
 }

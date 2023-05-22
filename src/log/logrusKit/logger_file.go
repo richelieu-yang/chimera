@@ -1,6 +1,7 @@
 package logrusKit
 
 import (
+	"github.com/richelieu42/chimera/v2/src/assert/fileAssert"
 	"github.com/richelieu42/chimera/v2/src/core/file/fileKit"
 	"github.com/richelieu42/chimera/v2/src/core/ioKit"
 	"github.com/sirupsen/logrus"
@@ -23,7 +24,7 @@ func NewFileLogger(filePath string, formatter logrus.Formatter, level logrus.Lev
 	if err := fileKit.MkParentDirs(filePath); err != nil {
 		return nil, err
 	}
-	if err := fileKit.AssertNotExistOrIsFile(filePath); err != nil {
+	if err := fileAssert.AssertNotExistOrIsFile(filePath); err != nil {
 		return nil, err
 	}
 
