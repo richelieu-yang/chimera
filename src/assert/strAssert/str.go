@@ -15,7 +15,7 @@ func AssertStringNotEmpty(str string) error {
 
 func AssertStringNotBlank(str string) error {
 	if strKit.IsBlank(str) {
-		return errorKit.SimpleWithExtraSkip(1, "[%s] str(value: %s, length: %d) is blank", funcKit.GetFuncName(1), str, len(str))
+		return errorKit.SimpleWithExtraSkip(1, "[%s] str(%s) is blank", funcKit.GetFuncName(1), str)
 	}
 	return nil
 }
