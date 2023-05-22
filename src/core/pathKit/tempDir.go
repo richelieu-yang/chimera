@@ -2,7 +2,7 @@ package pathKit
 
 import (
 	"github.com/richelieu42/chimera/v2/src/consts"
-	"github.com/richelieu42/chimera/v2/src/core/file/fileKit"
+	"github.com/richelieu42/chimera/v2/src/core/fileKit"
 	"os"
 )
 

@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"github.com/richelieu42/chimera/v2/src/assert/fileAssert"
 	"github.com/richelieu42/chimera/v2/src/core/errorKit"
-	"github.com/richelieu42/chimera/v2/src/core/file/fileKit"
+	fileKit2 "github.com/richelieu42/chimera/v2/src/core/fileKit"
 	"github.com/richelieu42/chimera/v2/src/crypto/base64Kit"
 	"github.com/richelieu42/chimera/v2/src/web/httpClientKit"
 	"github.com/richelieu42/chimera/v2/src/web/mimeTypeKit"
@@ -20,7 +20,7 @@ func GetImageBase64(imagePath string) (string, error) {
 		return "", err
 	}
 
-	imageData, err := fileKit.ReadFile(imagePath)
+	imageData, err := fileKit2.ReadFile(imagePath)
 	if err != nil {
 		return "", err
 	}
@@ -81,5 +81,5 @@ func DecodeToImageFile(base64 []byte, dest string) error {
 	if err != nil {
 		return err
 	}
-	return fileKit.WriteToFile(data, dest)
+	return fileKit2.WriteToFile(data, dest)
 }

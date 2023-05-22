@@ -9,7 +9,7 @@ filepath标准库的使用可以参考: https://www.cnblogs.com/jkko123/p/692396
 package pathKit
 
 import (
-	"github.com/richelieu42/chimera/v2/src/core/file/fileKit"
+	"github.com/richelieu42/chimera/v2/src/core/fileKit"
 	"github.com/richelieu42/chimera/v2/src/core/strKit"
 	"github.com/richelieu42/chimera/v2/src/core/timeKit"
 	"path/filepath"

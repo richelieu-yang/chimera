@@ -2,7 +2,7 @@ package logrusKit
 
 import (
 	"github.com/richelieu42/chimera/v2/src/assert/fileAssert"
-	"github.com/richelieu42/chimera/v2/src/core/file/fileKit"
+	"github.com/richelieu42/chimera/v2/src/core/fileKit"
 	"github.com/richelieu42/chimera/v2/src/core/ioKit"
 	"github.com/sirupsen/logrus"
 	"io"

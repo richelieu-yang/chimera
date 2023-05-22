@@ -3,7 +3,7 @@ package ioKit
 import (
 	rotatelogs "github.com/lestrrat-go/file-rotatelogs"
 	"github.com/richelieu42/chimera/v2/src/assert/fileAssert"
-	"github.com/richelieu42/chimera/v2/src/core/file/fileKit"
+	fileKit2 "github.com/richelieu42/chimera/v2/src/core/fileKit"
 	"github.com/richelieu42/chimera/v2/src/core/pathKit"
 	"github.com/richelieu42/chimera/v2/src/core/timeKit"
 	"io"
@@ -73,7 +73,7 @@ func NewRotateFileWriteCloserWithCount(filePath string, rotationTime time.Durati
 }
 
 func newRotateFileWriteCloser(filePath string, options []rotatelogs.Option) (io.WriteCloser, error) {
-	if err := fileKit.MkParentDirs(filePath); err != nil {
+	if err := fileKit2.MkParentDirs(filePath); err != nil {
 		return nil, err
 	}
 	if err := fileAssert.AssertNotExistOrIsFile(filePath); err != nil {
@@ -91,8 +91,8 @@ e.g. Mac M1
 */
 func getFilePattern(filePath string) string {
 	dir := pathKit.GetParentDir(filePath)
-	prefix := fileKit.GetPrefix(filePath)
-	suffix := fileKit.GetSuffix(filePath)
+	prefix := fileKit2.GetPrefix(filePath)
+	suffix := fileKit2.GetSuffix(filePath)
 
 	// Windows 和 Mac 的文件名不支持":"
 	var timePattern string

@@ -1,7 +1,7 @@
 package fileKit
 
 import (
-	"github.com/richelieu42/chimera/v2/src/assert/fileAssert"
+	"github.com/richelieu42/chimera/v2/src/core/errorKit"
 	"syscall"
 )
 
@@ -16,8 +16,8 @@ PS:
 @param path 文件或目录的路径（绝对||相对）
 */
 func IsHidden(path string) (bool, error) {
-	if err := fileAssert.AssertExist(path); err != nil {
-		return false, err
+	if !Exist(path) {
+		return false, errorKit.Simple("path(%s) doesn't exist")
 	}
 
 	pointer, err := syscall.UTF16PtrFromString(path)

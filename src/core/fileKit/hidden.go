@@ -3,7 +3,7 @@
 package fileKit
 
 import (
-	"github.com/richelieu42/chimera/v2/src/assert/fileAssert"
+	"github.com/richelieu42/chimera/v2/src/core/errorKit"
 	"path/filepath"
 	"strings"
 )
@@ -23,8 +23,8 @@ PS:
 @param 文件（或目录）的 path 或 name
 */
 func IsHidden(path string) (bool, error) {
-	if err := fileAssert.AssertExist(path); err != nil {
-		return false, err
+	if !Exist(path) {
+		return false, errorKit.Simple("path(%s) doesn't exist")
 	}
 
 	name := filepath.Base(path)

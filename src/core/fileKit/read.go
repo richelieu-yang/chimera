@@ -1,7 +1,7 @@
 package fileKit
 
 import (
-	"github.com/richelieu42/chimera/v2/src/assert/fileAssert"
+	"github.com/richelieu42/chimera/v2/src/core/errorKit"
 	"github.com/richelieu42/chimera/v2/src/crypto/base64Kit"
 	"os"
 )
@@ -15,9 +15,13 @@ PS:
 @param path 文件的路径（不能是目录的路径）
 */
 func ReadFile(filePath string) ([]byte, error) {
-	if err := fileAssert.AssertExistAndIsFile(filePath); err != nil {
-		return nil, err
+	if !Exist(filePath) {
+		return nil, errorKit.Simple("filePath doesn't exist", filePath)
 	}
+	if !IsFile(filePath) {
+		return nil, errorKit.Simple("filePath isn't a file", filePath)
+	}
+
 	return os.ReadFile(filePath)
 }
 

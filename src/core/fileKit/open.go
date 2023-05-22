@@ -1,7 +1,7 @@
 package fileKit
 
 import (
-	"github.com/richelieu42/chimera/v2/src/assert/fileAssert"
+	"github.com/richelieu42/chimera/v2/src/core/errorKit"
 	"os"
 )
 
@@ -14,8 +14,9 @@ PS:
 (2) os.Open() 是以"只读"权限打开.
 */
 func Open(path string) (*os.File, error) {
-	if err := fileAssert.AssertExist(path); err != nil {
-		return nil, err
+	if !Exist(path) {
+		return nil, errorKit.Simple("path(%s) does not exist", path)
 	}
+
 	return os.Open(path)
 }

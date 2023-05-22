@@ -4,7 +4,7 @@ import (
 	"github.com/richelieu42/chimera/v2/src/assert/fileAssert"
 	"github.com/richelieu42/chimera/v2/src/cmdKit"
 	"github.com/richelieu42/chimera/v2/src/core/errorKit"
-	"github.com/richelieu42/chimera/v2/src/core/file/fileKit"
+	fileKit2 "github.com/richelieu42/chimera/v2/src/core/fileKit"
 	"github.com/richelieu42/chimera/v2/src/core/pathKit"
 	"github.com/richelieu42/chimera/v2/src/core/sliceKit"
 	"github.com/richelieu42/chimera/v2/src/idKit"
@@ -51,7 +51,7 @@ func GetText(imgPath string, languages ...string) (string, error) {
 	}
 	uuid := idKit.NewUUID()
 	filePath := pathKit.Join(tempDir, uuid+".txt")
-	defer fileKit.Delete(filePath)
+	defer fileKit2.Delete(filePath)
 
 	var lang string
 	languages = sliceKit.RemoveEmpty(languages, true)
@@ -66,13 +66,13 @@ func GetText(imgPath string, languages ...string) (string, error) {
 	if err != nil {
 		return "", err
 	}
-	if !fileKit.Exist(filePath) {
+	if !fileKit2.Exist(filePath) {
 		return "", errorKit.Simple(result)
 	}
-	if fileKit.IsDir(filePath) {
+	if fileKit2.IsDir(filePath) {
 		return "", errorKit.Simple("filePath(%s) is a directory", filePath)
 	}
-	data, err := fileKit.ReadFile(filePath)
+	data, err := fileKit2.ReadFile(filePath)
 	if err != nil {
 		return "", err
 	}

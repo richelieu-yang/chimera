@@ -3,7 +3,7 @@ package ioKit
 import (
 	"github.com/richelieu42/chimera/v2/src/assert/fileAssert"
 	"github.com/richelieu42/chimera/v2/src/core/errorKit"
-	"github.com/richelieu42/chimera/v2/src/core/file/fileKit"
+	"github.com/richelieu42/chimera/v2/src/core/fileKit"
 	"github.com/richelieu42/chimera/v2/src/core/strKit"
 	"gopkg.in/natefinch/lumberjack.v2"
 	"io"
