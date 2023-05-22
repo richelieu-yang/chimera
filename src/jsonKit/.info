@@ -1,0 +1,3 @@
+e.g.
+由于map是无序的键值对集合，多次序列化一个map实例为json字符串，得到的结果可能不一.如果希望多次得到的结果一致，
+可以通过 jsonKit.WithApi(jsoniter.ConfigCompatibleWithStandardLibrary) 进行配置.
