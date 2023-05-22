@@ -1,6 +1,7 @@
 package fileKit
 
 import (
+	"github.com/richelieu42/chimera/v2/src/assert/fileAssert"
 	"io"
 	"os"
 	"path/filepath"
@@ -14,13 +15,14 @@ import (
 */
 func CopyFile(src, dest string) (int64, error) {
 	// 检查 src
-	if err := AssertExistAndIsFile(src); err != nil {
+	if err := fileAssert.AssertExistAndIsFile(src); err != nil {
 		return 0, err
 	}
 	// 检查 dest
-	if err := AssertNotExistOrIsFile(dest); err != nil {
+	if err := fileAssert.AssertNotExistOrIsFile(dest); err != nil {
 		return 0, err
 	}
+
 	if err := MkParentDirs(dest); err != nil {
 		return 0, err
 	}
@@ -51,11 +53,11 @@ PS:
 */
 func CopyDir(src, dest string) error {
 	// 检查 src
-	if err := AssertExistAndIsDir(src); err != nil {
+	if err := fileAssert.AssertExistAndIsDir(src); err != nil {
 		return err
 	}
 	// 检查 dest
-	if err := AssertNotExistOrIsDir(dest); err != nil {
+	if err := fileAssert.AssertNotExistOrIsDir(dest); err != nil {
 		return err
 	}
 	if err := MkDirs(dest); err != nil {

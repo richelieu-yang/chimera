@@ -1,6 +1,7 @@
 package fileKit
 
 import (
+	"github.com/richelieu42/chimera/v2/src/assert/fileAssert"
 	"os"
 	"path/filepath"
 )
@@ -16,7 +17,7 @@ pattern: "tempfile_test*.xyz" 	=> 临时文件的文件名: "tempfile_test361767
 */
 func NewTemporaryFile(dirPath, pattern string) (*os.File, error) {
 	// check dirPath
-	if err := AssertNotExistOrIsDir(dirPath); err != nil {
+	if err := fileAssert.AssertNotExistOrIsDir(dirPath); err != nil {
 		return nil, err
 	}
 	if err := MkDirs(dirPath); err != nil {
@@ -32,7 +33,7 @@ PS: 如果文件已经存在，会覆盖掉它.
 */
 func NewFile(filePath string) (*os.File, error) {
 	// 检查 filePath
-	if err := AssertNotExistOrIsFile(filePath); err != nil {
+	if err := fileAssert.AssertNotExistOrIsFile(filePath); err != nil {
 		return nil, err
 	}
 	if err := MkParentDirs(filePath); err != nil {
@@ -48,7 +49,7 @@ func NewFile(filePath string) (*os.File, error) {
 */
 func WriteToFile(data []byte, dest string) error {
 	// 检查 dest
-	if err := AssertNotExistOrIsFile(dest); err != nil {
+	if err := fileAssert.AssertNotExistOrIsFile(dest); err != nil {
 		return err
 	}
 	if err := MkParentDirs(dest); err != nil {
@@ -79,7 +80,7 @@ func EmptyDir(dirPath string) error {
 	if NotExist(dirPath) {
 		return nil
 	}
-	if err := AssertExistAndIsDir(dirPath); err != nil {
+	if err := fileAssert.AssertExistAndIsDir(dirPath); err != nil {
 		return err
 	}
 

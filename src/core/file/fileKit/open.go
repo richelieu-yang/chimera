@@ -1,6 +1,7 @@
 package fileKit
 
 import (
+	"github.com/richelieu42/chimera/v2/src/assert/fileAssert"
 	"os"
 )
 
@@ -13,7 +14,7 @@ PS:
 (2) os.Open() 是以"只读"权限打开.
 */
 func Open(path string) (*os.File, error) {
-	if err := AssertExist(path); err != nil {
+	if err := fileAssert.AssertExist(path); err != nil {
 		return nil, err
 	}
 	return os.Open(path)

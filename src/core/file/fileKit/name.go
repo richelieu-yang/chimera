@@ -1,6 +1,7 @@
 package fileKit
 
 import (
+	"github.com/richelieu42/chimera/v2/src/assert/fileAssert"
 	"github.com/richelieu42/chimera/v2/src/core/strKit"
 	"os"
 	"path"
@@ -90,7 +91,7 @@ PS:
 (4) 不管 oldPath，如果 newPath 对应的是一个已经存在的目录，将返回error(e.g. rename /Users/richelieu/Downloads/1 /Users/richelieu/Downloads/2: file exists).
 */
 func Rename(oldPath, newPath string) error {
-	if err := AssertExist(oldPath); err != nil {
+	if err := fileAssert.AssertExist(oldPath); err != nil {
 		return err
 	}
 

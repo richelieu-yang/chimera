@@ -1,6 +1,7 @@
 package fileKit
 
 import (
+	"github.com/richelieu42/chimera/v2/src/assert/fileAssert"
 	"github.com/richelieu42/chimera/v2/src/dataSizeKit"
 	"os"
 	"path/filepath"
@@ -8,7 +9,7 @@ import (
 
 // GetSize 获取文件（或目录）的大小
 func GetSize(path string) (*dataSizeKit.DataSize, error) {
-	if err := AssertExist(path); err != nil {
+	if err := fileAssert.AssertExist(path); err != nil {
 		return nil, err
 	}
 
@@ -20,7 +21,7 @@ func GetSize(path string) (*dataSizeKit.DataSize, error) {
 
 // GetFileSize 获取文件的大小
 func GetFileSize(filePath string) (*dataSizeKit.DataSize, error) {
-	if err := AssertExistAndIsFile(filePath); err != nil {
+	if err := fileAssert.AssertExistAndIsFile(filePath); err != nil {
 		return nil, err
 	}
 
@@ -42,7 +43,7 @@ func GetFileSize(filePath string) (*dataSizeKit.DataSize, error) {
 golang获取文件/目录（包含下面的文件）的大小: https://blog.csdn.net/n_fly/article/details/117080173
 */
 func GetDirSize(dirPath string) (*dataSizeKit.DataSize, error) {
-	if err := AssertExistAndIsDir(dirPath); err != nil {
+	if err := fileAssert.AssertExistAndIsDir(dirPath); err != nil {
 		return nil, err
 	}
 

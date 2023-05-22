@@ -1,6 +1,9 @@
 package fileKit
 
-import "syscall"
+import (
+	"github.com/richelieu42/chimera/v2/src/assert/fileAssert"
+	"syscall"
+)
 
 // IsHidden 文件（或目录）是否隐藏？
 /*
@@ -13,7 +16,7 @@ PS:
 @param path 文件或目录的路径（绝对||相对）
 */
 func IsHidden(path string) (bool, error) {
-	if err := AssertExist(path); err != nil {
+	if err := fileAssert.AssertExist(path); err != nil {
 		return false, err
 	}
 
