@@ -89,5 +89,5 @@ func UploadForResponse(url string, fileParams map[string]string, options ...Opti
 	// client
 	client := newHttpClient(opts.timeout, opts.safe)
 
-	return send(client, req)
+	return client.Do(req)
 }

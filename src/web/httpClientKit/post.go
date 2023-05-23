@@ -50,5 +50,5 @@ func PostForResponse(url string, options ...Option) (*http.Response, error) {
 	// client
 	client := newHttpClient(opts.timeout, opts.safe)
 
-	return send(client, req)
+	return client.Do(req)
 }
