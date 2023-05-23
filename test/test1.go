@@ -6,7 +6,5 @@ import (
 )
 
 func main() {
-	fmt.Println(md5Kit.EncryptFile("/Users/richelieu/Desktop/tasks.wps"))
-
-	fmt.Println("d9bc2286000a70c293180252479d8075" == "d9bc2286000a70c293180252479d8075")
+	fmt.Println(md5Kit.EncryptFile("/Users/richelieu/Documents/ino/notes/Linux（Unix、Mac）/命令（Mac、Linux）.wps"))
 }

@@ -13,6 +13,11 @@ func Encrypt(data interface{}) (string, error) {
 	return gmd5.Encrypt(data)
 }
 
+// EncryptFile
+/*
+e.g.
+("/Users/richelieu/Documents/ino/notes/Linux（Unix、Mac）/命令（Mac、Linux）.wps") => "390c5cb9447130fa6f42d488630bb459", nil
+*/
 func EncryptFile(filePath string) (string, error) {
 	if err := fileKit.AssertExistAndIsFile(filePath); err != nil {
 		return "", err

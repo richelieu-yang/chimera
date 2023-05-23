@@ -11,6 +11,11 @@ func Encrypt(v interface{}) string {
 	return gsha1.Encrypt(v)
 }
 
+// EncryptFile
+/*
+e.g.
+("/Users/richelieu/Documents/ino/notes/Linux（Unix、Mac）/命令（Mac、Linux）.wps") => "167a518a8ef373c3614f756bd718b27ae8c07853", nil
+*/
 func EncryptFile(filePath string) (string, error) {
 	if err := fileKit.AssertExistAndIsFile(filePath); err != nil {
 		return "", err
