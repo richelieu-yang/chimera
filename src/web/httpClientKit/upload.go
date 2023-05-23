@@ -29,6 +29,7 @@ func Upload(url string, fileParams map[string]string, options ...Option) (int, [
 /*
 @param fileParams 	(1)可以为nil或空;
 					(2)key: 键, value: 要上传文件的路径.
+@return !!!: 第一个返回值如果不为nil的话，一般来说需要手动调用 "resp.Body.Close()"
 */
 func UploadForResponse(url string, fileParams map[string]string, options ...Option) (*http.Response, error) {
 	opts := loadOptions(options...)

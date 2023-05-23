@@ -23,7 +23,7 @@ func Get(url string, options ...Option) (int, []byte, error) {
 
 // GetForResponse
 /*
-@return !!!: 第一个返回值如果不为nil的话，一般来说需要手动调用 "resp.Body.Close()".
+@return !!!: 第一个返回值如果不为nil的话，一般来说需要手动调用 "resp.Body.Close()"
 */
 func GetForResponse(url string, options ...Option) (*http.Response, error) {
 	opts := loadOptions(options...)
