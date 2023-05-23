@@ -8,7 +8,7 @@ func Gzip(bs []byte) []byte {
 
 // Gunzip
 /*
-!!!: 注意大小限制（100MB）.
+PS: 大小限制: 100MB.
 */
 func Gunzip(bs []byte) ([]byte, error) {
 	return codec.Gunzip(bs)
