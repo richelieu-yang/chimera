@@ -1,7 +1,7 @@
 package fileKit
 
 import (
-	"github.com/richelieu42/chimera/v2/src/core/errorKit"
+	"github.com/richelieu42/chimera/v2/src/core/strKit"
 	"os"
 	"path/filepath"
 )
@@ -16,12 +16,14 @@ pattern: "tempfile_test*" 		=> 临时文件的文件名: "tempfile_test827818253
 pattern: "tempfile_test*.xyz" 	=> 临时文件的文件名: "tempfile_test3617672388.xyz"
 */
 func NewTemporaryFile(dirPath, pattern string) (*os.File, error) {
-	// check dirPath
-	if Exist(dirPath) && IsFile(dirPath) {
-		return nil, errorKit.Simple("dirPath(%s) exists but it is a file", dirPath)
+	if err := AssertNotExistOrIsDir(dirPath); err != nil {
+		return nil, err
+	}
+	if err := MkDirs(dirPath); err != nil {
+		return nil, err
 	}
 
-	if err := MkDirs(dirPath); err != nil {
+	if err := strKit.AssertStringNotBlank(pattern); err != nil {
 		return nil, err
 	}
 
@@ -33,14 +35,13 @@ func NewTemporaryFile(dirPath, pattern string) (*os.File, error) {
 PS: 如果文件已经存在，会覆盖掉它.
 */
 func NewFile(filePath string) (*os.File, error) {
-	// 检查 filePath
-	if Exist(filePath) && IsDir(filePath) {
-		return nil, errorKit.Simple("filePath(%s) exists but it is a directory", filePath)
+	if err := AssertNotExistOrIsFile(filePath); err != nil {
+		return nil, err
 	}
-
 	if err := MkParentDirs(filePath); err != nil {
 		return nil, err
 	}
+
 	return os.Create(filePath)
 }
 
@@ -49,14 +50,13 @@ func NewFile(filePath string) (*os.File, error) {
 @param dest 目标文件的路径（不存在的话，会创建一个新的文件；存在且是个文件的话，会覆盖掉旧的（并不会加到该文件的最后面））
 */
 func WriteToFile(data []byte, dest string) error {
-	// 检查 dest
-	if Exist(dest) && IsDir(dest) {
-		return errorKit.Simple("dest(%s) exists but it is a directory", dest)
+	if err := AssertNotExistOrIsFile(dest); err != nil {
+		return err
 	}
-
 	if err := MkParentDirs(dest); err != nil {
 		return err
 	}
+
 	return os.WriteFile(dest, data, os.ModePerm)
 }
 
@@ -81,8 +81,8 @@ func EmptyDir(dirPath string) error {
 	if NotExist(dirPath) {
 		return nil
 	}
-	if IsFile(dirPath) {
-		return errorKit.Simple("dirPath(%s) exists but it is a file", dirPath)
+	if err := AssertExistAndIsDir(dirPath); err != nil {
+		return err
 	}
 
 	// 遍历目录

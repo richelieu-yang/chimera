@@ -1,11 +1,10 @@
 package fileKit
 
 import (
-	"github.com/richelieu42/chimera/v2/src/core/errorKit"
 	"os"
 )
 
-// Open 此方法对 os.Open 进行了封装
+// Open 以"只读权限"打开文件（或目录）.
 /*
 @param path 文件（或目录）的路径
 
@@ -14,8 +13,8 @@ PS:
 (2) os.Open() 是以"只读"权限打开.
 */
 func Open(path string) (*os.File, error) {
-	if !Exist(path) {
-		return nil, errorKit.Simple("path(%s) does not exist", path)
+	if err := AssertExist(path); err != nil {
+		return nil, err
 	}
 
 	return os.Open(path)
