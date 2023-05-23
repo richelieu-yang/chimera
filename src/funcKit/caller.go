@@ -19,17 +19,6 @@ func GetEntireCaller(callDepth int) string {
 	return fmt.Sprintf("%s|%s", prettyCaller(file, line), prettyFuncName(pc))
 }
 
-func prettyFuncName(pc uintptr) string {
-	// e.g."github.com/richelieu42/chimera/v2/src/core/file/fileKit.AssertExistAndIsFile"
-	funcName := runtime.FuncForPC(pc).Name()
-
-	index := strings.LastIndex(funcName, ".")
-	if index != -1 {
-		funcName = funcName[index+1:]
-	}
-	return funcName
-}
-
 // GetCaller
 /*
 参考: go-zero中的logx/util.go.
@@ -59,4 +48,15 @@ func prettyCaller(file string, line int) string {
 	}
 
 	return fmt.Sprintf("%s:%d", file[idx+1:], line)
+}
+
+func prettyFuncName(pc uintptr) string {
+	// e.g."github.com/richelieu42/chimera/v2/src/core/file/fileKit.AssertExistAndIsFile"
+	funcName := runtime.FuncForPC(pc).Name()
+
+	index := strings.LastIndex(funcName, ".")
+	if index != -1 {
+		funcName = funcName[index+1:]
+	}
+	return funcName
 }
