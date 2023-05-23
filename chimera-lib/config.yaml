@@ -20,7 +20,8 @@ gin:
     bodyLimit: 1
     xFrameOptions:
     cors:
-      # cors配置是否生效？false: 下面的origins配置将无效
+      # cors配置是否生效？
+      # 默认: false（）
       access: true
       # 支持的Origin(s)，即响应头中的Access-Control-Allow-Origin
       # (1) 默认: 支持所有的Origin（即动态支持请求的Origin，并非"*"）
