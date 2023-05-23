@@ -34,14 +34,14 @@ func GetForResponse(url string, options ...Option) (*http.Response, error) {
 	}
 	url = urlKit.AttachQueryParamsToUrl(url, opts.queryParams)
 
+	// client
+	client := newHttpClient(opts.timeout, opts.safe)
+
 	// req
 	req, err := http.NewRequest("GET", url, nil)
 	if err != nil {
 		return nil, err
 	}
-
-	// client
-	client := newHttpClient(opts.timeout, opts.safe)
 
 	return send(client, req)
 }
