@@ -1,4 +1,4 @@
-package interfaceAssert
+package interfaceKit
 
 import (
 	"github.com/richelieu42/chimera/v2/src/core/errorKit"

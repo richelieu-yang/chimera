@@ -2,7 +2,6 @@ package imageKit
 
 import (
 	"github.com/disintegration/imaging"
-	"github.com/richelieu42/chimera/v2/src/assert/fileAssert"
 	"github.com/richelieu42/chimera/v2/src/core/errorKit"
 	fileKit2 "github.com/richelieu42/chimera/v2/src/core/fileKit"
 )
@@ -20,7 +19,7 @@ func ConvertImageType(src, dest string) error {
 	if err := fileKit2.MkParentDirs(dest); err != nil {
 		return err
 	}
-	if err := fileAssert.AssertExistAndIsFile(src); err != nil {
+	if err := fileKit2.AssertExistAndIsFile(src); err != nil {
 		return err
 	}
 	if fileKit2.Exist(dest) && fileKit2.IsDir(dest) {

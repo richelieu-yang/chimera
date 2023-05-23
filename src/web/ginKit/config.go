@@ -1,8 +1,8 @@
 package ginKit
 
 import (
-	"github.com/richelieu42/chimera/v2/src/assert/fileAssert"
 	"github.com/richelieu42/chimera/v2/src/core/errorKit"
+	"github.com/richelieu42/chimera/v2/src/core/fileKit"
 	"github.com/richelieu42/chimera/v2/src/core/strKit"
 	"github.com/richelieu42/chimera/v2/src/web/refererKit"
 )
@@ -50,10 +50,10 @@ func (config *Config) Verify() error {
 		if sslConfig.Port == -1 || strKit.HasEmpty(sslConfig.CertFile, sslConfig.KeyFile) {
 			sslConfig = nil
 		} else {
-			if err := fileAssert.AssertExistAndIsFile(sslConfig.CertFile); err != nil {
+			if err := fileKit.AssertExistAndIsFile(sslConfig.CertFile); err != nil {
 				return err
 			}
-			if err := fileAssert.AssertExistAndIsFile(sslConfig.KeyFile); err != nil {
+			if err := fileKit.AssertExistAndIsFile(sslConfig.KeyFile); err != nil {
 				return err
 			}
 		}

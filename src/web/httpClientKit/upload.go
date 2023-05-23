@@ -2,10 +2,9 @@ package httpClientKit
 
 import (
 	"bytes"
-	"github.com/richelieu42/chimera/v2/src/assert/fileAssert"
-	"github.com/richelieu42/chimera/v2/src/assert/httpAssert"
 	"github.com/richelieu42/chimera/v2/src/core/fileKit"
 	"github.com/richelieu42/chimera/v2/src/urlKit"
+	"github.com/richelieu42/chimera/v2/src/web/httpKit"
 	"io"
 	"mime/multipart"
 	"net/http"
@@ -35,7 +34,7 @@ func UploadForResponse(url string, fileParams map[string]string, options ...Opti
 	opts := loadOptions(options...)
 
 	// url
-	if err := httpAssert.AssertHttpUrl(url); err != nil {
+	if err := httpKit.AssertHttpUrl(url); err != nil {
 		return nil, err
 	}
 	url = urlKit.AttachQueryParamsToUrl(url, opts.queryParams)
@@ -52,7 +51,7 @@ func UploadForResponse(url string, fileParams map[string]string, options ...Opti
 		}
 	}
 	for field, path := range fileParams {
-		if err := fileAssert.AssertExistAndIsFile(path); err != nil {
+		if err := fileKit.AssertExistAndIsFile(path); err != nil {
 			return nil, err
 		}
 		err := func() error {

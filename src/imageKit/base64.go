@@ -2,7 +2,6 @@ package imageKit
 
 import (
 	"fmt"
-	"github.com/richelieu42/chimera/v2/src/assert/fileAssert"
 	"github.com/richelieu42/chimera/v2/src/core/errorKit"
 	fileKit2 "github.com/richelieu42/chimera/v2/src/core/fileKit"
 	"github.com/richelieu42/chimera/v2/src/crypto/base64Kit"
@@ -16,7 +15,7 @@ import (
 参考: golang 将图片生成Base64 https://blog.csdn.net/weixin_40292098/article/details/126029489
 */
 func GetImageBase64(imagePath string) (string, error) {
-	if err := fileAssert.AssertExistAndIsFile(imagePath); err != nil {
+	if err := fileKit2.AssertExistAndIsFile(imagePath); err != nil {
 		return "", err
 	}
 

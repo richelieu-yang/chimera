@@ -1,4 +1,4 @@
-package ipAssert
+package ipKit
 
 import (
 	"github.com/go-playground/validator/v10"

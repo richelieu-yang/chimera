@@ -1,7 +1,6 @@
 package pathKit
 
 import (
-	"github.com/richelieu42/chimera/v2/src/assert/fileAssert"
 	"github.com/richelieu42/chimera/v2/src/core/fileKit"
 )
 
@@ -16,7 +15,7 @@ func SetProjectDir(dir string) error {
 	if err := fileKit.MkDirs(dir); err != nil {
 		return err
 	}
-	if err := fileAssert.AssertExistAndIsDir(dir); err != nil {
+	if err := fileKit.AssertExistAndIsDir(dir); err != nil {
 		return err
 	}
 	projectDir = dir

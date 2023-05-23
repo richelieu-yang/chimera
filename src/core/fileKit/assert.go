@@ -1,8 +1,7 @@
-package fileAssert
+package fileKit
 
 import (
 	"github.com/richelieu42/chimera/v2/src/core/errorKit"
-	"github.com/richelieu42/chimera/v2/src/core/fileKit"
 	"github.com/richelieu42/chimera/v2/src/core/strKit"
 	"github.com/richelieu42/chimera/v2/src/funcKit"
 )
@@ -16,7 +15,7 @@ func AssertExist(path string) error {
 		return errorKit.SimpleWithExtraSkip(1, "[%s] path(%s) is blank", funcKit.GetFuncName(1), path)
 	}
 
-	if !fileKit.Exist(path) {
+	if !Exist(path) {
 		return errorKit.SimpleWithExtraSkip(1, "[%s] path(%s) doesn't exist", funcKit.GetFuncName(1), path)
 	}
 	return nil
@@ -32,7 +31,7 @@ func AssertNotExistOrIsFile(path string) error {
 		return errorKit.SimpleWithExtraSkip(1, "[%s] path(%s) is blank", funcKit.GetFuncName(1), path)
 	}
 
-	if fileKit.Exist(path) && fileKit.IsDir(path) {
+	if Exist(path) && IsDir(path) {
 		return errorKit.SimpleWithExtraSkip(1, "[%s] path(%s) exists but it is a directory", funcKit.GetFuncName(1), path)
 	}
 	return nil
@@ -48,7 +47,7 @@ func AssertNotExistOrIsDir(path string) error {
 		return errorKit.SimpleWithExtraSkip(1, "[%s] path(%s) is blank", funcKit.GetFuncName(1), path)
 	}
 
-	if fileKit.Exist(path) && fileKit.IsFile(path) {
+	if Exist(path) && IsFile(path) {
 		return errorKit.SimpleWithExtraSkip(1, "[%s] path(%s) exists but it is a file", funcKit.GetFuncName(1), path)
 	}
 	return nil
@@ -63,10 +62,10 @@ func AssertExistAndIsFile(path string) error {
 		return errorKit.SimpleWithExtraSkip(1, "[%s] path(%s) is blank", funcKit.GetFuncName(1), path)
 	}
 
-	if !fileKit.Exist(path) {
+	if !Exist(path) {
 		return errorKit.SimpleWithExtraSkip(1, "[%s] path(%s) doesn't exist", funcKit.GetFuncName(1), path)
 	}
-	if fileKit.IsDir(path) {
+	if IsDir(path) {
 		return errorKit.SimpleWithExtraSkip(1, "[%s] path(%s) exists but it is a directory", funcKit.GetFuncName(1), path)
 	}
 	return nil
@@ -81,10 +80,10 @@ func AssertExistAndIsDir(path string) error {
 		return errorKit.SimpleWithExtraSkip(1, "[%s] path(%s) is blank", funcKit.GetFuncName(1), path)
 	}
 
-	if !fileKit.Exist(path) {
+	if !Exist(path) {
 		return errorKit.SimpleWithExtraSkip(1, "[%s] path(%s) doesn't exist", funcKit.GetFuncName(1), path)
 	}
-	if fileKit.IsFile(path) {
+	if IsFile(path) {
 		return errorKit.SimpleWithExtraSkip(1, "[%s] path(%s) exists but it is a file", funcKit.GetFuncName(1), path)
 	}
 	return nil

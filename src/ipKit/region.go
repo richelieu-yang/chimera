@@ -2,8 +2,8 @@ package ipKit
 
 import (
 	"github.com/lionsoul2014/ip2region/binding/golang/xdb"
-	"github.com/richelieu42/chimera/v2/src/assert/fileAssert"
 	"github.com/richelieu42/chimera/v2/src/consts"
+	"github.com/richelieu42/chimera/v2/src/core/fileKit"
 	"github.com/richelieu42/chimera/v2/src/core/pathKit"
 	"sync"
 )
@@ -43,7 +43,7 @@ func assignToSearcher() error {
 
 		if searcher == nil {
 			xdbPath := pathKit.Join(pathKit.GetProjectDir(), consts.Ip2RegionXdb)
-			if err := fileAssert.AssertExistAndIsFile(xdbPath); err != nil {
+			if err := fileKit.AssertExistAndIsFile(xdbPath); err != nil {
 				return err
 			}
 			// 缓存整个xdb数据

@@ -1,7 +1,6 @@
 package ocrKit
 
 import (
-	"github.com/richelieu42/chimera/v2/src/assert/fileAssert"
 	"github.com/richelieu42/chimera/v2/src/cmdKit"
 	"github.com/richelieu42/chimera/v2/src/core/errorKit"
 	fileKit2 "github.com/richelieu42/chimera/v2/src/core/fileKit"
@@ -41,7 +40,7 @@ PS:
 (3) 识别并不精确，有些图片可能识别不到文本（e.g.图片很小且就一两个字符）.
 */
 func GetText(imgPath string, languages ...string) (string, error) {
-	if err := fileAssert.AssertExistAndIsFile(imgPath); err != nil {
+	if err := fileKit2.AssertExistAndIsFile(imgPath); err != nil {
 		return "", err
 	}
 
