@@ -1,8 +1,8 @@
 package funcKit
 
 import (
-	"github.com/richelieu42/chimera/v2/src/core/strKit"
 	"runtime"
+	"strings"
 )
 
 // GetFuncName
@@ -16,9 +16,9 @@ func GetFuncName(callDepth int) string {
 		return ""
 	}
 	name := runtime.FuncForPC(pc).Name()
-	index := strKit.LastIndex(name, ".")
+	index := strings.LastIndex(name, ".")
 	if index != -1 {
-		name = strKit.SubAfter(name, index+1)
+		name = name[index+1:]
 	}
 	return name
 }
