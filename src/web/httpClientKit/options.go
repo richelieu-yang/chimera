@@ -15,7 +15,7 @@ const (
 type (
 	options struct {
 		timeout time.Duration
-		// safe 默认false（即使客户的url以https开头&&证书非法，请求也能成功）
+		// safe 默认false（跳过ssl证书验证，即使url 以https开头 && 证书非法，请求也能成功）
 		safe        bool
 		queryParams map[string]string
 		postParams  map[string]string
