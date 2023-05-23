@@ -18,6 +18,7 @@ goEncrypt:
 
 TODO:
 (1) 可以参考 go-zero 中的core/codec: 其中有gzip、rsa、aesecb.
+(2) 可以参考 GoFrame 中的加密解密: https://goframe.org/pages/viewpage.action?pageId=1114868
 
 
 
