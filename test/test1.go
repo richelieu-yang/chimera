@@ -1,10 +1,15 @@
 package main
 
 import (
-	"fmt"
-	"github.com/richelieu42/chimera/v2/src/crypto/md5Kit"
+	"github.com/gogf/gf/v2/container/gmap"
+	"github.com/gogf/gf/v2/frame/g"
+	"github.com/gogf/gf/v2/util/gutil"
 )
 
 func main() {
-	fmt.Println(md5Kit.EncryptFile("/Users/richelieu/Documents/ino/notes/Linux（Unix、Mac）/命令（Mac、Linux）.wps"))
+	array := g.Slice{2, 3, 1, 5, 4, 6, 8, 7, 9}
+	hashMap := gmap.New(true)
+	listMap := gmap.NewListMap(true)
+	treeMap := gmap.NewTreeMap(gutil.ComparatorInt, true)
+
 }
