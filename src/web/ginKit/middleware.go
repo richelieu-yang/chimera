@@ -44,14 +44,6 @@ func attachMiddlewares(engine *gin.Engine, config *MiddlewareConfig, recoveryMid
 			} else {
 				// 不配置cors
 			}
-
-			//var origins []string
-			//if config.Cors != nil {
-			//	origins = config.Cors.Origins
-			//}
-			//origins = sliceKit.RemoveEmpty(origins, true)
-			//origins = sliceKit.Uniq(origins)
-			//engine.Use(NewCorsMiddleware(origins))
 		}
 
 		// referer（必须在cors中间件后面）
