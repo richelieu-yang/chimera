@@ -11,5 +11,7 @@ func NewInt32(value ...int32) *gtype.Int32 {
 }
 
 func NewInt64(value ...int64) *gtype.Int64 {
+	gtype.NewByte()
+
 	return gtype.NewInt64(value...)
 }
