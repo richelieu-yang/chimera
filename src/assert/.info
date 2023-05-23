@@ -1,3 +1,0 @@
-!!!: 为避免import cycle:
-(1) 本项目内部尽可能少用 xxxAssert包(a) 内的方法，就算一定要用，xxxAssert包所依赖的包(b) 严禁使用 xxxAssert包.
-(2) 可能导致import cycle的case: 外部使用a => a使用b => b使用a（这一步要避免）
