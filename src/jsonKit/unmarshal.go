@@ -4,7 +4,7 @@ import (
 	jsoniter "github.com/json-iterator/go"
 	"github.com/richelieu42/chimera/v2/src/assert/ptrAssert"
 	"github.com/richelieu42/chimera/v2/src/assert/sliceAssert"
-	"github.com/richelieu42/chimera/v2/src/assert/strAssert"
+	"github.com/richelieu42/chimera/v2/src/core/strKit"
 )
 
 // Unmarshal 反序列化.
@@ -36,7 +36,7 @@ func UnmarshalFromString(ptr interface{}, str string) error {
 	if err := ptrAssert.AssertNotNilAndIsPointer(ptr); err != nil {
 		return err
 	}
-	if err := strAssert.AssertStringNotBlank(str); err != nil {
+	if err := strKit.AssertStringNotBlank(str); err != nil {
 		return err
 	}
 

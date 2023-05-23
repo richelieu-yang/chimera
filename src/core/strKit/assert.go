@@ -1,20 +1,19 @@
-package strAssert
+package strKit
 
 import (
 	"github.com/richelieu42/chimera/v2/src/core/errorKit"
-	"github.com/richelieu42/chimera/v2/src/core/strKit"
 	"github.com/richelieu42/chimera/v2/src/funcKit"
 )
 
 func AssertStringNotEmpty(str string) error {
-	if strKit.IsEmpty(str) {
+	if IsEmpty(str) {
 		return errorKit.SimpleWithExtraSkip(1, "[%s] str is empty", funcKit.GetFuncName(1))
 	}
 	return nil
 }
 
 func AssertStringNotBlank(str string) error {
-	if strKit.IsBlank(str) {
+	if IsBlank(str) {
 		return errorKit.SimpleWithExtraSkip(1, "[%s] str(%s) is blank", funcKit.GetFuncName(1), str)
 	}
 	return nil
