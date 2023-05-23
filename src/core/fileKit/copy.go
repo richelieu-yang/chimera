@@ -1,7 +1,6 @@
 package fileKit
 
 import (
-	"github.com/richelieu42/chimera/v2/src/core/errorKit"
 	"io"
 	"os"
 	"path/filepath"
@@ -15,21 +14,17 @@ import (
 */
 func CopyFile(src, dest string) (int64, error) {
 	// 检查 src
-	if !Exist(src) {
-		return 0, errorKit.Simple("src(%s) doesn't exist", src)
-	}
-	if !IsFile(src) {
-		return 0, errorKit.Simple("src(%s) isn't a file", src)
+	if err := AssertExistAndIsFile(src); err != nil {
+		return 0, err
 	}
 	// 检查 dest
-	if Exist(dest) && IsDir(dest) {
-		return 0, errorKit.Simple("dest(%s) exists but it is a directory", dest)
+	if err := AssertNotExistOrIsFile(dest); err != nil {
+		return 0, err
 	}
 
 	if err := MkParentDirs(dest); err != nil {
 		return 0, err
 	}
-
 	srcFile, err := os.Open(src)
 	if err != nil {
 		return 0, err
@@ -56,17 +51,17 @@ PS:
 */
 func CopyDir(src, dest string) error {
 	// 检查 src
-	if !Exist(src) {
-		return errorKit.Simple("src(%s) doesn't exist", src)
-	}
-	if !IsDir(src) {
-		return errorKit.Simple("src(%s) isn't a directory", src)
+	if err := AssertExistAndIsDir(src); err != nil {
+		return err
 	}
 	// 检查 dest
-	if Exist(dest) && IsFile(dest) {
-		return errorKit.Simple("dest(%s) exists but it is a file", dest)
+	if err := AssertNotExistOrIsDir(dest); err != nil {
+		return err
 	}
 
+	if err := MkDirs(dest); err != nil {
+		return err
+	}
 	// 遍历
 	return filepath.Walk(src, func(path string, info os.FileInfo, err error) error {
 		if err != nil {
