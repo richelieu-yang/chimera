@@ -1,4 +1,9 @@
 map: 无序的键值对集合.
 
 
+# GoFrame
+HashMap 支持排序? false 支持有序遍历? false
+ListMap 支持排序? false 支持有序遍历? true
+TreeMap 支持排序? true  支持有序遍历? true
+
 TODO: 字典类型-基本使用 https://goframe.org/pages/viewpage.action?pageId=30736711
