@@ -14,11 +14,14 @@ const (
 
 type (
 	options struct {
+		// timeout 请求的超时时间
 		timeout time.Duration
 		// safe 默认false（跳过ssl证书验证，即使url 以https开头 && 证书非法，请求也能成功）
-		safe        bool
+		safe bool
+		// queryParams 适用于: POST、GET
 		queryParams map[string]string
-		postParams  map[string]string
+		// postParams 适用于: POST
+		postParams map[string]string
 	}
 
 	Option func(opts *options)
