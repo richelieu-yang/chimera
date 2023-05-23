@@ -4,8 +4,6 @@ import "github.com/gogf/gf/v2/os/gmlock"
 
 // NewLocker 内存锁模块，支持按照给定键名动态生成互斥锁，并发安全并支持Try*Lock特性.
 /*
-参考: 内存锁-gmlock https://goframe.org/pages/viewpage.action?pageId=1114161
-
 使用场景: 需要动态创建互斥锁，或者需要维护大量动态锁的场景.
 
 PS:
