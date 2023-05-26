@@ -38,15 +38,15 @@ func PKCS1Encrypt(data, publicKey []byte) ([]byte, error) {
 }
 
 // PKCS1Decrypt 公钥解密（密钥格式: PKCS1）
-func PKCS1Decrypt(data, privateKey, password []byte) ([]byte, error) {
+func PKCS1Decrypt(data, privateKey, privateKeyPassword []byte) ([]byte, error) {
 	if err := sliceKit.AssertNotEmpty(privateKey); err != nil {
 		return nil, err
 	}
 
 	// 私钥
-	if password != nil {
+	if privateKeyPassword != nil {
 		var err error
-		privateKey, err = DecryptPEM(privateKey, password)
+		privateKey, err = DecryptPEM(privateKey, privateKeyPassword)
 		if err != nil {
 			return nil, err
 		}

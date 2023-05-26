@@ -49,15 +49,15 @@ PS: 支持大文本（内部分块加解密）.
 @param privateKey 	私钥
 @param password 	私钥的密码（没有则传nil）
 */
-func PKCS8Decrypt(data, privateKey, password []byte) ([]byte, error) {
+func PKCS8Decrypt(data, privateKey, privateKeyPassword []byte) ([]byte, error) {
 	if err := sliceKit.AssertNotEmpty(privateKey); err != nil {
 		return nil, err
 	}
 
 	// 私钥
-	if password != nil {
+	if privateKeyPassword != nil {
 		var err error
-		privateKey, err = DecryptPEM(privateKey, password)
+		privateKey, err = DecryptPEM(privateKey, privateKeyPassword)
 		if err != nil {
 			return nil, err
 		}
