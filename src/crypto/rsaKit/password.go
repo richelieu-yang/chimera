@@ -16,7 +16,7 @@ encryptWithPKCS8 a pem private key
 input: pem raw
 output: pem raw
 */
-func EncryptPEM(pemRaw []byte, passwd []byte) ([]byte, error) {
+func EncryptPEM(pemRaw []byte, password []byte) ([]byte, error) {
 	block, _ := pem.Decode(pemRaw)
 	if block == nil {
 		return nil, errorKit.Simple("fail to decode pem because block is nil")
@@ -29,7 +29,7 @@ func EncryptPEM(pemRaw []byte, passwd []byte) ([]byte, error) {
 		return nil, err
 	}
 
-	block, err = encryptPrivateKey(privateKey, passwd)
+	block, err = encryptPrivateKey(privateKey, password)
 	if err != nil {
 		return nil, err
 	}
