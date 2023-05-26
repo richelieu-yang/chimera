@@ -16,7 +16,7 @@ import (
 
 // EncryptPEM 通过password，加密私钥
 /**
- * encrypt a pem private key
+ * encryptWithPKCS8 a pem private key
  * input: pem raw
  * output: pem raw
  */
@@ -41,7 +41,7 @@ func EncryptPEM(pemRaw []byte, passwd []byte) ([]byte, error) {
 	return pem.EncodeToMemory(block), nil
 }
 
-// encrypt a private key
+// encryptWithPKCS8 a private key
 // input: private key
 // output: pem block
 func encryptPrivateKey(privateKey interface{}, passwd []byte) (*pem.Block, error) {
@@ -98,7 +98,7 @@ func derToPrivateKey(der []byte) (key interface{}, err error) {
 
 // DecryptPEM 通过password，解密私钥
 /**
- * decrypt a pem private key
+ * decryptWithPKCS8 a pem private key
  * input: pem raw
  * output: pem raw
  */
@@ -141,7 +141,7 @@ func DecryptPEM(pemRaw []byte, passwd []byte) ([]byte, error) {
 	rawBase64 := base64.StdEncoding.EncodeToString(raw)
 	derBase64 := base64.StdEncoding.EncodeToString(der)
 	if rawBase64 != derBase64 {
-		return nil, errorKit.Simple("Invalid decrypt PEM: raw does not match with der")
+		return nil, errorKit.Simple("Invalid decryptWithPKCS8 PEM: raw does not match with der")
 	}
 
 	block = &pem.Block{

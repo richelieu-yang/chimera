@@ -7,9 +7,6 @@ import (
 	"github.com/richelieu42/chimera/v2/src/core/errorKit"
 )
 
-/**
-* PKCS1
- */
 func parsePKCS1PrivateKey(s []byte) (*rsa.PrivateKey, error) {
 	block, _ := pem.Decode(s)
 	if block == nil {
@@ -19,9 +16,6 @@ func parsePKCS1PrivateKey(s []byte) (*rsa.PrivateKey, error) {
 	return x509.ParsePKCS1PrivateKey(block.Bytes)
 }
 
-/**
- * PKCS8
- */
 func parsePKCS8PrivateKey(s []byte) (*rsa.PrivateKey, error) {
 	block, _ := pem.Decode(s)
 	if block == nil {

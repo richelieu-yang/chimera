@@ -1,10 +1,10 @@
 // Package rsaKit 支持长文本加解密
-/**
- * Golang-RSA加密解密-数据无大小限制：https://www.cnblogs.com/akidongzi/p/12036165.html
- *
- * 密钥对（公钥、私钥）的要求：	PKCS#8、PEM
- * 在线生成非对称加密公钥、私钥：	http://web.chacuo.net/netrsakeypair
- */
+/*
+Golang-RSA加密解密-数据无大小限制：https://www.cnblogs.com/akidongzi/p/12036165.html
+
+密钥对（公钥、私钥）的要求：	PKCS#8、PEM
+在线生成非对称加密公钥、私钥：	http://web.chacuo.net/netrsakeypair
+*/
 package rsaKit
 
 import (
@@ -45,14 +45,14 @@ func init() {
 	}
 }
 
-// Encrypt （公钥）加密
+// EncryptWithPKCS8 （公钥）加密
 /*
 PS: 支持大文本（内部分块加解密）.
 
 @param data 		原文
 @param publicKey 	公钥
 */
-func Encrypt(data, publicKey []byte) ([]byte, error) {
+func EncryptWithPKCS8(data, publicKey []byte) ([]byte, error) {
 	if err := sliceKit.AssertNotEmpty(publicKey); err != nil {
 		return nil, err
 	}
@@ -68,7 +68,7 @@ func Encrypt(data, publicKey []byte) ([]byte, error) {
 	partLen := key.N.BitLen()/8 - 11
 	chunks := split(data, partLen)
 	for _, chunk := range chunks {
-		tmp, err := encrypt(key, chunk)
+		tmp, err := encryptWithPKCS8(key, chunk)
 		if err != nil {
 			return nil, err
 		}
@@ -80,7 +80,7 @@ func Encrypt(data, publicKey []byte) ([]byte, error) {
 	return base64Kit.Encode(data), nil
 }
 
-// Decrypt （私钥）解密
+// DecryptWithPKCS8 （私钥）解密
 /*
 PS: 支持大文本（内部分块加解密）.
 
@@ -88,7 +88,7 @@ PS: 支持大文本（内部分块加解密）.
 @param privateKey 	私钥
 @param password 	私钥的密码（没有则传nil）
 */
-func Decrypt(data, privateKey, password []byte) ([]byte, error) {
+func DecryptWithPKCS8(data, privateKey, password []byte) ([]byte, error) {
 	if err := sliceKit.AssertNotEmpty(privateKey); err != nil {
 		return nil, err
 	}
@@ -117,7 +117,7 @@ func Decrypt(data, privateKey, password []byte) ([]byte, error) {
 	partLen := key.N.BitLen() / 8
 	chunks := split(data, partLen)
 	for _, chunk := range chunks {
-		tmp, err := decrypt(key, chunk)
+		tmp, err := decryptWithPKCS8(key, chunk)
 		if err != nil {
 			return nil, err
 		}
@@ -126,11 +126,11 @@ func Decrypt(data, privateKey, password []byte) ([]byte, error) {
 	return buffer.Bytes(), nil
 }
 
-func encrypt(publicKey *rsa.PublicKey, data []byte) ([]byte, error) {
+func encryptWithPKCS8(publicKey *rsa.PublicKey, data []byte) ([]byte, error) {
 	return rsa.EncryptPKCS1v15(rand.Reader, publicKey, data)
 }
 
-func decrypt(privateKey *rsa.PrivateKey, data []byte) ([]byte, error) {
+func decryptWithPKCS8(privateKey *rsa.PrivateKey, data []byte) ([]byte, error) {
 	return rsa.DecryptPKCS1v15(rand.Reader, privateKey, data)
 }
 
