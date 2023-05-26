@@ -1,10 +1,3 @@
-// Package rsaKit 支持长文本加解密
-/*
-Golang-RSA加密解密-数据无大小限制：https://www.cnblogs.com/akidongzi/p/12036165.html
-
-密钥对（公钥、私钥）的要求：	PKCS#8、PEM
-在线生成非对称加密公钥、私钥：	http://web.chacuo.net/netrsakeypair
-*/
 package rsaKit
 
 import (

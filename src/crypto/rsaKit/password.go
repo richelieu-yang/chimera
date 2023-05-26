@@ -1,7 +1,3 @@
-// Package rsaKit 对私钥进行"加密"、"解密"操作.
-/*
-参考（将里面两个PKCS1 marshall改为PKCS8的了）：https://www.jianshu.com/p/c102a639cc50
-*/
 package rsaKit
 
 import (
@@ -15,11 +11,11 @@ import (
 )
 
 // EncryptPEM 通过password，加密私钥
-/**
- * encryptWithPKCS8 a pem private key
- * input: pem raw
- * output: pem raw
- */
+/*
+encryptWithPKCS8 a pem private key
+input: pem raw
+output: pem raw
+*/
 func EncryptPEM(pemRaw []byte, passwd []byte) ([]byte, error) {
 	block, _ := pem.Decode(pemRaw)
 	if block == nil {
@@ -41,9 +37,11 @@ func EncryptPEM(pemRaw []byte, passwd []byte) ([]byte, error) {
 	return pem.EncodeToMemory(block), nil
 }
 
-// encryptWithPKCS8 a private key
-// input: private key
-// output: pem block
+// encryptPrivateKey
+/*
+input: private key
+output: pem block
+*/
 func encryptPrivateKey(privateKey interface{}, passwd []byte) (*pem.Block, error) {
 	switch k := privateKey.(type) {
 	case *ecdsa.PrivateKey:
@@ -97,11 +95,11 @@ func derToPrivateKey(der []byte) (key interface{}, err error) {
 }
 
 // DecryptPEM 通过password，解密私钥
-/**
- * decryptWithPKCS8 a pem private key
- * input: pem raw
- * output: pem raw
- */
+/*
+decryptWithPKCS8 a pem private key
+input: pem raw
+output: pem raw
+*/
 func DecryptPEM(pemRaw []byte, passwd []byte) ([]byte, error) {
 	block, _ := pem.Decode(pemRaw)
 	if block == nil {

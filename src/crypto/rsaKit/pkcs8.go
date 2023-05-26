@@ -1,7 +1,3 @@
-// Package rsaKit 支持长文本加解密
-/*
-Golang-RSA加密解密-数据无大小限制：https://www.cnblogs.com/akidongzi/p/12036165.html
-*/
 package rsaKit
 
 import (
@@ -12,14 +8,14 @@ import (
 	"github.com/richelieu42/chimera/v2/src/crypto/base64Kit"
 )
 
-// EncryptWithPKCS8 （公钥）加密
+// PKCS8Encrypt （公钥）加密
 /*
 PS: 支持大文本（内部分块加解密）.
 
 @param data 		原文
 @param publicKey 	公钥
 */
-func EncryptWithPKCS8(data, publicKey []byte) ([]byte, error) {
+func PKCS8Encrypt(data, publicKey []byte) ([]byte, error) {
 	if err := sliceKit.AssertNotEmpty(publicKey); err != nil {
 		return nil, err
 	}
@@ -47,7 +43,7 @@ func EncryptWithPKCS8(data, publicKey []byte) ([]byte, error) {
 	return base64Kit.Encode(data), nil
 }
 
-// DecryptWithPKCS8 （私钥）解密
+// PKCS8Decrypt （私钥）解密
 /*
 PS: 支持大文本（内部分块加解密）.
 
@@ -55,7 +51,7 @@ PS: 支持大文本（内部分块加解密）.
 @param privateKey 	私钥
 @param password 	私钥的密码（没有则传nil）
 */
-func DecryptWithPKCS8(data, privateKey, password []byte) ([]byte, error) {
+func PKCS8Decrypt(data, privateKey, password []byte) ([]byte, error) {
 	if err := sliceKit.AssertNotEmpty(privateKey); err != nil {
 		return nil, err
 	}
