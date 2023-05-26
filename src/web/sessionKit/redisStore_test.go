@@ -5,12 +5,17 @@ import (
 	"github.com/gin-gonic/gin"
 	"github.com/gorilla/sessions"
 	"github.com/redis/go-redis/v9"
+	"github.com/richelieu42/chimera/v2/src/atomicKit"
+	"github.com/richelieu42/chimera/v2/src/core/intKit"
 	"github.com/richelieu42/chimera/v2/src/idKit"
 	"github.com/sirupsen/logrus"
 	"net/http"
+	"strconv"
 	"testing"
 	"time"
 )
+
+var i = atomicKit.NewInt()
 
 // TestRedisStore
 /*
@@ -25,7 +30,7 @@ func TestRedisStore(t *testing.T) {
 
 	// Redis配置（单节点）
 	redisOptions := &redis.Options{
-		Addr: "localhost:6379",
+		Addr: "127.0.0.1:6379",
 		DB:   0,
 	}
 	client := redis.NewClient(redisOptions)
@@ -46,6 +51,7 @@ func TestRedisStore(t *testing.T) {
 	})
 	// 自定义: cookie的value、Redis中的key的后半部分
 	store.KeyGen(func() (string, error) {
+		//return "id", nil
 		return idKit.NewULID(), nil
 	})
 	store.SetSessionTimeoutWhenZeroMaxAge(time.Hour)
@@ -59,11 +65,9 @@ func TestRedisStore(t *testing.T) {
 			return
 		}
 
-		logrus.WithFields(logrus.Fields{
-			"IsNew":  session.IsNew,
-			"ID":     session.ID,
-			"Values": session.Values,
-		}).Info("session")
+		if session.IsNew {
+			session.Values["i"] = i.Add(1)
+		}
 
 		/* (2) 保存session数据，本质上是将内存中的数据持久化到存储介质中（序列化并写到Redis中；会重置key的TTL） */
 		if err := session.Save(ctx.Request, ctx.Writer); err != nil {
@@ -71,7 +75,13 @@ func TestRedisStore(t *testing.T) {
 			return
 		}
 
-		ctx.String(http.StatusOK, "ok")
+		logrus.WithFields(logrus.Fields{
+			"IsNew":  session.IsNew,
+			"ID":     session.ID,
+			"Values": session.Values,
+		}).Info("session")
+
+		ctx.String(http.StatusOK, strconv.Itoa(intKit.ToInt(session.Values["i"])))
 	})
 	if err := engine.Run(":80"); err != nil {
 		panic(err)
