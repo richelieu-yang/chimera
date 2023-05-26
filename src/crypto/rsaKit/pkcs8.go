@@ -68,7 +68,7 @@ func EncryptWithPKCS8(data, publicKey []byte) ([]byte, error) {
 	partLen := key.N.BitLen()/8 - 11
 	chunks := split(data, partLen)
 	for _, chunk := range chunks {
-		tmp, err := encryptWithPKCS8(key, chunk)
+		tmp, err := rsa.EncryptPKCS1v15(rand.Reader, key, chunk)
 		if err != nil {
 			return nil, err
 		}
@@ -117,21 +117,13 @@ func DecryptWithPKCS8(data, privateKey, password []byte) ([]byte, error) {
 	partLen := key.N.BitLen() / 8
 	chunks := split(data, partLen)
 	for _, chunk := range chunks {
-		tmp, err := decryptWithPKCS8(key, chunk)
+		tmp, err := rsa.DecryptPKCS1v15(rand.Reader, key, chunk)
 		if err != nil {
 			return nil, err
 		}
 		buffer.Write(tmp)
 	}
 	return buffer.Bytes(), nil
-}
-
-func encryptWithPKCS8(publicKey *rsa.PublicKey, data []byte) ([]byte, error) {
-	return rsa.EncryptPKCS1v15(rand.Reader, publicKey, data)
-}
-
-func decryptWithPKCS8(privateKey *rsa.PrivateKey, data []byte) ([]byte, error) {
-	return rsa.DecryptPKCS1v15(rand.Reader, privateKey, data)
 }
 
 func split(buf []byte, lim int) [][]byte {
