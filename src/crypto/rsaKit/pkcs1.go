@@ -56,7 +56,7 @@ func DecryptWithPKCS1(data, privateKey, password []byte) ([]byte, error) {
 			return nil, err
 		}
 	}
-	key, err := parsePKCS8PrivateKey(privateKey)
+	key, err := parsePKCS1PrivateKey(privateKey)
 	if err != nil {
 		return nil, err
 	}
