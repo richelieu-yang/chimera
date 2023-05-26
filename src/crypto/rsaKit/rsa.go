@@ -11,6 +11,7 @@ import (
 	"bytes"
 	"crypto/rand"
 	"crypto/rsa"
+	"github.com/richelieu42/chimera/v2/src/core/sliceKit"
 	"github.com/richelieu42/chimera/v2/src/crypto/base64Kit"
 	"github.com/richelieu42/chimera/v2/src/resources"
 	"github.com/sirupsen/logrus"
@@ -44,8 +45,16 @@ func init() {
 	}
 }
 
-// Encrypt 公钥加密
-func Encrypt(publicKey []byte, data []byte) ([]byte, error) {
+// Encrypt （公钥）加密
+/*
+@param data 原文
+@param publicKey 公钥
+*/
+func Encrypt(data, publicKey []byte) ([]byte, error) {
+	if err := sliceKit.AssertNotEmpty(publicKey); err != nil {
+		return nil, err
+	}
+
 	// 公钥
 	key, err := parsePublicKey(publicKey)
 	if err != nil {
@@ -69,19 +78,17 @@ func Encrypt(publicKey []byte, data []byte) ([]byte, error) {
 	return base64Kit.Encode(data), nil
 }
 
-func EncryptToString(publicKeyData []byte, data []byte) (string, error) {
-	data, err := Encrypt(publicKeyData, data)
-	if err != nil {
-		return "", err
+// Decrypt （私钥）解密
+/*
+@param data	 		密文
+@param privateKey 	私钥
+@param password 	私钥的密码（没有则传nil）
+*/
+func Decrypt(data, privateKey, password []byte) ([]byte, error) {
+	if err := sliceKit.AssertNotEmpty(privateKey); err != nil {
+		return nil, err
 	}
-	return string(data), nil
-}
 
-// Decrypt 私钥解密
-/**
- * @param password 私钥的密码，可以为nil
- */
-func Decrypt(privateKey, password, data []byte) ([]byte, error) {
 	// 私钥
 	if password != nil {
 		var err error
@@ -113,18 +120,6 @@ func Decrypt(privateKey, password, data []byte) ([]byte, error) {
 		buffer.Write(tmp)
 	}
 	return buffer.Bytes(), nil
-}
-
-// DecryptToString
-/**
- * @param password 私钥的密码，可以为nil
- */
-func DecryptToString(privateKeyData, password, data []byte) (string, error) {
-	data, err := Decrypt(privateKeyData, password, data)
-	if err != nil {
-		return "", err
-	}
-	return string(data), nil
 }
 
 func encrypt(publicKey *rsa.PublicKey, data []byte) ([]byte, error) {
