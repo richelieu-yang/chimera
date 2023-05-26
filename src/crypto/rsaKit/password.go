@@ -13,8 +13,8 @@ import (
 // EncryptPEM 通过password，加密私钥
 /*
 encryptWithPKCS8 a pem private key
-input: pem raw
-output: pem raw
+input: 	pem raw
+output:	pem raw
 */
 func EncryptPEM(pemRaw []byte, password []byte) ([]byte, error) {
 	block, _ := pem.Decode(pemRaw)
