@@ -1,3 +1,6 @@
+PKCS1 VS PKCS8
+    早期openssl1.0之前版本，一般提供是pkcs#1格式，有很多软件只支持pkcs#1格式（js rsa模块)，那么你可以选择生成该种类型。现在一般流行是pkcs#8格式.
+
 在线生成非对称加密公钥私钥对
     http://web.chacuo.net/netrsakeypair
 
