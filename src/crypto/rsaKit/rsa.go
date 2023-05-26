@@ -47,8 +47,10 @@ func init() {
 
 // Encrypt （公钥）加密
 /*
-@param data 原文
-@param publicKey 公钥
+PS: 支持大文本（内部分块加解密）.
+
+@param data 		原文
+@param publicKey 	公钥
 */
 func Encrypt(data, publicKey []byte) ([]byte, error) {
 	if err := sliceKit.AssertNotEmpty(publicKey); err != nil {
@@ -80,6 +82,8 @@ func Encrypt(data, publicKey []byte) ([]byte, error) {
 
 // Decrypt （私钥）解密
 /*
+PS: 支持大文本（内部分块加解密）.
+
 @param data	 		密文
 @param privateKey 	私钥
 @param password 	私钥的密码（没有则传nil）
