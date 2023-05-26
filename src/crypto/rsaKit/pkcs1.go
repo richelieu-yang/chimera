@@ -8,6 +8,7 @@ import (
 	"github.com/richelieu42/chimera/v2/src/crypto/base64Kit"
 )
 
+// PKCS1Encrypt 公钥加密（密钥格式: PKCS1）
 func PKCS1Encrypt(data, publicKey []byte) ([]byte, error) {
 	if err := sliceKit.AssertNotEmpty(publicKey); err != nil {
 		return nil, err
@@ -36,6 +37,7 @@ func PKCS1Encrypt(data, publicKey []byte) ([]byte, error) {
 	return base64Kit.Encode(data), nil
 }
 
+// PKCS1Decrypt 公钥解密（密钥格式: PKCS1）
 func PKCS1Decrypt(data, privateKey, password []byte) ([]byte, error) {
 	if err := sliceKit.AssertNotEmpty(privateKey); err != nil {
 		return nil, err

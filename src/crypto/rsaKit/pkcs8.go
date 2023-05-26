@@ -8,10 +8,8 @@ import (
 	"github.com/richelieu42/chimera/v2/src/crypto/base64Kit"
 )
 
-// PKCS8Encrypt （公钥）加密
+// PKCS8Encrypt 公钥加密（密钥格式: PKCS8）
 /*
-PS: 支持大文本（内部分块加解密）.
-
 @param data 		原文
 @param publicKey 	公钥
 */
@@ -43,7 +41,7 @@ func PKCS8Encrypt(data, publicKey []byte) ([]byte, error) {
 	return base64Kit.Encode(data), nil
 }
 
-// PKCS8Decrypt （私钥）解密
+// PKCS8Decrypt 私钥解密（密钥格式: PKCS8）
 /*
 PS: 支持大文本（内部分块加解密）.
 
