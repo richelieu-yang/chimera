@@ -42,6 +42,7 @@ require (
 	github.com/shirou/gopsutil/v3 v3.23.4
 	github.com/shopspring/decimal v1.3.1
 	github.com/sirupsen/logrus v1.9.2
+	github.com/sony/sonyflake v1.1.0
 	github.com/spf13/cast v1.5.1
 	github.com/spf13/viper v1.15.0
 	github.com/stretchr/testify v1.8.3
@@ -123,7 +124,6 @@ require (
 	github.com/prometheus/common v0.42.0 // indirect
 	github.com/prometheus/procfs v0.9.0 // indirect
 	github.com/shoenig/go-m1cpu v0.1.5 // indirect
-	github.com/sony/sonyflake v1.1.0 // indirect
 	github.com/spaolacci/murmur3 v1.1.0 // indirect
 	github.com/spf13/afero v1.9.3 // indirect
 	github.com/spf13/jwalterweatherman v1.1.0 // indirect
