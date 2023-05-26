@@ -7,6 +7,21 @@ import (
 	"github.com/richelieu42/chimera/v2/src/core/errorKit"
 )
 
+// parsePublicKey 解析公钥（PKCS1 || PKCS8）
+func parsePublicKey(s []byte) (*rsa.PublicKey, error) {
+	block, _ := pem.Decode(s)
+	if block == nil {
+		return nil, errorKit.Simple("public key error")
+	}
+
+	keyInterface, err := x509.ParsePKIXPublicKey(block.Bytes)
+	if err != nil {
+		return nil, err
+	}
+	return keyInterface.(*rsa.PublicKey), nil
+}
+
+// parsePKCS1PrivateKey 解析私钥（PKCS1）
 func parsePKCS1PrivateKey(s []byte) (*rsa.PrivateKey, error) {
 	block, _ := pem.Decode(s)
 	if block == nil {
@@ -16,6 +31,7 @@ func parsePKCS1PrivateKey(s []byte) (*rsa.PrivateKey, error) {
 	return x509.ParsePKCS1PrivateKey(block.Bytes)
 }
 
+// parsePKCS8PrivateKey 解析私钥（PKCS8）
 func parsePKCS8PrivateKey(s []byte) (*rsa.PrivateKey, error) {
 	block, _ := pem.Decode(s)
 	if block == nil {

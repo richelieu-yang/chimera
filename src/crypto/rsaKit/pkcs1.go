@@ -15,7 +15,7 @@ import (
 	"github.com/richelieu42/chimera/v2/src/crypto/base64Kit"
 )
 
-func EncryptWithPKCS1(data, publicKey []byte) ([]byte, error) {
+func PKCS1Encrypt(data, publicKey []byte) ([]byte, error) {
 	if err := sliceKit.AssertNotEmpty(publicKey); err != nil {
 		return nil, err
 	}
@@ -43,7 +43,7 @@ func EncryptWithPKCS1(data, publicKey []byte) ([]byte, error) {
 	return base64Kit.Encode(data), nil
 }
 
-func DecryptWithPKCS1(data, privateKey, password []byte) ([]byte, error) {
+func PKCS1Decrypt(data, privateKey, password []byte) ([]byte, error) {
 	if err := sliceKit.AssertNotEmpty(privateKey); err != nil {
 		return nil, err
 	}

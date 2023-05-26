@@ -10,37 +10,7 @@ import (
 	"crypto/rsa"
 	"github.com/richelieu42/chimera/v2/src/core/sliceKit"
 	"github.com/richelieu42/chimera/v2/src/crypto/base64Kit"
-	"github.com/richelieu42/chimera/v2/src/resources"
-	"github.com/sirupsen/logrus"
 )
-
-var (
-	// DefaultPublicKey 默认公钥
-	DefaultPublicKey []byte
-
-	// DefaultPrivateKey 默认私钥
-	DefaultPrivateKey []byte
-
-	// DefaultPassword 默认私钥的密码
-	DefaultPassword = []byte("Y3l5")
-)
-
-func init() {
-	var err error
-	var path string
-
-	path = "resources/crypto/rsa/pub.pem"
-	DefaultPublicKey, err = resources.Asset(path)
-	if err != nil {
-		logrus.Fatal(err)
-	}
-
-	path = "resources/crypto/rsa/pri.pem"
-	DefaultPrivateKey, err = resources.Asset(path)
-	if err != nil {
-		logrus.Fatal(err)
-	}
-}
 
 // EncryptWithPKCS8 （公钥）加密
 /*
