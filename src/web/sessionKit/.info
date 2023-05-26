@@ -1,6 +1,6 @@
-redis_store.go 实际上是修改了 github.com/rbcervilla/redisstore/v8 v8.1.0.（因为该依赖有bug，详见 go - session.wps）
+redis_store.go 实际上是修改了 https://github.com/gorilla/sessions + github.com/rbcervilla/redisstore/v8 v8.1.0.（因为该依赖有bug，详见 go - session.wps）
 
 PS: 想看修改了哪些，可以"在文件中搜索关键词Richelieu"，或者"看文件的git记录"（推荐）.
 
 !!!:
-(1) 如果要将session存储到 Redis 中，需要使用 "分布式唯一id"!!!
+(1) 如果要将session存储到 Redis 中，需要使用 "分布式唯一id"!!! 如果生成的id一致，后面的会覆盖前面的.

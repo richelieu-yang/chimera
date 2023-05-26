@@ -1,7 +1,7 @@
 // Package rsaKit 对私钥进行"加密"、"解密"操作.
-/**
- * 参考（将里面两个PKCS1 marshall改为PKCS8的了）：https://www.jianshu.com/p/c102a639cc50
- */
+/*
+参考（将里面两个PKCS1 marshall改为PKCS8的了）：https://www.jianshu.com/p/c102a639cc50
+*/
 package rsaKit
 
 import (
