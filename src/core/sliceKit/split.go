@@ -1,8 +1,9 @@
-package rsaKit
+package sliceKit
 
-func split(buf []byte, limit int) [][]byte {
-	var chunk []byte
-	chunks := make([][]byte, 0, len(buf)/limit+1)
+// Split 分割 []T
+func Split[T any](buf []T, limit int) [][]T {
+	var chunk []T
+	chunks := make([][]T, 0, len(buf)/limit+1)
 
 	for len(buf) >= limit {
 		chunk, buf = buf[:limit], buf[limit:]

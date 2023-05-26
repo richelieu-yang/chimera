@@ -23,7 +23,7 @@ func PKCS1Encrypt(data, publicKey []byte) ([]byte, error) {
 	// 分块加密
 	buffer := bytes.NewBufferString("")
 	partLen := key.N.BitLen()/8 - 11
-	chunks := split(data, partLen)
+	chunks := sliceKit.Split(data, partLen)
 	for _, chunk := range chunks {
 		tmp, err := rsa.EncryptPKCS1v15(rand.Reader, key, chunk)
 		if err != nil {
@@ -65,7 +65,7 @@ func PKCS1Decrypt(data, privateKey, password []byte) ([]byte, error) {
 	// 分块解密
 	buffer := bytes.NewBufferString("")
 	partLen := key.N.BitLen() / 8
-	chunks := split(data, partLen)
+	chunks := sliceKit.Split(data, partLen)
 	for _, chunk := range chunks {
 		tmp, err := rsa.DecryptPKCS1v15(rand.Reader, key, chunk)
 		if err != nil {
