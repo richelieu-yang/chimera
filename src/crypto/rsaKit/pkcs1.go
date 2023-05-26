@@ -13,46 +13,9 @@ import (
 	"crypto/rsa"
 	"github.com/richelieu42/chimera/v2/src/core/sliceKit"
 	"github.com/richelieu42/chimera/v2/src/crypto/base64Kit"
-	"github.com/richelieu42/chimera/v2/src/resources"
-	"github.com/sirupsen/logrus"
 )
 
-var (
-	// DefaultPublicKey 默认公钥
-	DefaultPublicKey []byte
-
-	// DefaultPrivateKey 默认私钥
-	DefaultPrivateKey []byte
-
-	// DefaultPassword 默认私钥的密码
-	DefaultPassword = []byte("Y3l5")
-)
-
-func init() {
-	var err error
-	var path string
-
-	path = "resources/crypto/rsa/pub.pem"
-	DefaultPublicKey, err = resources.Asset(path)
-	if err != nil {
-		logrus.Fatal(err)
-	}
-
-	path = "resources/crypto/rsa/pri.pem"
-	DefaultPrivateKey, err = resources.Asset(path)
-	if err != nil {
-		logrus.Fatal(err)
-	}
-}
-
-// EncryptWithPKCS8 （公钥）加密
-/*
-PS: 支持大文本（内部分块加解密）.
-
-@param data 		原文
-@param publicKey 	公钥
-*/
-func EncryptWithPKCS8(data, publicKey []byte) ([]byte, error) {
+func EncryptWithPKCS1(data, publicKey []byte) ([]byte, error) {
 	if err := sliceKit.AssertNotEmpty(publicKey); err != nil {
 		return nil, err
 	}
@@ -80,15 +43,7 @@ func EncryptWithPKCS8(data, publicKey []byte) ([]byte, error) {
 	return base64Kit.Encode(data), nil
 }
 
-// DecryptWithPKCS8 （私钥）解密
-/*
-PS: 支持大文本（内部分块加解密）.
-
-@param data	 		密文
-@param privateKey 	私钥
-@param password 	私钥的密码（没有则传nil）
-*/
-func DecryptWithPKCS8(data, privateKey, password []byte) ([]byte, error) {
+func DecryptWithPKCS1(data, privateKey, password []byte) ([]byte, error) {
 	if err := sliceKit.AssertNotEmpty(privateKey); err != nil {
 		return nil, err
 	}
