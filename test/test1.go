@@ -7,9 +7,14 @@ import (
 )
 
 func main() {
+	options := []rsaKit.RsaOption{
+		rsaKit.WithPassword(""),
+		rsaKit.WithFormat(rsaKit.PKCS1),
+	}
+
 	priPath := "pri.pem"
 	pubPath := "pub.pem"
-	if err := rsaKit.GenerateKeyFiles(2048, priPath, pubPath); err != nil {
+	if err := rsaKit.GenerateKeyFiles(4096, priPath, pubPath, options...); err != nil {
 		panic(err)
 	}
 
@@ -28,11 +33,11 @@ func main() {
 	if err != nil {
 		panic(err)
 	}
-	fmt.Println("密文：", string(data))
+	fmt.Println("密文:", string(data))
 	// 解密
-	data, err = rsaKit.Decrypt(data, pri)
+	data, err = rsaKit.Decrypt(data, pri, options...)
 	if err != nil {
 		panic(err)
 	}
-	fmt.Println("明文：", string(data))
+	fmt.Println("明文:", string(data))
 }
