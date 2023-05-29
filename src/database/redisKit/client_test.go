@@ -30,12 +30,14 @@ func TestSingleNodeMode(test *testing.T) {
 		panic(err)
 	}
 
-	fmt.Println(client.SetNX(context.TODO(), "1", "a", time.Second*30))
+	fmt.Println(client.TTL(context.TODO(), "1"))
+
+	fmt.Println(client.SetEx(context.TODO(), "1", "222", time.Second*30))
 	fmt.Println(client.TTL(context.TODO(), "1"))
 
 	time.Sleep(time.Second * 5)
 
-	fmt.Println(client.SetNX(context.TODO(), "1", "a", time.Second*30))
+	fmt.Println(client.SetEx(context.TODO(), "1", "333", time.Second*30))
 	fmt.Println(client.TTL(context.TODO(), "1"))
 }
 

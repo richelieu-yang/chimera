@@ -47,7 +47,7 @@ func (client *Client) SetNX(ctx context.Context, key string, value interface{}, 
 
 // SetEx
 /*
-命令说明:	为指定的 key 设置值及其过期时间。如果 key 已经存在， SETEX 命令将会替换旧的值。
+命令说明:	为指定的 key 设置值及其过期时间。。(如果 key 已经存在，SETEX 命令将会 替换旧的值 并 更新TTL)
 命令语法:	SETEX KEY_NAME TIMEOUT VALUE
 命令返回值:	设置成功时返回 OK 。
 */
