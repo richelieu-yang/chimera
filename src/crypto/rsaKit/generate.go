@@ -9,6 +9,11 @@ import (
 	"github.com/richelieu42/chimera/v2/src/core/fileKit"
 )
 
+// GenerateKeyFiles 生成: 公钥 && 私钥
+/*
+@param bits		512 ||1024 || 2048 || 3072 || 4096
+@param options 	可配置: format、password
+*/
 func GenerateKeyFiles(bits int, priPath, pubPath string, options ...RsaOption) error {
 	pri, pub, err := GenerateKeys(bits, options...)
 	if err != nil {
@@ -24,10 +29,6 @@ func GenerateKeyFiles(bits int, priPath, pubPath string, options ...RsaOption) e
 	return nil
 }
 
-// GenerateKeys 生成: 公钥 && 私钥
-/*
-@param options 可配置: format、password
-*/
 func GenerateKeys(bits int, options ...RsaOption) (pri []byte, pub []byte, err error) {
 	opts := loadOptions(options...)
 	return opts.GenerateKeyPair(bits)

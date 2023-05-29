@@ -12,8 +12,8 @@ func TestRSA(t *testing.T) {
 		WithFormat(PKCS8),
 	}
 
-	priPath := "_pri.pem"
-	pubPath := "_pub.pem"
+	priPath := "_pri.key"
+	pubPath := "_pub.key"
 	if err := GenerateKeyFiles(4096, priPath, pubPath, options...); err != nil {
 		panic(err)
 	}
