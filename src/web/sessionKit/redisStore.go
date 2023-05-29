@@ -7,12 +7,13 @@ import (
 	"encoding/base32"
 	"encoding/gob"
 	"errors"
-	"github.com/gorilla/sessions"
-	"github.com/redis/go-redis/v9"
 	"io"
 	"net/http"
 	"strings"
 	"time"
+
+	"github.com/gorilla/sessions"
+	"github.com/redis/go-redis/v9"
 )
 
 // RedisStore stores gorilla sessions in Redis
@@ -44,6 +45,7 @@ func NewRedisStore(ctx context.Context, client redis.UniversalClient) (*RedisSto
 		keyGen:     generateRandomKey,
 		serializer: GobSerializer{},
 	}
+
 	return rs, rs.client.Ping(ctx).Err()
 }
 
@@ -76,16 +78,13 @@ func (s *RedisStore) New(r *http.Request, name string) (*sessions.Session, error
 
 // Save adds a single session to the response.
 //
-// If the Options.maxAge of the session is <= 0 then the session file will be
+// If the Options.MaxAge of the session is <= 0 then the session file will be
 // deleted from the store. With this process it enforces the properly
 // session cookie handling so no need to trust in the cookie management in the
 // web browser.
 func (s *RedisStore) Save(r *http.Request, w http.ResponseWriter, session *sessions.Session) error {
 	// Delete if max-age is <= 0
-
-	// Richelieu: maxAge == 0时，将生成cookie和存储到Redis中.
-	//if session.Options.maxAge <= 0 {
-	if session.Options.MaxAge < 0 {
+	if session.Options.MaxAge <= 0 {
 		if err := s.delete(r.Context(), session); err != nil {
 			return err
 		}
@@ -133,22 +132,14 @@ func (s *RedisStore) Close() error {
 	return s.client.Close()
 }
 
-// save writes session in Redis（存储到Redis中）
+// save writes session in Redis
 func (s *RedisStore) save(ctx context.Context, session *sessions.Session) error {
 	b, err := s.serializer.Serialize(session)
 	if err != nil {
 		return err
 	}
 
-	// Richelieu: maxAge == 0时，Redis中key的超时时间为 1h
-	var expiration time.Duration
-	if session.Options.MaxAge == 0 {
-		expiration = time.Hour
-	} else {
-		expiration = time.Duration(session.Options.MaxAge) * time.Second
-	}
-
-	return s.client.Set(ctx, s.keyPrefix+session.ID, b, expiration).Err()
+	return s.client.Set(ctx, s.keyPrefix+session.ID, b, time.Duration(session.Options.MaxAge)*time.Second).Err()
 }
 
 // load reads session from Redis
@@ -177,7 +168,7 @@ type SessionSerializer interface {
 	Deserialize(b []byte, s *sessions.Session) error
 }
 
-// GobSerializer Gob serializer
+// Gob serializer
 type GobSerializer struct{}
 
 func (gs GobSerializer) Serialize(s *sessions.Session) ([]byte, error) {
