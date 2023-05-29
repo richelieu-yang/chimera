@@ -8,7 +8,7 @@ import (
 
 func TestRSA(t *testing.T) {
 	options := []RsaOption{
-		WithPassword("cyy"),
+		WithPassword(""),
 		WithFormat(PKCS8),
 	}
 
