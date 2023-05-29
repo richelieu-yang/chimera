@@ -27,6 +27,7 @@ func (opts *rsaOptions) EncryptPrivatePEM(pemRaw []byte) ([]byte, error) {
 	if block == nil {
 		return nil, errorKit.Simple("fail to decode pem because block is nil")
 	}
+
 	der := block.Bytes
 	privateKey, err := derToPrivateKey(der)
 	if err != nil {
@@ -152,7 +153,7 @@ func derToPrivateKey(der []byte) (key interface{}, err error) {
 		case *rsa.PrivateKey, *ecdsa.PrivateKey:
 			return
 		default:
-			return nil, errorKit.Simple("Found unknown private key type in PKCS#8 wrapping")
+			return nil, errorKit.Simple("Found unknown private key type")
 		}
 	}
 	if key, err = x509.ParseECPrivateKey(der); err == nil {

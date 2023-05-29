@@ -11,7 +11,7 @@ import (
 func (opts *rsaOptions) parsePublicKey(data []byte) (*rsa.PublicKey, error) {
 	block, _ := pem.Decode(data)
 	if block == nil {
-		return nil, errorKit.Simple("public key error")
+		return nil, errorKit.Simple("fail to decode pem because block is nil")
 	}
 
 	keyInterface, err := x509.ParsePKIXPublicKey(block.Bytes)
@@ -25,7 +25,7 @@ func (opts *rsaOptions) parsePublicKey(data []byte) (*rsa.PublicKey, error) {
 func (opts *rsaOptions) parsePrivateKey(data []byte) (*rsa.PrivateKey, error) {
 	block, _ := pem.Decode(data)
 	if block == nil {
-		return nil, errorKit.Simple("private key error: block == nil")
+		return nil, errorKit.Simple("fail to decode pem because block is nil")
 	}
 
 	switch opts.format {
