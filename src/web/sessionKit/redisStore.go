@@ -100,14 +100,12 @@ func (s *RedisStore) Save(r *http.Request, w http.ResponseWriter, session *sessi
 
 	// Richelieu
 	var genFlag bool
-
 	if session.ID == "" {
 		id, err := s.keyGen()
 		if err != nil {
 			return errors.New("redisstore: failed to generate session id")
 		}
 		session.ID = id
-
 		// Richelieu
 		genFlag = true
 	}
@@ -145,6 +143,9 @@ func (s *RedisStore) Close() error {
 }
 
 // save writes session in Redis
+/*
+@param genFlag Richelieu: true: session.ID是新生成的
+*/
 func (s *RedisStore) save(ctx context.Context, session *sessions.Session, genFlag bool) error {
 	b, err := s.serializer.Serialize(session)
 	if err != nil {
@@ -161,7 +162,7 @@ func (s *RedisStore) save(ctx context.Context, session *sessions.Session, genFla
 	}
 	if genFlag {
 		// 要避免: key在Redis中已存在（uuid、ulid等并不可靠）
-		for i := 0; i < 3; i++ {
+		for i := 0; i < 6; i++ {
 			ok, err := s.client.SetNX(ctx, s.keyPrefix+session.ID, b, expiration).Result()
 			if err != nil {
 				return err
@@ -178,8 +179,7 @@ func (s *RedisStore) save(ctx context.Context, session *sessions.Session, genFla
 		}
 		return errorKit.Simple("multiple repetition")
 	}
-	cmd := s.client.Set(ctx, s.keyPrefix+session.ID, b, expiration)
-	return cmd.Err()
+	return s.client.Set(ctx, s.keyPrefix+session.ID, b, expiration).Err()
 }
 
 // load reads session from Redis
