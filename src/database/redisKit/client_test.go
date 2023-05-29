@@ -4,6 +4,7 @@ import (
 	"context"
 	"fmt"
 	"testing"
+	"time"
 )
 
 // TestSingleNodeMode 测试Redis的Cluster集群模式
@@ -29,21 +30,13 @@ func TestSingleNodeMode(test *testing.T) {
 		panic(err)
 	}
 
-	client.SetNX(context.TODO(), "1", "a")
+	fmt.Println(client.SetNX(context.TODO(), "1", "a", time.Second*30))
+	fmt.Println(client.TTL(context.TODO(), "1"))
 
-	//for i := 0; i < 1; i++ {
-	//	s, err := scan(client.GetUniversalClient(), context.TODO(), "*", 10)
-	//	if err != nil {
-	//		panic(err)
-	//	}
-	//	fmt.Println(s)
-	//	fmt.Println(len(s))
-	//	fmt.Println("======")
-	//
-	//	if len(s) != 101 {
-	//		panic(666)
-	//	}
-	//}
+	time.Sleep(time.Second * 5)
+
+	fmt.Println(client.SetNX(context.TODO(), "1", "a", time.Second*30))
+	fmt.Println(client.TTL(context.TODO(), "1"))
 }
 
 func TestClusterMode(test *testing.T) {

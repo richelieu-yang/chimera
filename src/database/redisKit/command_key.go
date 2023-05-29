@@ -58,7 +58,9 @@ func (client *Client) Del(ctx context.Context, keys ...string) (int64, error) {
 /*
 命令说明:	返回 key 的剩余过期时间.
 命令语法：	TTL KEY_NAME
-命令返回值：	当 key 不存在时，返回 -2 。 当 key 存在但没有设置剩余生存时间时，返回 -1 。 否则，以毫秒为单位，返回 key 的剩余生存时间.
+命令返回值：	(1) 当 key 不存在时，返回 -2
+			(2) 当 key 存在但没有设置剩余生存时间时（持久化键），返回 -1
+			(3) 否则，以毫秒为单位，返回 key 的剩余生存时间
 
 e.g. key不存在
 	duration, err := client.TTL(context.TODO(), "a")

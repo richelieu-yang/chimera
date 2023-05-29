@@ -32,6 +32,8 @@ func (client *Client) Set(ctx context.Context, key string, value interface{}, ex
 
 // SetNX
 /*
+PS: 如果传参key已经存在，不会修改该key的TTL.
+
 命令说明: 	在指定的 key 不存在时，为 key 设置指定的值.
 命令语法: 	SETNX KEY_NAME VALUE
 命令返回值: 	设置成功，返回 1 ；设置失败，返回 0 .
