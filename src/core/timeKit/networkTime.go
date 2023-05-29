@@ -8,15 +8,15 @@ import (
 )
 
 var networkTimeSources = []string{
-	"https://www.yozosoft.com/",
+	"https://www.bilibili.com/",
 	"https://www.baidu.com/",
-	"https://www.kingsoft.com/",
 	"https://cn.bing.com/",
 	"http://www.ntsc.ac.cn/",
 	"https://www.taobao.com/",
 	"https://www.360.cn/",
-	"https://www.bilibili.com/",
 	"https://www.google.com/",
+	"https://www.kingsoft.com/",
+	"https://www.yozosoft.com/",
 }
 
 // GetNetworkTime 获取网络时间.
