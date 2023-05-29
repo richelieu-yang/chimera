@@ -7,6 +7,7 @@ import (
 	"time"
 )
 
+// networkTimeSources 网络时间的来源s
 var networkTimeSources = []string{
 	"https://www.bilibili.com/",
 	"https://www.baidu.com/",
