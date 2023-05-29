@@ -57,7 +57,7 @@ func PKCS8Decrypt(data, privateKey, privateKeyPassword []byte) ([]byte, error) {
 	// 私钥
 	if privateKeyPassword != nil {
 		var err error
-		privateKey, err = DecryptPEM(privateKey, privateKeyPassword)
+		privateKey, err = DecryptPrivatePEM(privateKey, privateKeyPassword, PKCS8)
 		if err != nil {
 			return nil, err
 		}

@@ -38,7 +38,7 @@ func getNetworkTimeBySource(source string) (time.Time, error) {
 		(2) 内网环境，可能的情况: (a)直接返回error; (b)请求超时而返回error.
 	*/
 	client := &http.Client{
-		Timeout: time.Second * 3,
+		Timeout: time.Second * 10,
 		Transport: &http.Transport{
 			TLSClientConfig: &tls.Config{
 				InsecureSkipVerify: true,
