@@ -8,6 +8,7 @@ import (
 	"encoding/base64"
 	"encoding/pem"
 	"github.com/richelieu42/chimera/v2/src/core/errorKit"
+	"github.com/richelieu42/chimera/v2/src/core/strKit"
 )
 
 // EncryptPrivatePEM 通过password，加密私钥（.pem格式）
@@ -17,23 +18,24 @@ input: 	pem raw
 output:	pem raw
 */
 func (opts *rsaOptions) EncryptPrivatePEM(pemRaw []byte) ([]byte, error) {
+	if strKit.IsEmpty(opts.password) {
+		// 密码为空，不加密私钥
+		return pemRaw, nil
+	}
+
 	block, _ := pem.Decode(pemRaw)
 	if block == nil {
 		return nil, errorKit.Simple("fail to decode pem because block is nil")
 	}
-
 	der := block.Bytes
-
 	privateKey, err := derToPrivateKey(der)
 	if err != nil {
 		return nil, err
 	}
-
 	block, err = opts.encryptPrivateKey(privateKey)
 	if err != nil {
 		return nil, err
 	}
-
 	return pem.EncodeToMemory(block), nil
 }
 
@@ -85,20 +87,22 @@ input: 	pem raw
 output: pem raw
 */
 func (opts *rsaOptions) DecryptPrivatePEM(pemRaw []byte) ([]byte, error) {
+	if strKit.IsEmpty(opts.password) {
+		// 密码为空，不解密私钥
+		return pemRaw, nil
+	}
+
 	block, _ := pem.Decode(pemRaw)
 	if block == nil {
 		return nil, errorKit.Simple("fail to decode pem because block is nil")
 	}
-
 	if !x509.IsEncryptedPEMBlock(block) {
 		return nil, errorKit.Simple("fail to decode pem because it's not a decrypted pem")
 	}
-
 	der, err := x509.DecryptPEMBlock(block, []byte(opts.password))
 	if err != nil {
 		return nil, err
 	}
-
 	privateKey, err := derToPrivateKey(der)
 	if err != nil {
 		return nil, err
@@ -132,7 +136,6 @@ func (opts *rsaOptions) DecryptPrivatePEM(pemRaw []byte) ([]byte, error) {
 	if rawBase64 != derBase64 {
 		return nil, errorKit.Simple("invalid PEM: raw does not match with der")
 	}
-
 	block = &pem.Block{
 		Type:  block.Type,
 		Bytes: der,

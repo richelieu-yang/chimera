@@ -8,12 +8,12 @@ import (
 	"github.com/richelieu42/chimera/v2/src/crypto/base64Kit"
 )
 
+// Encrypt 公钥加密
 func Encrypt(data, publicKey []byte) ([]byte, error) {
 	opts := loadOptions()
 	return opts.Encrypt(data, publicKey)
 }
 
-// Encrypt 公钥加密
 func (opts *rsaOptions) Encrypt(data, publicKey []byte) ([]byte, error) {
 	if err := sliceKit.AssertNotEmpty(publicKey); err != nil {
 		return nil, err

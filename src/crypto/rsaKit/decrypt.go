@@ -5,11 +5,10 @@ import (
 	"crypto/rand"
 	"crypto/rsa"
 	"github.com/richelieu42/chimera/v2/src/core/sliceKit"
-	"github.com/richelieu42/chimera/v2/src/core/strKit"
 	"github.com/richelieu42/chimera/v2/src/crypto/base64Kit"
 )
 
-// Decrypt
+// Decrypt 私钥解密
 /*
 @param options 可配置: format、password
 */
@@ -24,12 +23,9 @@ func (opts *rsaOptions) Decrypt(data, privateKey []byte) ([]byte, error) {
 	}
 
 	// 私钥
-	if strKit.IsNotEmpty(opts.password) {
-		var err error
-		privateKey, err = opts.DecryptPrivatePEM(privateKey)
-		if err != nil {
-			return nil, err
-		}
+	privateKey, err := opts.DecryptPrivatePEM(privateKey)
+	if err != nil {
+		return nil, err
 	}
 	key, err := opts.parsePrivateKey(privateKey)
 	if err != nil {
