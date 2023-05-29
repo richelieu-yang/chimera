@@ -15,14 +15,6 @@ import (
 	"time"
 )
 
-const (
-	// defaultSessionTimeoutWhenMaxAgeZero
-	/*
-		Richelieu: RedisStore.sessionTimeoutWhenMaxAgeZero 的默认值.
-	*/
-	defaultSessionTimeoutWhenMaxAgeZero = 30 * time.Minute /*1800s*/
-)
-
 // RedisStore stores gorilla sessions in Redis
 type RedisStore struct {
 	// client to connect to redis
@@ -35,16 +27,6 @@ type RedisStore struct {
 	keyGen KeyGenFunc
 	// session serializer
 	serializer SessionSerializer
-
-	// sessionTimeoutWhenMaxAgeZero
-	/*
-		Richelieu: 当 maxAge == 0 时，后端session的有效期.
-
-		PS:
-		(1) 单位为秒（s）；
-		(2) 即Redis中key的超时时间.
-	*/
-	sessionTimeoutWhenMaxAgeZero time.Duration
 }
 
 // KeyGenFunc defines a function used by store to generate a key
@@ -61,21 +43,8 @@ func NewRedisStore(ctx context.Context, client redis.UniversalClient) (*RedisSto
 		keyPrefix:  "session:",
 		keyGen:     generateRandomKey,
 		serializer: GobSerializer{},
-
-		// Richelieu: 初始化实例时，值-1将使用默认值
-		sessionTimeoutWhenMaxAgeZero: -1,
 	}
 	return rs, rs.client.Ping(ctx).Err()
-}
-
-// SetSessionTimeoutWhenZeroMaxAge Richelieu
-/*
-@param duration > 0: 指定时间的有效期
-				== 0: 永久有效（TTL == -1，不建议这么干）
-				< 0: 采用默认值
-*/
-func (s *RedisStore) SetSessionTimeoutWhenZeroMaxAge(duration time.Duration) {
-	s.sessionTimeoutWhenMaxAgeZero = duration
 }
 
 // Get returns a session for the given name after adding it to the registry.
@@ -171,13 +140,10 @@ func (s *RedisStore) save(ctx context.Context, session *sessions.Session) error 
 		return err
 	}
 
-	// Richelieu: maxAge == 0时，将使用 sessionTimeoutWhenMaxAgeZero 属性
+	// Richelieu: maxAge == 0时，Redis中key的超时时间为 1h
 	var expiration time.Duration
 	if session.Options.MaxAge == 0 {
-		expiration = s.sessionTimeoutWhenMaxAgeZero
-		if expiration < 0 {
-			expiration = defaultSessionTimeoutWhenMaxAgeZero
-		}
+		expiration = time.Hour
 	} else {
 		expiration = time.Duration(session.Options.MaxAge) * time.Second
 	}

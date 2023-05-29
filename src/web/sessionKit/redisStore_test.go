@@ -12,7 +12,6 @@ import (
 	"net/http"
 	"strconv"
 	"testing"
-	"time"
 )
 
 var i = atomicKit.NewInt()
@@ -54,7 +53,6 @@ func TestRedisStore(t *testing.T) {
 		//return "id", nil
 		return idKit.NewULID(), nil
 	})
-	store.SetSessionTimeoutWhenZeroMaxAge(time.Hour)
 
 	engine := gin.Default()
 	engine.Any("/test", func(ctx *gin.Context) {
