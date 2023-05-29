@@ -29,6 +29,8 @@ func TestSingleNodeMode(test *testing.T) {
 		panic(err)
 	}
 
+	client.SetNX(context.TODO(), "1", "a")
+
 	//for i := 0; i < 1; i++ {
 	//	s, err := scan(client.GetUniversalClient(), context.TODO(), "*", 10)
 	//	if err != nil {

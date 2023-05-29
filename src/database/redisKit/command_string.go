@@ -58,6 +58,15 @@ func (client *Client) SetEx(ctx context.Context, key string, value interface{}, 
 	return str == "OK", nil
 }
 
+// SetXX
+/*
+Redis的数据类型详解 https://blog.csdn.net/m0_53474063/article/details/112647028
+*/
+func (client *Client) SetXX(ctx context.Context, key string, value interface{}, expiration time.Duration) (bool, error) {
+	cmd := client.universalClient.SetXX(ctx, key, value, expiration)
+	return cmd.Result()
+}
+
 // MSet
 /*
 命令说明:	同时设置一个或多个 key-value 对。
