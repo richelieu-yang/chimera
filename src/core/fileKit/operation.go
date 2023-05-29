@@ -47,17 +47,17 @@ func NewFile(filePath string) (*os.File, error) {
 
 // WriteToFile 将数据（字节流）写到文件中.
 /*
-@param dest 目标文件的路径（不存在的话，会创建一个新的文件；存在且是个文件的话，会覆盖掉旧的（并不会加到该文件的最后面））
+@param filePath 目标文件的路径（不存在的话，会创建一个新的文件；存在且是个文件的话，会覆盖掉旧的（并不会加到该文件的最后面））
 */
-func WriteToFile(data []byte, dest string) error {
-	if err := AssertNotExistOrIsFile(dest); err != nil {
+func WriteToFile(data []byte, filePath string) error {
+	if err := AssertNotExistOrIsFile(filePath); err != nil {
 		return err
 	}
-	if err := MkParentDirs(dest); err != nil {
+	if err := MkParentDirs(filePath); err != nil {
 		return err
 	}
 
-	return os.WriteFile(dest, data, os.ModePerm)
+	return os.WriteFile(filePath, data, os.ModePerm)
 }
 
 // Delete 删除 文件 或 目录（内部有文件或目录，也会一并删除）.

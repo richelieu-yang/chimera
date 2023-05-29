@@ -5,6 +5,6 @@ type (
 )
 
 const (
-	PKCS1 KeyFormat = iota
-	PKCS8
+	PKCS1 KeyFormat = 1
+	PKCS8 KeyFormat = 8
 )

@@ -10,13 +10,13 @@ import (
 	"github.com/richelieu42/chimera/v2/src/core/errorKit"
 )
 
-// EncryptPrivatePEM 通过password，加密私钥
+// EncryptPrivatePEM 通过password，加密私钥（.pem格式）
 /*
 encryptWithPKCS8 a pem private key
 input: 	pem raw
 output:	pem raw
 */
-func EncryptPrivatePEM(pemRaw []byte, password []byte, format KeyFormat) ([]byte, error) {
+func (opts *rsaOptions) EncryptPrivatePEM(pemRaw []byte) ([]byte, error) {
 	block, _ := pem.Decode(pemRaw)
 	if block == nil {
 		return nil, errorKit.Simple("fail to decode pem because block is nil")
@@ -29,7 +29,7 @@ func EncryptPrivatePEM(pemRaw []byte, password []byte, format KeyFormat) ([]byte
 		return nil, err
 	}
 
-	block, err = encryptPrivateKey(privateKey, password, format)
+	block, err = opts.encryptPrivateKey(privateKey)
 	if err != nil {
 		return nil, err
 	}
@@ -42,25 +42,23 @@ func EncryptPrivatePEM(pemRaw []byte, password []byte, format KeyFormat) ([]byte
 input: private key
 output: pem block
 */
-func encryptPrivateKey(privateKey interface{}, passwd []byte, format KeyFormat) (*pem.Block, error) {
+func (opts *rsaOptions) encryptPrivateKey(privateKey interface{}) (*pem.Block, error) {
 	switch k := privateKey.(type) {
 	case *ecdsa.PrivateKey:
 		raw, err := x509.MarshalECPrivateKey(k)
 		if err != nil {
 			return nil, err
 		}
-
-		block, err := x509.EncryptPEMBlock(rand.Reader, "EC PRIVATE KEY", raw, passwd, x509.PEMCipherAES256)
+		block, err := x509.EncryptPEMBlock(rand.Reader, "EC PRIVATE KEY", raw, []byte(opts.password), x509.PEMCipherAES256)
 		if err != nil {
 			return nil, err
 		}
-
 		return block, nil
 	case *rsa.PrivateKey:
 		var raw []byte
 		var err error
 
-		switch format {
+		switch opts.format {
 		case PKCS1:
 			raw = x509.MarshalPKCS1PrivateKey(k)
 		case PKCS8:
@@ -69,47 +67,24 @@ func encryptPrivateKey(privateKey interface{}, passwd []byte, format KeyFormat) 
 				return nil, err
 			}
 		default:
-			return nil, errorKit.Simple("invalid format(%v)", format)
+			return nil, errorKit.Simple("invalid format(%v)", opts.format)
 		}
-
-		block, err := x509.EncryptPEMBlock(rand.Reader, "PRIVATE KEY", raw, passwd, x509.PEMCipherAES256)
+		block, err := x509.EncryptPEMBlock(rand.Reader, "PRIVATE KEY", raw, []byte(opts.password), x509.PEMCipherAES256)
 		if err != nil {
 			return nil, err
 		}
-
 		return block, nil
 	default:
 		return nil, errorKit.Simple("Invalid key type. It must be *ecdsa.PrivateKey or *rsa.PrivateKey")
 	}
 }
 
-func derToPrivateKey(der []byte) (key interface{}, err error) {
-	if key, err = x509.ParsePKCS1PrivateKey(der); err == nil {
-		return key, nil
-	}
-
-	if key, err = x509.ParsePKCS8PrivateKey(der); err == nil {
-		switch key.(type) {
-		case *rsa.PrivateKey, *ecdsa.PrivateKey:
-			return
-		default:
-			return nil, errorKit.Simple("Found unknown private key type in PKCS#8 wrapping")
-		}
-	}
-
-	if key, err = x509.ParseECPrivateKey(der); err == nil {
-		return
-	}
-
-	return nil, errorKit.Simple("Invalid key type. The DER must contain an rsa.PrivateKey or ecdsa.PrivateKey")
-}
-
-// DecryptPrivatePEM 通过password，解密私钥
+// DecryptPrivatePEM 通过password，解密私钥（.pem格式）
 /*
 input: 	pem raw
 output: pem raw
 */
-func DecryptPrivatePEM(pemRaw []byte, passwd []byte, format KeyFormat) ([]byte, error) {
+func (opts *rsaOptions) DecryptPrivatePEM(pemRaw []byte) ([]byte, error) {
 	block, _ := pem.Decode(pemRaw)
 	if block == nil {
 		return nil, errorKit.Simple("fail to decode pem because block is nil")
@@ -119,7 +94,7 @@ func DecryptPrivatePEM(pemRaw []byte, passwd []byte, format KeyFormat) ([]byte, 
 		return nil, errorKit.Simple("fail to decode pem because it's not a decrypted pem")
 	}
 
-	der, err := x509.DecryptPEMBlock(block, passwd)
+	der, err := x509.DecryptPEMBlock(block, []byte(opts.password))
 	if err != nil {
 		return nil, err
 	}
@@ -137,7 +112,7 @@ func DecryptPrivatePEM(pemRaw []byte, passwd []byte, format KeyFormat) ([]byte, 
 			return nil, err
 		}
 	case *rsa.PrivateKey:
-		switch format {
+		switch opts.format {
 		case PKCS1:
 			raw = x509.MarshalPKCS1PrivateKey(k)
 		case PKCS8:
@@ -146,7 +121,7 @@ func DecryptPrivatePEM(pemRaw []byte, passwd []byte, format KeyFormat) ([]byte, 
 				return nil, err
 			}
 		default:
-			return nil, errorKit.Simple("invalid format(%v)", format)
+			return nil, errorKit.Simple("invalid format(%v)", opts.format)
 		}
 	default:
 		return nil, errorKit.Simple("Invalid key type. It must be *ecdsa.PrivateKey or *rsa.PrivateKey")
@@ -163,4 +138,22 @@ func DecryptPrivatePEM(pemRaw []byte, passwd []byte, format KeyFormat) ([]byte, 
 		Bytes: der,
 	}
 	return pem.EncodeToMemory(block), nil
+}
+
+func derToPrivateKey(der []byte) (key interface{}, err error) {
+	if key, err = x509.ParsePKCS1PrivateKey(der); err == nil {
+		return key, nil
+	}
+	if key, err = x509.ParsePKCS8PrivateKey(der); err == nil {
+		switch key.(type) {
+		case *rsa.PrivateKey, *ecdsa.PrivateKey:
+			return
+		default:
+			return nil, errorKit.Simple("Found unknown private key type in PKCS#8 wrapping")
+		}
+	}
+	if key, err = x509.ParseECPrivateKey(der); err == nil {
+		return
+	}
+	return nil, errorKit.Simple("Invalid key type. The DER must contain an rsa.PrivateKey or ecdsa.PrivateKey")
 }
