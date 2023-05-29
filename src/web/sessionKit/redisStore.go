@@ -7,8 +7,11 @@ import (
 	"encoding/base32"
 	"encoding/gob"
 	"errors"
+	"github.com/richelieu42/chimera/v2/src/core/errorKit"
+	"github.com/richelieu42/chimera/v2/src/randomKit"
 	"io"
 	"net/http"
+	"strconv"
 	"strings"
 	"time"
 
@@ -84,7 +87,10 @@ func (s *RedisStore) New(r *http.Request, name string) (*sessions.Session, error
 // web browser.
 func (s *RedisStore) Save(r *http.Request, w http.ResponseWriter, session *sessions.Session) error {
 	// Delete if max-age is <= 0
-	if session.Options.MaxAge <= 0 {
+
+	// Richelieu
+	//if session.Options.MaxAge <= 0 {
+	if session.Options.MaxAge < 0 {
 		if err := s.delete(r.Context(), session); err != nil {
 			return err
 		}
@@ -92,14 +98,20 @@ func (s *RedisStore) Save(r *http.Request, w http.ResponseWriter, session *sessi
 		return nil
 	}
 
+	// Richelieu
+	var genFlag bool
+
 	if session.ID == "" {
 		id, err := s.keyGen()
 		if err != nil {
 			return errors.New("redisstore: failed to generate session id")
 		}
 		session.ID = id
+
+		// Richelieu
+		genFlag = true
 	}
-	if err := s.save(r.Context(), session); err != nil {
+	if err := s.save(r.Context(), session, genFlag); err != nil {
 		return err
 	}
 
@@ -133,13 +145,41 @@ func (s *RedisStore) Close() error {
 }
 
 // save writes session in Redis
-func (s *RedisStore) save(ctx context.Context, session *sessions.Session) error {
+func (s *RedisStore) save(ctx context.Context, session *sessions.Session, genFlag bool) error {
 	b, err := s.serializer.Serialize(session)
 	if err != nil {
 		return err
 	}
 
-	return s.client.Set(ctx, s.keyPrefix+session.ID, b, time.Duration(session.Options.MaxAge)*time.Second).Err()
+	// Richelieu
+	//return s.client.Set(ctx, s.keyPrefix+session.ID, b, time.Duration(session.Options.MaxAge)*time.Second).Err()
+	var expiration time.Duration
+	if session.Options.MaxAge == 0 {
+		expiration = time.Hour
+	} else {
+		expiration = time.Duration(session.Options.MaxAge) * time.Second
+	}
+	if genFlag {
+		// 要避免: key在Redis中已存在（uuid、ulid等并不可靠）
+		for i := 0; i < 3; i++ {
+			ok, err := s.client.SetNX(ctx, s.keyPrefix+session.ID, b, expiration).Result()
+			if err != nil {
+				return err
+			}
+			if ok {
+				return nil
+			}
+			// 重复了，需要重新生成 session.ID
+			session.ID, err = s.keyGen()
+			if err != nil {
+				return errorKit.Simple("fail to regenerate session id")
+			}
+			session.ID += strconv.Itoa(randomKit.Int(0, 10000))
+		}
+		return errorKit.Simple("multiple repetition")
+	}
+	cmd := s.client.Set(ctx, s.keyPrefix+session.ID, b, expiration)
+	return cmd.Err()
 }
 
 // load reads session from Redis
