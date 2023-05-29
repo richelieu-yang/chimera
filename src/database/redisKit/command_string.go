@@ -30,7 +30,7 @@ func (client *Client) Set(ctx context.Context, key string, value interface{}, ex
 	return str == "OK", nil
 }
 
-// SetNX
+// SetNX key不存在才会: 设置值 && 更新TTL
 /*
 PS: 如果传参key已经存在，不会修改该key的TTL.
 
@@ -47,6 +47,8 @@ func (client *Client) SetNX(ctx context.Context, key string, value interface{}, 
 
 // SetEx
 /*
+Deprecated: 个人感觉在 go-redis 中，使用 Set 就够了.
+
 命令说明:	为指定的 key 设置值及其过期时间。。(如果 key 已经存在，SETEX 命令将会 替换旧的值 并 更新TTL)
 命令语法:	SETEX KEY_NAME TIMEOUT VALUE
 命令返回值:	设置成功时返回 OK 。
@@ -60,7 +62,7 @@ func (client *Client) SetEx(ctx context.Context, key string, value interface{}, 
 	return str == "OK", nil
 }
 
-// SetXX
+// SetXX （与 SetNX 相反）key存在才会: 设置值 && 更新TTL
 /*
 Redis的数据类型详解 https://blog.csdn.net/m0_53474063/article/details/112647028
 */

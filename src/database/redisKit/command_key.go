@@ -61,22 +61,6 @@ func (client *Client) Del(ctx context.Context, keys ...string) (int64, error) {
 命令返回值：	(1) 当 key 不存在时，返回 -2
 			(2) 当 key 存在但没有设置剩余生存时间时（持久化键），返回 -1
 			(3) 否则，以毫秒为单位，返回 key 的剩余生存时间
-
-e.g. key不存在
-	duration, err := client.TTL(context.TODO(), "a")
-	if err != nil {
-		panic(err)
-	}
-	fmt.Println(duration)       // -2ns
-	fmt.Println(duration == -2) // true
-
-e.g.1 key为持久化键
-	duration, err := client.TTL(context.TODO(), "a")
-	if err != nil {
-		panic(err)
-	}
-	fmt.Println(duration)       // -1ns
-	fmt.Println(duration == -1) // true
 */
 func (client *Client) TTL(ctx context.Context, key string) (time.Duration, error) {
 	cmd := client.universalClient.TTL(ctx, key)
