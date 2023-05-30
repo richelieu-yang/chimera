@@ -31,7 +31,7 @@ func GetNetworkTime() (time.Time, string, error) {
 		t      time.Time
 	}
 
-	var timeout = time.Second * 10
+	var timeout = time.Second * 8
 	var ch = make(chan *bean, len(networkTimeSources))
 
 	// 起多个goroutine同时获取网络时间，只要有一个成功获取到，此方法就返回值
