@@ -50,7 +50,7 @@ func TestRedisStore(t *testing.T) {
 	})
 	// 自定义: cookie的value、Redis中的key的后半部分
 	store.KeyGen(func() (string, error) {
-		//return "id", nil
+		//return "cyy", nil
 		return idKit.NewULID(), nil
 	})
 
