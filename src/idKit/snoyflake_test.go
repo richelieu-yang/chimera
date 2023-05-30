@@ -10,7 +10,13 @@ func TestNewSonyFlake(t *testing.T) {
 	if err != nil {
 		panic(err)
 	}
-	for i := 0; i < 100; i++ {
-		fmt.Println(sf.NextID())
+	for i := 0; i >= 0; i++ {
+		id, err := sf.NextID()
+		if err != nil {
+			panic(err)
+		}
+
+		str := fmt.Sprintf("%d", id)
+		fmt.Println(str, len(str))
 	}
 }

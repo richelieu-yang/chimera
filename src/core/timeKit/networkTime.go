@@ -9,7 +9,7 @@ import (
 
 // networkTimeSources 网络时间的来源s
 var networkTimeSources = []string{
-	"https://www.yozosoft.com/",
+	"https://github.com/",
 	"https://www.bilibili.com/",
 	"https://www.baidu.com/",
 	"https://cn.bing.com/",
@@ -18,6 +18,7 @@ var networkTimeSources = []string{
 	"https://www.360.cn/",
 	"https://www.google.com/",
 	"https://www.kingsoft.com/",
+	"https://www.yozosoft.com/",
 }
 
 // GetNetworkTime 获取网络时间.
