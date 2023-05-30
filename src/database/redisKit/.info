@@ -1,9 +1,10 @@
+(1) key、value、field都可以为"";
+
+## 命令教程
 redis命令手册:
     https://www.redis.net.cn/order/
 菜鸟教程:
     https://www.runoob.com/redis/redis-tutorial.html
-
-(1) key、value、field都可以为"";
 
 ## script（lua脚本）
 Redis Cluster中使用Lua脚本
