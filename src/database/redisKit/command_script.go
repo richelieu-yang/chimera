@@ -6,6 +6,8 @@ import (
 
 // Eval
 /*
+!!!: cluster集群模式下，使用lua脚本要注意（特别是涉及多个Redis key的情况），更多详见".info".
+
 命令说明:	使用 Lua 解释器执行脚本
 命令语法:	EVAL script numkeys key [key ...] arg [arg ...]
 */
@@ -16,6 +18,7 @@ func (client *Client) Eval(ctx context.Context, script string, keys []string, ar
 
 // EvalSha
 /*
+!!!: cluster集群模式下，使用lua脚本要注意（特别是涉及多个Redis key的情况），更多详见".info".
 PS: 一般与 ScriptLoad 搭配使用.
 
 命令说明:	根据给定的 sha1 校验码，执行缓存在服务器中的脚本
