@@ -175,7 +175,7 @@ func (s *RedisStore) save(ctx context.Context, session *sessions.Session, genFla
 			if err != nil {
 				return errorKit.Simple("fail to regenerate session id")
 			}
-			session.ID = id + "_" + strconv.Itoa(randomKit.Int(0, 10000))
+			session.ID = id + "_" + strconv.Itoa(randomKit.Int(0, 123456))
 		}
 		return errorKit.Simple("multiple repetition")
 	}
