@@ -162,7 +162,7 @@ func (s *RedisStore) save(ctx context.Context, session *sessions.Session, genFla
 	}
 	if genFlag {
 		// 要避免: key在Redis中已存在（uuid、ulid等并不可靠）
-		for i := 0; i < 6; i++ {
+		for i := 0; i < 3; i++ {
 			ok, err := s.client.SetNX(ctx, s.keyPrefix+session.ID, b, expiration).Result()
 			if err != nil {
 				return err
@@ -171,11 +171,11 @@ func (s *RedisStore) save(ctx context.Context, session *sessions.Session, genFla
 				return nil
 			}
 			// 重复了，需要重新生成 session.ID
-			session.ID, err = s.keyGen()
+			id, err := s.keyGen()
 			if err != nil {
 				return errorKit.Simple("fail to regenerate session id")
 			}
-			session.ID += strconv.Itoa(randomKit.Int(0, 10000))
+			session.ID = id + "_" + strconv.Itoa(randomKit.Int(0, 10000))
 		}
 		return errorKit.Simple("multiple repetition")
 	}

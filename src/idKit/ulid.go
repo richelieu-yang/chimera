@@ -12,7 +12,7 @@ PS:
 (2) If you just want to generate a ULID and don't (yet) care about details like performance, cryptographic security, etc., use the ulid.Make helper function.
 	This function calls time.Now to get a timestamp, and uses a source of entropy which is process-global, pseudo-random, and monotonic.
 
-@return 长度: 26（即ulid.EncodedSize）
+@return 长度: 26（即 ulid.EncodedSize）
 
 e.g.
 () => "01GMSRXRWJPYSQQZ5Z6T832CSZ"
