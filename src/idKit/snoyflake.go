@@ -7,7 +7,9 @@ import (
 
 // NewSonyFlake
 /*
-PS: 可用作分布式唯一id.
+PS:
+(1) 可用作分布式唯一id（前提是合理配置好 MachineID）;
+(2) 通过 sonyflake.Sonyflake.NextID() 生成id.
 
 golang实现的雪花算法 https://mp.weixin.qq.com/s/visG_GHtU67xCtsvvG1aPQ
 */

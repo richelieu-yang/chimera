@@ -5,7 +5,7 @@ import (
 	"io"
 )
 
-// NewULID ULID（不建议用作分布式唯一id）
+// NewULID ULID（不建议用作分布式唯一id，小概率会重复）
 /*
 PS:
 (1) Format: tttttttttteeeeeeeeeeeeeeee where t is time and e is entropy.（时间+随机数）
