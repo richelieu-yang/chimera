@@ -6,8 +6,6 @@ import (
 )
 
 func main() {
-	// Apple
-	fmt.Println(cpuid.CPU.VendorString)
-	// Apple M1 Pro
-	fmt.Println(cpuid.CPU.BrandName)
+	fmt.Println(cpuid.CPU.VM())
+
 }

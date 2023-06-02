@@ -7,18 +7,9 @@ import (
 	"time"
 )
 
-// GetNumber returns the number of logical CPUs usable by the current process.
-func GetNumber() int {
-	return runtime.NumCPU()
-}
-
-// GetPercent CPU使用率
-func GetPercent() (float64, error) {
-	percent, err := cpu.Percent(time.Second, false)
-	if err != nil {
-		return 0, err
-	}
-	return percent[0], nil
+// InVirtualMachine 是否在虚拟机中？
+func InVirtualMachine() bool {
+	return cpuid.CPU.VM()
 }
 
 // GetVendor CPU供应商
@@ -35,4 +26,18 @@ func GetVendor() string {
 */
 func GetBrandName() string {
 	return cpuid.CPU.BrandName
+}
+
+// GetNumber returns the number of logical CPUs usable by the current process.
+func GetNumber() int {
+	return runtime.NumCPU()
+}
+
+// GetPercent CPU使用率
+func GetPercent() (float64, error) {
+	percent, err := cpu.Percent(time.Second, false)
+	if err != nil {
+		return 0, err
+	}
+	return percent[0], nil
 }

@@ -66,6 +66,7 @@ func PrintBasicDetails() {
 	}
 
 	// cpu
+	logrus.Infof("[CHIMERA, CPU] in virtual machine? [%t].", cpuKit.InVirtualMachine())
 	logrus.Infof("[CHIMERA, CPU] vendor: [%s].", cpuKit.GetVendor())
 	logrus.Infof("[CHIMERA, CPU] brand name: [%s].", cpuKit.GetBrandName())
 	logrus.Infof("[CHIMERA, CPU] number: [%d].", cpuKit.GetNumber())
