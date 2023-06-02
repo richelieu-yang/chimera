@@ -7,6 +7,11 @@ import (
 
 // NewDistributedMutex 生成Redis分布式互斥锁.
 /*
+Go 每日一库之 redis官网推荐的go版本的分布式锁：redsync
+	https://mp.weixin.qq.com/s/yXbEMTsZEgLWZuZgrFPXSg
+图解redsync开源包，告诉你分布式锁为什么不仅仅是setnx
+	https://mp.weixin.qq.com/s/hI4bKjNB_20dGC4kZZxKsQ
+
 PS:
 (1) 不可重入锁;
 (2) 更多详见"Redis分布式锁（多语言）.docx";
