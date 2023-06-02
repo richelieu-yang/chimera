@@ -1,7 +1,4 @@
-// Package runtimeKit
-/**
- * 主要是对如下包的封装："runtime"
- */
+// Package runtimeKit 主要是对如下包的封装："runtime"
 package runtimeKit
 
 import (
