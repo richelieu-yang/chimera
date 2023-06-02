@@ -1,4 +1,4 @@
-# richelieu42/chimera
+# richelieu-yang/chimera
 
 ## 简介
 Golang的工具类.
