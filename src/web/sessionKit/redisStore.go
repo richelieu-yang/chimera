@@ -98,18 +98,14 @@ func (s *RedisStore) Save(r *http.Request, w http.ResponseWriter, session *sessi
 		return nil
 	}
 
-	// Richelieu
-	var genFlag bool
 	if session.ID == "" {
 		id, err := s.keyGen()
 		if err != nil {
 			return errors.New("redisstore: failed to generate session id")
 		}
 		session.ID = id
-		// Richelieu
-		genFlag = true
 	}
-	if err := s.save(r.Context(), session, genFlag); err != nil {
+	if err := s.save(r.Context(), session); err != nil {
 		return err
 	}
 
@@ -146,7 +142,7 @@ func (s *RedisStore) Close() error {
 /*
 @param genFlag Richelieu: true: session.ID是新生成的
 */
-func (s *RedisStore) save(ctx context.Context, session *sessions.Session, genFlag bool) error {
+func (s *RedisStore) save(ctx context.Context, session *sessions.Session) error {
 	b, err := s.serializer.Serialize(session)
 	if err != nil {
 		return err
@@ -160,7 +156,7 @@ func (s *RedisStore) save(ctx context.Context, session *sessions.Session, genFla
 	} else {
 		expiration = time.Duration(session.Options.MaxAge) * time.Second
 	}
-	if genFlag {
+	if session.IsNew {
 		// 要避免: key在Redis中已存在（uuid、ulid等并不可靠）
 		for i := 0; i < 3; i++ {
 			ok, err := s.client.SetNX(ctx, s.keyPrefix+session.ID, b, expiration).Result()
