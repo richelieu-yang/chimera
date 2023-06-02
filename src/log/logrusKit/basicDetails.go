@@ -1,6 +1,7 @@
 package logrusKit
 
 import (
+	"github.com/richelieu42/chimera/v2/src/core/cpuKit"
 	"github.com/richelieu42/chimera/v2/src/core/osKit"
 	"github.com/richelieu42/chimera/v2/src/core/pathKit"
 	"github.com/richelieu42/chimera/v2/src/core/runtimeKit"
@@ -65,17 +66,19 @@ func PrintBasicDetails() {
 	}
 
 	// cpu
+	logrus.Infof("[CHIMERA, CPU] vendor: [%s].", cpuKit.GetVendor())
+	logrus.Infof("[CHIMERA, CPU] brand name: [%s].", cpuKit.GetBrandName())
+	logrus.Infof("[CHIMERA, CPU] number: [%d].", cpuKit.GetNumber())
+	if cpuPercent, err := cpuKit.GetPercent(); err != nil {
+		logrus.Warnf("[CHIMERA, CPU] fail to get cpu percent, error: %v", err)
+	} else {
+		logrus.Infof("[CHIMERA, CPU] usage: [%.2f]%%.", cpuPercent)
+	}
 	//if cpuId, err := runtimeKit.GetCpuId(); err != nil {
 	//	logrus.Warnf("[CHIMERA, CPU] fail to get cpu id, error: %v", err)
 	//} else {
 	//	logrus.Infof("[CHIMERA, CPU] cpu id: [%s].", cpuId)
 	//}
-	logrus.Infof("[CHIMERA, CPU] cpu number: [%d].", runtimeKit.GetCPUNumber())
-	if cpuPercent, err := runtimeKit.GetCPUPercent(); err != nil {
-		logrus.Warnf("[CHIMERA, CPU] fail to get cpu percent, error: %v", err)
-	} else {
-		logrus.Infof("[CHIMERA, CPU] usage: [%.2f]%%.", cpuPercent)
-	}
 
 	//// mac
 	//if macAddresses, err := runtimeKit.GetMacAddresses(); err != nil {

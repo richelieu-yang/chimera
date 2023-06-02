@@ -1,4 +1,4 @@
-package runtimeKit
+package cpuKit
 
 import (
 	"bytes"
