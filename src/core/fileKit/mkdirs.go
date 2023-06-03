@@ -1,7 +1,9 @@
 package fileKit
 
 import (
+	"github.com/gogf/gf/v2/errors/gerror"
 	"github.com/gogf/gf/v2/os/gfile"
+	"github.com/richelieu-yang/chimera/v2/src/core/strKit"
 	"os"
 )
 
@@ -25,8 +27,16 @@ e.g.1 Mac
 */
 func MkDirs(dirPaths ...string) error {
 	for _, dirPath := range dirPaths {
+		// os.MkdirAll() 的第一个传参
+		// (1) 如果为""会返回error(mkdir : no such file or directory)
+		// (2) 如果为多个空格，返回的error为nil（并不会创建目录）
+		if strKit.IsEmpty(dirPath) {
+			continue
+		}
+
 		if err := os.MkdirAll(dirPath, os.ModePerm); err != nil {
-			break
+			err = gerror.Wrapf(err, `os.MkdirAll failed for dirPath "%s" with perm "%d"`, dirPath, os.ModePerm)
+			return err
 		}
 	}
 	return nil
