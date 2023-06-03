@@ -7,12 +7,11 @@ import (
 	"os"
 )
 
-// GetLuaContent
+// ReadLuaFile 按行读取 .lua文件 的内容.
 /*
- * 读取.lua文件的内容.
- * @param path lua文件的绝对路径
- */
-func GetLuaContent(path string) (string, error) {
+@param path .lua文件的路径
+*/
+func ReadLuaFile(path string) (string, error) {
 	file, err := os.Open(path)
 	defer file.Close()
 	if err != nil {
