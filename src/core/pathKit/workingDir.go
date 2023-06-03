@@ -2,7 +2,7 @@ package pathKit
 
 import (
 	"github.com/gogf/gf/v2/os/gfile"
-	"github.com/richelieu42/chimera/v2/src/core/fileKit"
+	"github.com/richelieu-yang/chimera/v2/src/core/fileKit"
 	"os"
 )
 

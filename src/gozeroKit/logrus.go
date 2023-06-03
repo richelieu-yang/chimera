@@ -1,7 +1,7 @@
 package gozeroKit
 
 import (
-	"github.com/richelieu42/chimera/v2/src/log/logrusKit"
+	"github.com/richelieu-yang/chimera/v2/src/log/logrusKit"
 	"github.com/sirupsen/logrus"
 	"github.com/zeromicro/go-zero/core/logx"
 	"github.com/zeromicro/zero-contrib/logx/logrusx"

@@ -2,7 +2,7 @@ package httpKit
 
 import (
 	"bytes"
-	"github.com/richelieu42/chimera/v2/src/core/ioKit"
+	"github.com/richelieu-yang/chimera/v2/src/core/ioKit"
 	"io"
 	"net/http"
 )

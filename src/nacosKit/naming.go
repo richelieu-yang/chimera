@@ -5,7 +5,7 @@ import (
 	"github.com/nacos-group/nacos-sdk-go/clients/naming_client"
 	"github.com/nacos-group/nacos-sdk-go/model"
 	"github.com/nacos-group/nacos-sdk-go/vo"
-	"github.com/richelieu42/chimera/v2/src/core/strKit"
+	"github.com/richelieu-yang/chimera/v2/src/core/strKit"
 )
 
 // RegisterInstance 注册实例

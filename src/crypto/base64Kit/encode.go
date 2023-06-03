@@ -2,7 +2,7 @@ package base64Kit
 
 import (
 	"github.com/gogf/gf/v2/encoding/gbase64"
-	"github.com/richelieu42/chimera/v2/src/core/fileKit"
+	"github.com/richelieu-yang/chimera/v2/src/core/fileKit"
 )
 
 func Encode(src []byte) []byte {

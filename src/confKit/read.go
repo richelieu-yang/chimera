@@ -10,10 +10,10 @@ package confKit
 
 import (
 	"github.com/mitchellh/mapstructure"
-	"github.com/richelieu42/chimera/v2/src/core/errorKit"
-	"github.com/richelieu42/chimera/v2/src/core/fileKit"
-	"github.com/richelieu42/chimera/v2/src/core/ioKit"
-	"github.com/richelieu42/chimera/v2/src/core/ptrKit"
+	"github.com/richelieu-yang/chimera/v2/src/core/errorKit"
+	"github.com/richelieu-yang/chimera/v2/src/core/fileKit"
+	"github.com/richelieu-yang/chimera/v2/src/core/ioKit"
+	"github.com/richelieu-yang/chimera/v2/src/core/ptrKit"
 	"github.com/spf13/viper"
 )
 

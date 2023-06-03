@@ -2,8 +2,8 @@ package imageKit
 
 import (
 	"github.com/disintegration/imaging"
-	"github.com/richelieu42/chimera/v2/src/core/errorKit"
-	fileKit2 "github.com/richelieu42/chimera/v2/src/core/fileKit"
+	"github.com/richelieu-yang/chimera/v2/src/core/errorKit"
+	fileKit2 "github.com/richelieu-yang/chimera/v2/src/core/fileKit"
 )
 
 // ConvertImageType 图片格式转换（图片类型转换）

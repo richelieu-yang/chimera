@@ -1,9 +1,9 @@
 package ioKit
 
 import (
-	"github.com/richelieu42/chimera/v2/src/core/errorKit"
-	"github.com/richelieu42/chimera/v2/src/core/fileKit"
-	"github.com/richelieu42/chimera/v2/src/core/strKit"
+	"github.com/richelieu-yang/chimera/v2/src/core/errorKit"
+	"github.com/richelieu-yang/chimera/v2/src/core/fileKit"
+	"github.com/richelieu-yang/chimera/v2/src/core/strKit"
 	"gopkg.in/natefinch/lumberjack.v2"
 	"io"
 	"os"

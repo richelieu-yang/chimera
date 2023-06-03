@@ -2,9 +2,9 @@ package ginKit
 
 import (
 	"github.com/gin-gonic/gin"
-	"github.com/richelieu42/chimera/v2/src/confKit"
-	"github.com/richelieu42/chimera/v2/src/core/osKit"
-	"github.com/richelieu42/chimera/v2/src/log/logrusKit"
+	"github.com/richelieu-yang/chimera/v2/src/confKit"
+	"github.com/richelieu-yang/chimera/v2/src/core/osKit"
+	"github.com/richelieu-yang/chimera/v2/src/log/logrusKit"
 	"net/http"
 	"testing"
 )

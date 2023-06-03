@@ -3,7 +3,7 @@ package redisKit
 import (
 	"context"
 	"fmt"
-	"github.com/richelieu42/chimera/v2/src/confKit"
+	"github.com/richelieu-yang/chimera/v2/src/confKit"
 	"github.com/sirupsen/logrus"
 	"testing"
 )

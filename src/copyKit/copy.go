@@ -3,8 +3,8 @@ package copyKit
 import (
 	"github.com/gogf/gf/v2/util/gutil"
 	"github.com/jinzhu/copier"
-	"github.com/richelieu42/chimera/v2/src/core/errorKit"
-	"github.com/richelieu42/chimera/v2/src/core/interfaceKit"
+	"github.com/richelieu-yang/chimera/v2/src/core/errorKit"
+	"github.com/richelieu-yang/chimera/v2/src/core/interfaceKit"
 )
 
 // Copy 浅拷贝

@@ -2,10 +2,10 @@ package httpKit
 
 import (
 	"fmt"
-	"github.com/richelieu42/chimera/v2/src/core/fileKit"
-	"github.com/richelieu42/chimera/v2/src/core/strKit"
-	"github.com/richelieu42/chimera/v2/src/jsonKit"
-	"github.com/richelieu42/chimera/v2/src/web/mimeTypeKit"
+	"github.com/richelieu-yang/chimera/v2/src/core/fileKit"
+	"github.com/richelieu-yang/chimera/v2/src/core/strKit"
+	"github.com/richelieu-yang/chimera/v2/src/jsonKit"
+	"github.com/richelieu-yang/chimera/v2/src/web/mimeTypeKit"
 	"net/http"
 	"net/url"
 	"path/filepath"

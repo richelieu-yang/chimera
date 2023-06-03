@@ -1,7 +1,7 @@
 package jsonKit
 
 import (
-	"github.com/richelieu42/chimera/v2/src/msgKit"
+	"github.com/richelieu-yang/chimera/v2/src/msgKit"
 	"github.com/sirupsen/logrus"
 	"sync"
 )

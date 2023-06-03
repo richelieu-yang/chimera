@@ -1,13 +1,13 @@
 package logrusKit
 
 import (
-	"github.com/richelieu42/chimera/v2/src/core/cpuKit"
-	"github.com/richelieu42/chimera/v2/src/core/osKit"
-	"github.com/richelieu42/chimera/v2/src/core/pathKit"
-	"github.com/richelieu42/chimera/v2/src/core/runtimeKit"
-	"github.com/richelieu42/chimera/v2/src/core/timeKit"
-	"github.com/richelieu42/chimera/v2/src/core/userKit"
-	"github.com/richelieu42/chimera/v2/src/ipKit"
+	"github.com/richelieu-yang/chimera/v2/src/core/cpuKit"
+	"github.com/richelieu-yang/chimera/v2/src/core/osKit"
+	"github.com/richelieu-yang/chimera/v2/src/core/pathKit"
+	"github.com/richelieu-yang/chimera/v2/src/core/runtimeKit"
+	"github.com/richelieu-yang/chimera/v2/src/core/timeKit"
+	"github.com/richelieu-yang/chimera/v2/src/core/userKit"
+	"github.com/richelieu-yang/chimera/v2/src/ipKit"
 	"github.com/shirou/gopsutil/v3/docker"
 	"github.com/sirupsen/logrus"
 )

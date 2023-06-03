@@ -1,7 +1,7 @@
 package zapKit
 
 import (
-	"github.com/richelieu42/chimera/v2/src/core/ioKit"
+	"github.com/richelieu-yang/chimera/v2/src/core/ioKit"
 	"github.com/stretchr/testify/assert"
 	"go.uber.org/zap"
 	"testing"

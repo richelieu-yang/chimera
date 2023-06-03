@@ -3,9 +3,9 @@ package httpKit
 import (
 	"fmt"
 	"github.com/gorilla/websocket"
-	"github.com/richelieu42/chimera/v2/src/core/strKit"
-	"github.com/richelieu42/chimera/v2/src/operationKit"
-	"github.com/richelieu42/chimera/v2/src/urlKit"
+	"github.com/richelieu-yang/chimera/v2/src/core/strKit"
+	"github.com/richelieu-yang/chimera/v2/src/operationKit"
+	"github.com/richelieu-yang/chimera/v2/src/urlKit"
 	"io"
 	"net/http"
 	"strings"

@@ -2,9 +2,9 @@ package httpClientKit
 
 import (
 	"bytes"
-	"github.com/richelieu42/chimera/v2/src/core/fileKit"
-	"github.com/richelieu42/chimera/v2/src/urlKit"
-	"github.com/richelieu42/chimera/v2/src/web/httpKit"
+	"github.com/richelieu-yang/chimera/v2/src/core/fileKit"
+	"github.com/richelieu-yang/chimera/v2/src/urlKit"
+	"github.com/richelieu-yang/chimera/v2/src/web/httpKit"
 	"io"
 	"mime/multipart"
 	"net/http"

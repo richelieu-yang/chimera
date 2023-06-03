@@ -5,7 +5,7 @@ import (
 	"github.com/emersion/go-imap"
 	id "github.com/emersion/go-imap-id"
 	"github.com/emersion/go-imap/client"
-	"github.com/richelieu42/chimera/v2/src/core/errorKit"
+	"github.com/richelieu-yang/chimera/v2/src/core/errorKit"
 	"sync"
 )
 

@@ -3,8 +3,8 @@ package nacosKit
 import (
 	"github.com/nacos-group/nacos-sdk-go/model"
 	"github.com/nacos-group/nacos-sdk-go/vo"
-	"github.com/richelieu42/chimera/v2/src/jsonKit"
-	"github.com/richelieu42/chimera/v2/src/randomKit"
+	"github.com/richelieu-yang/chimera/v2/src/jsonKit"
+	"github.com/richelieu-yang/chimera/v2/src/randomKit"
 	"log"
 	"testing"
 	"time"

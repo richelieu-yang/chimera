@@ -4,7 +4,7 @@ import (
 	"crypto/rsa"
 	"crypto/x509"
 	"encoding/pem"
-	"github.com/richelieu42/chimera/v2/src/core/errorKit"
+	"github.com/richelieu-yang/chimera/v2/src/core/errorKit"
 )
 
 // parsePublicKey 解析公钥

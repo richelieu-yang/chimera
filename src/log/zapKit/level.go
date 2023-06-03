@@ -1,8 +1,8 @@
 package zapKit
 
 import (
-	"github.com/richelieu42/chimera/v2/src/core/sliceKit"
-	"github.com/richelieu42/chimera/v2/src/core/strKit"
+	"github.com/richelieu-yang/chimera/v2/src/core/sliceKit"
+	"github.com/richelieu-yang/chimera/v2/src/core/strKit"
 	"go.uber.org/zap"
 	"go.uber.org/zap/zapcore"
 )

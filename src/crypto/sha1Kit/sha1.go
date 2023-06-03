@@ -4,7 +4,7 @@ import (
 	"crypto/sha1"
 	"encoding/hex"
 	"github.com/gogf/gf/v2/crypto/gsha1"
-	"github.com/richelieu42/chimera/v2/src/core/fileKit"
+	"github.com/richelieu-yang/chimera/v2/src/core/fileKit"
 )
 
 func Encrypt(v interface{}) string {

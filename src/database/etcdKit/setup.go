@@ -1,9 +1,9 @@
 package etcdKit
 
 import (
-	"github.com/richelieu42/chimera/v2/src/core/ioKit"
-	"github.com/richelieu42/chimera/v2/src/core/strKit"
-	"github.com/richelieu42/chimera/v2/src/log/zapKit"
+	"github.com/richelieu-yang/chimera/v2/src/core/ioKit"
+	"github.com/richelieu-yang/chimera/v2/src/core/strKit"
+	"github.com/richelieu-yang/chimera/v2/src/log/zapKit"
 	"github.com/sirupsen/logrus"
 	clientv3 "go.etcd.io/etcd/client/v3"
 	"go.uber.org/zap"

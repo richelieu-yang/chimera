@@ -3,10 +3,10 @@
 package osKit
 
 import (
-	"github.com/richelieu42/chimera/v2/src/cmdKit"
-	"github.com/richelieu42/chimera/v2/src/core/errorKit"
-	"github.com/richelieu42/chimera/v2/src/core/intKit"
-	"github.com/richelieu42/chimera/v2/src/core/strKit"
+	"github.com/richelieu-yang/chimera/v2/src/cmdKit"
+	"github.com/richelieu-yang/chimera/v2/src/core/errorKit"
+	"github.com/richelieu-yang/chimera/v2/src/core/intKit"
+	"github.com/richelieu-yang/chimera/v2/src/core/strKit"
 )
 
 // GetMaxOpenFiles 同一时间最多可开启的文件数

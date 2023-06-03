@@ -1,9 +1,9 @@
 package msgKit
 
 import (
-	"github.com/richelieu42/chimera/v2/src/confKit"
-	"github.com/richelieu42/chimera/v2/src/core/fileKit"
-	"github.com/richelieu42/chimera/v2/src/core/mapKit"
+	"github.com/richelieu-yang/chimera/v2/src/confKit"
+	"github.com/richelieu-yang/chimera/v2/src/core/fileKit"
+	"github.com/richelieu-yang/chimera/v2/src/core/mapKit"
 )
 
 /*

@@ -1,7 +1,7 @@
 package sliceKit
 
 import (
-	"github.com/richelieu42/chimera/v2/src/core/strKit"
+	"github.com/richelieu-yang/chimera/v2/src/core/strKit"
 	"strings"
 )
 

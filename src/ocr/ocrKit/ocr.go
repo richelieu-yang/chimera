@@ -1,12 +1,12 @@
 package ocrKit
 
 import (
-	"github.com/richelieu42/chimera/v2/src/cmdKit"
-	"github.com/richelieu42/chimera/v2/src/core/errorKit"
-	"github.com/richelieu42/chimera/v2/src/core/fileKit"
-	"github.com/richelieu42/chimera/v2/src/core/pathKit"
-	"github.com/richelieu42/chimera/v2/src/core/sliceKit"
-	"github.com/richelieu42/chimera/v2/src/idKit"
+	"github.com/richelieu-yang/chimera/v2/src/cmdKit"
+	"github.com/richelieu-yang/chimera/v2/src/core/errorKit"
+	"github.com/richelieu-yang/chimera/v2/src/core/fileKit"
+	"github.com/richelieu-yang/chimera/v2/src/core/pathKit"
+	"github.com/richelieu-yang/chimera/v2/src/core/sliceKit"
+	"github.com/richelieu-yang/chimera/v2/src/idKit"
 )
 
 //// GetText1 通过 第三方依赖otiai10/gosseract 实现

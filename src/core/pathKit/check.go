@@ -1,6 +1,6 @@
 package pathKit
 
-import "github.com/richelieu42/chimera/v2/src/core/strKit"
+import "github.com/richelieu-yang/chimera/v2/src/core/strKit"
 
 // CheckSkip 检查是否发生"路径穿越"（路径穿透）
 /*

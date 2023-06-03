@@ -2,7 +2,7 @@ package rsaKit
 
 import (
 	"fmt"
-	"github.com/richelieu42/chimera/v2/src/core/fileKit"
+	"github.com/richelieu-yang/chimera/v2/src/core/fileKit"
 	"testing"
 )
 

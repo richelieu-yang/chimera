@@ -1,7 +1,7 @@
 package pathKit
 
 import (
-	"github.com/richelieu42/chimera/v2/src/core/userKit"
+	"github.com/richelieu-yang/chimera/v2/src/core/userKit"
 )
 
 func GetUserHomePath() string {

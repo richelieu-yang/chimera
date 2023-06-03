@@ -1,7 +1,7 @@
 package idKit
 
 import (
-	"github.com/richelieu42/chimera/v2/src/core/errorKit"
+	"github.com/richelieu-yang/chimera/v2/src/core/errorKit"
 	"github.com/sony/sonyflake"
 )
 

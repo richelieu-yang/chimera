@@ -2,8 +2,8 @@ package ipKit
 
 import (
 	"github.com/go-playground/validator/v10"
-	"github.com/richelieu42/chimera/v2/src/core/errorKit"
-	"github.com/richelieu42/chimera/v2/src/funcKit"
+	"github.com/richelieu-yang/chimera/v2/src/core/errorKit"
+	"github.com/richelieu-yang/chimera/v2/src/funcKit"
 )
 
 // AssertIPv4

@@ -2,9 +2,9 @@ package jsonKit
 
 import (
 	jsoniter "github.com/json-iterator/go"
-	"github.com/richelieu42/chimera/v2/src/core/ptrKit"
-	"github.com/richelieu42/chimera/v2/src/core/sliceKit"
-	"github.com/richelieu42/chimera/v2/src/core/strKit"
+	"github.com/richelieu-yang/chimera/v2/src/core/ptrKit"
+	"github.com/richelieu-yang/chimera/v2/src/core/sliceKit"
+	"github.com/richelieu-yang/chimera/v2/src/core/strKit"
 )
 
 // Unmarshal 反序列化.

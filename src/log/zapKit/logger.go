@@ -1,7 +1,7 @@
 package zapKit
 
 import (
-	"github.com/richelieu42/chimera/v2/src/core/errorKit"
+	"github.com/richelieu-yang/chimera/v2/src/core/errorKit"
 	"go.uber.org/zap"
 	"go.uber.org/zap/zapcore"
 	"io"

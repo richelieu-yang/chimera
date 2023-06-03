@@ -2,9 +2,9 @@ package runtimeKit
 
 import (
 	"fmt"
-	"github.com/richelieu42/chimera/v2/src/core/errorKit"
-	"github.com/richelieu42/chimera/v2/src/core/floatKit"
-	"github.com/richelieu42/chimera/v2/src/dataSizeKit"
+	"github.com/richelieu-yang/chimera/v2/src/core/errorKit"
+	"github.com/richelieu-yang/chimera/v2/src/core/floatKit"
+	"github.com/richelieu-yang/chimera/v2/src/dataSizeKit"
 	"github.com/shirou/gopsutil/v3/disk"
 )
 

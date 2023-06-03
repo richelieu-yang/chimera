@@ -3,7 +3,7 @@ package ginKit
 import (
 	"github.com/gin-contrib/pprof"
 	"github.com/gin-gonic/gin"
-	"github.com/richelieu42/chimera/v2/src/netKit"
+	"github.com/richelieu-yang/chimera/v2/src/netKit"
 	"github.com/sirupsen/logrus"
 )
 

@@ -2,7 +2,7 @@ package base64Kit
 
 //import (
 //	"encoding/base64"
-//	"github.com/richelieu42/chimera/v2/src/core/sliceKit"
+//	"github.com/richelieu-yang/chimera/v2/src/core/sliceKit"
 //)
 //
 //// Encode1

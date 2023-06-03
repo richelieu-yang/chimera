@@ -2,8 +2,8 @@ package logrusKit
 
 import (
 	"fmt"
-	"github.com/richelieu42/chimera/v2/src/core/strKit"
-	"github.com/richelieu42/chimera/v2/src/core/timeKit"
+	"github.com/richelieu-yang/chimera/v2/src/core/strKit"
+	"github.com/richelieu-yang/chimera/v2/src/core/timeKit"
 	"github.com/sirupsen/logrus"
 	"runtime"
 	"strings"

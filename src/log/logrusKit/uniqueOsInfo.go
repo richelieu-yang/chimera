@@ -3,7 +3,7 @@
 package logrusKit
 
 import (
-	"github.com/richelieu42/chimera/v2/src/core/osKit"
+	"github.com/richelieu-yang/chimera/v2/src/core/osKit"
 	"github.com/sirupsen/logrus"
 )
 

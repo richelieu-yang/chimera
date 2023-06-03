@@ -2,7 +2,7 @@ package timeKit
 
 import (
 	"crypto/tls"
-	"github.com/richelieu42/chimera/v2/src/core/errorKit"
+	"github.com/richelieu-yang/chimera/v2/src/core/errorKit"
 	"net/http"
 	"time"
 )

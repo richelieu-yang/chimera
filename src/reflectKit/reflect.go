@@ -2,7 +2,7 @@ package reflectKit
 
 import (
 	"fmt"
-	"github.com/richelieu42/chimera/v2/src/core/errorKit"
+	"github.com/richelieu-yang/chimera/v2/src/core/errorKit"
 	"reflect"
 	"unsafe"
 )
