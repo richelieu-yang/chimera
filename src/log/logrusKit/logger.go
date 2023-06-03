@@ -72,7 +72,7 @@ PS:
 @param options 可以什么都不配置（此时输出到控制台）
 
 e.g.
-	writer, err := ioKit.NewLumberjackWriteCloser(ioKit.WithFilePath(path))
+	writer, err := ioKit.NewLumberjackWriteCloser(path)
 	// process err
 	logger := NewLogger(WithWriter(writer))
 */

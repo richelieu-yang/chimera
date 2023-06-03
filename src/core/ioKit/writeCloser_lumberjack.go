@@ -1,9 +1,7 @@
 package ioKit
 
 import (
-	"github.com/richelieu-yang/chimera/v2/src/core/errorKit"
 	"github.com/richelieu-yang/chimera/v2/src/core/fileKit"
-	"github.com/richelieu-yang/chimera/v2/src/core/strKit"
 	"gopkg.in/natefinch/lumberjack.v2"
 	"io"
 	"os"
@@ -11,7 +9,6 @@ import (
 
 type (
 	lumberjackOptions struct {
-		filePath   string
 		maxSize    int
 		maxAge     int
 		maxBackups int
@@ -22,12 +19,6 @@ type (
 
 	LumberjackOption func(opts *lumberjackOptions)
 )
-
-func WithFilePath(filePath string) LumberjackOption {
-	return func(opts *lumberjackOptions) {
-		opts.filePath = filePath
-	}
-}
 
 func WithMaxSize(maxSize int) LumberjackOption {
 	return func(opts *lumberjackOptions) {
@@ -82,24 +73,20 @@ PS:
 (1) 仅配置 filePath 的情况: (1)超过100MB就rotate一下; (2)保留所有文件; (3)不压缩; (4)默认使用UTC时间.
 (2) 文件不存在，会自动创建；文件存在，内容会追加在最后.
 
-@param options 必须要配置: filePath
+@param filePath 文件路径
+@param options 	可选配置
 */
-func NewLumberjackWriteCloser(options ...LumberjackOption) (io.WriteCloser, error) {
+func NewLumberjackWriteCloser(filePath string, options ...LumberjackOption) (io.WriteCloser, error) {
+	if err := fileKit.AssertNotExistOrIsFile(filePath); err != nil {
+		return nil, err
+	}
+	if err := fileKit.MkParentDirs(filePath); err != nil {
+		return nil, err
+	}
+
 	opts := loadOptions(options...)
-
-	/* check and polyfill */
-	if strKit.IsEmpty(opts.filePath) {
-		return nil, errorKit.New("filePath mustn't be empty")
-	}
-	if err := fileKit.MkParentDirs(opts.filePath); err != nil {
-		return nil, err
-	}
-	if err := fileKit.AssertNotExistOrIsFile(opts.filePath); err != nil {
-		return nil, err
-	}
-
 	var writeCloser io.WriteCloser = &lumberjack.Logger{
-		Filename:   opts.filePath,
+		Filename:   filePath,
 		MaxSize:    opts.maxSize,
 		MaxBackups: opts.maxBackups,
 		MaxAge:     opts.maxAge,

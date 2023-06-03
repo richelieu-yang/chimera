@@ -38,7 +38,7 @@ func setUp(config *Config) (err error) {
 		var logger *zap.Logger
 		if strKit.IsNotEmpty(config.LogPath) {
 			var writer io.Writer
-			writer, err = ioKit.NewLumberjackWriteCloser(ioKit.WithFilePath(config.LogPath))
+			writer, err = ioKit.NewLumberjackWriteCloser(config.LogPath)
 			if err != nil {
 				return
 			}

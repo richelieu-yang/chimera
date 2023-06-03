@@ -14,7 +14,7 @@ func TestNewLogger(t *testing.T) {
 
 	/* 输出到文件（可rotate） */
 	path := "test.log"
-	writer, err := ioKit.NewLumberjackWriteCloser(ioKit.WithFilePath(path))
+	writer, err := ioKit.NewLumberjackWriteCloser(path)
 	assert.Nil(t, err)
 	logger = NewLogger(WithWriter(writer))
 	logger.Info("to rotatable file")
