@@ -24,7 +24,7 @@ func EncryptToString(plainText, key []byte) (string, error) {
 	if err != nil {
 		return "", err
 	}
-	return base64Kit.EncodeToString1(cipherText), nil
+	return base64Kit.EncodeToString(cipherText), nil
 }
 
 func Encrypt(plainText, key []byte) (cipherText []byte, err error) {
@@ -49,7 +49,7 @@ func Encrypt(plainText, key []byte) (cipherText []byte, err error) {
 }
 
 func DecryptToString(base64Text, key []byte) (string, error) {
-	cipherText, err := base64Kit.Decode1(base64Text)
+	cipherText, err := base64Kit.Decode(base64Text)
 	if err != nil {
 		return "", err
 	}

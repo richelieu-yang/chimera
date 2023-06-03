@@ -39,5 +39,5 @@ func (opts *rsaOptions) Encrypt(data, publicKey []byte) ([]byte, error) {
 	data = buffer.Bytes()
 
 	// base64编码
-	return base64Kit.Encode1(data), nil
+	return base64Kit.Encode(data), nil
 }
