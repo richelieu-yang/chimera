@@ -1,7 +1,6 @@
 package fileKit
 
 import (
-	"github.com/richelieu42/chimera/v2/src/crypto/base64Kit"
 	"os"
 )
 
@@ -19,16 +18,4 @@ func ReadFile(filePath string) ([]byte, error) {
 	}
 
 	return os.ReadFile(filePath)
-}
-
-// ReadFileToBase64
-/*
-!!!: 如果想实现: 图片 => base64字符串，请使用 imageKit.ConvertImageToBase64().
-*/
-func ReadFileToBase64(filePath string) (string, error) {
-	data, err := ReadFile(filePath)
-	if err != nil {
-		return "", err
-	}
-	return base64Kit.EncodeToString1(data), nil
 }
