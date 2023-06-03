@@ -1,8 +1,8 @@
 package rocketmq5Kit
 
 import (
-	rmq_client "github.com/apache/rocketmq-clients/golang"
-	"github.com/apache/rocketmq-clients/golang/credentials"
+	rmq_client "github.com/apache/rocketmq-clients/golang/v5"
+	"github.com/apache/rocketmq-clients/golang/v5/credentials"
 	"github.com/richelieu42/chimera/v2/src/copyKit"
 	"github.com/richelieu42/chimera/v2/src/core/errorKit"
 	"github.com/richelieu42/chimera/v2/src/core/strKit"
@@ -17,8 +17,9 @@ type (
 
 var (
 	defaultCredentials = &credentials.SessionCredentials{
-		AccessKey:    "",
-		AccessSecret: "",
+		AccessKey:     "",
+		AccessSecret:  "",
+		SecurityToken: "",
 	}
 )
 
@@ -28,11 +29,12 @@ func processConfig(baseConfig *rmq_client.Config) (*rmq_client.Config, error) {
 		return nil, errorKit.New("baseConfig == nil")
 	}
 
-	// 深拷贝，为了不修改传参baseConfig
+	// 深拷贝（为了不修改传参baseConfig）
 	config, err := copyKit.DeepCopy(baseConfig)
 	if err != nil {
 		return nil, err
 	}
+
 	if strKit.IsEmpty(config.Endpoint) {
 		return nil, errorKit.New("config.Endpoint is empty")
 	}

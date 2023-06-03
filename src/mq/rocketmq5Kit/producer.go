@@ -2,7 +2,7 @@ package rocketmq5Kit
 
 import (
 	"context"
-	rmq_client "github.com/apache/rocketmq-clients/golang"
+	rmq_client "github.com/apache/rocketmq-clients/golang/v5"
 )
 
 // NewProducer
@@ -22,11 +22,7 @@ func NewProducer(logConfig *LogConfig, config *rmq_client.Config) (rmq_client.Pr
 	if err != nil {
 		return nil, err
 	}
-	producer, err := rmq_client.NewProducer(config)
-	if err == nil {
-		producer, err = polyfillProducer(producer, config.Endpoint)
-	}
-	return producer, err
+	return rmq_client.NewProducer(config)
 }
 
 // SendMessage

@@ -3,8 +3,8 @@ package rocketmq5Kit
 import (
 	"context"
 	"fmt"
-	rmq_client "github.com/apache/rocketmq-clients/golang"
-	"github.com/apache/rocketmq-clients/golang/protocol/v2"
+	rmq_client "github.com/apache/rocketmq-clients/golang/v5"
+	"github.com/apache/rocketmq-clients/golang/v5/protocol/v2"
 	"github.com/richelieu42/chimera/v2/src/core/errorKit"
 	"github.com/richelieu42/chimera/v2/src/core/pathKit"
 	"github.com/richelieu42/chimera/v2/src/core/sliceKit"

@@ -1,7 +1,7 @@
 package rocketmq5Kit
 
 import (
-	rmq_client "github.com/apache/rocketmq-clients/golang"
+	rmq_client "github.com/apache/rocketmq-clients/golang/v5"
 	"github.com/richelieu42/chimera/v2/src/core/errorKit"
 	"github.com/richelieu42/chimera/v2/src/core/strKit"
 	"time"
@@ -49,14 +49,10 @@ func NewSimpleConsumer(logConfig *LogConfig, config *rmq_client.Config, consumer
 
 	config.ConsumerGroup = consumerGroup
 
-	consumer, err := rmq_client.NewSimpleConsumer(config,
+	return rmq_client.NewSimpleConsumer(config,
 		rmq_client.WithAwaitDuration(AwaitDuration),
 		rmq_client.WithSubscriptionExpressions(map[string]*rmq_client.FilterExpression{
 			topic: rmq_client.NewFilterExpression(tag),
 		}),
 	)
-	if err == nil {
-		consumer, err = polyfillConsumer(consumer, config.Endpoint)
-	}
-	return consumer, err
 }
