@@ -34,11 +34,7 @@ func PrintBasicDetails() {
 	logrus.Infof("[CHIMERA, PATH] home dir: [%s].", userKit.GetUserHomeDir())
 
 	// path
-	if workingDir, err := pathKit.GetWorkingDir(); err != nil {
-		logrus.Fatal(err)
-	} else {
-		logrus.Infof("[CHIMERA, PATH] current working directory: [%s].", workingDir)
-	}
+	logrus.Infof("[CHIMERA, PATH] current working directory: [%s].", pathKit.GetWorkingDir())
 	logrus.Infof("[CHIMERA, PATH] temporary directory: [%s].", pathKit.GetTempDir())
 
 	// time
