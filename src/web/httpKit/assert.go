@@ -17,7 +17,7 @@ func AssertHttpUrl(httpUrl string) error {
 	validate := validator.New()
 	err := validate.Var(httpUrl, "required,http_url")
 	if err != nil {
-		return errorKit.SimpleWithExtraSkip(1, "[%s] httpUrl(%s) is invalid with error(%s)", funcKit.GetFuncName(1), httpUrl, err.Error())
+		return errorKit.NewSkipf(1, "[%s] httpUrl(%s) is invalid with error(%s)", funcKit.GetFuncName(1), httpUrl, err.Error())
 	}
 	return nil
 }

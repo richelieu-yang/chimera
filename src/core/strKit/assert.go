@@ -7,14 +7,14 @@ import (
 
 func AssertStringNotEmpty(str string) error {
 	if IsEmpty(str) {
-		return errorKit.SimpleWithExtraSkip(1, "[%s] str is empty", funcKit.GetFuncName(1))
+		return errorKit.NewSkipf(1, "[%s] str is empty", funcKit.GetFuncName(1))
 	}
 	return nil
 }
 
 func AssertStringNotBlank(str string) error {
 	if IsBlank(str) {
-		return errorKit.SimpleWithExtraSkip(1, "[%s] str(%s) is blank", funcKit.GetFuncName(1), str)
+		return errorKit.NewSkipf(1, "[%s] str(%s) is blank", funcKit.GetFuncName(1), str)
 	}
 	return nil
 }

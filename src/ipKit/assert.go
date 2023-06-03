@@ -18,7 +18,7 @@ func AssertIPv4(ipv4 string) error {
 	validate := validator.New()
 	err := validate.Var(ipv4, "required,ipv4")
 	if err != nil {
-		return errorKit.SimpleWithExtraSkip(1, "[%s] ipv4(%s) is invalid with error(%s)", funcKit.GetFuncName(1), ipv4, err.Error())
+		return errorKit.NewSkipf(1, "[%s] ipv4(%s) is invalid with error(%s)", funcKit.GetFuncName(1), ipv4, err.Error())
 	}
 	return nil
 }

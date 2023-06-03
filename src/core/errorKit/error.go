@@ -21,12 +21,6 @@
 */
 package errorKit
 
-import (
-	"errors"
-	"fmt"
-	"github.com/richelieu42/chimera/v2/src/funcKit"
-)
-
 //// Simple 新建error（指针；不会携带堆栈信息）
 //func Simple(format string, args ...interface{}) error {
 //	format = funcKit.GetEntireCaller(2) + " " + format
@@ -34,15 +28,15 @@ import (
 //	return errors.New(fmt.Sprintf(format, args...))
 //}
 
-// SimpleWithExtraSkip
-/*
-@param extraSkip 额外跳过的层数（>= 0）
-*/
-func SimpleWithExtraSkip(extraSkip int, format string, args ...interface{}) error {
-	format = funcKit.GetEntireCaller(2+extraSkip) + " " + format
-
-	return errors.New(fmt.Sprintf(format, args...))
-}
+//// SimpleWithExtraSkip
+///*
+//@param extraSkip 额外跳过的层数（>= 0）
+//*/
+//func SimpleWithExtraSkip(extraSkip int, format string, args ...interface{}) error {
+//	format = funcKit.GetEntireCaller(2+extraSkip) + " " + format
+//
+//	return errors.New(fmt.Sprintf(format, args...))
+//}
 
 //// New 新建error（指针；会携带堆栈信息）
 ///*
