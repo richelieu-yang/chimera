@@ -9,6 +9,7 @@ filepath标准库的使用可以参考: https://www.cnblogs.com/jkko123/p/692396
 package pathKit
 
 import (
+	"github.com/gogf/gf/v2/os/gfile"
 	"github.com/richelieu-yang/chimera/v2/src/core/fileKit"
 	"github.com/richelieu-yang/chimera/v2/src/core/strKit"
 	"github.com/richelieu-yang/chimera/v2/src/core/timeKit"
@@ -187,19 +188,8 @@ func EvalSymlinks(path string) (string, error) {
 // GetParentDir 返回文件（或目录）路径的父路径.
 /*
 PS: 类似于Java中的 getParentFile().
-
-@param nameOrPath 文件名或文件路径
-
-e.g.
-("")			=> "."
-(".")			=> "."
-("yozo.eio") 	=> "."
-("/")			=> "/"
-
-e.g.1 Mac
-("./a/b/c")		=> "a/b"
-("C:/a/b/c")	=> "C:/a/b"
 */
-func GetParentDir(nameOrPath string) string {
-	return filepath.Dir(nameOrPath)
+func GetParentDir(path string) string {
+	//return filepath.Dir(path)
+	return gfile.Dir(path)
 }
