@@ -148,9 +148,6 @@ func Glob(pattern string) (matches []string, err error) {
 }
 
 // EvalSymlinks 返回链接文件的实际路径
-/*
-@param path e.g."1.lnk"
-*/
 func EvalSymlinks(path string) (string, error) {
 	return filepath.EvalSymlinks(path)
 }
