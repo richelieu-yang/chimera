@@ -10,5 +10,5 @@ go get github.com/richelieu42/chimera
 
 ## TODOS
 (1) Golang.wps中的"samber/lo"，涉及: slice、map...  
-(2) GoFrame v2 https://goframe.org/pages/viewpage.action?pageId=1114859
+(2) GoFramev2 https://goframe.org/pages/viewpage.action?pageId=1114859
 
