@@ -11,8 +11,8 @@ var (
 	// Chmod 修改权限
 	Chmod func(path string, mode os.FileMode) (err error) = gfile.Chmod
 
-	Move   = gfile.Move
-	Rename = gfile.Move
+	Move   func(src string, dst string) (err error) = gfile.Move
+	Rename func(src string, dst string) (err error) = gfile.Move
 )
 
 // NewTemporaryFile 在指定目录下，生成临时文件.
@@ -52,21 +52,6 @@ func NewFile(filePath string) (*os.File, error) {
 	}
 
 	return os.Create(filePath)
-}
-
-// WriteToFile 将数据（字节流）写到文件中.
-/*
-@param filePath 目标文件的路径（不存在的话，会创建一个新的文件；存在且是个文件的话，会覆盖掉旧的（并不会加到该文件的最后面））
-*/
-func WriteToFile(data []byte, filePath string) error {
-	if err := AssertNotExistOrIsFile(filePath); err != nil {
-		return err
-	}
-	if err := MkParentDirs(filePath); err != nil {
-		return err
-	}
-
-	return os.WriteFile(filePath, data, os.ModePerm)
 }
 
 // Delete 删除 文件 或 目录（内部有文件或目录，也会一并删除）.
