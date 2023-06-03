@@ -6,10 +6,7 @@ import (
 )
 
 func TestChangeWorkingDir(t *testing.T) {
-	wd, err := GetWorkingDir()
-	if err != nil {
-		panic(err)
-	}
+	wd := GetWorkingDir()
 	fmt.Println("wd: ", wd)
 
 	tmp := Join(wd, "1", "a")
@@ -18,10 +15,7 @@ func TestChangeWorkingDir(t *testing.T) {
 		panic(err)
 	}
 
-	wd1, err := GetWorkingDir()
-	if err != nil {
-		panic(err)
-	}
+	wd1 := GetWorkingDir()
 	fmt.Println("wd1: ", wd1)
 
 	if tmp == wd1 {
@@ -29,5 +23,4 @@ func TestChangeWorkingDir(t *testing.T) {
 	} else {
 		panic("not equal")
 	}
-
 }
