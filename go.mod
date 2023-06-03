@@ -19,7 +19,7 @@ require (
 	github.com/gin-gonic/gin v1.9.1
 	github.com/go-playground/validator/v10 v10.14.0
 	github.com/go-redsync/redsync/v4 v4.8.1
-	github.com/gogf/gf/v2 v2.4.1
+	github.com/gogf/gf/v2 v2.4.2
 	github.com/google/uuid v1.3.0
 	github.com/gorilla/securecookie v1.1.1
 	github.com/gorilla/sessions v1.2.1
@@ -27,7 +27,7 @@ require (
 	github.com/jinzhu/copier v0.3.5
 	github.com/jordan-wright/email v4.0.1-0.20210109023952-943e75fe5223+incompatible
 	github.com/json-iterator/go v1.1.12
-	github.com/klauspost/cpuid/v2 v2.2.4
+	github.com/klauspost/cpuid/v2 v2.2.5
 	github.com/lestrrat-go/file-rotatelogs v2.4.0+incompatible
 	github.com/lionsoul2014/ip2region/binding/golang v0.0.0-20230415042440-a5e3d8259ae0
 	github.com/matoous/go-nanoid/v2 v2.0.0

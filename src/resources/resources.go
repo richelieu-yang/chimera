@@ -180,7 +180,7 @@ func resourcesHtml404Html() (*asset, error) {
 		return nil, err
 	}
 
-	info := bindataFileInfo{name: "resources/html/404.html", size: 12454, mode: os.FileMode(493), modTime: time.Unix(1679210962, 0)}
+	info := bindataFileInfo{name: "resources/html/404.html", size: 12454, mode: os.FileMode(493), modTime: time.Unix(1685694931, 0)}
 	a := &asset{bytes: bytes, info: info}
 	return a, nil
 }
@@ -200,7 +200,7 @@ func resourcesIconFaviconIco() (*asset, error) {
 		return nil, err
 	}
 
-	info := bindataFileInfo{name: "resources/icon/favicon.ico", size: 107788, mode: os.FileMode(493), modTime: time.Unix(1679210962, 0)}
+	info := bindataFileInfo{name: "resources/icon/favicon.ico", size: 107788, mode: os.FileMode(493), modTime: time.Unix(1685694931, 0)}
 	a := &asset{bytes: bytes, info: info}
 	return a, nil
 }
