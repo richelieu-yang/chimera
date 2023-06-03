@@ -4,7 +4,6 @@ import (
 	"github.com/gogf/gf/v2/os/gfile"
 	"os"
 	"path/filepath"
-	"time"
 )
 
 var (
@@ -57,18 +56,6 @@ var (
 	*/
 	GetExtName func(path string) string = gfile.ExtName
 )
-
-// GetModificationTime 获取文件（或目录）的修改时间
-/*
-@param path 传参""将返回err（Stat : The system cannot find the path specified.）
-*/
-func GetModificationTime(path string) (time.Time, error) {
-	info, err := Stat(path)
-	if err != nil {
-		return time.Time{}, err
-	}
-	return info.ModTime(), nil
-}
 
 // GetSize 获取文件（或目录）的大小.
 func GetSize(path string) (int64, error) {
