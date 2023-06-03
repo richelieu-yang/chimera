@@ -4,7 +4,7 @@ import "github.com/gogf/gf/v2/encoding/gcharset"
 
 // Convert 转换字符串的编码（字符集的编码）
 /*
-charset: "UTF-8"、"GBK"、"Big5"...
+支持的字符集（charset）: "UTF-8"、"GBK"、"Big5"等，更多详见: https://goframe.org/pages/viewpage.action?pageId=1114178.
 */
 func Convert(dstCharset string, srcCharset string, src string) (dst string, err error) {
 	return gcharset.Convert(dstCharset, src, src)
