@@ -89,7 +89,7 @@ func NewLumberjackWriteCloser(options ...LumberjackOption) (io.WriteCloser, erro
 
 	/* check and polyfill */
 	if strKit.IsEmpty(opts.filePath) {
-		return nil, errorKit.Simple("filePath mustn't be empty")
+		return nil, errorKit.New("filePath mustn't be empty")
 	}
 	if err := fileKit.MkParentDirs(opts.filePath); err != nil {
 		return nil, err

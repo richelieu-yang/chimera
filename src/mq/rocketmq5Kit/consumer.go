@@ -40,10 +40,10 @@ func NewSimpleConsumer(logConfig *LogConfig, config *rmq_client.Config, consumer
 	}
 
 	if strKit.IsEmpty(consumerGroup) {
-		return nil, errorKit.Simple("consumerGroup is empty")
+		return nil, errorKit.New("consumerGroup is empty")
 	}
 	if strKit.IsEmpty(topic) {
-		return nil, errorKit.Simple("topic is empty")
+		return nil, errorKit.New("topic is empty")
 	}
 	tag = strKit.EmptyToDefault(tag, "*")
 

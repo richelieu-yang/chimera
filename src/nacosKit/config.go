@@ -27,7 +27,7 @@ PS: 如果配置已存在，将覆盖.
 */
 func PublishConfig(client config_client.IConfigClient, dataId, group, content string, configType vo.ConfigType) (bool, error) {
 	if client == nil {
-		return false, errorKit.Simple("client is nil")
+		return false, errorKit.New("client is nil")
 	}
 	// content为blank，实际上就是删除配置
 	if strKit.IsBlank(content) {
@@ -50,7 +50,7 @@ PS: 如果配置不存在，将返回(true, nil).
 */
 func DeleteConfig(client config_client.IConfigClient, dataId, group string) (bool, error) {
 	if client == nil {
-		return false, errorKit.Simple("client is nil")
+		return false, errorKit.New("client is nil")
 	}
 
 	return client.DeleteConfig(vo.ConfigParam{
@@ -70,7 +70,7 @@ PS:
 */
 func GetConfig(client config_client.IConfigClient, dataId, group string) (string, error) {
 	if client == nil {
-		return "", errorKit.Simple("client is nil")
+		return "", errorKit.New("client is nil")
 	}
 
 	return client.GetConfig(vo.ConfigParam{
@@ -91,7 +91,7 @@ PS:
 */
 func ListenConfig(client config_client.IConfigClient, dataId, group string, callback func(namespaceId, dataId, group, content string)) error {
 	if client == nil {
-		return errorKit.Simple("client is nil")
+		return errorKit.New("client is nil")
 	}
 
 	return client.ListenConfig(vo.ConfigParam{
@@ -107,7 +107,7 @@ PS: 如果未监听，将返回nil.
 */
 func CancelListenConfig(client config_client.IConfigClient, dataId, group string) error {
 	if client == nil {
-		return errorKit.Simple("client is nil")
+		return errorKit.New("client is nil")
 	}
 
 	return client.CancelListenConfig(vo.ConfigParam{

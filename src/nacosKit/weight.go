@@ -20,14 +20,14 @@ var criticalScore float64 = 30
 
 func checkScore(score float64) error {
 	if score < 0 || score > 100 {
-		return errorKit.Simple("score(%.2f) is invalid", score)
+		return errorKit.Newf("score(%.2f) is invalid", score)
 	}
 	return nil
 }
 
 func checkWeight(weight float64) error {
 	if weight < 0 || weight > 10000 {
-		return errorKit.Simple("weight(%.2f) is invalid", weight)
+		return errorKit.Newf("weight(%.2f) is invalid", weight)
 	}
 	return nil
 }

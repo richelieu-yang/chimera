@@ -14,7 +14,7 @@ import (
 */
 func NewLogger(writer io.Writer, level zapcore.Level) (*zap.Logger, error) {
 	if writer == nil {
-		return nil, errorKit.Simple("writer == nil")
+		return nil, errorKit.New("writer == nil")
 	}
 
 	encoder := getEncoder()

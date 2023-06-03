@@ -17,10 +17,10 @@ e.g. spec == "@every 10s"
 */
 func NewCron(spec string, task func()) (*cron.Cron, cron.EntryID, error) {
 	if strKit.IsEmpty(spec) {
-		return nil, 0, errorKit.Simple("spec is empty")
+		return nil, 0, errorKit.New("spec is empty")
 	}
 	if task == nil {
-		return nil, 0, errorKit.Simple("task == nil")
+		return nil, 0, errorKit.New("task == nil")
 	}
 
 	c := cron.New(cron.WithSeconds())

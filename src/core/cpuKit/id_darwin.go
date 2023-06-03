@@ -17,7 +17,7 @@ func GetCpuId() (string, error) {
 		return "", err
 	}
 	if len(stats) == 0 {
-		return "", errorKit.Simple("length of stats is 0")
+		return "", errorKit.New("length of stats is 0")
 	}
 
 	buffer := bytes.Buffer{}
@@ -31,7 +31,7 @@ func GetCpuId() (string, error) {
 		}
 	}
 	if buffer.Len() == 0 {
-		return "", errorKit.Simple("length of buffer is 0")
+		return "", errorKit.New("length of buffer is 0")
 	}
 	return buffer.String(), nil
 }

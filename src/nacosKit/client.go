@@ -53,7 +53,7 @@ func NewConfigClient(config *NacosConfig, outputDir string, logLevel NacosLogLev
 
 func getConfigs(config *NacosConfig, outputDir string, logLevel NacosLogLevel) (*constant.ClientConfig, []constant.ServerConfig, error) {
 	if config == nil {
-		return nil, nil, errorKit.Simple("config is nil")
+		return nil, nil, errorKit.New("config is nil")
 	}
 	// outputDir
 	if err := fileKit.MkDirs(outputDir); err != nil {
@@ -123,7 +123,7 @@ func newServerConfigs(config *NacosConfig) ([]constant.ServerConfig, error) {
 	addresses := config.ServerAddresses
 	length := len(addresses)
 	if length == 0 {
-		return nil, errorKit.Simple("length of addresses is 0")
+		return nil, errorKit.New("length of addresses is 0")
 	}
 
 	configs := make([]constant.ServerConfig, 0, length)

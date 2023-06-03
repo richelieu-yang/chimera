@@ -23,7 +23,7 @@ e.g. UTC+8 转 UTC+0
 */
 func ConvertByLocation(t time.Time, loc *time.Location) (time.Time, error) {
 	if loc == nil {
-		return time.Time{}, errorKit.Simple("loc is nil")
+		return time.Time{}, errorKit.New("loc is nil")
 	}
 	return t.In(loc), nil
 }

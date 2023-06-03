@@ -109,10 +109,10 @@ func proxy(w http.ResponseWriter, r *http.Request, scheme, addr string, errorLog
 	case "https":
 	case "http":
 	default:
-		return errorKit.Simple("invalid scheme: %s", scheme)
+		return errorKit.Newf("invalid scheme: %s", scheme)
 	}
 	if strKit.IsEmpty(addr) {
-		return errorKit.Simple("addr is empty")
+		return errorKit.New("addr is empty")
 	}
 
 	var err error

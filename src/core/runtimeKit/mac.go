@@ -19,7 +19,7 @@ func GetMacAddresses() ([]string, error) {
 	}
 	length := len(interfaces)
 	if length == 0 {
-		return nil, errorKit.Simple("length of interfaces is 0")
+		return nil, errorKit.New("length of interfaces is 0")
 	}
 
 	s := make([]string, 0, length)
@@ -30,7 +30,7 @@ func GetMacAddresses() ([]string, error) {
 		}
 	}
 	if len(s) == 0 {
-		return nil, errorKit.Simple("length of s is 0")
+		return nil, errorKit.New("length of s is 0")
 	}
 	return s, nil
 }

@@ -11,11 +11,11 @@ import (
 */
 func ProcessAddresses(addresses []string) ([]string, error) {
 	if len(addresses) == 0 {
-		return nil, errorKit.Simple("len(addresses) == 0")
+		return nil, errorKit.New("len(addresses) == 0")
 	}
 	addrs := sliceKit.Uniq(sliceKit.RemoveEmpty(addresses, true))
 	if len(addrs) == 0 {
-		return nil, errorKit.Simple("len(addrs) == 0")
+		return nil, errorKit.New("len(addrs) == 0")
 	}
 
 	for index, addr := range addrs {

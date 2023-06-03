@@ -35,7 +35,7 @@ func (client *Client) GetUniversalClient() redis.UniversalClient {
 */
 func NewClient(config *Config) (*Client, error) {
 	if config == nil {
-		return nil, errorKit.Simple("config == nil")
+		return nil, errorKit.New("config == nil")
 	}
 
 	var opts *redis.UniversalOptions
@@ -50,7 +50,7 @@ func NewClient(config *Config) (*Client, error) {
 	case ModeCluster:
 		opts, err = newClusterOptions(config)
 	default:
-		err = errorKit.Simple("mode(%d) is invalid", config.Mode)
+		err = errorKit.Newf("mode(%d) is invalid", config.Mode)
 	}
 	if err != nil {
 		return nil, err
@@ -74,7 +74,7 @@ func NewClient(config *Config) (*Client, error) {
 		return nil, errorKit.Wrap(err, "fail to ping")
 	}
 	if str != "PONG" {
-		return nil, errorKit.Simple("result(%s) of ping in invalid", str)
+		return nil, errorKit.Newf("result(%s) of ping in invalid", str)
 	}
 
 	return client, nil
@@ -94,7 +94,7 @@ func newBaseOptions(config *Config) *redis.UniversalOptions {
 func newSingleNodeOptions(config *Config) (*redis.UniversalOptions, error) {
 	c := config.SingleNodeConfig
 	if c == nil {
-		return nil, errorKit.Simple("SingleNodeConfig is nil")
+		return nil, errorKit.New("SingleNodeConfig is nil")
 	}
 
 	opts := newBaseOptions(config)
@@ -107,17 +107,17 @@ func newSingleNodeOptions(config *Config) (*redis.UniversalOptions, error) {
 
 // newMasterSlaverOptions 主从模式
 func newMasterSlaverOptions(config *Config) (*redis.UniversalOptions, error) {
-	return nil, errorKit.Simple("mode(%d) is unsupported now", config.Mode)
+	return nil, errorKit.Newf("mode(%d) is unsupported now", config.Mode)
 }
 
 // newSentinelOptions 哨兵模式
 func newSentinelOptions(config *Config) (*redis.UniversalOptions, error) {
 	c := config.SentinelConfig
 	if c == nil {
-		return nil, errorKit.Simple("SentinelConfig is nil")
+		return nil, errorKit.New("SentinelConfig is nil")
 	}
 	if len(c.SentinelAddrs) == 0 {
-		return nil, errorKit.Simple("length of SentinelAddrs is 0")
+		return nil, errorKit.New("length of SentinelAddrs is 0")
 	}
 
 	opts := newBaseOptions(config)
@@ -134,7 +134,7 @@ func newSentinelOptions(config *Config) (*redis.UniversalOptions, error) {
 func newClusterOptions(config *Config) (*redis.UniversalOptions, error) {
 	c := config.ClusterConfig
 	if c == nil {
-		return nil, errorKit.Simple("ClusterConfig is nil")
+		return nil, errorKit.New("ClusterConfig is nil")
 	}
 
 	opts := newBaseOptions(config)

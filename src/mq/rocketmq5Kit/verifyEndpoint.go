@@ -34,10 +34,10 @@ var (
 */
 func VerifyEndpoint(endpoint, topic string) error {
 	if strKit.IsEmpty(endpoint) {
-		return errorKit.Simple("param endpoint is empty")
+		return errorKit.New("param endpoint is empty")
 	}
 	if strKit.IsEmpty(topic) {
-		return errorKit.Simple("param topic is empty")
+		return errorKit.New("param topic is empty")
 	}
 
 	/* logger */
@@ -68,7 +68,8 @@ func VerifyEndpoint(endpoint, topic string) error {
 		fmt.Sprintf("%s_%s_%s", ulid, timeStr, "$4"),
 		fmt.Sprintf("%s_%s_%s", ulid, timeStr, "$5"),
 	}
-	json, err := jsonKit.MarshalToStringWithIndent(texts)
+
+	json, err := jsonKit.MarshalToString(texts, jsonKit.WithIndent("    "))
 	if err != nil {
 		return err
 	}
@@ -89,7 +90,7 @@ func VerifyEndpoint(endpoint, topic string) error {
 		return errorKit.Wrap(err, "fail to new consumer")
 	}
 	if err := consumer.Start(); err != nil {
-		return errorKit.Wrap(err, "fail to start consumer with topic(%s)", topic)
+		return errorKit.Wrapf(err, "fail to start consumer with topic(%s)", topic)
 	}
 	defer consumer.GracefulStop()
 
@@ -134,7 +135,7 @@ func VerifyEndpoint(endpoint, topic string) error {
 						//	break LOOP
 						//case codes.DeadlineExceeded:
 						//	/* 超时结束 */
-						//	consumerErr = errorKit.Simple("consumer fails to receive all messages(count: %d) within timeout(%s), missing(%d)", len(texts), verifyTimeout.String(), len(text1))
+						//	consumerErr = errorKit.New("consumer fails to receive all messages(count: %d) within timeout(%s), missing(%d)", len(texts), verifyTimeout.String(), len(text1))
 						//	break LOOP
 					}
 				}
@@ -206,7 +207,7 @@ func VerifyEndpoint(endpoint, topic string) error {
 			ctx, _ := context.WithTimeout(context.TODO(), producerTimeout)
 			_, err := producer.Send(ctx, msg)
 			if err != nil {
-				err = errorKit.Wrap(err, "[Producer] Fail to send message(%s).", text)
+				err = errorKit.Wrapf(err, "[Producer] Fail to send message(%s).", text)
 				producerCh <- err
 				return
 			}
@@ -222,11 +223,11 @@ func VerifyEndpoint(endpoint, topic string) error {
 	case err = <-consumerCh:
 		// 此处err可能为nil（说明验证通过）
 	case <-time.After(verifyTimeout):
-		err = errorKit.Simple("fail to pass validation within timeout(%v)", verifyTimeout)
+		err = errorKit.Newf("fail to pass validation within timeout(%v)", verifyTimeout)
 	}
 
 	if err != nil {
-		err = errorKit.Wrap(err, "log path: [%s]", logPath)
+		err = errorKit.Wrapf(err, "log path: [%s]", logPath)
 		logger.Errorf("%+v", err)
 		return err
 	}

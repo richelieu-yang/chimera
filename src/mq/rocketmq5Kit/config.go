@@ -25,7 +25,7 @@ var (
 // processConfig Consumer和Producer通用
 func processConfig(baseConfig *rmq_client.Config) (*rmq_client.Config, error) {
 	if baseConfig == nil {
-		return nil, errorKit.Simple("config == nil")
+		return nil, errorKit.New("config == nil")
 	}
 
 	// 深拷贝，为了不修改传参baseConfig
@@ -33,11 +33,11 @@ func processConfig(baseConfig *rmq_client.Config) (*rmq_client.Config, error) {
 	obj := copyKit.DeepCopy(baseConfig)
 	config, ok := obj.(*rmq_client.Config)
 	if !ok {
-		return nil, errorKit.Simple("fail to deepcopy baseConfig")
+		return nil, errorKit.New("fail to deepcopy baseConfig")
 	}
 
 	if strKit.IsEmpty(config.Endpoint) {
-		return nil, errorKit.Simple("config.Endpoint is empty")
+		return nil, errorKit.New("config.Endpoint is empty")
 	}
 
 	config.ConsumerGroup = ""

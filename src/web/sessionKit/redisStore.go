@@ -169,11 +169,11 @@ func (s *RedisStore) save(ctx context.Context, session *sessions.Session) error 
 			// 重复了，需要重新生成 session.ID
 			id, err := s.keyGen()
 			if err != nil {
-				return errorKit.Simple("fail to regenerate session id")
+				return errorKit.New("fail to regenerate session id")
 			}
 			session.ID = id + "_" + strconv.Itoa(randomKit.Int(0, 123456))
 		}
-		return errorKit.Simple("multiple repetition")
+		return errorKit.New("multiple repetition")
 	}
 	return s.client.Set(ctx, s.keyPrefix+session.ID, b, expiration).Err()
 }

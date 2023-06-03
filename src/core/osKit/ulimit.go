@@ -25,7 +25,7 @@ func GetMaxOpenFiles() (int, error) {
 
 	i, err := intKit.StringToInt(str)
 	if err != nil {
-		return 0, errorKit.Simple("result(%s) isn't a number", str)
+		return 0, errorKit.Newf("result(%s) isn't a number", str)
 	}
 	return i, nil
 
@@ -41,7 +41,7 @@ func GetMaxOpenFiles() (int, error) {
 	//str := strKit.Trim(out.String())
 	//value, err := strconv.Atoi(str)
 	//if err != nil {
-	//	return 0, errorKit.Simple("result(%s) of command(%s) isn't a number", str, cmd.String())
+	//	return 0, errorKit.New("result(%s) of command(%s) isn't a number", str, cmd.String())
 	//}
 	//return value, nil
 }
@@ -62,7 +62,7 @@ func GetUserMaxProcesses() (int, error) {
 
 	i, err := intKit.StringToInt(str)
 	if err != nil {
-		return 0, errorKit.Simple("result(%s) isn't a number", str)
+		return 0, errorKit.Newf("result(%s) isn't a number", str)
 	}
 	return i, nil
 
@@ -79,7 +79,7 @@ func GetUserMaxProcesses() (int, error) {
 	//
 	//value, err := strconv.Atoi(str)
 	//if err != nil {
-	//	return 0, errorKit.Simple("result(%s) of command(%s) isn't a number", str, cmd.String())
+	//	return 0, errorKit.New("result(%s) of command(%s) isn't a number", str, cmd.String())
 	//}
 	//return value, nil
 }

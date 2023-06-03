@@ -56,7 +56,7 @@ func (lc *LogConfig) SetLogout() error {
 
 		logName := c.LogName
 		if strKit.IsEmpty(logName) {
-			return errorKit.Simple("logName is empty")
+			return errorKit.New("logName is empty")
 		}
 
 		if err := osKit.SetEnvs(map[string]string{

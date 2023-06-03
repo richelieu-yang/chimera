@@ -27,10 +27,10 @@ func SetApiKeyAndSecretKey(apiKey, secretKey string) error {
 	apiKey = strKit.Trim(apiKey)
 	secretKey = strKit.Trim(secretKey)
 	if strKit.IsEmpty(apiKey) {
-		return errorKit.Simple("apiKey is empty")
+		return errorKit.New("apiKey is empty")
 	}
 	if strKit.IsEmpty(secretKey) {
-		return errorKit.Simple("secretKey is empty")
+		return errorKit.New("secretKey is empty")
 	}
 	token = nil
 	clientId = apiKey
@@ -67,7 +67,7 @@ func getAccessToken() (*accessToken, error) {
 */
 func newAccessToken() (*accessToken, error) {
 	if strKit.HasEmpty(clientId, clientSecret) {
-		return nil, errorKit.Simple("SetApiKeyAndSecretKey() should be invoked firstly")
+		return nil, errorKit.New("SetApiKeyAndSecretKey() should be invoked firstly")
 	}
 
 	url := fmt.Sprintf("https://aip.baidubce.com/oauth/2.0/token?grant_type=%s&client_id=%s&client_secret=%s",
@@ -89,12 +89,12 @@ func newAccessToken() (*accessToken, error) {
 		return nil, err
 	}
 	if token == nil {
-		return nil, errorKit.Simple("failure response(%s)", string(resp))
+		return nil, errorKit.Newf("failure response(%s)", string(resp))
 	}
 	// 对token进行简单验证
 	// 正常情况下，token的有效期为30天，此处判断是为了防止特殊情况（86400秒 == 1天）
 	if token.ExpiresIn <= 86400 {
-		return nil, errorKit.Simple("token.ExpiresIn(%d) is invalid", 86400)
+		return nil, errorKit.Newf("token.ExpiresIn(%d) is invalid", 86400)
 	}
 	// 提前1h(3600s)认为token失效，以防特殊情况
 	token.ExpireTime = time.Now().Add(time.Second * time.Duration(token.ExpiresIn-3600))

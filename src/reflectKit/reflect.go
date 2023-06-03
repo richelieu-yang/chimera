@@ -22,7 +22,7 @@ func GetField(ptr interface{}, fieldName string) reflect.Value {
 // GetNestedField 获取（层层嵌套的）字段
 func GetNestedField(ptr interface{}, fieldNames ...string) (reflect.Value, error) {
 	if fieldNames == nil {
-		return reflect.Value{}, errorKit.Simple("fieldNames == nil")
+		return reflect.Value{}, errorKit.New("fieldNames == nil")
 	}
 
 	v := reflect.ValueOf(ptr).Elem()

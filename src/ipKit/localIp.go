@@ -32,7 +32,7 @@ func GetLocalIp() (string, error) {
 		}
 		return ipAddr.IP.String(), nil
 	}
-	return "", errorKit.Simple("fail to get local ip!")
+	return "", errorKit.New("fail to get local ip!")
 }
 
 var outboundIp string

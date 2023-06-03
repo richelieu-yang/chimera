@@ -24,16 +24,15 @@ package errorKit
 import (
 	"errors"
 	"fmt"
-	errors2 "github.com/pkg/errors"
 	"github.com/richelieu42/chimera/v2/src/funcKit"
 )
 
-// Simple 新建error（指针；不会携带堆栈信息）
-func Simple(format string, args ...interface{}) error {
-	format = funcKit.GetEntireCaller(2) + " " + format
-
-	return errors.New(fmt.Sprintf(format, args...))
-}
+//// Simple 新建error（指针；不会携带堆栈信息）
+//func Simple(format string, args ...interface{}) error {
+//	format = funcKit.GetEntireCaller(2) + " " + format
+//
+//	return errors.New(fmt.Sprintf(format, args...))
+//}
 
 // SimpleWithExtraSkip
 /*
@@ -45,126 +44,126 @@ func SimpleWithExtraSkip(extraSkip int, format string, args ...interface{}) erro
 	return errors.New(fmt.Sprintf(format, args...))
 }
 
-// New 新建error（指针；会携带堆栈信息）
-/*
-e.g. 返回值为什么是指针（详见 errors.Errorf）
-	err := errorKit.Simple("123")
-	err1 := errorKit.Simple("123")
-	fmt.Println(err == err)  	// true
-	fmt.Println(err == err1) 	// false（因为内存地址不一样）
-*/
-func New(format string, args ...interface{}) error {
-	format = funcKit.GetEntireCaller(2) + " " + format
+//// New 新建error（指针；会携带堆栈信息）
+///*
+//e.g. 返回值为什么是指针（详见 errors.Errorf）
+//	err := errorKit.New("123")
+//	err1 := errorKit.New("123")
+//	fmt.Println(err == err)  	// true
+//	fmt.Println(err == err1) 	// false（因为内存地址不一样）
+//*/
+//func New(format string, args ...interface{}) error {
+//	format = funcKit.GetEntireCaller(2) + " " + format
+//
+//	return errors2.Errorf(format, args...)
+//}
+//
+//// NewWithExtraSkip
+///*
+//@param extraSkip 额外跳过的层数
+//*/
+//func NewWithExtraSkip(extraSkip int, format string, args ...interface{}) error {
+//	format = funcKit.GetEntireCaller(2+extraSkip) + " " + format
+//
+//	return errors2.Errorf(format, args...)
+//}
 
-	return errors2.Errorf(format, args...)
-}
+//// IsErrorWithStack 错误是否有堆栈信息？
+///*
+//不考虑复杂情况（e.g. 混用 errorKit.Wrap 和 errorKit.WithMessage），
+//	errorKit.Wrap 和 errorKit.New 返回的error（非nil），将返回: true；
+//	errorKit.WithMessage 返回的error（非nil），将返回: false.
+//
+//e.g.
+//err := io.EOF
+//err1 := errorKit.Wrap(io.EOF, "1")
+//err2 := errorKit.WithMessage(io.EOF, "2")
+//err3 := errorKit.New("3")
+//
+//fmt.Println(errorKit.IsErrorWithStack(err))  // false
+//fmt.Println(errorKit.IsErrorWithStack(err1)) // true
+//fmt.Println(errorKit.IsErrorWithStack(err2)) // false
+//fmt.Println(errorKit.IsErrorWithStack(err3)) // true
+//*/
+//func IsErrorWithStack(err error) bool {
+//	type stackTracer interface {
+//		StackTrace() errors2.StackTrace
+//	}
+//
+//	if err == nil {
+//		return false
+//	}
+//	_, ok := err.(stackTracer)
+//	return ok
+//}
 
-// NewWithExtraSkip
-/*
-@param extraSkip 额外跳过的层数
-*/
-func NewWithExtraSkip(extraSkip int, format string, args ...interface{}) error {
-	format = funcKit.GetEntireCaller(2+extraSkip) + " " + format
+//func WithStack(err error) error {
+//	return errors2.WithStack(err)
+//}
 
-	return errors2.Errorf(format, args...)
-}
+//// Wrap
+///*
+//Wrap returns an error annotating err with a stack trace at the point Wrap is called, and the supplied message.
+//If err is nil, Wrap returns nil.
+//
+//@param format 建议首字母小写，且最后面不要加标点符号，否则"%v"输出会比较难看（%v: message在左边；%+v: message在下边）
+//*/
+//func Wrap(err error, format string, args ...interface{}) error {
+//	format = funcKit.GetEntireCaller(2) + " " + format
+//
+//	return errors2.Wrapf(err, format, args...)
+//}
 
-// IsErrorWithStack 错误是否有堆栈信息？
-/*
-不考虑复杂情况（e.g. 混用 errorKit.Wrap 和 errorKit.WithMessage），
-	errorKit.Wrap 和 errorKit.New 返回的error（非nil），将返回: true；
-	errorKit.WithMessage 返回的error（非nil），将返回: false.
+//// WithMessage
+///*
+//WithMessage annotates err with a new message.
+//If err is nil, WithMessage returns nil.
+//%v：	message在左边；
+//%+v：	message在下面。
+//
+//e.g.
+//	var err error = redis.Nil
+//	err = errorKit.WithMessage(err, "message")
+//
+//	//test/test2.go:11|main message: redis: nil
+//	fmt.Printf("%v\n", err)
+//
+//	//redis: nil
+//	//test/test2.go:11|main message
+//	fmt.Printf("%+v\n", err)
+//*/
+//func WithMessage(err error, format string, args ...interface{}) error {
+//	format = funcKit.GetEntireCaller(2) + " " + format
+//
+//	return errors2.WithMessagef(err, format, args...)
+//}
 
-e.g.
-err := io.EOF
-err1 := errorKit.Wrap(io.EOF, "1")
-err2 := errorKit.WithMessage(io.EOF, "2")
-err3 := errorKit.New("3")
+//// WithLocationInfo 附带调用此方法的caller的信息
+///*
+//e.g.
+//	err := io.EOF
+//	err = errorKit.WithLocationInfo(err)
+//
+//	// test/test1.go:11|main: EOF
+//	fmt.Printf("%v\n", err)
+//
+//	// EOF
+//	// test/test1.go:11|main
+//	fmt.Printf("%+v\n", err)
+//*/
+//func WithLocationInfo(err error) error {
+//	info := funcKit.GetEntireCaller(2)
+//	return errors2.WithMessage(err, info)
+//}
 
-fmt.Println(errorKit.IsErrorWithStack(err))  // false
-fmt.Println(errorKit.IsErrorWithStack(err1)) // true
-fmt.Println(errorKit.IsErrorWithStack(err2)) // false
-fmt.Println(errorKit.IsErrorWithStack(err3)) // true
-*/
-func IsErrorWithStack(err error) bool {
-	type stackTracer interface {
-		StackTrace() errors2.StackTrace
-	}
-
-	if err == nil {
-		return false
-	}
-	_, ok := err.(stackTracer)
-	return ok
-}
-
-func WithStack(err error) error {
-	return errors2.WithStack(err)
-}
-
-// Wrap
-/*
-Wrap returns an error annotating err with a stack trace at the point Wrap is called, and the supplied message.
-If err is nil, Wrap returns nil.
-
-@param format 建议首字母小写，且最后面不要加标点符号，否则"%v"输出会比较难看（%v: message在左边；%+v: message在下边）
-*/
-func Wrap(err error, format string, args ...interface{}) error {
-	format = funcKit.GetEntireCaller(2) + " " + format
-
-	return errors2.Wrapf(err, format, args...)
-}
-
-// WithMessage
-/*
-WithMessage annotates err with a new message.
-If err is nil, WithMessage returns nil.
-%v：	message在左边；
-%+v：	message在下面。
-
-e.g.
-	var err error = redis.Nil
-	err = errorKit.WithMessage(err, "message")
-
-	//test/test2.go:11|main message: redis: nil
-	fmt.Printf("%v\n", err)
-
-	//redis: nil
-	//test/test2.go:11|main message
-	fmt.Printf("%+v\n", err)
-*/
-func WithMessage(err error, format string, args ...interface{}) error {
-	format = funcKit.GetEntireCaller(2) + " " + format
-
-	return errors2.WithMessagef(err, format, args...)
-}
-
-// WithLocationInfo 附带调用此方法的caller的信息
-/*
-e.g.
-	err := io.EOF
-	err = errorKit.WithLocationInfo(err)
-
-	// test/test1.go:11|main: EOF
-	fmt.Printf("%v\n", err)
-
-	// EOF
-	// test/test1.go:11|main
-	fmt.Printf("%+v\n", err)
-*/
-func WithLocationInfo(err error) error {
-	info := funcKit.GetEntireCaller(2)
-	return errors2.WithMessage(err, info)
-}
-
-// Cause 获取传参err的root error（错误的根因）.
-/*
-(1) If the error does not implement Cause, the original error will be returned.（返回最原始的错误）
-(2) If the error is nil, nil will be returned without further investigation.
-
-e.g.
-(nil) => nil
-*/
-func Cause(err error) error {
-	return errors2.Cause(err)
-}
+//// Cause 获取传参err的root error（错误的根因）.
+///*
+//(1) If the error does not implement Cause, the original error will be returned.（返回最原始的错误）
+//(2) If the error is nil, nil will be returned without further investigation.
+//
+//e.g.
+//(nil) => nil
+//*/
+//func Cause(err error) error {
+//	return errors2.Cause(err)
+//}

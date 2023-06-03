@@ -50,7 +50,7 @@ func (opts *rsaOptions) GenerateKeyPair(bits int) (pri []byte, pub []byte, err e
 			return nil, nil, err
 		}
 	default:
-		return nil, nil, errorKit.Simple("invalid format(%v)", opts.format)
+		return nil, nil, errorKit.Newf("invalid format(%v)", opts.format)
 	}
 	block := &pem.Block{
 		Type:  "PRIVATE KEY",

@@ -22,7 +22,7 @@ func SetUp(pulsarConfig *Config) (err error) {
 	setupOnce.Do(func() {
 		config = pulsarConfig
 		if config == nil {
-			err = errorKit.Simple("config == nil")
+			err = errorKit.New("config == nil")
 		} else {
 			err = verify(config.VerifyConfig)
 		}

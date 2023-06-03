@@ -11,8 +11,6 @@ func TestMustSetUp(t *testing.T) {
 		PrintBasic: true,
 	})
 
-	DisableQuoteTemporarily(nil, func() {
-		logrus.Info("1\n2\n3\n")
-	})
+	DisableQuote(nil)
 	logrus.Info("1\n2\n3\n")
 }

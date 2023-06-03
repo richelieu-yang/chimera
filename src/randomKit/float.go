@@ -12,7 +12,7 @@ import (
 */
 func Float64(min, max float64, places int32) (rst float64, err error) {
 	if min >= max {
-		err = errorKit.Simple("min(%d) is greater than or equal to max(%d)", min, max)
+		err = errorKit.Newf("min(%d) is greater than or equal to max(%d)", min, max)
 		return
 	}
 

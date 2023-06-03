@@ -85,7 +85,7 @@ func _verify(logger *logrus.Logger, topic, consumerLogPath, producerLogPath stri
 		Type:             pulsar.Exclusive,
 	}, consumerLogPath)
 	if err != nil {
-		return errorKit.WithLocationInfo(err)
+		return err
 	}
 	defer consumer.Close()
 
@@ -96,7 +96,7 @@ func _verify(logger *logrus.Logger, topic, consumerLogPath, producerLogPath stri
 		SendTimeout: sendTimeout,
 	}, producerLogPath)
 	if err != nil {
-		return errorKit.WithLocationInfo(err)
+		return err
 	}
 	defer producer.Close()
 
@@ -126,7 +126,6 @@ func _verify(logger *logrus.Logger, topic, consumerLogPath, producerLogPath stri
 		for {
 			msg, err := consumer.Receive(consumerCtx)
 			if err != nil {
-				err = errorKit.WithLocationInfo(err)
 				logger.WithFields(logrus.Fields{
 					"error": err.Error(),
 				}).Info("[Pulsar, Verify, Consumer] fail to receive")
@@ -134,7 +133,6 @@ func _verify(logger *logrus.Logger, topic, consumerLogPath, producerLogPath stri
 				break
 			}
 			if err := consumer.Ack(msg); err != nil {
-				err = errorKit.WithLocationInfo(err)
 				logger.WithFields(logrus.Fields{
 					"error": err.Error(),
 				}).Info("[Pulsar, Verify, Consumer] fail to ack")
@@ -177,7 +175,6 @@ func _verify(logger *logrus.Logger, topic, consumerLogPath, producerLogPath stri
 				return err
 			}()
 			if err != nil {
-				err = errorKit.WithLocationInfo(err)
 				logger.WithFields(logrus.Fields{
 					"text":  text,
 					"error": err.Error(),
@@ -199,6 +196,6 @@ func _verify(logger *logrus.Logger, topic, consumerLogPath, producerLogPath stri
 	case err := <-consumerErrCh:
 		return err
 	case <-time.After(receiveTimeout):
-		return errorKit.Simple("fail to get all messages within time limit(%s)", receiveTimeout)
+		return errorKit.Newf("fail to get all messages within time limit(%s)", receiveTimeout)
 	}
 }

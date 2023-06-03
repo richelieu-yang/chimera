@@ -41,7 +41,7 @@ type (
 
 func (config *Config) Verify() error {
 	if config == nil {
-		return errorKit.Simple("config == nil")
+		return errorKit.New("config == nil")
 	}
 
 	// ssl
@@ -62,11 +62,11 @@ func (config *Config) Verify() error {
 	// ports(http && https)
 	if config.Port != -1 {
 		if sslConfig != nil && config.Port == sslConfig.Port {
-			return errorKit.Simple("http port and https port are same(%d)", config.Port)
+			return errorKit.Newf("http port and https port are same(%d)", config.Port)
 		}
 	} else {
 		if sslConfig == nil {
-			return errorKit.Simple("both http port and https port are invalid(-1)")
+			return errorKit.New("both http port and https port are invalid(-1)")
 		}
 	}
 

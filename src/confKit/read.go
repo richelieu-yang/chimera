@@ -74,10 +74,10 @@ func ReadFileAs(filePath string, defaultMap map[string]interface{}, ptr interfac
 // checkParamPtr 检查传参ptr：要求是指针且不为nil
 func checkParamPtr(ptr interface{}) error {
 	if ptr == nil {
-		return errorKit.Simple("ptr is nil")
+		return errorKit.New("ptr is nil")
 	}
 	if !ptrKit.IsPointer(ptr) {
-		return errorKit.Simple("ptr isn't a pointer")
+		return errorKit.New("ptr isn't a pointer")
 	}
 	return nil
 }

@@ -51,7 +51,7 @@ func GetNetworkTime() (time.Time, string, error) {
 	case b := <-ch:
 		return b.t, b.source, nil
 	case <-time.After(timeout):
-		return time.Time{}, "", errorKit.New("timeout(%v)", timeout)
+		return time.Time{}, "", errorKit.Newf("timeout(%v)", timeout)
 	}
 }
 

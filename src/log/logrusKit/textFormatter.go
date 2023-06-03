@@ -26,8 +26,11 @@ time=2023-03-23 16:46:23.398+08:00 level=info msg=[CHIMERA, OS] arch: [arm64]. f
 */
 func NewTextFormatter(timestampFormat string) *logrus.TextFormatter {
 	if strKit.IsEmpty(timestampFormat) {
-		timestampFormat = string(timeKit.FormatEntire)
+		timestampFormat = string(timeKit.FormatEntire1)
 	}
+
+	// 是否用""将字段的值包起来?
+	quoteFlag := true
 
 	return &logrus.TextFormatter{
 		/* 时间格式 */
@@ -41,8 +44,8 @@ func NewTextFormatter(timestampFormat string) *logrus.TextFormatter {
 		DisableColors: true,
 		ForceColors:   false,
 
-		DisableQuote: false,
-		ForceQuote:   true,
+		DisableQuote: !quoteFlag,
+		ForceQuote:   quoteFlag,
 
 		QuoteEmptyFields: true,
 

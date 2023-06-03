@@ -3,7 +3,6 @@ package pulsarKit
 import (
 	"context"
 	"github.com/apache/pulsar-client-go/pulsar"
-	"github.com/richelieu42/chimera/v2/src/core/errorKit"
 	"time"
 )
 
@@ -48,13 +47,11 @@ func NewProducerOriginally(ctx context.Context, addresses []string, options puls
 		var err error
 		client, err = NewClient(addresses, logPath)
 		if err != nil {
-			err = errorKit.WithLocationInfo(err)
 			errCh <- err
 			return
 		}
 		producer, err = client.CreateProducer(options)
 		if err != nil {
-			err = errorKit.WithLocationInfo(err)
 			errCh <- err
 			return
 		}
@@ -68,7 +65,7 @@ func NewProducerOriginally(ctx context.Context, addresses []string, options puls
 			if client == nil {
 				client.Close()
 			}
-			errCh <- errorKit.WithLocationInfo(ctx.Err())
+			errCh <- ctx.Err()
 		default:
 			errCh <- nil
 		}
@@ -76,7 +73,7 @@ func NewProducerOriginally(ctx context.Context, addresses []string, options puls
 
 	select {
 	case <-ctx.Done():
-		return nil, errorKit.WithLocationInfo(ctx.Err())
+		return nil, ctx.Err()
 	case err := <-errCh:
 		if err != nil {
 			return nil, err

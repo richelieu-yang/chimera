@@ -60,5 +60,5 @@ func GetDiskStat() (*DiskStat, error) {
 		}
 		return (*DiskStat)(stat), nil
 	}
-	return nil, errorKit.Simple("fail to get a part whose Mountpoint is \"/\"")
+	return nil, errorKit.New("fail to get a part whose Mountpoint is \"/\"")
 }

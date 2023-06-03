@@ -15,13 +15,13 @@ type (
 
 func (config *Config) Check() error {
 	if config == nil {
-		return errorKit.Simple("config == nil")
+		return errorKit.New("config == nil")
 	}
 
 	config.Endpoints = sliceKit.Uniq(config.Endpoints)
 	config.Endpoints = sliceKit.RemoveEmpty(config.Endpoints, true)
 	if len(config.Endpoints) == 0 {
-		return errorKit.Simple("config.Endpoints is empty")
+		return errorKit.New("config.Endpoints is empty")
 	}
 
 	return nil

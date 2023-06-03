@@ -15,7 +15,7 @@ type (
 
 func (config *Config) Verify() error {
 	if config == nil {
-		return errorKit.Simple("config == nil")
+		return errorKit.New("config == nil")
 	}
 
 	addr, err := netKit.ParseToAddress(config.ServerAddr)

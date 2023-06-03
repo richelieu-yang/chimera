@@ -12,7 +12,7 @@ const (
 )
 
 var (
-	NoUsablePortError = errorKit.Simple("no usable port")
+	NoUsablePortError = errorKit.New("no usable port")
 )
 
 // IsValidPort 是否为有效的端口？（根据值范围判断）
@@ -41,12 +41,12 @@ golang端口占用检测的使用	https://wenku.baidu.com/view/25716f5b01768e995
 */
 func IsLocalPortUsable(port int) (bool, error) {
 	if !IsValidPort(port) {
-		return false, errorKit.Simple("port(%d) is invalid", port)
+		return false, errorKit.Newf("port(%d) is invalid", port)
 	}
 	// 能连通就说明端口被占用了
 	ok, _ := CanDialWithTimeout("127.0.0.1", port, time.Second*3)
 	if ok {
-		return false, errorKit.Simple("port(%d) is already in use", port)
+		return false, errorKit.Newf("port(%d) is already in use", port)
 	}
 	return true, nil
 }
@@ -57,7 +57,7 @@ func IsLocalPortUsable(port int) (bool, error) {
 */
 func GetUsablePort(startPort int, exceptivePorts ...int) (int, error) {
 	if !IsValidPort(startPort) {
-		return 0, errorKit.Simple("startPort(%d) is invalid", startPort)
+		return 0, errorKit.Newf("startPort(%d) is invalid", startPort)
 	}
 
 	for p := startPort; p <= MaxPort; p++ {

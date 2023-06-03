@@ -51,7 +51,7 @@ func newImapClient(config *ImapConfig) (c *client.Client, err error) {
 		}
 	}()
 	if config == nil {
-		err = errorKit.Simple("config == nil")
+		err = errorKit.New("config == nil")
 		return
 	}
 

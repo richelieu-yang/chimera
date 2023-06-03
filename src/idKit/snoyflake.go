@@ -19,7 +19,7 @@ func NewSonyFlake(st *sonyflake.Settings) (*sonyflake.Sonyflake, error) {
 	}
 	sf := sonyflake.NewSonyflake(*st)
 	if sf == nil {
-		return nil, errorKit.Simple("sf == nil")
+		return nil, errorKit.New("sf == nil")
 	}
 	return sf, nil
 }

@@ -3,7 +3,7 @@ package ocrKit
 import (
 	"github.com/richelieu42/chimera/v2/src/cmdKit"
 	"github.com/richelieu42/chimera/v2/src/core/errorKit"
-	fileKit2 "github.com/richelieu42/chimera/v2/src/core/fileKit"
+	"github.com/richelieu42/chimera/v2/src/core/fileKit"
 	"github.com/richelieu42/chimera/v2/src/core/pathKit"
 	"github.com/richelieu42/chimera/v2/src/core/sliceKit"
 	"github.com/richelieu42/chimera/v2/src/idKit"
@@ -40,7 +40,7 @@ PS:
 (3) 识别并不精确，有些图片可能识别不到文本（e.g.图片很小且就一两个字符）.
 */
 func GetText(imgPath string, languages ...string) (string, error) {
-	if err := fileKit2.AssertExistAndIsFile(imgPath); err != nil {
+	if err := fileKit.AssertExistAndIsFile(imgPath); err != nil {
 		return "", err
 	}
 
@@ -50,7 +50,7 @@ func GetText(imgPath string, languages ...string) (string, error) {
 	}
 	uuid := idKit.NewUUID()
 	filePath := pathKit.Join(tempDir, uuid+".txt")
-	defer fileKit2.Delete(filePath)
+	defer fileKit.Delete(filePath)
 
 	var lang string
 	languages = sliceKit.RemoveEmpty(languages, true)
@@ -65,13 +65,13 @@ func GetText(imgPath string, languages ...string) (string, error) {
 	if err != nil {
 		return "", err
 	}
-	if !fileKit2.Exist(filePath) {
-		return "", errorKit.Simple(result)
+	if !fileKit.Exist(filePath) {
+		return "", errorKit.New(result)
 	}
-	if fileKit2.IsDir(filePath) {
-		return "", errorKit.Simple("filePath(%s) is a directory", filePath)
+	if fileKit.IsDir(filePath) {
+		return "", errorKit.Newf("filePath(%s) is a directory", filePath)
 	}
-	data, err := fileKit2.ReadFile(filePath)
+	data, err := fileKit.ReadFile(filePath)
 	if err != nil {
 		return "", err
 	}
