@@ -44,7 +44,7 @@ func NewTextFormatter(timestampFormat string) *logrus.TextFormatter {
 		DisableQuote: false,
 		ForceQuote:   true,
 
-		QuoteEmptyFields: false,
+		QuoteEmptyFields: true,
 
 		CallerPrettyfier: func(f *runtime.Frame) (funcName string, fileName string) {
 			s := strings.Split(f.Function, ".")

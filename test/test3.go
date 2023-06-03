@@ -2,13 +2,11 @@ package main
 
 import (
 	"fmt"
-	"github.com/richelieu42/chimera/v2/src/crypto/base64Kit"
+	"github.com/gogf/gf/v2/os/gfile"
 )
 
 func main() {
-	data, err := base64Kit.EncodeFile("/Users/richelieu/Documents/ino/notes/Golang/WEB")
-	if err != nil {
-		panic(err)
-	}
-	fmt.Println(string(data))
+	fmt.Println(gfile.Pwd())
+	fmt.Println(gfile.SelfDir())
+	fmt.Println(gfile.MainPkgPath())
 }

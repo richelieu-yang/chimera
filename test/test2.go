@@ -1,10 +1,12 @@
 package main
 
 import (
-	"fmt"
-	"github.com/gogf/gf/v2/encoding/gbase64"
+	"github.com/richelieu42/chimera/v2/src/compressKit"
 )
 
 func main() {
-	fmt.Println(gbase64.EncodeString("cyy"))
+	err := compressKit.ZipPath("/Users/richelieu/Downloads/a111", "/Users/richelieu/Downloads/a.zip")
+	if err != nil {
+		panic(err)
+	}
 }
