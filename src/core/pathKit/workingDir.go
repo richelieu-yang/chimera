@@ -9,6 +9,7 @@ import (
 
 // GetWorkingDir 获取 当前工作目录的绝对路径
 func GetWorkingDir() string {
+	//return gfile.Pwd()
 	path, err := os.Getwd()
 	if err != nil {
 		logrus.WithError(err).Fatal("fail to get working directory")
