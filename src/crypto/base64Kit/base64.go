@@ -5,11 +5,11 @@ import (
 	"github.com/richelieu42/chimera/v2/src/core/sliceKit"
 )
 
-// Encode
+// Encode1
 /*
 @param args 可以是 base64.StdEncoding、base64.URLEncoding、base64.RawStdEncoding、base64.RawURLEncoding 等（默认: base64.StdEncoding）
 */
-func Encode(data []byte, args ...*base64.Encoding) []byte {
+func Encode1(data []byte, args ...*base64.Encoding) []byte {
 	encoding := sliceKit.GetFirstItemWithDefault(base64.StdEncoding, args...)
 
 	encodedLen := encoding.EncodedLen(len(data))
@@ -18,13 +18,13 @@ func Encode(data []byte, args ...*base64.Encoding) []byte {
 	return out
 }
 
-func EncodeToString(data []byte, args ...*base64.Encoding) string {
+func EncodeToString1(data []byte, args ...*base64.Encoding) string {
 	encoding := sliceKit.GetFirstItemWithDefault(base64.StdEncoding, args...)
 
 	return encoding.EncodeToString(data)
 }
 
-func Decode(data []byte, args ...*base64.Encoding) ([]byte, error) {
+func Decode1(data []byte, args ...*base64.Encoding) ([]byte, error) {
 	encoding := sliceKit.GetFirstItemWithDefault(base64.StdEncoding, args...)
 
 	decodedLen := encoding.DecodedLen(len(data))
@@ -36,14 +36,14 @@ func Decode(data []byte, args ...*base64.Encoding) ([]byte, error) {
 	return out[:n], nil
 }
 
-func DecodeString(str string, args ...*base64.Encoding) ([]byte, error) {
+func DecodeString1(str string, args ...*base64.Encoding) ([]byte, error) {
 	encoding := sliceKit.GetFirstItemWithDefault(base64.StdEncoding, args...)
 
 	return encoding.DecodeString(str)
 }
 
-func DecodeToString(data []byte, args ...*base64.Encoding) (string, error) {
-	out, err := Decode(data, args...)
+func DecodeToString1(data []byte, args ...*base64.Encoding) (string, error) {
+	out, err := Decode1(data, args...)
 	if err != nil {
 		return "", err
 	}

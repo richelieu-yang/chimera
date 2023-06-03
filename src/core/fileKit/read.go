@@ -30,5 +30,5 @@ func ReadFileToBase64(filePath string) (string, error) {
 	if err != nil {
 		return "", err
 	}
-	return base64Kit.EncodeToString(data), nil
+	return base64Kit.EncodeToString1(data), nil
 }

@@ -48,7 +48,7 @@ func EncodeToBase64String(data []byte) (string, error) {
 	case "image/jpeg":
 		fallthrough
 	case "image/png":
-		base64Str := fmt.Sprintf("data:%s;base64,%s", mimeType, base64Kit.EncodeToString(data))
+		base64Str := fmt.Sprintf("data:%s;base64,%s", mimeType, base64Kit.EncodeToString1(data))
 		return base64Str, nil
 	default:
 		return "", errorKit.Simple("mimeType(%s) isn't supported currently", mimeType)
@@ -68,7 +68,7 @@ func DecodeFromBase64(base64 []byte) ([]byte, error) {
 		base64 = base64[length:]
 	}
 
-	return base64Kit.Decode(base64)
+	return base64Kit.Decode1(base64)
 }
 
 // DecodeToImageFile

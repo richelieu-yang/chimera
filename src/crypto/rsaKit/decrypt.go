@@ -33,7 +33,7 @@ func (opts *rsaOptions) Decrypt(data, privateKey []byte) ([]byte, error) {
 	}
 
 	// base64解码
-	data, err = base64Kit.Decode(data)
+	data, err = base64Kit.Decode1(data)
 	if err != nil {
 		return nil, err
 	}
