@@ -61,7 +61,7 @@ func UploadForResponse(url string, fileParams map[string]string, options ...Opti
 				return err
 			}
 			defer file.Close()
-			part, err := writer.CreateFormFile(field, fileKit.GetName(path))
+			part, err := writer.CreateFormFile(field, fileKit.GetBaseName(path))
 			if err != nil {
 				return err
 			}

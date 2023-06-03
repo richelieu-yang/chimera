@@ -23,6 +23,38 @@ var (
 	//
 	// Note that it returns true if `path` does not exist.
 	IsEmpty func(path string) bool = gfile.IsEmpty
+
+	// GetBaseName 获取 完整的文件名.
+	/*
+		e.g.
+		/var/www/file.js -> file.js
+		file.js          -> file.js
+	*/
+	GetBaseName func(path string) string = gfile.Basename
+
+	// GetName 获取 前缀.
+	/*
+		e.g.
+		/var/www/file.js -> file
+		file.js          -> file
+	*/
+	GetName func(path string) string = gfile.Name
+
+	// GetExt 获取 后缀（带"."）
+	/*
+		e.g.
+		main.go  => .go
+		api.json => .json
+	*/
+	GetExt func(path string) string = gfile.Ext
+
+	// GetExtName 获取 后缀（不带"."）
+	/*
+		e.g.
+		main.go  => go
+		api.json => json
+	*/
+	GetExtName func(path string) string = gfile.ExtName
 )
 
 // GetModificationTime 获取文件（或目录）的修改时间

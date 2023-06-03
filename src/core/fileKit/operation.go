@@ -10,6 +10,9 @@ import (
 var (
 	// Chmod 修改权限
 	Chmod func(path string, mode os.FileMode) (err error) = gfile.Chmod
+
+	Move   = gfile.Move
+	Rename = gfile.Move
 )
 
 // NewTemporaryFile 在指定目录下，生成临时文件.
