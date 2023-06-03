@@ -50,7 +50,7 @@ func GetText(imgPath string, languages ...string) (string, error) {
 	}
 	uuid := idKit.NewUUID()
 	filePath := pathKit.Join(tempDir, uuid+".txt")
-	defer fileKit.Delete(filePath)
+	defer fileKit.Remove(filePath)
 
 	var lang string
 	languages = sliceKit.RemoveEmpty(languages, true)

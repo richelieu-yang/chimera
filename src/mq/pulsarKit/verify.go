@@ -55,14 +55,14 @@ func verify(verifyConfig *VerifyConfig) (err error) {
 	defer func() {
 		if err == nil {
 			// 验证成功的情况下，删掉客户端日志文件
-			if err := fileKit.Delete(consumerLogPath); err != nil {
+			if err := fileKit.Remove(consumerLogPath); err != nil {
 				cLogger.WithFields(logrus.Fields{
 					"error": err.Error(),
 				}).Error("[Verify] fail to delete consumerLogPath")
 			} else {
 				cLogger.Info("[Verify] delete consumerLogPath")
 			}
-			if err := fileKit.Delete(producerLogPath); err != nil {
+			if err := fileKit.Remove(producerLogPath); err != nil {
 				cLogger.WithFields(logrus.Fields{
 					"error": err.Error(),
 				}).Error("[Verify] fail to delete producerLogPath")

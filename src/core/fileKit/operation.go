@@ -5,6 +5,7 @@ import (
 	"github.com/richelieu-yang/chimera/v2/src/core/strKit"
 	"os"
 	"path/filepath"
+	"time"
 )
 
 var (
@@ -13,7 +14,28 @@ var (
 
 	Move   func(src string, dst string) (err error) = gfile.Move
 	Rename func(src string, dst string) (err error) = gfile.Move
+
+	// Remove 删除文件（或目录）
+	/*
+		PS: 如果是目录且内部有文件或目录，也会一并删除.
+	*/
+	Remove = gfile.Remove
 )
+
+// NewFile 创建文件.
+/*
+PS: 如果文件已经存在，会覆盖掉它.
+*/
+func NewFile(filePath string) (*os.File, error) {
+	if err := AssertNotExistOrIsFile(filePath); err != nil {
+		return nil, err
+	}
+	if err := MkParentDirs(filePath); err != nil {
+		return nil, err
+	}
+
+	return os.Create(filePath)
+}
 
 // NewTemporaryFile 在指定目录下，生成临时文件.
 /*
@@ -39,34 +61,6 @@ func NewTemporaryFile(dirPath, pattern string) (*os.File, error) {
 	return os.CreateTemp(dirPath, pattern)
 }
 
-// NewFile 创建文件.
-/*
-PS: 如果文件已经存在，会覆盖掉它.
-*/
-func NewFile(filePath string) (*os.File, error) {
-	if err := AssertNotExistOrIsFile(filePath); err != nil {
-		return nil, err
-	}
-	if err := MkParentDirs(filePath); err != nil {
-		return nil, err
-	}
-
-	return os.Create(filePath)
-}
-
-// Delete 删除 文件 或 目录（内部有文件或目录，也会一并删除）.
-/*
-@param path 文件（或目录）的路径（绝对 || 相对），可以不存在，此时将返回nil
-
-PS:
-(1) 传参path可以为"": 正常执行，返回nil；
-(2) path对应的文件或目录不存在: 正常执行，返回nil；
-(3) Windows系统，如果 传参path 对应的是 一个被锁定的文件 或者 一个目录（内部有文件被锁定），将返回error（remove xxx(path): The process cannot access the file because it is being used by another process.）.
-*/
-func Delete(path string) error {
-	return os.RemoveAll(path)
-}
-
 // EmptyDir 清空目录：删掉目录中的文件和子目录（递归），但该目录本身不会被删掉.
 /*
 @param dirPath 可以不存在（此时将返回nil）
@@ -85,9 +79,23 @@ func EmptyDir(dirPath string) error {
 		return err
 	}
 	for _, dirEntry := range dirEntries {
-		if err := os.RemoveAll(filepath.Join(dirPath, dirEntry.Name())); err != nil {
+		path := filepath.Join(dirPath, dirEntry.Name())
+		if err := Remove(path); err != nil {
 			return err
 		}
 	}
 	return nil
+}
+
+// SetModificationTime 修改文件（或目录）的修改时间
+/*
+PS:
+(1) 也会同时修改文件（或目录）的访问时间；
+(2) 修改目录的修改时间，将不会影响该目录下的文件或目录；
+(3) 传参t可以晚于当前时间.
+
+@param path 传参""将返回error（chtimes : The system cannot find the path specified.）
+*/
+func SetModificationTime(path string, t time.Time) error {
+	return os.Chtimes(path, t, t)
 }
