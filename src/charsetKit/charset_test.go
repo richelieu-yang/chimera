@@ -6,7 +6,8 @@ import (
 )
 
 func TestConvert(t *testing.T) {
-	charset := "GBK"
+	//charset := "GBK"
+	charset := "gbk"
 	text := "`1234567890-=~!@#$%^&*()_+<>?,./;':\"[]\\{}|强无敌群无多我饿去当前文档"
 
 	tmp, err := UTF8To(charset, text)
