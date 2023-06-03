@@ -4,6 +4,10 @@ import (
 	"github.com/sirupsen/logrus"
 )
 
+// DisableQuote
+/*
+PS: 输出中存在 换行字符\n 的话，只有禁掉双引号才会生效.
+*/
 func DisableQuote(logger *logrus.Logger) {
 	if logger == nil {
 		logger = logrus.StandardLogger()
