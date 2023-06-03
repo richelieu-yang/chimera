@@ -20,7 +20,3 @@ e.g.
 func ExpandTilde(path string) (string, error) {
 	return homedir.Expand(path)
 }
-
-func GetUserHomePath() string {
-	return userKit.GetUserHomeDir()
-}
