@@ -58,7 +58,12 @@ func GetOutputPath(timeStr string) (string, error) {
 		if strKit.IsEmpty(timeStr) {
 			timeStr = timeKit.FormatCurrentTime(timeKit.FormatFileName)
 		}
-		tmp := Join(GetProjectDir(), "out", "BootTime_"+timeStr)
+
+		workingDir, err := GetWorkingDir()
+		if err != nil {
+			return "", err
+		}
+		tmp := Join(workingDir, "out", "BootTime_"+timeStr)
 		if err := fileKit.MkDirs(tmp); err != nil {
 			return "", err
 		}

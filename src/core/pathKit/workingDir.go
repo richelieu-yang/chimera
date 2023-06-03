@@ -5,8 +5,8 @@ import (
 	"os"
 )
 
-// GetCurrentWorkingDir 获取 当前工作目录的绝对路径
-func GetCurrentWorkingDir() (string, error) {
+// GetWorkingDir 获取 当前工作目录的绝对路径
+func GetWorkingDir() (string, error) {
 	return os.Getwd()
 }
 
