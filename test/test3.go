@@ -2,12 +2,13 @@ package main
 
 import (
 	"fmt"
-	"github.com/gogf/gf/v2/errors/gcode"
+
+	"github.com/gogf/gf/v2/encoding/gjson"
 	"github.com/gogf/gf/v2/errors/gerror"
 )
 
 func main() {
-	err := gerror.NewCode(gcode.New(10000, "", nil), "My Error")
-	fmt.Println(err.Error())
-	fmt.Println(gerror.Code(err))
+	_, err1 := gjson.Encode(func() {})
+	err2 := gerror.Wrap(err1, `error occurred`)
+	fmt.Printf("%+v", err2)
 }
