@@ -36,6 +36,8 @@ func PrintBasicDetails() {
 	// path
 	logrus.Infof("[CHIMERA, PATH] current working directory: [%s].", pathKit.GetWorkingDir())
 	logrus.Infof("[CHIMERA, PATH] temporary directory: [%s].", pathKit.GetTempDir())
+	logrus.Infof("[CHIMERA, PATH] SelfDir: [%s].", pathKit.SelfDir())
+	logrus.Infof("[CHIMERA, PATH] MainPkgPath: [%s].", pathKit.MainPkgPath())
 
 	// time
 	systemTime := timeKit.GetSystemTime()
