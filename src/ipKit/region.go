@@ -23,6 +23,7 @@ func GetRegion(ip string) (string, error) {
 	//if err := assignToSearcher(); err != nil {
 	//	return "", err
 	//}
+
 	// 每个 ip 数据段的 region 信息都固定了格式：国家|区域|省份|城市|ISP，只有中国的数据绝大部分精确到了城市，其他国家部分数据只能定位到国家，后前的选项全部是0。
 	return searcher.SearchByStr(ip)
 }
