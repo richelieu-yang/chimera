@@ -1,9 +1,15 @@
 package fileKit
 
 import (
+	"github.com/gogf/gf/v2/os/gfile"
 	"github.com/richelieu-yang/chimera/v2/src/core/strKit"
 	"os"
 	"path/filepath"
+)
+
+var (
+	// Chmod 修改权限
+	Chmod func(path string, mode os.FileMode) (err error) = gfile.Chmod
 )
 
 // NewTemporaryFile 在指定目录下，生成临时文件.
@@ -78,7 +84,7 @@ func Delete(path string) error {
 @param dirPath 可以不存在（此时将返回nil）
 */
 func EmptyDir(dirPath string) error {
-	if NotExist(dirPath) {
+	if !Exists(dirPath) {
 		return nil
 	}
 	if err := AssertExistAndIsDir(dirPath); err != nil {

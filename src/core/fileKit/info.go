@@ -1,62 +1,36 @@
 package fileKit
 
 import (
+	"github.com/gogf/gf/v2/os/gfile"
 	"os"
 	"time"
 )
 
-// Exist 判断文件（或目录）是否存在.
-/*
-@param path 绝对路径 || 相对路径
+var (
+	Exists func(path string) bool = gfile.Exists
+	IsFile func(path string) bool = gfile.IsFile
+	IsDir  func(path string) bool = gfile.IsDir
 
-e.g.
-("") => false
-(" ") => false
-*/
-func Exist(path string) bool {
-	_, err := os.Stat(path)
-	return err == nil || os.IsExist(err)
-}
+	// Stat 获取文件（或目录）信息
+	Stat func(path string) (os.FileInfo, error) = gfile.Stat
 
-func NotExist(path string) bool {
-	return !Exist(path)
-}
+	IsReadable func(path string) bool = gfile.IsReadable
+	IsWritable func(path string) bool = gfile.IsWritable
 
-// IsDir
-/*
-@return 如果传参path对应的文件或目录不存在，将返回false
-*/
-func IsDir(path string) bool {
-	if fileInfo, err := os.Stat(path); err != nil {
-		return false
-	} else {
-		return fileInfo.IsDir()
-	}
-}
-
-// IsFile
-/*
-@return 如果传参path对应的文件或目录不存在，将返回false
-*/
-func IsFile(path string) bool {
-	if fileInfo, err := os.Stat(path); err != nil {
-		return false
-	} else {
-		return !fileInfo.IsDir()
-	}
-}
-
-// GetFileInfo 获取文件（或目录）信息
-func GetFileInfo(path string) (os.FileInfo, error) {
-	return os.Stat(path)
-}
+	// IsEmpty checks whether the given `path` is empty.
+	// If `path` is a folder, it checks if there's any file under it.
+	// If `path` is a file, it checks if the file size is zero.
+	//
+	// Note that it returns true if `path` does not exist.
+	IsEmpty func(path string) bool = gfile.IsEmpty
+)
 
 // GetModificationTime 获取文件（或目录）的修改时间
 /*
 @param path 传参""将返回err（Stat : The system cannot find the path specified.）
 */
 func GetModificationTime(path string) (time.Time, error) {
-	info, err := os.Stat(path)
+	info, err := Stat(path)
 	if err != nil {
 		return time.Time{}, err
 	}

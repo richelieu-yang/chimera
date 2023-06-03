@@ -1,9 +1,8 @@
 package fileKit
 
 import (
-	"github.com/richelieu-yang/chimera/v2/src/core/strKit"
+	"github.com/gogf/gf/v2/os/gfile"
 	"os"
-	"path/filepath"
 )
 
 // MkDirs 为目录路径，创建（一级或多级）目录.
@@ -24,16 +23,13 @@ e.g.1 Mac
 (".")					=>	nil（什么都不会做）
 ("./")					=>	nil（什么都不会做）
 */
-func MkDirs(dirPaths ...string) (err error) {
+func MkDirs(dirPaths ...string) error {
 	for _, dirPath := range dirPaths {
-		if strKit.IsNotEmpty(dirPath) {
-			err = os.MkdirAll(dirPath, os.ModePerm)
-			if err != nil {
-				break
-			}
+		if err := os.MkdirAll(dirPath, os.ModePerm); err != nil {
+			break
 		}
 	}
-	return
+	return nil
 }
 
 // MkParentDirs 为父路径，创建（一级或多级）目录.
@@ -44,16 +40,13 @@ e.g.
 ("")	=> nil
 (".")	=> nil
 */
-func MkParentDirs(paths ...string) (err error) {
+func MkParentDirs(paths ...string) error {
 	for _, path := range paths {
 		// Richelieu: 为防止 import cycle，不直接使用 pathKit.GetParentDir()
-		//dirPath := pathKit.GetParentDir(path)
-		dirPath := filepath.Dir(path)
-
-		err = MkDirs(dirPath)
-		if err != nil {
-			break
+		parentDir := gfile.Dir(path)
+		if err := MkDirs(parentDir); err != nil {
+			return err
 		}
 	}
-	return
+	return nil
 }
