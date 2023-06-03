@@ -18,10 +18,11 @@ var (
 	IsWritable func(path string) bool = gfile.IsWritable
 
 	// IsEmpty checks whether the given `path` is empty.
-	// If `path` is a folder, it checks if there's any file under it.
-	// If `path` is a file, it checks if the file size is zero.
-	//
-	// Note that it returns true if `path` does not exist.
+	/*
+		If `path` is a folder, it checks if there's any file under it.
+		If `path` is a file, it checks if the file size is zero.
+		Note that it returns true if `path` does not exist.
+	*/
 	IsEmpty func(path string) bool = gfile.IsEmpty
 
 	// GetBaseName 获取 完整的文件名.
