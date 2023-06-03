@@ -22,7 +22,7 @@ func StartWith(s, prefix string) bool {
 	return strings.HasPrefix(s, prefix)
 }
 
-// RemovePrefixIfExists 去掉指定的"前缀"（如果存在的话）
+// RemovePrefixIfExist 去掉指定的"前缀"（如果存在的话）
 /*
 PS:
 (1) 区分大小写；
@@ -40,7 +40,7 @@ e.g.1	区分大小写
 ("abcd", "abcd") => ""
 ("abcd", "Abcd") => "abcd"
 */
-func RemovePrefixIfExists(s, prefix string) string {
+func RemovePrefixIfExist(s, prefix string) string {
 	return strings.TrimPrefix(s, prefix)
 }
 

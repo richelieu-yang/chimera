@@ -97,7 +97,7 @@ func (verifier *RefererVerifier) Verify(route, referer string) (bool, string) {
 		return verifier.blocked, "blocked"
 	}
 
-	referer = strKit.RemovePrefixIfExists(referer, prefix)
+	referer = strKit.RemovePrefixIfExist(referer, prefix)
 	referer = strKit.SubBeforeString(referer, "/")
 	// 忽略端口号（有的话）
 	referer = strKit.SubBeforeString(referer, ":")

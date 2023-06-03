@@ -66,7 +66,7 @@ func NewTemporaryFile(dirPath, pattern string) (*os.File, error) {
 @param dirPath 可以不存在（此时将返回nil）
 */
 func EmptyDir(dirPath string) error {
-	if !Exists(dirPath) {
+	if !Exist(dirPath) {
 		return nil
 	}
 	if err := AssertExistAndIsDir(dirPath); err != nil {
