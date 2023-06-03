@@ -22,7 +22,7 @@ e.g. Mac
 () => "/var/folders/4_/33p_vn057msfh2nvgx6hwv_40000gn/T/$$chimera", nil
 */
 func GetUniqueTempDir() (string, error) {
-	dir := Join(GetTempDir(), "$$"+consts.OwnName)
+	dir := Join(GetTempDir(), "$$"+consts.ProjectName)
 	err := fileKit.MkDirs(dir)
 	return dir, err
 }

@@ -22,7 +22,7 @@ type (
 		Account string
 		// 邮箱的授权码
 		Password string
-		// 发件人的昵称（默认: consts.OwnName）
+		// 发件人的昵称（默认: consts.ProjectName）
 		NickName string
 	}
 )
@@ -43,7 +43,7 @@ func InitializeSmtp(config *SmtpConfig, count int) error {
 	if config == nil {
 		return errorKit.Simple("config == nil")
 	}
-	config.NickName = strKit.EmptyToDefault(config.NickName, consts.OwnName, true)
+	config.NickName = strKit.EmptyToDefault(config.NickName, consts.ProjectName, true)
 	defaultFrom = fmt.Sprintf("%s <%s>", config.NickName, config.Account)
 
 	if count <= 0 {
