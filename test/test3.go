@@ -2,11 +2,12 @@ package main
 
 import (
 	"fmt"
-	"github.com/gogf/gf/v2/os/gfile"
+	"github.com/gogf/gf/v2/errors/gcode"
+	"github.com/gogf/gf/v2/errors/gerror"
 )
 
 func main() {
-	fmt.Println(gfile.Pwd())
-	fmt.Println(gfile.SelfDir())
-	fmt.Println(gfile.MainPkgPath())
+	err := gerror.NewCode(gcode.New(10000, "", nil), "My Error")
+	fmt.Println(err.Error())
+	fmt.Println(gerror.Code(err))
 }
