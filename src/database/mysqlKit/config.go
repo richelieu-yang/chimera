@@ -1,8 +1,17 @@
-package gormKit
+package mysqlKit
 
-import "fmt"
+import (
+	"fmt"
+	"time"
+)
 
 type (
+	PoolConfig struct {
+		MaxIdleConns    int           `json:"maxIdleConns"`
+		MaxOpenConns    int           `json:"maxOpenConns"`
+		ConnMaxLifetime time.Duration `json:"connMaxLifetime"`
+	}
+
 	DsnConfig struct {
 		UserName string `json:"userName"`
 		Password string `json:"password"`
