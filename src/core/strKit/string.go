@@ -52,22 +52,22 @@ func LastIndex(s, str string) int {
 	return strings.LastIndex(s, str)
 }
 
-// Contains 是否包含（区分大小写）
+// Contain 是否包含（区分大小写）
 /*
 e.g.
 ("", "1") 		=> false
 ("abc", "Abc") 	=> false
 */
-func Contains(s, substr string) bool {
+func Contain(s, substr string) bool {
 	return strings.Contains(s, substr)
 }
 
-// ContainsIgnoreCase 是否包含（不区分大小写）
+// ContainIgnoreCase 是否包含（不区分大小写）
 /*
 e.g.
 ("abc", "Abc") 	=> true
 */
-func ContainsIgnoreCase(s, substr string) bool {
+func ContainIgnoreCase(s, substr string) bool {
 	s = ToLower(s)
 	substr = ToLower(substr)
 	return strings.Contains(s, substr)
@@ -125,25 +125,28 @@ func Split(s, sep string) []string {
 	return strings.Split(s, sep)
 }
 
-// Equals 比较字符串（区分大小写）
+// Compare 字符串比较
+/*
+@return (1) -1 if a < b
+		(2)  0 if a == b
+		(3) +1 if a > b
+*/
+var Compare = strings.Compare
+
+// Equal 字符串是否相等？（区分大小写）
 /*
 e.g.
 ("abc", "Abc") => false
 */
-func Equals(str, str1 string) bool {
+func Equal(str, str1 string) bool {
 	return strings.Compare(str, str1) == 0
 }
 
-// EqualsIgnoreCase 比较字符串（不区分大小写）
+// EqualIgnoreCase 字符串是否相等？（不区分大小写）
 /*
 e.g.
 ("abc", "Abc") => true
 */
-func EqualsIgnoreCase(str, str1 string) bool {
+func EqualIgnoreCase(str, str1 string) bool {
 	return strings.EqualFold(str, str1)
-}
-
-// ToBytes string => []byte
-func ToBytes(str string) []byte {
-	return []byte(str)
 }
