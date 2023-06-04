@@ -98,3 +98,16 @@ func getDirSize(dirPath string) (int64, error) {
 	}
 	return bytes, nil
 }
+
+// GetFileMode get mode and permission bits of file/directory
+func GetFileMode(path string) (os.FileMode, error) {
+	if err := AssertExist(path); err != nil {
+		return 0, err
+	}
+
+	fileInfo, err := os.Stat(path)
+	if err != nil {
+		return 0, err
+	}
+	return fileInfo.Mode(), nil
+}
