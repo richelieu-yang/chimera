@@ -6,7 +6,6 @@ import (
 	fileKit2 "github.com/richelieu-yang/chimera/v2/src/core/fileKit"
 	"github.com/richelieu-yang/chimera/v2/src/crypto/base64Kit"
 	"github.com/richelieu-yang/chimera/v2/src/web/httpClientKit"
-	"github.com/richelieu-yang/chimera/v2/src/web/mimeTypeKit"
 	"regexp"
 )
 
@@ -43,7 +42,7 @@ func GetWebImageBase64(url string) (string, error) {
 }
 
 func EncodeToBase64String(data []byte) (string, error) {
-	mimeType := mimeTypeKit.DetectContentType(data)
+	mimeType := fileKit2.DetectContentType(data)
 	switch mimeType {
 	case "image/jpeg":
 		fallthrough

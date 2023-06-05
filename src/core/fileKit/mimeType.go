@@ -1,4 +1,4 @@
-package mimeTypeKit
+package fileKit
 
 import (
 	"github.com/gabriel-vasile/mimetype"
@@ -8,6 +8,8 @@ import (
 
 // DetectContentType 获取 ContentType(即MimeType).
 /*
+PS: 读取前512个字节.
+
 @return 保底 "application/octet-stream"
 
 e.g.
