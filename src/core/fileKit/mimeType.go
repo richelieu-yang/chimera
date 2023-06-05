@@ -8,7 +8,7 @@ import (
 
 // DetectContentType 获取 ContentType(即MimeType).
 /*
-PS: 读取前512个字节.
+PS: 读取前 512 个字节.
 
 @return 保底 "application/octet-stream"
 
@@ -22,7 +22,9 @@ func DetectContentType(data []byte) string {
 
 // Detect
 /*
-mimetype库: 基于magic数的用于媒体类型和文件扩展名检测的快速的 Go 库，支持 170+ 格式.
+PS:
+(1) mimetype库: 基于magic数的用于媒体类型和文件扩展名检测的快速的 Go 库，支持 170+ 格式.
+(2) 读取前 3072 个字节.
 
 e.g.
 	mime := mimeTypeKit.Detect(nil)
