@@ -10,10 +10,12 @@ import (
 // NewSimpleConsumer
 /*
 PS: In most case, you don't need to create many consumers, singletion pattern is more recommended.
+
 @param consumerGroup 			不能为""
 @param subscriptionExpressions	key: topic, value: tag（一般是 rmq_client.SUB_ALL）
+@param clientLogPath 			客户端日志（blank则输出到控制台）
 */
-func NewSimpleConsumer(consumerGroup string, subscriptionExpressions map[string]*rmq_client.FilterExpression) (rmq_client.SimpleConsumer, error) {
+func NewSimpleConsumer(consumerGroup string, subscriptionExpressions map[string]*rmq_client.FilterExpression, clientLogPath string) (rmq_client.SimpleConsumer, error) {
 	endpoint := sliceKit.Join(config.Endpoints, ";")
 	if err := strKit.AssertNotEmpty(consumerGroup, "consumerGroup"); err != nil {
 		return nil, err
