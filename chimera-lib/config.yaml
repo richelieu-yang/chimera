@@ -111,3 +111,4 @@ rocketmq5:
     accessSecret:
     securityToken:
   validatedTopic: test
+  clientLogPath:
