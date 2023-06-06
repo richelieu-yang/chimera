@@ -13,6 +13,7 @@ e.g.
 (nil, "-") 							=> ""
 ([]string{}, "-") 					=> ""
 ([]string{"0", "1", "2", "3"}, "-") => "0-1-2-3"
+([]string{"1"}, ";") 				=> "1"
 */
 func Join(s []string, sep string) string {
 	return strings.Join(s, sep)

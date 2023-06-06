@@ -2,9 +2,10 @@ package main
 
 import (
 	"fmt"
-	"github.com/richelieu-yang/chimera/v2/src/funcKit"
+	"github.com/richelieu-yang/chimera/v2/src/core/sliceKit"
 )
 
 func main() {
-	fmt.Printf(funcKit.GetFuncName(1))
+	str := sliceKit.Join([]string{"1"}, ";")
+	fmt.Printf(str)
 }
