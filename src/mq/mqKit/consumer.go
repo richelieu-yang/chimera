@@ -9,8 +9,7 @@ import (
 
 // NewSimpleConsumer
 /*
-PS:
-(1) In most case, you don't need to create many consumers, singletion pattern is more recommended.
+PS: In most case, you don't need to create many consumers, singletion pattern is more recommended.
 */
 func NewSimpleConsumer(consumerGroup string, subscriptionExpressions map[string]*rmq_client.FilterExpression) (rmq_client.SimpleConsumer, error) {
 	endpoint := sliceKit.Join(config.Endpoints, ";")
