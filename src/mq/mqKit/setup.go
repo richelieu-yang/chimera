@@ -23,7 +23,6 @@ func SetUp(config *Config) error {
 	if err := initClientLog(config.ClientLogPath); err != nil {
 		return err
 	}
-
 	return nil
 }
 
