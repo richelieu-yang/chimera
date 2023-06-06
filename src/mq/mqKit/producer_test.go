@@ -52,6 +52,7 @@ func TestNewProducer(t *testing.T) {
 		} else {
 			receipt := receipts[0]
 			logrus.WithFields(logrus.Fields{
+				"text":          text,
 				"MessageID":     receipt.MessageID,
 				"TransactionId": receipt.TransactionId,
 				"Offset":        receipt.Offset,
