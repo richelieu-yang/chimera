@@ -15,10 +15,6 @@ import (
 func TestNewSimpleConsumer(t *testing.T) {
 	var topic string = "test"
 
-	type config struct {
-		RocketMQ5 *Config `json:"rocketmq5,optional"`
-	}
-
 	logrusKit.MustSetUp(nil)
 	if wd, err := pathKit.ReviseWorkingDirInTestMode(consts.ProjectName); err != nil {
 		logrus.Fatal(err)
@@ -26,6 +22,9 @@ func TestNewSimpleConsumer(t *testing.T) {
 		logrus.Infof("new working directory: [%s].", wd)
 	}
 
+	type config struct {
+		RocketMQ5 *Config `json:"rocketmq5,optional"`
+	}
 	c := &config{}
 	confKit.MustLoad("chimera-lib/config.yaml", c)
 	c.RocketMQ5.ClientLogPath = "consumer.log"
