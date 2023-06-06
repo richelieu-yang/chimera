@@ -28,11 +28,14 @@ func check(config *Config) error {
 		return errorKit.New("config == nil")
 	}
 
+	// Endpoints
 	s := sliceKit.RemoveEmpty(config.Endpoints, true)
-	if sliceKit.IsEmpty(s) {
-		return errorKit.New("config.Endpoints is empty")
+	if err := sliceKit.AssertNotEmpty(s, "config.Endpoints"); err != nil {
+		return err
 	}
+	config.Endpoints = s
 
+	// Credentials
 	if config.Credentials == nil {
 		config.Credentials = &credentials.SessionCredentials{
 			AccessKey:    "",
