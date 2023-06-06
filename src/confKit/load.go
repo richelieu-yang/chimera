@@ -28,7 +28,7 @@ e.g.1	组合多个tag
 */
 func MustLoad(path string, ptr any, opts ...conf.Option) {
 	if err := Load(path, ptr, opts...); err != nil {
-		logrus.Fatal(err)
+		logrus.Fatalf("%+v", err)
 	}
 }
 

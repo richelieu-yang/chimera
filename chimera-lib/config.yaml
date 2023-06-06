@@ -110,5 +110,4 @@ rocketmq5:
     accessKey:
     accessSecret:
     securityToken:
-  validatedTopic: 
-
+  validatedTopic: test

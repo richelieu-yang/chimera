@@ -6,6 +6,6 @@ type (
 	Config struct {
 		Endpoints      []string                        `json:"endpoints"`
 		Credentials    *credentials.SessionCredentials `json:"credentials,optional"`
-		ValidatedTopic string                          `json:"validatedTopic"`
+		ValidatedTopic string                          `json:"validatedTopic,optional"`
 	}
 )
