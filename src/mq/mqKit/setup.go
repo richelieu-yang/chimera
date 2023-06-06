@@ -7,6 +7,8 @@ import (
 	"github.com/sirupsen/logrus"
 )
 
+var config *Config
+
 func MustSetUp(config *Config) {
 	if err := SetUp(config); err != nil {
 		logrus.Fatalf("%+v", err)
