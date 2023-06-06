@@ -54,7 +54,7 @@ func NewTemporaryFile(dirPath, pattern string) (*os.File, error) {
 		return nil, err
 	}
 
-	if err := strKit.AssertStringNotBlank(pattern); err != nil {
+	if err := strKit.AssertNotBlank(pattern); err != nil {
 		return nil, err
 	}
 

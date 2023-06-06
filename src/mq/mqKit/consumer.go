@@ -13,7 +13,7 @@ PS:
 */
 func NewSimpleConsumer(consumerGroup string, subscriptionExpressions map[string]*rmq_client.FilterExpression) (rmq_client.SimpleConsumer, error) {
 	endpoint := sliceKit.Join(config.Endpoints, ";")
-	if err := strKit.AssertStringNotEmpty(consumerGroup); err != nil {
+	if err := strKit.AssertNotEmpty(consumerGroup); err != nil {
 		return nil, err
 	}
 
