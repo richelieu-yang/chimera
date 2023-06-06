@@ -3,7 +3,7 @@ package mqKit
 import (
 	"github.com/apache/rocketmq-clients/golang/v5/credentials"
 	"github.com/richelieu-yang/chimera/v2/src/core/errorKit"
-	"github.com/richelieu-yang/chimera/v2/src/core/strKit"
+	"github.com/richelieu-yang/chimera/v2/src/core/sliceKit"
 	"github.com/sirupsen/logrus"
 )
 
@@ -26,9 +26,11 @@ func check(config *Config) error {
 		return errorKit.New("config == nil")
 	}
 
-	if strKit.IsBlank(config.Endpoint) {
-		return errorKit.New("config.Endpoint is blank")
+	s := sliceKit.RemoveEmpty(config.Endpoints, true)
+	if sliceKit.IsEmpty(s) {
+		return errorKit.New("config.Endpoint is empty")
 	}
+
 	if config.Credentials == nil {
 		config.Credentials = &credentials.SessionCredentials{
 			AccessKey:    "",
