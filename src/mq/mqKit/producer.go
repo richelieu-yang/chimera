@@ -12,8 +12,16 @@ PS: In most case, you don't need to create many producers, singletion pattern is
 func NewProducer() (rmq_client.Producer, error) {
 	endpoint := sliceKit.Join(config.Endpoints, ";")
 
-	return rmq_client.NewProducer(&rmq_client.Config{
+	producer, err := rmq_client.NewProducer(&rmq_client.Config{
 		Endpoint:    endpoint,
 		Credentials: config.Credentials,
 	})
+	if err != nil {
+		return nil, err
+	}
+	// Start
+	if err := producer.Start(); err != nil {
+		return nil, err
+	}
+	return producer, nil
 }

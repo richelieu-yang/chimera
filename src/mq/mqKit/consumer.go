@@ -20,7 +20,7 @@ func NewSimpleConsumer(consumerGroup string, subscriptionExpressions map[string]
 		return nil, err
 	}
 
-	return rmq_client.NewSimpleConsumer(&rmq_client.Config{
+	simpleConsumer, err := rmq_client.NewSimpleConsumer(&rmq_client.Config{
 		Endpoint:      endpoint,
 		ConsumerGroup: consumerGroup,
 		Credentials:   config.Credentials,
@@ -28,4 +28,12 @@ func NewSimpleConsumer(consumerGroup string, subscriptionExpressions map[string]
 		rmq_client.WithAwaitDuration(AwaitDuration),
 		rmq_client.WithSubscriptionExpressions(subscriptionExpressions),
 	)
+	if err != nil {
+		return nil, err
+	}
+	// Start
+	if err := simpleConsumer.Start(); err != nil {
+		return nil, err
+	}
+	return simpleConsumer, nil
 }
