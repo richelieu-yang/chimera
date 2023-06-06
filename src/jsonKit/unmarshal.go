@@ -36,7 +36,7 @@ func UnmarshalFromString(ptr interface{}, str string) error {
 	if err := ptrKit.AssertNotNilAndIsPointer(ptr); err != nil {
 		return err
 	}
-	if err := strKit.AssertNotBlank(str); err != nil {
+	if err := strKit.AssertNotBlank(str, "str"); err != nil {
 		return err
 	}
 

@@ -30,7 +30,7 @@ func check(config *Config) error {
 
 	s := sliceKit.RemoveEmpty(config.Endpoints, true)
 	if sliceKit.IsEmpty(s) {
-		return errorKit.New("config.Endpoint is empty")
+		return errorKit.New("config.Endpoints is empty")
 	}
 
 	if config.Credentials == nil {
