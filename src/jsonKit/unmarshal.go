@@ -18,7 +18,7 @@ func Unmarshal(ptr interface{}, data []byte) error {
 	if err := ptrKit.AssertNotNilAndIsPointer(ptr); err != nil {
 		return err
 	}
-	if err := sliceKit.AssertNotEmpty(data); err != nil {
+	if err := sliceKit.AssertNotEmpty(data, "data"); err != nil {
 		return err
 	}
 

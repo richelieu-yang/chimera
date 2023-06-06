@@ -18,7 +18,7 @@ func Decrypt(data, privateKey []byte, options ...RsaOption) ([]byte, error) {
 }
 
 func (opts *rsaOptions) Decrypt(data, privateKey []byte) ([]byte, error) {
-	if err := sliceKit.AssertNotEmpty(privateKey); err != nil {
+	if err := sliceKit.AssertNotEmpty(privateKey, "privateKey"); err != nil {
 		return nil, err
 	}
 

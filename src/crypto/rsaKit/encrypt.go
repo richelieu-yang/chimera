@@ -15,7 +15,7 @@ func Encrypt(data, publicKey []byte) ([]byte, error) {
 }
 
 func (opts *rsaOptions) Encrypt(data, publicKey []byte) ([]byte, error) {
-	if err := sliceKit.AssertNotEmpty(publicKey); err != nil {
+	if err := sliceKit.AssertNotEmpty(publicKey, "publicKey"); err != nil {
 		return nil, err
 	}
 
