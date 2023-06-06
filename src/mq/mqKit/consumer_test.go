@@ -28,8 +28,8 @@ func TestNewSimpleConsumer(t *testing.T) {
 	c := &config{}
 	confKit.MustLoad("chimera-lib/config.yaml", c)
 	c.RocketMQ5.ClientLogPath = "consumer.log"
-
 	MustSetUp(c.RocketMQ5)
+
 	consumer, err := NewSimpleConsumer("cg0222", map[string]*rmq_client.FilterExpression{
 		"test1": rmq_client.SUB_ALL,
 	})
