@@ -30,8 +30,8 @@ func TestNewSimpleConsumer(t *testing.T) {
 	c.RocketMQ5.ClientLogPath = "consumer.log"
 
 	MustSetUp(c.RocketMQ5)
-	consumer, err := NewSimpleConsumer("cg022", map[string]*rmq_client.FilterExpression{
-		"test": rmq_client.SUB_ALL,
+	consumer, err := NewSimpleConsumer("cg0222", map[string]*rmq_client.FilterExpression{
+		"": rmq_client.SUB_ALL,
 	})
 	if err != nil {
 		logrus.Fatal(err)
