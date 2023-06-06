@@ -1,0 +1,6 @@
+## tag
+tag可以为nil.
+e.g.
+Producer发出消息的tag为nil，Consumer收到对应消息的tag也为nil.
+
+
