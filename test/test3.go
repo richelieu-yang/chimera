@@ -6,6 +6,6 @@ import (
 )
 
 func main() {
-	str := sliceKit.Join([]string{"1"}, ";")
+	str := sliceKit.Join([]string{"0", "1", "2", "3", ""}, "-")
 	fmt.Printf(str)
 }
