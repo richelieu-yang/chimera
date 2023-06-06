@@ -13,12 +13,13 @@ import (
 )
 
 func TestNewSimpleConsumer(t *testing.T) {
+	var topic string = "test1"
+
 	type config struct {
 		RocketMQ5 *Config `json:"rocketmq5,optional"`
 	}
 
 	logrusKit.MustSetUp(nil)
-
 	if wd, err := pathKit.ReviseWorkingDirInTestMode(consts.ProjectName); err != nil {
 		logrus.Fatal(err)
 	} else {
@@ -31,7 +32,7 @@ func TestNewSimpleConsumer(t *testing.T) {
 	MustSetUp(c.RocketMQ5)
 
 	consumer, err := NewSimpleConsumer("cg0222", map[string]*rmq_client.FilterExpression{
-		"test1": rmq_client.SUB_ALL,
+		topic: rmq_client.SUB_ALL,
 	})
 	if err != nil {
 		logrus.Fatal(err)

@@ -53,8 +53,5 @@ func SendMessageForSendReceipts(producer rmq_client.Producer, topic string, body
 		msg.SetTag(*tag)
 	}
 	msg.SetKeys(keys...)
-
-	msg.SetMessageGroup()
-
 	return producer.Send(context.TODO(), msg)
 }
