@@ -4,7 +4,7 @@ import "github.com/apache/rocketmq-clients/golang/v5/credentials"
 
 type (
 	Config struct {
-		Endpoint    string
+		Endpoints   []string                        `json:"endpoints"`
 		Credentials *credentials.SessionCredentials `json:"credentials"`
 	}
 )
