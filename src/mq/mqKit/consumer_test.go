@@ -23,7 +23,7 @@ func TestNewSimpleConsumer(t *testing.T) {
 	if wd, err := pathKit.ReviseWorkingDirInTestMode(consts.ProjectName); err != nil {
 		logrus.Fatal(err)
 	} else {
-		logrus.Infof("new working directory: [%s].\n", wd)
+		logrus.Infof("new working directory: [%s].", wd)
 	}
 
 	c := &config{}
@@ -40,7 +40,7 @@ func TestNewSimpleConsumer(t *testing.T) {
 	defer consumer.GracefulStop()
 	go func() {
 		for {
-			time.Sleep(time.Second)
+			time.Sleep(time.Millisecond * 50)
 
 			mvs, err := consumer.Receive(context.TODO(), MaxMessageNum, InvisibleDuration)
 			if err != nil {
@@ -48,21 +48,23 @@ func TestNewSimpleConsumer(t *testing.T) {
 				continue
 			}
 			for _, mv := range mvs {
-				if err := consumer.Ack(context.TODO(), mv); err != nil {
+				go func(mv *rmq_client.MessageView) {
+					if err := consumer.Ack(context.TODO(), mv); err != nil {
+						logrus.WithFields(logrus.Fields{
+							//"topic": mv.GetTopic(),
+							//"tag":   mv.GetTag(),
+							//"msgId": mv.GetMessageId(),
+							"text":  string(mv.GetBody()),
+							"error": err,
+						}).Error("[CONSUMER] fail to ack the message")
+					}
 					logrus.WithFields(logrus.Fields{
-						"topic": mv.GetTopic(),
-						"tag":   mv.GetTag(),
-						"msgId": mv.GetMessageId(),
-						"text":  string(mv.GetBody()),
-						"error": err,
-					}).Error("[CONSUMER] fail to ack the message")
-				}
-				logrus.WithFields(logrus.Fields{
-					"topic": mv.GetTopic(),
-					"tag":   mv.GetTag(),
-					"msgId": mv.GetMessageId(),
-					"text":  string(mv.GetBody()),
-				}).Info("[CONSUMER] receive a message")
+						//"topic": mv.GetTopic(),
+						//"tag":   mv.GetTag(),
+						//"msgId": mv.GetMessageId(),
+						"text": string(mv.GetBody()),
+					}).Info("[CONSUMER] receive a message")
+				}(mv)
 			}
 		}
 	}()

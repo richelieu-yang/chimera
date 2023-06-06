@@ -7,10 +7,10 @@ import (
 	"github.com/richelieu-yang/chimera/v2/src/confKit"
 	"github.com/richelieu-yang/chimera/v2/src/consts"
 	"github.com/richelieu-yang/chimera/v2/src/core/pathKit"
-	"github.com/richelieu-yang/chimera/v2/src/core/timeKit"
 	"github.com/richelieu-yang/chimera/v2/src/log/logrusKit"
 	"github.com/sirupsen/logrus"
 	"testing"
+	"time"
 )
 
 func TestNewProducer(t *testing.T) {
@@ -25,7 +25,7 @@ func TestNewProducer(t *testing.T) {
 	if wd, err := pathKit.ReviseWorkingDirInTestMode(consts.ProjectName); err != nil {
 		logrus.Fatal(err)
 	} else {
-		logrus.Infof("new working directory: [%s].\n", wd)
+		logrus.Infof("new working directory: [%s].", wd)
 	}
 
 	c := &config{}
@@ -37,26 +37,29 @@ func TestNewProducer(t *testing.T) {
 	if err != nil {
 		logrus.Fatal(err)
 	}
-	time := timeKit.FormatCurrentTime()
-	for i := 0; i < 3; i++ {
-		text := fmt.Sprintf("%s_%d", time, i)
+	//timeStr := timeKit.FormatCurrentTime()
+	for i := 0; i < 100000; i++ {
+		//text := fmt.Sprintf("%s_%d", timeStr, i)
+		text := fmt.Sprintf("%d", i)
 
 		msg := &rmq_client.Message{
 			Topic: topic,
 			Tag:   tag,
 			Body:  []byte(text),
 		}
-		receipts, err := producer.Send(context.Background(), msg)
+		ctx, _ := context.WithTimeout(context.TODO(), time.Second)
+		receipts, err := producer.Send(ctx, msg)
 		if err != nil {
 			logrus.WithError(err).Error("[PRODUCER] fail to send")
 		} else {
 			receipt := receipts[0]
 			logrus.WithFields(logrus.Fields{
-				"text":          text,
-				"MessageID":     receipt.MessageID,
-				"TransactionId": receipt.TransactionId,
-				"Offset":        receipt.Offset,
+				"text":      text,
+				"MessageID": receipt.MessageID,
+				//"TransactionId": receipt.TransactionId,
+				//"Offset":        receipt.Offset,
 			}).Info("[PRODUCER] succeed to send")
 		}
+		time.Sleep(time.Second)
 	}
 }
