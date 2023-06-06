@@ -14,7 +14,7 @@ import (
 )
 
 func TestNewProducer(t *testing.T) {
-	var topic string = "test1"
+	var topic string = "test"
 	var tag *string = nil
 
 	type config struct {
@@ -30,7 +30,7 @@ func TestNewProducer(t *testing.T) {
 
 	c := &config{}
 	confKit.MustLoad("chimera-lib/config.yaml", c)
-	c.RocketMQ5.ClientLogPath = "consumer.log"
+	c.RocketMQ5.ClientLogPath = "producer.log"
 	MustSetUp(c.RocketMQ5)
 
 	producer, err := NewProducer()

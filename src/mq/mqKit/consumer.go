@@ -2,7 +2,6 @@ package mqKit
 
 import (
 	rmq_client "github.com/apache/rocketmq-clients/golang/v5"
-	"github.com/richelieu-yang/chimera/v2/src/core/mapKit"
 	"github.com/richelieu-yang/chimera/v2/src/core/sliceKit"
 	"github.com/richelieu-yang/chimera/v2/src/core/strKit"
 )
@@ -25,9 +24,9 @@ func NewSimpleConsumer(consumerGroup string, subscriptionExpressions map[string]
 	if err := strKit.AssertNotEmpty(consumerGroup, "consumerGroup"); err != nil {
 		return nil, err
 	}
-	if err := mapKit.AssertNotEmpty(subscriptionExpressions, "subscriptionExpressions"); err != nil {
-		return nil, err
-	}
+	//if err := mapKit.AssertNotEmpty(subscriptionExpressions, "subscriptionExpressions"); err != nil {
+	//	return nil, err
+	//}
 
 	simpleConsumer, err := rmq_client.NewSimpleConsumer(&rmq_client.Config{
 		Endpoint:      endpoint,

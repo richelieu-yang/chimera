@@ -13,7 +13,7 @@ import (
 )
 
 func TestNewSimpleConsumer(t *testing.T) {
-	var topic string = "test1"
+	var topic string = "test"
 
 	type config struct {
 		RocketMQ5 *Config `json:"rocketmq5,optional"`
