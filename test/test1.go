@@ -1,70 +1,68 @@
 package main
 
 import (
-	"database/sql"
+	"context"
 	"fmt"
-	"github.com/richelieu-yang/chimera/v2/src/core/ioKit"
-	"github.com/richelieu-yang/chimera/v2/src/database/mysqlKit"
-	"gorm.io/driver/mysql"
-	"gorm.io/gorm"
-	"gorm.io/gorm/logger"
+	"github.com/richelieu-yang/chimera/v2/src/log/logrusKit"
+	"log"
+	"os"
+	"strconv"
 	"time"
+
+	rmq_client "github.com/apache/rocketmq-clients/golang/v5"
+	"github.com/apache/rocketmq-clients/golang/v5/credentials"
 )
 
 func main() {
-	c := &mysqlKit.DsnConfig{
-		UserName: "root",
-		Password: "~Test123",
-		Host:     "127.0.0.1:3306",
-		DBName:   "ccc2",
-	}
+	Topic = "test"
+	Endpoint = "127.0.0.1:8081"
+	AccessKey = ""
+	SecretKey = ""
 
-	writeCloser, err := ioKit.NewLumberjackWriteCloser("a.log")
+	logrusKit.MustSetUp(nil)
+
+	os.Setenv("mq.consoleAppender.enabled", "true")
+	rmq_client.ResetLogger()
+
+	// In most case, you don't need to create many producers, singletion pattern is more recommended.
+	producer, err := rmq_client.NewProducer(&rmq_client.Config{
+		Endpoint: Endpoint,
+		Credentials: &credentials.SessionCredentials{
+			AccessKey:    AccessKey,
+			AccessSecret: SecretKey,
+		},
+	},
+		rmq_client.WithTopics(Topic),
+	)
 	if err != nil {
-		panic(err)
+		log.Fatal(err)
 	}
-
-	dsn := c.String()
-	db, err := gorm.Open(mysql.Open(dsn), &gorm.Config{
-		Logger: logger.New(writeCloser, logger.Config{
-			SlowThreshold:             200 * time.Millisecond,
-			LogLevel:                  Warn,
-			IgnoreRecordNotFoundError: false,
-			Colorful:                  true,
-		}),
-	})
+	// start producer
+	err = producer.Start()
 	if err != nil {
-		panic(err)
+		log.Fatal(err)
 	}
+	// graceful stop producer
+	defer producer.GracefulStop()
 
-	var sqlDB *sql.DB
-	sqlDB, err = db.DB()
-	if err != nil {
-		panic(err)
+	for i := 0; i < 10; i++ {
+		// new a message
+		msg := &rmq_client.Message{
+			Topic: Topic,
+			Body:  []byte("this is a message : " + strconv.Itoa(i)),
+		}
+		// set keys and tag
+		msg.SetKeys("a", "b")
+		msg.SetTag("ab")
+		// send message in sync
+		resp, err := producer.Send(context.TODO(), msg)
+		if err != nil {
+			log.Fatal(err)
+		}
+		for i := 0; i < len(resp); i++ {
+			fmt.Printf("%#v\n", resp[i])
+		}
+		// wait a moment
+		time.Sleep(time.Second * 1)
 	}
-	sqlDB.SetMaxIdleConns(10)
-	sqlDB.SetMaxOpenConns(100)
-	sqlDB.SetConnMaxLifetime(time.Hour)
-	if err := sqlDB.Ping(); err != nil {
-		panic(err)
-	}
-
-	type User struct {
-		Name     string
-		Age      uint
-		Birthday time.Time
-	}
-	user := &User{Name: "Jinzhu", Age: 18, Birthday: time.Now()}
-
-	// 可以通过Set设置附加参数，下面设置表的存储引擎为InnoDB
-	db.Set("gorm:table_options", "ENGINE=MyISAM").AutoMigrate(&User{})
-
-	// 自动建表
-	if err := db.AutoMigrate(user); err != nil {
-		panic(err)
-	}
-	// 插入数据
-	result := db.Create(user) // 通过数据的指针来创建
-	fmt.Println(result.Error)
-	fmt.Println(result.RowsAffected)
 }
