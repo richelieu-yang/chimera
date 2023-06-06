@@ -9,7 +9,7 @@ import (
 	"os"
 )
 
-func InitClientLog(path string) error {
+func initClientLog(path string) error {
 	if strKit.IsBlank(path) {
 		// (1) 输出到控制台
 		if err := os.Setenv(rmq_client.ENABLE_CONSOLE_APPENDER, "true"); err != nil {

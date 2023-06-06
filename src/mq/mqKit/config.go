@@ -7,5 +7,6 @@ type (
 		Endpoints      []string                        `json:"endpoints"`
 		Credentials    *credentials.SessionCredentials `json:"credentials,optional"`
 		ValidatedTopic string                          `json:"validatedTopic,optional"`
+		ClientLogPath  string                          `json:"clientLogPath,optional"`
 	}
 )
