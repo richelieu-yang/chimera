@@ -11,7 +11,7 @@ PS: In most case, you don't need to create many producers, singletion pattern is
 
 @param clientLogPath 客户端日志（blank则输出到控制台）
 */
-func NewProducer(clientLogPath string) (rmq_client.Producer, error) {
+func NewProducer() (rmq_client.Producer, error) {
 	if config == nil {
 		return nil, NotSetupError
 	}
