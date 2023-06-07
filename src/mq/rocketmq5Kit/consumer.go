@@ -2,57 +2,46 @@ package rocketmq5Kit
 
 import (
 	rmq_client "github.com/apache/rocketmq-clients/golang/v5"
-	"github.com/richelieu-yang/chimera/v2/src/core/errorKit"
+	"github.com/richelieu-yang/chimera/v2/src/core/sliceKit"
 	"github.com/richelieu-yang/chimera/v2/src/core/strKit"
-	"time"
-)
-
-const (
-	// AwaitDuration (consumer创建实例时用到) maximum waiting time for receive func
-	AwaitDuration = time.Second * 5
-
-	// MaxMessageNum (consumer收消息时用到) maximum number of messages received at one time
-	MaxMessageNum int32 = 16
-
-	// InvisibleDuration (consumer收消息时用到) InvisibleDuration should > 20s
-	InvisibleDuration = time.Second * 20
-
-	// receive messages in a loop
 )
 
 // NewSimpleConsumer
 /*
-@param logConfig	可以为nil（此时将默认输出到控制台）
-@param config 		不会修改传参config，因为修改的是副本
-@return rmq_client.SimpleConsumer实例要手动调用 Start()!!!
-*/
-func NewSimpleConsumer(logConfig *LogConfig, config *rmq_client.Config, consumerGroup, topic, tag string) (rmq_client.SimpleConsumer, error) {
-	lock.Lock()
-	defer lock.Unlock()
+PS: In most case, you don't need to create many consumers, singletion pattern is more recommended.
 
-	if err := logConfig.SetLogout(); err != nil {
-		return nil, err
+@param consumerGroup 			不能为""
+@param subscriptionExpressions	(1) key: 	topic，不能为 "*" || blank
+								(2) value: 	tag，一般为 rmq_client.SUB_ALL
+@param clientLogPath 			客户端日志（blank则输出到控制台）
+*/
+func NewSimpleConsumer(consumerGroup string, subscriptionExpressions map[string]*rmq_client.FilterExpression) (rmq_client.SimpleConsumer, error) {
+	if config == nil {
+		return nil, NotSetupError
 	}
 
-	config, err := processConfig(config)
+	endpoint := sliceKit.Join(config.Endpoints, ";")
+	if err := strKit.AssertNotEmpty(consumerGroup, "consumerGroup"); err != nil {
+		return nil, err
+	}
+	//if err := mapKit.AssertNotEmpty(subscriptionExpressions, "subscriptionExpressions"); err != nil {
+	//	return nil, err
+	//}
+
+	simpleConsumer, err := rmq_client.NewSimpleConsumer(&rmq_client.Config{
+		Endpoint:      endpoint,
+		ConsumerGroup: consumerGroup,
+		Credentials:   config.Credentials,
+	},
+		rmq_client.WithAwaitDuration(AwaitDuration),
+		rmq_client.WithSubscriptionExpressions(subscriptionExpressions),
+	)
 	if err != nil {
 		return nil, err
 	}
-
-	if strKit.IsEmpty(consumerGroup) {
-		return nil, errorKit.New("consumerGroup is empty")
+	// Start
+	if err := simpleConsumer.Start(); err != nil {
+		return nil, err
 	}
-	if strKit.IsEmpty(topic) {
-		return nil, errorKit.New("topic is empty")
-	}
-	tag = strKit.EmptyToDefault(tag, "*")
-
-	config.ConsumerGroup = consumerGroup
-
-	return rmq_client.NewSimpleConsumer(config,
-		rmq_client.WithAwaitDuration(AwaitDuration),
-		rmq_client.WithSubscriptionExpressions(map[string]*rmq_client.FilterExpression{
-			topic: rmq_client.NewFilterExpression(tag),
-		}),
-	)
+	return simpleConsumer, nil
 }

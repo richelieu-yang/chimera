@@ -1,4 +1,4 @@
-package mqKit
+package rocketmq5Kit
 
 import (
 	rmq_client "github.com/apache/rocketmq-clients/golang/v5"

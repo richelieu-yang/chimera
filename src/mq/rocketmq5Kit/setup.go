@@ -1,4 +1,4 @@
-package mqKit
+package rocketmq5Kit
 
 import (
 	"github.com/apache/rocketmq-clients/golang/v5/credentials"

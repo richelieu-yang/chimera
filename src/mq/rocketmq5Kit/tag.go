@@ -8,7 +8,7 @@ func MixTags(tags ...string) string {
 
 func GetTagString(tag *string) string {
 	if tag == nil {
-		return ""
+		return "<nil>"
 	}
 	return *tag
 }

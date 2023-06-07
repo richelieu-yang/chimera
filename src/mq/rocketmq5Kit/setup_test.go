@@ -1,4 +1,4 @@
-package mqKit
+package rocketmq5Kit
 
 import (
 	"fmt"
