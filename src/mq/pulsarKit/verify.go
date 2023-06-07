@@ -29,6 +29,11 @@ const (
 )
 
 // verify 简单地验证 Pulsar服务 是否启动成功
+/*
+PS:
+可能失败的原因：
+（1）pulsar的进程在，但启动报错（存储空间爆了）
+*/
 func verify(verifyConfig *VerifyConfig) (err error) {
 	if verifyConfig == nil {
 		// 不验证
