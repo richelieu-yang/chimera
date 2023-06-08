@@ -13,4 +13,6 @@ func main() {
 	fmt.Println(stat.String())
 	fmt.Println(stat.GetFreePercent())
 	fmt.Println(stat.GetUsedPercent())
+
+	fmt.Println(stat.Used + stat.Free - stat.Total)
 }
