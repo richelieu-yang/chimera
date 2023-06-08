@@ -2,13 +2,15 @@ package main
 
 import (
 	"fmt"
-	"github.com/richelieu-yang/chimera/v2/src/core/runtimeKit"
+	"github.com/richelieu-yang/chimera/v2/src/diskKit"
 )
 
 func main() {
-	stat, err := runtimeKit.GetDiskStat()
+	stat, err := diskKit.GetDiskStat()
 	if err != nil {
 		panic(err)
 	}
 	fmt.Println(stat.String())
+	fmt.Println(stat.GetFreePercent())
+	fmt.Println(stat.GetUsedPercent())
 }

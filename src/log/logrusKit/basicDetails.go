@@ -7,6 +7,7 @@ import (
 	"github.com/richelieu-yang/chimera/v2/src/core/runtimeKit"
 	"github.com/richelieu-yang/chimera/v2/src/core/timeKit"
 	"github.com/richelieu-yang/chimera/v2/src/core/userKit"
+	"github.com/richelieu-yang/chimera/v2/src/diskKit"
 	"github.com/richelieu-yang/chimera/v2/src/ipKit"
 	"github.com/shirou/gopsutil/v3/docker"
 	"github.com/sirupsen/logrus"
@@ -44,25 +45,21 @@ func PrintBasicDetails() {
 	zoneName, zoneOffset := systemTime.Zone()
 	logrus.Infof("[CHIMERA, TIME] system time: [%v], zone: [%s, %d].", systemTime, zoneName, zoneOffset)
 	if networkTime, source, err := timeKit.GetNetworkTime(); err != nil {
-		logrus.Warnf("[CHIMERA, TIME] fail to get network time, error: %v", err)
+		logrus.WithError(err).Warn("[CHIMERA, TIME] fail to get network time")
 	} else {
 		logrus.Infof("[CHIMERA, TIME] network time: [%v], source: [%s].", networkTime, source)
 	}
 
 	// ip
 	if ip, err := ipKit.GetOutboundIP(); err != nil {
-		logrus.WithFields(logrus.Fields{
-			"error": err.Error(),
-		}).Warn("[CHIMERA, IP] fail to get local ip")
+		logrus.WithError(err).Warn("[CHIMERA, IP] fail to get local ip")
 	} else {
 		logrus.Infof("[CHIMERA, IP] local ip(for reference only): [%s].", ip)
 	}
 
 	// host
 	if hostInfo, err := runtimeKit.GetHostInfo(); err != nil {
-		logrus.WithFields(logrus.Fields{
-			"error": err.Error(),
-		}).Warn("[CHIMERA, HOST] fail to get host info")
+		logrus.WithError(err).Warn("[CHIMERA, HOST] fail to get host info")
 	} else {
 		logrus.Infof("[CHIMERA, HOST] host name: [%s].", hostInfo.Hostname)
 	}
@@ -77,11 +74,6 @@ func PrintBasicDetails() {
 	} else {
 		logrus.Infof("[CHIMERA, CPU] usage: [%.2f]%%.", cpuPercent)
 	}
-	//if cpuId, err := runtimeKit.GetCpuId(); err != nil {
-	//	logrus.Warnf("[CHIMERA, CPU] fail to get cpu id, error: %v", err)
-	//} else {
-	//	logrus.Infof("[CHIMERA, CPU] cpu id: [%s].", cpuId)
-	//}
 
 	//// mac
 	//if macAddresses, err := runtimeKit.GetMacAddresses(); err != nil {
@@ -94,11 +86,16 @@ func PrintBasicDetails() {
 
 	// memory
 	if info, err := runtimeKit.GetMemoryStat(); err != nil {
-		logrus.WithFields(logrus.Fields{
-			"error": err.Error(),
-		}).Fatal("fail to get memory stat")
+		logrus.WithError(err).Fatal("[CHIMERA, MEMORY] fail to get memory stat")
 	} else {
-		logrus.Infof("[CHIMERA, MEMORY] memory stat: [%s].", info)
+		logrus.Infof("[CHIMERA, MEMORY] stat: [%s].", info)
+	}
+
+	// disk
+	if stat, err := diskKit.GetDiskStat(); err != nil {
+		logrus.WithError(err).Warn("[CHIMERA, DISK] fail to get disk stat")
+	} else {
+		logrus.Infof("[CHIMERA, DISK] stat: [%s].", stat.String())
 	}
 
 	// docker
