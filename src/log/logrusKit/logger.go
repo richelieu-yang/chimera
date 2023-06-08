@@ -91,6 +91,7 @@ func NewLogger(options ...LoggerOption) *logrus.Logger {
 	return logger
 }
 
+// NewFileLogger 输出到文件(not rotatable).
 func NewFileLogger(filePath string, options ...LoggerOption) (*logrus.Logger, error) {
 	if err := fileKit.AssertNotExistOrIsFile(filePath); err != nil {
 		return nil, err
