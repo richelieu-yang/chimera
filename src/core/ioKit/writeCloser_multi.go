@@ -85,7 +85,7 @@ func (multi *multiWriterCloser) Close() (err error) {
 	closers := sliceKit.ConvertElementType(multi.writeClosers, func(item io.WriteCloser, _ int) io.Closer {
 		return item
 	})
-	return CloseCloser(closers...)
+	return Close(closers...)
 }
 
 // MultiWriteCloser
