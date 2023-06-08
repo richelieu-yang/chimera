@@ -26,8 +26,7 @@ func (stat *DiskStat) GetFreePercent() float64 {
 
 // String
 /*
-e.g.
-"free: 300 GB, used: 160.43 GB, total: 460.43 GB, used percent: 34.84%"
+@return e.g. "free: 213 GiB, used: 247 GiB, total: 460 GiB, free percent: 46.27%"
 */
 func (stat *DiskStat) String() string {
 	return fmt.Sprintf("free: %s, used: %s, total: %s, free percent: %.2f%%",
