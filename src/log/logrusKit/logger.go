@@ -1,9 +1,11 @@
 package logrusKit
 
 import (
+	"github.com/richelieu-yang/chimera/v2/src/core/fileKit"
 	"github.com/richelieu-yang/chimera/v2/src/core/ioKit"
 	"github.com/sirupsen/logrus"
 	"io"
+	"os"
 )
 
 type (
@@ -87,6 +89,23 @@ func NewLogger(options ...LoggerOption) *logrus.Logger {
 		logger.SetOutput(opts.writer)
 	}
 	return logger
+}
+
+func NewFileLogger(filePath string, options ...LoggerOption) (*logrus.Logger, error) {
+	if err := fileKit.AssertNotExistOrIsFile(filePath); err != nil {
+		return nil, err
+	}
+	if err := fileKit.MkParentDirs(filePath); err != nil {
+		return nil, err
+	}
+
+	file, err := os.OpenFile(filePath, os.O_RDWR|os.O_APPEND|os.O_CREATE, 0666)
+	if err != nil {
+		return nil, err
+	}
+	option := WithWriter(file)
+	options = append(options, option)
+	return NewLogger(options...), nil
 }
 
 // DisposeLogger 释放资源（主要针对文件日志）
