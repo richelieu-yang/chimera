@@ -52,7 +52,11 @@ func (stat *DiskStat) String() string {
 
 // GetDiskStat
 /*
-参考: golang 获取cpu 内存 硬盘 使用率 信息 进程信息 https://blog.csdn.net/whatday/article/details/109620192
+PS:
+(1) Mac（Linux），查看磁盘空间的命令: df -h
+
+golang 获取cpu 内存 硬盘 使用率 信息 进程信息
+	https://blog.csdn.net/whatday/article/details/109620192
 */
 func GetDiskStat() (*DiskStat, error) {
 	// 参考: disk_test.go
