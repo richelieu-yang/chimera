@@ -65,7 +65,6 @@ func NewClient(config *Config) (client *Client, err error) {
 		return
 	}
 
-	// test
 	//opts.OnConnect = func(ctx context.Context, conn *redis.Conn) error {
 	//	logrus.Infof("conn: %v", conn)
 	//	return nil
