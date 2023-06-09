@@ -70,7 +70,7 @@ func (opts *rsaOptions) encryptPrivateKey(privateKey interface{}) (*pem.Block, e
 				return nil, err
 			}
 		default:
-			return nil, errorKit.Newf("invalid format(%v)", opts.format)
+			return nil, errorKit.New("invalid format(%v)", opts.format)
 		}
 		block, err := x509.EncryptPEMBlock(rand.Reader, "PRIVATE KEY", raw, []byte(opts.password), x509.PEMCipherAES256)
 		if err != nil {
@@ -126,7 +126,7 @@ func (opts *rsaOptions) DecryptPrivatePEM(pemRaw []byte) ([]byte, error) {
 				return nil, err
 			}
 		default:
-			return nil, errorKit.Newf("invalid format(%v)", opts.format)
+			return nil, errorKit.New("invalid format(%v)", opts.format)
 		}
 	default:
 		return nil, errorKit.New("Invalid key type. It must be *ecdsa.PrivateKey or *rsa.PrivateKey")

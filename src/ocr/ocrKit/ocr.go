@@ -69,7 +69,7 @@ func GetText(imgPath string, languages ...string) (string, error) {
 		return "", errorKit.New(result)
 	}
 	if fileKit.IsDir(filePath) {
-		return "", errorKit.Newf("filePath(%s) is a directory", filePath)
+		return "", errorKit.New("filePath(%s) is a directory", filePath)
 	}
 	data, err := fileKit.ReadFile(filePath)
 	if err != nil {

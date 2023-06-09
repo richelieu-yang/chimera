@@ -13,7 +13,7 @@ func LoadLinkLibrary(path string) (*plugin.Plugin, error) {
 		return nil, errorKit.New("path of link library is empty")
 	}
 	if !fileKit.Exist(path) {
-		return nil, errorKit.Newf("link library(path: %s) doesn't exist", path)
+		return nil, errorKit.New("link library(path: %s) doesn't exist", path)
 	}
 	return plugin.Open(path)
 }

@@ -21,7 +21,7 @@ Deprecated: 调用完 Write() 后立即调用 Close() || 进程退出，Write的
 */
 func NewDailyRotateRuleWriteCloser(filePath, delimiter string, days int, compress bool) (io.WriteCloser, error) {
 	if days <= 0 {
-		return nil, errorKit.Newf("invalid days(%d)", days)
+		return nil, errorKit.New("invalid days(%d)", days)
 	}
 	delimiter = strKit.EmptyToDefault(delimiter, defaultDelimiter)
 
@@ -58,13 +58,13 @@ e.g. Mac环境
 */
 func NewSizeLimitRotateRuleWriteCloser(filePath, delimiter string, days, maxSize, maxBackups int, compress bool) (io.WriteCloser, error) {
 	if days <= 0 {
-		return nil, errorKit.Newf("invalid days(%d)", days)
+		return nil, errorKit.New("invalid days(%d)", days)
 	}
 	if maxSize <= 0 {
-		return nil, errorKit.Newf("invalid maxSize(%d)", maxSize)
+		return nil, errorKit.New("invalid maxSize(%d)", maxSize)
 	}
 	if maxBackups <= 0 {
-		return nil, errorKit.Newf("invalid maxBackups(%d)", maxBackups)
+		return nil, errorKit.New("invalid maxBackups(%d)", maxBackups)
 	}
 	delimiter = strKit.EmptyToDefault(delimiter, defaultDelimiter)
 

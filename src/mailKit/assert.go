@@ -10,7 +10,7 @@ func AssertEmail(email string) error {
 	validate := validator.New()
 	err := validate.Var(email, "required,email")
 	if err != nil {
-		return errorKit.NewSkipf(1, "[%s] email(%s) is invalid with error(%s)", funcKit.GetFuncName(1), email, err.Error())
+		return errorKit.NewSkip(1, "[%s] email(%s) is invalid with error(%s)", funcKit.GetFuncName(1), email, err.Error())
 	}
 	return nil
 }

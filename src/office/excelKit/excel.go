@@ -15,15 +15,15 @@ e.g.
 func ConvertAxisToRowCol(axis string) (int, int, error) {
 	re := regexp.MustCompile(`^([A-Z]+)(\d+)$`)
 	if !re.MatchString(axis) {
-		return 0, 0, errorKit.Newf("axis(%s) is invalid", axis)
+		return 0, 0, errorKit.New("axis(%s) is invalid", axis)
 	}
 	var tmp [][]string = re.FindAllStringSubmatch(axis, -1)
 	if len(tmp) != 1 {
-		return 0, 0, errorKit.Newf("axis(%s) is invalid", axis)
+		return 0, 0, errorKit.New("axis(%s) is invalid", axis)
 	}
 	var s []string = tmp[0]
 	if len(s) != 3 {
-		return 0, 0, errorKit.Newf("axis(%s) is invalid", axis)
+		return 0, 0, errorKit.New("axis(%s) is invalid", axis)
 	}
 
 	colStr := s[1]
@@ -70,7 +70,7 @@ func ConvertRowColToAxis(row, col int) (string, error) {
 
 func ConvertRowToString(row int) (string, error) {
 	if row < 0 || row > MaxRow {
-		return "", errorKit.Newf("row(%d) is invalid", row)
+		return "", errorKit.New("row(%d) is invalid", row)
 	}
 	return strconv.Itoa(row + 1), nil
 }
@@ -94,7 +94,7 @@ func ConvertColToString(col int) (string, error) {
 	//}
 
 	if col < 0 || col > MaxCol {
-		return "", errorKit.Newf("col(%d) is invalid", col)
+		return "", errorKit.New("col(%d) is invalid", col)
 	}
 
 	str := ""

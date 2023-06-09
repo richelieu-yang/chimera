@@ -89,12 +89,12 @@ func newAccessToken() (*accessToken, error) {
 		return nil, err
 	}
 	if token == nil {
-		return nil, errorKit.Newf("failure response(%s)", string(resp))
+		return nil, errorKit.New("failure response(%s)", string(resp))
 	}
 	// 对token进行简单验证
 	// 正常情况下，token的有效期为30天，此处判断是为了防止特殊情况（86400秒 == 1天）
 	if token.ExpiresIn <= 86400 {
-		return nil, errorKit.Newf("token.ExpiresIn(%d) is invalid", 86400)
+		return nil, errorKit.New("token.ExpiresIn(%d) is invalid", 86400)
 	}
 	// 提前1h(3600s)认为token失效，以防特殊情况
 	token.ExpireTime = time.Now().Add(time.Second * time.Duration(token.ExpiresIn-3600))

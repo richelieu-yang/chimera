@@ -25,7 +25,7 @@ func GetMaxOpenFiles() (int, error) {
 
 	i, err := intKit.StringToInt(str)
 	if err != nil {
-		return 0, errorKit.Newf("result(%s) isn't a number", str)
+		return 0, errorKit.New("result(%s) isn't a number", str)
 	}
 	return i, nil
 
@@ -62,7 +62,7 @@ func GetUserMaxProcesses() (int, error) {
 
 	i, err := intKit.StringToInt(str)
 	if err != nil {
-		return 0, errorKit.Newf("result(%s) isn't a number", str)
+		return 0, errorKit.New("result(%s) isn't a number", str)
 	}
 	return i, nil
 

@@ -6,6 +6,14 @@ import (
 	"strings"
 )
 
+// AddEntireCaller
+/*
+@param skip 1: 加上 调用此函数的函数的EntireCaller
+*/
+func AddEntireCaller(skip int, text string) string {
+	return GetEntireCaller(skip+1) + " " + text
+}
+
 // GetEntireCaller
 /*
 e.g.

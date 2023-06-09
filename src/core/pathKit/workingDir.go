@@ -44,7 +44,7 @@ func ReviseWorkingDirInTestMode(projectName string) (string, error) {
 	wd := GetWorkingDir()
 	index := strKit.Index(wd, projectName)
 	if index == -1 {
-		return "", errorKit.Newf("invalid projectName(%s)", projectName)
+		return "", errorKit.New("invalid projectName(%s)", projectName)
 	}
 	wd1 := strKit.SubBefore(wd, index+len(projectName))
 	if err := ChangeWorkingDir(wd1); err != nil {

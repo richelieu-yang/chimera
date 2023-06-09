@@ -14,10 +14,10 @@ import (
 func AssertNotEmpty[T any](s []T, name string) error {
 	if len(s) == 0 {
 		if s == nil {
-			return errorKit.NewSkipf(1, "[%s] param(name: %s, type: %s) == nil",
+			return errorKit.NewSkip(1, "[%s] param(name: %s, type: %s) == nil",
 				funcKit.GetFuncName(1), name, "slice")
 		}
-		return errorKit.NewSkipf(1, "[%s] param(name: %s, type: %s) is empty",
+		return errorKit.NewSkip(1, "[%s] param(name: %s, type: %s) is empty",
 			funcKit.GetFuncName(1), name, "slice")
 	}
 	return nil

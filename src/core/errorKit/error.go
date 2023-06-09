@@ -105,7 +105,7 @@ package errorKit
 //func Wrap(err error, format string, args ...interface{}) error {
 //	format = funcKit.GetEntireCaller(2) + " " + format
 //
-//	return errors2.Wrapf(err, format, args...)
+//	return errors2.Wrap(err, format, args...)
 //}
 
 //// WithMessage

@@ -47,7 +47,7 @@ func InitializeSmtp(config *SmtpConfig, count int) error {
 	defaultFrom = fmt.Sprintf("%s <%s>", config.NickName, config.Account)
 
 	if count <= 0 {
-		return errorKit.Newf("count(%d) is invalid", count)
+		return errorKit.New("count(%d) is invalid", count)
 	}
 
 	auth := smtp.PlainAuth("", config.Account, config.Password, config.Host)

@@ -59,7 +59,7 @@ func NewClient(config *Config) (client *Client, err error) {
 	case ModeCluster:
 		opts, err = newClusterOptions(config)
 	default:
-		err = errorKit.Newf("mode(%d) is invalid", config.Mode)
+		err = errorKit.New("mode(%d) is invalid", config.Mode)
 	}
 	if err != nil {
 		return
@@ -90,7 +90,7 @@ func NewClient(config *Config) (client *Client, err error) {
 		return
 	}
 	if !strKit.EqualIgnoreCase(str, "PONG") {
-		err = errorKit.Newf("result(%s) of ping in invalid", str)
+		err = errorKit.New("result(%s) of ping in invalid", str)
 		return
 	}
 	return
@@ -124,7 +124,7 @@ func newSingleNodeOptions(config *Config) (*redis.UniversalOptions, error) {
 
 // newMasterSlaverOptions 主从模式
 func newMasterSlaverOptions(config *Config) (*redis.UniversalOptions, error) {
-	return nil, errorKit.Newf("mode(%d) is unsupported now", config.Mode)
+	return nil, errorKit.New("mode(%d) is unsupported now", config.Mode)
 }
 
 // newSentinelOptions 哨兵模式

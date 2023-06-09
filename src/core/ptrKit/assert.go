@@ -13,10 +13,10 @@ import (
 */
 func AssertNotNilAndIsPointer(ptr interface{}) error {
 	if ptr == nil {
-		return errorKit.NewSkipf(1, "[%s] ptr == nil", funcKit.GetFuncName(1))
+		return errorKit.NewSkip(1, "[%s] ptr == nil", funcKit.GetFuncName(1))
 	}
 	if !IsPointer(ptr) {
-		return errorKit.NewSkipf(1, "[%s] ptr(type: %T) isn't a pointer", funcKit.GetFuncName(1), ptr)
+		return errorKit.NewSkip(1, "[%s] ptr(type: %T) isn't a pointer", funcKit.GetFuncName(1), ptr)
 	}
 	return nil
 }

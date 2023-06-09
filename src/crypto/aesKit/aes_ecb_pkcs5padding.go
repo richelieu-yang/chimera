@@ -30,7 +30,7 @@ func EncryptToString(plainText, key []byte) (string, error) {
 func Encrypt(plainText, key []byte) (cipherText []byte, err error) {
 	block, err := aes.NewCipher(key)
 	if err != nil {
-		err = errorKit.Wrapf(err, "key(%s) is invalid", string(key))
+		err = errorKit.Wrap(err, "key(%s) is invalid", string(key))
 		return
 	}
 
@@ -64,7 +64,7 @@ func DecryptToString(base64Text, key []byte) (string, error) {
 func Decrypt(cipherText, key []byte) (plainText []byte, err error) {
 	block, err := aes.NewCipher(key)
 	if err != nil {
-		err = errorKit.Wrapf(err, "key(%s) is invalid", string(key))
+		err = errorKit.Wrap(err, "key(%s) is invalid", string(key))
 		return
 	}
 

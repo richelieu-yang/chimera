@@ -38,6 +38,6 @@ func (opts *rsaOptions) parsePrivateKey(data []byte) (*rsa.PrivateKey, error) {
 		}
 		return keyInterface.(*rsa.PrivateKey), nil
 	default:
-		return nil, errorKit.Newf("invalid key format(%d)", opts.format)
+		return nil, errorKit.New("invalid key format(%d)", opts.format)
 	}
 }
