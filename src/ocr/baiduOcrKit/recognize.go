@@ -3,7 +3,7 @@ package baiduOcrKit
 import (
 	"fmt"
 	"github.com/richelieu-yang/chimera/v2/src/core/errorKit"
-	"github.com/richelieu-yang/chimera/v2/src/core/fileKit"
+	"github.com/richelieu-yang/chimera/v2/src/crypto/base64Kit"
 	"github.com/richelieu-yang/chimera/v2/src/jsonKit"
 	"github.com/richelieu-yang/chimera/v2/src/urlKit"
 	"github.com/richelieu-yang/chimera/v2/src/web/httpClientKit"
@@ -29,7 +29,7 @@ func RecognizeUniversalWords(imagePath string) (*Words, error) {
 	url := fmt.Sprintf("%s?access_token=%s", "https://aip.baidubce.com/rest/2.0/ocr/v1/general_basic", token.AccessToken)
 
 	// params
-	base64Str, err := fileKit.ReadFileToBase64(imagePath)
+	base64Str, err := base64Kit.EncodeFileToString(imagePath)
 	if err != nil {
 		return nil, err
 	}

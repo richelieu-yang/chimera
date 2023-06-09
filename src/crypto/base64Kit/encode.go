@@ -17,10 +17,15 @@ func EncodeFile(path string) ([]byte, error) {
 	if err := fileKit.AssertExistAndIsFile(path); err != nil {
 		return nil, err
 	}
+
 	return gbase64.EncodeFile(path)
 }
 
 func EncodeFileToString(path string) (string, error) {
+	if err := fileKit.AssertExistAndIsFile(path); err != nil {
+		return "", err
+	}
+
 	return gbase64.EncodeFileToString(path)
 }
 
