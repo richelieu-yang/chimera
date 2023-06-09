@@ -9,6 +9,9 @@ import (
 // AddEntireCaller
 /*
 @param skip 1: 加上 调用此函数的函数的EntireCaller
+
+e.g.	main()调用此函数
+(1, "123") => "test/test1.go:11|main 123"
 */
 func AddEntireCaller(skip int, text string) string {
 	return GetEntireCaller(skip+1) + " " + text

@@ -4,9 +4,12 @@ import (
 	"fmt"
 	"github.com/richelieu-yang/chimera/v2/src/core/errorKit"
 	"github.com/richelieu-yang/chimera/v2/src/core/strKit"
+	"github.com/richelieu-yang/chimera/v2/src/funcKit"
 )
 
 func main() {
+	fmt.Println(funcKit.AddEntireCaller(1, "123"))
+
 	fmt.Printf("%+v\n", a())
 
 	fmt.Println("=========")
