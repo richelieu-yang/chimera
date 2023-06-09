@@ -5,9 +5,9 @@ type (
 		UserName string `json:"userName,optional"`
 		Password string `json:"password,optional"`
 
-		MinIdleConns int `json:"minIdleConns,default=64,range=[32:100000]"`
-		MaxIdleConns int `json:"maxIdleConns,default=128,range=[32:100000]"`
-		PoolSize     int `json:"poolSize,default=512,range=[32:100000]"`
+		MinIdleConns int `json:"minIdleConns,default=64,range=[32:1000000]"`
+		MaxIdleConns int `json:"maxIdleConns,default=256,range=[32:1000000]"`
+		PoolSize     int `json:"poolSize,default=512,range=[32:1000000]"`
 
 		Mode Mode `json:"mode,default=0,options=0|2|3"`
 

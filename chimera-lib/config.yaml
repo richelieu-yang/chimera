@@ -56,6 +56,9 @@ gin:
 redis:
   userName:
   password:
+  minIdleConns: 64
+  maxIdleConns: 256
+  poolSize: 512
   # 默认值: -1
   # 0: 单点
   # 1: 主从（暂不支持）
