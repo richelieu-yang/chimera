@@ -17,6 +17,13 @@ type (
 	}
 )
 
+func (client *Client) Close() error {
+	if client != nil && client.universalClient != nil {
+		return client.universalClient.Close()
+	}
+	return nil
+}
+
 func (client *Client) GetMode() Mode {
 	return client.mode
 }
@@ -32,7 +39,8 @@ func (client *Client) GetUniversalClient() redis.UniversalClient {
 
 连接哨兵集群的demo: https://blog.csdn.net/supery071/article/details/109491404
 
-@return cluster模式下，第1个返回值的类型: *redis.ClusterClient
+@return	(1) 两个返回值，必定有一个为nil，另一个非nil；
+		(2) Cluster模式下，第1个返回值的类型: *redis.ClusterClient.
 */
 func NewClient(config *Config) (client *Client, err error) {
 	if config == nil {
@@ -68,6 +76,12 @@ func NewClient(config *Config) (client *Client, err error) {
 		mode:            config.Mode,
 		universalClient: goRedisClient,
 	}
+	defer func() {
+		if err != nil {
+			_ = client.Close()
+			client = nil
+		}
+	}()
 
 	// 简单测试是否Redis服务可用
 	ctx, cancel := context.WithTimeout(context.TODO(), time.Second*3)
