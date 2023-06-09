@@ -5,6 +5,7 @@ import (
 	"github.com/redis/go-redis/v9"
 	"github.com/richelieu-yang/chimera/v2/src/core/errorKit"
 	"github.com/richelieu-yang/chimera/v2/src/core/strKit"
+	"time"
 )
 
 type (
@@ -33,13 +34,13 @@ func (client *Client) GetUniversalClient() redis.UniversalClient {
 
 @return cluster模式下，第1个返回值的类型: *redis.ClusterClient
 */
-func NewClient(config *Config) (*Client, error) {
+func NewClient(config *Config) (client *Client, err error) {
 	if config == nil {
-		return nil, errorKit.New("config == nil")
+		err = errorKit.New("config == nil")
+		return
 	}
 
 	var opts *redis.UniversalOptions
-	var err error
 	switch config.Mode {
 	case ModeSingleNode:
 		opts, err = newSingleNodeOptions(config)
@@ -53,7 +54,7 @@ func NewClient(config *Config) (*Client, error) {
 		err = errorKit.Newf("mode(%d) is invalid", config.Mode)
 	}
 	if err != nil {
-		return nil, err
+		return
 	}
 
 	// test
@@ -63,21 +64,23 @@ func NewClient(config *Config) (*Client, error) {
 	//}
 
 	goRedisClient := redis.NewUniversalClient(opts)
-	client := &Client{
+	client = &Client{
 		mode:            config.Mode,
 		universalClient: goRedisClient,
 	}
 
 	// 简单测试是否Redis服务可用
-	str, err := client.Ping(context.TODO())
+	ctx, cancel := context.WithTimeout(context.TODO(), time.Second*3)
+	defer cancel()
+	str, err := client.Ping(ctx)
 	if err != nil {
-		return nil, errorKit.Wrap(err, "fail to ping")
+		return
 	}
-	if str != "PONG" {
-		return nil, errorKit.Newf("result(%s) of ping in invalid", str)
+	if !strKit.EqualIgnoreCase(str, "PONG") {
+		err = errorKit.Newf("result(%s) of ping in invalid", str)
+		return
 	}
-
-	return client, nil
+	return
 }
 
 func newBaseOptions(config *Config) *redis.UniversalOptions {

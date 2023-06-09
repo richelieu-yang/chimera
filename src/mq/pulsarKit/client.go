@@ -7,7 +7,6 @@ import (
 	"github.com/richelieu-yang/chimera/v2/src/core/strKit"
 	"github.com/richelieu-yang/chimera/v2/src/log/logrusKit"
 	"github.com/richelieu-yang/chimera/v2/src/netKit"
-	"github.com/sirupsen/logrus"
 )
 
 func NewClient(addresses []string, logPath string) (pulsar.Client, error) {
@@ -21,7 +20,7 @@ func NewClient(addresses []string, logPath string) (pulsar.Client, error) {
 	/* logger */
 	var logger log.Logger
 	if strKit.IsNotEmpty(logPath) {
-		fileLogger, err := logrusKit.NewFileLogger(logPath, nil, logrus.DebugLevel, false)
+		fileLogger, err := logrusKit.NewFileLogger(logPath)
 		if err != nil {
 			return nil, err
 		}
