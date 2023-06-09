@@ -1,5 +1,8 @@
 (1) key、value、field都可以为"";
 
+## TODOs
+MinIdleConns、PoolSize，详见 client.go 中的 newBaseOptions()
+
 ## 命令教程
 菜鸟教程:
     https://www.runoob.com/redis/redis-tutorial.html
