@@ -2,9 +2,13 @@ package main
 
 import (
 	"fmt"
-	"runtime"
+	"github.com/richelieu-yang/chimera/v2/src/core/errorKit"
 )
 
 func main() {
-	fmt.Println(runtime.GOMAXPROCS(0))
+	fmt.Println(a())
+}
+
+func a() error {
+	return errorKit.New("zzz")
 }
