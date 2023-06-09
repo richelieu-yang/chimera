@@ -98,8 +98,8 @@ func NewClient(config *Config) (client *Client, err error) {
 
 func newBaseOptions(config *Config) *redis.UniversalOptions {
 	return &redis.UniversalOptions{
-		MinIdleConns: 32,
-		PoolSize:     128,
+		MinIdleConns: 128,
+		PoolSize:     512,
 
 		Username: config.UserName,
 		Password: config.Password,
