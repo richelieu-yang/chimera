@@ -52,25 +52,23 @@ func LastIndex(s, str string) int {
 	return strings.LastIndex(s, str)
 }
 
-// Contain 是否包含（区分大小写）
+// Contains 是否包含（区分大小写）
 /*
 e.g.
 ("", "1") 		=> false
 ("abc", "Abc") 	=> false
 */
-func Contain(s, substr string) bool {
+func Contains(s, substr string) bool {
 	return strings.Contains(s, substr)
 }
 
-// ContainIgnoreCase 是否包含（不区分大小写）
+// ContainsIgnoreCase 是否包含（不区分大小写）
 /*
 e.g.
 ("abc", "Abc") 	=> true
 */
-func ContainIgnoreCase(s, substr string) bool {
-	s = ToLower(s)
-	substr = ToLower(substr)
-	return strings.Contains(s, substr)
+func ContainsIgnoreCase(s, substr string) bool {
+	return strings.Contains(ToLower(s), ToLower(substr))
 }
 
 // Count 计数
