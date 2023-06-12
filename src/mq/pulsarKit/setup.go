@@ -38,7 +38,8 @@ func SetUp(pulsarConfig *Config) (err error) {
 /*
 前提: 成功调用 SetUp() || MustSetUp().
 
-@param logPath 客户端的日志输出（为空则输出到控制台）
+@param options 必需属性: Topic、SendTimeout
+@param logPath 客户端的日志输出（"": 输出到控制台）
 */
 func NewProducer(ctx context.Context, options pulsar.ProducerOptions, logPath string) (*Producer, error) {
 	if config == nil {
@@ -51,8 +52,8 @@ func NewProducer(ctx context.Context, options pulsar.ProducerOptions, logPath st
 /*
 前提: 成功调用 SetUp() || MustSetUp().
 
-@param options 至少需要为 Topic、SubscriptionName、Type 属性复制
-@param logPath 客户端的日志输出（为空则输出到控制台）
+@param options 必需属性: Topic、SubscriptionName、Type
+@param logPath 客户端的日志输出（"": 输出到控制台）
 */
 func NewConsumer(ctx context.Context, options pulsar.ConsumerOptions, logPath string) (*Consumer, error) {
 	if config == nil {
