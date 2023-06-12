@@ -17,7 +17,7 @@ var setupOnce sync.Once
 
 func MustSetUp(config *Config) {
 	if err := setUp(config); err != nil {
-		logrus.Fatal(err)
+		logrus.Fatalf("%+v", err)
 	}
 }
 

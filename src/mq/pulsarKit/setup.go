@@ -14,7 +14,7 @@ var config *Config
 func MustSetUp(config *Config) {
 	err := SetUp(config)
 	if err != nil {
-		logrus.Fatal(err)
+		logrus.Fatalf("%+v", err)
 	}
 }
 

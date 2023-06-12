@@ -7,9 +7,8 @@ import (
 var client *Client
 
 func MustSetUp(config *Config) {
-	err := SetUp(config)
-	if err != nil {
-		logrus.Fatal(err)
+	if err := SetUp(config); err != nil {
+		logrus.Fatalf("%+v", err)
 	}
 }
 

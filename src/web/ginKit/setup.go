@@ -10,7 +10,7 @@ import (
 func MustSetUp(config *Config, recoveryMiddleware gin.HandlerFunc, businessLogic func(engine *gin.Engine) error) {
 	err := setUp(config, recoveryMiddleware, businessLogic)
 	if err != nil {
-		logrus.Fatal(err)
+		logrus.Fatalf("%+v", err)
 	}
 }
 
