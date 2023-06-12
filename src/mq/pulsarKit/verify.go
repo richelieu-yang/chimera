@@ -35,15 +35,11 @@ PS:
 （1）pulsar的进程在，但启动报错（存储空间爆了）
 */
 func verify(verifyConfig *VerifyConfig) (err error) {
-	if verifyConfig == nil {
+	if verifyConfig == nil || strKit.IsBlank(verifyConfig.Topic) {
 		// 不验证
 		return nil
 	}
 	topic := verifyConfig.Topic
-	if strKit.IsEmpty(topic) || strKit.IsBlank(topic) {
-		// 不验证
-		return nil
-	}
 
 	dir, _ := pathKit.GetUniqueTempDir()
 	timeStr := timeKit.FormatCurrentTime(timeKit.FormatFileName)
@@ -85,8 +81,9 @@ func _verify(logger *logrus.Logger, topic, consumerLogPath, producerLogPath stri
 	ctx0, cancel := context.WithTimeout(context.TODO(), connectTimeout)
 	defer cancel()
 	consumer, err := NewConsumer(ctx0, pulsar.ConsumerOptions{
-		Topic:            topic,
-		SubscriptionName: fmt.Sprintf("verify_%s", idKit.NewUUID()),
+		Topic: topic,
+		//SubscriptionName: fmt.Sprintf("verify_%s", idKit.NewUUID()),
+		SubscriptionName: "verify123",
 		Type:             pulsar.Exclusive,
 	}, consumerLogPath)
 	if err != nil {
