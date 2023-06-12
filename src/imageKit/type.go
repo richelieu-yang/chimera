@@ -22,7 +22,7 @@ func ConvertImageType(src, dest string) error {
 	if err := fileKit2.AssertExistAndIsFile(src); err != nil {
 		return err
 	}
-	if fileKit2.Exist(dest) && fileKit2.IsDir(dest) {
+	if fileKit2.Exists(dest) && fileKit2.IsDir(dest) {
 		return errorKit.New("dest(%s) exists but it's a directory", dest)
 	}
 

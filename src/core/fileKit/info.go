@@ -7,7 +7,7 @@ import (
 )
 
 var (
-	Exist  func(path string) bool = gfile.Exists
+	Exists func(path string) bool = gfile.Exists
 	IsFile func(path string) bool = gfile.IsFile
 	IsDir  func(path string) bool = gfile.IsDir
 

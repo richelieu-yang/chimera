@@ -65,7 +65,7 @@ func GetText(imgPath string, languages ...string) (string, error) {
 	if err != nil {
 		return "", err
 	}
-	if !fileKit.Exist(filePath) {
+	if !fileKit.Exists(filePath) {
 		return "", errorKit.New(result)
 	}
 	if fileKit.IsDir(filePath) {
