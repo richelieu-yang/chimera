@@ -13,6 +13,7 @@ import (
 	"github.com/richelieu-yang/chimera/v2/src/idKit"
 	"github.com/richelieu-yang/chimera/v2/src/log/logrusKit"
 	"github.com/richelieu-yang/chimera/v2/src/operationKit"
+	"github.com/richelieu-yang/chimera/v2/src/randomKit"
 	"github.com/sirupsen/logrus"
 	"time"
 )
@@ -82,7 +83,7 @@ func _verify(logger *logrus.Logger, topic, consumerLogPath, producerLogPath stri
 	defer cancel()
 	consumer, err := NewConsumer(ctx0, pulsar.ConsumerOptions{
 		Topic:            topic,
-		SubscriptionName: fmt.Sprintf("verify_%s", idKit.NewUUID()),
+		SubscriptionName: fmt.Sprintf("verify_%s_%d", idKit.NewUUID(), randomKit.Int(0, 10000000)),
 		Type:             pulsar.Exclusive,
 	}, consumerLogPath)
 	if err != nil {
