@@ -81,9 +81,8 @@ func _verify(logger *logrus.Logger, topic, consumerLogPath, producerLogPath stri
 	ctx0, cancel := context.WithTimeout(context.TODO(), connectTimeout)
 	defer cancel()
 	consumer, err := NewConsumer(ctx0, pulsar.ConsumerOptions{
-		Topic: topic,
-		//SubscriptionName: fmt.Sprintf("verify_%s", idKit.NewUUID()),
-		SubscriptionName: "verify123",
+		Topic:            topic,
+		SubscriptionName: fmt.Sprintf("verify_%s", idKit.NewUUID()),
 		Type:             pulsar.Exclusive,
 	}, consumerLogPath)
 	if err != nil {
