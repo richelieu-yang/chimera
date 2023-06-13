@@ -16,8 +16,8 @@ e.g. spec == "@every 10s"
 	在调用Start()或Run()的那个瞬间开始计时，每隔10s执行1次传参task.
 */
 func NewCron(spec string, task func()) (*cron.Cron, cron.EntryID, error) {
-	if strKit.IsEmpty(spec) {
-		return nil, 0, errorKit.New("spec is empty")
+	if strKit.IsBlank(spec) {
+		return nil, 0, errorKit.New("spec is blank")
 	}
 	if task == nil {
 		return nil, 0, errorKit.New("task == nil")
