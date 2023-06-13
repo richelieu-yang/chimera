@@ -8,10 +8,23 @@ import (
 
 // NewCron
 /*
+定时任务-表达式
+	https://goframe.org/pages/viewpage.action?pageId=30736411
 Go 每日一库之定时任务库：cron
 	https://mp.weixin.qq.com/s/swdijAro2k8LuYu7q_La1A
 cron表达式，每天凌晨0点执行定时任务
 	https://www.cnblogs.com/yddwinter/p/16033633.html
+
+
+e.g. spec
+"* * * * * *"			每秒执行
+"30 * * * * *"			每分钟的第30s，执行一次
+"15,30 * * * * *"		每分钟的第15s、第30s，各执行一次
+"0 0 2 * * *"			每天凌晨2点执行
+"@every 10s"			从执行Run() || Start()开始，每 10s	 	执行一次
+"@every 1m"				从执行Run() || Start()开始，每 1min	执行一次
+"@hourly"				从执行Run() || Start()开始，每 1h 		执行一次
+"@every 1h30m"			从执行Run() || Start()开始，每 1.5h 	执行一次
 */
 func NewCron() *cron.Cron {
 	// 带"秒"
