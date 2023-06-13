@@ -3,11 +3,9 @@ package main
 import (
 	"database/sql"
 	"fmt"
-	"github.com/richelieu-yang/chimera/v2/src/core/ioKit"
 	"github.com/richelieu-yang/chimera/v2/src/database/mysqlKit"
 	"gorm.io/driver/mysql"
 	"gorm.io/gorm"
-	"gorm.io/gorm/logger"
 	"time"
 )
 
@@ -19,24 +17,24 @@ func main() {
 		DBName:   "ccc2",
 	}
 
-	writeCloser, err := ioKit.NewLumberjackWriteCloser("a.log")
-	if err != nil {
-		panic(err)
-	}
+	//writeCloser, err := ioKit.NewLumberjackWriteCloser("a.log")
+	//if err != nil {
+	//	panic(err)
+	//}
 	//var logger logger.Interface
 
-	logger.Discard
-
-	logger.Default
+	//logger.Discard
+	//
+	//logger.Default
 
 	dsn := c.String()
 	db, err := gorm.Open(mysql.Open(dsn), &gorm.Config{
-		Logger: logger.New(writeCloser, logger.Config{
-			SlowThreshold:             200 * time.Millisecond,
-			LogLevel:                  Warn,
-			IgnoreRecordNotFoundError: false,
-			Colorful:                  true,
-		}),
+		//Logger: logger.New(writeCloser, logger.Config{
+		//	SlowThreshold:             200 * time.Millisecond,
+		//	LogLevel:                  Warn,
+		//	IgnoreRecordNotFoundError: false,
+		//	Colorful:                  true,
+		//}),
 	})
 	if err != nil {
 		panic(err)
