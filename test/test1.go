@@ -4,12 +4,15 @@ import (
 	"database/sql"
 	"fmt"
 	"github.com/richelieu-yang/chimera/v2/src/database/mysqlKit"
+	"github.com/sirupsen/logrus"
 	"gorm.io/driver/mysql"
 	"gorm.io/gorm"
 	"time"
 )
 
 func main() {
+	logrus.Info()
+
 	c := &mysqlKit.DsnConfig{
 		UserName: "root",
 		Password: "~Test123",

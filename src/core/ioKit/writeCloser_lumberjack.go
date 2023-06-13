@@ -64,7 +64,7 @@ func loadOptions(options ...LumberjackOption) *lumberjackOptions {
 	return opts
 }
 
-// NewLumberjackWriteCloser
+// NewLumberjackWriteCloser 文件分割（根据文件大小）
 /*
 参考: https://github.com/natefinch/lumberjack
 
