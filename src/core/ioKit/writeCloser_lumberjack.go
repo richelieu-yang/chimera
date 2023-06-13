@@ -4,7 +4,6 @@ import (
 	"github.com/richelieu-yang/chimera/v2/src/core/fileKit"
 	"gopkg.in/natefinch/lumberjack.v2"
 	"io"
-	"os"
 )
 
 type (
@@ -50,6 +49,7 @@ func WithCompress(compress bool) LumberjackOption {
 	}
 }
 
+// WithConsole Deprecated: 暂不使用
 func WithConsole(console bool) LumberjackOption {
 	return func(opts *lumberjackOptions) {
 		opts.console = console
@@ -79,7 +79,7 @@ PS:
 @param filePath 文件路径
 @param options 	可选配置
 */
-func NewLumberjackWriteCloser(filePath string, options ...LumberjackOption) (io.WriteCloser, error) {
+func NewLumberjackWriteCloser(filePath string, options ...LumberjackOption) (*lumberjack.Logger /*io.WriteCloser*/, error) {
 	if err := fileKit.AssertNotExistOrIsFile(filePath); err != nil {
 		return nil, err
 	}
@@ -88,7 +88,7 @@ func NewLumberjackWriteCloser(filePath string, options ...LumberjackOption) (io.
 	}
 
 	opts := loadOptions(options...)
-	var writeCloser io.WriteCloser = &lumberjack.Logger{
+	var writeCloser = &lumberjack.Logger{
 		Filename:   filePath,
 		MaxSize:    opts.maxSize,
 		MaxBackups: opts.maxBackups,
@@ -96,9 +96,9 @@ func NewLumberjackWriteCloser(filePath string, options ...LumberjackOption) (io.
 		LocalTime:  opts.localTime,
 		Compress:   opts.compress,
 	}
-	if opts.console {
-		writeCloser = MultiWriteCloser(writeCloser, NopCloserToWriter(os.Stdout))
-	}
+	//if opts.console {
+	//	writeCloser = MultiWriteCloser(writeCloser, NopCloserToWriter(os.Stdout))
+	//}
 	return writeCloser, nil
 }
 
