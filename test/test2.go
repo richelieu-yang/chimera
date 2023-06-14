@@ -21,6 +21,7 @@ func main() {
 	if err != nil {
 		logrus.Fatal(err)
 	}
+
 	c.Run()
 
 	//wc, err := ioKit.NewRotatableWriteCloser("/Users/richelieu/Downloads/aaa.log", 1024*1024*1,

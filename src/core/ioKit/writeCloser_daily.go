@@ -18,6 +18,7 @@ func (dwc *DailyWriteCloser) Write(p []byte) (int, error) {
 }
 
 func (dwc *DailyWriteCloser) Close() error {
+	_ = dwc.cron.Stop()
 	return dwc.writeCloser.Close()
 }
 
@@ -26,12 +27,16 @@ func (dwc *DailyWriteCloser) Close() error {
 @param options 可选配置，参考 NewRotatableWriteCloser()
 */
 func NewDailyWriteCloser(filePath string, options ...LumberjackOption) (io.WriteCloser, error) {
+	return NewRotatableWriteCloserWithSpec(filePath, "0 0 0 * * *", options...)
+}
+
+func NewRotatableWriteCloserWithSpec(filePath string, spec string, options ...LumberjackOption) (io.WriteCloser, error) {
 	wc, err := NewRotatableWriteCloser(filePath, math.MaxInt64, options...)
 	if err != nil {
 		return nil, err
 	}
 
-	c, _, err := cronKit.NewCronWithTask("0 0 0 * * *", func() {
+	c, _, err := cronKit.NewCronWithTask(spec, func() {
 		_, _ = wc.Write([]byte("rotate by cron"))
 		if err := wc.Rotate(); err != nil {
 			text := "fail to rotate by cron, error: " + err.Error()

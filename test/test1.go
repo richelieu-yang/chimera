@@ -14,11 +14,9 @@ func main() {
 	if err != nil {
 		logrus.Fatal(err)
 	}
-
+	logger := logrusKit.NewLogger(logrusKit.WithOutput(wc))
 	c, _, err := cronKit.NewCronWithTask("* * * * * *", func() {
-		if _, err := wc.Write([]byte("-")); err != nil {
-			logrus.Error(err.Error())
-		}
+		logger.Info("-")
 	})
 	if err != nil {
 		logrus.Fatal(err)
