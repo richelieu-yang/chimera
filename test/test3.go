@@ -2,12 +2,16 @@ package main
 
 import (
 	"github.com/richelieu-yang/chimera/v2/src/core/ioKit"
+	"github.com/richelieu-yang/chimera/v2/src/core/timeKit"
 	"github.com/richelieu-yang/chimera/v2/src/dataSizeKit"
 	"github.com/richelieu-yang/chimera/v2/src/log/logrusKit"
 	"github.com/sirupsen/logrus"
 )
 
 func main() {
+
+	timeKit.FormatB
+
 	logrusKit.MustSetUp(nil)
 
 	wc, err := ioKit.NewRotatableWriteCloser("test3.log", dataSizeKit.MiB*20)
