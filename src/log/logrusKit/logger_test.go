@@ -16,7 +16,7 @@ func TestNewLogger(t *testing.T) {
 	if err != nil {
 		panic(err)
 	}
-	logger = NewLogger(WithWriter(writer))
+	logger = NewLogger(WithOutput(writer))
 	logger.Info("rotatable file logger")
 }
 

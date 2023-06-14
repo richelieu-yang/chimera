@@ -13,7 +13,7 @@ type (
 		formatter    logrus.Formatter
 		reportCaller bool
 		level        logrus.Level
-		writer       io.Writer
+		output       io.Writer
 	}
 
 	LoggerOption func(opts *loggerOptions)
@@ -37,9 +37,9 @@ func WithLevel(level logrus.Level) LoggerOption {
 	}
 }
 
-func WithWriter(writer io.Writer) LoggerOption {
+func WithOutput(output io.Writer) LoggerOption {
 	return func(opts *loggerOptions) {
-		opts.writer = writer
+		opts.output = output
 	}
 }
 
@@ -51,7 +51,7 @@ func loadOptions(options ...LoggerOption) *loggerOptions {
 		// 默认: debug
 		level: logrus.DebugLevel,
 		// 默认: 输出到控制台
-		writer: nil,
+		output: nil,
 	}
 
 	for _, option := range options {
@@ -69,14 +69,14 @@ func loadOptions(options ...LoggerOption) *loggerOptions {
 // NewLogger
 /*
 PS:
-(1) 如果希望 输出到文件 且 rotatable，可以使用 WithWriter()，详见下例.
+(1) 如果希望 输出到文件 且 rotatable，可以使用 WithOutput()，详见下例.
 
 @param options 可以什么都不配置（此时输出到控制台）
 
 e.g.
-	writer, err := ioKit.NewLumberjackWriteCloser(path)
+	output, err := ioKit.NewLumberjackWriteCloser(path)
 	// process err
-	logger := NewLogger(WithWriter(writer))
+	logger := NewLogger(WithOutput(output))
 */
 func NewLogger(options ...LoggerOption) *logrus.Logger {
 	opts := loadOptions(options...)
@@ -85,8 +85,8 @@ func NewLogger(options ...LoggerOption) *logrus.Logger {
 	logger.SetFormatter(opts.formatter)
 	logger.SetReportCaller(opts.reportCaller)
 	logger.SetLevel(opts.level)
-	if opts.writer != nil {
-		logger.SetOutput(opts.writer)
+	if opts.output != nil {
+		logger.SetOutput(opts.output)
 	}
 	return logger
 }
@@ -104,7 +104,7 @@ func NewFileLogger(filePath string, options ...LoggerOption) (*logrus.Logger, er
 	if err != nil {
 		return nil, err
 	}
-	option := WithWriter(file)
+	option := WithOutput(file)
 	options = append(options, option)
 	return NewLogger(options...), nil
 }
