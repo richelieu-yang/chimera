@@ -1,14 +1,15 @@
 package main
 
 import (
-	"github.com/richelieu-yang/chimera/v2/src/core/timeKit"
-	"time"
+	"github.com/richelieu-yang/chimera/v2/src/core/bytesKit"
 )
 
 func main() {
-	t := time.Now()
-	println(timeKit.FormatTimeToString(t, "2006-01-02T15-04-05.000"))
-	println(timeKit.FormatTimeToString(t, timeKit.FormatEntire))
+	var a = []byte("abcd")
+	var b = []byte("abcd")
+	println(bytesKit.Equals(a, b)) // true
+	b = []byte("abcd1")
+	println(bytesKit.Equals(a, b)) // false
 }
 
 //func main() {
