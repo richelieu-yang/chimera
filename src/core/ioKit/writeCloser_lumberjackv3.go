@@ -54,7 +54,9 @@ func loadOptions(options ...LumberjackOption) *lumberjackOptions {
 
 // NewRotatableWriteCloser 可rotate（依据传参maxSize）的io.WriteCloser.
 /*
-缺陷: 如果 当前目标文件 被人为删了，会丢失部分输出直至再次调用Rotate().
+PS:
+(1) 如果 当前目标文件 被人为删了，会丢失部分输出直至再次调用Rotate().
+(2) 可以同时配置 MaxBackups 和 MaxAge.
 
 @param maxSize unit: byte
 @param options 可选配置:
