@@ -9,7 +9,9 @@ func main() {
 	var b = []byte("abcd")
 	println(bytesKit.Equals(a, b)) // true
 	b = []byte("abcd1")
-	println(bytesKit.Equals(a, b)) // false
+	println(bytesKit.Equals(a, b))     // false
+	println(bytesKit.Equals(a, nil))   // false
+	println(bytesKit.Equals(nil, nil)) // true
 }
 
 //func main() {
