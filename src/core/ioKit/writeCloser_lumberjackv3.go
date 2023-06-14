@@ -42,7 +42,10 @@ func WithCompress(compress bool) LumberjackOption {
 }
 
 func loadOptions(options ...LumberjackOption) *lumberjackOptions {
-	opts := &lumberjackOptions{}
+	opts := &lumberjackOptions{
+		compress:  false,
+		localTime: true,
+	}
 	for _, option := range options {
 		option(opts)
 	}
@@ -53,10 +56,10 @@ func loadOptions(options ...LumberjackOption) *lumberjackOptions {
 /*
 @param maxSize unit: byte
 @param options 可选配置:
-WithCompress()		[默认不压缩] 是否压缩被rotate的文件？
-WithMaxBackups()	[默认保留所有旧日志] 旧日志保存的最多数量
-WithMaxAge()		[默认保留所有旧日志] 旧日志保存的最长时间
-WithLocalTime()		[默认使用UTC时间] 是否使用本地时间戳？
+WithCompress()		[默认: 不压缩] 是否压缩被rotate的文件？
+WithMaxBackups()	[默认: 保留所有旧日志] 旧日志保存的最多数量
+WithMaxAge()		[默认: 保留所有旧日志] 旧日志保存的最长时间
+WithLocalTime()		[默认: true] true: 使用本地时间; false: 使用UTC时间
 */
 func NewRotatableWriteCloser(filePath string, maxSize int64, options ...LumberjackOption) (*lumberjack.Roller, error) {
 	if err := fileKit.AssertNotExistOrIsFile(filePath); err != nil {
