@@ -21,21 +21,22 @@ func (dwc *DailyWriteCloser) Close() error {
 	return dwc.writeCloser.Close()
 }
 
-// NewDailyWriteCloser
+// NewDailyWriteCloser 每天凌晨0点rotate1次.
 /*
-@param options 可选配置: WithCompress() || WithMaxAge() || WithMaxBackups()
+@param options 可选配置，参考 NewRotatableWriteCloser()
 */
 func NewDailyWriteCloser(filePath string, options ...LumberjackOption) (io.WriteCloser, error) {
-	options = append(options, WithMaxSize(math.MaxInt64))
-	wc, err := NewLumberjackWriteCloser(filePath, options...)
+	wc, err := NewRotatableWriteCloser(filePath, math.MaxInt64, options...)
 	if err != nil {
 		return nil, err
 	}
 
 	c, _, err := cronKit.NewCronWithTask("0 0 0 * * *", func() {
-		_, _ = wc.Write([]byte("rotate by c"))
+		_, _ = wc.Write([]byte("rotate by cron"))
 		if err := wc.Rotate(); err != nil {
-			logrus.WithError(err).Error("fail to rotate")
+			text := "fail to rotate by cron, error: " + err.Error()
+			_, _ = wc.Write([]byte(text))
+			logrus.Error(text)
 		}
 	})
 	if err != nil {

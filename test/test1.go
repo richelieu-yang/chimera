@@ -1,7 +1,30 @@
 package main
 
-func main() {
+import (
+	"github.com/richelieu-yang/chimera/v2/src/core/ioKit"
+	"github.com/richelieu-yang/chimera/v2/src/cronKit"
+	"github.com/richelieu-yang/chimera/v2/src/log/logrusKit"
+	"github.com/sirupsen/logrus"
+)
 
+func main() {
+	logrusKit.MustSetUp(nil)
+
+	wc, err := ioKit.NewDailyWriteCloser("aaa.log")
+	if err != nil {
+		logrus.Fatal(err)
+	}
+
+	c, _, err := cronKit.NewCronWithTask("* * * * * *", func() {
+		if _, err := wc.Write([]byte("-")); err != nil {
+			logrus.Error(err.Error())
+		}
+	})
+	if err != nil {
+		logrus.Fatal(err)
+	}
+
+	c.Run()
 }
 
 //func main() {
