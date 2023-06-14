@@ -44,8 +44,10 @@ func WithCompress(compress bool) LumberjackOption {
 
 func loadOptions(options ...LumberjackOption) *lumberjackOptions {
 	opts := &lumberjackOptions{
-		compress:  false,
-		localTime: true,
+		maxAge:     0,
+		maxBackups: 0,
+		localTime:  true,
+		compress:   false,
 	}
 	for _, option := range options {
 		option(opts)
@@ -75,7 +77,7 @@ func NewRotatableWriteCloser(filePath string, maxSize int64, options ...Lumberja
 	}
 
 	opts := loadOptions(options...)
-	if opts.maxAge < time.Minute {
+	if opts.maxAge > 0 && opts.maxAge < time.Minute {
 		return nil, errorKit.New("maxAge(%s) is too small", opts.maxAge)
 	}
 	return lumberjack.NewRoller(filePath, maxSize, &lumberjack.Options{
