@@ -22,7 +22,7 @@ func (dwc *DailyWriteCloser) Close() error {
 	return dwc.writeCloser.Close()
 }
 
-// NewDailyWriteCloser 每天凌晨0点rotate1次.
+// NewDailyWriteCloser 每天凌晨0点执行Rotate().
 /*
 @param options 可选配置，参考 NewRotatableWriteCloser()
 */
