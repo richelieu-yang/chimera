@@ -2,6 +2,7 @@ package logrusKit
 
 import (
 	"github.com/richelieu-yang/chimera/v2/src/core/ioKit"
+	"github.com/richelieu-yang/chimera/v2/src/dataSizeKit"
 	"testing"
 )
 
@@ -12,7 +13,7 @@ func TestNewLogger(t *testing.T) {
 
 	/* 输出到文件(rotatable) */
 	path := "test.log"
-	writer, err := ioKit.NewLumberjackWriteCloser(path)
+	writer, err := ioKit.NewRotatableWriteCloser(path, 10*dataSizeKit.MiB)
 	if err != nil {
 		panic(err)
 	}

@@ -9,7 +9,7 @@ import (
 
 // NewLogger
 /*
-@param writer 	可以是: ioKit.NewLumberjackWriteCloser()
+@param writer	可以是: ioKit.NewRotatableWriteCloser()
 @param level 	e.g. zap.InfoLevel
 */
 func NewLogger(writer io.Writer, level zapcore.Level) (*zap.Logger, error) {

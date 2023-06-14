@@ -1,7 +1,7 @@
 package etcdKit
 
 import (
-	"github.com/richelieu-yang/chimera/v2/src/core/ioKit"
+	"github.com/richelieu-yang/chimera/v2/src/core/fileKit"
 	"github.com/richelieu-yang/chimera/v2/src/core/strKit"
 	"github.com/richelieu-yang/chimera/v2/src/log/zapKit"
 	"github.com/sirupsen/logrus"
@@ -38,7 +38,8 @@ func setUp(config *Config) (err error) {
 		var logger *zap.Logger
 		if strKit.IsNotEmpty(config.LogPath) {
 			var writer io.Writer
-			writer, err = ioKit.NewLumberjackWriteCloser(config.LogPath)
+
+			writer, err = fileKit.NewFileInAppendMode(config.LogPath)
 			if err != nil {
 				return
 			}

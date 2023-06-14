@@ -22,10 +22,7 @@ var (
 	Remove = gfile.Remove
 )
 
-// NewFile 创建文件.
-/*
-PS: 如果文件已经存在，会覆盖掉它.
-*/
+// NewFile 创建文件（读写权限、文件不存在就创建、打开并清空文件）.
 func NewFile(filePath string) (*os.File, error) {
 	if err := AssertNotExistOrIsFile(filePath); err != nil {
 		return nil, err
@@ -34,7 +31,20 @@ func NewFile(filePath string) (*os.File, error) {
 		return nil, err
 	}
 
+	// flag: O_RDWR|O_CREATE|O_TRUNC
 	return os.Create(filePath)
+}
+
+// NewFileInAppendMode 创建文件（读写权限、文件不存在就创建、追加模式）.
+func NewFileInAppendMode(filePath string) (*os.File, error) {
+	if err := AssertNotExistOrIsFile(filePath); err != nil {
+		return nil, err
+	}
+	if err := MkParentDirs(filePath); err != nil {
+		return nil, err
+	}
+
+	return os.OpenFile(filePath, os.O_RDWR|os.O_CREATE|os.O_APPEND, 0666)
 }
 
 // NewTemporaryFile 在指定目录下，生成临时文件.

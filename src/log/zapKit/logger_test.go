@@ -1,19 +1,22 @@
 package zapKit
 
 import (
-	"github.com/richelieu-yang/chimera/v2/src/core/ioKit"
-	"github.com/stretchr/testify/assert"
+	"github.com/richelieu-yang/chimera/v2/src/core/fileKit"
 	"go.uber.org/zap"
 	"testing"
 )
 
 func TestNewLogger(t *testing.T) {
 	// 日志文件会生成在当前.go文件的同目录下
-	writer, err := ioKit.NewLumberjackWriteCloser("aaa.log", ioKit.WithCompress(true))
-	assert.Nil(t, err)
+	writer, err := fileKit.NewFileInAppendMode("aaa.log")
+	if err != nil {
+		panic(err)
+	}
 
 	logger, err := NewLogger(writer, zap.InfoLevel)
-	assert.Nil(t, err)
+	if err != nil {
+		panic(err)
+	}
 
 	// 由于日志级别，下一行不会输出
 	logger.Debug("Debug")

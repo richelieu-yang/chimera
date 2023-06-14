@@ -5,7 +5,6 @@ import (
 	"github.com/richelieu-yang/chimera/v2/src/core/ioKit"
 	"github.com/sirupsen/logrus"
 	"io"
-	"os"
 )
 
 type (
@@ -72,11 +71,6 @@ PS:
 (1) 如果希望 输出到文件 且 rotatable，可以使用 WithOutput()，详见下例.
 
 @param options 可以什么都不配置（此时输出到控制台）
-
-e.g.
-	output, err := ioKit.NewLumberjackWriteCloser(path)
-	// process err
-	logger := NewLogger(WithOutput(output))
 */
 func NewLogger(options ...LoggerOption) *logrus.Logger {
 	opts := loadOptions(options...)
@@ -93,14 +87,7 @@ func NewLogger(options ...LoggerOption) *logrus.Logger {
 
 // NewFileLogger 输出到文件(not rotatable).
 func NewFileLogger(filePath string, options ...LoggerOption) (*logrus.Logger, error) {
-	if err := fileKit.AssertNotExistOrIsFile(filePath); err != nil {
-		return nil, err
-	}
-	if err := fileKit.MkParentDirs(filePath); err != nil {
-		return nil, err
-	}
-
-	file, err := os.OpenFile(filePath, os.O_RDWR|os.O_APPEND|os.O_CREATE, 0666)
+	file, err := fileKit.NewFileInAppendMode(filePath)
 	if err != nil {
 		return nil, err
 	}
