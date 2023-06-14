@@ -1,7 +1,8 @@
 package main
 
 import (
-	"github.com/richelieu-yang/chimera/v2/src/cronKit"
+	"github.com/natefinch/lumberjack/v3"
+	"github.com/richelieu-yang/chimera/v2/src/dataSizeKit"
 	"github.com/richelieu-yang/chimera/v2/src/log/logrusKit"
 	"github.com/sirupsen/logrus"
 )
@@ -9,15 +10,21 @@ import (
 func main() {
 	logrusKit.MustSetUp(nil)
 
-	cron, _, err := cronKit.NewCronWithTask("@every 10s", func() {
-		logrus.Info("do")
-	})
+	wc, err := lumberjack.NewRoller("ccc.log", 20*dataSizeKit.MiB, &lumberjack.Options{})
 	if err != nil {
 		panic(err)
 	}
-	cron.Start()
 
-	logrus.Info("--------")
-
-	select {}
+	//wc := &lumberjack.Logger{
+	//	Filename: "CCC.log",
+	//	MaxSize:  20,
+	//}
+	for {
+		n, err := wc.Write([]byte("46464\n"))
+		if err != nil {
+			logrus.Fatal(err)
+			return
+		}
+		logrus.Info(n)
+	}
 }

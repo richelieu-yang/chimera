@@ -1,13 +1,13 @@
 package dataSizeKit
 
 const (
-	B   = 1
-	KiB = 1 << 10
-	MiB = 1 << 20
-	GiB = 1 << 30
-	TiB = 1 << 40
-	PiB = 1 << 50
-	EiB = 1 << 60
+	B   int64 = 1
+	KiB int64 = 1 << 10
+	MiB int64 = 1 << 20
+	GiB int64 = 1 << 30
+	TiB int64 = 1 << 40
+	PiB int64 = 1 << 50
+	EiB int64 = 1 << 60
 	//ZB = 1 << 70
 	//YB = 1 << 80
 )
