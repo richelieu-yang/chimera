@@ -1,28 +1,9 @@
 package main
 
-import (
-	"github.com/richelieu-yang/chimera/v2/src/core/ioKit"
-	"github.com/richelieu-yang/chimera/v2/src/cronKit"
-	"github.com/richelieu-yang/chimera/v2/src/log/logrusKit"
-	"github.com/sirupsen/logrus"
-)
+import "github.com/richelieu-yang/chimera/v2/src/core/timeKit"
 
 func main() {
-	logrusKit.MustSetUp(nil)
-
-	wc, err := ioKit.NewDailyWriteCloser("aaa.log")
-	if err != nil {
-		logrus.Fatal(err)
-	}
-	logger := logrusKit.NewLogger(logrusKit.WithOutput(wc))
-	c, _, err := cronKit.NewCronWithTask("* * * * * *", func() {
-		logger.Info("-")
-	})
-	if err != nil {
-		logrus.Fatal(err)
-	}
-
-	c.Run()
+	println(timeKit.FormatCurrentTime("2006-01-02T15-04-05.000"))
 }
 
 //func main() {
