@@ -55,7 +55,7 @@ func RemoveEmpty(s []string, trimArgs ...bool) []string {
 // ContainsStringIgnoreCase 字符串str是否在切片s中？（不区分大小写）
 func ContainsStringIgnoreCase(s []string, str string) bool {
 	for _, tmp := range s {
-		if strKit.EqualIgnoreCase(tmp, str) {
+		if strKit.EqualsIgnoreCase(tmp, str) {
 			return true
 		}
 	}

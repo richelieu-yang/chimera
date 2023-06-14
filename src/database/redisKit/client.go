@@ -83,13 +83,17 @@ func NewClient(config *Config) (client *Client, err error) {
 	}()
 
 	// 简单测试是否Redis服务可用
-	ctx, cancel := context.WithTimeout(context.TODO(), time.Second*3)
+	pingTimeout := time.Second * 3
+	ctx, cancel := context.WithTimeout(context.TODO(), pingTimeout)
 	defer cancel()
 	str, err := client.Ping(ctx)
 	if err != nil {
+		if err == context.DeadlineExceeded {
+			err = errorKit.New("fail to ping within timeout(%s)", pingTimeout)
+		}
 		return
 	}
-	if !strKit.EqualIgnoreCase(str, "PONG") {
+	if !strKit.EqualsIgnoreCase(str, "PONG") {
 		err = errorKit.New("result(%s) of ping in invalid", str)
 		return
 	}

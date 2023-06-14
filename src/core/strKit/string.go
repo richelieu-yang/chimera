@@ -13,17 +13,11 @@ import (
 /*
 Deprecated: 直接用 fmt.Sprintf() 对编码更友好。
 */
-func Format(format string, args ...interface{}) string {
-	return fmt.Sprintf(format, args...)
-}
+var Format func(format string, args ...interface{}) string = fmt.Sprintf
 
-func ToLower(s string) string {
-	return strings.ToLower(s)
-}
+var ToLower func(s string) string = strings.ToLower
 
-func ToUpper(s string) string {
-	return strings.ToUpper(s)
-}
+var ToUpper func(s string) string = strings.ToUpper
 
 // Index
 /*
@@ -39,18 +33,14 @@ e.g.
 ("bcabc", "ab")		=> 2
 ("23", "1")			=> -1
 */
-func Index(s, str string) int {
-	return strings.Index(s, str)
-}
+var Index func(s, str string) int = strings.Index
 
 // LastIndex
 /*
 e.g.
 ("", "1") => -1
 */
-func LastIndex(s, str string) int {
-	return strings.LastIndex(s, str)
-}
+var LastIndex func(s, str string) int = strings.LastIndex
 
 // Contains 是否包含（区分大小写）
 /*
@@ -58,9 +48,7 @@ e.g.
 ("", "1") 		=> false
 ("abc", "Abc") 	=> false
 */
-func Contains(s, substr string) bool {
-	return strings.Contains(s, substr)
-}
+var Contains func(s, substr string) bool = strings.Contains
 
 // ContainsIgnoreCase 是否包含（不区分大小写）
 /*
@@ -82,26 +70,18 @@ e.g.
 e.g.1 If substr is an empty string, Count returns 1 + the number of Unicode code points in s.
 strKit.Count("12345", "") 	=> 6
 */
-func Count(s, substr string) int {
-	return strings.Count(s, substr)
-}
+var Count func(s, substr string) int = strings.Count
 
-func Replace(s, old, new string, n int) string {
-	return strings.Replace(s, old, new, n)
-}
+var Replace func(s, old, new string, n int) string = strings.Replace
 
 // ReplaceAll
 /*
 e.g.
 ("12321", "2", "0") => "10301"
 */
-func ReplaceAll(s, old, new string) string {
-	return strings.ReplaceAll(s, old, new)
-}
+var ReplaceAll func(s, old, new string) string = strings.ReplaceAll
 
-func Join(elements []string, sep string) string {
-	return strings.Join(elements, sep)
-}
+var Join func(elements []string, sep string) string = strings.Join
 
 // Split
 /*
@@ -119,9 +99,7 @@ e.g.1
 ("1-2-3", "+") 	=> [1-2-3]（长度为1）
 ("172.18.21.50;8095;", ";") => [172.18.21.50 8095 ]（长度为3，第三个元素为""）
 */
-func Split(s, sep string) []string {
-	return strings.Split(s, sep)
-}
+var Split func(s, sep string) []string = strings.Split
 
 // Compare 字符串比较
 /*
@@ -129,22 +107,20 @@ func Split(s, sep string) []string {
 		(2)  0 if a == b
 		(3) +1 if a > b
 */
-var Compare = strings.Compare
+var Compare func(a, b string) int = strings.Compare
 
-// Equal 字符串是否相等？（区分大小写）
+// Equals 字符串是否相等？（区分大小写）
 /*
 e.g.
 ("abc", "Abc") => false
 */
-func Equal(str, str1 string) bool {
+func Equals(str, str1 string) bool {
 	return strings.Compare(str, str1) == 0
 }
 
-// EqualIgnoreCase 字符串是否相等？（不区分大小写）
+// EqualsIgnoreCase 字符串是否相等？（不区分大小写）
 /*
 e.g.
 ("abc", "Abc") => true
 */
-func EqualIgnoreCase(str, str1 string) bool {
-	return strings.EqualFold(str, str1)
-}
+var EqualsIgnoreCase func(str, str1 string) bool = strings.EqualFold
