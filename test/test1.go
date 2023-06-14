@@ -1,9 +1,14 @@
 package main
 
-import "github.com/richelieu-yang/chimera/v2/src/core/timeKit"
+import (
+	"github.com/richelieu-yang/chimera/v2/src/core/timeKit"
+	"time"
+)
 
 func main() {
-	println(timeKit.FormatCurrentTime("2006-01-02T15-04-05.000"))
+	t := time.Now()
+	println(timeKit.FormatTimeToString(t, "2006-01-02T15-04-05.000"))
+	println(timeKit.FormatTimeToString(t, timeKit.FormatEntire))
 }
 
 //func main() {
