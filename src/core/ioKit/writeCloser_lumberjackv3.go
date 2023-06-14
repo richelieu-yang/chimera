@@ -54,6 +54,8 @@ func loadOptions(options ...LumberjackOption) *lumberjackOptions {
 
 // NewRotatableWriteCloser 可rotate（依据传参maxSize）的io.WriteCloser.
 /*
+缺陷: 如果 当前目标文件 被人为删了，后续输出就丢了.
+
 @param maxSize unit: byte
 @param options 可选配置:
 WithCompress()		[默认: 不压缩] 是否压缩被rotate的文件？
