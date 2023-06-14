@@ -2,6 +2,7 @@ package ioKit
 
 import (
 	"github.com/natefinch/lumberjack/v3"
+	"github.com/richelieu-yang/chimera/v2/src/core/errorKit"
 	"github.com/richelieu-yang/chimera/v2/src/core/fileKit"
 	"time"
 )
@@ -74,6 +75,9 @@ func NewRotatableWriteCloser(filePath string, maxSize int64, options ...Lumberja
 	}
 
 	opts := loadOptions(options...)
+	if opts.maxAge < time.Minute {
+		return nil, errorKit.New("maxAge(%s) is too small", opts.maxAge)
+	}
 	return lumberjack.NewRoller(filePath, maxSize, &lumberjack.Options{
 		MaxAge:     opts.maxAge,
 		MaxBackups: opts.maxBackups,
