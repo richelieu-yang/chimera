@@ -10,7 +10,7 @@ func TestMustLoad(t *testing.T) {
 	type config struct {
 		Time    time.Duration `json:"time"`
 		Number  int           `json:"number,range=[1:100)"`
-		Number1 int           `json:"number1,range=[1:]"`
+		Number1 int           `json:"number1,range=[1:)"`
 	}
 
 	c := &config{}
