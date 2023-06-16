@@ -15,7 +15,7 @@ func TestMustLoad(t *testing.T) {
 		Time    time.Duration `json:"time"`
 		Number  int           `json:"number,range=[1:100)"`
 		Number1 int           `json:"number1,range=[1:)"`
-		//
+		// 此时使用 "config1" 而非 "*config1"，避免nil的情况
 		Config1 config1 `json:"config1"`
 	}
 
