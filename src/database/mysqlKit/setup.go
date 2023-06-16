@@ -35,6 +35,7 @@ func SetUp(config *Config, output io.Writer) error {
 		output = os.Stdout
 	}
 	writer := log.New(output, "\r\n", log.Ldate|log.Ltime|log.Lmicroseconds)
+	// 参考: logger.Default
 	clientLogger := logger.New(writer, logger.Config{
 		// 慢SQL阈值
 		SlowThreshold: config.Log.SlowThreshold,
