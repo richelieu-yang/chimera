@@ -17,6 +17,7 @@ func NewSonyFlake(st *sonyflake.Settings) (*sonyflake.Sonyflake, error) {
 	if st == nil {
 		st = &sonyflake.Settings{}
 	}
+
 	sf := sonyflake.NewSonyflake(*st)
 	if sf == nil {
 		return nil, errorKit.New("sf == nil")
