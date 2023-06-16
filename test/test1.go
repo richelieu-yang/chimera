@@ -2,9 +2,13 @@ package main
 
 import (
 	"github.com/richelieu-yang/chimera/v2/src/core/bytesKit"
+	"math"
 )
 
 func main() {
+
+	println(math.MaxUint16)
+
 	var a = []byte("abcd")
 	var b = []byte("abcd")
 	println(bytesKit.Equals(a, b)) // true

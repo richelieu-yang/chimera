@@ -5,7 +5,7 @@ import (
 	"github.com/sony/sonyflake"
 )
 
-// NewSonyFlake
+// NewSonyFlake 雪花算法.
 /*
 PS:
 (1) 可用作分布式唯一id（前提是合理配置好 MachineID）;
