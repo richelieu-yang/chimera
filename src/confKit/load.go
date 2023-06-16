@@ -11,6 +11,14 @@ import (
 (0) 所有字段首字母大写 && 有json tag;
 (1) 结构体可以参考 go-zero的 rest.RestConf，可以通过tag控制配置的值（默认值default、范围range、可选optional...；可以组合）
 (2) 值为数组时要注意（要么有值(size > 0)，要么全注释掉），以免返回error.
+(3) range(定义当前字段数值范围)支持:
+	[:5] (:5] [:5) (:5)
+	[1:] [1:) (1:] (1:)
+	[1:5] [1:5) (1:5] (1:5)
+	e.g.
+	type config struct {
+		Number1 int           `json:"number1,range=[1:]"`
+	}
 
 @param path	配置文件的路径（推荐使用.yaml）
 @param ptr	[不能为nil] 结构体实例的指针
