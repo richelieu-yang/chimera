@@ -5,7 +5,6 @@ import (
 	"github.com/richelieu-yang/chimera/v2/src/confKit"
 	"github.com/richelieu-yang/chimera/v2/src/consts"
 	"github.com/richelieu-yang/chimera/v2/src/core/pathKit"
-	"github.com/richelieu-yang/chimera/v2/src/jsonKit"
 	"testing"
 )
 
@@ -23,9 +22,5 @@ func TestSetUp(t *testing.T) {
 	c := &config{}
 	confKit.MustLoad("chimera-lib/config.yaml", c)
 
-	str, err := jsonKit.MarshalToString(c, jsonKit.WithIndent("    "))
-	if err != nil {
-		panic(err)
-	}
-	fmt.Println(str)
+	MustSetUp(c.MySQL, nil)
 }

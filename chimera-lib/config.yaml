@@ -125,6 +125,7 @@ mysql:
   host: 127.0.0.1:3306
   dbName: ccc2
   log:
+    # 慢SQL阈值
     slowThreshold: 200ms
     # 客户端日志级别: 1(Silent)、2(Error)、3(Warn)、4(Info)
     logLevel: 4
