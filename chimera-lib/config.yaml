@@ -124,5 +124,13 @@ mysql:
   password: ~Test123
   host: 127.0.0.1:3306
   dbName: ccc2
-  slowThreshold: 200ms
-  logLevel: info
+  log:
+    slowThreshold: 200ms
+    logLevel: info
+  pool:
+    MaxIdleConns: 10
+    MaxOpenConns: 100
+    ConnMaxLifetime: 30m
+
+
+

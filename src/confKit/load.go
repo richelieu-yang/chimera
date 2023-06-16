@@ -1,6 +1,7 @@
 package confKit
 
 import (
+	"github.com/richelieu-yang/chimera/v2/src/core/fileKit"
 	"github.com/sirupsen/logrus"
 	"github.com/zeromicro/go-zero/core/conf"
 )
@@ -38,10 +39,16 @@ e.g.1	组合多个tag
 	Port     int    `json:"port,optional,range=[-1:65535]"`
 	Port     int    `json:"port,default=-1,range=[-1:65535]"`
 */
-func MustLoad(path string, ptr any, opts ...conf.Option) {
-	if err := Load(path, ptr, opts...); err != nil {
+func MustLoad(path string, ptr any, options ...conf.Option) {
+	if err := Load(path, ptr, options...); err != nil {
 		logrus.Fatalf("%+v", err)
 	}
 }
 
-var Load func(path string, ptr any, opts ...conf.Option) error = conf.Load
+func Load(path string, ptr any, options ...conf.Option) error {
+	if err := fileKit.AssertExistAndIsFile(path); err != nil {
+		return err
+	}
+
+	return conf.Load(path, ptr, options...)
+}
