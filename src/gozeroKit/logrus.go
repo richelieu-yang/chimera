@@ -1,7 +1,6 @@
 package gozeroKit
 
 import (
-	"github.com/richelieu-yang/chimera/v2/src/log/logrusKit"
 	"github.com/sirupsen/logrus"
 	"github.com/zeromicro/go-zero/core/logx"
 	"github.com/zeromicro/zero-contrib/logx/logrusx"
@@ -9,15 +8,11 @@ import (
 
 // SetLogrusWriter go-zero与第三方日志库logrus集成
 /*
-@param formatter 可以为nil
-*/
-func SetLogrusWriter(formatter logrus.Formatter) {
-	if formatter == nil {
-		formatter = logrusKit.DefaultTextFormatter
-	}
+!!!: 需要在 rest.MustNewServer() 后调用此方法，否则会被覆盖.
 
-	writer := logrusx.NewLogrusWriter(func(logger *logrus.Logger) {
-		logger.SetFormatter(formatter)
-	})
+@param options 可以修改 Out、Formatter...
+*/
+func SetLogrusWriter(options ...func(logger *logrus.Logger)) {
+	writer := logrusx.NewLogrusWriter(options...)
 	logx.SetWriter(writer)
 }
