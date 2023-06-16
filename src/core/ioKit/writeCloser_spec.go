@@ -22,7 +22,7 @@ func (dwc *DailyWriteCloser) Close() error {
 	return dwc.writeCloser.Close()
 }
 
-// NewDailyWriteCloser 每天凌晨0点执行Rotate().
+// NewDailyWriteCloser 每天凌晨0点，执行Rotate().
 /*
 @param options 可选配置，参考 NewRotatableWriteCloser()
 */
@@ -30,6 +30,11 @@ func NewDailyWriteCloser(filePath string, options ...LumberjackOption) (io.Write
 	return NewRotatableWriteCloserWithSpec(filePath, "0 0 0 * * *", options...)
 }
 
+// NewRotatableWriteCloserWithSpec 满足条件（spec），执行Rotate().
+/*
+PS:
+(1) 可能存在情况，Rotate()后，生成的旧日志文件大小为0B.
+*/
 func NewRotatableWriteCloserWithSpec(filePath string, spec string, options ...LumberjackOption) (io.WriteCloser, error) {
 	// math.MaxInt64: 8.0 EiB
 	wc, err := NewRotatableWriteCloser(filePath, math.MaxInt64, options...)
