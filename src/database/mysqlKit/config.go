@@ -8,12 +8,7 @@ import (
 
 type (
 	Config struct {
-		UserName string `json:"userName"`
-		Password string `json:"password"`
-		// Host e.g."127.0.0.1:3306"
-		Host   string `json:"host"`
-		DBName string `json:"dbName"`
-		//DsnConfig
+		DsnConfig
 
 		Log  LogConfig  `json:"log"`
 		Pool PoolConfig `json:"pool"`
@@ -21,21 +16,21 @@ type (
 
 	DsnConfig struct {
 		UserName string `json:"userName"`
-		Password string `json:"password"`
+		Password string `json:"password,optional"`
 		// Host e.g."127.0.0.1:3306"
 		Host   string `json:"host"`
 		DBName string `json:"dbName"`
 	}
 
 	LogConfig struct {
-		SlowThreshold time.Duration   `json:"slowThreshold"`
-		LogLevel      logger.LogLevel `json:"logLevel"`
+		SlowThreshold time.Duration   `json:"slowThreshold,default=200ms"`
+		LogLevel      logger.LogLevel `json:"logLevel,default=4,options=1|2|3|4"`
 	}
 
 	PoolConfig struct {
-		MaxIdleConns    int           `json:"maxIdleConns"`
-		MaxOpenConns    int           `json:"maxOpenConns"`
-		ConnMaxLifetime time.Duration `json:"connMaxLifetime"`
+		MaxIdleConns    int           `json:"maxIdleConns,default=32"`
+		MaxOpenConns    int           `json:"maxOpenConns,default=128"`
+		ConnMaxLifetime time.Duration `json:"connMaxLifetime,default=30m"`
 	}
 )
 

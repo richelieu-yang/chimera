@@ -126,10 +126,14 @@ mysql:
   dbName: ccc2
   log:
     slowThreshold: 200ms
-    logLevel: info
+    # 客户端日志级别: 1(Silent)、2(Error)、3(Warn)、4(Info)
+    logLevel: 4
   pool:
-    MaxIdleConns: 10
-    MaxOpenConns: 100
+    # set the maximum number of connections in the idle connection pool
+    MaxIdleConns: 32
+    # set the maximum number of open connections to the database
+    MaxOpenConns: 128
+    # set the maximum amount of time a connection may be reused
     ConnMaxLifetime: 30m
 
 

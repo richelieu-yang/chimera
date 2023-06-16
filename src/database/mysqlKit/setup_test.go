@@ -20,7 +20,7 @@ func TestSetUp(t *testing.T) {
 		MySQL *Config `json:"mysql"`
 	}
 
-	c := &Config{}
+	c := &config{}
 	confKit.MustLoad("chimera-lib/config.yaml", c)
 
 	str, err := jsonKit.MarshalToString(c, jsonKit.WithIndent("    "))
