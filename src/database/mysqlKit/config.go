@@ -6,6 +6,9 @@ import (
 )
 
 type (
+	Config struct {
+	}
+
 	PoolConfig struct {
 		MaxIdleConns    int           `json:"maxIdleConns"`
 		MaxOpenConns    int           `json:"maxOpenConns"`
@@ -21,7 +24,7 @@ type (
 	}
 )
 
-func (c *DsnConfig) String() string {
+func (c *DsnConfig) ToDSN() string {
 	// 参考 https://github.com/go-sql-driver/mysql#dsn-data-source-name 获取详情
 	return fmt.Sprintf("%s:%s@tcp(%s)/%s?charset=utf8mb4&parseTime=True&loc=Local",
 		c.UserName,

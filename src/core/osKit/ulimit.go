@@ -38,10 +38,10 @@ func GetMaxOpenFiles() (int, error) {
 	//	return 0, err
 	//}
 	//// strKit.Trim()是为了：去掉最后面的"\n"
-	//str := strKit.Trim(out.String())
+	//str := strKit.Trim(out.ToDSN())
 	//value, err := strconv.Atoi(str)
 	//if err != nil {
-	//	return 0, errorKit.New("result(%s) of command(%s) isn't a number", str, cmd.String())
+	//	return 0, errorKit.New("result(%s) of command(%s) isn't a number", str, cmd.ToDSN())
 	//}
 	//return value, nil
 }
@@ -75,11 +75,11 @@ func GetUserMaxProcesses() (int, error) {
 	//	return 0, err
 	//}
 	//// strKit.Trim()是为了：去掉最后面的"\n"
-	//str := strKit.Trim(out.String())
+	//str := strKit.Trim(out.ToDSN())
 	//
 	//value, err := strconv.Atoi(str)
 	//if err != nil {
-	//	return 0, errorKit.New("result(%s) of command(%s) isn't a number", str, cmd.String())
+	//	return 0, errorKit.New("result(%s) of command(%s) isn't a number", str, cmd.ToDSN())
 	//}
 	//return value, nil
 }

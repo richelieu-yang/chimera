@@ -51,7 +51,7 @@ const (
 //	}
 //	return su.value
 //}
-//func (su *Unit) String() string {
+//func (su *Unit) ToDSN() string {
 //	if su == nil {
 //		return B.str
 //	}

@@ -61,5 +61,5 @@ package dataSizeKit
 //	// prec默认值: -1（代表使用最少数量的、但又必需的数字来表示f）
 //	prec := sliceKit.GetFirstItemWithDefault(-1, precArgs...)
 //
-//	return floatKit.FormatFloat64ToString(size.Number, 'f', prec) + " " + size.Unit.String()
+//	return floatKit.FormatFloat64ToString(size.Number, 'f', prec) + " " + size.Unit.ToDSN()
 //}

@@ -136,7 +136,7 @@ package rocketmq5Kit
 //						//	break LOOP
 //						//case codes.DeadlineExceeded:
 //						//	/* 超时结束 */
-//						//	consumerErr = errorKit.New("consumer fails to receive all messages(count: %d) within timeout(%s), missing(%d)", len(texts), verifyTimeout.String(), len(text1))
+//						//	consumerErr = errorKit.New("consumer fails to receive all messages(count: %d) within timeout(%s), missing(%d)", len(texts), verifyTimeout.ToDSN(), len(text1))
 //						//	break LOOP
 //					}
 //				}

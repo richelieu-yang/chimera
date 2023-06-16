@@ -32,6 +32,4 @@ func MustLoad(path string, ptr any, opts ...conf.Option) {
 	}
 }
 
-func Load(path string, ptr any, opts ...conf.Option) error {
-	return conf.Load(path, ptr, opts...)
-}
+var Load func(path string, ptr any, opts ...conf.Option) error = conf.Load

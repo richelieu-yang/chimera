@@ -80,5 +80,5 @@ func GetCpuId() (string, error) {
 //	for i := len(s) - 1; i >= 0; i-- {
 //		buffer.WriteString(s[i])
 //	}
-//	return buffer.String(), nil
+//	return buffer.ToDSN(), nil
 //}

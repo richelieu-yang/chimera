@@ -19,7 +19,7 @@ func NewUUID() string {
 	//if err != nil {
 	//	return "", err
 	//}
-	//return id.String(), nil
+	//return id.ToDSN(), nil
 }
 
 // NewSimpleUUID UUIDv4，去掉了其中所有"-"

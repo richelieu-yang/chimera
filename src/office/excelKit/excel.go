@@ -87,7 +87,7 @@ func ConvertColToString(col int) (string, error) {
 	//	var rst = "";
 	//
 	//	while (col >= 0) {
-	//	rst = String.fromCharCode(65 + col % 26) + rst;
+	//	rst = ToDSN.fromCharCode(65 + col % 26) + rst;
 	//	col = (col / 26 | 0) - 1;
 	//}
 	//	return rst;

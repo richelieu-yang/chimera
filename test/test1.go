@@ -25,12 +25,16 @@ func main() {
 	if err != nil {
 		logrus.Fatal(err)
 	}
-	db, err := gorm.Open(mysql.Open(c.String()), &gorm.Config{
+	db, err := gorm.Open(mysql.Open(c.ToDSN()), &gorm.Config{
 		Logger: logger.New(writer, logger.Config{
-			SlowThreshold:             200 * time.Millisecond,
-			LogLevel:                  logger.Info,
+			// 慢SQL阈值
+			SlowThreshold: 200 * time.Millisecond,
+			// 日志级别
+			LogLevel: logger.Info,
+			// 忽略 logger.ErrRecordNotFound（记录未找到错误） ？
 			IgnoreRecordNotFoundError: false,
-			Colorful:                  false,
+			// 彩色打印？
+			Colorful: false,
 		}),
 	})
 	if err != nil {
@@ -70,7 +74,7 @@ func main() {
 }
 
 func NewGormLoggerWriter() (logger.Writer, error) {
-	f, err := fileKit.NewFile("aaa.log")
+	f, err := fileKit.NewFile("ccc.log")
 	if err != nil {
 		return nil, err
 	}

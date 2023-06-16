@@ -118,3 +118,11 @@ rocketmq5:
   validatedTopic: test
   # 客户端的日志输出（非业务；非目录）
   clientLogPath:
+
+mysql:
+  userName: root
+  password: ~Test123
+  host: 127.0.0.1:3306
+  dbName: ccc2
+  slowThreshold: 200ms
+  logLevel: info

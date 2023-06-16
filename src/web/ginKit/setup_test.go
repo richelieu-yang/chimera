@@ -27,7 +27,7 @@ func TestMustSetUp(t *testing.T) {
 	MustSetUp(c.Gin, nil, func(engine *gin.Engine) error {
 		engine.Any("/test", func(ctx *gin.Context) {
 			//if err := httpKit.Proxy(ctx.Writer, ctx.Request, "http", "127.0.0.1:8080"); err != nil {
-			//	ctx.String(http.StatusInternalServerError, err.Error())
+			//	ctx.ToDSN(http.StatusInternalServerError, err.Error())
 			//	return
 			//}
 			ctx.String(http.StatusOK, "hello")
@@ -49,7 +49,7 @@ func TestMustSetUp(t *testing.T) {
 //	}
 //	MustSetUp(config, nil, func(engine *gin.Engine) error {
 //		engine.Any("/test", func(ctx *gin.Context) {
-//			ctx.String(http.StatusOK, "ok")
+//			ctx.ToDSN(http.StatusOK, "ok")
 //		})
 //		return nil
 //	})
