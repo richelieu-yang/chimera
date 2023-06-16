@@ -3,6 +3,7 @@ package ginKit
 import (
 	"github.com/gin-contrib/pprof"
 	"github.com/gin-gonic/gin"
+	"github.com/richelieu-yang/chimera/v2/src/log/logrusKit"
 	"github.com/richelieu-yang/chimera/v2/src/netKit"
 	"github.com/sirupsen/logrus"
 )
@@ -10,6 +11,7 @@ import (
 func MustSetUp(config *Config, recoveryMiddleware gin.HandlerFunc, businessLogic func(engine *gin.Engine) error) {
 	err := setUp(config, recoveryMiddleware, businessLogic)
 	if err != nil {
+		logrusKit.DisableQuote(nil)
 		logrus.Fatalf("%+v", err)
 	}
 }

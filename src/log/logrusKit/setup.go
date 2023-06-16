@@ -10,6 +10,7 @@ var setupOnce sync.Once
 func MustSetUp(config *Config) {
 	err := SetUp(config)
 	if err != nil {
+		DisableQuote(nil)
 		logrus.Fatalf("%+v", err)
 	}
 }

@@ -4,6 +4,7 @@ import (
 	"context"
 	"github.com/apache/pulsar-client-go/pulsar"
 	"github.com/richelieu-yang/chimera/v2/src/core/errorKit"
+	"github.com/richelieu-yang/chimera/v2/src/log/logrusKit"
 	"github.com/sirupsen/logrus"
 	"sync"
 )
@@ -14,6 +15,7 @@ var config *Config
 func MustSetUp(config *Config) {
 	err := SetUp(config)
 	if err != nil {
+		logrusKit.DisableQuote(nil)
 		logrus.Fatalf("%+v", err)
 	}
 }

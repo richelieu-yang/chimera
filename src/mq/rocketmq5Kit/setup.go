@@ -4,6 +4,7 @@ import (
 	"github.com/apache/rocketmq-clients/golang/v5/credentials"
 	"github.com/richelieu-yang/chimera/v2/src/core/errorKit"
 	"github.com/richelieu-yang/chimera/v2/src/core/sliceKit"
+	"github.com/richelieu-yang/chimera/v2/src/log/logrusKit"
 	"github.com/sirupsen/logrus"
 )
 
@@ -11,6 +12,7 @@ var config *Config
 
 func MustSetUp(config *Config) {
 	if err := SetUp(config); err != nil {
+		logrusKit.DisableQuote(nil)
 		logrus.Fatalf("%+v", err)
 	}
 }

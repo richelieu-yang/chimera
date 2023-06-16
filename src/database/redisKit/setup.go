@@ -1,6 +1,7 @@
 package redisKit
 
 import (
+	"github.com/richelieu-yang/chimera/v2/src/log/logrusKit"
 	"github.com/sirupsen/logrus"
 )
 
@@ -8,6 +9,7 @@ var client *Client
 
 func MustSetUp(config *Config) {
 	if err := SetUp(config); err != nil {
+		logrusKit.DisableQuote(nil)
 		logrus.Fatalf("%+v", err)
 	}
 }
