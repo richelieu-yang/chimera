@@ -15,11 +15,14 @@ import (
 	[:5] (:5] [:5) (:5)
 	[1:] [1:) (1:] (1:)
 	[1:5] [1:5) (1:5] (1:5)
+
 	e.g.
 	type config struct {
 		Number1 int           `json:"number1,range=[1:]"`
 	}
-(4) error(wrong number range setting): 不满足tag range
+
+	可能返回的error:
+	(a) wrong number range setting: 不满足tag range
 
 @param path	配置文件的路径（推荐使用.yaml）
 @param ptr	[不能为nil] 结构体实例的指针
