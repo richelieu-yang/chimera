@@ -12,13 +12,15 @@ PS:
 (2) 通过 sonyflake.Sonyflake.NextID() 生成id（貌似是18位的）.
 
 golang实现的雪花算法 https://mp.weixin.qq.com/s/visG_GHtU67xCtsvvG1aPQ
+
+@param settings 可以为nil（但不推荐这么干）
 */
-func NewSonyFlake(st *sonyflake.Settings) (*sonyflake.Sonyflake, error) {
-	if st == nil {
-		st = &sonyflake.Settings{}
+func NewSonyFlake(settings *sonyflake.Settings) (*sonyflake.Sonyflake, error) {
+	if settings == nil {
+		settings = &sonyflake.Settings{}
 	}
 
-	sf := sonyflake.NewSonyflake(*st)
+	sf := sonyflake.NewSonyflake(*settings)
 	if sf == nil {
 		return nil, errorKit.New("sf == nil")
 	}
