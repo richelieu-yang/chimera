@@ -23,7 +23,7 @@ func MustSetUp(config *Config, output io.Writer) {
 
 // SetUp
 /*
-@param output 客户端的日志输出（默认输出到控制台）
+@param output 客户端的日志输出（nil: 输出到控制台）
 */
 func SetUp(config *Config, output io.Writer) error {
 	if config == nil {
@@ -65,4 +65,11 @@ func SetUp(config *Config, output io.Writer) error {
 
 	db = tmpDB
 	return nil
+}
+
+func GetDB() (*gorm.DB, error) {
+	if db == nil {
+		return nil, errorKit.New("hasn't been set up")
+	}
+	return db, nil
 }
