@@ -31,6 +31,7 @@ func NewDailyWriteCloser(filePath string, options ...LumberjackOption) (io.Write
 }
 
 func NewRotatableWriteCloserWithSpec(filePath string, spec string, options ...LumberjackOption) (io.WriteCloser, error) {
+	// math.MaxInt64: 8.0 EiB
 	wc, err := NewRotatableWriteCloser(filePath, math.MaxInt64, options...)
 	if err != nil {
 		return nil, err

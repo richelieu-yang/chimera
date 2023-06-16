@@ -1,21 +1,12 @@
 package main
 
 import (
-	"github.com/richelieu-yang/chimera/v2/src/core/bytesKit"
+	"github.com/richelieu-yang/chimera/v2/src/dataSizeKit"
 	"math"
 )
 
 func main() {
-
-	println(math.MaxUint16)
-
-	var a = []byte("abcd")
-	var b = []byte("abcd")
-	println(bytesKit.Equals(a, b)) // true
-	b = []byte("abcd1")
-	println(bytesKit.Equals(a, b))     // false
-	println(bytesKit.Equals(a, nil))   // false
-	println(bytesKit.Equals(nil, nil)) // true
+	println(dataSizeKit.ToReadableStringWithIEC(math.MaxInt64))
 }
 
 //func main() {
