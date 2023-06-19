@@ -9,7 +9,7 @@ import (
 func TestNewLogger(t *testing.T) {
 	/* 输出到控制台 */
 	logger := NewLogger()
-	logger.Info("to consoleOutput")
+	logger.Info("to output")
 
 	/* 输出到文件(rotatable) */
 	path := "test.log"

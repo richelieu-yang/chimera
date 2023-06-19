@@ -6,13 +6,14 @@ import (
 	"os"
 )
 
-// consoleOutput 控制台的输出
-var consoleOutput io.Writer = os.Stdout
+// output 控制台的输出
+var output io.Writer = os.Stdout
 
-func SetConsoleWriter(writer io.Writer) {
+func SetOutput(writer io.Writer) {
 	if writer == nil {
 		return
 	}
-	consoleOutput = writer
-	logrus.StandardLogger().Out = writer
+
+	output = writer
+	logrus.SetOutput(output)
 }

@@ -82,7 +82,7 @@ func NewLogger(options ...LoggerOption) *logrus.Logger {
 	if opts.output != nil {
 		logger.SetOutput(opts.output)
 	} else {
-		logger.SetOutput(consoleOutput)
+		logger.SetOutput(output)
 	}
 	return logger
 }
