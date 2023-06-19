@@ -1,18 +1,33 @@
 package main
 
 import (
-	"fmt"
 	"github.com/richelieu-yang/chimera/v2/src/core/fileKit"
-	"os"
+	"github.com/richelieu-yang/chimera/v2/src/core/ioKit"
+	"time"
 )
 
 func main() {
-	f, err := fileKit.NewFile("aaaa.log")
+	path := "test.log"
+
+	f, err := fileKit.NewFileInAppendMode(path)
 	if err != nil {
 		panic(err)
 	}
-	defer f.Close()
+	writeCloser, err := ioKit.NewDailyWriteCloser(path)
+	if err != nil {
+		panic(err)
+	}
 
-	os.Stdout = f
-	fmt.Println("aaa\n")
+	cf, err := fileKit.NewCustomizedFile(f, writeCloser)
+	if err != nil {
+		panic(err)
+	}
+
+	for {
+		_, err := cf.WriteString("qwdqwdqwdqwdqwdqwdqwdqwdqw\r\n")
+		if err != nil {
+			panic(err)
+		}
+		time.Sleep(time.Millisecond * 500)
+	}
 }

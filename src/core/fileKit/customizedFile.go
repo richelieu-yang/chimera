@@ -38,7 +38,7 @@ func (rf *CustomizedFile) Close() error {
 	return err1
 }
 
-// NewCustomizedFile 自定义的os.File（修改了输出）
+// NewCustomizedFile 自定义的os.File（修改了所有Write方法）
 /*
 @param writeCloser 与 传参f 相关的io.WriteCloser实例
 */
