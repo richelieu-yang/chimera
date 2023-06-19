@@ -6,14 +6,14 @@ import (
 	"os"
 )
 
-// output 控制台的输出
-var output io.Writer = os.Stdout
+// defaultOutput 默认输出: 控制台
+var defaultOutput io.Writer = os.Stdout
 
 func SetOutput(writer io.Writer) {
 	if writer == nil {
 		return
 	}
 
-	output = writer
-	logrus.SetOutput(output)
+	defaultOutput = writer
+	logrus.SetOutput(defaultOutput)
 }
