@@ -7,18 +7,15 @@ import (
 	"github.com/richelieu-yang/chimera/v2/src/core/fileKit"
 	"github.com/richelieu-yang/chimera/v2/src/core/pathKit"
 	"github.com/sirupsen/logrus"
+	"gorm.io/gorm"
 	"testing"
-	"time"
 )
 
-type user struct {
-	Name     string
-	Age      uint
-	Birthday time.Time
-}
+type User struct {
+	gorm.Model
 
-func (u *user) TableName() string {
-	return "user"
+	Name string
+	Age  uint32
 }
 
 func TestSetUp(t *testing.T) {
@@ -40,16 +37,18 @@ func TestSetUp(t *testing.T) {
 	}
 	MustSetUp(c.MySQL, f)
 
-	user := &user{Name: "Jinzhu", Age: 18, Birthday: time.Now()}
-
 	// 可以通过Set设置附加参数，下面设置表的存储引擎为InnoDB
 	db.Set("gorm:table_options", "ENGINE=MyISAM") /*.AutoMigrate(&user{})*/
-	// 自动建表
+
+	user := &User{
+		Name: "Miro",
+		Age:  18,
+	}
 	if err := db.AutoMigrate(user); err != nil {
 		logrus.Fatal(err)
 	}
-	// 插入数据
-	result := db.Create(user) // 通过数据的指针来创建
+	result := db.Omit("name").Create(user)
+	fmt.Println(user.ID)
 	fmt.Println(result.Error)
 	fmt.Println(result.RowsAffected)
 }
