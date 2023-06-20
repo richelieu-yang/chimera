@@ -1,8 +1,14 @@
 package errorKit
 
-import "github.com/gogf/gf/v2/errors/gerror"
+import (
+	"errors"
+	"github.com/gogf/gf/v2/errors/gerror"
+)
 
 var (
+	// Is reports whether any error in err's tree matches target.
+	Is func(err, target error) bool = errors.Is
+
 	// Equal 错误比较
 	Equal func(err, target error) bool = gerror.Equal
 

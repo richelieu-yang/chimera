@@ -1,6 +1,7 @@
 package mysqlKit
 
 import (
+	"database/sql"
 	"fmt"
 	"github.com/richelieu-yang/chimera/v2/src/confKit"
 	"github.com/richelieu-yang/chimera/v2/src/consts"
@@ -15,6 +16,7 @@ type User struct {
 
 	Name string `gorm:"not null"`
 	Age  uint32
+	Mail sql.NullString
 }
 
 func TestSetUp(t *testing.T) {
@@ -43,16 +45,25 @@ func TestSetUp(t *testing.T) {
 	// 可以通过Set设置附加参数，下面设置表的存储引擎为InnoDB
 	db.Set("gorm:table_options", "ENGINE=InnoDB") /*.AutoMigrate(&user{})*/
 
-	user := &User{
-		//Name: "yjs",
-		Age: 18,
-	}
+	user := &User{}
 	if err := db.AutoMigrate(user); err != nil {
 		logrus.Fatal(err)
 	}
 
-	result := db.Create(user)
-	fmt.Println("ID: ", user.ID)
-	fmt.Println("Error: ", result.Error) // Error:  Error 1364 (HY000): Field 'name' doesn't have a default value
-	fmt.Println("RowsAffected: ", result.RowsAffected)
+	rst := db.Create(&User{
+		Name: "yjs",
+		Age:  0,
+		//Mail: "",
+	})
+	if rst.Error != nil {
+		logrus.Fatal(rst.Error)
+	}
+	logrus.Infof("rst.RowsAffected: %d", rst.RowsAffected)
+
+	//var s []User
+	//rst := db.Find(&s)
+	//if rst.Error != nil {
+	//	logrus.Fatal(rst.Error)
+	//}
+	//logrus.Infof("%+v", s)
 }
