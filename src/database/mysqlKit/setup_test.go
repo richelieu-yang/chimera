@@ -7,14 +7,13 @@ import (
 	"github.com/richelieu-yang/chimera/v2/src/core/fileKit"
 	"github.com/richelieu-yang/chimera/v2/src/core/pathKit"
 	"github.com/sirupsen/logrus"
-	"gorm.io/gorm"
 	"testing"
 )
 
 type User struct {
-	gorm.Model
+	ID int
 
-	Name string
+	Name string `gorm:"not null"`
 	Age  uint32
 }
 
@@ -37,18 +36,23 @@ func TestSetUp(t *testing.T) {
 	}
 	MustSetUp(c.MySQL, f)
 
+	db, err := GetDB()
+	if err != nil {
+		panic(err)
+	}
 	// 可以通过Set设置附加参数，下面设置表的存储引擎为InnoDB
-	db.Set("gorm:table_options", "ENGINE=MyISAM") /*.AutoMigrate(&user{})*/
+	db.Set("gorm:table_options", "ENGINE=InnoDB") /*.AutoMigrate(&user{})*/
 
 	user := &User{
-		Name: "Miro",
-		Age:  18,
+		//Name: "yjs",
+		Age: 18,
 	}
 	if err := db.AutoMigrate(user); err != nil {
 		logrus.Fatal(err)
 	}
-	result := db.Omit("name").Create(user)
-	fmt.Println(user.ID)
-	fmt.Println(result.Error)
-	fmt.Println(result.RowsAffected)
+
+	result := db.Create(user)
+	fmt.Println("ID: ", user.ID)
+	fmt.Println("Error: ", result.Error) // Error:  Error 1364 (HY000): Field 'name' doesn't have a default value
+	fmt.Println("RowsAffected: ", result.RowsAffected)
 }
