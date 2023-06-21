@@ -1,7 +1,6 @@
 package mysqlKit
 
 import (
-	"database/sql"
 	"fmt"
 	"github.com/richelieu-yang/chimera/v2/src/confKit"
 	"github.com/richelieu-yang/chimera/v2/src/consts"
@@ -16,7 +15,7 @@ type User struct {
 
 	Name string `gorm:"not null"`
 	Age  uint32
-	Mail sql.NullString
+	Mail *string `gorm:"not null"`
 }
 
 func TestSetUp(t *testing.T) {
