@@ -1,6 +1,7 @@
 package logrusKit
 
 import (
+	"github.com/richelieu-yang/chimera/v2/src/core/strKit"
 	"github.com/sirupsen/logrus"
 )
 
@@ -17,6 +18,10 @@ func SetLevel(logger *logrus.Logger, level logrus.Level) {
 
 // ParseLevel string => logrus.Level
 func ParseLevel(str string) (logrus.Level, error) {
+	if strKit.IsBlank(str) {
+		return logrus.DebugLevel, nil
+	}
+
 	return logrus.ParseLevel(str)
 	//
 	//switch strKit.ToLower(str) {
