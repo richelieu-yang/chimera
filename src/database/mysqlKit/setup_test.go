@@ -1,6 +1,7 @@
 package mysqlKit
 
 import (
+	"database/sql"
 	"fmt"
 	"github.com/richelieu-yang/chimera/v2/src/confKit"
 	"github.com/richelieu-yang/chimera/v2/src/consts"
@@ -13,9 +14,8 @@ import (
 type User struct {
 	ID int
 
-	Name string `gorm:"not null"`
+	Name sql.NullString `gorm:"default:null"`
 	Age  uint32
-	Mail *string `gorm:"not null"`
 }
 
 func TestSetUp(t *testing.T) {
@@ -50,19 +50,10 @@ func TestSetUp(t *testing.T) {
 	}
 
 	rst := db.Create(&User{
-		Name: "yjs",
-		Age:  0,
-		//Mail: "",
+		Age: 20,
 	})
 	if rst.Error != nil {
 		logrus.Fatal(rst.Error)
 	}
 	logrus.Infof("rst.RowsAffected: %d", rst.RowsAffected)
-
-	//var s []User
-	//rst := db.Find(&s)
-	//if rst.Error != nil {
-	//	logrus.Fatal(rst.Error)
-	//}
-	//logrus.Infof("%+v", s)
 }
