@@ -3,6 +3,7 @@ package ginKit
 import (
 	"github.com/gin-contrib/pprof"
 	"github.com/gin-gonic/gin"
+	"github.com/richelieu-yang/chimera/v2/src/core/errorKit"
 	"github.com/richelieu-yang/chimera/v2/src/log/logrusKit"
 	"github.com/richelieu-yang/chimera/v2/src/netKit"
 	"github.com/sirupsen/logrus"
@@ -69,7 +70,7 @@ func setUp(config *Config, recoveryMiddleware gin.HandlerFunc, businessLogic fun
 
 	if businessLogic != nil {
 		if err := businessLogic(engine); err != nil {
-			return err
+			return errorKit.Wrap(err, "fail to execute businessLogic()")
 		}
 	}
 
