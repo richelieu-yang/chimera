@@ -1,8 +1,8 @@
 package boolKit
 
 import (
+	"github.com/richelieu-yang/chimera/v2/src/core/strKit"
 	"github.com/spf13/cast"
-	"strings"
 )
 
 var (
@@ -16,7 +16,7 @@ var (
 PS: 参考了 strconv.ParseBool()、Java hutool中的BooleanUtil.toBoolean().
 */
 func StringToBool(str string) bool {
-	switch strings.ToLower(str) {
+	switch strKit.ToLower(str) {
 	case "1", "t", "true", "yes", "y", "ok", "on", "是", "对", "對", "真", "√":
 		return true
 	default:
