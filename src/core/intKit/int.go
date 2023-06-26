@@ -21,32 +21,32 @@ var (
 	   (true)	=> 1 <nil>
 	   ("")		=> 0 unable to cast "" of type string to int64
 	*/
-	ToIntE = cast.ToIntE
+	ToIntE func(i interface{}) (int, error) = cast.ToIntE
 
-	ToInt8 = cast.ToInt8
+	ToInt8 func(i interface{}) int8 = cast.ToInt8
 
 	// ToInt8E
 	/*
-		e.g.
+		e.g. 将string转换为整型，建议还是用 StringToInt
 			fmt.Println(cast.ToInt8E("07")) // 7 <nil>
 			fmt.Println(cast.ToInt8E("08")) // 0 unable to cast "08" of type string to int64
 
 			fmt.Println(strconv.Atoi("07")) // 7 <nil>
 			fmt.Println(strconv.Atoi("08")) // 8 <nil>
 	*/
-	ToInt8E = cast.ToInt8E
+	ToInt8E func(i interface{}) (int8, error) = cast.ToInt8E
 
-	ToInt16 = cast.ToInt16
+	ToInt16 func(i interface{}) int16 = cast.ToInt16
 
-	ToInt16E = cast.ToInt16E
+	ToInt16E func(i interface{}) (int16, error) = cast.ToInt16E
 
-	ToInt32 = cast.ToInt32
+	ToInt32 func(i interface{}) int32 = cast.ToInt32
 
-	ToInt32E = cast.ToInt32E
+	ToInt32E func(i interface{}) (int32, error) = cast.ToInt32E
 
-	ToInt64 = cast.ToInt64
+	ToInt64 func(i interface{}) int64 = cast.ToInt64
 
-	ToInt64E = cast.ToInt64E
+	ToInt64E func(i interface{}) (int64, error) = cast.ToInt64E
 
 	// StringToInt 类型转换: string => int
 	StringToInt func(s string) (int, error) = strconv.Atoi
