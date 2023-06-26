@@ -11,7 +11,7 @@ var (
 	   e.g.
 	   (nil) => 0
 	*/
-	ToInt = cast.ToInt
+	ToInt func(i interface{}) int = cast.ToInt
 
 	// ToIntE
 	/*
@@ -25,6 +25,15 @@ var (
 
 	ToInt8 = cast.ToInt8
 
+	// ToInt8E
+	/*
+		e.g.
+			fmt.Println(cast.ToInt8E("07")) // 7 <nil>
+			fmt.Println(cast.ToInt8E("08")) // 0 unable to cast "08" of type string to int64
+
+			fmt.Println(strconv.Atoi("07")) // 7 <nil>
+			fmt.Println(strconv.Atoi("08")) // 8 <nil>
+	*/
 	ToInt8E = cast.ToInt8E
 
 	ToInt16 = cast.ToInt16
@@ -40,7 +49,7 @@ var (
 	ToInt64E = cast.ToInt64E
 
 	// StringToInt 类型转换: string => int
-	StringToInt = strconv.Atoi
+	StringToInt func(s string) (int, error) = strconv.Atoi
 )
 
 // StringToIntWithDefault 类型转换: string => int
