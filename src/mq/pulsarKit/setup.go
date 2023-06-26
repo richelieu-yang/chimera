@@ -47,6 +47,7 @@ func NewProducer(ctx context.Context, options pulsar.ProducerOptions, logPath st
 	if config == nil {
 		return nil, NotSetupError
 	}
+
 	return NewProducerOriginally(ctx, config.Addresses, options, logPath)
 }
 
@@ -61,5 +62,6 @@ func NewConsumer(ctx context.Context, options pulsar.ConsumerOptions, logPath st
 	if config == nil {
 		return nil, NotSetupError
 	}
+
 	return NewConsumerOriginally(ctx, config.Addresses, options, logPath)
 }

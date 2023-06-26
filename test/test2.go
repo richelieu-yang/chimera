@@ -1,43 +1,44 @@
 package main
 
 import (
-	"github.com/richelieu-yang/chimera/v2/src/core/ioKit"
-	"github.com/richelieu-yang/chimera/v2/src/cronKit"
+	"context"
+	"github.com/apache/pulsar-client-go/pulsar"
 	"github.com/richelieu-yang/chimera/v2/src/log/logrusKit"
+	"github.com/richelieu-yang/chimera/v2/src/mq/pulsarKit"
 	"github.com/sirupsen/logrus"
 )
 
 func main() {
 	logrusKit.MustSetUp(nil)
 
-	wc, err := ioKit.NewDailyWriteCloser("aaa.log")
-	if err != nil {
-		logrus.Fatal(err)
-	}
-	logger := logrusKit.NewLogger(logrusKit.WithOutput(wc))
-	c, _, err := cronKit.NewCronWithTask("* * * * * *", func() {
-		logger.Info("-")
+	pulsarKit.MustSetUp(&pulsarKit.Config{
+		Addresses: []string{"pulsar://localhost:6650"},
+		VerifyConfig: &pulsarKit.VerifyConfig{
+			Topic: "test",
+			Print: true,
+		},
 	})
+
+	consumer, err := pulsarKit.NewConsumer(context.TODO(), pulsar.ConsumerOptions{
+		Topic:            "test",
+		SubscriptionName: "name",
+		Type:             pulsar.Exclusive,
+	}, "")
 	if err != nil {
 		logrus.Fatal(err)
 	}
+	consumer.Close()
 
-	c.Run()
+	consumer1, err := pulsarKit.NewConsumer(context.TODO(), pulsar.ConsumerOptions{
+		Topic:            "test",
+		SubscriptionName: "name",
+		Type:             pulsar.Exclusive,
+	}, "")
+	if err != nil {
+		logrus.Fatal(err)
+	}
+	defer consumer1.Close()
 
-	//wc, err := ioKit.NewRotatableWriteCloser("/Users/richelieu/Downloads/aaa.log", 1024*1024*1,
-	//	ioKit.WithCompress(true),
-	//	ioKit.WithMaxAge(time.Minute),
-	//)
-	//if err != nil {
-	//	panic(err)
-	//}
-	//
-	//for {
-	//	n, err := wc.Write([]byte("qwdqwdqwdqwd\n"))
-	//	if err != nil {
-	//		logrus.Fatal(err)
-	//		return
-	//	}
-	//	logrus.Info(n)
-	//}
+	select {}
+
 }
