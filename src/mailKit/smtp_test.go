@@ -21,7 +21,7 @@ func TestSendMail(t *testing.T) {
 
 	for i := 0; i < 1; i++ {
 		time := timeKit.FormatCurrentTime()
-		mail := NewMail("", []string{"yjs@yozosoft.com", "richelieu042@gmail.com"}, "主题"+time, []byte(intKit.FormatIntToString(i, 10)), nil, []string{"miro42@163.com"}, nil)
+		mail := NewMail("", []string{"yjs@yozosoft.com", "richelieu042@gmail.com"}, "主题"+time, []byte(intKit.FormatInt(int64(i), 10)), nil, []string{"miro42@163.com"}, nil)
 		err = SendMail(mail)
 		if err != nil {
 			panic(err)

@@ -3,23 +3,23 @@ package intKit
 import "github.com/spf13/cast"
 
 var (
-	ToUint = cast.ToUint
+	ToUint func(i interface{}) uint = cast.ToUint
 
-	ToUintE = cast.ToUintE
+	ToUintE func(i interface{}) (uint, error) = cast.ToUintE
 
-	ToUint8 = cast.ToUint8
+	ToUint8 func(i interface{}) uint8 = cast.ToUint8
 
-	ToUint8E = cast.ToUint8E
+	ToUint8E func(i interface{}) (uint8, error) = cast.ToUint8E
 
-	ToUint16 = cast.ToUint16
+	ToUint16 func(i interface{}) uint16 = cast.ToUint16
 
-	ToUint16E = cast.ToUint16E
+	ToUint16E func(i interface{}) (uint16, error) = cast.ToUint16E
 
-	ToUint32 = cast.ToUint32
+	ToUint32 func(i interface{}) uint32 = cast.ToUint32
 
-	ToUint32E = cast.ToUint32E
+	ToUint32E func(i interface{}) (uint32, error) = cast.ToUint32E
 
-	ToUint64 = cast.ToUint64
+	ToUint64 func(i interface{}) uint64 = cast.ToUint64
 
-	ToUint64E = cast.ToUint64E
+	ToUint64E func(i interface{}) (uint64, error) = cast.ToUint64E
 )
