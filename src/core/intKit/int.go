@@ -19,7 +19,7 @@ var (
 	   (nil) 	=> 0 <nil>
 	   (false)	=> 0 <nil>
 	   (true)	=> 1 <nil>
-	   ("")	=> 0 unable to cast "" of type string to int64
+	   ("")		=> 0 unable to cast "" of type string to int64
 	*/
 	ToIntE = cast.ToIntE
 
