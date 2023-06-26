@@ -42,6 +42,7 @@ func IsLocalPortAvailable(port int) bool {
 	if !IsValidPort(port) {
 		return false
 	}
+
 	// 能连通就说明端口被占用了
 	addr := JoinHostnameAndPort("127.0.0.1", port)
 	ok, _ := DialTimeout(addr, time.Second*3)
