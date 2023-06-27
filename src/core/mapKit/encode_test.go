@@ -16,9 +16,7 @@ func TestEncode(t *testing.T) {
 		Name: "测试员",
 	}
 	m := Encode(u)
-	fmt.Println(m) // map[ID:666 Name:测试员]
-	m1 := Encode(&u)
-	fmt.Println(m1) // map[ID:666 Name:测试员]
-
-	Encode(nil)
+	fmt.Println(m) // map[id:666 name:测试员]
+	m1 := EncodeWithTag(&u, "json")
+	fmt.Println(m1) // map[id:666 name:测试员]
 }
