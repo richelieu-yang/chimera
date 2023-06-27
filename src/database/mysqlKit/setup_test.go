@@ -16,6 +16,7 @@ type User struct {
 	gorm.Model
 
 	Name sql.NullString
+	Age  uint
 }
 
 func TestSetUp(t *testing.T) {
@@ -44,26 +45,34 @@ func TestSetUp(t *testing.T) {
 	// 可以通过Set设置附加参数，下面设置表的存储引擎为InnoDB
 	db.Set("gorm:table_options", "ENGINE=InnoDB")
 
-	user := &User{
-		Name: sql.NullString{
-			String: "test",
-			Valid:  true,
-		},
-	}
-	if err := db.AutoMigrate(user); err != nil {
+	if err := db.AutoMigrate(&User{}); err != nil {
 		logrus.Fatal(err)
 	}
 
-	rst := db.Where(User{
-		Name: sql.NullString{
-			String: "test",
-			Valid:  true,
-		},
-	}).FirstOrCreate(user)
+	//db.Create(&User{
+	//	Name: sql.NullString{
+	//		String: "test",
+	//		Valid:  true,
+	//	},
+	//	Age: 100,
+	//})
+
+	var u User
+	rst := db.First(&u)
 	if rst.Error != nil {
 		panic(rst.Error)
 	}
-	// 创建记录，rst.RowsAffected == 1
-	// 否则 rst.RowsAffected == 0
-	fmt.Printf("RowsAffected: [%d]\n", rst.RowsAffected)
+	// 赋零值
+	u.Age = 0
+	rst = db.Table("users").Updates(&u)
+	if rst.Error != nil {
+		panic(rst.Error)
+	}
+
+	//u.Name = sql.NullString{}
+	//u.Age = 100
+	//rst = db.Save(&u)
+	//if rst.Error != nil {
+	//	panic(rst.Error)
+	//}
 }

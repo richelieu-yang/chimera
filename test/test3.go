@@ -1,5 +1,7 @@
 package main
 
-func main() {
+import "github.com/fatih/structs"
 
+func main() {
+	structs.Map()
 }
