@@ -6,6 +6,9 @@ import (
 
 // Encode 结构体 => map[string]interface{}
 /*
+golang gorm 零值更新不生效问题处理
+	https://blog.csdn.net/damanchen/article/details/124717553
+
 PS: 一般情况下，需要使用 tag.
 
 @param obj 	(1) 结构体（实例||指针）
