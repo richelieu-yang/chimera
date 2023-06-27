@@ -8,7 +8,7 @@ import (
 /*
 PS: 一般情况下，需要使用 tag.
 
-@param obj 	(1) 结构体实例 || 结构体实例的指针
+@param obj 	(1) 结构体（实例||指针）
 			(2) 不能为nil（否则会panic）
 @return 必定不为nil
 */
