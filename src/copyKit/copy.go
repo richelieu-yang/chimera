@@ -78,32 +78,6 @@ e.g. 传参为nil的情况
 	}
 	fmt.Println(c)
 	fmt.Println(c == nil) // true
-
-e.g.1
-	b := &Bean{
-		Id: 666,
-	}
-	src := map[string]interface{}{
-		"b":   false,
-		"tmp": b,
-	}
-	dest, err := copyKit.DeepCopy(src)
-	if err != nil {
-		panic(err)
-	}
-
-	// {"b":false,"tmp":{"Id":666}} <nil>
-	fmt.Println(jsonKit.MarshalToString(src, jsonKit.WithApi(jsoniter.ConfigCompatibleWithStandardLibrary)))
-	// {"b":false,"tmp":{"Id":666}} <nil>
-	fmt.Println(jsonKit.MarshalToString(dest, jsonKit.WithApi(jsoniter.ConfigCompatibleWithStandardLibrary)))
-
-	src["b"] = true
-	b.Id = 777
-
-	// {"b":true,"tmp":{"Id":777}} <nil>
-	fmt.Println(jsonKit.MarshalToString(src, jsonKit.WithApi(jsoniter.ConfigCompatibleWithStandardLibrary)))
-	// {"b":false,"tmp":{"Id":666}} <nil>
-	fmt.Println(jsonKit.MarshalToString(dest, jsonKit.WithApi(jsoniter.ConfigCompatibleWithStandardLibrary)))
 */
 func DeepCopy[T any](src T) (dest T, err error) {
 	if interfaceKit.IsNil(src) {
