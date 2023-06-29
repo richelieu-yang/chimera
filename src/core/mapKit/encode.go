@@ -6,7 +6,8 @@ import (
 
 // Encode 结构体 => map[string]interface{}
 /*
-TODO: 结构体的匿名字段，目前不会内嵌.
+!!!:
+结构体存在匿名字段的情况，会转换为map[string]interface{}嵌套map[string]interface{}.(https://blog.csdn.net/qcrao/article/details/121279453)
 
 PS: 一般情况下，需要使用 tag.
 
