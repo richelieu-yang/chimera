@@ -8,7 +8,7 @@ import (
 
 func TestMarshalToString(t *testing.T) {
 	type user struct {
-		gorm.Model `json:"model"`
+		gorm.Model
 
 		Name string `json:"name"`
 	}
