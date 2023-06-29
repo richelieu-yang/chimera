@@ -6,7 +6,9 @@ import (
 	"github.com/richelieu-yang/chimera/v2/src/confKit"
 	"github.com/richelieu-yang/chimera/v2/src/consts"
 	"github.com/richelieu-yang/chimera/v2/src/core/fileKit"
+	"github.com/richelieu-yang/chimera/v2/src/core/mapKit"
 	"github.com/richelieu-yang/chimera/v2/src/core/pathKit"
+	"github.com/richelieu-yang/chimera/v2/src/jsonKit"
 	"github.com/sirupsen/logrus"
 	"gorm.io/gorm"
 	"testing"
@@ -64,7 +66,12 @@ func TestSetUp(t *testing.T) {
 	}
 	// 赋零值
 	u.Age = 0
-	rst = db.Table("users").Updates(&u)
+
+	fmt.Println(jsonKit.MarshalToString(u, jsonKit.WithIndent("    ")))
+
+	m := mapKit.Encode(u)
+	rst = db.Table("users").Updates(m)
+	//rst = db.Model(&u).Updates(&u)
 	if rst.Error != nil {
 		panic(rst.Error)
 	}

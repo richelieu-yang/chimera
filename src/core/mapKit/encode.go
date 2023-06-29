@@ -6,10 +6,12 @@ import (
 
 // Encode 结构体 => map[string]interface{}
 /*
-golang gorm 零值更新不生效问题处理
-	https://blog.csdn.net/damanchen/article/details/124717553
+TODO: 结构体的匿名字段，目前不会内嵌.
 
 PS: 一般情况下，需要使用 tag.
+
+golang gorm 零值更新不生效问题处理
+	https://blog.csdn.net/damanchen/article/details/124717553
 
 @param obj 	(1) 结构体（实例||指针）
 			(2) 不能为nil（否则会panic）

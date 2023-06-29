@@ -1,7 +1,16 @@
 package main
 
-import "github.com/fatih/structs"
+import (
+	"gorm.io/gorm"
+)
 
 func main() {
-	structs.Map()
+	type User struct {
+		gorm.Model
+
+		Name string `json:"name"`
+		Age  uint   `json:"age"`
+	}
+
+	//structs.Map()
 }
