@@ -50,7 +50,7 @@ require (
 	github.com/zeromicro/zero-contrib/logx/logrusx v0.0.0-20230517160033-92ba832728db
 	go.etcd.io/etcd/client/v3 v3.5.9
 	go.uber.org/zap v1.24.0
-	golang.org/x/exp v0.0.0-20230522175609-2e198f4a06a1
+	golang.org/x/exp v0.0.0-20230626212559-97b1e661b5df
 	google.golang.org/grpc v1.56.1
 	gorm.io/driver/mysql v1.5.1
 	gorm.io/gorm v1.25.1
@@ -145,7 +145,7 @@ require (
 	golang.org/x/arch v0.3.0 // indirect
 	golang.org/x/crypto v0.9.0 // indirect
 	golang.org/x/image v0.0.0-20191009234506-e7c1f5e7dbb8 // indirect
-	golang.org/x/mod v0.8.0 // indirect
+	golang.org/x/mod v0.11.0 // indirect
 	golang.org/x/net v0.10.0 // indirect
 	golang.org/x/oauth2 v0.7.0 // indirect
 	golang.org/x/sync v0.1.0 // indirect
