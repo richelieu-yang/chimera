@@ -1,26 +1,6 @@
 package sliceKit
 
-// Copy 浅拷贝（浅克隆）
-/*
-PS: 也可以使用 copyKit.Copy().
-参考: golang复制切片的方法（避免操作同一底层数组） https://blog.csdn.net/weixin_43970884/article/details/126051345
-
-@param src 可以为nil（此时将返回空的slice实例）
-@return != nil
-
-e.g.
-	src := []string{"0", "1", "2"}
-	dest := sliceKit.Copy(src)
-
-	src[0] = "a"
-	fmt.Println(src)  // [a 1 2]
-	fmt.Println(dest) // [0 1 2]
-*/
-func Copy[T any](src []T) []T {
-	dest := make([]T, len(src))
-	copy(dest, src)
-	return dest
-}
+import "github.com/richelieu-yang/chimera/v2/src/copyKit"
 
 // CopyToDest 将src的元素复制到dest中（可能会修改dest的内容，但dest的内存地址不变！！！）
 /*
@@ -43,4 +23,31 @@ e.g.1	正常情况
 */
 func CopyToDest[T any](src, dest []T) int {
 	return copy(dest, src)
+}
+
+// Copy 浅拷贝（浅克隆）
+/*
+PS: 也可以使用 copyKit.Copy().
+参考: golang复制切片的方法（避免操作同一底层数组） https://blog.csdn.net/weixin_43970884/article/details/126051345
+
+@param src 可以为nil（此时将返回空的slice实例）
+@return != nil
+
+e.g.
+	src := []string{"0", "1", "2"}
+	dest := sliceKit.Copy(src)
+
+	src[0] = "a"
+	fmt.Println(src)  // [a 1 2]
+	fmt.Println(dest) // [0 1 2]
+*/
+func Copy[T any](s []T) []T {
+	dest := make([]T, len(s))
+	copy(dest, s)
+	return dest
+}
+
+// DeepCopy 深拷贝
+func DeepCopy[T any](s []T) ([]T, error) {
+	return copyKit.DeepCopy(s)
 }
