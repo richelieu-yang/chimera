@@ -34,6 +34,10 @@ func WithErrorLogger(errorLogger *log.Logger) ProxyOption {
 	}
 }
 
+// WithReqUrlPath
+/*
+@param reqUrlPath 不带query
+*/
 func WithReqUrlPath(reqUrlPath *string) ProxyOption {
 	return func(opts *proxyOptions) {
 		opts.reqUrlPath = reqUrlPath
