@@ -6,9 +6,7 @@ import (
 	"github.com/richelieu-yang/chimera/v2/src/confKit"
 	"github.com/richelieu-yang/chimera/v2/src/consts"
 	"github.com/richelieu-yang/chimera/v2/src/core/fileKit"
-	"github.com/richelieu-yang/chimera/v2/src/core/mapKit"
 	"github.com/richelieu-yang/chimera/v2/src/core/pathKit"
-	"github.com/richelieu-yang/chimera/v2/src/jsonKit"
 	"github.com/sirupsen/logrus"
 	"gorm.io/gorm"
 	"testing"
@@ -18,7 +16,7 @@ type User struct {
 	gorm.Model
 
 	Name sql.NullString
-	Age  uint
+	Age  uint `gorm:"column:user_age"`
 }
 
 func TestSetUp(t *testing.T) {
@@ -64,22 +62,14 @@ func TestSetUp(t *testing.T) {
 	if rst.Error != nil {
 		panic(rst.Error)
 	}
-	// 赋零值
-	u.Age = 0
 
-	fmt.Println(jsonKit.MarshalToString(u, jsonKit.WithIndent("    ")))
-
-	m := mapKit.Encode(u)
-	rst = db.Table("users").Updates(m)
-	//rst = db.Model(&u).Updates(&u)
+	//rst = db.Table("users").Where("id=?", 1).Updates(map[string]interface{}{
+	//	"Age": 100,
+	//})
+	rst = db.Model(&u).Updates(map[string]interface{}{
+		"Age": 0,
+	})
 	if rst.Error != nil {
 		panic(rst.Error)
 	}
-
-	//u.Name = sql.NullString{}
-	//u.Age = 100
-	//rst = db.Save(&u)
-	//if rst.Error != nil {
-	//	panic(rst.Error)
-	//}
 }
