@@ -32,6 +32,8 @@ var RemoveSuffixIfExists func(s, suffix string) string = strings.TrimSuffix
 /*
 PS: 区分大小写.
 
+@param suffix 后缀
+
 e.g.
 ("abc", "c"))	=> "abc"
 ("abc", "C")) 	=> "abcC"

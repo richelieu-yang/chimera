@@ -44,6 +44,8 @@ var RemovePrefixIfExists func(s, prefix string) string = strings.TrimPrefix
 /*
 PS: 区分大小写.
 
+@param prefix 前缀
+
 e.g.
 ("abc", "a")	=> "abc"
 ("abc", "A")) 	=> "Aabc"
