@@ -54,7 +54,7 @@ func ReadLuaFile(path string) (string, error) {
 	scan := bufio.NewScanner(file)
 	for scan.Scan() {
 		line := scan.Text()
-		line = strKit.Trim(line)
+		line = strKit.TrimSpace(line)
 		// 忽略"空行"和"注释行"
 		if strKit.IsEmpty(line) || strKit.StartWith(line, "--") {
 			continue

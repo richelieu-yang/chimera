@@ -58,7 +58,7 @@ func SelectInstances(namingClient naming_client.INamingClient, param vo.SelectIn
 */
 func SelectOneHealthyInstance(namingClient naming_client.INamingClient, param vo.SelectOneHealthInstanceParam) (*model.Instance, error) {
 	// 防止blank的情况
-	param.GroupName = strKit.Trim(param.GroupName)
+	param.GroupName = strKit.TrimSpace(param.GroupName)
 
 	return namingClient.SelectOneHealthyInstance(param)
 }

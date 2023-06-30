@@ -1,44 +1,36 @@
 package main
 
 import (
-	"context"
-	"github.com/apache/pulsar-client-go/pulsar"
-	"github.com/richelieu-yang/chimera/v2/src/log/logrusKit"
-	"github.com/richelieu-yang/chimera/v2/src/mq/pulsarKit"
-	"github.com/sirupsen/logrus"
+	"fmt"
+	"github.com/gin-gonic/gin"
+	"github.com/richelieu-yang/chimera/v2/src/web/httpKit"
+	"net/http"
 )
 
 func main() {
-	logrusKit.MustSetUp(nil)
+	engine := gin.Default()
 
-	pulsarKit.MustSetUp(&pulsarKit.Config{
-		Addresses: []string{"pulsar://localhost:6650"},
-		VerifyConfig: &pulsarKit.VerifyConfig{
-			Topic: "test",
-			Print: true,
-		},
+	key := "ccc"
+	engine.Any("/", func(ctx *gin.Context) {
+		value := httpKit.GetHeader(ctx.Request.Header, key)
+		fmt.Printf("%s: [%s]\n", key, value)
+
+		ctx.String(http.StatusOK, "/")
+	})
+	engine.Any("/a", func(ctx *gin.Context) {
+		value := httpKit.GetHeader(ctx.Request.Header, key)
+		fmt.Printf("%s: [%s]\n", key, value)
+
+		ctx.String(http.StatusOK, "/a")
+	})
+	engine.Any("/b/c", func(ctx *gin.Context) {
+		value := httpKit.GetHeader(ctx.Request.Header, key)
+		fmt.Printf("%s: [%s]\n", key, value)
+
+		ctx.String(http.StatusOK, "/b/c")
 	})
 
-	consumer, err := pulsarKit.NewConsumer(context.TODO(), pulsar.ConsumerOptions{
-		Topic:            "test",
-		SubscriptionName: "name",
-		Type:             pulsar.Exclusive,
-	}, "")
-	if err != nil {
-		logrus.Fatal(err)
+	if err := engine.Run(":81"); err != nil {
+		panic(err)
 	}
-	consumer.Close()
-
-	consumer1, err := pulsarKit.NewConsumer(context.TODO(), pulsar.ConsumerOptions{
-		Topic:            "test",
-		SubscriptionName: "name",
-		Type:             pulsar.Exclusive,
-	}, "")
-	if err != nil {
-		logrus.Fatal(err)
-	}
-	defer consumer1.Close()
-
-	select {}
-
 }

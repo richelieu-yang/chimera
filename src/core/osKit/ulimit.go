@@ -21,7 +21,7 @@ func GetMaxOpenFiles() (int, error) {
 		return 0, err
 	}
 	// e.g. "122880\n" => "122880"
-	str = strKit.Trim(str)
+	str = strKit.TrimSpace(str)
 
 	i, err := intKit.StringToInt(str)
 	if err != nil {
@@ -37,8 +37,8 @@ func GetMaxOpenFiles() (int, error) {
 	//if err != nil {
 	//	return 0, err
 	//}
-	//// strKit.Trim()是为了：去掉最后面的"\n"
-	//str := strKit.Trim(out.ToDSN())
+	//// strKit.TrimSpace()是为了：去掉最后面的"\n"
+	//str := strKit.TrimSpace(out.ToDSN())
 	//value, err := strconv.Atoi(str)
 	//if err != nil {
 	//	return 0, errorKit.New("result(%s) of command(%s) isn't a number", str, cmd.ToDSN())
@@ -58,7 +58,7 @@ func GetUserMaxProcesses() (int, error) {
 		return 0, err
 	}
 	// e.g."5333\n" => "5333"
-	str = strKit.Trim(str)
+	str = strKit.TrimSpace(str)
 
 	i, err := intKit.StringToInt(str)
 	if err != nil {
@@ -74,8 +74,8 @@ func GetUserMaxProcesses() (int, error) {
 	//if err != nil {
 	//	return 0, err
 	//}
-	//// strKit.Trim()是为了：去掉最后面的"\n"
-	//str := strKit.Trim(out.ToDSN())
+	//// strKit.TrimSpace()是为了：去掉最后面的"\n"
+	//str := strKit.TrimSpace(out.ToDSN())
 	//
 	//value, err := strconv.Atoi(str)
 	//if err != nil {

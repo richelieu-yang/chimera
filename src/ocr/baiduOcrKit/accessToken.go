@@ -24,8 +24,8 @@ func SetApiKeyAndSecretKey(apiKey, secretKey string) error {
 	lock.Lock()
 	defer lock.Unlock()
 
-	apiKey = strKit.Trim(apiKey)
-	secretKey = strKit.Trim(secretKey)
+	apiKey = strKit.TrimSpace(apiKey)
+	secretKey = strKit.TrimSpace(secretKey)
 	if strKit.IsEmpty(apiKey) {
 		return errorKit.New("apiKey is empty")
 	}

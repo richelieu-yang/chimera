@@ -57,7 +57,7 @@ func EmptyToDefault(str, def string, trimArgs ...bool) string {
 		trimFlag = false
 	}
 	if trimFlag {
-		str = Trim(str)
+		str = TrimSpace(str)
 	}
 
 	if IsEmpty(str) {

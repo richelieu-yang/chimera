@@ -17,7 +17,7 @@ import (
  * @return 优化过的ContextPath
  */
 func PolyfillContextPath(relativePath string) string {
-	rst := joinPaths("", strKit.Trim(relativePath))
+	rst := joinPaths("", strKit.TrimSpace(relativePath))
 
 	switch rst {
 	case "":

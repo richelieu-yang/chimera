@@ -18,9 +18,7 @@ e.g.1	区分大小写
 ("abc", "abc") => true
 ("abc", "Abc") => false
 */
-func StartWith(s, prefix string) bool {
-	return strings.HasPrefix(s, prefix)
-}
+var StartWith func(s, prefix string) bool = strings.HasPrefix
 
 // RemovePrefixIfExist 去掉指定的"前缀"（如果存在的话）
 /*
@@ -40,9 +38,7 @@ e.g.1	区分大小写
 ("abcd", "abcd") => ""
 ("abcd", "Abcd") => "abcd"
 */
-func RemovePrefixIfExist(s, prefix string) string {
-	return strings.TrimPrefix(s, prefix)
-}
+var RemovePrefixIfExist func(s, prefix string) string = strings.TrimPrefix
 
 // PrependIfMissing 如果给定字符串不是以给定的字符串为开头，则在"首部"添加 起始字符串.
 /*

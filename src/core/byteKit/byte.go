@@ -35,7 +35,7 @@ func ToByteWithDefaultE(obj interface{}, def byte) (byte, error) {
 }
 
 func stringToByte(str string, def byte) (byte, error) {
-	str = strKit.Trim(str)
+	str = strKit.TrimSpace(str)
 
 	if strKit.IsEmpty(str) {
 		return def, nil

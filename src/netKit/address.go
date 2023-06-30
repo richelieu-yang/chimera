@@ -46,7 +46,7 @@ e.g.
 ("https://blog.csdn.net/weixin_52428496/article/details/110159938") => "blog.csdn.net:443", nil
 */
 func ParseToAddress(str string) (*Address, error) {
-	tmp := strKit.Trim(str)
+	tmp := strKit.TrimSpace(str)
 	tmp = strKit.ReplaceAll(tmp, "\\", "/")
 	if strKit.IsEmpty(tmp) {
 		return nil, errorKit.New("invalid str(%s)", str)

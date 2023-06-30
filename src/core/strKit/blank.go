@@ -5,7 +5,7 @@ package strKit
 ("  \r\n ") => true
 */
 func IsBlank(str string) bool {
-	return IsEmpty(Trim(str))
+	return IsEmpty(TrimSpace(str))
 }
 
 func BlankToDefault(str, def string) string {
