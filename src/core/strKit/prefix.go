@@ -9,12 +9,12 @@ PS: 区分大小写.
 @param s		prefix不为""的情况下，如果s为""，返回值必定为false
 @param prefix 	如果prefix为""，返回值必定为true
 
-e.g.	""的情况
+e.g. ""的情况
 ("", "") 	=> true
 ("1", "")	=> true
 ("", "1")	=> false
 
-e.g.1	区分大小写
+e.g.1 区分大小写
 ("abc", "abc") => true
 ("abc", "Abc") => false
 */
@@ -29,12 +29,12 @@ PS:
 @param s		如果为""，返回""
 @param prefix	如果为""，返回传参s
 
-e.g.	""的情况
+e.g. ""的情况
 ("", "")	=> ""
 ("1", "")	=> "1"
 ("", "1") 	=> ""
 
-e.g.1	区分大小写
+e.g.1 区分大小写
 ("abcd", "abcd") => ""
 ("abcd", "Abcd") => "abcd"
 */
