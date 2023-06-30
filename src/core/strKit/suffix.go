@@ -18,19 +18,15 @@ e.g.1	区分大小写
 ("abc", "abc") => true
 ("abc", "Abc") => false
 */
-func EndWith(s, suffix string) bool {
-	return strings.HasSuffix(s, suffix)
-}
+var EndWith func(s, suffix string) bool = strings.HasSuffix
 
-// RemoveSuffixIfExist 去掉指定的"后缀"（如果存在的话）
+// RemoveSuffixIfExists 去掉指定的"后缀"（如果存在的话）
 /*
 PS:
 (1) 区分大小写；
 (2) 存在多个的话，只会移除最后1个.
 */
-func RemoveSuffixIfExist(s, suffix string) string {
-	return strings.TrimSuffix(s, suffix)
-}
+var RemoveSuffixIfExists func(s, suffix string) string = strings.TrimSuffix
 
 // AppendIfMissing 如果给定字符串不是以给定的字符串为结尾，则在"尾部"添加结尾字符串（不忽略大小写）.
 /*

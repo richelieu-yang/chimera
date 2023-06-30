@@ -9,9 +9,7 @@ import (
 func main() {
 	engine := gin.Default()
 	engine.Any("/*name", func(ctx *gin.Context) {
-		httpKit.AddHeader(ctx.Request.Header, "ccc", "q1wEydfvq5wujhdg1biqkhgFYTfy")
-
-		if err := httpKit.Proxy(ctx.Writer, ctx.Request, "http", "127.0.0.1:81"); err != nil {
+		if err := httpKit.Proxy(ctx.Writer, ctx.Request, "http", "127.0.0.1:16686"); err != nil {
 			ctx.String(http.StatusOK, err.Error())
 		}
 	})
