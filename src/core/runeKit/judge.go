@@ -24,7 +24,7 @@ var (
 	IsSpace func(r rune) bool = unicode.IsSpace
 )
 
-// IsChineseRune 是否中文字符（包括繁体）？
+// IsChineseRune 是否为（简体||繁体）中文字符？
 /*
 e.g.
 	fmt.Println(runeKit.IsChineseRune('体')) // true
