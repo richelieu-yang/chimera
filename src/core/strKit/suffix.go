@@ -41,9 +41,11 @@ e.g.
 ("abc", "C")) 	=> "abcC"
 ("abc", "0")) 	=> "abc0"
 */
-func AppendIfMissing(str, suffix string) string {
-	if !EndWith(str, suffix) {
-		str += suffix
+func AppendIfMissing(str, suffix string) (rst string) {
+	if EndWith(str, suffix) {
+		rst = str
+	} else {
+		rst = str + suffix
 	}
-	return str
+	return
 }

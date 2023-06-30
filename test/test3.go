@@ -1,16 +1,14 @@
 package main
 
 import (
-	"gorm.io/gorm"
+	"fmt"
+	"strings"
 )
 
 func main() {
-	type User struct {
-		gorm.Model
+	s := "aaa0aaa0aaa"
 
-		Name string `json:"name"`
-		Age  uint   `json:"age"`
-	}
-
-	//structs.Map()
+	fmt.Println(strings.Trim(s, "a"))      // 0123
+	fmt.Println(strings.TrimLeft(s, "a"))  // 0123aaa
+	fmt.Println(strings.TrimRight(s, "a")) // aaa0123
 }
