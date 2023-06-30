@@ -2,6 +2,9 @@ package imageKit
 
 import (
 	"github.com/richelieu-yang/chimera/v2/src/core/fileKit"
+	"image"
+	"image/jpeg"
+	"image/png"
 	"os"
 )
 
@@ -37,7 +40,8 @@ import (
 //	return imaging.Save(image, dest)
 //}
 
-func ConvertFormat(src, dest string) error {
+// ToJpeg 将图片格式转换为".jpg" || ".jpeg"
+func ToJpeg(src, dest string) error {
 	if err := fileKit.AssertExistAndIsFile(src); err != nil {
 		return err
 	}
@@ -48,11 +52,50 @@ func ConvertFormat(src, dest string) error {
 		return err
 	}
 
-	f, err := os.Open(src)
+	srcFile, err := os.Open(src)
+	if err != nil {
+		panic(err)
+	}
+	defer srcFile.Close()
+	srcImage, _, err := image.Decode(srcFile)
 	if err != nil {
 		return err
 	}
-	defer f.Close()
 
-	return nil
+	destFile, err := os.Create(dest)
+	if err != nil {
+		return err
+	}
+	defer destFile.Close()
+	return jpeg.Encode(destFile, srcImage, &jpeg.Options{Quality: 100})
+}
+
+// ToPng 将图片格式转换为".png"
+func ToPng(src, dest string) error {
+	if err := fileKit.AssertExistAndIsFile(src); err != nil {
+		return err
+	}
+	if err := fileKit.AssertNotExistOrIsFile(dest); err != nil {
+		return err
+	}
+	if err := fileKit.MkParentDirs(dest); err != nil {
+		return err
+	}
+
+	srcFile, err := os.Open(src)
+	if err != nil {
+		panic(err)
+	}
+	defer srcFile.Close()
+	srcImage, _, err := image.Decode(srcFile)
+	if err != nil {
+		return err
+	}
+
+	destFile, err := os.Create(dest)
+	if err != nil {
+		return err
+	}
+	defer destFile.Close()
+	return png.Encode(destFile, srcImage)
 }
