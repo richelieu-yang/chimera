@@ -3,7 +3,7 @@ package strKit
 import "strings"
 
 var (
-	// Trim 返回字符串，删除了s"左边&&右边"的连续cutset
+	// Trim 返回字符串，删除了s"左边&&右边"的连续cutset.
 	/*
 		e.g.
 		fmt.Println(strings.Trim("aaa0aaa0aaa", "a")) // "0aaa0"
@@ -12,7 +12,7 @@ var (
 	*/
 	Trim func(s, cutset string) string = strings.Trim
 
-	// TrimLeft 返回字符串，删除了s"左边"的连续cutset
+	// TrimLeft 返回字符串，删除了s"左边"的连续cutset.
 	/*
 		e.g.
 		fmt.Println(strings.TrimLeft("aaa0aaa0aaa", "a")) // "0aaa0aaa"
@@ -20,7 +20,7 @@ var (
 	*/
 	TrimLeft func(s, cutset string) string = strings.TrimLeft
 
-	// TrimRight 返回字符串，删除了s"右边"的连续cutset
+	// TrimRight 返回字符串，删除了s"右边"的连续cutset.
 	/*
 		e.g.
 		fmt.Println(strings.TrimRight("aaa0aaa0aaa", "a")) // "aaa0aaa0"
@@ -28,21 +28,27 @@ var (
 	*/
 	TrimRight func(s, cutset string) string = strings.TrimRight
 
-	// TrimFunc 返回字符串，删除了s"左边&&右边"的连续的满足条件的rune
+	// TrimFunc 返回字符串，删除了s"左边&&右边"的连续的满足条件的rune.
 	/*
 		@param f	(1) 返回true: 	删除此rune，继续判断下一个rune
 					(2) 返回false: 	不删除此rune，中断此次（左边||右边）删除
+
+		e.g.
+		str := strings.TrimFunc("77GeeksForGeeks!!!11a1", func(r rune) bool {
+			return unicode.IsDigit(r)
+		})
+		fmt.Print(str) // "GeeksForGeeks!!!11a"
 	*/
 	TrimFunc func(s string, f func(rune) bool) string = strings.TrimFunc
 
-	// TrimLeftFunc 返回字符串，删除了s"左边"的连续的满足条件的rune
+	// TrimLeftFunc 返回字符串，删除了s"左边"的连续的满足条件的rune.
 	/*
 		@param f	(1) 返回true: 	删除此rune，继续判断下一个rune
 					(2) 返回false: 	不删除此rune，中断此次（左边||右边）删除
 	*/
 	TrimLeftFunc func(s string, f func(rune) bool) string = strings.TrimLeftFunc
 
-	// TrimRightFunc 返回字符串，删除了s"右边"的连续的满足条件的rune
+	// TrimRightFunc 返回字符串，删除了s"右边"的连续的满足条件的rune.
 	/*
 		@param f	(1) 返回true: 	删除此rune，继续判断下一个rune
 					(2) 返回false: 	不删除此rune，中断此次（左边||右边）删除
