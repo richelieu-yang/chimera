@@ -6,7 +6,8 @@ import (
 )
 
 func main() {
-	fmt.Println(runeKit.IsDigit('1')) // true
-	fmt.Println(runeKit.IsDigit('0')) // true
-	fmt.Println(runeKit.IsDigit('-')) // false
+	fmt.Println(runeKit.IsSpace(' '))  // true
+	fmt.Println(runeKit.IsSpace('\r')) // true
+	fmt.Println(runeKit.IsSpace('\n')) // true
+	fmt.Println(runeKit.IsSpace('\t')) // true
 }

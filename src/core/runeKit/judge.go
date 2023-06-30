@@ -21,6 +21,13 @@ var (
 	IsDigit func(r rune) bool = unicode.IsDigit
 
 	// IsSpace 判断是否为空白符号('\t', '\n', '\v', '\f', '\r', ' ', U+0085 (NEL), U+00A0 (NBSP))？
+	/*
+		e.g.
+			fmt.Println(runeKit.IsSpace(' '))  // true
+			fmt.Println(runeKit.IsSpace('\r')) // true
+			fmt.Println(runeKit.IsSpace('\n')) // true
+			fmt.Println(runeKit.IsSpace('\t')) // true
+	*/
 	IsSpace func(r rune) bool = unicode.IsSpace
 )
 
