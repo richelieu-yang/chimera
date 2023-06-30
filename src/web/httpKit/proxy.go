@@ -51,6 +51,10 @@ func WithQueryParams(queryParams map[string]string) ProxyOption {
 }
 
 // Proxy 代理请求（反向代理，请求转发）.
+/*
+@param w e.g. ctx.Writer
+@param r e.g. ctx.Request
+*/
 func Proxy(w http.ResponseWriter, r *http.Request, scheme, addr string, options ...ProxyOption) error {
 	opts := loadOptions(options...)
 	return proxy(w, r, scheme, addr, opts.errorLogger, opts.reqUrlPath, opts.queryParams)
