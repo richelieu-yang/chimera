@@ -20,8 +20,7 @@ gin:
 #    bodyLimit: 1
     xFrameOptions:
     cors:
-      # cors配置是否生效？
-      # 默认: false（下面的origins配置将无效）
+      # cors配置是否生效？默认: false（此时下面的origins配置将无效，因为允许所有域）
       access: true
       # 支持的Origin(s)，即响应头中的Access-Control-Allow-Origin
       # (1) 默认: 支持所有的Origin（即动态支持请求的Origin，并非"*"）
@@ -43,7 +42,7 @@ gin:
 #        blocked: false
 #        # (1) 支持通配: "*"; (2) 支持边界匹配: "^" || "$"; (3) 忽略端口（即不要有":{port}"）; (4) 不区分大小写
 #        serverNames:
-##          - 127.0.0.1
+#          - 127.0.0.1
 #          - "*.yozo.com"
   ssl:
     # 证书文件

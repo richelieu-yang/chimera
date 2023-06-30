@@ -2,8 +2,7 @@ package imageKit
 
 import (
 	"github.com/disintegration/imaging"
-	"github.com/richelieu-yang/chimera/v2/src/core/errorKit"
-	fileKit2 "github.com/richelieu-yang/chimera/v2/src/core/fileKit"
+	"github.com/richelieu-yang/chimera/v2/src/core/fileKit"
 )
 
 // ConvertImageType 图片格式转换（图片类型转换）
@@ -16,14 +15,14 @@ PS:
 (2) 支持的图片格式："jpg"、"jpeg"、"png"、"gif"、"tif"、"tiff"、"bmp".（详见 imaging.Save()）
 */
 func ConvertImageType(src, dest string) error {
-	if err := fileKit2.MkParentDirs(dest); err != nil {
+	if err := fileKit.AssertExistAndIsFile(src); err != nil {
 		return err
 	}
-	if err := fileKit2.AssertExistAndIsFile(src); err != nil {
+	if err := fileKit.AssertNotExistOrIsFile(dest); err != nil {
 		return err
 	}
-	if fileKit2.Exists(dest) && fileKit2.IsDir(dest) {
-		return errorKit.New("dest(%s) exists but it's a directory", dest)
+	if err := fileKit.MkParentDirs(dest); err != nil {
+		return err
 	}
 
 	image, err := imaging.Open(src)
