@@ -57,7 +57,6 @@ func NewCorsMiddleware(origins []string) gin.HandlerFunc {
 			(1) 允许部分origin
 			AllowOrigins: 指定允许请求源的列表，如果列表中存在 *，则允许所有请求源，默认值是 []
 		*/
-
 		config.AllowOrigins = origins
 	} else {
 		/*

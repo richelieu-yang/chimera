@@ -29,6 +29,10 @@ var (
 	TrimRight func(s, cutset string) string = strings.TrimRight
 
 	// TrimFunc
+	/*
+		@param f	(1) 返回true: 	删除此rune，继续判断下一个rune
+					(2) 返回false: 	不删除此rune，中断此次（左边||右边）删除
+	*/
 	TrimFunc func(s string, f func(rune) bool) string = strings.TrimFunc
 
 	// TrimLeftFunc
