@@ -1,19 +1,23 @@
 package main
 
 import (
+	"fmt"
 	"github.com/gin-gonic/gin"
-	"github.com/sirupsen/logrus"
 	"net/http"
 )
 
 func main() {
 	engine := gin.Default()
 
-	engine.Any("/*.act", func(ctx *gin.Context) {
-		logrus.Infof("ctx.FullPath(): [%s]", ctx.FullPath())
-		logrus.Infof("ctx.Param(\"a\"): [%s]", ctx.Param(".act"))
+	engine.Any("/*name", func(ctx *gin.Context) {
+		str := ctx.Param("name")
+		if str != "" {
+			fmt.Println(str)
+		} else {
+			fmt.Println("empty")
+		}
 
-		ctx.String(http.StatusOK, ctx.FullPath())
+		ctx.String(http.StatusOK, "ok")
 	})
 
 	if err := engine.Run(":80"); err != nil {

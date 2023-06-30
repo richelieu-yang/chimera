@@ -11,9 +11,31 @@ import (
 	"strings"
 )
 
-// GetRequestRoute 获取请求的路由.
-func GetRequestRoute(req *http.Request) string {
+// GetRequestURI 带query
+/*
+e.g.
+http://127.0.0.1/a/b?1=1&2=2 => "/a/b?1=1&2=2"
+*/
+func GetRequestURI(req *http.Request) string {
+	return req.RequestURI
+}
+
+// GetURLPath 不带query
+/*
+e.g.
+http://127.0.0.1/a/b?1=1&2=2 => "/a/b"
+*/
+func GetURLPath(req *http.Request) string {
 	return req.URL.Path
+}
+
+// GetURLRawQuery
+/*
+e.g.
+http://127.0.0.1/a/b?1=1&2=2 => "1=1&2=2"
+*/
+func GetURLRawQuery(req *http.Request) string {
+	return req.URL.RawQuery
 }
 
 // GetProto
