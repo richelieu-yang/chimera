@@ -3,7 +3,7 @@ package imageKit
 import (
 	"fmt"
 	"github.com/richelieu-yang/chimera/v2/src/core/errorKit"
-	fileKit2 "github.com/richelieu-yang/chimera/v2/src/core/fileKit"
+	"github.com/richelieu-yang/chimera/v2/src/core/fileKit"
 	"github.com/richelieu-yang/chimera/v2/src/crypto/base64Kit"
 	"github.com/richelieu-yang/chimera/v2/src/web/httpClientKit"
 	"regexp"
@@ -14,11 +14,11 @@ import (
 参考: golang 将图片生成Base64 https://blog.csdn.net/weixin_40292098/article/details/126029489
 */
 func GetImageBase64(imagePath string) (string, error) {
-	if err := fileKit2.AssertExistAndIsFile(imagePath); err != nil {
+	if err := fileKit.AssertExistAndIsFile(imagePath); err != nil {
 		return "", err
 	}
 
-	imageData, err := fileKit2.ReadFile(imagePath)
+	imageData, err := fileKit.ReadFile(imagePath)
 	if err != nil {
 		return "", err
 	}
@@ -42,7 +42,7 @@ func GetWebImageBase64(url string) (string, error) {
 }
 
 func EncodeToBase64String(data []byte) (string, error) {
-	mimeType := fileKit2.DetectContentType(data)
+	mimeType := fileKit.DetectContentType(data)
 	switch mimeType {
 	case "image/jpeg":
 		fallthrough
@@ -79,5 +79,5 @@ func DecodeToImageFile(base64 []byte, dest string) error {
 	if err != nil {
 		return err
 	}
-	return fileKit2.WriteToFile(data, dest)
+	return fileKit.WriteToFile(data, dest)
 }
