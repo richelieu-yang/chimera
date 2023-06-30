@@ -2,13 +2,11 @@ package main
 
 import (
 	"fmt"
-	"strings"
-	"unicode"
+	"github.com/richelieu-yang/chimera/v2/src/core/runeKit"
 )
 
 func main() {
-	str := strings.TrimFunc("77GeeksForGeeks!!!11a1", func(r rune) bool {
-		return unicode.IsDigit(r)
-	})
-	fmt.Print(str) // "GeeksForGeeks!!!11a"
+	fmt.Println(runeKit.IsDigit('1')) // true
+	fmt.Println(runeKit.IsDigit('0')) // true
+	fmt.Println(runeKit.IsDigit('-')) // false
 }
