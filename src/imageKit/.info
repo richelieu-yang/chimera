@@ -4,6 +4,22 @@ TODO:
 (2) webp格式图片
 
 
-
-
+## h2non/bimg
+「GoCN酷Go推荐」Go 语言高性能图像处理神器 h2non/bimg
+    https://mp.weixin.qq.com/s/kAFZohzJo2DiKkxjnVti6A
+h2non/bimg 提供以下出片处理 API：
+    调整大小
+    放大
+    裁剪（包括智能裁剪支持，libvips 8.5+）
+    旋转（根据 EXIF 方向自动旋转）
+    翻转（具有基于EXIF元数据的自动翻转）
+    翻转
+    缩略图
+    获取大小
+    水印（使用文本或图像）
+    高斯模糊效果
+    自定义输出颜色空间（RGB，灰度...）
+    格式转换以及压缩处理
+    EXIF元数据（大小，Alpha通道，配置文件，方向...）修改
+    修剪（libvips 8.6+）
 
