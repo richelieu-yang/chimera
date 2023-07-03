@@ -5,9 +5,9 @@ import (
 )
 
 func main() {
-	println(fileKit.GetExtName("main.go"))  // "go"
-	println(fileKit.GetExtName("api.json")) // "json"
-	println(fileKit.GetExtName(""))         // ""
-	println(fileKit.GetExtName("    "))     // ""
-	println(fileKit.GetExtName("empty"))    // ""
+	println(fileKit.GetExt("main.go"))  // ".go"
+	println(fileKit.GetExt("api.json")) // ".json"
+	println(fileKit.GetExt(""))         // ""
+	println(fileKit.GetExt("    "))     // ""
+	println(fileKit.GetExt("empty"))    // ""
 }

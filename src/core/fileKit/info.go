@@ -43,16 +43,19 @@ var (
 
 	// GetExt 获取 后缀（带"."）
 	/*
+		@return 可能为""
 		e.g.
-		main.go  => .go
-		api.json => .json
+			println(fileKit.GetExt("main.go"))  // ".go"
+			println(fileKit.GetExt("api.json")) // ".json"
+			println(fileKit.GetExt(""))         // ""
+			println(fileKit.GetExt("    "))     // ""
+			println(fileKit.GetExt("empty"))    // ""
 	*/
 	GetExt func(path string) string = gfile.Ext
 
 	// GetExtName 获取 后缀（不带"."）
 	/*
 		@return 可能为""
-
 		e.g.
 			println(fileKit.GetExtName("main.go"))  // "go"
 			println(fileKit.GetExtName("api.json")) // "json"
