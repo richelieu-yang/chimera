@@ -22,7 +22,7 @@ type (
 	}
 )
 
-// GetSize
+// GetSize 获取图片的尺寸（宽高）.
 /*
 【图像处理】Golang 获取常用图像的宽高总结
 	https://www.cnblogs.com/voipman/p/16108320.html
