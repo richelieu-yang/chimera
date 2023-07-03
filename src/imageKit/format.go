@@ -58,6 +58,10 @@ func Convert(src, dest string) error {
 	if !ok {
 		return errorKit.New("extName(%s) of dest is invalid", extName)
 	}
+	if !bimg.IsTypeSupportedSave(imageType) {
+		return errorKit.New("imageType(%d, %s) isn't supported to save by current libvips compilation",
+			imageType, mapKit.Get(bimg.ImageTypes, imageType))
+	}
 
 	data, err := bimg.Read(src)
 	if err != nil {
