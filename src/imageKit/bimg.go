@@ -12,6 +12,27 @@ import (
 var bimgOnce = new(sync.Once)
 var bimgMapper map[string]bimg.ImageType
 
+// GetImageType 根据 文件名 判断图片类型.
+func GetImageType(path string) (bimg.ImageType, error) {
+	bimgOnce.Do(func() {
+		bimgMapper = mapKit.Invert(bimg.ImageTypes)
+
+		bimgMapper["jpg"] = bimg.JPEG
+		bimgMapper["tif"] = bimg.TIFF
+	})
+
+	extName := fileKit.GetExtName(path)
+	if err := strKit.AssertNotEmpty(extName, "extName"); err != nil {
+		return bimg.UNKNOWN, err
+	}
+	extName = strKit.ToLower(extName)
+	imageType, ok := bimgMapper[extName]
+	if !ok {
+		return bimg.UNKNOWN, errorKit.New("extName(%s) of dest is invalid", extName)
+	}
+	return imageType, nil
+}
+
 // Convert 转换图片的格式.
 /*
 !!!:
@@ -35,11 +56,6 @@ var bimgMapper map[string]bimg.ImageType
 	"avif"
 */
 func Convert(src, dest string) error {
-	bimgOnce.Do(func() {
-		bimgMapper = mapKit.Invert(bimg.ImageTypes)
-		bimgMapper["jpg"] = bimg.JPEG
-	})
-
 	// src
 	if err := fileKit.AssertExistAndIsFile(src); err != nil {
 		return err
@@ -48,14 +64,9 @@ func Convert(src, dest string) error {
 	if err := fileKit.AssertNotExistOrIsFile(dest); err != nil {
 		return err
 	}
-	extName := fileKit.GetExtName(dest)
-	if err := strKit.AssertNotEmpty(extName, "extName"); err != nil {
+	imageType, err := GetImageType(dest)
+	if err != nil {
 		return err
-	}
-	extName = strKit.ToLower(extName)
-	imageType, ok := bimgMapper[extName]
-	if !ok {
-		return errorKit.New("extName(%s) of dest is invalid", extName)
 	}
 	if !bimg.IsTypeSupportedSave(imageType) {
 		return errorKit.New("imageType(%d, %s) isn't supported to save by current libvips compilation",
