@@ -1,11 +1,43 @@
 package imageKit
 
 import (
+	"github.com/h2non/bimg"
 	"github.com/richelieu-yang/chimera/v2/src/core/fileKit"
 	"image/jpeg"
 	"image/png"
 	"os"
 )
+
+// Convert 转换图片的格式.
+/*
+!!!: 因为 h2non/bimg 基于C语言的libvip库，因此使用要满足"一些条件"，详见:
+	「GoCN酷Go推荐」Go 语言高性能图像处理神器 h2non/bimg https://mp.weixin.qq.com/s/kAFZohzJo2DiKkxjnVti6A
+
+支持的格式:
+	"jpg"
+	"jpeg"
+	"png"
+	"webp"
+	"tiff"
+	"gif"
+	"pdf"
+	"svg"
+	"magick"
+	"heif"
+	"avif"
+*/
+func Convert(src, dest string, imageType bimg.ImageType) error {
+	buffer, err := bimg.Read(src)
+	if err != nil {
+		return err
+	}
+	newImage, err := bimg.NewImage(buffer).Convert(imageType)
+	if err != nil {
+		return err
+	}
+	//return bimg.Write("004-Convert."+bimg.ImageTypes[imageType], newImage)
+	return bimg.Write(dest, newImage)
+}
 
 //import (
 //	"github.com/disintegration/imaging"
