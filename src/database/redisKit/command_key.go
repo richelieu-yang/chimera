@@ -149,33 +149,71 @@ PS:
 e.g. db为空（|| db中不存在符合条件的key）
 (context.TODO(), "*", 10) => ([]string{}, nil)
 */
-func (client *Client) ScanFully(ctx context.Context, match string, count int64) ([]string, error) {
-	// 抽出来的通用代码，作用: 让1个节点（node）执行命令
-	// 方法1: 多次调用scan，直至cursor为0
-	f := func(ctx context.Context, client redis.UniversalClient) ([]string, error) {
-		var cursor uint64 = 0
-		var keys []string
-
-		for {
-			var s []string
-			var err error
-			s, cursor, err = client.Scan(ctx, cursor, match, count).Result()
+func (client *Client) ScanFully(ctx context.Context, match string, count int64) (keys []string, err error) {
+	clusterClient, ok := client.universalClient.(*redis.ClusterClient)
+	if ok {
+		// (1) cluster集群，特殊处理（还是有小概率漏数据）
+		var lock = new(sync.Mutex)
+		err := clusterClient.ForEachMaster(ctx, func(ctx context.Context, client *redis.Client) error {
+			tmp, err := scanFullyInOneNode(client, ctx, match, count)
 			if err != nil {
-				return nil, err
+				return err
 			}
 
 			keys = sliceKit.Merge(keys, s)
+			return nil
 
-			if cursor == 0 {
-				// 已经完整的过一遍了，中断循环
-				break
-			}
+			//s, err := fn(ctx, client)
+			//if err != nil {
+			//	return err
+			//}
+			//
+			//// !!!: 对于ForEachMaster()，会起多个goroutine"同时"执行传入的函数，此处加锁是为了处理并发问题，以防: 同时修改变量keys，导致最终的keys漏东西
+			//lock.Lock()
+			//defer lock.Unlock()
+			//
+			//keys = sliceKit.Merge(keys, s)
+			//return nil
+		})
+		if err != nil {
+			return nil, err
 		}
 		return sliceKit.Uniq(keys), nil
+	} else {
+		// (2) 非cluster集群，常规处理
+		keys, err = scanFullyInOneNode(client.universalClient, ctx, match, count)
+		if err != nil {
+			return nil, err
+		}
 	}
+	return sliceKit.Uniq(keys), nil
+}
 
-	//// 方法2: 通过go-redis依赖的Iterator实现
-	//f := func(ctx context.Context, client redis.UniversalClient) ([]string, error) {
+// scanFullyInOneNode 抽出来的通用代码，作用: 让1个节点（node）执行 Scan 命令
+func scanFullyInOneNode(client redis.UniversalClient, ctx context.Context, match string, count int64) ([]string, error) {
+	// 方法1: 多次调用scan，直至cursor为0
+	var cursor uint64 = 0
+	var keys []string
+
+	for {
+		var s []string
+		var err error
+		s, cursor, err = client.Scan(ctx, cursor, match, count).Result()
+		if err != nil {
+			return nil, err
+		}
+
+		keys = sliceKit.Merge(keys, s)
+
+		if cursor == 0 {
+			// 已经完整的过一遍了，中断循环
+			break
+		}
+	}
+	return keys, nil
+
+	// 方法2: 通过go-redis依赖的Iterator实现
+	//fn := func(ctx context.Context, client redis.UniversalClient) ([]string, error) {
 	//	var cursor uint64 = 0
 	//	var keys []string
 	//
@@ -195,33 +233,6 @@ func (client *Client) ScanFully(ctx context.Context, match string, count int64) 
 	//	}
 	//	return keys, nil
 	//}
-
-	clusterClient, ok := client.universalClient.(*redis.ClusterClient)
-	if ok {
-		// (1) cluster集群，特殊处理（还是有小概率漏数据）
-		var keys []string
-		var lock = new(sync.Mutex)
-
-		err := clusterClient.ForEachMaster(ctx, func(ctx context.Context, client *redis.Client) error {
-			s, err := f(ctx, client)
-			if err != nil {
-				return err
-			}
-
-			// !!!: 对于ForEachMaster()，会起多个goroutine"同时"执行传入的函数，此处加锁是为了处理并发问题，以防: 同时修改变量keys，导致最终的keys漏东西
-			lock.Lock()
-			defer lock.Unlock()
-
-			keys = sliceKit.Merge(keys, s)
-			return nil
-		})
-		if err != nil {
-			return nil, err
-		}
-		return sliceKit.Uniq(keys), nil
-	}
-	// (2) 非cluster集群，常规处理
-	return f(ctx, client.universalClient)
 }
 
 // RandomKey

@@ -46,13 +46,19 @@ PS:
 @return 可能为nil
 
 e.g.
-([]string(nil), []string{"1", "2"}) => [1 2]
-([]string{"1", "2"}, []string(nil)) => [1 2]
+	s := sliceKit.Merge[string](nil, []string{})
+	fmt.Println(s)        // []
+	fmt.Println(len(s))   // 0
+	fmt.Println(s != nil) // true
 
-([]string(nil))	=> nil
-([]string{}) 	=> []
+e.g.1
+	([]string(nil), []string{"1", "2"}) => [1 2]
+	([]string{"1", "2"}, []string(nil)) => [1 2]
 
-([]string(nil), []string{"a", "b"}, []string(nil), []string{"b", "c"}) => [a b b c]
+	([]string(nil))	=> nil
+	([]string{}) 	=> []
+
+	([]string(nil), []string{"a", "b"}, []string(nil), []string{"b", "c"}) => [a b b c]
 */
 func Merge[T comparable](slices ...[]T) []T {
 	var rst []T

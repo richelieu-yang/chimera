@@ -1,15 +1,17 @@
 package main
 
-import "github.com/richelieu-yang/chimera/v2/src/imageKit"
+import (
+	"fmt"
+	"github.com/richelieu-yang/chimera/v2/src/core/sliceKit"
+)
+
+type SampleStruct struct {
+	Value string
+}
 
 func main() {
-	if err := imageKit.ToJpeg("a.png", "b.jpg"); err != nil {
-		panic(err)
-	}
-	if err := imageKit.ToJpeg("a.png", "b.jpeg"); err != nil {
-		panic(err)
-	}
-	if err := imageKit.ToPng("b.jpg", "c.png"); err != nil {
-		panic(err)
-	}
+	s := sliceKit.Merge[string](nil, []string{})
+	fmt.Println(s)        // []
+	fmt.Println(len(s))   // 0
+	fmt.Println(s != nil) // true
 }
