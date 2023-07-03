@@ -2,6 +2,7 @@ package imageKit
 
 import (
 	"github.com/h2non/bimg"
+	"github.com/richelieu-yang/chimera/v2/src/core/errorKit"
 	"github.com/richelieu-yang/chimera/v2/src/core/fileKit"
 	"github.com/richelieu-yang/chimera/v2/src/core/mapKit"
 	"github.com/richelieu-yang/chimera/v2/src/core/strKit"
@@ -43,23 +44,18 @@ func Convert(src, dest string) error {
 		return err
 	}
 	// dest
-	extName := fileKit.GetExtName(dest)
-	if err := strKit.AssertNotBlank(extName, "extName"); err != nil {
+	if err := fileKit.AssertExistAndIsFile(dest); err != nil {
 		return err
 	}
+	extName := fileKit.GetExtName(dest)
+	if err := strKit.AssertNotEmpty(extName, "extName"); err != nil {
+		return err
+	}
+	extName = strKit.ToLower(extName)
 	imageType, ok := formatMapper[extName]
 	if !ok {
-		//dest +=
+		return errorKit.New("extName(%s) of dest is invalid", extName)
 	}
-
-	//mapKit.Contains()
-	//
-	//if !strKit.EqualsIgnoreCase(ext, bimg.ImageTypes[imageType]) {
-	//	dest += "." + bimg.ImageTypes[imageType]
-	//}
-	//if err := fileKit.AssertNotExistOrIsFile(dest); err != nil {
-	//	return err
-	//}
 
 	data, err := bimg.Read(src)
 	if err != nil {
@@ -70,16 +66,7 @@ func Convert(src, dest string) error {
 	if err != nil {
 		return err
 	}
-	return bimg.Write(dest, img)
-}
-
-func getImageType(extName string) bimg.ImageType {
-	for k, v := range bimg.ImageTypes {
-		if strKit.EqualsIgnoreCase(extName, v) {
-			return k
-		}
-	}
-	return bimg.UNKNOWN
+	return bimg.Write(dest, data1)
 }
 
 //import (
