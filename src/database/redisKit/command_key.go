@@ -166,7 +166,7 @@ func (client *Client) ScanFully(ctx context.Context, match string, count int64) 
 			if err != nil {
 				return err
 			}
-			// 避免: 共享资源竞争的问题（因为 ForEachMaster() 内部会起协程执行函数）
+			// 加解锁以避免: 共享资源竞争的问题（因为 ForEachMaster() 内部会起协程执行函数）
 			mu.LockFunc(func() {
 				keys = sliceKit.Merge(keys, tmp)
 			})
