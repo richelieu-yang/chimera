@@ -106,7 +106,10 @@ PS: 如果map包含重复值，则后续值将覆盖前一个值的属性赋值�
 @return 必定不为nil
 
 e.g.
-
+	m1 := lo.Invert(map[string]int{"a": 1, "b": 2})
+	fmt.Println(m1) // map[1:a 2:b]
+	m2 := lo.Invert(map[string]int{"a": 1, "b": 2, "c": 1})
+	fmt.Println(m2) // map[1:c 2:b] 或 map[1:a 2:b]（因为map是无序的）
 */
 func Invert[K comparable, V comparable](in map[K]V) map[V]K {
 	return lo.Invert(in)
