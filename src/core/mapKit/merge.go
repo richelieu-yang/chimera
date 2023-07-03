@@ -23,8 +23,5 @@ e.g.
 	fmt.Println(m) // map[a:100 b:2]
 */
 func Merge[K comparable, V any](maps ...map[K]V) map[K]V {
-
-	lo.Invert()
-
 	return lo.Assign(maps...)
 }
