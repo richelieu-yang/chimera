@@ -22,6 +22,8 @@ var formatMapper map[string]bimg.ImageType
 (2) bug: 转换后，透明背景色 可能=> 黑色背景色（即使目标格式支持透明背景色）；
 (3) bug: 图片转pdf.
 
+@param dest 如果已经存在且是个文件，会覆盖
+
 支持的格式:
 	"jpg"
 	"jpeg"
