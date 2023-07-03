@@ -8,11 +8,11 @@ import (
 	"image/jpeg"
 	"image/png"
 	"os"
+	"sync"
 )
 
-func init() {
-	mapKit.
-}
+var formatOnce = new(sync.Once)
+var formatMapper map[string]bimg.ImageType
 
 // Convert 转换图片的格式.
 /*
@@ -33,6 +33,11 @@ func init() {
 	"avif"
 */
 func Convert(src, dest string) error {
+	formatOnce.Do(func() {
+		formatMapper = mapKit.Invert(bimg.ImageTypes)
+		formatMapper["jpg"] = bimg.JPEG
+	})
+
 	// src
 	if err := fileKit.AssertExistAndIsFile(src); err != nil {
 		return err
@@ -42,13 +47,19 @@ func Convert(src, dest string) error {
 	if err := strKit.AssertNotBlank(extName, "extName"); err != nil {
 		return err
 	}
+	imageType, ok := formatMapper[extName]
+	if !ok {
+		//dest +=
+	}
 
-	if !strKit.EqualsIgnoreCase(ext, bimg.ImageTypes[imageType]) {
-		dest += "." + bimg.ImageTypes[imageType]
-	}
-	if err := fileKit.AssertNotExistOrIsFile(dest); err != nil {
-		return err
-	}
+	//mapKit.Contains()
+	//
+	//if !strKit.EqualsIgnoreCase(ext, bimg.ImageTypes[imageType]) {
+	//	dest += "." + bimg.ImageTypes[imageType]
+	//}
+	//if err := fileKit.AssertNotExistOrIsFile(dest); err != nil {
+	//	return err
+	//}
 
 	data, err := bimg.Read(src)
 	if err != nil {
