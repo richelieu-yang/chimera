@@ -17,8 +17,10 @@ var formatMapper map[string]bimg.ImageType
 
 // Convert 转换图片的格式.
 /*
-!!!: 因为 h2non/bimg 基于C语言的libvip库，因此使用要满足"一些条件"，详见:
-	「GoCN酷Go推荐」Go 语言高性能图像处理神器 h2non/bimg https://mp.weixin.qq.com/s/kAFZohzJo2DiKkxjnVti6A
+!!!:
+(1) 因为 h2non/bimg 基于C语言的libvip库，因此使用要满足"一些条件"，详见: https://mp.weixin.qq.com/s/kAFZohzJo2DiKkxjnVti6A
+(2) bug: 转换后，透明背景色 可能=> 黑色背景色（即使目标格式支持透明背景色）；
+(3) bug: 图片转pdf.
 
 支持的格式:
 	"jpg"
@@ -44,7 +46,7 @@ func Convert(src, dest string) error {
 		return err
 	}
 	// dest
-	if err := fileKit.AssertExistAndIsFile(dest); err != nil {
+	if err := fileKit.AssertNotExistOrIsFile(dest); err != nil {
 		return err
 	}
 	extName := fileKit.GetExtName(dest)

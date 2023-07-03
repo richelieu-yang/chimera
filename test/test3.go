@@ -1,13 +1,11 @@
 package main
 
 import (
-	"github.com/richelieu-yang/chimera/v2/src/core/fileKit"
+	"github.com/richelieu-yang/chimera/v2/src/imageKit"
 )
 
 func main() {
-	println(fileKit.GetExt("main.go"))  // ".go"
-	println(fileKit.GetExt("api.json")) // ".json"
-	println(fileKit.GetExt(""))         // ""
-	println(fileKit.GetExt("    "))     // ""
-	println(fileKit.GetExt("empty"))    // ""
+	if err := imageKit.Convert("1.jpg", "1.pdf"); err != nil {
+		panic(err)
+	}
 }
