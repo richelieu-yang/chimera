@@ -9,6 +9,7 @@ import (
 	"golang.org/x/image/tiff"
 	"golang.org/x/image/webp"
 	"image"
+	"image/color"
 	"image/gif"
 	"image/jpeg"
 	"image/png"
@@ -16,18 +17,21 @@ import (
 )
 
 type (
-	Size struct {
+	Info struct {
+		ExtName    string      `json:"extName"`
+		ColorModel color.Model `json:"colorModel"`
+
 		Width  int `json:"width"`
 		Height int `json:"height"`
 	}
 )
 
-// GetSize 获取图片的尺寸（宽高）.
+// GetInfo 获取图片的信息（宽、高、后缀名）.
 /*
 【图像处理】Golang 获取常用图像的宽高总结
 	https://www.cnblogs.com/voipman/p/16108320.html
 */
-func GetSize(path string) (*Size, error) {
+func GetInfo(path string) (*Info, error) {
 	if err := fileKit.AssertExistAndIsFile(path); err != nil {
 		return nil, err
 	}
@@ -62,8 +66,10 @@ func GetSize(path string) (*Size, error) {
 	if err != nil {
 		return nil, err
 	}
-	return &Size{
-		Width:  imgConf.Width,
-		Height: imgConf.Height,
+	return &Info{
+		ExtName:    extName,
+		ColorModel: imgConf.ColorModel,
+		Width:      imgConf.Width,
+		Height:     imgConf.Height,
 	}, nil
 }
