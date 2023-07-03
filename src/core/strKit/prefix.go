@@ -20,6 +20,8 @@ e.g.1 区分大小写
 */
 var StartWith func(s, prefix string) bool = strings.HasPrefix
 
+var CutPrefix func(s, prefix string) (after string, found bool) = strings.CutPrefix
+
 // RemovePrefixIfExists 去掉指定的"前缀"（如果存在的话）
 /*
 PS:

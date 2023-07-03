@@ -20,6 +20,8 @@ e.g.1	区分大小写
 */
 var EndWith func(s, suffix string) bool = strings.HasSuffix
 
+var CutSuffix func(s, suffix string) (before string, found bool) = strings.CutSuffix
+
 // RemoveSuffixIfExists 去掉指定的"后缀"（如果存在的话）
 /*
 PS:
