@@ -3,8 +3,9 @@ package redisKit
 import (
 	"context"
 	"github.com/redis/go-redis/v9"
+	"github.com/richelieu-yang/chimera/v2/src/core/errorKit"
 	"github.com/richelieu-yang/chimera/v2/src/core/sliceKit"
-	"sync"
+	"github.com/richelieu-yang/chimera/v2/src/mutexKit"
 	"time"
 )
 
@@ -149,31 +150,27 @@ PS:
 e.g. db为空（|| db中不存在符合条件的key）
 (context.TODO(), "*", 10) => ([]string{}, nil)
 */
-func (client *Client) ScanFully(ctx context.Context, match string, count int64) (keys []string, err error) {
+func (client *Client) ScanFully(ctx context.Context, match string, count int64) ([]string, error) {
+	if count < 1 {
+		return nil, errorKit.New("invalid count(%d)", count)
+	}
+
+	var keys = make([]string, 0, count*3)
+	var err error
 	clusterClient, ok := client.universalClient.(*redis.ClusterClient)
 	if ok {
 		// (1) cluster集群，特殊处理（还是有小概率漏数据）
-		var lock = new(sync.Mutex)
+		mu := mutexKit.NewMutex()
 		err := clusterClient.ForEachMaster(ctx, func(ctx context.Context, client *redis.Client) error {
 			tmp, err := scanFullyInOneNode(client, ctx, match, count)
 			if err != nil {
 				return err
 			}
-
-			keys = sliceKit.Merge(keys, s)
+			// 避免: 共享资源竞争的问题（因为 ForEachMaster() 内部会起协程执行函数）
+			mu.LockFunc(func() {
+				keys = sliceKit.Merge(keys, tmp)
+			})
 			return nil
-
-			//s, err := fn(ctx, client)
-			//if err != nil {
-			//	return err
-			//}
-			//
-			//// !!!: 对于ForEachMaster()，会起多个goroutine"同时"执行传入的函数，此处加锁是为了处理并发问题，以防: 同时修改变量keys，导致最终的keys漏东西
-			//lock.Lock()
-			//defer lock.Unlock()
-			//
-			//keys = sliceKit.Merge(keys, s)
-			//return nil
 		})
 		if err != nil {
 			return nil, err
@@ -196,15 +193,13 @@ func scanFullyInOneNode(client redis.UniversalClient, ctx context.Context, match
 	var keys []string
 
 	for {
-		var s []string
+		var tmp []string
 		var err error
-		s, cursor, err = client.Scan(ctx, cursor, match, count).Result()
+		tmp, cursor, err = client.Scan(ctx, cursor, match, count).Result()
 		if err != nil {
 			return nil, err
 		}
-
-		keys = sliceKit.Merge(keys, s)
-
+		keys = sliceKit.Merge(keys, tmp)
 		if cursor == 0 {
 			// 已经完整的过一遍了，中断循环
 			break
