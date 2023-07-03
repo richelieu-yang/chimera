@@ -50,6 +50,7 @@ require (
 	go.etcd.io/etcd/client/v3 v3.5.9
 	go.uber.org/zap v1.24.0
 	golang.org/x/exp v0.0.0-20230626212559-97b1e661b5df
+	golang.org/x/image v0.0.0-20190802002840-cff245a6509b
 	google.golang.org/grpc v1.56.1
 	gorm.io/driver/mysql v1.5.1
 	gorm.io/gorm v1.25.2

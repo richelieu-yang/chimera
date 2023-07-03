@@ -2,6 +2,8 @@ package imageKit
 
 import (
 	"github.com/richelieu-yang/chimera/v2/src/core/fileKit"
+	"golang.org/x/image/webp"
+
 	"image"
 	"image/jpeg"
 	"image/png"
@@ -98,4 +100,37 @@ func ToPng(src, dest string) error {
 	}
 	defer destFile.Close()
 	return png.Encode(destFile, srcImage)
+}
+
+// ToPng 将图片格式转换为".png"
+func ToPng(src, dest string) error {
+	if err := fileKit.AssertExistAndIsFile(src); err != nil {
+		return err
+	}
+	if err := fileKit.AssertNotExistOrIsFile(dest); err != nil {
+		return err
+	}
+	if err := fileKit.MkParentDirs(dest); err != nil {
+		return err
+	}
+
+	srcFile, err := os.Open(src)
+	if err != nil {
+		panic(err)
+	}
+	defer srcFile.Close()
+	srcImage, _, err := image.Decode(srcFile)
+	if err != nil {
+		return err
+	}
+
+	destFile, err := os.Create(dest)
+	if err != nil {
+		return err
+	}
+	defer destFile.Close()
+
+	webp.En
+
+	return webp.Decode().Encode(destFile, srcImage)
 }
