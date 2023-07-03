@@ -2,7 +2,6 @@ package main
 
 import (
 	"fmt"
-	"github.com/richelieu-yang/chimera/v2/src/core/sliceKit"
 )
 
 type SampleStruct struct {
@@ -10,8 +9,7 @@ type SampleStruct struct {
 }
 
 func main() {
-	s := sliceKit.Merge[string](nil, []string{})
-	fmt.Println(s)        // []
-	fmt.Println(len(s))   // 0
-	fmt.Println(s != nil) // true
+	var keys = make([]string, 0, 60)
+	fmt.Println(len(keys))
+	fmt.Println(cap(keys))
 }

@@ -155,7 +155,7 @@ func (client *Client) ScanFully(ctx context.Context, match string, count int64) 
 		return nil, errorKit.New("invalid count(%d)", count)
 	}
 
-	var keys = make([]string, 0, count*3)
+	var keys = make([]string, 0, count*6)
 	var err error
 	clusterClient, ok := client.universalClient.(*redis.ClusterClient)
 	if ok {
