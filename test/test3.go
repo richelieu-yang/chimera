@@ -37,4 +37,5 @@ func main() {
 		panic(err)
 	}
 	fmt.Println(keys)
+	fmt.Println(len(keys))
 }
