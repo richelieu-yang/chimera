@@ -3,10 +3,16 @@ package imageKit
 import (
 	"github.com/h2non/bimg"
 	"github.com/richelieu-yang/chimera/v2/src/core/fileKit"
+	"github.com/richelieu-yang/chimera/v2/src/core/mapKit"
+	"github.com/richelieu-yang/chimera/v2/src/core/strKit"
 	"image/jpeg"
 	"image/png"
 	"os"
 )
+
+func init() {
+	mapKit.
+}
 
 // Convert 转换图片的格式.
 /*
@@ -26,17 +32,43 @@ import (
 	"heif"
 	"avif"
 */
-func Convert(src, dest string, imageType bimg.ImageType) error {
-	buffer, err := bimg.Read(src)
+func Convert(src, dest string) error {
+	// src
+	if err := fileKit.AssertExistAndIsFile(src); err != nil {
+		return err
+	}
+	// dest
+	extName := fileKit.GetExtName(dest)
+	if err := strKit.AssertNotBlank(extName, "extName"); err != nil {
+		return err
+	}
+
+	if !strKit.EqualsIgnoreCase(ext, bimg.ImageTypes[imageType]) {
+		dest += "." + bimg.ImageTypes[imageType]
+	}
+	if err := fileKit.AssertNotExistOrIsFile(dest); err != nil {
+		return err
+	}
+
+	data, err := bimg.Read(src)
 	if err != nil {
 		return err
 	}
-	newImage, err := bimg.NewImage(buffer).Convert(imageType)
+	img := bimg.NewImage(data)
+	data1, err := img.Convert(imageType)
 	if err != nil {
 		return err
 	}
-	//return bimg.Write("004-Convert."+bimg.ImageTypes[imageType], newImage)
-	return bimg.Write(dest, newImage)
+	return bimg.Write(dest, img)
+}
+
+func getImageType(extName string) bimg.ImageType {
+	for k, v := range bimg.ImageTypes {
+		if strKit.EqualsIgnoreCase(extName, v) {
+			return k
+		}
+	}
+	return bimg.UNKNOWN
 }
 
 //import (

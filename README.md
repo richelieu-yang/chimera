@@ -9,6 +9,6 @@ PS: 如果安装失败（因为部分依赖 i/o timeout等原因），可以考�
 go get github.com/richelieu42/chimera
 
 ## TODOS
-(1) Golang.wps中的"samber/lo"，涉及: slice、map...  
-(2) GoFramev2 https://goframe.org/pages/viewpage.action?pageId=1114859
+(1) samber/lo，可以参考：Golang.wps中、https://github.com/samber/lo
+(2) GoFramev2: https://goframe.org/pages/viewpage.action?pageId=1114859
 

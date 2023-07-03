@@ -97,3 +97,17 @@ func Keys[K comparable, V any](m map[K]V) []K {
 func Values[K comparable, V any](m map[K]V) []V {
 	return lo.Values(m)
 }
+
+// Invert 倒置（反转，交换key、value）
+/*
+PS: 如果map包含重复值，则后续值将覆盖前一个值的属性赋值。
+
+@param in 可以为nil（将返回空的map实例）
+@return 必定不为nil
+
+e.g.
+
+*/
+func Invert[K comparable, V comparable](in map[K]V) map[V]K {
+	return lo.Invert(in)
+}
