@@ -8,6 +8,9 @@ import (
 
 	// 兼容webp格式解析
 	_ "golang.org/x/image/webp"
+	_ "image/gif"
+	_ "image/jpeg"
+	_ "image/png"
 )
 
 // Decode 解码图片
