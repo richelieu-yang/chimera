@@ -1,6 +1,6 @@
 module github.com/richelieu-yang/chimera/v2
 
-go 1.20
+go 1.21
 
 require (
 	github.com/apache/pulsar-client-go v0.10.0
