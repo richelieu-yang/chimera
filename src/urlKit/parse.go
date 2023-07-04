@@ -4,7 +4,10 @@ import "net/url"
 
 // Parse 解析url（http、https、rtsp、rtmp等协议）
 /*
-参考: https://blog.csdn.net/zhuyuqiang1238/article/details/121807708
+GoLand教程-Go URL解析
+	https://mp.weixin.qq.com/s/i6uEUzvu5BPna5QtSYDSMQ
+golang url.Parse 解析
+	https://blog.csdn.net/zhuyuqiang1238/article/details/121807708
 
 @param rawURL !!!不能是如下格式: "localhost:8080"
 
@@ -21,9 +24,7 @@ e.g.
 	fmt.Println(u.RawQuery)   // a=123&b=456
 	fmt.Println(u.Query())    // map[a:[123] b:[456]]
 */
-func Parse(rawURL string) (*url.URL, error) {
-	return url.Parse(rawURL)
-}
+var Parse func(rawURL string) (*url.URL, error) = url.Parse
 
 // ParseQuery
 /*
@@ -40,6 +41,4 @@ e.g.
 	}
 	fmt.Println(m) 			// map[a:[123] b:[456]]
 */
-func ParseQuery(query string) (url.Values, error) {
-	return url.ParseQuery(query)
-}
+var ParseQuery func(query string) (url.Values, error) = url.ParseQuery
