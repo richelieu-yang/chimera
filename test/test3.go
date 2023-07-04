@@ -6,7 +6,7 @@ import (
 )
 
 func main() {
-	fmt.Println(imageKit.ToJpeg("/Users/richelieu/Desktop/a.png", "/Users/richelieu/Desktop/c1.jpg", 0))
+	fmt.Println(imageKit.ToJpeg("/Users/richelieu/Desktop/b.png", "/Users/richelieu/Desktop/b.jpg", 100))
 }
 
 //func test(src, dest string) {

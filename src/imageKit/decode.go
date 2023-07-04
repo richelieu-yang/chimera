@@ -17,7 +17,7 @@ import (
 
 // Decode 解码图片
 /*
-@param r 类型可以是: *os.File
+@param r 类型可以是: *os.File（用完记得调用Close()）
 */
 var Decode func(r io.Reader) (image.Image, string, error) = image.Decode
 
