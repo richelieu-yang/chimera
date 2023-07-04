@@ -7,15 +7,11 @@ import "net/url"
 e.g.
 ("") => ""
 */
-func EncodeURIComponent(text string) string {
-	return url.QueryEscape(text)
-}
+var EncodeURIComponent func(s string) string = url.QueryEscape
 
 // DecodeURIComponent 解码
 /*
 e.g.
 ("") => "", nil
 */
-func DecodeURIComponent(text string) (string, error) {
-	return url.QueryUnescape(text)
-}
+var DecodeURIComponent func(s string) (string, error) = url.QueryUnescape
