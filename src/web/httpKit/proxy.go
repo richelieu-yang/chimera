@@ -52,10 +52,10 @@ func WithQueryParams(queryParams map[string]string) ProxyOption {
 
 // Proxy 代理请求（反向代理，请求转发）.
 /*
-PS: 转发请求前如果想变更请求头，可以在调用此函数前设置请求头.
+PS: 转发请求前如果想变更请求头(Header)，可以在调用此函数前设置请求头.
 
-@param w e.g. ctx.Writer
-@param r e.g. ctx.Request
+@param w e.g.ctx.Writer
+@param r e.g.ctx.Request
 */
 func Proxy(w http.ResponseWriter, r *http.Request, scheme, addr string, options ...ProxyOption) error {
 	opts := loadOptions(options...)
