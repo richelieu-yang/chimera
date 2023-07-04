@@ -2,14 +2,8 @@ package base64Kit
 
 import "github.com/gogf/gf/v2/encoding/gbase64"
 
-func Decode(data []byte) ([]byte, error) {
-	return gbase64.Decode(data)
-}
+var Decode func(data []byte) ([]byte, error) = gbase64.Decode
 
-func DecodeString(data string) ([]byte, error) {
-	return gbase64.DecodeString(data)
-}
+var DecodeString func(data string) ([]byte, error) = gbase64.DecodeString
 
-func DecodeToString(data string) (string, error) {
-	return gbase64.DecodeToString(data)
-}
+var DecodeToString func(data string) (string, error) = gbase64.DecodeToString

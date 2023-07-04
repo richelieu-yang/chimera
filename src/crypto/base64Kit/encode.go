@@ -21,6 +21,7 @@ func EncodeFile(path string) ([]byte, error) {
 	return gbase64.EncodeFile(path)
 }
 
+// EncodeFileToString 文件 => base64字符串
 func EncodeFileToString(path string) (string, error) {
 	if err := fileKit.AssertExistAndIsFile(path); err != nil {
 		return "", err
@@ -29,10 +30,6 @@ func EncodeFileToString(path string) (string, error) {
 	return gbase64.EncodeFileToString(path)
 }
 
-func EncodeString(src string) string {
-	return gbase64.EncodeString(src)
-}
+var EncodeString func(src string) string = gbase64.EncodeString
 
-func EncodeToString(src []byte) string {
-	return gbase64.EncodeToString(src)
-}
+var EncodeToString func(src []byte) string = gbase64.EncodeToString
