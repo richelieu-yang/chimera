@@ -2,7 +2,7 @@ package stackKit
 
 import "sync"
 
-// NewStack
+// NewStack 堆栈
 /*
 @param safe	是否goroutines安全？
 @return 	必定不为nil
