@@ -2,6 +2,7 @@ package imageKit
 
 import (
 	"github.com/richelieu-yang/chimera/v2/src/core/fileKit"
+	"github.com/richelieu-yang/chimera/v2/src/core/sliceKit"
 	"image"
 	"image/color"
 	"image/draw"
@@ -10,13 +11,17 @@ import (
 )
 
 // ToJpeg 将图片格式转换为".jpg"(||".jpeg")
-func ToJpeg(src, dest string) error {
+/*
+@param qualityArgs （默认: 100; 取值范围: [1, 100]）生成jpeg图片的质量
+*/
+func ToJpeg(src, dest string, qualityArgs ...int8) error {
 	if err := fileKit.AssertNotExistOrIsFile(dest); err != nil {
 		return err
 	}
 	if err := fileKit.MkParentDirs(dest); err != nil {
 		return err
 	}
+	quality := sliceKit.GetFirstItemWithDefault(100, qualityArgs...)
 
 	srcImage, _, err := DecodeWithPath(src)
 	destFile, err := os.Create(dest)
@@ -32,6 +37,6 @@ func ToJpeg(src, dest string) error {
 	draw.Draw(destImage, destImage.Bounds(), &image.Uniform{C: color.White}, image.Point{}, draw.Src)
 	draw.Draw(destImage, destImage.Bounds(), srcImage, srcImage.Bounds().Min, draw.Over)
 	return jpeg.Encode(destFile, destImage, &jpeg.Options{
-		Quality: 100,
+		Quality: int(quality),
 	})
 }
