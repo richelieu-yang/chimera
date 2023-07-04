@@ -21,5 +21,6 @@ func ToPng(src, dest string) error {
 		return err
 	}
 	defer destFile.Close()
+
 	return png.Encode(destFile, srcImage)
 }

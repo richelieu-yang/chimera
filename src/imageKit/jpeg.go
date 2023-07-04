@@ -21,5 +21,6 @@ func ToJpeg(src, dest string) error {
 		return err
 	}
 	defer destFile.Close()
+
 	return jpeg.Encode(destFile, srcImage, &jpeg.Options{Quality: 100})
 }
