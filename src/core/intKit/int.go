@@ -51,7 +51,9 @@ var (
 
 	// StringToInt 类型转换: string => int
 	/*
-		PS: 传参s 必须是10进制的数字字符串（别的进制会返回error）.
+		PS:
+		(1) 传参s 必须是10进制的数字字符串（别的进制会返回error）.
+		(2) strconv.Atoi <=> strconv.ParseInt(s, 10, 0)
 	*/
 	StringToInt func(s string) (int, error) = strconv.Atoi
 
