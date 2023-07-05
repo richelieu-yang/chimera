@@ -17,6 +17,4 @@ func init() {
 	GoRoot = runtime.GOROOT()
 }
 
-func GetHostInfo() (*host.InfoStat, error) {
-	return host.Info()
-}
+var GetHostInfo func() (*host.InfoStat, error) = host.Info
