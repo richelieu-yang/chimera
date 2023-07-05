@@ -6,18 +6,15 @@ import (
 )
 
 var (
-	// ToInt
-	/*
-	   e.g.
-	   (nil) => 0
-	*/
 	ToInt func(i interface{}) int = cast.ToInt
 
 	// ToIntE
 	/*
 		PS:
-		(1) 8进制的前缀:	0
-		(2) 16进制的前缀:	0x || 0X（字母x不区分大小写，即0x与0X等价）
+		(1) 2进制的前缀:	0b
+		(2) 8进制的前缀:	0
+		(3) 10进制的前缀:	无
+		(4) 16进制的前缀:	0x || 0X（字母x不区分大小写，即0x与0X等价）
 
 		e.g.
 			fmt.Println(strconv.Atoi("08"))  	// 8 <nil>
