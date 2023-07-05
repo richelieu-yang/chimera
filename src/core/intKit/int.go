@@ -15,25 +15,29 @@ var (
 
 	// ToIntE
 	/*
-	   e.g.
-	   (nil) 	=> 0 <nil>
-	   (false)	=> 0 <nil>
-	   (true)	=> 1 <nil>
-	   ("")		=> 0 unable to cast "" of type string to int64
+		PS:
+		(1) 8进制的前缀:	0
+		(2) 16进制的前缀:	0x || 0X（字母x不区分大小写，即0x与0X等价）
+
+		e.g.
+			fmt.Println(strconv.Atoi("08"))  	// 8 <nil>
+			fmt.Println(strconv.Atoi("0xg")) 	// 0 strconv.Atoi: parsing "0xg": invalid syntax
+
+			// 0开头是"8进制数"，8进制数不应该出现"8"，所以转换失败
+			fmt.Println(cast.ToIntE("08")) 		// 0 unable to cast "08" of type string to int64
+			// 0x开头是"16进制数"，16进制数不应该出现"g"，所以转换失败
+			fmt.Println(cast.ToIntE("0xg")) 	// 0 unable to cast "0xg" of type string to int64
+
+		e.g.1
+		   (nil) 	=> 0 <nil>
+		   (false)	=> 0 <nil>
+		   (true)	=> 1 <nil>
+		   ("")		=> 0 unable to cast "" of type string to int64
 	*/
 	ToIntE func(i interface{}) (int, error) = cast.ToIntE
 
 	ToInt8 func(i interface{}) int8 = cast.ToInt8
 
-	// ToInt8E
-	/*
-		e.g. 将string转换为整型，建议还是用 StringToInt
-			fmt.Println(cast.ToInt8E("07")) // 7 <nil>
-			fmt.Println(cast.ToInt8E("08")) // 0 unable to cast "08" of type string to int64
-
-			fmt.Println(strconv.Atoi("07")) // 7 <nil>
-			fmt.Println(strconv.Atoi("08")) // 8 <nil>
-	*/
 	ToInt8E func(i interface{}) (int8, error) = cast.ToInt8E
 
 	ToInt16 func(i interface{}) int16 = cast.ToInt16
@@ -49,10 +53,21 @@ var (
 	ToInt64E func(i interface{}) (int64, error) = cast.ToInt64E
 
 	// StringToInt 类型转换: string => int
+	/*
+		PS: 传参s 必须是10进制的数字字符串（别的进制会返回error）.
+	*/
 	StringToInt func(s string) (int, error) = strconv.Atoi
+
+	// StringToIntWithBase
+	/*
+		@param base		传参s的进制数（2 || 8 || 10 || 16）
+		@param bitSize 	返回值的位数（0 || 8 || 16 || 32 || 64; 0: 使用当前系统的位数）
+	*/
+	StringToIntWithBase func(s string, base int, bitSize int) (i int64, err error) = strconv.ParseInt
 )
 
 // StringToIntWithDefault 类型转换: string => int
+
 func StringToIntWithDefault(str string, def int) int {
 	i, err := StringToInt(str)
 	if err != nil {
