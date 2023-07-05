@@ -2,8 +2,9 @@ package jaegerKit
 
 type (
 	Config struct {
-		Access bool   `json:"access"`
-		Url    string `json:"url"`
+		Access bool `json:"access"`
+		// Url Jaeger服务的url，e.g."http://localhost:14268/api/traces"
+		Url string `json:"url"`
 	}
 
 	ResourceConfig struct {
