@@ -22,25 +22,3 @@ var (
 	*/
 	IntToStringWithBase func(i int64, base int) string = strconv.FormatInt
 )
-
-//func IntToString(i int) string {
-//	return strconv.Itoa(i)
-//}
-
-//// ToString
-///*
-//e.g.
-//(nil) => ""
-//*/
-//func ToString(obj interface{}) string {
-//	return cast.ToString(obj)
-//}
-//
-//// ToStringE
-///*
-//e.g.
-//(nil) => "", nil
-//*/
-//func ToStringE(obj interface{}) (string, error) {
-//	return cast.ToStringE(obj)
-//}
