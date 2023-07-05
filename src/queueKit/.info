@@ -1,1 +1,7 @@
-队列类型-gqueue https://goframe.org/pages/viewpage.action?pageId=1114347
+## 队列 vs 堆栈
+    队列: 先进先出
+    堆栈: 后进先出
+
+## GoFrame
+队列类型-gqueue
+    https://goframe.org/pages/viewpage.action?pageId=1114347

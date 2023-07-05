@@ -18,13 +18,29 @@ type (
 		Size() int
 	}
 
-	// stackImpl 堆栈（先进后出）
 	stackImpl[V any] struct {
 		rwLock *sync.RWMutex
-		size   int
-		eles   []V
+
+		size int
+		eles []V
 	}
 )
+
+// NewStack 堆栈（后进先出）
+/*
+@param safe	是否goroutines安全？
+@return 必定不为nil
+*/
+func NewStack[V any](safe bool) Stack[V] {
+	stack := &stackImpl[V]{
+		size: 0,
+		eles: make([]V, 0, 32),
+	}
+	if safe {
+		stack.rwLock = new(sync.RWMutex)
+	}
+	return stack
+}
 
 // Push 放数据（放到slice的最后面）
 func (s *stackImpl[V]) Push(ele V) {
