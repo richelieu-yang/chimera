@@ -2,76 +2,52 @@ package stackKit
 
 import (
 	"github.com/richelieu-yang/chimera/v2/src/core/sliceKit"
-	"sync"
+	"github.com/richelieu-yang/chimera/v2/src/listKit"
 )
 
 type (
 	Stack[V any] interface {
+		// Push 放在最后面
 		Push(ele V)
 
-		// Pop
-		/*
-			@return 被拿出来的元素 + 是否成功拿出数据？
-		*/
-		Pop() (V, bool)
+		// Pop 移除并返回最后面的
+		Pop() V
 
 		Size() int
 	}
-
-	stackImpl[V any] struct {
-		rwLock *sync.RWMutex
-
-		size int
-		eles []V
-	}
 )
 
-// NewStack 堆栈（后进先出）
+func NewStack[V any](safe ...bool) Stack[V] {
+	return &stackImpl[V]{
+		list: listKit.NewDoubleLinkedList(safe...),
+	}
+}
+
+// NewStackFrom
 /*
-@param safe	是否goroutines安全？
-@return 必定不为nil
+Deprecated: 有点耗性能，看 GoFrame 后续会不会支持泛型.
 */
-func NewStack[V any](safe bool) Stack[V] {
-	stack := &stackImpl[V]{
-		size: 0,
-		eles: make([]V, 0, 32),
+func NewStackFrom[V any](s []V, safe ...bool) Stack[V] {
+	var s1 []interface{} = sliceKit.ConvertElementType[V, interface{}](s, func(item V, index int) interface{} {
+		return item
+	})
+	return &stackImpl[V]{
+		list: listKit.NewDoubleLinkedListFrom(s1, safe...),
 	}
-	if safe {
-		stack.rwLock = new(sync.RWMutex)
-	}
-	return stack
 }
 
-// Push 放数据（放到slice的最后面）
-func (s *stackImpl[V]) Push(ele V) {
-	if s.rwLock != nil {
-		s.rwLock.Lock()
-		defer s.rwLock.Unlock()
-	}
-
-	s.eles = append(s.eles, ele)
-	s.size++
-}
-
-// Pop 拿数据（slice最后面的）
-func (s *stackImpl[V]) Pop() (ele V, ok bool) {
-	if s.rwLock != nil {
-		s.rwLock.Lock()
-		defer s.rwLock.Unlock()
-	}
-
-	s.eles, ele, ok = sliceKit.RemoveLast(s.eles)
-	if ok {
-		s.size--
-	}
-	return
-}
-
-func (s *stackImpl[V]) Size() int {
-	if s.rwLock != nil {
-		s.rwLock.RLock()
-		defer s.rwLock.RUnlock()
-	}
-
-	return s.size
-}
+//// NewStack1 堆栈（后进先出）
+///*
+//@param safe	是否goroutines安全？
+//@return 必定不为nil
+//*/
+//func NewStack1[V any](safe bool) Stack[V] {
+//	stack := &stackImpl1[V]{
+//		size: 0,
+//		eles: make([]V, 0, 32),
+//	}
+//	if safe {
+//		stack.rwLock = new(sync.RWMutex)
+//	}
+//	return stack
+//}

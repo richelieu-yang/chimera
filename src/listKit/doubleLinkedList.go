@@ -14,4 +14,4 @@ PS: 返回值的使用可以参考 "GoFrame.wps".
 
 @param array 可以为nil，但这么干无意义
 */
-var NewDoubleLinkedListFrom func(array []interface{}, safe ...bool) *glist.List = glist.NewFrom
+var NewDoubleLinkedListFrom func(s []interface{}, safe ...bool) *glist.List = glist.NewFrom
