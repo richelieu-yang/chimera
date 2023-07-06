@@ -1,6 +1,7 @@
 package stackKit
 
 import (
+	"container/list"
 	"github.com/gogf/gf/v2/container/glist"
 )
 
@@ -10,15 +11,24 @@ type (
 	}
 )
 
-// Push 放数据（放到slice的最后面）
 func (impl *stackImpl[V]) Push(ele V) {
 	impl.list.PushBack(ele)
 }
 
-// Pop 拿数据（slice最后面的）
-func (impl *stackImpl[V]) Pop() V {
-	v := impl.list.PopBack()
-	return v.(V)
+func (impl *stackImpl[V]) Pop() (ele V, flag bool) {
+	// 可以参考 impl.list.PopBack()，但它只有一个返回值，不满足需求
+	// impl.list.PopBack()
+
+	impl.list.LockFunc(func(list *list.List) {
+		tmp := list.Back()
+		if tmp == nil {
+			// 堆栈为空
+			return
+		}
+		ele = list.Remove(tmp).(V)
+		flag = true
+	})
+	return
 }
 
 func (impl *stackImpl[V]) Size() int {
