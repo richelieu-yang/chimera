@@ -6,3 +6,6 @@
     https://github.com/bytedance/sonic/blob/main/README_ZH_CN.md
 Go语言JSON解析届顶流：Sonic
     https://mp.weixin.qq.com/s/Ij5wNjNZ6rRbQqTYIvP_aw
+
+## problems
+#### 多次序列化同一map（无序的），希望结果一致
