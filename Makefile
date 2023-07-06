@@ -1,5 +1,5 @@
-app=test1
-path=test/test1.go
+app=test2
+path=test/test2.go
 
 all: windows-amd64 darwin-arm64 linux-amd64 linux-arm64 linux-loong64 linux-mips64 linux-mips64le
 
