@@ -17,3 +17,6 @@ Go语言JSON解析届顶流：Sonic
 
 ## problems
 #### 多次序列化同一map（无序的），希望结果一致
+sonic.ConfigDefault:            多次实验（1000000），发现生成的json字符串一致.
+sonic.ConfigStd（推荐，稳一点）:   生成的json字符串必定一致.
+
