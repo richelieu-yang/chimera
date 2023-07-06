@@ -1,4 +1,4 @@
-package jsonKit
+package jsoniterKit
 
 import (
 	jsoniter "github.com/json-iterator/go"

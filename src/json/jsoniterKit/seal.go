@@ -1,4 +1,4 @@
-package jsonKit
+package jsoniterKit
 
 import (
 	"fmt"

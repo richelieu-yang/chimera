@@ -11,7 +11,6 @@ import (
 	"github.com/richelieu-yang/chimera/v2/src/core/fileKit"
 	"github.com/richelieu-yang/chimera/v2/src/core/intKit"
 	"github.com/richelieu-yang/chimera/v2/src/core/strKit"
-	"github.com/richelieu-yang/chimera/v2/src/jsonKit"
 	"net/http"
 	"net/url"
 	"unicode"
@@ -143,7 +142,7 @@ func RespondError(ctx *gin.Context, statusCode int, err error) {
 	if statusCode <= 0 {
 		statusCode = http.StatusInternalServerError
 	}
-	json, _ := jsonKit.SealFully("error", message, nil)
+	json, _ := jsoniterKit.SealFully("error", message, nil)
 	RespondText(ctx, statusCode, json)
 }
 
@@ -155,7 +154,7 @@ func RespondPanic(ctx *gin.Context, err any) {
 		message = "err == nil"
 	}
 
-	json, _ := jsonKit.SealFully("panic", message, nil)
+	json, _ := jsoniterKit.SealFully("panic", message, nil)
 	RespondText(ctx, httpStatusCode.Panic, json)
 }
 

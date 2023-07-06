@@ -3,7 +3,7 @@ package nacosKit
 import (
 	"github.com/nacos-group/nacos-sdk-go/model"
 	"github.com/nacos-group/nacos-sdk-go/vo"
-	"github.com/richelieu-yang/chimera/v2/src/jsonKit"
+	"github.com/richelieu-yang/chimera/v2/src/json/jsoniterKit"
 	"github.com/richelieu-yang/chimera/v2/src/randomKit"
 	"log"
 	"testing"
@@ -65,7 +65,7 @@ func Test(t *testing.T) {
 
 			{
 				param.Enable = true
-				json, _ := jsonKit.MarshalToString(param)
+				json, _ := jsoniterKit.MarshalToString(param)
 				t.Logf("即将注册服务: %s", json)
 				ok, err := client.RegisterInstance(param)
 				if err != nil {
@@ -77,7 +77,7 @@ func Test(t *testing.T) {
 			time.Sleep(time.Second * 5)
 			{
 				param.Enable = false
-				json, _ := jsonKit.MarshalToString(param)
+				json, _ := jsoniterKit.MarshalToString(param)
 				t.Logf("即将注册服务: %s", json)
 				ok, err := client.RegisterInstance(param)
 				if err != nil {

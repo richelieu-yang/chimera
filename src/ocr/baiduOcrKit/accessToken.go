@@ -4,7 +4,6 @@ import (
 	"fmt"
 	"github.com/richelieu-yang/chimera/v2/src/core/errorKit"
 	"github.com/richelieu-yang/chimera/v2/src/core/strKit"
-	"github.com/richelieu-yang/chimera/v2/src/jsonKit"
 	"github.com/richelieu-yang/chimera/v2/src/web/httpClientKit"
 	"sync"
 	"time"
@@ -80,7 +79,7 @@ func newAccessToken() (*accessToken, error) {
 	}
 
 	m := make(map[string]interface{})
-	if err := jsonKit.Unmarshal(&m, resp); err != nil {
+	if err := jsoniterKit.Unmarshal(&m, resp); err != nil {
 		return nil, err
 	}
 

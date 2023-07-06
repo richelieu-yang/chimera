@@ -1,4 +1,4 @@
-package jsonKit
+package jsoniterKit
 
 import "github.com/richelieu-yang/chimera/v2/src/core/strKit"
 
