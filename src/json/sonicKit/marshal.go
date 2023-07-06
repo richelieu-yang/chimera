@@ -22,6 +22,11 @@ func MarshalToStringByAPI(api sonic.API, v interface{}) (string, error) {
 	return api.MarshalToString(v)
 }
 
+// MarshalByAPIWithIndent
+/*
+@param prefix 一般为""
+@param indent 推荐值: "\t" || "    "（4个空格）
+*/
 func MarshalByAPIWithIndent(api sonic.API, v interface{}, prefix, indent string) ([]byte, error) {
 	if api == nil {
 		api = sonic.ConfigDefault
@@ -29,6 +34,11 @@ func MarshalByAPIWithIndent(api sonic.API, v interface{}, prefix, indent string)
 	return api.MarshalIndent(v, prefix, indent)
 }
 
+// MarshalToStringByAPIWithIndent
+/*
+@param prefix 一般为""
+@param indent 推荐值: "\t" || "    "（4个空格）
+*/
 func MarshalToStringByAPIWithIndent(api sonic.API, v interface{}, prefix, indent string) (string, error) {
 	data, err := MarshalByAPIWithIndent(api, v, prefix, indent)
 	if err != nil {
