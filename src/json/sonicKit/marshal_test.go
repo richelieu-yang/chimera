@@ -2,7 +2,6 @@ package sonicKit
 
 import (
 	"fmt"
-	"github.com/bytedance/sonic"
 	"testing"
 )
 
@@ -12,7 +11,7 @@ func TestMarshalToStringByAPIWithIndent(t *testing.T) {
 		"b": 2,
 		"":  3,
 	}
-	str, err := MarshalToStringByAPIWithIndent(sonic.ConfigDefault, m, "", "\t")
+	str, err := MarshalToStringByAPIWithIndent(nil, m, "", "\t")
 	if err != nil {
 		panic(err)
 	}
