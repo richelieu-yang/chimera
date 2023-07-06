@@ -1,5 +1,8 @@
 ## Sonic简介
 一个速度奇快的 JSON 序列化/反序列化库，由 JIT （即时编译）和 SIMD （单指令流多数据流）加速。
 
-## 官方文档
-https://github.com/bytedance/sonic/blob/main/README_ZH_CN.md
+## 文档s
+官方文档
+    https://github.com/bytedance/sonic/blob/main/README_ZH_CN.md
+Go语言JSON解析届顶流：Sonic
+    https://mp.weixin.qq.com/s/Ij5wNjNZ6rRbQqTYIvP_aw
