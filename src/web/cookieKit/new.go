@@ -9,8 +9,8 @@ import (
 /*
 @param name			可以为""，但无意义，设置不了
 @param value
-@param path			可以为""
-@param domain		可以为""
+@param path			可以为""（此时为"/"）
+@param domain		可以为""（此时为对应的hostname，可能是ip）
 @param maxAge		单位为秒（s）
 @param secure
 @param httpOnly

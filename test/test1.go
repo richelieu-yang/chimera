@@ -1,19 +1,21 @@
 package main
 
 import (
-	"fmt"
-	"github.com/gogf/gf/v2/container/glist"
-	"github.com/richelieu-yang/chimera/v2/src/core/sliceKit"
+	"github.com/gin-gonic/gin"
+	"github.com/richelieu-yang/chimera/v2/src/log/logrusKit"
+	"github.com/sirupsen/logrus"
 )
 
 func main() {
-	sliceKit.ConvertElementType()
+	logrusKit.MustSetUp(&logrusKit.Config{
+		Level:      "",
+		PrintBasic: false,
+	})
+	engine := gin.Default()
 
-	list := glist.New()
-	list.PushBack(0)
-	list.PushBack(1)
+	engine.Static("/", "./resource1")
 
-	fmt.Println(list.PopBack())
-	fmt.Println(list.PopBack())
-	fmt.Println(list.PopBack())
+	if err := engine.Run(":81"); err != nil {
+		logrus.Fatal(err)
+	}
 }

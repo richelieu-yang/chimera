@@ -1,25 +1,28 @@
 package main
 
 import (
-	"container/list"
-	"fmt"
-	"github.com/gogf/gf/v2/container/glist"
+	"github.com/gin-gonic/gin"
+	"github.com/richelieu-yang/chimera/v2/src/log/logrusKit"
+	"github.com/richelieu-yang/chimera/v2/src/web/cookieKit"
+	"github.com/sirupsen/logrus"
+	"net/http"
 )
 
 func main() {
-	l := glist.New(true)
-
-	l.PushBack(0)
-	l.PushBack(1)
-	l.PushBack(2)
-
-	l.LockFunc(func(list *list.List) {
-		if e := list.Back(); e != nil {
-			value = list.Remove(e)
-		}
+	logrusKit.MustSetUp(&logrusKit.Config{
+		Level:      "",
+		PrintBasic: false,
 	})
+	engine := gin.Default()
 
-	fmt.Println(l.Back().Value)
-	fmt.Println(l.Back().Value)
-	fmt.Println(l.Back().Value)
+	engine.Any("/test", func(ctx *gin.Context) {
+		cookie := cookieKit.NewCookie("cyy", "yjs", "", "", 0, false, true, http.SameSiteDefaultMode)
+		cookieKit.SetCookie(ctx.Writer, cookie)
+		ctx.String(http.StatusOK, "ok")
+	})
+	engine.Static("/s/", "./resource2")
+
+	if err := engine.Run(":82"); err != nil {
+		logrus.Fatal(err)
+	}
 }
