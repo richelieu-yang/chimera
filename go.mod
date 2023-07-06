@@ -5,6 +5,7 @@ go 1.20
 require (
 	github.com/apache/pulsar-client-go v0.10.0
 	github.com/apache/rocketmq-clients/golang/v5 v5.0.1-rc.4
+	github.com/bytedance/sonic v1.9.2
 	github.com/dablelv/go-huge-util v0.0.44
 	github.com/deckarep/golang-set/v2 v2.3.0
 	github.com/dustin/go-humanize v1.0.1
@@ -71,7 +72,6 @@ require (
 	github.com/beorn7/perks v1.0.1 // indirect
 	github.com/bits-and-blooms/bitset v1.4.0 // indirect
 	github.com/buger/jsonparser v1.1.1 // indirect
-	github.com/bytedance/sonic v1.9.2 // indirect
 	github.com/census-instrumentation/opencensus-proto v0.4.1 // indirect
 	github.com/cespare/xxhash/v2 v2.2.0 // indirect
 	github.com/chenzhuoyu/base64x v0.0.0-20221115062448-fe3a3abad311 // indirect
