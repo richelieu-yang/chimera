@@ -6,12 +6,11 @@ import (
 )
 
 func TestNewStack(t *testing.T) {
-	stack := NewStack[int](true)
+	stack := NewStack[int](false)
 	for i := 0; i < 3; i++ {
-		var i2 = i
-		stack.Push(i2)
+		stack.Push(i)
 	}
-	for i := 0; i < 4; i++ {
+	for i := 0; i < 5; i++ {
 		fmt.Println(stack.Pop())
 	}
 }
