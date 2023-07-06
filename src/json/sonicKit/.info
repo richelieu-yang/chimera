@@ -7,8 +7,11 @@
 Go语言JSON解析届顶流：Sonic
     https://mp.weixin.qq.com/s/Ij5wNjNZ6rRbQqTYIvP_aw
 
-## 希望对键排序（性能损失约10%）
-    使用 sonic.ConfigStd .
+## 希望对键排序（性能损失约10%，默认不启用）
+最简单的一种方法: 直接使用 sonic.ConfigStd .
+
+## HTML 转义（性能损失约15%，默认不启用）
+最简单的一种方法: 直接使用 sonic.ConfigStd .
 
 ## problems
 #### 多次序列化同一map（无序的），希望结果一致
