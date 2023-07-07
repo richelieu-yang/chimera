@@ -46,11 +46,13 @@ func TestRedisStore(t *testing.T) {
 	// 自定义: cookie的属性（配置）
 	store.Options(sessions.Options{
 		HttpOnly: false,
-		Secure:   false,
 		MaxAge:   0, // 只有 >= 0 的情况下，才会将数据写到Redis中
+
+		Secure:   false,
+		SameSite: http.SameSiteDefaultMode,
 	})
 
-	// 自定义: cookie的value、Redis中的key的后半部分
+	// 自定义: cookie的value，也是Redis中的key的后半部分
 	store.KeyGen(func() (string, error) {
 		return idKit.NewULID(), nil
 	})
