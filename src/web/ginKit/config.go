@@ -8,7 +8,7 @@ import (
 
 type (
 	Config struct {
-		Mode     string `json:"mode,default=debug,options=debug||release||test"`
+		Mode     string `json:"mode,default=debug,options=debug|release|test"`
 		HostName string `json:"hostName,optional"`
 		Port     int    `json:"port,default=80,range=[1:65535]"`
 		Colorful bool   `json:"colorful,default=true"`
@@ -28,7 +28,7 @@ type (
 		BodyLimit     int64                                `json:"bodyLimit,default=-1,range=[-1:]"`
 		Gzip          bool                                 `json:"gzip,default=false"`
 		XFrameOptions string                               `json:"xFrameOptions,optional"`
-		Cors          CorsConfig                           `json:"cors,optional"`
+		Cors          CorsConfig                           `json:"cors"`
 		Referer       []*refererKit.RefererVerifierBuilder `json:"referer,optional"`
 	}
 
