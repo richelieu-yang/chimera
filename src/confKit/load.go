@@ -9,6 +9,9 @@ import (
 
 // MustLoad 读取配置文件并反序列化为 指定结构体指针ptr
 /*
+PS:
+(1) default对应的是 该行被注释掉（而非值为空） 的情况；
+
 !!!:
 (0) 所有字段首字母大写 && 有json tag;
 (1) 结构体可以参考 go-zero的 rest.RestConf，可以通过 tag 控制配置的值（默认值default、范围range、可选optional...；可以组合）
