@@ -6,19 +6,15 @@ import (
 	"time"
 )
 
-// NewOpenCorsMiddleware 新建一个开放的（任意origin都通过）cors中间件.
-func NewOpenCorsMiddleware() gin.HandlerFunc {
-	return NewCorsMiddleware(nil)
-}
-
 // NewCorsMiddleware 新建一个cors中间件.
 /*
 「Go框架」 Gin 怎么实现允许前端跨域请求？
 	https://mp.weixin.qq.com/s/2eJUJKJ3Xu5jOYXAfknqtA
 
-@param origins 	(1) origin白名单（可以为nil）
+@param origins 	(0) 可以为nil
+				(1) origin白名单
 				(2) 支持wildcard（*）
-				(3) len(origins) == 0，则通配
+				(3) len(origins) == 0，则通配（请求的origin是什么就允许什么）
 
 e.g.
 	传参: []string{"https://*.github.com", "https://api.*", "http://*", "https://facebook.com", "*.golang.org"}
