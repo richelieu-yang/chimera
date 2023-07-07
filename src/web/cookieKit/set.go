@@ -2,11 +2,6 @@ package cookieKit
 
 import "net/http"
 
-//func SetCookieByAttributes(writer http.ResponseWriter, name, value, path, domain string, maxAge int, secure, httpOnly bool, sameSite http.SameSite) {
-//	cookie := NewCookie(name, value, path, domain, maxAge, secure, httpOnly, sameSite)
-//	SetCookie(writer, cookie)
-//}
-
 // SetCookie
 /*
 @param writer e.g. gin.Context Writer
@@ -19,5 +14,6 @@ func SetCookie(writer http.ResponseWriter, cookie *http.Cookie) {
 			cookie.Path = "/"
 		}
 	}
+
 	http.SetCookie(writer, cookie)
 }
