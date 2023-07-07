@@ -8,7 +8,7 @@ import (
 
 type (
 	Config struct {
-		Host     string `json:"host,optional"`
+		HostName string `json:"hostName,optional"`
 		Port     int    `json:"port,default=80,range=[1:65535]"`
 		Colorful bool   `json:"colorful,default=true"`
 		Pprof    bool   `json:"pprof,default=false"`

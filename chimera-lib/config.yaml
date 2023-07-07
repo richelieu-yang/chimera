@@ -5,6 +5,7 @@ logrus:
   printBasic: true
 
 gin:
+  hostName:
   # http端口号（默认: 80）
   port: 80
   # 日志带颜色输出?（默认: true）
@@ -47,7 +48,7 @@ gin:
 #          - "*.yozo.com"
   ssl:
     # 是否配置ssl？
-    access: false
+    access: true
     # 证书文件(建议".pem")
     certFile: /Users/richelieu/GolandProjects/chimera/chimera-lib/ssl.pem
     # key文件(".key")

@@ -74,24 +74,17 @@ func setUp(config *Config, recoveryMiddleware gin.HandlerFunc, businessLogic fun
 		}
 	}
 
-	// http server
-	if config.Port != -1 {
-		go func() {
-			if err := engine.Run(netKit.JoinHostnameAndPort(config.Host, config.Port)); err != nil {
-				logrus.Fatal(err)
-			}
-		}()
+	if config.SSL.Access {
+		// https server
+		sslConfig := config.SSL
+		if err := engine.RunTLS(netKit.JoinHostnameAndPort(config.HostName, config.Port), sslConfig.CertFile, sslConfig.KeyFile); err != nil {
+			return err
+		}
+	} else {
+		// http server
+		if err := engine.Run(netKit.JoinHostnameAndPort(config.HostName, config.Port)); err != nil {
+			return err
+		}
 	}
-
-	// https server
-	sslConfig := config.SSL
-	if sslConfig != nil && sslConfig.Port != -1 {
-		go func() {
-			if err := engine.RunTLS(netKit.JoinHostnameAndPort(config.Host, sslConfig.Port), sslConfig.CertFile, sslConfig.KeyFile); err != nil {
-				logrus.Fatal(engine)
-			}
-		}()
-	}
-
-	select {}
+	return nil
 }

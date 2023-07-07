@@ -3,14 +3,20 @@ package ginKit
 import (
 	"github.com/gin-gonic/gin"
 	"github.com/richelieu-yang/chimera/v2/src/confKit"
+	"github.com/richelieu-yang/chimera/v2/src/consts"
 	"github.com/richelieu-yang/chimera/v2/src/core/osKit"
-	"github.com/richelieu-yang/chimera/v2/src/log/logrusKit"
+	"github.com/richelieu-yang/chimera/v2/src/core/pathKit"
+	"github.com/sirupsen/logrus"
 	"net/http"
 	"testing"
 )
 
 func TestMustSetUp(t *testing.T) {
-	logrusKit.MustSetUp(nil)
+	wd, err := pathKit.ReviseWorkingDirInTestMode(consts.ProjectName)
+	if err != nil {
+		panic(err)
+	}
+	logrus.Infof("wd: [%s].", wd)
 
 	var path string
 	if osKit.IsWindows() {
@@ -35,22 +41,3 @@ func TestMustSetUp(t *testing.T) {
 		return nil
 	})
 }
-
-//func TestMustSetUp1(t *testing.T) {
-//	config := &Config{
-//		Port:       80,
-//		Colorful:   true,
-//		Middleware: nil,
-//		SSL: &SslConfig{
-//			CertFile: "/Users/richelieu/GolandProjects/chimera/chimera-lib/ssl.pem",
-//			KeyFile:  "/Users/richelieu/GolandProjects/chimera/chimera-lib/ssl.key",
-//			Port:     443,
-//		},
-//	}
-//	MustSetUp(config, nil, func(engine *gin.Engine) error {
-//		engine.Any("/test", func(ctx *gin.Context) {
-//			ctx.ToDSN(http.StatusOK, "ok")
-//		})
-//		return nil
-//	})
-//}
