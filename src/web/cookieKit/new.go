@@ -1,8 +1,9 @@
 package cookieKit
 
 import (
+	"github.com/richelieu-yang/chimera/v2/src/core/strKit"
+	"github.com/richelieu-yang/chimera/v2/src/urlKit"
 	"net/http"
-	"net/url"
 )
 
 type (
@@ -40,34 +41,69 @@ type (
 		SameSite http.SameSite
 	}
 
-	Option func(*options)
+	CookieOption func(*options)
 )
 
-// NewCookie
-/*
-@param name			可以为""（但无意义）
-@param value		可以为""
-@param path
-@param domain
-@param maxAge		单位为秒（s）
-@param secure
-@param httpOnly
-@param sameSite		e.g. http.SameSiteDefaultMode
-*/
-func NewCookie(name, value, path, domain string, maxAge int, secure, httpOnly bool, sameSite http.SameSite) *http.Cookie {
-	// 参考: gin.Context.SetCookie()
-	if path == "" {
-		path = "/"
+func WithPath(path string) CookieOption {
+	return func(opts *options) {
+		opts.Path = path
+	}
+}
+
+func WithDomain(domain string) CookieOption {
+	return func(opts *options) {
+		opts.Domain = domain
+	}
+}
+
+func WithMaxAge(maxAge int) CookieOption {
+	return func(opts *options) {
+		opts.MaxAge = maxAge
+	}
+}
+
+func WithSecure(secure bool) CookieOption {
+	return func(opts *options) {
+		opts.Secure = secure
+	}
+}
+
+func WithHttpOnly(httpOnly bool) CookieOption {
+	return func(opts *options) {
+		opts.HttpOnly = httpOnly
+	}
+}
+
+func WithSameSite(sameSite http.SameSite) CookieOption {
+	return func(opts *options) {
+		opts.SameSite = sameSite
+	}
+}
+
+func loadOptions(cookieOptions ...CookieOption) *options {
+	opts := &options{}
+	for _, option := range cookieOptions {
+		option(opts)
 	}
 
+	// 参考: gin.Context.SetCookie()
+	opts.Path = strKit.BlankToDefault(opts.Path, "/")
+
+	return opts
+}
+
+func NewCookie(name, value string, cookieOptions ...CookieOption) *http.Cookie {
+	opts := loadOptions(cookieOptions...)
+
 	return &http.Cookie{
-		Name:     name,
-		Value:    url.QueryEscape(value),
-		Path:     path,
-		Domain:   domain,
-		MaxAge:   maxAge,
-		Secure:   secure,
-		HttpOnly: httpOnly,
-		SameSite: sameSite,
+		Name:  name,
+		Value: urlKit.EncodeURIComponent(value),
+
+		Path:     opts.Path,
+		Domain:   opts.Domain,
+		MaxAge:   opts.MaxAge,
+		Secure:   opts.Secure,
+		HttpOnly: opts.HttpOnly,
+		SameSite: opts.SameSite,
 	}
 }
