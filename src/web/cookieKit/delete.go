@@ -1,6 +1,8 @@
 package cookieKit
 
-import "net/http"
+import (
+	"net/http"
+)
 
 // DeleteCookieByName
 /*
@@ -24,6 +26,8 @@ func DeleteCookie(writer http.ResponseWriter, cookie *http.Cookie) {
 	if cookie == nil {
 		return
 	}
-	cookie.MaxAge = -1
+
+	SetCookieMaxAge(cookie, -1)
+
 	SetCookie(writer, cookie)
 }

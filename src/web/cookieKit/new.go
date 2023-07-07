@@ -110,7 +110,7 @@ e.g. 跨域情况下，iframe页面（子页面）设置cookie失败的一种解
 func NewCookie(name, value string, cookieOptions ...CookieOption) *http.Cookie {
 	opts := loadOptions(cookieOptions...)
 
-	return &http.Cookie{
+	cookie := &http.Cookie{
 		Name:  name,
 		Value: urlKit.EncodeURIComponent(value),
 
@@ -121,4 +121,6 @@ func NewCookie(name, value string, cookieOptions ...CookieOption) *http.Cookie {
 		HttpOnly: opts.HttpOnly,
 		SameSite: opts.SameSite,
 	}
+	SetCookieMaxAge(cookie, opts.MaxAge)
+	return cookie
 }
