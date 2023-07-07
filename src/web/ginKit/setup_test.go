@@ -4,7 +4,6 @@ import (
 	"github.com/gin-gonic/gin"
 	"github.com/richelieu-yang/chimera/v2/src/confKit"
 	"github.com/richelieu-yang/chimera/v2/src/consts"
-	"github.com/richelieu-yang/chimera/v2/src/core/osKit"
 	"github.com/richelieu-yang/chimera/v2/src/core/pathKit"
 	"github.com/sirupsen/logrus"
 	"net/http"
@@ -12,23 +11,18 @@ import (
 )
 
 func TestMustSetUp(t *testing.T) {
+	type config struct {
+		Gin *Config `json:"Gin"`
+	}
+
 	wd, err := pathKit.ReviseWorkingDirInTestMode(consts.ProjectName)
 	if err != nil {
 		panic(err)
 	}
 	logrus.Infof("wd: [%s].", wd)
 
-	var path string
-	if osKit.IsWindows() {
-		path = "D:\\GolandProjects\\chimera\\chimera-lib\\config.yaml"
-	} else {
-		path = "/Users/richelieu/GolandProjects/chimera/chimera-lib/config.yaml"
-	}
-
-	type config struct {
-		Gin *Config `json:"Gin"`
-	}
 	c := &config{}
+	path := "chimera-lib/config.yaml"
 	confKit.MustLoad(path, c)
 	MustSetUp(c.Gin, nil, func(engine *gin.Engine) error {
 		engine.Any("/test", func(ctx *gin.Context) {

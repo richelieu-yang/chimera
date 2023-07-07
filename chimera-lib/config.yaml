@@ -48,7 +48,7 @@ gin:
 #          - "*.yozo.com"
   ssl:
     # 是否配置ssl？
-    access: true
+    access: false
     # 证书文件(建议".pem")
     certFile: /Users/richelieu/GolandProjects/chimera/chimera-lib/ssl.pem
     # key文件(".key")
