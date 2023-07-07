@@ -24,7 +24,7 @@ var i = atomicKit.NewInt()
 func TestRedisStore(t *testing.T) {
 	// Redis中的key的前缀（value为 string 类型）
 	redisKeyPrefix := "session:"
-
+	// cookie的name
 	cookieName := "session-id"
 
 	// Redis配置（单节点）
@@ -42,15 +42,16 @@ func TestRedisStore(t *testing.T) {
 
 	// 自定义: Redis中的key的前缀
 	store.KeyPrefix(redisKeyPrefix)
-	// 自定义: cookie的配置
+
+	// 自定义: cookie的属性（配置）
 	store.Options(sessions.Options{
-		HttpOnly: true,
+		HttpOnly: false,
 		Secure:   false,
-		MaxAge:   0, // 只有 > 0 的情况下，才会将数据写到Redis中
+		MaxAge:   0, // 只有 >= 0 的情况下，才会将数据写到Redis中
 	})
+
 	// 自定义: cookie的value、Redis中的key的后半部分
 	store.KeyGen(func() (string, error) {
-		//return "cyy", nil
 		return idKit.NewULID(), nil
 	})
 
