@@ -33,7 +33,7 @@ type (
 		HttpOnly bool
 		// SameSite
 		/*
-			http.SameSiteDefaultMode:
+			http.SameSiteDefaultMode:	默认值
 			http.SameSiteStrictMode:	Scrict最为严格，完全禁止第三方Cookie，跨站点时，任何情况下都不会发送Cookie。
 			http.SameSiteLaxMode:		Lax规则稍稍放宽，大多数情况也是不发送第三方 Cookie，但是导航到目标网址的 Get 请求除外。
 			http.SameSiteNoneMode:		网站可以选择显式关闭SameSite属性，将其设为None。不过，前提是必须同时设置Secure属性（Cookie 只能通过 HTTPS 协议发送），否则无效。
@@ -81,7 +81,14 @@ func WithSameSite(sameSite http.SameSite) CookieOption {
 }
 
 func loadOptions(cookieOptions ...CookieOption) *options {
-	opts := &options{}
+	opts := &options{
+		Path:     "/",
+		Domain:   "",
+		MaxAge:   0,
+		Secure:   false,
+		HttpOnly: false,
+		SameSite: http.SameSiteDefaultMode,
+	}
 	for _, option := range cookieOptions {
 		option(opts)
 	}
