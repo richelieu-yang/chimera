@@ -31,7 +31,7 @@ func setUp(config *Config, recoveryMiddleware gin.HandlerFunc, businessLogic fun
 	}
 
 	// Gin的模式，默认debug模式，后续可以在 businessLogic 里面调整
-	gin.SetMode(gin.DebugMode)
+	gin.SetMode(config.Mode)
 
 	/*
 		gin框架中如何让日志文字带颜色输出？

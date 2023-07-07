@@ -5,11 +5,13 @@ logrus:
   printBasic: true
 
 gin:
+  # Gin的模式（默认: debug，可选: debug||release||test）
+  mode:
   hostName:
   # http端口号（默认: 80）
-  port: 80
+#  port: 80
   # 日志带颜色输出?（默认: true）
-  colorful: true
+#  colorful: true
   # 是否开启pprof路由？（默认: false）
   # PS: 只应该在性能测试的时候才在代码中引入pprof.
   pprof: false
