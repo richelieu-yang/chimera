@@ -20,7 +20,7 @@ gin:
 #    bodyLimit: 1
     xFrameOptions:
     cors:
-      # cors配置是否生效？默认: false（此时下面的origins配置将无效，因为允许所有域）
+      # 是否配置cors？默认: false（此时下面的 origins配置 将无效）
       access: false
       # 支持的Origin(s)，即响应头中的Access-Control-Allow-Origin
       # (1) 默认: 支持所有的Origin（即动态支持请求的Origin，并非"*"）
@@ -45,10 +45,11 @@ gin:
 #          - 127.0.0.1
 #          - "*.yozo.com"
   ssl:
+    # 是否配置ssl？
     access: false
-    # 证书文件
+    # 证书文件(建议".pem")
     certFile: /Users/richelieu/GolandProjects/chimera/chimera-lib/ssl.pem
-    # key文件
+    # key文件(".key")
     keyFile: /Users/richelieu/GolandProjects/chimera/chimera-lib/ssl.key
 
 redis:
