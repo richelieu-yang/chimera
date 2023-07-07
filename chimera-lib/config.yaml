@@ -45,12 +45,11 @@ gin:
 #          - 127.0.0.1
 #          - "*.yozo.com"
   ssl:
+    access: false
     # 证书文件
     certFile: /Users/richelieu/GolandProjects/chimera/chimera-lib/ssl.pem
     # key文件
     keyFile: /Users/richelieu/GolandProjects/chimera/chimera-lib/ssl.key
-    # https端口号（默认-1）
-    port: 443
 
 redis:
   userName:
