@@ -92,6 +92,14 @@ func loadOptions(cookieOptions ...CookieOption) *options {
 	return opts
 }
 
+// NewCookie
+/*
+e.g. 跨域情况下，iframe页面（子页面）设置cookie失败的一种解决方法
+满足以下条件:
+	(1) WithSameSite(http.SameSiteNoneMode)
+	(2) WithSecure(true)
+	(3) https协议
+*/
 func NewCookie(name, value string, cookieOptions ...CookieOption) *http.Cookie {
 	opts := loadOptions(cookieOptions...)
 
