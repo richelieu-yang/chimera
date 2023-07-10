@@ -1,6 +1,8 @@
 package jsonResplKit
 
-import "github.com/bytedance/sonic"
+import (
+	"github.com/bytedance/sonic"
+)
 
 type (
 	options struct {
@@ -10,6 +12,10 @@ type (
 	Option func(opts *options)
 )
 
+// WithAPI
+/*
+@param api sonic.ConfigDefault（默认; 推荐） || jsoniter.ConfigDefault
+*/
 func WithAPI(api API) Option {
 	return func(opts *options) {
 		opts.api = api
