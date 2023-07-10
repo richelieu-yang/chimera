@@ -2,14 +2,19 @@ package main
 
 import (
 	"fmt"
-	"github.com/bytedance/sonic"
+	"github.com/richelieu-yang/chimera/v2/src/core/fileKit"
+	"time"
 )
 
 func main() {
-	m := map[string]interface{}{
-		"a": nil,
-		"b": 0,
-		"c": "",
+	path := "nohup.out"
+
+	start := time.Now()
+	if err := fileKit.CopyFile(path, "nohup1.out"); err != nil {
+		panic(err)
 	}
-	fmt.Println(sonic.ConfigFastest.MarshalToString(m))
+	fmt.Println(time.Since(start))
+	if _, err := fileKit.Create(path); err != nil {
+		panic(err)
+	}
 }

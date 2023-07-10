@@ -1,11 +1,13 @@
 package main
 
 import (
-	"github.com/bytedance/sonic"
-	jsoniter "github.com/json-iterator/go"
+	"github.com/sirupsen/logrus"
 )
 
 func main() {
-	sonic.ConfigDefault
-	jsoniter.ConfigDefault
+	i := 0
+	for {
+		i++
+		logrus.Info(i)
+	}
 }
