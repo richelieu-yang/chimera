@@ -4,6 +4,8 @@ import "github.com/richelieu-yang/chimera/v2/src/core/strKit"
 
 // Marshal 序列化（可选配置: api && indent）.
 /*
+Description: 建议使用sonicKit.
+
 @param obj 可以为nil || ""
 
 e.g.
@@ -21,6 +23,8 @@ func Marshal(obj interface{}, options ...JsonOption) ([]byte, error) {
 
 // MarshalToString 序列化为json字符串（可选配置: api && indent）.
 /*
+Description: 建议使用sonicKit.
+
 @param obj 可以为nil || ""
 
 e.g.
