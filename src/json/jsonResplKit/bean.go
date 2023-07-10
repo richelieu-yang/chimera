@@ -11,20 +11,9 @@ type (
 		//UnmarshalFromString(str string, v interface{}) error
 	}
 
-	// Response 建议实现的结构体的导出字段加上json tag
-	Response interface {
-		GetCode() string
-
-		SetCode(code string)
-
-		GetMessage() string
-
-		SetMessage(msg string)
-
-		GetData() interface{}
-
-		SetData(data interface{})
-	}
-
-	RespProvider func(code, msg string, data interface{}) Response
+	// BeanProvider
+	/*
+		@return 建议是个结构体实例 && 加上json tag
+	*/
+	BeanProvider func(code, msg string, data interface{}) interface{}
 )

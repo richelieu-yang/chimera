@@ -5,8 +5,6 @@ import "github.com/bytedance/sonic"
 type (
 	options struct {
 		api API
-
-		msgProcessor func(string) string
 	}
 
 	Option func(opts *options)
@@ -18,16 +16,9 @@ func WithAPI(api API) Option {
 	}
 }
 
-func WithMsgProcessor(msgProcessor func(string) string) Option {
-	return func(opts *options) {
-		opts.msgProcessor = msgProcessor
-	}
-}
-
 func loadOptions(optionSlice ...Option) *options {
 	opts := &options{
-		api:          nil,
-		msgProcessor: nil,
+		api: nil,
 	}
 	for _, option := range optionSlice {
 		option(opts)

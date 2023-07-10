@@ -23,7 +23,7 @@ func readFiles(paths ...string) error {
 
 // readFile 读取message文件，加到 msgMap 中.
 /*
-@param filePath 建议是 .properties后缀 的文件
+@param filePath 建议是 .properties 的文件
 */
 func readFile(filePath string) error {
 	if err := fileKit.AssertExistAndIsFile(filePath); err != nil {

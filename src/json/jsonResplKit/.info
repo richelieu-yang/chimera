@@ -1,1 +1,2 @@
-需要和 msgKit 搭配使用.
+## 二开: 想要在msg前端加点东西
+    可以通过 BeanProvider实例.
