@@ -3,7 +3,6 @@ package jsonResplKit
 import (
 	"fmt"
 	"github.com/richelieu-yang/chimera/v2/src/core/strKit"
-	"github.com/richelieu-yang/chimera/v2/src/msgKit"
 )
 
 func Seal(code string, data interface{}, msgArgs ...interface{}) string {
@@ -16,7 +15,7 @@ PS: 需要先成功调用 MustSetUp || SetUp.
 */
 func SealFully(code, msg string, data interface{}, msgArgs ...interface{}) string {
 	if strKit.IsEmpty(msg) {
-		msg = msgKit.GetMsg(code)
+		msg = msgMap[code]
 	}
 	if strKit.IsNotEmpty(msg) && msgArgs != nil {
 		msg = fmt.Sprintf(msg, msgArgs...)

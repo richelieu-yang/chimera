@@ -3,7 +3,6 @@ package jsonResplKit
 import (
 	"github.com/richelieu-yang/chimera/v2/src/core/interfaceKit"
 	"github.com/richelieu-yang/chimera/v2/src/log/logrusKit"
-	"github.com/richelieu-yang/chimera/v2/src/msgKit"
 	"github.com/sirupsen/logrus"
 )
 
@@ -28,7 +27,7 @@ func SetUp(respProvider RespProvider, msgFilePaths []string, options ...Option) 
 	if err := interfaceKit.AssertNotNil(respProvider, "respProvider"); err != nil {
 		return err
 	}
-	if err := msgKit.ReadFiles(msgFilePaths...); err != nil {
+	if err := readFiles(msgFilePaths...); err != nil {
 		return err
 	}
 
