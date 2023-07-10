@@ -10,6 +10,10 @@ func Seal(code string, data interface{}, msgArgs ...interface{}) string {
 	return SealFully(code, "", data, msgArgs...)
 }
 
+// SealFully
+/*
+PS: 需要先成功调用 MustSetUp || SetUp.
+*/
 func SealFully(code, msg string, data interface{}, msgArgs ...interface{}) string {
 	if strKit.IsEmpty(msg) {
 		msg = msgKit.GetMsg(code)
@@ -17,7 +21,6 @@ func SealFully(code, msg string, data interface{}, msgArgs ...interface{}) strin
 	if strKit.IsNotEmpty(msg) && msgArgs != nil {
 		msg = fmt.Sprintf(msg, msgArgs...)
 	}
-	// 供外部对最终message进行二开
 	if msgProcessor != nil {
 		msg = msgProcessor(msg)
 	}

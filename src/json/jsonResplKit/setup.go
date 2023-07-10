@@ -8,8 +8,12 @@ import (
 )
 
 var (
-	provider     RespProvider        = nil
-	api          API                 = nil
+	provider RespProvider = nil
+
+	// api 用于序列化json
+	api API = nil
+
+	// msgProcessor 供外部对最终message进行二开
 	msgProcessor func(string) string = nil
 )
 
