@@ -5,7 +5,11 @@ import (
 	"github.com/richelieu-yang/chimera/v2/src/core/strKit"
 )
 
-func Seal(code string, data interface{}, msgArgs ...interface{}) string {
+// Seal
+/*
+PS: 需要先成功调用 MustSetUp || SetUp.
+*/
+func Seal(code string, data interface{}, msgArgs ...interface{}) (string, error) {
 	return SealFully(code, "", data, msgArgs...)
 }
 
@@ -13,7 +17,7 @@ func Seal(code string, data interface{}, msgArgs ...interface{}) string {
 /*
 PS: 需要先成功调用 MustSetUp || SetUp.
 */
-func SealFully(code, msg string, data interface{}, msgArgs ...interface{}) string {
+func SealFully(code, msg string, data interface{}, msgArgs ...interface{}) (string, error) {
 	if strKit.IsEmpty(msg) {
 		msg = msgMap[code]
 	}
@@ -24,8 +28,6 @@ func SealFully(code, msg string, data interface{}, msgArgs ...interface{}) strin
 		msg = msgProcessor(msg)
 	}
 
-	resp := provider(code, msg, data)
-	// 忽略错误
-	json, _ := api.MarshalToString(resp)
-	return json
+	bean := provider(code, msg, data)
+	return api.MarshalToString(bean)
 }
