@@ -8,9 +8,18 @@ import (
 
 /*
 key:	code
-value:	msg
+value:	message
 */
 var msgMap = make(map[string]string)
+
+func ReadFiles(paths ...string) error {
+	for _, path := range paths {
+		if err := ReadFile(path); err != nil {
+			return err
+		}
+	}
+	return nil
+}
 
 // ReadFile 读取message文件，加到 msgMap 中.
 /*
