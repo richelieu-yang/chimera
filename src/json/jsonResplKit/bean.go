@@ -11,9 +11,9 @@ type (
 		//UnmarshalFromString(str string, v interface{}) error
 	}
 
-	// BeanProvider
+	// RespProvider
 	/*
 		@return 建议是个结构体实例 && 加上json tag
 	*/
-	BeanProvider func(code, msg string, data interface{}) interface{}
+	RespProvider func(code, msg string, data interface{}) interface{}
 )

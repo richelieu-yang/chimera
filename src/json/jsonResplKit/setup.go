@@ -7,7 +7,7 @@ import (
 )
 
 var (
-	provider BeanProvider = nil
+	provider RespProvider = nil
 
 	// api 用于序列化json
 	api API = nil
@@ -16,14 +16,14 @@ var (
 	msgProcessor func(string) string = nil
 )
 
-func MustSetUp(beanProvider BeanProvider, msgFilePaths []string, options ...Option) {
-	if err := SetUp(beanProvider, msgFilePaths, options...); err != nil {
+func MustSetUp(respProvider RespProvider, msgFilePaths []string, options ...Option) {
+	if err := SetUp(respProvider, msgFilePaths, options...); err != nil {
 		logrusKit.DisableQuote(nil)
 		logrus.Fatalf("%+v", err)
 	}
 }
 
-func SetUp(respProvider BeanProvider, msgFilePaths []string, options ...Option) error {
+func SetUp(respProvider RespProvider, msgFilePaths []string, options ...Option) error {
 	if err := interfaceKit.AssertNotNil(respProvider, "respProvider"); err != nil {
 		return err
 	}
