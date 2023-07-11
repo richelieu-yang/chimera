@@ -19,7 +19,9 @@ var (
 	/*
 		PS: 如果是目录且内部有文件或目录，也会一并删除.
 	*/
-	Remove = gfile.Remove
+	Remove func(path string) (err error) = gfile.Remove
+
+	Truncate func(path string, size int) (err error) = gfile.Truncate
 )
 
 // NewFile 创建文件（读写权限、文件不存在就创建、打开并清空文件）.
