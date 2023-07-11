@@ -1,3 +1,6 @@
+## 限制
+sonic only supports Go1.16~1.20 && CPU amd64
+
 ## Sonic简介
 一个速度奇快的 JSON 序列化/反序列化库，由 JIT （即时编译）和 SIMD （单指令流多数据流）加速。
 
