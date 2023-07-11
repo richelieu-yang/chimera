@@ -12,7 +12,13 @@ var (
 	// Chmod 修改权限
 	Chmod func(path string, mode os.FileMode) (err error) = gfile.Chmod
 
-	Move   func(src string, dst string) (err error) = gfile.Move
+	// CutAndPaste 剪贴
+	CutAndPaste func(src string, dst string) (err error) = gfile.Move
+
+	// Move 移动
+	Move func(src string, dst string) (err error) = gfile.Move
+
+	// Rename 重命名
 	Rename func(src string, dst string) (err error) = gfile.Move
 
 	// Remove 删除文件（或目录）
@@ -22,6 +28,13 @@ var (
 	Remove func(path string) (err error) = gfile.Remove
 
 	// Truncate 截断
+	/*
+		PS:
+		(1) If the file is a symbolic link, it changes the size of the link's target.
+		(2) If there is an error, it will be of type *PathError.
+
+		@param size 如果为0，则清空文件内容
+	*/
 	Truncate func(path string, size int) (err error) = gfile.Truncate
 )
 
