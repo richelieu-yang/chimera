@@ -1,8 +1,8 @@
 package fileKit
 
 import (
-	"github.com/gogf/gf/v2/errors/gerror"
 	"github.com/gogf/gf/v2/os/gfile"
+	"github.com/richelieu-yang/chimera/v2/src/core/errorKit"
 	"github.com/richelieu-yang/chimera/v2/src/core/strKit"
 	"os"
 )
@@ -35,7 +35,7 @@ func MkDirs(dirPaths ...string) error {
 		}
 
 		if err := os.MkdirAll(dirPath, os.ModePerm); err != nil {
-			err = gerror.Wrapf(err, `os.MkdirAll failed for dirPath "%s" with perm "%d"`, dirPath, os.ModePerm)
+			err = errorKit.Wrap(err, `os.MkdirAll failed for dirPath "%s" with perm "%d"`, dirPath, os.ModePerm)
 			return err
 		}
 	}

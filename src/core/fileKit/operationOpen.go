@@ -1,8 +1,8 @@
 package fileKit
 
 import (
-	"github.com/gogf/gf/v2/errors/gerror"
 	"github.com/gogf/gf/v2/os/gfile"
+	"github.com/richelieu-yang/chimera/v2/src/core/errorKit"
 	"os"
 )
 
@@ -40,7 +40,7 @@ func Create(path string) (*os.File, error) {
 
 	file, err := os.Create(path)
 	if err != nil {
-		err = gerror.Wrapf(err, `os.Create failed for name "%s"`, path)
+		err = errorKit.Wrap(err, `os.Create failed for name "%s"`, path)
 	}
 	return file, err
 }
