@@ -2,14 +2,9 @@ package pathKit
 
 import (
 	"github.com/gogf/gf/v2/os/gfile"
-	"github.com/richelieu-yang/chimera/v2/src/core/fileKit"
 	"github.com/richelieu-yang/chimera/v2/src/core/strKit"
-	"github.com/richelieu-yang/chimera/v2/src/core/timeKit"
 	"path/filepath"
 )
-
-// outputDir （默认的）输出目录
-var outputDir string
 
 var (
 	// SelfDir returns absolute directory path of current running process(binary).
@@ -105,22 +100,4 @@ func CheckSkip(parent, path string) bool {
 	path = Join(path)
 
 	return !strKit.StartWith(path, parent)
-}
-
-// GetOutputPath 获取输出目录的路径.
-/*
-Deprecated: 没啥用（因为每个项目都有其特性）.
-*/
-func GetOutputPath(timeStr string) (string, error) {
-	if strKit.IsEmpty(outputDir) {
-		if strKit.IsEmpty(timeStr) {
-			timeStr = timeKit.FormatCurrentTime(timeKit.FormatFileName)
-		}
-		tmp := Join(GetWorkingDir(), "out", "BootTime_"+timeStr)
-		if err := fileKit.MkDirs(tmp); err != nil {
-			return "", err
-		}
-		outputDir = tmp
-	}
-	return outputDir, nil
 }
