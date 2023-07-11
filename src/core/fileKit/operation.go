@@ -21,6 +21,7 @@ var (
 	*/
 	Remove func(path string) (err error) = gfile.Remove
 
+	// Truncate 截断
 	Truncate func(path string, size int) (err error) = gfile.Truncate
 )
 
