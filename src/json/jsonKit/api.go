@@ -24,6 +24,10 @@ func MarshalIndent(v interface{}, prefix, indent string) ([]byte, error) {
 	return api.MarshalIndent(v, prefix, indent)
 }
 
+// MarshalIndentToString
+/*
+@param indent 为了兼容性，用 "    " 替代 "\t".
+*/
 func MarshalIndentToString(v interface{}, prefix, indent string) (string, error) {
 	data, err := api.MarshalIndent(v, prefix, indent)
 	return string(data), err
