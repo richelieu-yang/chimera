@@ -81,8 +81,6 @@ func NewLogger(options ...LoggerOption) *logrus.Logger {
 	logger.SetLevel(opts.level)
 	if opts.output != nil {
 		logger.SetOutput(opts.output)
-	} else {
-		logger.SetOutput(defaultOutput)
 	}
 	return logger
 }
