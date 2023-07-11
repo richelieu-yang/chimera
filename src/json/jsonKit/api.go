@@ -16,16 +16,17 @@ type (
 	}
 )
 
-func SetAPI(a API) {
-	api = a
-}
-
 func Marshal(v interface{}) ([]byte, error) {
 	return api.Marshal(v)
 }
 
 func MarshalIndent(v interface{}, prefix, indent string) ([]byte, error) {
 	return api.MarshalIndent(v, prefix, indent)
+}
+
+func MarshalIndentToString(v interface{}, prefix, indent string) (string, error) {
+	data, err := api.MarshalIndent(v, prefix, indent)
+	return string(data), err
 }
 
 func MarshalToString(v interface{}) (string, error) {
