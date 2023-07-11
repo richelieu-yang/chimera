@@ -1,4 +1,4 @@
-package jsonKit
+package sonicKit
 
 import (
 	"github.com/bytedance/sonic"
