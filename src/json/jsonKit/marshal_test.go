@@ -1,4 +1,4 @@
-package sonicKit
+package jsonKit
 
 import (
 	"fmt"
