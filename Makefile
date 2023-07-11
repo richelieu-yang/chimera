@@ -9,12 +9,12 @@ darwin-arm64:
 
 windows-amd64:
 	@rm -rf $(app)-windows-amd64.exe
-	@CGO_ENABLED=0 GOOS=windows GOARCH=amd64 go build -tags=jsoniter -o $(app)-windows-amd64.exe $(path)
+	@CGO_ENABLED=0 GOOS=windows GOARCH=amd64 go build -tags="sonic avx" -o $(app)-windows-amd64.exe $(path)
 	@upx -9 $(app)-windows-amd64.exe
 
 linux-amd64:
 	@rm -rf $(app)-linux-amd64
-	@CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build -tags=jsoniter -o $(app)-linux-amd64 $(path)
+	@CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build -tags="sonic avx" -o $(app)-linux-amd64 $(path)
 	@upx -9 $(app)-linux-amd64
 
 linux-arm64:
