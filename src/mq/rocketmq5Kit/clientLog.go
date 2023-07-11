@@ -20,7 +20,7 @@ func initClientLog(path string) error {
 		if err := fileKit.AssertNotExistOrIsFile(path); err != nil {
 			return err
 		}
-		dir := pathKit.GetParentDir(path)
+		dir := pathKit.ParentDir(path)
 		if err := fileKit.MkDirs(dir); err != nil {
 			return err
 		}
