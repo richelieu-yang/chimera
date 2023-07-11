@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"github.com/richelieu-yang/chimera/v2/src/core/errorKit"
 	"github.com/richelieu-yang/chimera/v2/src/core/strKit"
+	"github.com/richelieu-yang/chimera/v2/src/json/jsonKit"
 	"github.com/richelieu-yang/chimera/v2/src/web/httpClientKit"
 	"sync"
 	"time"
@@ -73,13 +74,13 @@ func newAccessToken() (*accessToken, error) {
 		grantType,
 		clientId,
 		clientSecret)
-	_, resp, err := httpClientKit.Get(url)
+	_, respData, err := httpClientKit.Get(url)
 	if err != nil {
 		return nil, err
 	}
 
 	m := make(map[string]interface{})
-	if err := jsoniterKit.Unmarshal(&m, resp); err != nil {
+	if err := jsonKit.Unmarshal(respData, &m); err != nil {
 		return nil, err
 	}
 
@@ -88,7 +89,7 @@ func newAccessToken() (*accessToken, error) {
 		return nil, err
 	}
 	if token == nil {
-		return nil, errorKit.New("failure response(%s)", string(resp))
+		return nil, errorKit.New("failure response(%s)", string(respData))
 	}
 	// 对token进行简单验证
 	// 正常情况下，token的有效期为30天，此处判断是为了防止特殊情况（86400秒 == 1天）

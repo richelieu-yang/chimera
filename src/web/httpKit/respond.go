@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"github.com/richelieu-yang/chimera/v2/src/core/fileKit"
 	"github.com/richelieu-yang/chimera/v2/src/core/strKit"
-	"github.com/richelieu-yang/chimera/v2/src/json/sonicKit"
+	"github.com/richelieu-yang/chimera/v2/src/json/jsonKit"
 	"net/http"
 	"net/url"
 	"path/filepath"
@@ -58,7 +58,7 @@ func RespondStringData(w http.ResponseWriter, code int, data []byte) error {
 参考: gin里面的 Context.JSON() .
 */
 func RespondJson(w http.ResponseWriter, code int, obj any) error {
-	data, err := sonicKit.Marshal(obj)
+	data, err := jsonKit.Marshal(obj)
 	if err != nil {
 		return err
 	}

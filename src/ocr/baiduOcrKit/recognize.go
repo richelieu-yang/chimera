@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"github.com/richelieu-yang/chimera/v2/src/core/errorKit"
 	"github.com/richelieu-yang/chimera/v2/src/crypto/base64Kit"
+	"github.com/richelieu-yang/chimera/v2/src/json/jsonKit"
 	"github.com/richelieu-yang/chimera/v2/src/urlKit"
 	"github.com/richelieu-yang/chimera/v2/src/web/httpClientKit"
 )
@@ -38,13 +39,13 @@ func RecognizeUniversalWords(imagePath string) (*Words, error) {
 	}
 
 	// 发请求
-	_, resp, err := httpClientKit.Post(url, httpClientKit.WithPostParams(params))
+	_, respData, err := httpClientKit.Post(url, httpClientKit.WithPostParams(params))
 	if err != nil {
 		return nil, err
 	}
 
 	m := make(map[string]interface{})
-	if err := jsoniterKit.Unmarshal(&m, resp); err != nil {
+	if err := jsonKit.Unmarshal(respData, &m); err != nil {
 		return nil, err
 	}
 
@@ -54,7 +55,7 @@ func RecognizeUniversalWords(imagePath string) (*Words, error) {
 		return nil, err
 	}
 	if words == nil {
-		return nil, errorKit.New("failure response(%s)", string(resp))
+		return nil, errorKit.New("failure response(%s)", string(respData))
 	}
 	return words, nil
 }
