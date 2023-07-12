@@ -12,6 +12,7 @@ func TestDecode(t *testing.T) {
 	{
 		// base64.StdEncoding
 		str1 := EncodeStringToString(str)
+		// !!!: 生成的base64字符串中有'+'、'/'、'='
 		fmt.Println(str1)
 		str2, err := DecodeStringToString(str1)
 		if err != nil {
@@ -24,7 +25,7 @@ func TestDecode(t *testing.T) {
 		fmt.Println("str == str2")
 	}
 
-	fmt.Println("*********************")
+	fmt.Println("**************************************")
 
 	{
 		// base64.RawURLEncoding
@@ -41,8 +42,7 @@ func TestDecode(t *testing.T) {
 		fmt.Println("str == str2")
 	}
 
-	fmt.Println("*********************")
-
+	fmt.Println("**************************************")
 	{
 		// base64.URLEncoding + base64.NoPadding
 		r := base64.NoPadding
