@@ -1,7 +1,6 @@
 package base64Kit
 
 import (
-	"encoding/base64"
 	"github.com/richelieu-yang/chimera/v2/src/core/fileKit"
 )
 
@@ -13,7 +12,7 @@ func Encode(src []byte, options ...Base64Option) []byte {
 	opts := loadOptions(options...)
 
 	dst := make([]byte, opts.encoding.EncodedLen(len(src)))
-	base64.StdEncoding.Encode(dst, src)
+	opts.encoding.Encode(dst, src)
 	return dst
 }
 
