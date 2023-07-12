@@ -1,9 +1,33 @@
 package base64Kit
 
-import "github.com/gogf/gf/v2/encoding/gbase64"
+// Decode []byte => []byte
+/*
+参考: gbase64.Decode()
+*/
+func Decode(data []byte, options ...Base64Option) ([]byte, error) {
+	opts := loadOptions(options...)
 
-var Decode func(data []byte) ([]byte, error) = gbase64.Decode
+	rst := make([]byte, opts.encoding.DecodedLen(len(data)))
+	n, err := opts.encoding.Decode(rst, data)
+	if err != nil {
+		return nil, err
+	}
+	return rst[:n], nil
+}
 
-var DecodeString func(data string) ([]byte, error) = gbase64.DecodeString
+// DecodeToString []byte => string
+func DecodeToString(data []byte, options ...Base64Option) (string, error) {
+	rst, err := Decode(data, options...)
+	return string(rst), err
+}
 
-var DecodeToString func(data string) (string, error) = gbase64.DecodeToString
+// DecodeString string => []byte
+func DecodeString(str string, options ...Base64Option) ([]byte, error) {
+	return Decode([]byte(str), options...)
+}
+
+// DecodeStringToString string => string
+func DecodeStringToString(str string, options ...Base64Option) (string, error) {
+	rst, err := DecodeString(str, options...)
+	return string(rst), err
+}

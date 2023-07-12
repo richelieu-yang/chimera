@@ -1,35 +1,49 @@
 package base64Kit
 
 import (
-	"github.com/gogf/gf/v2/encoding/gbase64"
+	"encoding/base64"
 	"github.com/richelieu-yang/chimera/v2/src/core/fileKit"
 )
 
-func Encode(src []byte) []byte {
-	return gbase64.Encode(src)
+// Encode []byte => []byte
+/*
+参考: gbase64.Encode()
+*/
+func Encode(src []byte, options ...Base64Option) []byte {
+	opts := loadOptions(options...)
+
+	dst := make([]byte, opts.encoding.EncodedLen(len(src)))
+	base64.StdEncoding.Encode(dst, src)
+	return dst
 }
 
-// EncodeFile
-/*
-@param path 文件路径（不支持目录路径）
-*/
-func EncodeFile(path string) ([]byte, error) {
-	if err := fileKit.AssertExistAndIsFile(path); err != nil {
+// EncodeToString []byte => string
+func EncodeToString(src []byte, options ...Base64Option) string {
+	return string(Encode(src, options...))
+}
+
+// EncodeString string => []byte
+func EncodeString(src string, options ...Base64Option) []byte {
+	return Encode([]byte(src), options...)
+}
+
+// EncodeStringToString string => string
+func EncodeStringToString(src string, options ...Base64Option) string {
+	return string(EncodeString(src, options...))
+}
+
+// EncodeFile file => []byte
+func EncodeFile(path string, options ...Base64Option) ([]byte, error) {
+	data, err := fileKit.ReadFile(path)
+	if err != nil {
 		return nil, err
 	}
 
-	return gbase64.EncodeFile(path)
+	return Encode(data, options...), nil
 }
 
-// EncodeFileToString 文件 => base64字符串
-func EncodeFileToString(path string) (string, error) {
-	if err := fileKit.AssertExistAndIsFile(path); err != nil {
-		return "", err
-	}
-
-	return gbase64.EncodeFileToString(path)
+// EncodeFileToString file => string
+func EncodeFileToString(path string, options ...Base64Option) (string, error) {
+	data, err := EncodeFile(path, options...)
+	return string(data), err
 }
-
-var EncodeString func(src string) string = gbase64.EncodeString
-
-var EncodeToString func(src []byte) string = gbase64.EncodeToString
