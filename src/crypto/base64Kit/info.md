@@ -8,11 +8,22 @@ BASE64编解码-gbase64
 ## base64.StdEncoding 和 base64.URLEncoding 的区别
 base64.StdEncoding和base64.URLEncoding的区别
     https://blog.csdn.net/harryhare/article/details/88086660
+Go语言的JWT鉴权，怎么使用？
+	https://mp.weixin.qq.com/s/Ygdqabh6ahu9ZUVsfZ7bzw
 
-base64.StdEncoding 生成base64字符串可能包含的字符: 
-base64.URLEncoding 生成base64字符串可能包含的字符:
-base64.RawStdEncoding 生成base64字符串可能包含的字符:
-base64.RawURLEncoding 生成base64字符串可能包含的字符:
+相较于 base64.StdEncoding，base64.URLEncoding 会将生成的base64字符串中的 
+	'+'（替换为'-'）
+	'/'（替换为'_'）
+
+base64.StdEncoding 生成base64字符串可能包含的字符: 		ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/ 和 =（padding）
+base64.URLEncoding 生成base64字符串可能包含的字符:		ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789-_ 和 =（padding）
+base64.RawStdEncoding 生成base64字符串可能包含的字符: 	ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/
+base64.RawURLEncoding 生成base64字符串可能包含的字符:	ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789-_
+
+将生成的base64字符串作为 url参数（或文件名的一部分），必需使用 base64.RawURLEncoding，原因: 它生成的base64字符串不会包含以下3种字符: 
+	'+'（替换为'-'）
+	'/'（替换为'_'）
+	'='（被省略，因为NoPadding）
 
 e.g.
 	input := []byte("\x00\x00\x3e\x00\x00\x3f\x00")
