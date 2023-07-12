@@ -16,6 +16,10 @@ type (
 	}
 )
 
+func GetAPI() API {
+	return api
+}
+
 func Marshal(v interface{}) ([]byte, error) {
 	return api.Marshal(v)
 }
