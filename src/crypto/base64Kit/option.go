@@ -3,21 +3,21 @@ package base64Kit
 import "encoding/base64"
 
 type (
-	options struct {
+	base64Options struct {
 		encoding *base64.Encoding
 		padding  *rune
 	}
 
-	Base64Option func(opts *options)
+	Base64Option func(opts *base64Options)
 )
 
-func loadOptions(base64Options ...Base64Option) *options {
-	opts := &options{
+func loadOptions(options ...Base64Option) *base64Options {
+	opts := &base64Options{
 		encoding: nil,
 		padding:  nil,
 	}
 
-	for _, option := range base64Options {
+	for _, option := range options {
 		option(opts)
 	}
 
@@ -35,7 +35,7 @@ func loadOptions(base64Options ...Base64Option) *options {
 @param encoding base64.StdEncoding || base64.URLEncoding || base64.RawStdEncoding || base64.RawURLEncoding
 */
 func WithEncoding(encoding *base64.Encoding) Base64Option {
-	return func(opts *options) {
+	return func(opts *base64Options) {
 		opts.encoding = encoding
 	}
 }
@@ -47,7 +47,7 @@ PS:
 (2) base64.RawStdEncoding 和 base64.RawURLEncoding 的padding:	-1（base64.NoPadding）
 */
 func WithPadding(padding *rune) Base64Option {
-	return func(opts *options) {
+	return func(opts *base64Options) {
 		opts.padding = padding
 	}
 }
