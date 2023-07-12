@@ -13,9 +13,12 @@ import (
 	"time"
 )
 
-// RotateOutput
+// RotateOutput spec触发时，备份并清空传参output对应的文件.
 /*
-PS: 主要用于将nohup输出每天分块.
+PS:
+(1) 缺陷: 可能会丢部分输出，目前没啥好的办法解决.
+(2) 建议每天一次.
+(3) 不能将nohup.out重命名然后再新建个nohup.out，因为输出还是会到原先那个nohup.out中.
 
 @param output 	控制台输出文件（e.g.nohup.out）的路径
 @param backDir	备份文件存放的目录
