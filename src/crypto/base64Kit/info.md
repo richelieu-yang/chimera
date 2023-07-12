@@ -21,8 +21,8 @@ base64.RawStdEncoding 生成base64字符串可能包含的字符: 	ABCDEFGHIJKLM
 base64.RawURLEncoding 生成base64字符串可能包含的字符:	ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789-_
 
 将生成的base64字符串作为 url参数（或文件名的一部分），必需使用 base64.RawURLEncoding，原因: 它生成的base64字符串不会包含以下3种字符: 
-	'+'（替换为'-'）
-	'/'（替换为'_'）
+	'+'（被替换为'-'）
+	'/'（被替换为'_'）
 	'='（被省略，因为NoPadding）
 
 e.g.
