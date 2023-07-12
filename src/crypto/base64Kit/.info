@@ -1,4 +1,9 @@
-# GoFrame
+## GoFrame的 gbase64
+BASE64编解码-gbase64
+    https://goframe.org/pages/viewpage.action?pageId=1114301
 
-## gbase64
-BASE64编解码-gbase64 https://goframe.org/pages/viewpage.action?pageId=1114301
+
+### base64.StdEncoding 和 base64.URLEncoding 的区别
+base64.StdEncoding和base64.URLEncoding的区别
+    https://blog.csdn.net/harryhare/article/details/88086660
+

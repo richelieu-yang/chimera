@@ -30,12 +30,22 @@ func loadOptions(base64Options ...Base64Option) *options {
 	return opts
 }
 
+// WithEncoding
+/*
+@param encoding base64.StdEncoding || base64.URLEncoding || base64.RawStdEncoding || base64.RawURLEncoding
+*/
 func WithEncoding(encoding *base64.Encoding) Base64Option {
 	return func(opts *options) {
 		opts.encoding = encoding
 	}
 }
 
+// WithPadding
+/*
+PS:
+(1) base64.StdEncoding 和 base64.URLEncoding 的padding:			'='（61）
+(2) base64.RawStdEncoding 和 base64.RawURLEncoding 的padding:	-1（base64.NoPadding）
+*/
 func WithPadding(padding *rune) Base64Option {
 	return func(opts *options) {
 		opts.padding = padding
