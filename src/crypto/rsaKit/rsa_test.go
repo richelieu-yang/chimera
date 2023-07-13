@@ -8,8 +8,8 @@ import (
 
 func TestRSA(t *testing.T) {
 	options := []RsaOption{
-		WithPassword("cyy"),
 		WithFormat(PKCS8),
+		WithPassword("cyy"),
 	}
 
 	priPath := "_pri.key"
