@@ -17,17 +17,17 @@ func Decrypt(data, privateKey []byte, options ...RsaOption) ([]byte, error) {
 	return opts.Decrypt(data, privateKey)
 }
 
-func (opts *rsaOptions) Decrypt(data, privateKeyData []byte) ([]byte, error) {
-	if err := sliceKit.AssertNotEmpty(privateKeyData, "privateKeyData"); err != nil {
+func (opts *rsaOptions) Decrypt(data, pemData []byte) ([]byte, error) {
+	if err := sliceKit.AssertNotEmpty(pemData, "pemData"); err != nil {
 		return nil, err
 	}
 
 	// 私钥
-	privateKeyData, err := opts.decryptPrivatePEM(privateKeyData)
+	pemData, err := opts.decryptPrivatePEM(pemData)
 	if err != nil {
 		return nil, err
 	}
-	privateKey, err := opts.parsePrivateKey(privateKeyData)
+	privateKey, err := opts.parsePrivateKey(pemData)
 	if err != nil {
 		return nil, err
 	}
