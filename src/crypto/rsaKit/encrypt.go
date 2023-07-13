@@ -8,13 +8,11 @@ import (
 	"github.com/richelieu-yang/chimera/v2/src/crypto/base64Kit"
 )
 
-// Encrypt 公钥加密
-func Encrypt(data, publicKey []byte) ([]byte, error) {
-	opts := loadOptions()
-	return opts.Encrypt(data, publicKey)
-}
-
-func (opts *rsaOptions) Encrypt(data, pemData []byte) ([]byte, error) {
+// Encrypt 公钥加密.
+/*
+支持: PKCS1、PKCS8.
+*/
+func Encrypt(data, pemData []byte) ([]byte, error) {
 	if err := sliceKit.AssertNotEmpty(pemData, "pemData"); err != nil {
 		return nil, err
 	}

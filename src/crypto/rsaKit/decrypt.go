@@ -10,24 +10,15 @@ import (
 
 // Decrypt 私钥解密
 /*
-@param options 可配置: format、password
+支持: PKCS1、PKCS8.
 */
-func Decrypt(data, privateKey []byte, options ...RsaOption) ([]byte, error) {
-	opts := loadOptions(options...)
-	return opts.Decrypt(data, privateKey)
-}
-
-func (opts *rsaOptions) Decrypt(data, pemData []byte) ([]byte, error) {
+func Decrypt(data, pemData []byte, password string) ([]byte, error) {
 	if err := sliceKit.AssertNotEmpty(pemData, "pemData"); err != nil {
 		return nil, err
 	}
 
 	// 私钥
-	//pemData, err := opts.DecryptPrivatePEM(pemData)
-	//if err != nil {
-	//	return nil, err
-	//}
-	privateKey, err := ParsePrivateKeyFromPem(pemData, opts.password)
+	privateKey, err := ParsePrivateKeyFromPem(pemData, password)
 	if err != nil {
 		return nil, err
 	}

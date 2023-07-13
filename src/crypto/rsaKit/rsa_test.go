@@ -7,9 +7,11 @@ import (
 
 // 加密 && 解密
 func TestRSA(t *testing.T) {
+	password := "qwdqwdqwd"
+
 	options := []RsaOption{
-		WithFormat(PKCS1),
-		WithPassword("cyyqwdqwd"),
+		WithFormat(PKCS8),
+		WithPassword(password),
 	}
 	pri, pub, err := GenerateKeys(2048, options...)
 	if err != nil {
@@ -24,7 +26,7 @@ func TestRSA(t *testing.T) {
 	}
 	fmt.Printf("密文:\n%s\n", string(data))
 	// 解密
-	data, err = Decrypt(data, pri, options...)
+	data, err = Decrypt(data, pri, password)
 	if err != nil {
 		panic(err)
 	}
