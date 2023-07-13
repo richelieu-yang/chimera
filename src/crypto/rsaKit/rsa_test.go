@@ -8,7 +8,7 @@ import (
 // 加密 && 解密
 func TestRSA(t *testing.T) {
 	options := []RsaOption{
-		WithFormat(PKCS8),
+		WithFormat(PKCS1),
 		WithPassword("cyy"),
 	}
 	pri, pub, err := GenerateKeys(4096, options...)

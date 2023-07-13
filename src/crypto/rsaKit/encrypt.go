@@ -14,23 +14,23 @@ func Encrypt(data, publicKey []byte) ([]byte, error) {
 	return opts.Encrypt(data, publicKey)
 }
 
-func (opts *rsaOptions) Encrypt(data, publicKey []byte) ([]byte, error) {
-	if err := sliceKit.AssertNotEmpty(publicKey, "publicKey"); err != nil {
+func (opts *rsaOptions) Encrypt(data, pemData []byte) ([]byte, error) {
+	if err := sliceKit.AssertNotEmpty(pemData, "pemData"); err != nil {
 		return nil, err
 	}
 
 	// 公钥
-	key, err := opts.ParsePublicKeyFromPem(publicKey)
+	publicKey, err := ParsePublicKeyFromPem(pemData)
 	if err != nil {
 		return nil, err
 	}
 
 	// 分块加密
 	buffer := bytes.NewBufferString("")
-	partLen := key.N.BitLen()/8 - 11
+	partLen := publicKey.N.BitLen()/8 - 11
 	chunks := sliceKit.Split(data, partLen)
 	for _, chunk := range chunks {
-		tmp, err := rsa.EncryptPKCS1v15(rand.Reader, key, chunk)
+		tmp, err := rsa.EncryptPKCS1v15(rand.Reader, publicKey, chunk)
 		if err != nil {
 			return nil, err
 		}

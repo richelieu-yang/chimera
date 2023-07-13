@@ -8,7 +8,7 @@ import (
 )
 
 // ParsePublicKeyFromPem 解析公钥
-func (opts *rsaOptions) ParsePublicKeyFromPem(data []byte) (*rsa.PublicKey, error) {
+func ParsePublicKeyFromPem(data []byte) (*rsa.PublicKey, error) {
 	block, _ := pem.Decode(data)
 	if block == nil {
 		return nil, errorKit.New("fail to decode pem because block is nil")
@@ -20,6 +20,20 @@ func (opts *rsaOptions) ParsePublicKeyFromPem(data []byte) (*rsa.PublicKey, erro
 	}
 	return keyInterface.(*rsa.PublicKey), nil
 }
+
+//// ParsePublicKeyFromPem 解析公钥
+//func (opts *rsaOptions) ParsePublicKeyFromPem(data []byte) (*rsa.PublicKey, error) {
+//	block, _ := pem.Decode(data)
+//	if block == nil {
+//		return nil, errorKit.New("fail to decode pem because block is nil")
+//	}
+//
+//	keyInterface, err := x509.ParsePKIXPublicKey(block.Bytes)
+//	if err != nil {
+//		return nil, err
+//	}
+//	return keyInterface.(*rsa.PublicKey), nil
+//}
 
 // ParsePrivateKeyFromPem 解析私钥
 func (opts *rsaOptions) ParsePrivateKeyFromPem(data []byte) (*rsa.PrivateKey, error) {
