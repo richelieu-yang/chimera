@@ -24,6 +24,6 @@
 **/.DS_Store
 .DS_Store?
 
-./test*
+/test*
 
-./_*.pem
+/_*.pem
