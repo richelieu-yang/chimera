@@ -5,19 +5,18 @@ import (
 	"testing"
 )
 
-// 加密 && 解密
+// 测试: 加密 && 解密
 func TestRSA(t *testing.T) {
+	bits := 2048
+	format := PKCS1
 	password := "qwdqwdqwd"
-	options := []RsaOption{
-		WithFormat(PKCS1),
-		WithPassword(password),
-	}
-	pri, pub, err := GenerateKeys(2048, options...)
+	data := []byte("`1245`152678`16983强无敌群无多7~!@#$%^&*()_+=")
+
+	// 生成公钥私钥
+	pri, pub, err := GenerateKeys(bits, format, password)
 	if err != nil {
 		panic(err)
 	}
-
-	data := []byte("`1245`152678`169837~!@#$%^&*()_+=")
 	// 加密
 	data, err = Encrypt(data, pub)
 	if err != nil {

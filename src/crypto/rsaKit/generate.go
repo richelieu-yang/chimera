@@ -16,7 +16,7 @@ import (
 @param pubPath	公钥文件存放的位置
 @param options 	可配置: format、password...
 */
-func GenerateKeyFiles(bits int, priPath, pubPath string, format KeyFormat, password string) error {
+func GenerateKeyFiles(bits int, format KeyFormat, password, priPath, pubPath string) error {
 	pri, pub, err := GenerateKeys(bits, format, password)
 	if err != nil {
 		return err

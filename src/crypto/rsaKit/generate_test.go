@@ -12,13 +12,13 @@ func TestGenerateKeyFiles(t *testing.T) {
 		panic(err)
 	}
 
-	options := []RsaOption{
-		WithFormat(PKCS1),
-		WithPassword(""),
-	}
+	bits := 2048
+	format := PKCS1
+	password := "dqwdqwd强无敌群多"
+
 	priPath := "_pri.pem"
 	pubPath := "_pub.pem"
-	if err := GenerateKeyFiles(2048, priPath, pubPath, options...); err != nil {
+	if err := GenerateKeyFiles(bits, format, password, priPath, pubPath); err != nil {
 		panic(err)
 	}
 }
