@@ -10,7 +10,7 @@ func TestGenerateKeyFiles(t *testing.T) {
 
 	priPath := "_pri.key"
 	pubPath := "_pub.key"
-	if err := GenerateKeyFiles(4096, priPath, pubPath, options...); err != nil {
+	if err := GenerateKeyFiles(2048, priPath, pubPath, options...); err != nil {
 		panic(err)
 	}
 }

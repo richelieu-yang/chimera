@@ -4,6 +4,7 @@ import (
 	"errors"
 	"fmt"
 	"github.com/golang-jwt/jwt/v5"
+	"github.com/richelieu-yang/chimera/v2/src/core/fileKit"
 	"time"
 )
 
@@ -20,7 +21,23 @@ type CustomClaims struct {
 	UserName string
 }
 
+var pri []byte
+var pub []byte
+
 func main() {
+	var err error
+	pri, err = fileKit.ReadFile("_pri.key")
+	if err != nil {
+		panic(err)
+	}
+	pub, err = fileKit.ReadFile("_pub.key")
+	if err != nil {
+		panic(err)
+	}
+
+	pri = pri
+	pub = pub
+
 	/* (1) 生成token */
 	//claims := &jwt.MapClaims{
 	//	"id":   11,
@@ -37,7 +54,7 @@ func main() {
 	}
 
 	token := jwt.NewWithClaims(jwt.SigningMethodRS256, claims)
-	tokenString, err := token.SignedString([]byte(SECRETKEY))
+	tokenString, err := token.SignedString(pri)
 	if err != nil {
 		panic(err)
 	}
@@ -59,7 +76,8 @@ func ParseToken(tokenString string) (jwt.Claims, error) {
 			return nil, errors.New(fmt.Sprintf("Unexpected signing method: %v", token.Header["alg"]))
 		}
 		// hmacSampleSecret is a []byte containing your secret, e.g. []byte("my_secret_key")
-		return []byte(SECRETKEY), nil
+		//return []byte(SECRETKEY), nil
+		return pub, nil
 	})
 	if err != nil {
 		return nil, err
