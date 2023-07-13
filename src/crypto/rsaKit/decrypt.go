@@ -27,7 +27,7 @@ func (opts *rsaOptions) Decrypt(data, pemData []byte) ([]byte, error) {
 	if err != nil {
 		return nil, err
 	}
-	privateKey, err := opts.ParsePrivateKeyFromPem(pemData)
+	privateKey, err := ParsePrivateKeyFromPem(pemData)
 	if err != nil {
 		return nil, err
 	}
