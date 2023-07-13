@@ -27,6 +27,8 @@ func ParsePublicKeyFromPem(pemData []byte) (*rsa.PublicKey, error) {
 // ParsePrivateKeyFromPem 解析私钥.
 /*
 支持: PKCS1、PKCS8.
+
+@param password 私钥的密码.
 */
 func ParsePrivateKeyFromPem(data []byte) (*rsa.PrivateKey, error) {
 	return jwt.ParseRSAPrivateKeyFromPEM(data)
