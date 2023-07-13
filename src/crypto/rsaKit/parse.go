@@ -7,8 +7,8 @@ import (
 	"github.com/richelieu-yang/chimera/v2/src/core/errorKit"
 )
 
-// parsePublicKey 解析公钥
-func (opts *rsaOptions) parsePublicKey(data []byte) (*rsa.PublicKey, error) {
+// ParsePublicKeyFromPem 解析公钥
+func (opts *rsaOptions) ParsePublicKeyFromPem(data []byte) (*rsa.PublicKey, error) {
 	block, _ := pem.Decode(data)
 	if block == nil {
 		return nil, errorKit.New("fail to decode pem because block is nil")
@@ -21,8 +21,8 @@ func (opts *rsaOptions) parsePublicKey(data []byte) (*rsa.PublicKey, error) {
 	return keyInterface.(*rsa.PublicKey), nil
 }
 
-// parsePrivateKey 解析私钥
-func (opts *rsaOptions) parsePrivateKey(data []byte) (*rsa.PrivateKey, error) {
+// ParsePrivateKeyFromPem 解析私钥
+func (opts *rsaOptions) ParsePrivateKeyFromPem(data []byte) (*rsa.PrivateKey, error) {
 	block, _ := pem.Decode(data)
 	if block == nil {
 		return nil, errorKit.New("fail to decode pem because block is nil")

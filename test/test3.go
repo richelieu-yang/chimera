@@ -21,22 +21,19 @@ type CustomClaims struct {
 	UserName string
 }
 
-var pri []byte
-var pub []byte
+var priPem []byte
+var pubPem []byte
 
 func main() {
 	var err error
-	pri, err = fileKit.ReadFile("_pri.key")
+	priPem, err = fileKit.ReadFile("_pri.pem")
 	if err != nil {
 		panic(err)
 	}
-	pub, err = fileKit.ReadFile("_pub.key")
+	pubPem, err = fileKit.ReadFile("_pub.pem")
 	if err != nil {
 		panic(err)
 	}
-
-	pri = pri
-	pub = pub
 
 	/* (1) 生成token */
 	//claims := &jwt.MapClaims{
@@ -54,7 +51,11 @@ func main() {
 	}
 
 	token := jwt.NewWithClaims(jwt.SigningMethodRS256, claims)
-	tokenString, err := token.SignedString(pri)
+	priKey, err := jwt.ParseRSAPrivateKeyFromPEM(priPem)
+	if err != nil {
+		panic(err)
+	}
+	tokenString, err := token.SignedString(priKey)
 	if err != nil {
 		panic(err)
 	}
@@ -77,7 +78,7 @@ func ParseToken(tokenString string) (jwt.Claims, error) {
 		}
 		// hmacSampleSecret is a []byte containing your secret, e.g. []byte("my_secret_key")
 		//return []byte(SECRETKEY), nil
-		return pub, nil
+		return pubPem, nil
 	})
 	if err != nil {
 		return nil, err

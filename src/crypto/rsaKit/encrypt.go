@@ -20,7 +20,7 @@ func (opts *rsaOptions) Encrypt(data, publicKey []byte) ([]byte, error) {
 	}
 
 	// 公钥
-	key, err := opts.parsePublicKey(publicKey)
+	key, err := opts.ParsePublicKeyFromPem(publicKey)
 	if err != nil {
 		return nil, err
 	}
