@@ -4,7 +4,6 @@ import (
 	"errors"
 	"fmt"
 	"github.com/golang-jwt/jwt/v5"
-	"net/http"
 	"time"
 )
 
@@ -22,9 +21,6 @@ type CustomClaims struct {
 }
 
 func main() {
-
-	http.SameSiteDefaultMode
-
 	/* (1) 生成token */
 	//claims := &jwt.MapClaims{
 	//	"id":   11,
