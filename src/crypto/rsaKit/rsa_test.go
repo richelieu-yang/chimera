@@ -8,7 +8,7 @@ import (
 // 测试: 加密 && 解密
 func TestRSA(t *testing.T) {
 	bits := 2048
-	format := PKCS1
+	format := PKCS8
 	password := "qwdqwdqwd"
 	data := []byte("`1245`152678`16983强无敌群无多7~!@#$%^&*()_+=")
 
