@@ -16,8 +16,8 @@ import (
 @param pubPath	公钥文件存放的位置
 @param options 	可配置: format、password...
 */
-func GenerateKeyFiles(bits int, priPath, pubPath string, options ...RsaOption) error {
-	pri, pub, err := GenerateKeys(bits, options...)
+func GenerateKeyFiles(bits int, priPath, pubPath string, format KeyFormat, password string) error {
+	pri, pub, err := GenerateKeys(bits, format, password)
 	if err != nil {
 		return err
 	}
@@ -31,19 +31,14 @@ func GenerateKeyFiles(bits int, priPath, pubPath string, options ...RsaOption) e
 	return nil
 }
 
-func GenerateKeys(bits int, options ...RsaOption) (pri []byte, pub []byte, err error) {
-	opts := loadOptions(options...)
-	return opts.GenerateKeyPair(bits)
-}
-
-func (opts *rsaOptions) GenerateKeyPair(bits int) (pri []byte, pub []byte, err error) {
+func GenerateKeys(bits int, format KeyFormat, password string) (pri []byte, pub []byte, err error) {
 	// 生成私钥
 	privateKey, err := rsa.GenerateKey(rand.Reader, bits)
 	if err != nil {
 		return nil, nil, err
 	}
 	var derStream []byte
-	switch opts.format {
+	switch format {
 	case PKCS1:
 		derStream = x509.MarshalPKCS1PrivateKey(privateKey)
 	case PKCS8:
@@ -52,14 +47,14 @@ func (opts *rsaOptions) GenerateKeyPair(bits int) (pri []byte, pub []byte, err e
 			return nil, nil, err
 		}
 	default:
-		return nil, nil, errorKit.New("invalid format(%v)", opts.format)
+		return nil, nil, errorKit.New("invalid format(%v)", format)
 	}
 	block := &pem.Block{
 		Type:  "PRIVATE KEY",
 		Bytes: derStream,
 	}
 	pri = pem.EncodeToMemory(block)
-	pri, err = opts.EncryptPrivatePEM(pri)
+	pri, err = EncryptPrivatePEM(pri, format, password)
 	if err != nil {
 		return nil, nil, err
 	}
