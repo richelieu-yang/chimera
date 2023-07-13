@@ -82,12 +82,12 @@ func (opts *rsaOptions) encryptPrivateKey(privateKey interface{}) (*pem.Block, e
 	}
 }
 
-// DecryptPrivatePEM 通过password，解密私钥（.pem格式）
+// decryptPrivatePEM 通过password，解密私钥（.pem格式）
 /*
 input: 	pem raw
 output: pem raw
 */
-func (opts *rsaOptions) DecryptPrivatePEM(pemRaw []byte) ([]byte, error) {
+func (opts *rsaOptions) decryptPrivatePEM(pemRaw []byte) ([]byte, error) {
 	if strKit.IsEmpty(opts.password) {
 		// 密码为空，不解密私钥
 		return pemRaw, nil

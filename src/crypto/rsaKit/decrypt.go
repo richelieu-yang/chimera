@@ -17,17 +17,17 @@ func Decrypt(data, privateKey []byte, options ...RsaOption) ([]byte, error) {
 	return opts.Decrypt(data, privateKey)
 }
 
-func (opts *rsaOptions) Decrypt(data, privateKey []byte) ([]byte, error) {
-	if err := sliceKit.AssertNotEmpty(privateKey, "privateKey"); err != nil {
+func (opts *rsaOptions) Decrypt(data, privateKeyData []byte) ([]byte, error) {
+	if err := sliceKit.AssertNotEmpty(privateKeyData, "privateKeyData"); err != nil {
 		return nil, err
 	}
 
 	// 私钥
-	privateKey, err := opts.DecryptPrivatePEM(privateKey)
+	privateKeyData, err := opts.decryptPrivatePEM(privateKeyData)
 	if err != nil {
 		return nil, err
 	}
-	key, err := opts.parsePrivateKey(privateKey)
+	privateKey, err := opts.parsePrivateKey(privateKeyData)
 	if err != nil {
 		return nil, err
 	}
@@ -40,10 +40,10 @@ func (opts *rsaOptions) Decrypt(data, privateKey []byte) ([]byte, error) {
 
 	// 分块解密
 	buffer := bytes.NewBufferString("")
-	partLen := key.N.BitLen() / 8
+	partLen := privateKey.N.BitLen() / 8
 	chunks := sliceKit.Split(data, partLen)
 	for _, chunk := range chunks {
-		tmp, err := rsa.DecryptPKCS1v15(rand.Reader, key, chunk)
+		tmp, err := rsa.DecryptPKCS1v15(rand.Reader, privateKey, chunk)
 		if err != nil {
 			return nil, err
 		}
