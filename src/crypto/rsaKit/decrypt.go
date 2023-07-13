@@ -23,7 +23,7 @@ func (opts *rsaOptions) Decrypt(data, pemData []byte) ([]byte, error) {
 	}
 
 	// 私钥
-	pemData, err := opts.decryptPrivatePEM(pemData)
+	pemData, err := opts.DecryptPrivatePEM(pemData)
 	if err != nil {
 		return nil, err
 	}

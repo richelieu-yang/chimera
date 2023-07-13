@@ -17,13 +17,13 @@ encryptWithPKCS8 a pem private key
 input: 	pem raw
 output:	pem raw
 */
-func (opts *rsaOptions) EncryptPrivatePEM(pemRaw []byte) ([]byte, error) {
+func (opts *rsaOptions) EncryptPrivatePEM(pemData []byte) ([]byte, error) {
 	if strKit.IsEmpty(opts.password) {
 		// 密码为空，不加密私钥
-		return pemRaw, nil
+		return pemData, nil
 	}
 
-	block, _ := pem.Decode(pemRaw)
+	block, _ := pem.Decode(pemData)
 	if block == nil {
 		return nil, errorKit.New("fail to decode pem because block is nil")
 	}
@@ -82,18 +82,18 @@ func (opts *rsaOptions) encryptPrivateKey(privateKey interface{}) (*pem.Block, e
 	}
 }
 
-// decryptPrivatePEM 通过password，解密私钥（.pem格式）
+// DecryptPrivatePEM 通过password，解密私钥（.pem格式）
 /*
 input: 	pem raw
 output: pem raw
 */
-func (opts *rsaOptions) decryptPrivatePEM(pemRaw []byte) ([]byte, error) {
+func (opts *rsaOptions) DecryptPrivatePEM(pemData []byte) ([]byte, error) {
 	if strKit.IsEmpty(opts.password) {
 		// 密码为空，不解密私钥
-		return pemRaw, nil
+		return pemData, nil
 	}
 
-	block, _ := pem.Decode(pemRaw)
+	block, _ := pem.Decode(pemData)
 	if block == nil {
 		return nil, errorKit.New("fail to decode pem because block is nil")
 	}
