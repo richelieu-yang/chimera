@@ -12,9 +12,18 @@ import (
 // GenerateKeyFiles 生成: 公钥 && 私钥
 /*
 @param bits		512 ||1024 || 2048 || 3072 || 4096
-@param options 	可配置: format、password
+@param priPath	私钥文件存放的位置
+@param pubPath	公钥文件存放的位置
+@param options 	可配置: format、password...
 */
 func GenerateKeyFiles(bits int, priPath, pubPath string, options ...RsaOption) error {
+	if err := fileKit.AssertNotExistOrIsFile(priPath); err != nil {
+		return err
+	}
+	if err := fileKit.AssertNotExistOrIsFile(pubPath); err != nil {
+		return err
+	}
+
 	pri, pub, err := GenerateKeys(bits, options...)
 	if err != nil {
 		return err
