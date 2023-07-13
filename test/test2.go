@@ -1,31 +1,15 @@
 package main
 
 import (
+	"encoding/base64"
 	"fmt"
-	"github.com/richelieu-yang/chimera/v2/src/core/fileKit"
-	"time"
+	"github.com/richelieu-yang/chimera/v2/src/crypto/base64Kit"
 )
 
 func main() {
-	//path := "nohup.out"
-
-	start := time.Now()
-
-	path := "/Users/richelieu/GolandProjects/chimera/nohup111_副本5.out"
-
-	if _, err := fileKit.Create(path); err != nil {
+	str, err := base64Kit.DecodeStringToString("eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9", base64Kit.WithEncoding(base64.RawURLEncoding))
+	if err != nil {
 		panic(err)
 	}
-
-	if err := fileKit.Truncate(path, 0); err != nil {
-		panic(err)
-	}
-
-	//if err := fileKit.CopyFile(path, "nohup1.out"); err != nil {
-	//	panic(err)
-	//}
-	fmt.Println(time.Since(start))
-	//if _, err := fileKit.Create(path); err != nil {
-	//	panic(err)
-	//}
+	fmt.Println(str)
 }

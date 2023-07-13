@@ -1,12 +1,16 @@
 package main
 
 import (
+	"errors"
 	"fmt"
 	"github.com/golang-jwt/jwt/v5"
+	"net/http"
 	"time"
 )
 
 const (
+	MaxAge = time.Duration(60*60*24) * time.Second
+
 	SECRETKEY = "243223ffslsfsldfl412fdsfsdf" //私钥
 )
 
@@ -14,54 +18,58 @@ const (
 type CustomClaims struct {
 	jwt.RegisteredClaims
 
-	UserId int64
+	UserName string
 }
 
 func main() {
-	//生成token
-	maxAge := 60 * 60 * 24
-	// Create the Claims
-	//claims := &jwt.StandardClaims{
-	//  //  ExpiresAt: time.Now().Add(time.Duration(maxAge)*time.Second).Unix(), // 过期时间，必须设置,
-	//  //  Issuer:  "jerry",// 非必须，也可以填充用户名，
-	//  //}
 
-	//或者用下面自定义claim
-	claims := jwt.MapClaims{
-		"id":   11,
-		"name": "jerry",
-		"exp":  time.Now().Add(time.Duration(maxAge) * time.Second).Unix(), // 过期时间，必须设置,
+	http.SameSiteDefaultMode
+
+	/* (1) 生成token */
+	//claims := &jwt.MapClaims{
+	//	"id":   11,
+	//	"name": "jerry",
+	//	"exp":  time.Now().Add(MaxAge).Unix(), // 过期时间，必须设置,
+	//}
+	claims := &CustomClaims{
+		RegisteredClaims: jwt.RegisteredClaims{
+			ExpiresAt: &jwt.NumericDate{
+				Time: time.Now().Add(time.Second * 3),
+			},
+		},
+		UserName: "测试",
 	}
 
-	token := jwt.NewWithClaims(jwt.SigningMethodHS256, claims)
+	token := jwt.NewWithClaims(jwt.SigningMethodRS256, claims)
 	tokenString, err := token.SignedString([]byte(SECRETKEY))
 	if err != nil {
-		fmt.Println(err)
+		panic(err)
 	}
-	fmt.Printf("token: %v\n", tokenString)
+	println("token:", tokenString)
 
-	//解析token
-	ret, err := ParseToken(tokenString)
+	/* (2) 解析token */
+	rst, err := ParseToken(tokenString)
 	if err != nil {
-		fmt.Println(err)
+		panic(err)
 	}
-	fmt.Printf("userinfo: %v\n", ret)
+	println("claims:", rst)
 }
 
 // ParseToken 解析token
-func ParseToken(tokenString string) (jwt.MapClaims, error) {
+func ParseToken(tokenString string) (jwt.Claims, error) {
 	token, err := jwt.Parse(tokenString, func(token *jwt.Token) (interface{}, error) {
 		// Don't forget to validate the alg is what you expect:
-		if _, ok := token.Method.(*jwt.SigningMethodHMAC); !ok {
-			return nil, fmt.Errorf("Unexpected signing method: %v", token.Header["alg"])
+		if _, ok := token.Method.(*jwt.SigningMethodRSA); !ok {
+			return nil, errors.New(fmt.Sprintf("Unexpected signing method: %v", token.Header["alg"]))
 		}
-
 		// hmacSampleSecret is a []byte containing your secret, e.g. []byte("my_secret_key")
 		return []byte(SECRETKEY), nil
 	})
-	if claims, ok := token.Claims.(jwt.MapClaims); ok && token.Valid {
-		return claims, nil
-	} else {
+	if err != nil {
 		return nil, err
 	}
+	if !token.Valid {
+		return nil, errors.New("token is invalid")
+	}
+	return token.Claims, nil
 }

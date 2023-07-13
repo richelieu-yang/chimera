@@ -9,7 +9,7 @@ gin:
   mode: debug
   hostName:
   # http端口号（默认: 80）
-#  port: 80
+  port: 80
   # 日志带颜色输出?（默认: true）
 #  colorful: true
   # 是否开启pprof路由？（默认: false）
