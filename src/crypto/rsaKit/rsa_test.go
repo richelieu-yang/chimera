@@ -17,12 +17,14 @@ func TestRSA(t *testing.T) {
 	if err != nil {
 		panic(err)
 	}
+
 	// 加密
 	data, err = Encrypt(data, pub)
 	if err != nil {
 		panic(err)
 	}
 	fmt.Printf("密文:\n%s\n", string(data))
+
 	// 解密
 	data, err = Decrypt(data, pri, password)
 	if err != nil {
