@@ -2,27 +2,16 @@ package rsaKit
 
 import (
 	"fmt"
-	"github.com/richelieu-yang/chimera/v2/src/core/fileKit"
 	"testing"
 )
 
+// 加密 && 解密
 func TestRSA(t *testing.T) {
 	options := []RsaOption{
 		WithFormat(PKCS8),
 		WithPassword("cyy"),
 	}
-
-	priPath := "_pri.key"
-	pubPath := "_pub.key"
-	if err := GenerateKeyFiles(4096, priPath, pubPath, options...); err != nil {
-		panic(err)
-	}
-
-	pri, err := fileKit.ReadFile(priPath)
-	if err != nil {
-		panic(err)
-	}
-	pub, err := fileKit.ReadFile(pubPath)
+	pri, pub, err := GenerateKeys(4096, options...)
 	if err != nil {
 		panic(err)
 	}
