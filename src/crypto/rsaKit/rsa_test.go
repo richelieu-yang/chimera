@@ -9,7 +9,7 @@ import (
 func TestRSA(t *testing.T) {
 	options := []RsaOption{
 		WithFormat(PKCS8),
-		//WithPassword("cyy"),
+		WithPassword("cyyqwdqwd"),
 	}
 	pri, pub, err := GenerateKeys(2048, options...)
 	if err != nil {
@@ -22,11 +22,11 @@ func TestRSA(t *testing.T) {
 	if err != nil {
 		panic(err)
 	}
-	fmt.Println("密文:", string(data))
+	fmt.Printf("密文:\n%s\n", string(data))
 	// 解密
 	data, err = Decrypt(data, pri, options...)
 	if err != nil {
 		panic(err)
 	}
-	fmt.Println("明文:", string(data))
+	fmt.Printf("明文:\n%s\n", string(data))
 }

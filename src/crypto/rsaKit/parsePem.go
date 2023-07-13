@@ -3,6 +3,7 @@ package rsaKit
 import (
 	"crypto/rsa"
 	"github.com/golang-jwt/jwt/v5"
+	"github.com/richelieu-yang/chimera/v2/src/core/strKit"
 )
 
 // ParsePublicKeyFromPem 解析公钥.
@@ -28,9 +29,12 @@ func ParsePublicKeyFromPem(pemData []byte) (*rsa.PublicKey, error) {
 /*
 支持: PKCS1、PKCS8.
 
-@param password 私钥的密码.
+@param password 私钥的密码（"": 无密码）
 */
-func ParsePrivateKeyFromPem(data []byte) (*rsa.PrivateKey, error) {
+func ParsePrivateKeyFromPem(data []byte, password string) (*rsa.PrivateKey, error) {
+	if strKit.IsNotEmpty(password) {
+		return jwt.ParseRSAPrivateKeyFromPEMWithPassword(data, password)
+	}
 	return jwt.ParseRSAPrivateKeyFromPEM(data)
 
 	//block, _ := pem.Decode(data)

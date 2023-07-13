@@ -25,8 +25,6 @@ var priPem []byte
 var pubPem []byte
 
 func main() {
-	jwt.ParseRSAPublicKeyFromPEM()
-
 	var err error
 	priPem, err = fileKit.ReadFile("_pri.pem")
 	if err != nil {
