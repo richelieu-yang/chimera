@@ -12,9 +12,10 @@ import (
 // GenerateKeyFiles 生成: 公钥 && 私钥
 /*
 @param bits		512 ||1024 || 2048 || 3072 || 4096
-@param priPath	私钥文件存放的位置
-@param pubPath	公钥文件存放的位置
-@param options 	可配置: format、password...
+@param format	PKCS1 || PKCS8
+@param password 私钥的密码（没有则传""）
+@param priPath	生成私钥文件的位置
+@param pubPath	生成公钥文件的位置
 */
 func GenerateKeyFiles(bits int, format KeyFormat, password, priPath, pubPath string) error {
 	pri, pub, err := GenerateKeys(bits, format, password)
