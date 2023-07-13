@@ -5,13 +5,13 @@ import (
 	"fmt"
 	"github.com/golang-jwt/jwt/v5"
 	"github.com/richelieu-yang/chimera/v2/src/core/fileKit"
+	"github.com/richelieu-yang/chimera/v2/src/core/timeKit"
+	"github.com/richelieu-yang/chimera/v2/src/crypto/rsaKit"
 	"time"
 )
 
 const (
-	MaxAge = time.Duration(60*60*24) * time.Second
-
-	SECRETKEY = "243223ffslsfsldfl412fdsfsdf" //私钥
+	MaxAge = timeKit.Day
 )
 
 // CustomClaims 自定义Claims
@@ -25,12 +25,23 @@ var priPem []byte
 var pubPem []byte
 
 func main() {
+	// 私钥的密码
+	password := "dqwdqwd强无敌群多"
 	var err error
 	priPem, err = fileKit.ReadFile("_pri.pem")
 	if err != nil {
 		panic(err)
 	}
 	pubPem, err = fileKit.ReadFile("_pub.pem")
+	if err != nil {
+		panic(err)
+	}
+
+	privateKey, err := rsaKit.ParsePrivateKeyFromPem(priPem, password)
+	if err != nil {
+		panic(err)
+	}
+	publicKey, err := rsaKit.ParsePublicKeyFromPem(pubPem)
 	if err != nil {
 		panic(err)
 	}
@@ -44,33 +55,29 @@ func main() {
 	claims := &CustomClaims{
 		RegisteredClaims: jwt.RegisteredClaims{
 			ExpiresAt: &jwt.NumericDate{
-				Time: time.Now().Add(time.Second * 3),
+				Time: time.Now().Add(MaxAge),
 			},
 		},
 		UserName: "测试",
 	}
 
 	token := jwt.NewWithClaims(jwt.SigningMethodRS256, claims)
-	priKey, err := jwt.ParseRSAPrivateKeyFromPEM(priPem)
+	tokenString, err := token.SignedString(privateKey)
 	if err != nil {
 		panic(err)
 	}
-	tokenString, err := token.SignedString(priKey)
-	if err != nil {
-		panic(err)
-	}
-	println("token:", tokenString)
+	fmt.Printf("jwt:\n%s\n", tokenString)
 
 	/* (2) 解析token */
-	rst, err := ParseToken(tokenString)
+	rst, err := ParseToken(publicKey, tokenString)
 	if err != nil {
 		panic(err)
 	}
-	println("claims:", rst)
+	fmt.Printf("claims:\n%v\n", rst)
 }
 
 // ParseToken 解析token
-func ParseToken(tokenString string) (jwt.Claims, error) {
+func ParseToken(key interface{}, tokenString string) (jwt.Claims, error) {
 	token, err := jwt.Parse(tokenString, func(token *jwt.Token) (interface{}, error) {
 		// Don't forget to validate the alg is what you expect:
 		if _, ok := token.Method.(*jwt.SigningMethodRSA); !ok {
@@ -78,7 +85,7 @@ func ParseToken(tokenString string) (jwt.Claims, error) {
 		}
 		// hmacSampleSecret is a []byte containing your secret, e.g. []byte("my_secret_key")
 		//return []byte(SECRETKEY), nil
-		return pubPem, nil
+		return key, nil
 	})
 	if err != nil {
 		return nil, err
