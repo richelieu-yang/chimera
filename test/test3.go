@@ -2,17 +2,17 @@ package main
 
 import (
 	"fmt"
-	"github.com/richelieu-yang/chimera/v2/src/core/ioKit"
-	"time"
+	"github.com/richelieu-yang/chimera/v2/src/core/mapKit"
 )
 
 func main() {
-	wc, err := ioKit.NewDailyWriteCloser("/Users/richelieu/Downloads/a.log")
-	if err != nil {
-		panic(err)
+	m := map[string]interface{}{
+		"1": 1,
 	}
-	for {
-		fmt.Println(wc.Write([]byte("qwdqwdqwdqwd\n")))
-		time.Sleep(time.Second)
-	}
+	fmt.Println(m)
+
+	clear()
+
+	mapKit.Clear(m)
+	fmt.Println(m)
 }

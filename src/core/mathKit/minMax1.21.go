@@ -5,10 +5,10 @@ package mathKit
 
 import "cmp"
 
-func Max[T cmp.Ordered](a, b T) T {
-	return max(a, b)
+func Max[T cmp.Ordered](x T, y ...T) T {
+	return max(x, y...)
 }
 
-func Min[T cmp.Ordered](a, b T) T {
-	return min(a, b)
+func Min[T cmp.Ordered](x T, y ...T) T {
+	return min(x, y...)
 }

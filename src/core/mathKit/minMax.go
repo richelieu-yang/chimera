@@ -3,20 +3,26 @@
 
 package mathKit
 
-import (
-	"golang.org/x/exp/constraints"
-)
+import "golang.org/x/exp/constraints"
 
-func Max[T constraints.Ordered](a, b T) T {
-	if a > b {
-		return a
+func Max[T constraints.Ordered](p T, args ...T) T {
+	rst := p
+
+	for _, ele := range args {
+		if ele > rst {
+			rst = ele
+		}
 	}
-	return b
+	return rst
 }
 
-func Min[T constraints.Ordered](a, b T) T {
-	if a < b {
-		return a
+func Min[T constraints.Ordered](p T, args ...T) T {
+	rst := p
+
+	for _, ele := range args {
+		if ele < rst {
+			rst = ele
+		}
 	}
-	return b
+	return rst
 }
