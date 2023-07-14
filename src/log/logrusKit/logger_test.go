@@ -13,7 +13,7 @@ func TestNewLogger(t *testing.T) {
 
 	/* 输出到文件(rotatable) */
 	path := "test.log"
-	writer, err := ioKit.NewRotatableWriteCloser(path, 10*dataSizeKit.MiB)
+	writer, err := ioKit.NewLumberJackWriteCloser(path, 10*dataSizeKit.MiB)
 	if err != nil {
 		panic(err)
 	}

@@ -4,6 +4,7 @@ import (
 	"github.com/natefinch/lumberjack/v3"
 	"github.com/richelieu-yang/chimera/v2/src/core/errorKit"
 	"github.com/richelieu-yang/chimera/v2/src/core/fileKit"
+	"github.com/richelieu-yang/chimera/v2/src/core/mathKit"
 	"time"
 )
 
@@ -15,34 +16,34 @@ type (
 		compress   bool
 	}
 
-	LumberjackOption func(opts *lumberjackOptions)
+	LumberJackOption func(opts *lumberjackOptions)
 )
 
-func WithMaxAge(maxAge time.Duration) LumberjackOption {
+func WithMaxAge(maxAge time.Duration) LumberJackOption {
 	return func(opts *lumberjackOptions) {
 		opts.maxAge = maxAge
 	}
 }
 
-func WithMaxBackups(maxBackups int) LumberjackOption {
+func WithMaxBackups(maxBackups int) LumberJackOption {
 	return func(opts *lumberjackOptions) {
 		opts.maxBackups = maxBackups
 	}
 }
 
-func WithLocalTime(localTime bool) LumberjackOption {
+func WithLocalTime(localTime bool) LumberJackOption {
 	return func(opts *lumberjackOptions) {
 		opts.localTime = localTime
 	}
 }
 
-func WithCompress(compress bool) LumberjackOption {
+func WithCompress(compress bool) LumberJackOption {
 	return func(opts *lumberjackOptions) {
 		opts.compress = compress
 	}
 }
 
-func loadOptions(options ...LumberjackOption) *lumberjackOptions {
+func loadOptions(options ...LumberJackOption) *lumberjackOptions {
 	opts := &lumberjackOptions{
 		maxAge:     0,
 		maxBackups: 0,
@@ -52,10 +53,14 @@ func loadOptions(options ...LumberjackOption) *lumberjackOptions {
 	for _, option := range options {
 		option(opts)
 	}
+
+	opts.maxAge = mathKit.Max(opts.maxAge, 0)
+	opts.maxBackups = mathKit.Max(opts.maxBackups, 0)
+
 	return opts
 }
 
-// NewRotatableWriteCloser 可rotate（依据传参maxSize）的io.WriteCloser.
+// NewLumberJackWriteCloser 可rotate（依据传参maxSize）的io.WriteCloser.
 /*
 PS:
 (1) 如果 当前目标文件 被人为删了，会丢失部分输出直至再次调用Rotate().
@@ -68,7 +73,7 @@ WithMaxBackups()	[默认: 保留所有旧日志] 旧日志保存的最多数量
 WithMaxAge()		[默认: 保留所有旧日志] 旧日志保存的最长时间
 WithLocalTime()		[默认: true] true: 使用本地时间; false: 使用UTC时间
 */
-func NewRotatableWriteCloser(filePath string, maxSize int64, options ...LumberjackOption) (*lumberjack.Roller, error) {
+func NewLumberJackWriteCloser(filePath string, maxSize int64, options ...LumberJackOption) (*lumberjack.Roller, error) {
 	if err := fileKit.AssertNotExistOrIsFile(filePath); err != nil {
 		return nil, err
 	}
