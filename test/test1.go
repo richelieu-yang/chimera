@@ -8,6 +8,7 @@ import (
 
 func main() {
 	fmt.Println(runtimeKit.GoVersion)
-	fmt.Println(mathKit.Max(0, -1))
-	fmt.Println(mathKit.Min(0, -1))
+
+	//fmt.Println(max(0, -1, 1, 2, 3))
+	fmt.Println(mathKit.Max(0, -1, 1, 2, 3))
 }

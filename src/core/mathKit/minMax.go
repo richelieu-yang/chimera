@@ -1,10 +1,11 @@
-// go版本 < 1.21
-//go:build !go1.21
-
 package mathKit
 
 import "golang.org/x/exp/constraints"
 
+// Max
+/*
+TODO: go1.21，使用max().
+*/
 func Max[T constraints.Ordered](p T, args ...T) T {
 	rst := p
 
@@ -16,6 +17,10 @@ func Max[T constraints.Ordered](p T, args ...T) T {
 	return rst
 }
 
+// Min
+/*
+TODO: go1.21，使用min().
+*/
 func Min[T constraints.Ordered](p T, args ...T) T {
 	rst := p
 
