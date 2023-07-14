@@ -1,6 +1,9 @@
 package ioKit
 
 import (
+	"fmt"
+	"github.com/richelieu-yang/chimera/v2/src/consts"
+	"github.com/richelieu-yang/chimera/v2/src/core/strKit"
 	"github.com/richelieu-yang/chimera/v2/src/cronKit"
 	"github.com/robfig/cron/v3"
 	"github.com/sirupsen/logrus"
@@ -43,9 +46,10 @@ func NewRotatableWriteCloserWithSpec(filePath string, spec string, options ...Lu
 	}
 
 	c, _, err := cronKit.NewCronWithTask(spec, func() {
-		_, _ = wc.Write([]byte("rotate by cron"))
+		text := fmt.Sprintf("[%s] Rotate by cron.\n", strKit.ToUpper(consts.ProjectName))
+		_, _ = wc.Write([]byte(text))
 		if err := wc.Rotate(); err != nil {
-			text := "fail to rotate by cron, error: " + err.Error()
+			text := fmt.Sprintf("[%s] Fail to rotate by cron, error:\n%v\n", strKit.ToUpper(consts.ProjectName), err)
 			_, _ = wc.Write([]byte(text))
 			logrus.Error(text)
 		}
@@ -53,6 +57,7 @@ func NewRotatableWriteCloserWithSpec(filePath string, spec string, options ...Lu
 	if err != nil {
 		return nil, err
 	}
+	// Start() 不阻塞
 	c.Start()
 
 	return &DailyWriteCloser{
