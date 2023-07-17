@@ -1,10 +1,16 @@
 package main
 
 import (
-	"fmt"
-	"github.com/richelieu-yang/chimera/v2/src/json/jsonKit"
+	"github.com/richelieu-yang/chimera/v2/src/cronKit"
+	"github.com/sirupsen/logrus"
 )
 
 func main() {
-	fmt.Println(jsonKit.MarshalIndentToString(111, "", "\t"))
+	c, _, err := cronKit.NewCronWithTask("0 0 0 * * *", func() {
+		logrus.Info("execute")
+	})
+	if err != nil {
+		panic(err)
+	}
+	c.Run()
 }
