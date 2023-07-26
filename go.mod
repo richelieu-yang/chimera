@@ -6,7 +6,7 @@ require (
 	github.com/apache/pulsar-client-go v0.11.0
 	github.com/apache/rocketmq-clients/golang/v5 v5.0.1-rc.4
 	github.com/bytedance/sonic v1.9.2
-	github.com/dablelv/go-huge-util v0.0.44
+	github.com/dablelv/go-huge-util v0.0.48
 	github.com/deckarep/golang-set/v2 v2.3.0
 	github.com/dustin/go-humanize v1.0.1
 	github.com/emersion/go-imap v1.2.1
@@ -20,7 +20,7 @@ require (
 	github.com/gin-gonic/gin v1.9.1
 	github.com/go-playground/validator/v10 v10.14.1
 	github.com/go-redsync/redsync/v4 v4.8.1
-	github.com/gogf/gf/v2 v2.4.4
+	github.com/gogf/gf/v2 v2.5.0
 	github.com/golang-jwt/jwt/v5 v5.0.0
 	github.com/google/uuid v1.3.0
 	github.com/gorilla/securecookie v1.1.1
@@ -31,7 +31,7 @@ require (
 	github.com/jordan-wright/email v4.0.1-0.20210109023952-943e75fe5223+incompatible
 	github.com/json-iterator/go v1.1.12
 	github.com/klauspost/cpuid/v2 v2.2.5
-	github.com/lionsoul2014/ip2region/binding/golang v0.0.0-20230712125443-5fe015190707
+	github.com/lionsoul2014/ip2region/binding/golang v0.0.0-20230717040633-c8446edaab76
 	github.com/matoous/go-nanoid/v2 v2.0.0
 	github.com/mitchellh/go-homedir v1.1.0
 	github.com/mitchellh/mapstructure v1.5.0
@@ -48,14 +48,14 @@ require (
 	github.com/sony/sonyflake v1.1.0
 	github.com/spf13/cast v1.5.1
 	github.com/spf13/viper v1.16.0
-	github.com/zeromicro/go-zero v1.5.3
-	github.com/zeromicro/zero-contrib/logx/logrusx v0.0.0-20230708101417-16e73a5d116c
+	github.com/zeromicro/go-zero v1.5.4
+	github.com/zeromicro/zero-contrib/logx/logrusx v0.0.0-20230723160843-46458a31fae9
 	go.etcd.io/etcd/client/v3 v3.5.9
 	go.opentelemetry.io/otel v1.16.0
 	go.opentelemetry.io/otel/exporters/jaeger v1.16.0
 	go.opentelemetry.io/otel/sdk v1.16.0
 	go.uber.org/zap v1.24.0
-	golang.org/x/exp v0.0.0-20230713183714-613f0c0eb8a1
+	golang.org/x/exp v0.0.0-20230725093048-515e97ebf090
 	golang.org/x/image v0.9.0
 	google.golang.org/grpc v1.56.2
 	gorm.io/driver/mysql v1.5.1
@@ -121,14 +121,14 @@ require (
 	github.com/modern-go/concurrent v0.0.0-20180306012644-bacd9c7ef1dd // indirect
 	github.com/mtibben/percent v0.2.1 // indirect
 	github.com/natefinch/lumberjack v2.0.0+incompatible // indirect
-	github.com/pelletier/go-toml/v2 v2.0.8 // indirect
+	github.com/pelletier/go-toml/v2 v2.0.9 // indirect
 	github.com/pierrec/lz4 v2.0.5+incompatible // indirect
 	github.com/pkg/errors v0.9.1 // indirect
 	github.com/power-devops/perfstat v0.0.0-20210106213030-5aafc221ea8c // indirect
-	github.com/prometheus/client_golang v1.15.1 // indirect
+	github.com/prometheus/client_golang v1.16.0 // indirect
 	github.com/prometheus/client_model v0.3.0 // indirect
 	github.com/prometheus/common v0.42.0 // indirect
-	github.com/prometheus/procfs v0.9.0 // indirect
+	github.com/prometheus/procfs v0.10.1 // indirect
 	github.com/shoenig/go-m1cpu v0.1.6 // indirect
 	github.com/spaolacci/murmur3 v1.1.0 // indirect
 	github.com/spf13/afero v1.9.5 // indirect
@@ -150,18 +150,18 @@ require (
 	go.uber.org/automaxprocs v1.5.2 // indirect
 	go.uber.org/multierr v1.9.0 // indirect
 	golang.org/x/arch v0.3.0 // indirect
-	golang.org/x/crypto v0.9.0 // indirect
+	golang.org/x/crypto v0.11.0 // indirect
 	golang.org/x/mod v0.11.0 // indirect
-	golang.org/x/net v0.10.0 // indirect
+	golang.org/x/net v0.12.0 // indirect
 	golang.org/x/oauth2 v0.7.0 // indirect
-	golang.org/x/sync v0.1.0 // indirect
-	golang.org/x/sys v0.9.0 // indirect
-	golang.org/x/term v0.8.0 // indirect
+	golang.org/x/sync v0.2.0 // indirect
+	golang.org/x/sys v0.10.0 // indirect
+	golang.org/x/term v0.10.0 // indirect
 	golang.org/x/text v0.11.0 // indirect
 	google.golang.org/api v0.122.0 // indirect
 	google.golang.org/appengine v1.6.7 // indirect
 	google.golang.org/genproto v0.0.0-20230410155749-daa745c078e1 // indirect
-	google.golang.org/protobuf v1.30.0 // indirect
+	google.golang.org/protobuf v1.31.0 // indirect
 	gopkg.in/ini.v1 v1.67.0 // indirect
 	gopkg.in/natefinch/lumberjack.v2 v2.0.0 // indirect
 	gopkg.in/yaml.v2 v2.4.0 // indirect
