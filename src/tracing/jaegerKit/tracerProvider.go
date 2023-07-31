@@ -1,6 +1,7 @@
 package jaegerKit
 
 import (
+	"github.com/richelieu-yang/chimera/v2/src/core/interfaceKit"
 	"go.opentelemetry.io/otel/attribute"
 	"go.opentelemetry.io/otel/exporters/jaeger"
 	"go.opentelemetry.io/otel/sdk/resource"
@@ -10,7 +11,7 @@ import (
 
 // NewTracerProvider
 /*
-	参考: https://github.com/open-telemetry/opentelemetry-go/blob/main/example/jaeger/main.go
+	参考官方demo: https://github.com/open-telemetry/opentelemetry-go/blob/main/example/jaeger/main.go
 
 	tracerProvider returns an OpenTelemetry TracerProvider configured to use
 	the Jaeger exporter that will send spans to the provided url. The returned
@@ -20,11 +21,16 @@ import (
 	@param url e.g."http://localhost:14268/api/traces"
 */
 func NewTracerProvider(url string, rc *ResourceConfig) (*trace.TracerProvider, error) {
+	if err := interfaceKit.AssertNotNil(rc, "rc"); err != nil {
+		return nil, err
+	}
+
 	// Create the Jaeger exporter
 	exporter, err := jaeger.New(jaeger.WithCollectorEndpoint(jaeger.WithEndpoint(url)))
 	if err != nil {
 		return nil, err
 	}
+
 	tp := trace.NewTracerProvider(
 		// Always be sure to batch in production.
 		trace.WithBatcher(exporter),
