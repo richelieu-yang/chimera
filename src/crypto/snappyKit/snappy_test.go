@@ -6,18 +6,18 @@ import (
 	"testing"
 )
 
-func TestEncode(t *testing.T) {
-	//src := []byte("11111111")
-	src := []byte("akakakakakakakakakakdddddddddcccccceeeeeeeegggggggggsssss")
+func TestEncodeAndDecode(t *testing.T) {
+	src := []byte("11111111222222222223333333333444444444444444444444444")
+	//src := []byte("akakakakakakakakakakdddddddddcccccceeeeeeeegggggggggsssss")
 
 	dst := Encode(src)
-	fmt.Println("dst", string(dst), len(dst))
+	fmt.Println(string(dst), len(dst))
 
 	src1, err := Decode(dst)
 	if err != nil {
 		panic(err)
 	}
-	fmt.Println("src1", string(src1), len(src1))
+	fmt.Println(string(src1), len(src1))
 
 	if !bytesKit.Equals(src, src1) {
 		panic("not equal")
