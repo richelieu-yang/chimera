@@ -1,6 +1,6 @@
 package snappyKit
 
-import "github.com/golang/snappy"
+import "github.com/klauspost/compress/snappy"
 
 // Encode 编码.
 func Encode(src []byte) []byte {

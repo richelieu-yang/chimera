@@ -1,4 +1,9 @@
+## 依赖
+github.com/klauspost/compress 而非 github.com/golang/snappy（库太老了）
+
 ## 参考
+klauspost/compress
+    https://github.com/klauspost/compress
 「Go开源包」snappy：google开源的快速、无损压缩包
     https://mp.weixin.qq.com/s/ie7LqXZQOUX0Bfn4QhHzLA
 
