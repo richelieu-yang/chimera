@@ -3,7 +3,7 @@
     https://mp.weixin.qq.com/s/ie7LqXZQOUX0Bfn4QhHzLA
 
 ## 简介
-snappy: Google开源的快速、无损的压缩包.
+snappy: Google开源的快速、无损的压缩包.（有可能: 压缩后的数据比压缩前大）
 该包的目标并不是最大化的压缩比例，也不是和其他压缩库兼容；相反，snappy算法的目标是在合理的压缩率下尽可能的提高压缩速度。
 
 ### 优点
