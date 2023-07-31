@@ -14,6 +14,8 @@ var Compare func(a, b []byte) int = bytes.Compare
 
 // Equals
 /*
+PS: 两个传参都为nil，将返回true.
+
 @param a 可以为nil
 @param b 可以为nil
 

@@ -2,13 +2,15 @@ package main
 
 import (
 	"fmt"
-	"github.com/richelieu-yang/chimera/v2/src/core/mathKit"
-	"github.com/richelieu-yang/chimera/v2/src/core/runtimeKit"
+	"github.com/golang/snappy"
 )
 
 func main() {
-	fmt.Println(runtimeKit.GoVersion)
+	fmt.Println([]byte("aaa"))
+	src1 := []byte("akakakakakakakakakakdddddddddcccccceeeeeeeegggggggggsssss")
 
-	//fmt.Println(max(0, -1, 1, 2, 3))
-	fmt.Println(mathKit.Max(0, -1, 1, 2, 3))
+	var dst1 []byte
+	c := snappy.Encode(dst1, src1)
+	fmt.Printf("src1 before compression len:%d\n", len(src1))
+	fmt.Printf("src1 after compression len:%d\n", len(c))
 }
