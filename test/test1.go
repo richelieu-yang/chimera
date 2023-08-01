@@ -22,10 +22,6 @@ type (
 	}
 )
 
-//func main() {
-//	fmt.Println(memoryKit.MemoryStatToString())
-//}
-
 func main() {
 	var m runtime.MemStats
 	runtime.ReadMemStats(&m)

@@ -3,7 +3,6 @@ package logrusKit
 import (
 	"github.com/richelieu-yang/chimera/v2/src/core/cpuKit"
 	"github.com/richelieu-yang/chimera/v2/src/core/memoryKit"
-	"github.com/richelieu-yang/chimera/v2/src/core/osKit"
 	"github.com/richelieu-yang/chimera/v2/src/core/pathKit"
 	"github.com/richelieu-yang/chimera/v2/src/core/runtimeKit"
 	"github.com/richelieu-yang/chimera/v2/src/core/timeKit"
@@ -16,15 +15,12 @@ import (
 
 // PrintBasicDetails 输出服务器的基本信息（以便于甩锅）
 func PrintBasicDetails() {
-	logrus.Infof("[CHIMERA] ======================================================================================================================")
+	logrus.Infof("[CHIMERA] ===================================================================================")
 
 	logrus.Infof("[CHIMERA, PROCESS] pid: [%d].", runtimeKit.PID)
 
 	// os
-	logrus.Infof("[CHIMERA, OS] os: [%s].", osKit.OS)
-	logrus.Infof("[CHIMERA, OS] arch: [%s].", osKit.ARCH)
-	logrus.Infof("[CHIMERA, OS] bits: [%d].", osKit.BITS)
-	printUniqueOsInfo()
+	printOsInfo()
 
 	// golang
 	logrus.Infof("[CHIMERA, GO] go version: [%s].", runtimeKit.GoVersion)
@@ -112,5 +108,5 @@ func PrintBasicDetails() {
 		logrus.Infof("[CHIMERA, DOCKER] docker id list: %v.", dockerIds)
 	}
 
-	logrus.Infof("[CHIMERA] ======================================================================================================================")
+	logrus.Infof("[CHIMERA] ===================================================================================")
 }

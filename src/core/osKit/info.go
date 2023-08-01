@@ -10,6 +10,21 @@ import (
 	"strconv"
 )
 
+// GetCountOfProcesses 获取当前的进程数.
+func GetCountOfProcesses() (int, error) {
+	str, err := cmdKit.ExecuteToString("sh", "-c", "ps auxw | wc -l")
+	if err != nil {
+		return 0, err
+	}
+	str = strKit.TrimSpace(str)
+
+	i, err := strconv.Atoi(str)
+	if err != nil {
+		return 0, err
+	}
+	return i, nil
+}
+
 // GetMaxOpenFiles 同一时间最多可开启的文件数
 /*
 PS:
@@ -66,23 +81,6 @@ func GetMaxUserProcesses() (int, error) {
 		return 0, errorKit.New("result(%s) isn't a number", str)
 	}
 	return i, nil
-
-	//cmd := exec.Command("sh", "-c", "ulimit -u")
-	////cmd := exec.Command("ulimit", "-u")
-	//var out bytes.Buffer
-	//cmd.Stdout = &out
-	//err := cmd.Run()
-	//if err != nil {
-	//	return 0, err
-	//}
-	//// strKit.TrimSpace()是为了：去掉最后面的"\n"
-	//str := strKit.TrimSpace(out.ToDSN())
-	//
-	//value, err := strconv.Atoi(str)
-	//if err != nil {
-	//	return 0, errorKit.New("result(%s) of command(%s) isn't a number", str, cmd.ToDSN())
-	//}
-	//return value, nil
 }
 
 func GetCoreFileSize() (string, error) {
