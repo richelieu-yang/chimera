@@ -2,6 +2,7 @@ package logrusKit
 
 import (
 	"github.com/richelieu-yang/chimera/v2/src/core/cpuKit"
+	"github.com/richelieu-yang/chimera/v2/src/core/memoryKit"
 	"github.com/richelieu-yang/chimera/v2/src/core/osKit"
 	"github.com/richelieu-yang/chimera/v2/src/core/pathKit"
 	"github.com/richelieu-yang/chimera/v2/src/core/runtimeKit"
@@ -85,7 +86,7 @@ func PrintBasicDetails() {
 	//}
 
 	// memory
-	if info, err := runtimeKit.GetMemoryStat(); err != nil {
+	if info, err := memoryKit.GetMemoryStat(); err != nil {
 		logrus.WithError(err).Fatal("[CHIMERA, MEMORY] fail to get memory stat")
 	} else {
 		logrus.Infof("[CHIMERA, MEMORY] stat: [%s].", info)

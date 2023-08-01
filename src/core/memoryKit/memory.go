@@ -1,4 +1,4 @@
-package runtimeKit
+package memoryKit
 
 import (
 	"fmt"
