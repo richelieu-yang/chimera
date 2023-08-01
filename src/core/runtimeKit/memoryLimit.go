@@ -22,5 +22,6 @@ func SetSoftMemoryLimit(limit int64) (int64, error) {
 	if limit < int64(512*dataSizeKit.MiB) {
 		return 0, errorKit.New("limit(%s) is too small", dataSizeKit.ToReadableStringWithIEC(uint64(limit)))
 	}
+
 	return debug.SetMemoryLimit(limit), nil
 }
