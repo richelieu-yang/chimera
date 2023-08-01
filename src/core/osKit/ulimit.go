@@ -7,6 +7,7 @@ import (
 	"github.com/richelieu-yang/chimera/v2/src/core/errorKit"
 	"github.com/richelieu-yang/chimera/v2/src/core/intKit"
 	"github.com/richelieu-yang/chimera/v2/src/core/strKit"
+	"strconv"
 )
 
 // GetMaxOpenFiles 同一时间最多可开启的文件数
@@ -46,13 +47,13 @@ func GetMaxOpenFiles() (int, error) {
 	//return value, nil
 }
 
-// GetUserMaxProcesses 用户最多可开启的程序数目
+// GetMaxUserProcesses 用户最多可开启的程序数目
 /*
 PS:
 (1) 仅支持Mac、Linux环境；
 (2) Process: 进程.
 */
-func GetUserMaxProcesses() (int, error) {
+func GetMaxUserProcesses() (int, error) {
 	str, err := cmdKit.ExecuteToString("sh", "-c", "ulimit -u")
 	if err != nil {
 		return 0, err
@@ -82,4 +83,22 @@ func GetUserMaxProcesses() (int, error) {
 	//	return 0, errorKit.New("result(%s) of command(%s) isn't a number", str, cmd.ToDSN())
 	//}
 	//return value, nil
+}
+
+func GetCoreFileSize() (string, error) {
+	str, err := cmdKit.ExecuteToString("sh", "-c", "ulimit -c")
+	if err != nil {
+		return "", err
+	}
+	// e.g."5333\n" => "5333"
+	str = strKit.TrimSpace(str)
+
+	if str == "unlimited" {
+		return str, nil
+	}
+	i, err := intKit.StringToInt(str)
+	if err != nil {
+		return "", errorKit.New("result(%s) isn't a number", str)
+	}
+	return strconv.Itoa(i), nil
 }

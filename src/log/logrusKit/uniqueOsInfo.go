@@ -9,19 +9,27 @@ import (
 
 // printUniqueOsInfo 输出特殊的信息（主要依赖于不同的OS）
 func printUniqueOsInfo() {
-	if userMaxProcesses, err := osKit.GetUserMaxProcesses(); err != nil {
+	if userMaxProcesses, err := osKit.GetMaxUserProcesses(); err != nil {
 		logrus.WithFields(logrus.Fields{
 			"error": err.Error(),
-		}).Warn("[CHIMERA, OS] fail to get userMaxProcesses(ulimit -u)")
+		}).Warn("[CHIMERA, OS] fail to get ulimit -u(max user processes)")
 	} else {
-		logrus.Infof("[CHIMERA, OS] userMaxProcesses(ulimit -u): [%d].", userMaxProcesses)
+		logrus.Infof("[CHIMERA, OS] ulimit -u(max user processes): [%d].", userMaxProcesses)
 	}
 
 	if maxOpenFiles, err := osKit.GetMaxOpenFiles(); err != nil {
 		logrus.WithFields(logrus.Fields{
 			"error": err.Error(),
-		}).Warn("[CHIMERA, OS] fail to get maxOpenFiles(ulimit -n)")
+		}).Warn("[CHIMERA, OS] fail to get ulimit -n(open files)")
 	} else {
-		logrus.Infof("[CHIMERA, OS] maxOpenFiles(ulimit -n): [%d].", maxOpenFiles)
+		logrus.Infof("[CHIMERA, OS] ulimit -n(open files): [%d].", maxOpenFiles)
+	}
+
+	if coreFileSize, err := osKit.GetCoreFileSize(); err != nil {
+		logrus.WithFields(logrus.Fields{
+			"error": err.Error(),
+		}).Warn("[CHIMERA, OS] fail to get ulimit -c(core file size)")
+	} else {
+		logrus.Infof("[CHIMERA, OS] ulimit -c(core file size): [%s].", coreFileSize)
 	}
 }
