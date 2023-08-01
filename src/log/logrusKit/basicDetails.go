@@ -60,7 +60,7 @@ func PrintBasicDetails() {
 
 	// host
 	if hostInfo, err := runtimeKit.GetHostInfo(); err != nil {
-		logrus.WithError(err).Warn("[CHIMERA, HOST] fail to get host info")
+		logrus.WithError(err).Warn("[CHIMERA, HOST] fail to get host stat")
 	} else {
 		logrus.Infof("[CHIMERA, HOST] host name: [%s].", hostInfo.Hostname)
 	}
@@ -86,10 +86,10 @@ func PrintBasicDetails() {
 	//}
 
 	// memory
-	if info, err := memoryKit.GetMemoryStat(); err != nil {
+	if stat, err := memoryKit.GetMemoryStat(); err != nil {
 		logrus.WithError(err).Fatal("[CHIMERA, MEMORY] fail to get memory stat")
 	} else {
-		logrus.Infof("[CHIMERA, MEMORY] stat: [%s].", info)
+		logrus.Infof("[CHIMERA, MEMORY] stat: [%s].", memoryKit.MemoryStatToString(stat))
 	}
 
 	// disk

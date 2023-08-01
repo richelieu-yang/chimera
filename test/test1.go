@@ -1,6 +1,8 @@
 package main
 
 import (
+	"fmt"
+	"github.com/richelieu-yang/chimera/v2/src/core/memoryKit"
 	"github.com/sirupsen/logrus"
 	"runtime"
 )
@@ -22,6 +24,10 @@ type (
 )
 
 func main() {
+	fmt.Println(memoryKit.MemoryStatToString())
+}
+
+func main1() {
 	var m runtime.MemStats
 	runtime.ReadMemStats(&m)
 
@@ -30,7 +36,19 @@ func main() {
 	logrus.Info(m.Sys)
 	logrus.Info(m.NumGC)
 
-	mem
+	logrus.Info("-------")
+
+	memStat, err := memoryKit.GetMemoryStat()
+	if err != nil {
+		panic(err)
+	}
+	logrus.Info(memStat.Total)
+	logrus.Info(memStat.Available)
+	logrus.Info(memStat.Used)
+	logrus.Info(memStat.UsedPercent)
+	logrus.Info(memStat.Free)
+
+	logrus.Info(memStat.Total - memStat.Used - memStat.Available)
 
 	//logx.Statf("MEMORY: Alloc=%.1fMi, TotalAlloc=%.1fMi, Sys=%.1fMi, NumGC=%d",
 	//	bToMb(m.Alloc), bToMb(m.TotalAlloc), bToMb(m.Sys), m.NumGC)
