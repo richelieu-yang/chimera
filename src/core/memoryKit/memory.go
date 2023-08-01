@@ -73,7 +73,7 @@ func GetUsedMemoryPercent() (float64, error) {
 	return stat.UsedPercent, nil
 }
 
-// GetMemoryStat 获取当前瞬间的内存状态
+// GetMemoryStat 获取当前瞬间的内存状态.
 /*
 PS:
 (1) Total = Available + Used
