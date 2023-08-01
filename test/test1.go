@@ -1,7 +1,6 @@
 package main
 
 import (
-	"fmt"
 	"github.com/richelieu-yang/chimera/v2/src/core/memoryKit"
 	"github.com/sirupsen/logrus"
 	"runtime"
@@ -23,11 +22,11 @@ type (
 	}
 )
 
-func main() {
-	fmt.Println(memoryKit.MemoryStatToString())
-}
+//func main() {
+//	fmt.Println(memoryKit.MemoryStatToString())
+//}
 
-func main1() {
+func main() {
 	var m runtime.MemStats
 	runtime.ReadMemStats(&m)
 
@@ -42,16 +41,18 @@ func main1() {
 	if err != nil {
 		panic(err)
 	}
-	logrus.Info(memStat.Total)
-	logrus.Info(memStat.Available)
-	logrus.Info(memStat.Used)
-	logrus.Info(memStat.UsedPercent)
-	logrus.Info(memStat.Free)
+	logrus.Info(memoryKit.MemoryStatToString(memStat))
 
-	logrus.Info(memStat.Total - memStat.Used - memStat.Available)
-
-	//logx.Statf("MEMORY: Alloc=%.1fMi, TotalAlloc=%.1fMi, Sys=%.1fMi, NumGC=%d",
-	//	bToMb(m.Alloc), bToMb(m.TotalAlloc), bToMb(m.Sys), m.NumGC)
+	//logrus.Info(memStat.Total)
+	//logrus.Info(memStat.Available)
+	//logrus.Info(memStat.Used)
+	//logrus.Info(memStat.UsedPercent)
+	//logrus.Info(memStat.Free)
+	//
+	//logrus.Info(memStat.Total - memStat.Used - memStat.Available)
+	//
+	////logx.Statf("MEMORY: Alloc=%.1fMi, TotalAlloc=%.1fMi, Sys=%.1fMi, NumGC=%d",
+	////	bToMb(m.Alloc), bToMb(m.TotalAlloc), bToMb(m.Sys), m.NumGC)
 }
 
 func bToMb(b uint64) float32 {
