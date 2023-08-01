@@ -3,6 +3,7 @@ package memoryKit
 import (
 	"github.com/richelieu-yang/chimera/v2/src/core/errorKit"
 	"github.com/richelieu-yang/chimera/v2/src/dataSizeKit"
+	"math"
 	"runtime/debug"
 )
 
@@ -15,13 +16,13 @@ PS:
 @param limit 单位: B(byte；字节)
 @return 之前的内存限制
 */
-func SetSoftMemoryLimit(limit int64) (int64, error) {
-	if limit <= 0 {
-		return 0, errorKit.New("limit(%d) is invalid", limit)
-	}
+func SetSoftMemoryLimit(limit uint64) (int64, error) {
 	if limit < 512*dataSizeKit.MiB {
-		return 0, errorKit.New("limit(%s) is too small", dataSizeKit.ToReadableStringWithIEC(uint64(limit)))
+		return 0, errorKit.New("limit(%s) is too small", dataSizeKit.ToReadableStringWithIEC(limit))
+	}
+	if limit > math.MaxInt64 {
+		return 0, errorKit.New("limit(%s) is too large", dataSizeKit.ToReadableStringWithIEC(limit))
 	}
 
-	return debug.SetMemoryLimit(limit), nil
+	return debug.SetMemoryLimit(int64(limit)), nil
 }
