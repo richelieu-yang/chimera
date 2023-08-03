@@ -15,3 +15,8 @@ func GetThreadsMax() (int, error) {
 func GetPidMax() (int, error) {
 	return 0, errorKit.New("not yet realized")
 }
+
+// GetMaxThreadCountInAProcess 获取 Linux的"vm.max_map_count"（单进程可生成的最大线程数）
+func GetMaxThreadCountInAProcess() (int, error) {
+	return 0, errorKit.New("not yet realized")
+}
