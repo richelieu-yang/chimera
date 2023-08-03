@@ -2,11 +2,11 @@ package osKit
 
 import "github.com/richelieu-yang/chimera/v2/src/core/errorKit"
 
-func GetCurrentProcessCount() (int, error) {
+func GetCurrentCountOfProcesses() (int, error) {
 	return 0, errorKit.New("not yet realized")
 }
 
-func GetCurrentThreadCount() (int, error) {
+func GetCurrentCountOfProcessesAndThreads() (int, error) {
 	return 0, errorKit.New("not yet realized")
 }
 

@@ -6,11 +6,11 @@ import (
 	"strconv"
 )
 
-// GetCurrentProcessCount
+// GetCurrentCountOfProcesses
 /*
 支持: 	Linux、Mac
 */
-func GetCurrentProcessCount() (int, error) {
+func GetCurrentCountOfProcesses() (int, error) {
 	str, err := cmdKit.ExecuteToString("sh", "-c", "ps auxw | wc -l")
 	if err != nil {
 		return 0, err
@@ -24,12 +24,12 @@ func GetCurrentProcessCount() (int, error) {
 	return i, nil
 }
 
-// GetCurrentThreadCount
+// GetCurrentCountOfProcessesAndThreads
 /*
 支持: 	Linux
 不支持:	Mac
 */
-func GetCurrentThreadCount() (int, error) {
+func GetCurrentCountOfProcessesAndThreads() (int, error) {
 	str, err := cmdKit.ExecuteToString("sh", "-c", "ps -eLf | wc -l")
 	if err != nil {
 		return 0, err
@@ -43,7 +43,7 @@ func GetCurrentThreadCount() (int, error) {
 	return i, nil
 }
 
-// GetThreadsMax 获取 Linux的"kernel.threads-max"（系统可生成最大线程数）
+// GetThreadsMax 获取 Linux的"kernel.threads-max"（系统中可以创建线程数量的上限）
 /*
 命令:
 cat /proc/sys/kernel/threads-max
@@ -63,7 +63,7 @@ func GetThreadsMax() (int, error) {
 	return i, nil
 }
 
-// GetPidMax 获取 Linux的"kernel.pid_max"
+// GetPidMax 获取 Linux的"kernel.pid_max"（系统中可以创建进程数量的上限）
 /*
 命令:
 cat /proc/sys/kernel/pid_max
