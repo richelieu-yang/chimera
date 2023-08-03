@@ -14,4 +14,20 @@ func printUniqueOsInfo() {
 			logrus.Infof("[CHIMERA, OS] ulimit information:\n%s\n", str)
 		})
 	}
+
+	if i, err := osKit.GetThreadsMax(); err != nil {
+		logrus.WithError(err).Error("[CHIMERA, OS] fail to get kernel.threads-max")
+	} else {
+		logrus.Infof("[CHIMERA, OS] kernel.threads-max: [%d].", i)
+	}
+	if i, err := osKit.GetPidMax(); err != nil {
+		logrus.WithError(err).Error("[CHIMERA, OS] fail to get kernel.pid_max")
+	} else {
+		logrus.Infof("[CHIMERA, OS] kernel.pid_max: [%d].", i)
+	}
+	if i, err := osKit.GetMaxThreadCountInAProcess(); err != nil {
+		logrus.WithError(err).Error("[CHIMERA, OS] fail to get vm.max_map_count")
+	} else {
+		logrus.Infof("[CHIMERA, OS] vm.max_map_count: [%d].", i)
+	}
 }
