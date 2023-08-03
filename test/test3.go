@@ -1,16 +1,19 @@
 package main
 
 import (
+	"flag"
 	"fmt"
-	"github.com/richelieu-yang/chimera/v2/src/cmdKit"
-	"github.com/richelieu-yang/chimera/v2/src/core/strKit"
 )
 
+var addr string
+
+func init() {
+	flag.StringVar(&addr, "addr", "default", "address")
+}
+
 func main() {
-	str, err := cmdKit.ExecuteToString("sh", "-c", "ps auxw | wc -l")
-	if err != nil {
-		panic(err)
-	}
-	str = strKit.TrimSpace(str)
-	fmt.Println(str)
+	// 必要，否则取不到值
+	flag.Parse()
+
+	fmt.Printf("addr:[%s]\n", addr)
 }
