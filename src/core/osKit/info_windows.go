@@ -6,6 +6,10 @@ func GetProcessCount() (int, error) {
 	return 0, errorKit.New("not yet realized")
 }
 
+func GetThreadCount() (int, error) {
+	return 0, errorKit.New("not yet realized")
+}
+
 // GetThreadsMax 获取Linux的"kernel.threads-max"
 func GetThreadsMax() (int, error) {
 	return 0, errorKit.New("not yet realized")
