@@ -6,7 +6,7 @@ import (
 	"strconv"
 )
 
-// GetCurrentCountOfProcesses
+// GetCurrentCountOfProcesses 瞬时的值.
 /*
 支持: 	Linux、Mac
 */
@@ -24,7 +24,7 @@ func GetCurrentCountOfProcesses() (int, error) {
 	return i, nil
 }
 
-// GetCurrentCountOfProcessesAndThreads
+// GetCurrentCountOfProcessesAndThreads 瞬时的值.
 /*
 支持: 	Linux
 不支持:	Mac
