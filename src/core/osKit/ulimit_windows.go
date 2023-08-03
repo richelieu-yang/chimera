@@ -10,7 +10,7 @@ func GetMaxOpenFiles() (int, error) {
 	return 0, errorKit.New("not yet realized")
 }
 
-func GetMaxUserProcesses() (int, error) {
+func GetMaxProcessCountByUser() (int, error) {
 	return 0, errorKit.New("not yet realized")
 }
 

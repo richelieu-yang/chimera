@@ -18,6 +18,6 @@ func GetPidMax() (int, error) {
 	return 0, errorKit.New("not yet realized")
 }
 
-func GetMaxThreadCountInAProcess() (int, error) {
+func GetMaxMapCount() (int, error) {
 	return 0, errorKit.New("not yet realized")
 }
