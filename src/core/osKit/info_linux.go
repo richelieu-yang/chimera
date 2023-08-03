@@ -1,5 +1,3 @@
-//go:build !windows
-
 package osKit
 
 import (
@@ -8,12 +6,13 @@ import (
 	"strconv"
 )
 
-// GetProcessCount
+// GetThreadCount
 /*
-支持: 	Linux、Mac
+支持: 	Linux
+不支持:	Mac
 */
-func GetProcessCount() (int, error) {
-	str, err := cmdKit.ExecuteToString("sh", "-c", "ps auxw | wc -l")
+func GetThreadCount() (int, error) {
+	str, err := cmdKit.ExecuteToString("sh", "-c", "ps -eLf | wc -l")
 	if err != nil {
 		return 0, err
 	}

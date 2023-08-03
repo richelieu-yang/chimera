@@ -9,7 +9,7 @@ import (
 
 // printUniqueOsInfo 输出特殊的信息（主要依赖于不同的OS）
 func printUniqueOsInfo() {
-	if count, err := osKit.GetCountOfProcesses(); err != nil {
+	if count, err := osKit.GetProcessCount(); err != nil {
 		logrus.WithError(err).Error("[CHIMERA, OS] fail to get current count of processes")
 	} else {
 		logrus.Infof("[CHIMERA, OS] current count of processes: [%d].", count)
