@@ -6,11 +6,11 @@ import (
 	"strconv"
 )
 
-// GetProcessCount
+// GetCurrentProcessCount
 /*
 支持: 	Linux、Mac
 */
-func GetProcessCount() (int, error) {
+func GetCurrentProcessCount() (int, error) {
 	str, err := cmdKit.ExecuteToString("sh", "-c", "ps auxw | wc -l")
 	if err != nil {
 		return 0, err
@@ -24,12 +24,12 @@ func GetProcessCount() (int, error) {
 	return i, nil
 }
 
-// GetThreadCount
+// GetCurrentThreadCount
 /*
 支持: 	Linux
 不支持:	Mac
 */
-func GetThreadCount() (int, error) {
+func GetCurrentThreadCount() (int, error) {
 	str, err := cmdKit.ExecuteToString("sh", "-c", "ps -eLf | wc -l")
 	if err != nil {
 		return 0, err

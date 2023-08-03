@@ -6,6 +6,6 @@ import (
 )
 
 func main() {
-	fmt.Println(osKit.GetThreadCount())
-	fmt.Println(osKit.GetProcessCount())
+	fmt.Println(osKit.GetCurrentThreadCount())
+	fmt.Println(osKit.GetCurrentProcessCount())
 }
