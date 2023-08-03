@@ -19,25 +19,7 @@ func printUniqueOsInfo() {
 		logrus.WithError(err).Error("[CHIMERA, OS] fail to get ulimit information")
 	} else {
 		DisableQuoteTemporarily(nil, func() {
-			logrus.Infof("[CHIMERA, OS] ulimit information:\n%s", str)
+			logrus.Infof("[CHIMERA, OS] ulimit information:\n%s\n", str)
 		})
 	}
-
-	//if userMaxProcesses, err := osKit.GetMaxUserProcesses(); err != nil {
-	//	logrus.WithError(err).Error("[CHIMERA, OS] fail to get ulimit -u(max user processes)")
-	//} else {
-	//	logrus.Infof("[CHIMERA, OS] ulimit -u(max user processes): [%d].", userMaxProcesses)
-	//}
-	//
-	//if maxOpenFiles, err := osKit.GetMaxOpenFiles(); err != nil {
-	//	logrus.WithError(err).Error("[CHIMERA, OS] fail to get ulimit -n(open files)")
-	//} else {
-	//	logrus.Infof("[CHIMERA, OS] ulimit -n(open files): [%d].", maxOpenFiles)
-	//}
-	//
-	//if coreFileSize, err := osKit.GetCoreFileSize(); err != nil {
-	//	logrus.WithError(err).Error("[CHIMERA, OS] fail to get ulimit -c(core file size)")
-	//} else {
-	//	logrus.Infof("[CHIMERA, OS] ulimit -c(core file size): [%s].", coreFileSize)
-	//}
 }
