@@ -25,7 +25,7 @@ func GetThreadCount() (int, error) {
 	return i, nil
 }
 
-// GetThreadsMax 获取"kernel.threads-max"
+// GetThreadsMax 获取Linux的"kernel.threads-max"
 /*
 命令:
 cat /proc/sys/kernel/threads-max
@@ -45,7 +45,7 @@ func GetThreadsMax() (int, error) {
 	return i, nil
 }
 
-// GetPidMax 获取"kernel.pid_max"
+// GetPidMax 获取Linux的"kernel.pid_max"
 /*
 命令:
 cat /proc/sys/kernel/pid_max
