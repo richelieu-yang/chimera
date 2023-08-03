@@ -1,5 +1,3 @@
-//go:build linux || darwin
-
 package logrusKit
 
 import (
@@ -9,12 +7,6 @@ import (
 
 // printUniqueOsInfo 输出特殊的信息（主要依赖于不同的OS）
 func printUniqueOsInfo() {
-	if count, err := osKit.GetCurrentProcessCount(); err != nil {
-		logrus.WithError(err).Error("[CHIMERA, OS] fail to get current count of processes")
-	} else {
-		logrus.Infof("[CHIMERA, OS] current count of processes: [%d].", count)
-	}
-
 	if str, err := osKit.GetUlimitInfo(); err != nil {
 		logrus.WithError(err).Error("[CHIMERA, OS] fail to get ulimit information")
 	} else {
