@@ -1,12 +1,14 @@
 package main
 
-import "github.com/richelieu-yang/chimera/v2/src/log/logrusKit"
+import (
+	"fmt"
+)
 
 func main() {
-	logrusKit.MustSetUp(&logrusKit.Config{
-		Level:      "",
-		PrintBasic: true,
-	})
+	fmt.Println("" == "")
+	fmt.Println("1" == "1")
+	fmt.Println("1" == "2")
+
 }
 
 //type (

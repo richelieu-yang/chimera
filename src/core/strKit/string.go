@@ -111,6 +111,8 @@ var Compare func(a, b string) int = strings.Compare
 
 // Equals 字符串是否相等？（区分大小写）
 /*
+PS: 也可以用 == 进行判断字符串是否相等（但不建议这么干）.
+
 e.g.
 ("abc", "Abc") => false
 */
