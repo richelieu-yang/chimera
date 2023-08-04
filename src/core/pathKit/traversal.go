@@ -1,6 +1,7 @@
 package pathKit
 
 import (
+	"io/fs"
 	"os"
 	"path/filepath"
 )
@@ -10,6 +11,8 @@ import (
 PS: 包含传参root
 */
 var Walk func(root string, fn filepath.WalkFunc) error = filepath.Walk
+
+var WalkDir func(root string, fn fs.WalkDirFunc) error = filepath.WalkDir
 
 // ReadDir 遍历目录.
 /*
