@@ -26,7 +26,7 @@ func (c *Consumer) Close() {
 PS: 目标Pulsar服务未启动的情况下，如果ctx不加以限制，要过约 1min 才会返回error（期间客户端日志有connection refused输出）.
 
 @param options	必须的属性: Topic、SubscriptionName、Type
-@param logPath 	客户端的日志输出（为空则输出到控制台）
+@param logPath 	客户端的日志输出（为空则输出到控制台; 不会rotate）
 */
 func NewConsumerOriginally(ctx context.Context, addresses []string, options pulsar.ConsumerOptions, logPath string) (*Consumer, error) {
 	var client pulsar.Client

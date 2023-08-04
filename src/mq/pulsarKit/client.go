@@ -9,6 +9,10 @@ import (
 	"github.com/richelieu-yang/chimera/v2/src/netKit"
 )
 
+// NewClient
+/*
+@param logPath 客户端的日志输出（为空则输出到控制台; 不会rotate）
+*/
 func NewClient(addresses []string, logPath string) (pulsar.Client, error) {
 	/* url */
 	tmp, err := netKit.ProcessAddresses(addresses)
