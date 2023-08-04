@@ -103,9 +103,9 @@ var Split func(s, sep string) []string = strings.Split
 
 // Compare 字符串比较
 /*
-@return (1) -1 if a < b
-		(2)  0 if a == b
-		(3) +1 if a > b
+@return (1) -1: if a < b
+		(2)  0: if a == b
+		(3) +1: if a > b
 */
 var Compare func(a, b string) int = strings.Compare
 
