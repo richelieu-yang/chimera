@@ -50,7 +50,7 @@ require (
 	github.com/spf13/cast v1.5.1
 	github.com/spf13/viper v1.16.0
 	github.com/zeromicro/go-zero v1.5.4
-	github.com/zeromicro/zero-contrib/logx/logrusx v0.0.0-20230723160843-46458a31fae9
+	github.com/zeromicro/zero-contrib/logx/logrusx v0.0.0-20230803120537-3e1f7cf790e5
 	go.etcd.io/etcd/client/v3 v3.5.9
 	go.opentelemetry.io/otel v1.16.0
 	go.opentelemetry.io/otel/exporters/jaeger v1.16.0

@@ -61,7 +61,7 @@ func GetMaxOpenFiles() (int, error) {
 	//return value, nil
 }
 
-// GetMaxProcessCountByUser 单个用户可以创建的进程数（线程也算）.
+// GetMaxProcessCountByUser 单个用户可以创建的进程数上限（线程也算）.
 /*
 PS:
 (1) ulimit -u命令: 限制单个用户可以创建的进程数.

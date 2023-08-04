@@ -1383,8 +1383,8 @@ github.com/zeebo/assert v1.3.0/go.mod h1:Pq9JiuJQpG8JLJdtkwrJESF0Foym2/D9XMU5ciN
 github.com/zeebo/xxh3 v1.0.2/go.mod h1:5NWz9Sef7zIDm2JHfFlcQvNekmcEl9ekUZQQKCYaDcA=
 github.com/zeromicro/go-zero v1.5.4 h1:kRvcYuxcHOkUZvg7887KQl77Qv4klGL7MqGkTBgkpS8=
 github.com/zeromicro/go-zero v1.5.4/go.mod h1:x/aUyLmSwRECvOyjOf+lhwThBOilJIY+s3slmPAeboA=
-github.com/zeromicro/zero-contrib/logx/logrusx v0.0.0-20230723160843-46458a31fae9 h1:e2wAd/4A5l4xi1D5ACjDOLIuPFI0/MOknseKTTaZwTE=
-github.com/zeromicro/zero-contrib/logx/logrusx v0.0.0-20230723160843-46458a31fae9/go.mod h1:Hb7FtkJ38KlXtnm/7tsu0U+RErxOxdAQkr0uzKgKWVA=
+github.com/zeromicro/zero-contrib/logx/logrusx v0.0.0-20230803120537-3e1f7cf790e5 h1:W4V5HCm15M2jeHKYFv35SGZ49txLkvCkG/H6dutnvTc=
+github.com/zeromicro/zero-contrib/logx/logrusx v0.0.0-20230803120537-3e1f7cf790e5/go.mod h1:Hb7FtkJ38KlXtnm/7tsu0U+RErxOxdAQkr0uzKgKWVA=
 go.etcd.io/etcd/api/v3 v3.5.9 h1:4wSsluwyTbGGmyjJktOf3wFQoTBIURXHnq9n/G/JQHs=
 go.etcd.io/etcd/api/v3 v3.5.9/go.mod h1:uyAal843mC8uUVSLWz6eHa/d971iDGnCRpmKd2Z+X8k=
 go.etcd.io/etcd/client/pkg/v3 v3.5.9 h1:oidDC4+YEuSIQbsR94rY9gur91UPL6DnxDCIYd2IGsE=
