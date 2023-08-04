@@ -8,7 +8,9 @@ import (
 
 // Walk 遍历目录.
 /*
-PS: 包含传参root
+PS:
+(1) 包含传参root
+(2) filepath.Walk 和 filepath.WalkDir 的区别:
 */
 var Walk func(root string, fn filepath.WalkFunc) error = filepath.Walk
 
