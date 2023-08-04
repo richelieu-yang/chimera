@@ -6,7 +6,7 @@ import (
 	"strconv"
 )
 
-// GetCurrentCountOfProcesses (瞬时的值)获取系统中所有进程的数量.
+// GetCurrentCountOfProcesses 获取: (瞬时的值)获取系统中所有进程的数量.
 /*
 支持: 	Linux、Mac
 */
@@ -24,7 +24,7 @@ func GetCurrentCountOfProcesses() (int, error) {
 	return i, nil
 }
 
-// GetCurrentCountOfProcessesAndThreads (瞬时的值)获取系统中所有进程及其线程的数量.
+// GetCurrentCountOfProcessesAndThreads 获取: (瞬时的值)获取系统中所有进程及其线程的数量.
 /*
 支持: 	Linux
 不支持:	Mac
@@ -43,7 +43,7 @@ func GetCurrentCountOfProcessesAndThreads() (int, error) {
 	return i, nil
 }
 
-// GetThreadsMax 获取 Linux的"kernel.threads-max"（系统的最大线程数）
+// GetThreadsMax 获取: 系统的最大线程数.
 /*
 命令:
 cat /proc/sys/kernel/threads-max
@@ -63,7 +63,7 @@ func GetThreadsMax() (int, error) {
 	return i, nil
 }
 
-// GetPidMax 获取 Linux的"kernel.pid_max"（系统的pid最大值，作为系统范围内 进程 和 线程 总数的限制）
+// GetPidMax 获取: 系统的pid最大值（作为系统范围内 进程 和 线程 总数的限制）.
 /*
 PS:
 (1) 大多数Linux上的默认值: 32768
@@ -88,7 +88,7 @@ func GetPidMax() (int, error) {
 	return i, nil
 }
 
-// GetMaxMapCount 获取 Linux的"vm.max_map_count"（一个进程可以拥有的最大内存映射区域数量（间接限制了线程数））
+// GetMaxMapCount 获取: 一个进程可以拥有的最大内存映射区域数量（间接限制了线程数）.
 /*
 PS: @return 间接限制了线程数，因为每个线程都需要一些内存映射区域.
 
