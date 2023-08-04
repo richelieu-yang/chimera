@@ -20,6 +20,8 @@ CST: 中国标准时间(UTC+8)
 MST: 北美山区标准时间(UTC-7)
 */
 const (
+	FormatDate TimeFormat = "2006-01-02"
+
 	// FormatDefault 参考 time/format.go
 	FormatDefault TimeFormat = "2006-01-02 15:04:05.999999999 -0700 MST"
 
