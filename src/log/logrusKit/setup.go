@@ -38,7 +38,7 @@ func SetUp(config *Config) (err error) {
 		logrus.SetLevel(level)
 
 		if config.PrintBasic {
-			PrintBasicDetails()
+			PrintBasicDetails(nil)
 		}
 	})
 	return
