@@ -2,7 +2,7 @@ package pathKit
 
 import "path/filepath"
 
-// Walk 遍历目录
+// Walk 遍历目录.
 /*
 PS: 详见"Golang.wps".
 */
