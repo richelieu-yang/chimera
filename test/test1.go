@@ -2,13 +2,34 @@ package main
 
 import (
 	"fmt"
+	"github.com/richelieu-yang/chimera/v2/src/core/fileKit"
+	"github.com/richelieu-yang/chimera/v2/src/log/logrusKit"
+	"time"
 )
 
 func main() {
-	fmt.Println("" == "")
-	fmt.Println("1" == "1")
-	fmt.Println("1" == "2")
+	path := "cyy.log"
 
+	f, err := fileKit.NewFileInAppendMode(path)
+	if err != nil {
+		panic(err)
+	}
+	defer f.Close()
+	logger := logrusKit.NewLogger(logrusKit.WithOutput(f))
+
+	go func() {
+		time.Sleep(time.Second * 10)
+
+		if err := fileKit.Truncate(path, 0); err != nil {
+			panic(err)
+		}
+		fmt.Println("------")
+	}()
+
+	for i := 0; i < 10000; i++ {
+		logger.Info(i)
+		time.Sleep(time.Second)
+	}
 }
 
 //type (
