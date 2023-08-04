@@ -10,7 +10,7 @@ import (
 	"strconv"
 )
 
-// GetUlimitInfo
+// GetUlimitInfo 获取: 目前资源限制的信息.
 /*
 命令: sh -c "ulimit -a"
 */
@@ -24,7 +24,7 @@ func GetUlimitInfo() (string, error) {
 	return str, nil
 }
 
-// GetMaxOpenFiles 同一时间最多可开启的文件数
+// GetMaxOpenFiles 获取: 同一时间最多可开启的文件数.
 /*
 PS:
 (1) 当前仅支持Mac、Linux环境.
@@ -61,7 +61,7 @@ func GetMaxOpenFiles() (int, error) {
 	//return value, nil
 }
 
-// GetMaxProcessCountByUser 单个用户可以创建的进程数上限（线程也算）.
+// GetMaxProcessCountByUser 获取: 单个用户可以创建的进程数上限（线程也算）
 /*
 PS:
 (1) ulimit -u命令: 限制单个用户可以创建的进程数.
@@ -82,6 +82,7 @@ func GetMaxProcessCountByUser() (int, error) {
 	return i, nil
 }
 
+// GetCoreFileSize 获取: core文件的最大值，单位为区块.
 func GetCoreFileSize() (string, error) {
 	str, err := cmdKit.ExecuteToString("sh", "-c", "ulimit -c")
 	if err != nil {
