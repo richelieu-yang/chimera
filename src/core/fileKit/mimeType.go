@@ -16,9 +16,7 @@ e.g.
 ([]byte(nil))	=> "text/plain; charset=utf-8"
 ([]byte{}) 		=> "text/plain; charset=utf-8"
 */
-func DetectContentType(data []byte) string {
-	return http.DetectContentType(data)
-}
+var DetectContentType func(data []byte) string = http.DetectContentType
 
 // Detect
 /*
@@ -30,13 +28,9 @@ e.g.
 	mime := mimeTypeKit.Detect(nil)
 	fmt.Println(mime.ToDSN()) // "text/plain"
 */
-func Detect(in []byte) *mimetype.MIME {
-	return mimetype.Detect(in)
-}
+var Detect func(in []byte) *mimetype.MIME = mimetype.Detect
 
-func DetectReader(r io.Reader) (*mimetype.MIME, error) {
-	return mimetype.DetectReader(r)
-}
+var DetectReader func(r io.Reader) (*mimetype.MIME, error) = mimetype.DetectReader
 
 // DetectFile
 /*
@@ -55,6 +49,4 @@ e.g.
 	mime, _ = mimeTypeKit.DetectFile("/Users/richelieu/Desktop/download.pdf")
 	fmt.Println(mime.ToDSN()) // application/pdf
 */
-func DetectFile(path string) (*mimetype.MIME, error) {
-	return mimetype.DetectFile(path)
-}
+var DetectFile func(path string) (*mimetype.MIME, error) = mimetype.DetectFile

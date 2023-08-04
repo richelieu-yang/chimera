@@ -9,6 +9,4 @@ import (
 /*
 参考: go-zero中 fs.CloseOnExec.
 */
-func CloseOnExec(f *os.File) {
-	fs.CloseOnExec(f)
-}
+var CloseOnExec func(f *os.File) = fs.CloseOnExec
