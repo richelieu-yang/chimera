@@ -35,3 +35,7 @@ func GetMemoryStats() *runtime.MemStats {
 	runtime.ReadMemStats(stats)
 	return stats
 }
+
+func GetProgramMemoryStats() *runtime.MemStats {
+
+}
