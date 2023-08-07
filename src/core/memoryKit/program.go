@@ -16,6 +16,6 @@ mem.VirtualMemoryStat 结构体的字段:
 
 Free和Available的区别:
 	简单来说，Free内存是未被使用且处于空闲状态的内存，而Available内存则包括了已经被使用但可以释放的内存，例如缓存和缓冲区等.
-	Available内存是一个 "估计值" ，表示在不使用交换空间的情况下可以使用多少内存12。
+	Available内存是一个 "估计值" ，表示在不使用交换空间的情况下可以使用多少内存。
 */
 var GetMachineMemoryStats func() (*mem.VirtualMemoryStat, error) = mem.VirtualMemory
