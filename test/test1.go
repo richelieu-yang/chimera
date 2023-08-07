@@ -2,17 +2,19 @@ package main
 
 import (
 	"fmt"
-	"github.com/richelieu-yang/chimera/v2/src/core/fileKit"
-	"os"
+	"github.com/richelieu-yang/chimera/v2/src/core/memoryKit"
+	"github.com/richelieu-yang/chimera/v2/src/dataSizeKit"
 )
 
 func main() {
-	args := os.Args[1:]
+	stats := memoryKit.GetMemoryStats()
 
-	if len(args) == 0 {
-		panic("len(args) == 0")
-	}
-	path := args[0]
-	fmt.Println("path:", path)
-	fmt.Println(fileKit.IsHidden(path))
+	//
+	fmt.Println("Alloc:", dataSizeKit.ToReadableStringWithIEC(stats.Alloc))
+	//
+	fmt.Println("TotalAlloc:", dataSizeKit.ToReadableStringWithIEC(stats.TotalAlloc))
+	//
+	fmt.Println("Sys:", dataSizeKit.ToReadableStringWithIEC(stats.Sys))
+	//
+	fmt.Println("NumGC:", stats.NumGC)
 }
