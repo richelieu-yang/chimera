@@ -24,7 +24,7 @@ func initClientLog(path string) error {
 		if err := fileKit.MkDirs(dir); err != nil {
 			return err
 		}
-		name := fileKit.GetBaseName(path)
+		name := fileKit.GetFileName(path)
 
 		if err := osKit.SetEnvs(map[string]string{
 			rmq_client.ENABLE_CONSOLE_APPENDER: "false",

@@ -25,15 +25,15 @@ var (
 	*/
 	IsEmpty func(path string) bool = gfile.IsEmpty
 
-	// GetBaseName 获取 完整的文件名.
+	// GetFileName 获取 文件名.
 	/*
 		e.g.
 		/var/www/file.js -> file.js
 		file.js          -> file.js
 	*/
-	GetBaseName func(path string) string = gfile.Basename
+	GetFileName func(path string) string = filepath.Base
 
-	// GetName 获取 前缀.
+	// GetName 获取 文件名的前缀.
 	/*
 		e.g.
 		/var/www/file.js -> file
@@ -41,9 +41,10 @@ var (
 	*/
 	GetName func(path string) string = gfile.Name
 
-	// GetExt 获取 后缀（带"."）
+	// GetExt 获取 文件名的后缀（带"."）
 	/*
 		@return 可能为""
+
 		e.g.
 			println(fileKit.GetExt("main.go"))  // ".go"
 			println(fileKit.GetExt("api.json")) // ".json"

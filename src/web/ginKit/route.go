@@ -71,7 +71,7 @@ func NoRouteByDefault(engine IEngine) error {
 	htmlPath := pathKit.Join(dir, relPath)
 	LoadHtmlFiles(engine, htmlPath)
 	NoRoute(engine, func(ctx *gin.Context) {
-		ctx.HTML(http.StatusNotFound, fileKit.GetBaseName(htmlPath), gin.H{
+		ctx.HTML(http.StatusNotFound, fileKit.GetFileName(htmlPath), gin.H{
 			"urlPath": ctx.Request.URL.Path,
 		})
 	})

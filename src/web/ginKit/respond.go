@@ -203,7 +203,7 @@ func RespondPackage(ctx *gin.Context, pack *ResponsePackage) {
 	// (2) 文件（路径）
 	if strKit.IsNotEmpty(pack.FilePath) {
 		if strKit.IsEmpty(pack.FileName) {
-			pack.FileName = fileKit.GetBaseName(pack.FilePath)
+			pack.FileName = fileKit.GetFileName(pack.FilePath)
 		}
 		RespondFile(ctx, statusCode, pack.FilePath, pack.FileName)
 		return
