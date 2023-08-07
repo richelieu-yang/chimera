@@ -3,8 +3,7 @@
 package fileKit
 
 import (
-	"path/filepath"
-	"strings"
+	"github.com/richelieu-yang/chimera/v2/src/core/strKit"
 )
 
 // IsHidden 文件（或目录）是否隐藏？
@@ -26,13 +25,5 @@ func IsHidden(path string) (bool, error) {
 		return false, err
 	}
 
-	name := filepath.Base(path)
-	switch name {
-	case ".":
-		fallthrough
-	case "..":
-		return false, nil
-	default:
-		return strings.HasPrefix(name, "."), nil
-	}
+	return strKit.StartWith(GetFileName(path), "."), nil
 }
