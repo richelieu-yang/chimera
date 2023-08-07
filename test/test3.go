@@ -2,14 +2,14 @@ package main
 
 import (
 	"fmt"
+	"github.com/richelieu-yang/chimera/v2/src/core/pathKit"
 	"io/fs"
-	"path/filepath"
 )
 
 func main() {
 	dirPath := "/Users/richelieu/Desktop/a"
 
-	err := filepath.Walk(dirPath, func(path string, info fs.FileInfo, err error) error {
+	err := pathKit.Walk(dirPath, func(path string, info fs.FileInfo, err error) error {
 		if err != nil {
 			return err
 		}
@@ -22,7 +22,7 @@ func main() {
 
 	fmt.Println("======")
 
-	err = filepath.WalkDir(dirPath, func(path string, d fs.DirEntry, err error) error {
+	err = pathKit.WalkDir(dirPath, func(path string, d fs.DirEntry, err error) error {
 		if err != nil {
 			return err
 		}
