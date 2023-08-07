@@ -12,6 +12,9 @@ var (
 	IsDir  func(path string) bool = gfile.IsDir
 
 	// Stat 获取文件（或目录）信息
+	/*
+		@param path 如果为""或不存在，将返回error(e.g."" => stat : no such file or directory)
+	*/
 	Stat func(path string) (os.FileInfo, error) = gfile.Stat
 
 	IsReadable func(path string) bool = gfile.IsReadable

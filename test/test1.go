@@ -2,9 +2,16 @@ package main
 
 import (
 	"fmt"
-	"path/filepath"
+	"os"
 )
 
 func main() {
-	fmt.Println(filepath.Base("a.log"))
+	path := ""
+	//path := "/aaa.log"
+	info, err := os.Stat(path)
+	if err != nil {
+		fmt.Println(err.Error())
+		panic(err)
+	}
+	fmt.Println(info != nil)
 }
