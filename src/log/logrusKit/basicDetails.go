@@ -1,12 +1,14 @@
 package logrusKit
 
 import (
+	"fmt"
 	"github.com/richelieu-yang/chimera/v2/src/core/cpuKit"
 	"github.com/richelieu-yang/chimera/v2/src/core/memoryKit"
 	"github.com/richelieu-yang/chimera/v2/src/core/pathKit"
 	"github.com/richelieu-yang/chimera/v2/src/core/runtimeKit"
 	"github.com/richelieu-yang/chimera/v2/src/core/timeKit"
 	"github.com/richelieu-yang/chimera/v2/src/core/userKit"
+	"github.com/richelieu-yang/chimera/v2/src/dataSizeKit"
 	"github.com/richelieu-yang/chimera/v2/src/diskKit"
 	"github.com/richelieu-yang/chimera/v2/src/ipKit"
 	"github.com/shirou/gopsutil/v3/docker"
@@ -86,10 +88,17 @@ func PrintBasicDetails(logger *logrus.Logger) {
 	//}
 
 	// memory
-	if stat, err := memoryKit.GetMemoryStat(); err != nil {
-		logger.WithError(err).Fatal("[CHIMERA, MEMORY] fail to get memory stat")
+	if stats, err := memoryKit.GetMachineMemoryStats(); err != nil {
+		logger.WithError(err).Fatal("[CHIMERA, MEMORY] fail to get machine memory stats")
 	} else {
-		logger.Infof("[CHIMERA, MEMORY] stat: [%s].", memoryKit.MemoryStatToString(stat))
+		str := fmt.Sprintf("total: %s, available: %s, used: %s, free: %s, used percent: %.2f%%",
+			dataSizeKit.ToReadableStringWithIEC(stats.Total),
+			dataSizeKit.ToReadableStringWithIEC(stats.Available),
+			dataSizeKit.ToReadableStringWithIEC(stats.Used),
+			dataSizeKit.ToReadableStringWithIEC(stats.Free),
+			stats.UsedPercent,
+		)
+		logger.Infof("[CHIMERA, MEMORY] machine memory stats: [%s].", str)
 	}
 
 	// disk

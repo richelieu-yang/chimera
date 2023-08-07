@@ -1,8 +1,11 @@
 package memoryKit
 
-import "runtime"
+import (
+	"github.com/shirou/gopsutil/v3/mem"
+	"runtime"
+)
 
-// GetMemoryStats 获取有关Go程序的实时内存统计信息.
+// GetProgramMemoryStats 获取有关Go程序的实时内存统计信息.
 /*
 runtime.MemStats结构体的的字段:
 (1) Alloc（单位: 字节）
@@ -30,12 +33,16 @@ runtime.MemStats结构体的的字段:
 	DebugGC is currently unused.
 	表示是否启用调试垃圾回收。它是一个 bool 类型，如果为 true，则启用调试垃圾回收；如果为 false，则禁用调试垃圾回收。
 */
-func GetMemoryStats() *runtime.MemStats {
+func GetProgramMemoryStats() *runtime.MemStats {
 	var stats = &runtime.MemStats{}
 	runtime.ReadMemStats(stats)
 	return stats
 }
 
-func GetProgramMemoryStats() *runtime.MemStats {
-
-}
+// GetMachineMemoryStats 获取当前瞬间的服务器内存状态.
+/*
+PS:
+(1) Total = Available + Used
+(2) UsedPercent: 内存使用率 e.g.50.903940200805664
+*/
+var GetMachineMemoryStats func() (*mem.VirtualMemoryStat, error) = mem.VirtualMemory

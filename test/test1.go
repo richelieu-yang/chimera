@@ -7,7 +7,7 @@ import (
 )
 
 func main() {
-	stats := memoryKit.GetMemoryStats()
+	stats := memoryKit.GetProgramMemoryStats()
 
 	fmt.Println("Alloc:", dataSizeKit.ToReadableStringWithIEC(stats.Alloc))
 	fmt.Println("TotalAlloc:", dataSizeKit.ToReadableStringWithIEC(stats.TotalAlloc))
