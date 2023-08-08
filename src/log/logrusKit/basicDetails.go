@@ -65,7 +65,7 @@ func PrintBasicDetails(logger *logrus.Logger) {
 
 	// host
 	if hostInfo, err := runtimeKit.GetHostInfo(); err != nil {
-		logger.WithError(err).Warn("[CHIMERA, HOST] fail to get host stat")
+		logger.WithError(err).Warn("[CHIMERA, HOST] fail to get host stats")
 	} else {
 		logger.Infof("[CHIMERA, HOST] host name: [%s].", hostInfo.Hostname)
 	}
@@ -113,10 +113,17 @@ func PrintBasicDetails(logger *logrus.Logger) {
 	}
 
 	// disk
-	if stat, err := diskKit.GetDiskUsageStat(); err != nil {
-		logger.WithError(err).Warn("[CHIMERA, DISK] fail to get disk usage stat")
+	if stats, err := diskKit.GetDiskUsageStat(); err != nil {
+		logger.WithError(err).Warn("[CHIMERA, DISK] fail to get disk usage stats")
 	} else {
-		logger.Infof("[CHIMERA, DISK] disk usage stat: [%s].", stat.String())
+		str := fmt.Sprintf("path: %s, free: %s, used: %s, total: %s, used percent: %.2f%%",
+			stats.Path,
+			dataSizeKit.ToReadableStringWithIEC(stats.Free),
+			dataSizeKit.ToReadableStringWithIEC(stats.Used),
+			dataSizeKit.ToReadableStringWithIEC(stats.Total),
+			stats.UsedPercent,
+		)
+		logger.Infof("[CHIMERA, DISK] disk usage stats: [%s].", str)
 	}
 
 	// docker

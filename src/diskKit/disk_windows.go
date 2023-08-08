@@ -1,6 +1,6 @@
 package diskKit
 
-func GetDiskUsageStat() (*DiskUsageStat, error) {
+func GetDiskUsageStat() (*DiskUsageStats, error) {
 	path := "C:"
-	return GetDiskUsageStatByPath(path)
+	return GetDiskUsageStatsByPath(path)
 }
