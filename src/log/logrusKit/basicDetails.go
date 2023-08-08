@@ -68,11 +68,11 @@ func PrintBasicDetails(logger *logrus.Logger) {
 	}
 
 	// cpu
-	logger.Infof("[CHIMERA, CPU] in virtual machine? [%t].", cpuKit.InVirtualMachine())
+	logger.Infof("[CHIMERA, CPU] in a virtual machine? [%t].", cpuKit.InVirtualMachine())
 	logger.Infof("[CHIMERA, CPU] vendor: [%s].", cpuKit.GetVendor())
 	logger.Infof("[CHIMERA, CPU] brand name: [%s].", cpuKit.GetBrandName())
-	logger.Infof("[CHIMERA, CPU] number: [%d].", cpuKit.GetNumber())
-	if cpuPercent, err := cpuKit.GetPercent(); err != nil {
+	logger.Infof("[CHIMERA, CPU] number: [%d].", cpuKit.GetCpuNumber())
+	if cpuPercent, err := cpuKit.GetUsage(); err != nil {
 		logger.Warnf("[CHIMERA, CPU] fail to get cpu percent, error: %v", err)
 	} else {
 		logger.Infof("[CHIMERA, CPU] usage: [%.2f]%%.", cpuPercent)

@@ -1,6 +1,7 @@
 package statKit
 
 import (
+	"github.com/richelieu-yang/chimera/v2/src/core/floatKit"
 	"github.com/richelieu-yang/chimera/v2/src/core/memoryKit"
 	"github.com/richelieu-yang/chimera/v2/src/core/osKit"
 	"github.com/richelieu-yang/chimera/v2/src/dataSizeKit"
@@ -12,6 +13,8 @@ type (
 		Program *ProgramStats `json:"program"`
 
 		Machine *MachineStats `json:"machine"`
+
+		Cpu *CpuStats `json:"cpu"`
 	}
 
 	ProgramStats struct {
@@ -39,6 +42,9 @@ type (
 		Used             string  `json:"used,omitempty"`
 		UsedPercent      float64 `json:"usedPercent,omitempty"`
 		Free             string  `json:"free,omitempty"`
+	}
+
+	CpuStats struct {
 	}
 )
 
@@ -85,9 +91,16 @@ func GetStats() (rst *Stats) {
 			mStats.Total = dataSizeKit.ToReadableStringWithIEC(stats.Total)
 			mStats.Available = dataSizeKit.ToReadableStringWithIEC(stats.Available)
 			mStats.Used = dataSizeKit.ToReadableStringWithIEC(stats.Used)
-			mStats.UsedPercent = stats.UsedPercent
+			mStats.UsedPercent = floatKit.Round(stats.UsedPercent, 2)
 			mStats.Free = dataSizeKit.ToReadableStringWithIEC(stats.Free)
 		}
+	}
+
+	/* CPU */
+	var cStats = &CpuStats{}
+	rst.Cpu = cStats
+	{
+
 	}
 
 	return rst
