@@ -12,11 +12,16 @@ import (
 
 type (
 	Stats struct {
+		Cpu *CpuStats `json:"cpu"`
+
 		Program *ProgramStats `json:"program"`
 
 		Machine *MachineStats `json:"machine"`
+	}
 
-		Cpu *CpuStats `json:"cpu"`
+	CpuStats struct {
+		Usage      float64 `json:"usage,omitempty"`
+		UsageError error   `json:"usageError,omitempty"`
 	}
 
 	ProgramStats struct {
@@ -44,11 +49,6 @@ type (
 		Used             string  `json:"used,omitempty"`
 		UsedPercent      float64 `json:"usedPercent,omitempty"`
 		Free             string  `json:"free,omitempty"`
-	}
-
-	CpuStats struct {
-		Usage      float64 `json:"usage,omitempty"`
-		UsageError error   `json:"usageError,omitempty"`
 	}
 )
 
