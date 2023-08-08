@@ -26,26 +26,28 @@ type (
 
 	MachineStats struct {
 		// ProcessCount 进程数
-		ProcessCount      int   `json:"processCount"`
-		ProcessCountError error `json:"processCountError"`
+		ProcessCount      int   `json:"processCount,omitempty"`
+		ProcessCountError error `json:"processCountError,omitempty"`
 
 		// ProcessThreadCount 进程数（包括线程数）
-		ProcessThreadCount      int   `json:"processThreadCount"`
-		ProcessThreadCountError error `json:"processThreadCountError"`
+		ProcessThreadCount      int   `json:"processThreadCount,omitempty"`
+		ProcessThreadCountError error `json:"processThreadCountError,omitempty"`
 
-		MemoryStatsError error   `json:"memoryStatsError"`
-		Total            uint64  `json:"total"`
-		Available        uint64  `json:"available"`
-		Used             uint64  `json:"used"`
-		UsedPercent      float64 `json:"usedPercent"`
-		Free             uint64  `json:"free"`
+		MemoryStatsError error   `json:"memoryStatsError,omitempty"`
+		Total            string  `json:"total,omitempty"`
+		Available        string  `json:"available,omitempty"`
+		Used             string  `json:"used,omitempty"`
+		UsedPercent      float64 `json:"usedPercent,omitempty"`
+		Free             string  `json:"free,omitempty"`
 	}
 )
 
 func GetStats() (rst *Stats) {
 	rst = &Stats{}
 
+	/* program */
 	var pStats = &ProgramStats{}
+	rst.Program = pStats
 	{
 		stats := memoryKit.GetProgramMemoryStats()
 
@@ -57,9 +59,10 @@ func GetStats() (rst *Stats) {
 		pStats.NumGC = stats.NumGC
 		pStats.EnableGC = stats.EnableGC
 	}
-	rst.Program = pStats
 
+	/* machine */
 	var mStats = &MachineStats{}
+	rst.Machine = mStats
 	{
 		count, err := osKit.GetProcessCount()
 		if err != nil {
@@ -79,14 +82,13 @@ func GetStats() (rst *Stats) {
 		if err != nil {
 			mStats.MemoryStatsError = err
 		} else {
-			mStats.Total = stats.Total
-			mStats.Available = stats.Available
-			mStats.Used = stats.Used
+			mStats.Total = dataSizeKit.ToReadableStringWithIEC(stats.Total)
+			mStats.Available = dataSizeKit.ToReadableStringWithIEC(stats.Available)
+			mStats.Used = dataSizeKit.ToReadableStringWithIEC(stats.Used)
 			mStats.UsedPercent = stats.UsedPercent
-			mStats.Free = stats.Free
+			mStats.Free = dataSizeKit.ToReadableStringWithIEC(stats.Free)
 		}
 	}
-	rst.Machine = mStats
 
 	return rst
 }
