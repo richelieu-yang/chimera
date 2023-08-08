@@ -57,8 +57,10 @@ func GetModel() int {
 
 // GetUsage CPU使用率
 /*
+PS: 耗时1s.
+
 e.g.
-() =>
+() => 12.701612903175233
 */
 func GetUsage() (float64, error) {
 	s, err := cpu.Percent(time.Second, false)
