@@ -29,12 +29,10 @@ func Setup(logPath string) error {
 	}
 	logger = logrusKit.NewLogger(logrusKit.WithOutput(f))
 
-	c, _, err := cronKit.NewCronWithTask("@every 20s", printStats)
+	c, _, err := cronKit.NewCronWithTask("@every 20s", func() {
+		PrintStats(logger)
+	})
 	c.Start()
 
 	return nil
-}
-
-func printStats() {
-
 }

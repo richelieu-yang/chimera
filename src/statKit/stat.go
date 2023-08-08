@@ -5,7 +5,9 @@ import (
 	"github.com/richelieu-yang/chimera/v2/src/core/floatKit"
 	"github.com/richelieu-yang/chimera/v2/src/core/memoryKit"
 	"github.com/richelieu-yang/chimera/v2/src/dataSizeKit"
+	"github.com/richelieu-yang/chimera/v2/src/json/jsonKit"
 	"github.com/richelieu-yang/chimera/v2/src/processKit"
+	"github.com/sirupsen/logrus"
 	"runtime"
 	"sync"
 )
@@ -134,4 +136,17 @@ func GetStats() (rst *Stats) {
 
 	wg.Wait()
 	return rst
+}
+
+func PrintStats(logger *logrus.Logger) {
+	if logger == nil {
+		logger = logrus.StandardLogger()
+	}
+	stats := GetStats()
+
+	json, err := jsonKit.MarshalIndentToString(stats, "", "    ")
+	if err != nil {
+		logger.WithError(err).Error("fail to print")
+	}
+	logger.Info(json)
 }
