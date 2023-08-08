@@ -13,8 +13,9 @@ PS:
 
 mem.VirtualMemoryStat 结构体的字段:
 (1) Total		总内存
-(2) Available	可用内存
+(2) Available	可用内存（未被使用且处于空闲状态的内存 + 已经被使用但可以释放的内存，例如缓存和缓冲区等）
 (3) Used		已使用内存
 (4) UsedPercent	内存使用百分比
+(5) Free		空闲状态的内存
 */
 var GetMachineMemoryStats func() (*mem.VirtualMemoryStat, error) = mem.VirtualMemory

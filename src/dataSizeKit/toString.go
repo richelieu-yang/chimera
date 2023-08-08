@@ -20,8 +20,6 @@ func ToReadableStringWithIEC(s uint64) string {
 
 // ToReadableStringWithSI
 /*
-Deprecated: 大部门场景使用IEC标准: ToReadableStringWithIEC().
-
 PS:
 (1) 采用SI标准（国际单位制；https://blog.csdn.net/bioitee/article/details/120797739）.
 (2) 1KB == 1000
