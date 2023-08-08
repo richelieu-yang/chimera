@@ -7,11 +7,8 @@ import (
 	"strconv"
 )
 
-// GetCurrentCountOfProcesses
-/*
-支持: 	Linux、Mac
-*/
-func GetCurrentCountOfProcesses() (int, error) {
+// GetProcessCount 获取: (瞬时的值)系统中所有进程的数量.
+func GetProcessCount() (int, error) {
 	str, err := cmdKit.ExecuteToString("sh", "-c", "ps auxw | wc -l")
 	if err != nil {
 		return 0, err
@@ -25,7 +22,8 @@ func GetCurrentCountOfProcesses() (int, error) {
 	return i, nil
 }
 
-func GetCurrentCountOfProcessesAndThreads() (int, error) {
+// GetProcessThreadCount 获取: (瞬时的值)系统中所有进程及其线程的数量.
+func GetProcessThreadCount() (int, error) {
 	return 0, errorKit.New("not yet realized")
 }
 
