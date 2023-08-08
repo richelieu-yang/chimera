@@ -21,5 +21,11 @@ func Setup(logPath string) error {
 		return err
 	}
 
+	f, err := fileKit.NewFileInAppendMode(logPath)
+	if err != nil {
+		return err
+	}
+	logger := logrusKit.NewLogger(logrusKit.WithOutput(f))
+
 	return nil
 }

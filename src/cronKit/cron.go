@@ -8,7 +8,11 @@ import (
 
 // NewCron
 /*
-!!!: 想要通过修改机器时间来验证的话，需要先改时间，再启动cron.
+!!!:
+(1) 想要通过修改机器时间来验证的话，需要先改时间，再启动cron.
+(2) 返回的 *cron.Cron实例 要调用 Run() || Start() 以启动
+	Run()	会阻塞调用此方法的goroutine，
+	Start()	不会阻塞调用此方法的goroutine
 
 定时任务-表达式
 	https://goframe.org/pages/viewpage.action?pageId=30736411
@@ -22,10 +26,10 @@ e.g. spec
 "* * * * * *"			每秒执行
 "30 * * * * *"			每分钟的第30s，执行一次
 "15,30 * * * * *"		每分钟的第15s、第30s，各执行一次
-"@every 10s"			从执行Run() || Start()开始，每 10s	 	执行一次
-"@every 1m"				从执行Run() || Start()开始，每 1min	执行一次
-"@hourly"				从执行Run() || Start()开始，每 1h 		执行一次
-"@every 1h30m"			从执行Run() || Start()开始，每 1.5h 	执行一次
+"@every 10s"			从启动（执行Run() || Start()）开始，每 10s	执行一次
+"@every 1m"				从启动（执行Run() || Start()）开始，每 1min	执行一次
+"@hourly"				从启动（执行Run() || Start()）开始，每 1h 	执行一次
+"@every 1h30m"			从启动（执行Run() || Start()）开始，每 1.5h 执行一次
 */
 func NewCron() *cron.Cron {
 	// cron.WithSeconds(): 带"秒"
@@ -34,9 +38,6 @@ func NewCron() *cron.Cron {
 
 // NewCronWithTask
 /*
-PS:
-(1) 第1个返回值: 可以调用 Run() 或 Start() 以启动.（Run()会阻塞调用此方法的goroutine；Start()不会阻塞）
-
 @param spec "@every 10s" || "@every 1m"，更多可参考"Golang - 1.docx"
 */
 func NewCronWithTask(spec string, task func()) (*cron.Cron, cron.EntryID, error) {
