@@ -2,13 +2,18 @@ package main
 
 import (
 	"fmt"
-	"github.com/shirou/gopsutil/v3/process"
+	"github.com/shirou/gopsutil/v3/disk"
 )
 
 func main() {
-	s, err := process.Pids()
+	parts, err := disk.Partitions(true)
 	if err != nil {
 		panic(err)
 	}
-	fmt.Println(len(s))
+	diskInfo, err := disk.Usage(parts[0].Mountpoint)
+	if err != nil {
+		panic(err)
+	}
+	fmt.Println(diskInfo.UsedPercent)
+
 }

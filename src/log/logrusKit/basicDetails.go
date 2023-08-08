@@ -113,10 +113,10 @@ func PrintBasicDetails(logger *logrus.Logger) {
 	}
 
 	// disk
-	if stat, err := diskKit.GetDiskStat(); err != nil {
-		logger.WithError(err).Warn("[CHIMERA, DISK] fail to get disk stat")
+	if stat, err := diskKit.GetDiskUsageStat(); err != nil {
+		logger.WithError(err).Warn("[CHIMERA, DISK] fail to get disk usage stat")
 	} else {
-		logger.Infof("[CHIMERA, DISK] stat: [%s].", stat.String())
+		logger.Infof("[CHIMERA, DISK] disk usage stat: [%s].", stat.String())
 	}
 
 	// docker
