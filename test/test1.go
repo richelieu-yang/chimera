@@ -5,6 +5,7 @@ import (
 	"github.com/richelieu-yang/chimera/v2/src/json/jsonKit"
 	"github.com/richelieu-yang/chimera/v2/src/log/logrusKit"
 	"github.com/richelieu-yang/chimera/v2/src/statKit"
+	"github.com/shirou/gopsutil/v3/process"
 )
 
 func main() {
@@ -25,4 +26,13 @@ func main() {
 	//fmt.Println(stats.DebugGC)
 	//
 	//fmt.Println(stats)
+
+	s, err := process.Pids()
+	if err != nil {
+		panic(err)
+	}
+	fmt.Println(len(s))
+
+	//process.PidExists()
+
 }
