@@ -6,6 +6,7 @@ import (
 	"github.com/richelieu-yang/chimera/v2/src/core/memoryKit"
 	"github.com/richelieu-yang/chimera/v2/src/core/pathKit"
 	"github.com/richelieu-yang/chimera/v2/src/core/runtimeKit"
+	"github.com/richelieu-yang/chimera/v2/src/core/sliceKit"
 	"github.com/richelieu-yang/chimera/v2/src/core/timeKit"
 	"github.com/richelieu-yang/chimera/v2/src/core/userKit"
 	"github.com/richelieu-yang/chimera/v2/src/dataSizeKit"
@@ -69,11 +70,18 @@ func PrintBasicDetails(logger *logrus.Logger) {
 
 	// cpu
 	logger.Infof("[CHIMERA, CPU] in a virtual machine? [%t].", cpuKit.InVirtualMachine())
-	logger.Infof("[CHIMERA, CPU] vendor: [%s].", cpuKit.GetVendor())
+	logger.Infof("[CHIMERA, CPU] family: [%d].", cpuKit.GetFamily())
+	logger.Infof("[CHIMERA, CPU] model: [%d].", cpuKit.GetModel())
+	logger.Infof("[CHIMERA, CPU] vendor id: [%s].", cpuKit.GetVendorID())
+	logger.Infof("[CHIMERA, CPU] vendor string: [%s].", cpuKit.GetVendorString())
 	logger.Infof("[CHIMERA, CPU] brand name: [%s].", cpuKit.GetBrandName())
-	logger.Infof("[CHIMERA, CPU] number: [%d].", cpuKit.GetCpuNumber())
+	logger.Infof("[CHIMERA, CPU] physical cores: [%d].", cpuKit.GetPhysicalCores())
+	logger.Infof("[CHIMERA, CPU] threads per core: [%d].", cpuKit.GetThreadsPerCore())
+	logger.Infof("[CHIMERA, CPU] logical cores: [%d].", cpuKit.GetLogicalCores())
+	logger.Infof("[CHIMERA, CPU] CPU number: [%d].", cpuKit.GetCpuNumber())
+	logger.Infof("[CHIMERA, CPU] features: [%s].", sliceKit.Join(cpuKit.GetFeatureSet(), ","))
 	if cpuPercent, err := cpuKit.GetUsage(); err != nil {
-		logger.Warnf("[CHIMERA, CPU] fail to get cpu percent, error: %v", err)
+		logger.WithError(err).Warn("[CHIMERA, CPU] fail to get cpu usage")
 	} else {
 		logger.Infof("[CHIMERA, CPU] usage: [%.2f]%%.", cpuPercent)
 	}

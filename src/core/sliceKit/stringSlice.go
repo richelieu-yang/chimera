@@ -16,9 +16,7 @@ e.g.1
 ([]string{"1"}, ";") 					=> "1"
 ([]string{"0", "1", "2", "3", ""}, "-") => "0-1-2-3-"
 */
-func Join(s []string, sep string) string {
-	return strings.Join(s, sep)
-}
+var Join func(s []string, sep string) string = strings.Join
 
 // RemoveEmpty
 /*

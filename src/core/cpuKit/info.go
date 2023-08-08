@@ -10,11 +10,15 @@ import (
 // InVirtualMachine 是否在虚拟机中？
 var InVirtualMachine func() bool = cpuid.CPU.VM
 
-// GetVendor CPU供应商
+func GetVendorID() cpuid.Vendor {
+	return cpuid.CPU.VendorID
+}
+
+// GetVendorString CPU供应商
 /*
 @return e.g."Apple"
 */
-func GetVendor() string {
+func GetVendorString() string {
 	return cpuid.CPU.VendorString
 }
 
@@ -26,8 +30,30 @@ func GetBrandName() string {
 	return cpuid.CPU.BrandName
 }
 
+func GetPhysicalCores() int {
+	return cpuid.CPU.PhysicalCores
+}
+
+func GetThreadsPerCore() int {
+	return cpuid.CPU.ThreadsPerCore
+}
+
+func GetLogicalCores() int {
+	return cpuid.CPU.LogicalCores
+}
+
 // GetCpuNumber returns the number of logical CPUs usable by the current process.
 var GetCpuNumber func() int = runtime.NumCPU
+
+var GetFeatureSet func() []string = cpuid.CPU.FeatureSet
+
+func GetFamily() int {
+	return cpuid.CPU.Family
+}
+
+func GetModel() int {
+	return cpuid.CPU.Model
+}
 
 // GetUsage CPU使用率
 /*
