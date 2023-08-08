@@ -28,8 +28,9 @@ func Setup(logPath string) error {
 		return err
 	}
 	logger = logrusKit.NewLogger(logrusKit.WithOutput(f))
+	logrusKit.DisableQuote(logger)
 
-	c, _, err := cronKit.NewCronWithTask("@every 20s", func() {
+	c, _, err := cronKit.NewCronWithTask("@every 15s", func() {
 		PrintStats(logger)
 	})
 	c.Start()
