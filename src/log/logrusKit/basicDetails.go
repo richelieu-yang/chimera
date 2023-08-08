@@ -12,6 +12,7 @@ import (
 	"github.com/richelieu-yang/chimera/v2/src/dataSizeKit"
 	"github.com/richelieu-yang/chimera/v2/src/diskKit"
 	"github.com/richelieu-yang/chimera/v2/src/ipKit"
+	"github.com/richelieu-yang/chimera/v2/src/processKit"
 	"github.com/shirou/gopsutil/v3/docker"
 	"github.com/sirupsen/logrus"
 )
@@ -24,7 +25,7 @@ func PrintBasicDetails(logger *logrus.Logger) {
 
 	logger.Infof("[CHIMERA] ===================================================================================")
 
-	logger.Infof("[CHIMERA, PROCESS] pid: [%d].", runtimeKit.PID)
+	logger.Infof("[CHIMERA, PROCESS] pid: [%d].", processKit.PID)
 
 	// os
 	printOsInfo()

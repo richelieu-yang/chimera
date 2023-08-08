@@ -1,6 +1,11 @@
 package processKit
 
-import "github.com/shirou/gopsutil/v3/process"
+import (
+	"github.com/shirou/gopsutil/v3/process"
+	"os"
+)
+
+var PID int = os.Getpid()
 
 var GetRunningPids func() ([]int32, error) = process.Pids
 

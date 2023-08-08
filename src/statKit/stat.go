@@ -4,8 +4,8 @@ import (
 	"github.com/richelieu-yang/chimera/v2/src/core/cpuKit"
 	"github.com/richelieu-yang/chimera/v2/src/core/floatKit"
 	"github.com/richelieu-yang/chimera/v2/src/core/memoryKit"
-	"github.com/richelieu-yang/chimera/v2/src/core/osKit"
 	"github.com/richelieu-yang/chimera/v2/src/dataSizeKit"
+	"github.com/richelieu-yang/chimera/v2/src/processKit"
 	"runtime"
 	"sync"
 )
@@ -105,14 +105,14 @@ func GetStats() (rst *Stats) {
 		var mStats = &MachineStats{}
 		rst.Machine = mStats
 		{
-			count, err := osKit.GetProcessCount()
+			count, err := processKit.GetProcessCount()
 			if err != nil {
 				mStats.ProcessCountError = err
 			} else {
 				mStats.ProcessCount = count
 			}
 
-			count1, err := osKit.GetProcessThreadCount()
+			count1, err := processKit.GetProcessThreadCount()
 			if err != nil {
 				mStats.ProcessThreadCountError = err
 			} else {
