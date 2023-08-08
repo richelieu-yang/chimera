@@ -55,9 +55,13 @@ func GetModel() int {
 	return cpuid.CPU.Model
 }
 
+func GetFrequency() int64 {
+	return cpuid.CPU.Hz
+}
+
 // GetUsage CPU使用率
 /*
-PS: 耗时1s.
+PS: 耗时约1s.
 
 e.g.
 () => 12.701612903175233

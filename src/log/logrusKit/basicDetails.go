@@ -80,6 +80,7 @@ func PrintBasicDetails(logger *logrus.Logger) {
 	logger.Infof("[CHIMERA, CPU] logical cores: [%d].", cpuKit.GetLogicalCores())
 	logger.Infof("[CHIMERA, CPU] CPU number: [%d].", cpuKit.GetCpuNumber())
 	logger.Infof("[CHIMERA, CPU] features: [%s].", sliceKit.Join(cpuKit.GetFeatureSet(), ","))
+	logger.Infof("[CHIMERA, CPU] frequency: [%d]hz.", cpuKit.GetFrequency())
 	if cpuPercent, err := cpuKit.GetUsage(); err != nil {
 		logger.WithError(err).Warn("[CHIMERA, CPU] fail to get cpu usage")
 	} else {
