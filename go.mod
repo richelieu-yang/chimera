@@ -50,13 +50,13 @@ require (
 	github.com/spf13/cast v1.5.1
 	github.com/spf13/viper v1.16.0
 	github.com/zeromicro/go-zero v1.5.4
-	github.com/zeromicro/zero-contrib/logx/logrusx v0.0.0-20230803120537-3e1f7cf790e5
+	github.com/zeromicro/zero-contrib/logx/logrusx v0.0.0-20230807142214-5952d42ba776
 	go.etcd.io/etcd/client/v3 v3.5.9
 	go.opentelemetry.io/otel v1.16.0
 	go.opentelemetry.io/otel/exporters/jaeger v1.16.0
 	go.opentelemetry.io/otel/sdk v1.16.0
 	go.uber.org/zap v1.25.0
-	golang.org/x/exp v0.0.0-20230801115018-d63ba01acd4b
+	golang.org/x/exp v0.0.0-20230807204917-050eac23e9de
 	golang.org/x/image v0.11.0
 	google.golang.org/grpc v1.57.0
 	gorm.io/driver/mysql v1.5.1
