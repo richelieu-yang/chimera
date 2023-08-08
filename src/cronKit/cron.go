@@ -12,8 +12,8 @@ import (
 !!!:
 (1) 想要通过修改机器时间来验证的话，需要先改时间，再启动cron.
 (2) 返回的 *cron.Cron实例 要调用 Run() || Start() 以启动
-	Run()	会阻塞调用此方法的goroutine，
-	Start()	不会阻塞调用此方法的goroutine
+	Run()	会阻塞 调用此方法的goroutine，
+	Start()	不会阻塞 调用此方法的goroutine
 
 定时任务-表达式
 	https://goframe.org/pages/viewpage.action?pageId=30736411
