@@ -2,6 +2,7 @@ package cronKit
 
 import (
 	"github.com/richelieu-yang/chimera/v2/src/core/errorKit"
+	"github.com/richelieu-yang/chimera/v2/src/core/interfaceKit"
 	"github.com/richelieu-yang/chimera/v2/src/core/strKit"
 	"github.com/robfig/cron/v3"
 )
@@ -26,10 +27,10 @@ e.g. spec
 "* * * * * *"			每秒执行
 "30 * * * * *"			每分钟的第30s，执行一次
 "15,30 * * * * *"		每分钟的第15s、第30s，各执行一次
-"@every 10s"			从启动（执行Run() || Start()）开始，每 10s	执行一次
-"@every 1m"				从启动（执行Run() || Start()）开始，每 1min	执行一次
-"@hourly"				从启动（执行Run() || Start()）开始，每 1h 	执行一次
-"@every 1h30m"			从启动（执行Run() || Start()）开始，每 1.5h 执行一次
+"@every 10s"			从启动（调用Run() || Start()）开始，每 10s	执行一次
+"@every 1m"				从启动（调用Run() || Start()）开始，每 1min	执行一次
+"@hourly"				从启动（调用Run() || Start()）开始，每 1h 	执行一次
+"@every 1h30m"			从启动（调用Run() || Start()）开始，每 1.5h 执行一次
 */
 func NewCron() *cron.Cron {
 	// cron.WithSeconds(): 带"秒"
@@ -41,11 +42,11 @@ func NewCron() *cron.Cron {
 @param spec "@every 10s" || "@every 1m"，更多可参考"Golang - 1.docx"
 */
 func NewCronWithTask(spec string, task func()) (*cron.Cron, cron.EntryID, error) {
-	if strKit.IsBlank(spec) {
-		return nil, 0, errorKit.New("spec is blank")
+	if err := strKit.AssertNotBlank(spec, "spec"); err != nil {
+		return nil, 0, err
 	}
-	if task == nil {
-		return nil, 0, errorKit.New("task == nil")
+	if err := interfaceKit.AssertNotNil(task, "task"); err != nil {
+		return nil, 0, err
 	}
 
 	c := NewCron()
