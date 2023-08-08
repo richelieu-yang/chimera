@@ -1,6 +1,7 @@
 package statKit
 
 import (
+	"github.com/richelieu-yang/chimera/v2/src/core/cpuKit"
 	"github.com/richelieu-yang/chimera/v2/src/core/floatKit"
 	"github.com/richelieu-yang/chimera/v2/src/core/memoryKit"
 	"github.com/richelieu-yang/chimera/v2/src/core/osKit"
@@ -45,11 +46,25 @@ type (
 	}
 
 	CpuStats struct {
+		Usage      float64 `json:"usage,omitempty"`
+		UsageError error   `json:"usageError,omitempty"`
 	}
 )
 
 func GetStats() (rst *Stats) {
 	rst = &Stats{}
+
+	/* CPU */
+	var cStats = &CpuStats{}
+	rst.Cpu = cStats
+	{
+		usage, err := cpuKit.GetUsage()
+		if err != nil {
+			cStats.UsageError = err
+		} else {
+			cStats.Usage = floatKit.Round(usage, 2)
+		}
+	}
 
 	/* program */
 	var pStats = &ProgramStats{}
@@ -94,13 +109,6 @@ func GetStats() (rst *Stats) {
 			mStats.UsedPercent = floatKit.Round(stats.UsedPercent, 2)
 			mStats.Free = dataSizeKit.ToReadableStringWithIEC(stats.Free)
 		}
-	}
-
-	/* CPU */
-	var cStats = &CpuStats{}
-	rst.Cpu = cStats
-	{
-
 	}
 
 	return rst
