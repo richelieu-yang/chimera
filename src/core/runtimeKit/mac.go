@@ -7,11 +7,11 @@ import (
 )
 
 // GetMacAddresses
-/**
- * 参考：https://blog.csdn.net/chixielao6059/article/details/100860506
- *
- * MAC地址：主机网卡的物理地址.
- */
+/*
+参考：https://blog.csdn.net/chixielao6059/article/details/100860506
+
+@return MAC地址：主机网卡的物理地址.
+*/
 func GetMacAddresses() ([]string, error) {
 	interfaces, err := net.Interfaces()
 	if err != nil {

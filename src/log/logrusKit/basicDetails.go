@@ -11,6 +11,7 @@ import (
 	"github.com/richelieu-yang/chimera/v2/src/core/userKit"
 	"github.com/richelieu-yang/chimera/v2/src/dataSizeKit"
 	"github.com/richelieu-yang/chimera/v2/src/diskKit"
+	"github.com/richelieu-yang/chimera/v2/src/dockerKit"
 	"github.com/richelieu-yang/chimera/v2/src/ipKit"
 	"github.com/richelieu-yang/chimera/v2/src/processKit"
 	"github.com/shirou/gopsutil/v3/docker"
@@ -119,7 +120,7 @@ func PrintBasicDetails(logger *logrus.Logger) {
 	}
 
 	// docker
-	if dockerIds, err := runtimeKit.GetDockerIdList(); err != nil {
+	if dockerIds, err := dockerKit.GetDockerIdList(); err != nil {
 		if err == docker.ErrDockerNotAvailable {
 			logger.Info("[CHIMERA, DOCKER] docker isn't available")
 		} else {
