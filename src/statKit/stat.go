@@ -5,6 +5,7 @@ import (
 	"github.com/richelieu-yang/chimera/v2/src/core/floatKit"
 	"github.com/richelieu-yang/chimera/v2/src/core/memoryKit"
 	"github.com/richelieu-yang/chimera/v2/src/dataSizeKit"
+	"github.com/richelieu-yang/chimera/v2/src/diskKit"
 	"github.com/richelieu-yang/chimera/v2/src/json/jsonKit"
 	"github.com/richelieu-yang/chimera/v2/src/processKit"
 	"github.com/sirupsen/logrus"
@@ -16,12 +17,20 @@ type (
 	Stats struct {
 		Cpu *CpuStats `json:"cpu"`
 
+		Disk *DiskStats `json:"disk"`
+
 		Program *ProgramStats `json:"program"`
 
 		Machine *MachineStats `json:"machine"`
 	}
 
 	CpuStats struct {
+		Usage      float64 `json:"usage,omitempty"`
+		UsageError error   `json:"usageError,omitempty"`
+	}
+
+	DiskStats struct {
+		Path       string  `json:"path,omitempty"`
 		Usage      float64 `json:"usage,omitempty"`
 		UsageError error   `json:"usageError,omitempty"`
 	}
@@ -67,14 +76,32 @@ func GetStats() (rst *Stats) {
 	go func() {
 		defer wg.Done()
 
-		var cStats = &CpuStats{}
-		rst.Cpu = cStats
+		var cpuStats = &CpuStats{}
+		rst.Cpu = cpuStats
 		{
 			usage, err := cpuKit.GetUsage()
 			if err != nil {
-				cStats.UsageError = err
+				cpuStats.UsageError = err
 			} else {
-				cStats.Usage = floatKit.Round(usage, 2)
+				cpuStats.Usage = floatKit.Round(usage, 2)
+			}
+		}
+	}()
+
+	/* DISK */
+	wg.Add(1)
+	go func() {
+		defer wg.Done()
+
+		var diskStats = &DiskStats{}
+		rst.Disk = diskStats
+		{
+			stats, err := diskKit.GetDiskUsageStat()
+			if err != nil {
+				diskStats.UsageError = err
+			} else {
+				diskStats.Path = stats.Path
+				diskStats.Usage = stats.UsedPercent
 			}
 		}
 	}()
@@ -84,18 +111,18 @@ func GetStats() (rst *Stats) {
 	go func() {
 		defer wg.Done()
 
-		var pStats = &ProgramStats{}
-		rst.Program = pStats
+		var programStats = &ProgramStats{}
+		rst.Program = programStats
 		{
 			stats := memoryKit.GetProgramMemoryStats()
 
-			pStats.GoroutineCount = runtime.NumGoroutine()
+			programStats.GoroutineCount = runtime.NumGoroutine()
 
-			pStats.Alloc = dataSizeKit.ToReadableStringWithIEC(stats.Alloc)
-			pStats.TotalAlloc = dataSizeKit.ToReadableStringWithIEC(stats.TotalAlloc)
-			pStats.Sys = dataSizeKit.ToReadableStringWithIEC(stats.Sys)
-			pStats.NumGC = stats.NumGC
-			pStats.EnableGC = stats.EnableGC
+			programStats.Alloc = dataSizeKit.ToReadableStringWithIEC(stats.Alloc)
+			programStats.TotalAlloc = dataSizeKit.ToReadableStringWithIEC(stats.TotalAlloc)
+			programStats.Sys = dataSizeKit.ToReadableStringWithIEC(stats.Sys)
+			programStats.NumGC = stats.NumGC
+			programStats.EnableGC = stats.EnableGC
 		}
 	}()
 
@@ -104,32 +131,32 @@ func GetStats() (rst *Stats) {
 	go func() {
 		defer wg.Done()
 
-		var mStats = &MachineStats{}
-		rst.Machine = mStats
+		var machineStats = &MachineStats{}
+		rst.Machine = machineStats
 		{
 			count, err := processKit.GetProcessCount()
 			if err != nil {
-				mStats.ProcessCountError = err
+				machineStats.ProcessCountError = err
 			} else {
-				mStats.ProcessCount = count
+				machineStats.ProcessCount = count
 			}
 
 			count1, err := processKit.GetProcessThreadCount()
 			if err != nil {
-				mStats.ProcessThreadCountError = err
+				machineStats.ProcessThreadCountError = err
 			} else {
-				mStats.ProcessThreadCount = count1
+				machineStats.ProcessThreadCount = count1
 			}
 
 			stats, err := memoryKit.GetMachineMemoryStats()
 			if err != nil {
-				mStats.MemoryStatsError = err
+				machineStats.MemoryStatsError = err
 			} else {
-				mStats.Total = dataSizeKit.ToReadableStringWithIEC(stats.Total)
-				mStats.Available = dataSizeKit.ToReadableStringWithIEC(stats.Available)
-				mStats.Used = dataSizeKit.ToReadableStringWithIEC(stats.Used)
-				mStats.UsedPercent = floatKit.Round(stats.UsedPercent, 2)
-				mStats.Free = dataSizeKit.ToReadableStringWithIEC(stats.Free)
+				machineStats.Total = dataSizeKit.ToReadableStringWithIEC(stats.Total)
+				machineStats.Available = dataSizeKit.ToReadableStringWithIEC(stats.Available)
+				machineStats.Used = dataSizeKit.ToReadableStringWithIEC(stats.Used)
+				machineStats.UsedPercent = floatKit.Round(stats.UsedPercent, 2)
+				machineStats.Free = dataSizeKit.ToReadableStringWithIEC(stats.Free)
 			}
 		}
 	}()
