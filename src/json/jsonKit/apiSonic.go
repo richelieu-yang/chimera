@@ -3,9 +3,7 @@
 
 package jsonKit
 
-import (
-	"github.com/bytedance/sonic"
-)
+import "github.com/bytedance/sonic"
 
 func init() {
 	defaultAPI = sonic.ConfigDefault
