@@ -62,6 +62,15 @@ type (
 		Used             string  `json:"used,omitempty"`
 		UsedPercent      float64 `json:"usedPercent,omitempty"`
 		Free             string  `json:"free,omitempty"`
+
+		MaxProcessThreadCountByUser      int    `json:"maxProcessThreadCountByUser,omitempty"`
+		MaxProcessThreadCountByUserError string `json:"maxProcessThreadCountByUserError,omitempty"`
+		PidMax                           int    `json:"pidMax,omitempty"`
+		PidMaxError                      string `json:"pidMaxError,omitempty"`
+		ThreadsMax                       int    `json:"threadsMax,omitempty"`
+		ThreadsMaxError                  string `json:"threadsMaxError,omitempty"`
+		MaxMapCount                      int    `json:"maxMapCount,omitempty"`
+		MaxMapCountError                 string `json:"maxMapCountError,omitempty"`
 	}
 )
 
@@ -162,14 +171,29 @@ func GetStats() (rst *Stats) {
 			}
 
 			// ulimit -u
-			osKit.GetMaxProcessCountByUser()
-			// kernel.threads-max
-			osKit.GetThreadsMax()
+			if tmp, err := osKit.GetMaxProcessThreadCountByUser(); err != nil {
+				machineStats.MaxProcessThreadCountByUserError = err.Error()
+			} else {
+				machineStats.MaxProcessThreadCountByUser = tmp
+			}
 			// kernel.pid_max
-			osKit.GetPidMax()
+			if tmp, err := osKit.GetPidMax(); err != nil {
+				machineStats.PidMaxError = err.Error()
+			} else {
+				machineStats.PidMax = tmp
+			}
+			// kernel.threads-max
+			if tmp, err := osKit.GetThreadsMax(); err != nil {
+				machineStats.ThreadsMaxError = err.Error()
+			} else {
+				machineStats.ThreadsMax = tmp
+			}
 			// vm.max_map_count
-			osKit.GetMaxMapCount()
-
+			if tmp, err := osKit.GetMaxMapCount(); err != nil {
+				machineStats.MaxMapCountError = err.Error()
+			} else {
+				machineStats.MaxMapCount = tmp
+			}
 		}
 	}()
 

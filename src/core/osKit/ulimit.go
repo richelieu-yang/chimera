@@ -61,13 +61,13 @@ func GetMaxOpenFiles() (int, error) {
 	//return value, nil
 }
 
-// GetMaxProcessCountByUser 获取: 单个用户可以创建的进程数上限（线程也算）
+// GetMaxProcessThreadCountByUser 获取: 单个用户可以创建的进程数上限（线程也算）
 /*
 PS:
 (1) ulimit -u命令: 限制单个用户可以创建的进程数.
 (2) ulimit -u命令也可以用来限制单个用户可以创建的线程数，因为: 在Linux中，线程本质上只是具有共享地址空间的进程。
 */
-func GetMaxProcessCountByUser() (int, error) {
+func GetMaxProcessThreadCountByUser() (int, error) {
 	str, err := cmdKit.ExecuteToString("sh", "-c", "ulimit -u")
 	if err != nil {
 		return 0, err
