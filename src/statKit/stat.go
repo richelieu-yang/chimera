@@ -99,7 +99,7 @@ func GetStats() (rst *Stats) {
 		}
 	}()
 
-	/* DISK */
+	/* disk */
 	wg.Add(1)
 	go func() {
 		defer wg.Done()

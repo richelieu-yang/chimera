@@ -8,5 +8,5 @@ import (
 )
 
 func init() {
-	api = sonic.ConfigDefault
+	defaultAPI = sonic.ConfigDefault
 }
