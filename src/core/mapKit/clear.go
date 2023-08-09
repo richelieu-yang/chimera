@@ -4,7 +4,7 @@ package mapKit
 
 // Clear
 /*
-Deprecated: go <= 1.20的情况下，性能较差，还不如新建个空的然后覆盖.
+Deprecated: go <= 1.20的情况下，性能较差，还不如新建个 空的map实例 然后覆盖.
 */
 func Clear[K comparable, V any](m map[K]V) {
 	for k, _ := range m {
