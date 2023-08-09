@@ -4,6 +4,7 @@ import (
 	"github.com/richelieu-yang/chimera/v2/src/core/cpuKit"
 	"github.com/richelieu-yang/chimera/v2/src/core/floatKit"
 	"github.com/richelieu-yang/chimera/v2/src/core/memoryKit"
+	"github.com/richelieu-yang/chimera/v2/src/core/osKit"
 	"github.com/richelieu-yang/chimera/v2/src/dataSizeKit"
 	"github.com/richelieu-yang/chimera/v2/src/diskKit"
 	"github.com/richelieu-yang/chimera/v2/src/json/jsonKit"
@@ -159,6 +160,16 @@ func GetStats() (rst *Stats) {
 				machineStats.UsedPercent = floatKit.Round(stats.UsedPercent, 2)
 				machineStats.Free = dataSizeKit.ToReadableStringWithIEC(stats.Free)
 			}
+
+			// ulimit -u
+			osKit.GetMaxProcessCountByUser()
+			// kernel.threads-max
+			osKit.GetThreadsMax()
+			// kernel.pid_max
+			osKit.GetPidMax()
+			// vm.max_map_count
+			osKit.GetMaxMapCount()
+
 		}
 	}()
 

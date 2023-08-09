@@ -9,7 +9,7 @@ import (
 // GoVersion Golang的版本号
 var GoVersion string
 
-// GoRoot GOROOT环境变量
+// GoRoot 环境变量GOROOT
 var GoRoot string
 
 func init() {

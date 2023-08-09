@@ -28,12 +28,12 @@ func PrintBasicDetails(logger *logrus.Logger) {
 
 	logger.Infof("[CHIMERA, PROCESS] pid: [%d].", processKit.PID)
 
+	// golang
+	logger.Infof("[CHIMERA, GO] version: [%s].", runtimeKit.GoVersion)
+	logger.Infof("[CHIMERA, GO] GOROOT: [%s].", runtimeKit.GoRoot)
+
 	// os
 	printOsInfo()
-
-	// golang
-	logger.Infof("[CHIMERA, GO] go version: [%s].", runtimeKit.GoVersion)
-	logger.Infof("[CHIMERA, GO] GOROOT: [%s].", runtimeKit.GoRoot)
 
 	// user
 	logger.Infof("[CHIMERA, USER] name: [%s].", userKit.GetName())
