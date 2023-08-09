@@ -1,3 +1,5 @@
+//go:build !windows
+
 package logrusKit
 
 import (
@@ -8,7 +10,7 @@ import (
 // printUniqueOsInfo 输出特殊的信息（主要依赖于不同的OS）
 func printUniqueOsInfo() {
 	if str, err := osKit.GetUlimitInfo(); err != nil {
-		logrus.WithError(err).Error("[CHIMERA, OS] fail to get ulimit information")
+		logrus.WithError(err).Warn("[CHIMERA, OS] fail to get ulimit information")
 	} else {
 		DisableQuoteTemporarily(nil, func(logger *logrus.Logger) {
 			logger.Infof("[CHIMERA, OS] ulimit information:\n%s\n", str)
@@ -16,17 +18,17 @@ func printUniqueOsInfo() {
 	}
 
 	if i, err := osKit.GetThreadsMax(); err != nil {
-		logrus.WithError(err).Error("[CHIMERA, OS] fail to get kernel.threads-max")
+		logrus.WithError(err).Warn("[CHIMERA, OS] fail to get kernel.threads-max")
 	} else {
 		logrus.Infof("[CHIMERA, OS] kernel.threads-max: [%d].", i)
 	}
 	if i, err := osKit.GetPidMax(); err != nil {
-		logrus.WithError(err).Error("[CHIMERA, OS] fail to get kernel.pid_max")
+		logrus.WithError(err).Warn("[CHIMERA, OS] fail to get kernel.pid_max")
 	} else {
 		logrus.Infof("[CHIMERA, OS] kernel.pid_max: [%d].", i)
 	}
 	if i, err := osKit.GetMaxMapCount(); err != nil {
-		logrus.WithError(err).Error("[CHIMERA, OS] fail to get vm.max_map_count")
+		logrus.WithError(err).Warn("[CHIMERA, OS] fail to get vm.max_map_count")
 	} else {
 		logrus.Infof("[CHIMERA, OS] vm.max_map_count: [%d].", i)
 	}
