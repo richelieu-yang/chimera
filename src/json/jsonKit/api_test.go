@@ -2,6 +2,7 @@ package jsonKit
 
 import (
 	"fmt"
+	jsoniter "github.com/json-iterator/go"
 	"testing"
 )
 
@@ -12,5 +13,13 @@ func TestUnmarshalFromString(t *testing.T) {
 	if err := UnmarshalFromString(json, &m); err != nil {
 		panic(err)
 	}
-	fmt.Println(m["a"]) // "b"
+	if m["a"] != "b" {
+		panic("not equal")
+	}
+
+	json, err := MarshalIndentToStringWithAPI(jsoniter.ConfigCompatibleWithStandardLibrary, m, "", "    ")
+	if err != nil {
+		panic(err)
+	}
+	fmt.Println(json)
 }
