@@ -7,6 +7,7 @@ import (
 	"github.com/richelieu-yang/chimera/v2/src/dataSizeKit"
 	"github.com/richelieu-yang/chimera/v2/src/diskKit"
 	"github.com/richelieu-yang/chimera/v2/src/json/jsonKit"
+	"github.com/richelieu-yang/chimera/v2/src/log/logrusKit"
 	"github.com/richelieu-yang/chimera/v2/src/processKit"
 	"github.com/sirupsen/logrus"
 	"runtime"
@@ -101,7 +102,7 @@ func GetStats() (rst *Stats) {
 				diskStats.UsageError = err
 			} else {
 				diskStats.Path = stats.Path
-				diskStats.Usage = stats.UsedPercent
+				diskStats.Usage = floatKit.Round(stats.UsedPercent, 2)
 			}
 		}
 	}()
@@ -169,11 +170,13 @@ func PrintStats(logger *logrus.Logger) {
 	if logger == nil {
 		logger = logrus.StandardLogger()
 	}
-	stats := GetStats()
 
+	stats := GetStats()
 	json, err := jsonKit.MarshalIndentToString(stats, "", "    ")
 	if err != nil {
 		logger.WithError(err).Error("fail to print")
 	}
-	logger.Info(json)
+	logrusKit.DisableQuoteTemporarily(logger, func(logger *logrus.Logger) {
+		logger.Infof("[CHIMERA] stats:\n%s", json)
+	})
 }

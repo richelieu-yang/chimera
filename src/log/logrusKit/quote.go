@@ -37,7 +37,7 @@ func EnableQuote(logger *logrus.Logger) {
 @param logger 	(1) 可以为nil（此时将采用logrus.StandardLogger()）
 				(2) 只有当formatter为 *logrus.TextFormatter 类型，DisableQuote才会生效
 */
-func DisableQuoteTemporarily(logger *logrus.Logger, callback func()) {
+func DisableQuoteTemporarily(logger *logrus.Logger, callback func(logger *logrus.Logger)) {
 	if callback == nil {
 		return
 	}
@@ -53,12 +53,12 @@ func DisableQuoteTemporarily(logger *logrus.Logger, callback func()) {
 		textFormatter.DisableQuote = true
 		textFormatter.ForceQuote = false
 
-		callback()
+		callback(logger)
 
 		// restore
 		textFormatter.DisableQuote = a
 		textFormatter.ForceQuote = b
 	} else {
-		callback()
+		callback(logger)
 	}
 }

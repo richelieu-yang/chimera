@@ -8,6 +8,6 @@ import (
 func main() {
 	logrusKit.MustSetUp(nil)
 
-	statKit.MustSetup("./stat.log")
+	statKit.MustSetup("")
 	select {}
 }

@@ -10,8 +10,8 @@ func printUniqueOsInfo() {
 	if str, err := osKit.GetUlimitInfo(); err != nil {
 		logrus.WithError(err).Error("[CHIMERA, OS] fail to get ulimit information")
 	} else {
-		DisableQuoteTemporarily(nil, func() {
-			logrus.Infof("[CHIMERA, OS] ulimit information:\n%s\n", str)
+		DisableQuoteTemporarily(nil, func(logger *logrus.Logger) {
+			logger.Infof("[CHIMERA, OS] ulimit information:\n%s\n", str)
 		})
 	}
 
