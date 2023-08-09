@@ -11,8 +11,8 @@ ulimit -c: unlimited
 ulimit -n: 服务器支持的最大值（最大值通过 ulimit -Hn 命令查看）
 
 #### 系统的pid最大值（作为系统范围内 进程 和 线程 总数的限制）
-kernel.pid_max:     (1) 32位系统: 32768
-                    (2) 64位系统: 2000000（200W）
+kernel.pid_max: (1) 32位系统: 32768
+                (2) 64位系统: 2000000（200W）
 
 #### 系统的最大线程数
 kernel.threads-max: 352656（参考yozo的服务器）
