@@ -8,6 +8,10 @@ func MarshalWithAPI(api API, v interface{}) ([]byte, error) {
 	return api.Marshal(v)
 }
 
+// MarshalIndentWithAPI
+/*
+@param indent 为了兼容性，用"    "（4个空格）替代"\t"
+*/
 func MarshalIndentWithAPI(api API, v interface{}, prefix, indent string) ([]byte, error) {
 	if api == nil {
 		api = defaultAPI
