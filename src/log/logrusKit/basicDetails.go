@@ -57,10 +57,15 @@ func PrintBasicDetails(logger *logrus.Logger) {
 	}
 
 	// ip
-	if ip, err := ipKit.GetOutboundIP(); err != nil {
-		logger.WithError(err).Warn("[CHIMERA, IP] fail to get local ip")
+	if ips, err := ipKit.GetLocalIPs(); err != nil {
+		logger.WithError(err).Warn("[CHIMERA, IP] fail to get local ips")
 	} else {
-		logger.Infof("[CHIMERA, IP] local ip(for reference only): [%s].", ip)
+		logger.Infof("[CHIMERA, IP] local IPs: %s.", ips)
+	}
+	if ip, err := ipKit.GetOutboundIP(); err != nil {
+		logger.WithError(err).Warn("[CHIMERA, IP] fail to get outbound ip")
+	} else {
+		logger.Infof("[CHIMERA, IP] outbound IP: [%s].", ip)
 	}
 
 	// host
