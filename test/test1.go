@@ -9,6 +9,8 @@ import (
 	"time"
 )
 
+var a string = ""
+
 // 换成一个随机字符串并返回对应的缓冲区
 func genRandomBytes() *bytes.Buffer {
 	var buff bytes.Buffer
