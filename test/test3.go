@@ -2,9 +2,16 @@ package main
 
 import (
 	"fmt"
-	"github.com/gogf/gf/v2/os/gfile"
+	"github.com/richelieu-yang/chimera/v2/src/core/fileKit"
 )
 
 func main() {
-	fmt.Println(gfile.Size("/Users/richelieu/Downloads"))
+	path := "/Users/richelieu/Downloads"
+	entries, err := fileKit.ReadDir(path)
+	if err != nil {
+		panic(err)
+	}
+	for _, entry := range entries {
+		fmt.Println(entry.Name())
+	}
 }
