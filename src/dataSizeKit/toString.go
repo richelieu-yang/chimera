@@ -14,9 +14,7 @@ PS:
 e.g.
 	(78848) => "77 KiB"
 */
-func ToReadableStringWithIEC(s uint64) string {
-	return humanize.IBytes(s)
-}
+var ToReadableStringWithIEC func(s uint64) string = humanize.IBytes
 
 // ToReadableStringWithSI
 /*
@@ -30,6 +28,4 @@ PS:
 e.g.
 	(78848) => "79 kB"
 */
-func ToReadableStringWithSI(s uint64) string {
-	return humanize.Bytes(s)
-}
+var ToReadableStringWithSI func(s uint64) string = humanize.Bytes

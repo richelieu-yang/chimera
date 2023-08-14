@@ -2,11 +2,13 @@ package main
 
 import (
 	"fmt"
-	"go.uber.org/zap/zapcore"
+	"github.com/richelieu-yang/chimera/v2/src/dataSizeKit"
 )
 
 func main() {
-	fmt.Println(zapcore.ParseLevel(""))
+	fmt.Println(dataSizeKit.ToReadableStringWithIEC(128783))
+
+	//fmt.Println(zapcore.ParseLevel(""))
 
 	//// 父Context
 	//ctx0, cancel0 := context.WithCancel(context.TODO())

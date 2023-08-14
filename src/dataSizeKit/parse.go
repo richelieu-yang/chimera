@@ -13,6 +13,4 @@ e.g.
 ("42mib")	=> 44040192 <nil>
 ("42 mib")	=> 44040192 <nil>
 */
-func ParseString(str string) (uint64, error) {
-	return humanize.ParseBytes(str)
-}
+var ParseString func(str string) (uint64, error) = humanize.ParseBytes
