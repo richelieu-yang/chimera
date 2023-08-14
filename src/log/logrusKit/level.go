@@ -24,9 +24,8 @@ func ParseLevel(str string) (logrus.Level, error) {
 	if strKit.IsBlank(str) {
 		return logrus.DebugLevel, nil
 	}
-
 	return logrus.ParseLevel(str)
-	//
+
 	//switch strKit.ToLower(str) {
 	//case "trace":
 	//	return logrus.TraceLevel
