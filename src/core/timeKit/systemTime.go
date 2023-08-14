@@ -23,7 +23,7 @@ PS:
 func SetSystemTime(t time.Time, rootPassword string) error {
 	// 将时间转换为（date命令认可的）字符串
 	format := "010215042006.05"
-	timeStr := FormatTimeToString(t, TimeFormat(format))
+	timeStr := Format(t, TimeFormat(format))
 
 	var script string
 	if strKit.IsEmpty(rootPassword) {

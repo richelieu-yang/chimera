@@ -48,7 +48,7 @@ func rotate(output, backupDir string) (string, error) {
 		return "", err
 	}
 
-	dateStr := timeKit.FormatTimeToString(time.Now().Add(-timeKit.Day), "2006-01-02")
+	dateStr := timeKit.Format(time.Now().Add(-timeKit.Day), "2006-01-02")
 	name := fileKit.GetName(output)
 	ext := fileKit.GetExt(output)
 	target := pathKit.Join(backupDir, fmt.Sprintf("%s-%s%s", name, dateStr, ext))

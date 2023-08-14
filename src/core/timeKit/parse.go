@@ -12,11 +12,11 @@ import (
 e.g.
 (timeKit.FormatDate, "2016-08-08")
 */
-func Parse[T ~string](format T, timeStr string) (time.Time, error) {
+func Parse[F ~string](format F, timeStr string) (time.Time, error) {
 	return time.Parse(string(format), timeStr)
 }
 
-func ParseInLocation[T ~string](format T, timeStr string, loc *time.Location) (time.Time, error) {
+func ParseInLocation[F ~string](format F, timeStr string, loc *time.Location) (time.Time, error) {
 	return time.ParseInLocation(string(format), timeStr, loc)
 }
 

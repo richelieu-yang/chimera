@@ -43,7 +43,7 @@ func verify(verifyConfig VerifyConfig) (err error) {
 	topic := verifyConfig.Topic
 
 	dir, _ := pathKit.GetUniqueTempDir()
-	timeStr := timeKit.FormatCurrentTime(timeKit.FormatFileName)
+	timeStr := timeKit.FormatCurrent(timeKit.FormatFileName)
 	consumerLogPath := pathKit.Join(dir, fmt.Sprintf("pulsar_verify_consumer_%s.log", timeStr))
 	producerLogPath := pathKit.Join(dir, fmt.Sprintf("pulsar_verify_producer_%s.log", timeStr))
 
@@ -98,7 +98,7 @@ func _verify(logger *logrus.Logger, topic, consumerLogPath, producerLogPath stri
 	}
 	defer producer.Close()
 
-	timeStr := timeKit.FormatCurrentTime()
+	timeStr := timeKit.FormatCurrent()
 	ulid := idKit.NewULID()
 	texts := []string{
 		fmt.Sprintf("%s&&%s&&%s", ulid, timeStr, "$0"),
