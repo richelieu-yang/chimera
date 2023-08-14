@@ -43,12 +43,12 @@ func SetUp(pulsarConfig *Config) (err error) {
 @param options 必需属性: Topic、SendTimeout
 @param logPath 客户端的日志输出（"": 输出到控制台）
 */
-func NewProducer(ctx context.Context, options pulsar.ProducerOptions, logPath string) (*Producer, error) {
+func NewProducer(ctx context.Context, options pulsar.ProducerOptions, clientLogPath string) (*Producer, error) {
 	if config == nil {
 		return nil, NotSetupError
 	}
 
-	return NewProducerOriginally(ctx, config.Addresses, options, logPath)
+	return NewProducerOriginally(ctx, config.Addresses, options, clientLogPath)
 }
 
 // NewConsumer
@@ -58,10 +58,10 @@ func NewProducer(ctx context.Context, options pulsar.ProducerOptions, logPath st
 @param options 必需属性: Topic、SubscriptionName、Type
 @param logPath 客户端的日志输出（"": 输出到控制台）
 */
-func NewConsumer(ctx context.Context, options pulsar.ConsumerOptions, logPath string) (*Consumer, error) {
+func NewConsumer(ctx context.Context, options pulsar.ConsumerOptions, clientLogPath string) (*Consumer, error) {
 	if config == nil {
 		return nil, NotSetupError
 	}
 
-	return NewConsumerOriginally(ctx, config.Addresses, options, logPath)
+	return NewConsumerOriginally(ctx, config.Addresses, options, clientLogPath)
 }

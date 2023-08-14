@@ -14,7 +14,7 @@ func main() {
 	cancel0 = cancel0
 	cancel1 = cancel1
 
-	cancel1()
+	cancel0()
 
 	go func() {
 		select {

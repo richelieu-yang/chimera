@@ -7,6 +7,7 @@ import (
 	"github.com/richelieu-yang/chimera/v2/src/core/strKit"
 	"github.com/richelieu-yang/chimera/v2/src/log/logrusKit"
 	"github.com/richelieu-yang/chimera/v2/src/netKit"
+	"github.com/sirupsen/logrus"
 )
 
 // NewClient
@@ -28,6 +29,10 @@ func NewClient(addresses []string, logPath string) (pulsar.Client, error) {
 		if err != nil {
 			return nil, err
 		}
+
+		// 文件日志的日志级别 与 logrus全局日志级别 保持一致
+		fileLogger.SetLevel(logrus.GetLevel())
+
 		logger = log.NewLoggerWithLogrus(fileLogger)
 	}
 

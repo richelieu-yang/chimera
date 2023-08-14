@@ -32,11 +32,11 @@ func (p *Producer) Close() {
 /*
 PS: 目标Pulsar服务未启动的情况下，如果ctx不加以限制，要过约 1min 才会返回error（期间客户端日志有connection refused输出）.
 
-@param options 	必须的属性: Topic
-				建议的属性: SendTimeout
-@param logPath 	客户端的日志输出（为空则输出到控制台; 不会rotate）
+@param options 			必须的属性: Topic
+						建议的属性: SendTimeout
+@param clientLogPath 	客户端的日志输出（为空则输出到控制台; 不会rotate）
 */
-func NewProducerOriginally(ctx context.Context, addresses []string, options pulsar.ProducerOptions, logPath string) (*Producer, error) {
+func NewProducerOriginally(ctx context.Context, addresses []string, options pulsar.ProducerOptions, clientLogPath string) (*Producer, error) {
 	var client pulsar.Client
 	var producer pulsar.Producer
 
@@ -45,7 +45,7 @@ func NewProducerOriginally(ctx context.Context, addresses []string, options puls
 
 	go func() {
 		var err error
-		client, err = NewClient(addresses, logPath)
+		client, err = NewClient(addresses, clientLogPath)
 		if err != nil {
 			errCh <- err
 			return
