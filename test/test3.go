@@ -6,10 +6,12 @@ import (
 )
 
 func main() {
-	t, err := timeKit.ParseTimeString(timeKit.FormatDate, "2022-01-01")
-	if err != nil {
-		panic(err)
-	}
-	fmt.Println(t)
-	fmt.Println(t.Add(-timeKit.Day))
+	//t, err := timeKit.Parse(timeKit.FormatDate, "2022-01-01")
+	//if err != nil {
+	//	panic(err)
+	//}
+	//fmt.Println(t)
+	//fmt.Println(t.Add(-timeKit.Day))
+
+	fmt.Println(timeKit.ParseDuration(""))
 }

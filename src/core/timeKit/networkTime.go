@@ -81,7 +81,7 @@ func getNetworkTimeBySource(url string, timeout time.Duration) (time.Time, error
 	defer resp.Body.Close()
 
 	timeString := resp.Header.Get("Date")
-	t, err := ParseTimeString(string(FormatNetwork), timeString)
+	t, err := Parse(string(FormatNetwork), timeString)
 	if err != nil {
 		return time.Time{}, err
 	}
