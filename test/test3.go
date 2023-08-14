@@ -6,7 +6,7 @@ import (
 )
 
 func main() {
-	t, err := timeKit.ParseTimeString(string(timeKit.FormatDate), "2022-01-01")
+	t, err := timeKit.ParseTimeString(timeKit.FormatDate, "2022-01-01")
 	if err != nil {
 		panic(err)
 	}

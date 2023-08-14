@@ -10,13 +10,13 @@ import (
 @param layout 	时间格式
 @param str 		要解析的时间字符串
 */
-func ParseTimeString(layout, str string, args ...*time.Location) (time.Time, error) {
+func ParseTimeString[T ~string](format T, timeStr string, args ...*time.Location) (time.Time, error) {
 	loc := sliceKit.GetFirstItemWithDefault(nil, args...)
 	if loc == nil {
 		loc = time.Local
 	}
 
-	return time.ParseInLocation(layout, str, loc)
+	return time.ParseInLocation(string(format), timeStr, loc)
 }
 
 // ParseDurationString string => time.Duration
