@@ -21,7 +21,7 @@ func ParseInLocation[T ~string](format T, timeStr string, loc *time.Location) (t
 }
 
 // ParseDuration string => time.Duration
-/*
+/*-
 @param str (1) 如果为 ""，将返回error
     	   (2) e.g. "300ms"、"-1.5h"、"2h45m"
 */
