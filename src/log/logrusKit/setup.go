@@ -14,12 +14,14 @@ func MustSetUp(config *Config) {
 
 // SetUp
 /*
-@param config 可以为nil
+PS: 可以多次调用.
+
+@param config 可以为nil（采用默认值）
 */
 func SetUp(config *Config) error {
 	if config == nil {
 		config = &Config{
-			Level:      "debug",
+			Level:      "",
 			PrintBasic: false,
 		}
 	}
