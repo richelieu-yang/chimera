@@ -2,7 +2,6 @@ package pathKit
 
 import (
 	"io/fs"
-	"os"
 	"path/filepath"
 )
 
@@ -18,13 +17,5 @@ PS:
 		此外，WalkDirFunc 在读取目录之前调用，以允许 SkipDir 完全跳过目录读取。如果目录读取失败，则该函数会再次为该目录调用一次以报告错误.
 */
 var Walk func(root string, fn filepath.WalkFunc) error = filepath.Walk
+
 var WalkDir func(root string, fn fs.WalkDirFunc) error = filepath.WalkDir
-
-// ReadDir 获取指定目录下的文件或目录（另一种遍历目录的方法）.
-/*
-PS:
-(1) 不包含子目录下的文件（或目录）.
-
-@param name 目录路径
-*/
-var ReadDir func(name string) ([]os.DirEntry, error) = os.ReadDir
