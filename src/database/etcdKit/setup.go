@@ -8,6 +8,7 @@ import (
 	"github.com/sirupsen/logrus"
 	clientv3 "go.etcd.io/etcd/client/v3"
 	"go.uber.org/zap"
+	"go.uber.org/zap/zapcore"
 	"io"
 	"sync"
 	"time"
@@ -45,7 +46,14 @@ func setUp(config *Config) (err error) {
 			if err != nil {
 				return
 			}
-			logger, err = zapKit.NewLogger(writer, zap.InfoLevel)
+
+			// logger日志级别 等同于 logrus的全局日志级别
+			var level zapcore.Level
+			level, err = zapKit.ParseLevel(logrus.GetLevel().String())
+			if err != nil {
+				return
+			}
+			logger, err = zapKit.NewLogger(writer, level)
 			if err != nil {
 				return
 			}
