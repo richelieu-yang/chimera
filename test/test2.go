@@ -2,16 +2,37 @@ package main
 
 import (
 	"context"
+	"errors"
 	"fmt"
-	"github.com/redis/go-redis/v9"
+	"time"
 )
 
 func main() {
 	ctx, cancel := context.WithCancelCause(context.TODO())
+	ctx1, _ := context.WithTimeoutCause(context.TODO(), time.Second, errors.New("timeout"))
+	cancel = cancel
 
-	cancel(redis.Nil)
-	fmt.Println(ctx.Err())                       // context canceled
-	fmt.Println(ctx.Err() == context.Canceled)   // true
-	fmt.Println(context.Cause(ctx))              // redis: nil
-	fmt.Println(context.Cause(ctx) == redis.Nil) // true
+	//cancel(nil)
+	time.Sleep(time.Second * 2)
+
+	fmt.Println(ctx1.Err())
+	fmt.Println(ctx.Err())
+
+	go func() {
+		select {
+		case <-ctx1.Done():
+			fmt.Println("ctx1.Done()")
+		}
+	}()
+
+	go func() {
+		select {
+		case <-ctx.Done():
+			fmt.Println("ctx.Done()")
+		}
+	}()
+
+	for {
+
+	}
 }

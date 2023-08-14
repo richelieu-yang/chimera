@@ -1,38 +1,38 @@
 package main
 
 import (
-	"bytes"
-	"log"
-	"math/rand"
-	"net/http"
-	_ "net/http/pprof" // 开启 pprof
+	"context"
+	"errors"
+	"fmt"
 	"time"
 )
 
-var a string = ""
-
-// 换成一个随机字符串并返回对应的缓冲区
-func genRandomBytes() *bytes.Buffer {
-	var buff bytes.Buffer
-	for i := 1; i < 10000; i++ {
-		buff.Write([]byte{'0' + byte(rand.Intn(10))})
-	}
-	return &buff
-}
-
-// 访问url: http://127.0.0.1:6060/debug/pprof/
 func main() {
+	ctx0, _ := context.WithTimeoutCause(context.TODO(), time.Second, errors.New("timeout"))
+	ctx1, cancel := context.WithCancelCause(context.TODO())
+	cancel = cancel
+
+	//cancel(nil)
+	time.Sleep(time.Second * 2)
+
+	fmt.Println(ctx0.Err())
+	fmt.Println(ctx1.Err())
+
 	go func() {
-		for {
-			// 循环调用生成字符串方法，模拟 CPU 负载
-			for i := 0; i < 1000; i++ {
-				_ = genRandomBytes()
-			}
-			time.Sleep(time.Second)
+		select {
+		case <-ctx0.Done():
+			fmt.Println("ctx0.Done()")
 		}
 	}()
 
-	// 程序绑定到 6060 端口
-	// pprof 结果也必须通过该接口获取
-	log.Fatal(http.ListenAndServe("127.0.0.1:6060", nil))
+	go func() {
+		select {
+		case <-ctx1.Done():
+			fmt.Println("ctx1.Done()")
+		}
+	}()
+
+	for {
+
+	}
 }

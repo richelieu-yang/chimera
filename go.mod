@@ -5,7 +5,7 @@ go 1.20
 require (
 	github.com/apache/pulsar-client-go v0.11.0
 	github.com/apache/rocketmq-clients/golang/v5 v5.0.1-rc.4
-	github.com/bytedance/sonic v1.9.2
+	github.com/bytedance/sonic v1.10.0
 	github.com/dablelv/go-huge-util v0.0.48
 	github.com/deckarep/golang-set/v2 v2.3.1
 	github.com/dustin/go-humanize v1.0.1
@@ -46,7 +46,7 @@ require (
 	github.com/shirou/gopsutil/v3 v3.23.7
 	github.com/shopspring/decimal v1.3.1
 	github.com/sirupsen/logrus v1.9.3
-	github.com/sony/sonyflake v1.1.0
+	github.com/sony/sonyflake v1.2.0
 	github.com/spf13/cast v1.5.1
 	github.com/spf13/viper v1.16.0
 	github.com/zeromicro/go-zero v1.5.4
@@ -56,11 +56,11 @@ require (
 	go.opentelemetry.io/otel/exporters/jaeger v1.16.0
 	go.opentelemetry.io/otel/sdk v1.16.0
 	go.uber.org/zap v1.25.0
-	golang.org/x/exp v0.0.0-20230809150735-7b3493d9a819
+	golang.org/x/exp v0.0.0-20230811145659-89c5cff77bcb
 	golang.org/x/image v0.11.0
 	google.golang.org/grpc v1.57.0
 	gorm.io/driver/mysql v1.5.1
-	gorm.io/gorm v1.25.2
+	gorm.io/gorm v1.25.3
 )
 
 require (
@@ -76,7 +76,8 @@ require (
 	github.com/buger/jsonparser v1.1.1 // indirect
 	github.com/census-instrumentation/opencensus-proto v0.4.1 // indirect
 	github.com/cespare/xxhash/v2 v2.2.0 // indirect
-	github.com/chenzhuoyu/base64x v0.0.0-20221115062448-fe3a3abad311 // indirect
+	github.com/chenzhuoyu/base64x v0.0.0-20230717121745-296ad89f973d // indirect
+	github.com/chenzhuoyu/iasm v0.9.0 // indirect
 	github.com/coreos/go-semver v0.3.1 // indirect
 	github.com/coreos/go-systemd/v22 v22.5.0 // indirect
 	github.com/danieljoos/wincred v1.1.2 // indirect
