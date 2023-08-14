@@ -2,16 +2,14 @@ package main
 
 import (
 	"fmt"
-	"github.com/richelieu-yang/chimera/v2/src/core/fileKit"
+	"github.com/richelieu-yang/chimera/v2/src/core/timeKit"
 )
 
 func main() {
-	path := "/Users/richelieu/Downloads"
-	entries, err := fileKit.ReadDir(path)
+	t, err := timeKit.ParseTimeString(string(timeKit.FormatDate), "2022-01-01")
 	if err != nil {
 		panic(err)
 	}
-	for _, entry := range entries {
-		fmt.Println(entry.Name())
-	}
+	fmt.Println(t)
+	fmt.Println(t.Add(-timeKit.Day))
 }
