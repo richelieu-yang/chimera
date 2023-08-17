@@ -42,10 +42,13 @@ type KeyGenFunc func() (string, error)
 // NewRedisStore returns a new RedisStore with default configuration
 /*
 PS:
-(1) cookie的value 即 Redis中对应的键.
+(1) cookie的value 由 传参keyGen 生成（即Redis中session键的后半部分）.
+
+e.g.
+	同一个Session，cookie的值: "01H815Q2YFYEFDZHAQ2478FFS9", Redis中session键: "session:01H815Q2YFYEFDZHAQ2478FFS9".
 
 @param redisKeyPrefix 			Redis中session键的前半部分（固定）
-@param keyGen					 Redis中session键的后半部分（不固定，动态生成）
+@param keyGen					Redis中session键的后半部分（不固定，动态生成）
 								(a) 可以为nil，将采用默认值
 @param opts 					Cookie的属性
 @param expirationForZeroMaxAge	(a) sessions.Options.MaxAge == 0的情况下，此属性才有效

@@ -23,8 +23,6 @@ var i = atomicKit.NewInt()
 访问地址: http://localhost/test
 */
 func TestRedisStore(t *testing.T) {
-	// Redis中的key的前缀（value为 string 类型）
-	redisKeyPrefix := "session:"
 	// cookie的name
 	cookieName := "session-id"
 	// Redis配置（单节点）
@@ -35,6 +33,8 @@ func TestRedisStore(t *testing.T) {
 	client := redis.NewClient(redisOptions)
 
 	/* ------------------------------- store starts ------------------------------- */
+	// Redis中的key的前缀（value为 string 类型）
+	redisKeyPrefix := "session:"
 	opts := sessions.Options{
 		HttpOnly: false,
 		MaxAge:   0, // 只有 >= 0 的情况下，才会将数据写到Redis中
