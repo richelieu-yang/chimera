@@ -25,7 +25,8 @@ var (
 
 		PS: 支持第三方依赖 "github.com/gogf/gf/v2/errors/gerror".
 
-		@param target 不能为nil，否则会 panic
+		@param target 	(1) 不能为nil，否则会 panic
+						(2) 必须是指针类型，否则会 panic
 	*/
 	As func(err error, target any) bool = errors.As
 

@@ -20,3 +20,29 @@ func TestIs(t *testing.T) {
 	fmt.Println(Is(err2, err1)) // true
 	fmt.Println(Is(err1, err2)) // false
 }
+
+type myError struct {
+	Text string
+}
+
+func (err myError) Error() string {
+	return err.Text
+}
+
+func TestAs(t *testing.T) {
+	err := myError{
+		Text: "cyy",
+	}
+	err1 := Wrap(err, "1")
+
+	target := myError{}
+
+	if ok := As(err1, &target); !ok {
+		panic(false)
+
+	}
+	fmt.Println(target.Text)
+	if err.Text != target.Text {
+		panic("not equal")
+	}
+}
