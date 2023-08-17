@@ -13,6 +13,8 @@ var (
 	/*
 		finds the first error in err's tree that matches target, and if one is found, sets
 		target to that error value and returns true. Otherwise, it returns false.
+
+		@param target 不能为nil，否则会 panic
 	*/
 	As func(err error, target any) bool = errors.As
 
