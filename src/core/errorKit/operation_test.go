@@ -39,9 +39,8 @@ func TestAs(t *testing.T) {
 
 	if ok := As(err1, &target); !ok {
 		panic(false)
-
 	}
-	fmt.Println(target.Text)
+	fmt.Println(target.Text) // cyy
 	if err.Text != target.Text {
 		panic("not equal")
 	}
