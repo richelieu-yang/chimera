@@ -10,7 +10,7 @@ e.g.
 ("2006-01-02T15:04:05.000") => "2023-08-17T16:05:14.985"
 */
 func FormatCurrent[F ~string](format F) string {
-	return Format(time.Now(), format)
+	return time.Now().Format(string(format))
 }
 
 // Format time.Time => string
@@ -20,8 +20,8 @@ func FormatCurrent[F ~string](format F) string {
 
 一个方法如果接受类型为time.Time的参数，那么不用考虑该参数为nil的情况，因为：
 （1）time.Time类型变量的零值不为nil；
-（2）调用时，该参数位置不能直接传参nil（IDEA报错：Cannot use 'nil' as the type time.Time）；
-（3）time.Time类型变量不能被赋值为nil（IDEA报错：Cannot use 'nil' as the type time.Time）.
+（2）调用时，该参数位置不能直接传参nil（IDE报错：Cannot use 'nil' as the type time.Time）；
+（3）time.Time类型变量不能被赋值为nil（IDE报错：Cannot use 'nil' as the type time.Time）.
 
 e.g.
 	str := timeKit.Format(time.Now(), timeKit.FormatCommon)
