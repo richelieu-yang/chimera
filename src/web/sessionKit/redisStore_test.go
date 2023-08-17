@@ -7,6 +7,7 @@ import (
 	"github.com/redis/go-redis/v9"
 	"github.com/richelieu-yang/chimera/v2/src/atomicKit"
 	"github.com/richelieu-yang/chimera/v2/src/core/intKit"
+	"github.com/richelieu-yang/chimera/v2/src/core/timeKit"
 	"github.com/richelieu-yang/chimera/v2/src/idKit"
 	"github.com/sirupsen/logrus"
 	"net/http"
@@ -26,7 +27,6 @@ func TestRedisStore(t *testing.T) {
 	redisKeyPrefix := "session:"
 	// cookie的name
 	cookieName := "session-id"
-
 	// Redis配置（单节点）
 	redisOptions := &redis.Options{
 		Addr: "127.0.0.1:6379",
@@ -34,7 +34,7 @@ func TestRedisStore(t *testing.T) {
 	}
 	client := redis.NewClient(redisOptions)
 
-	store, err := NewRedisStore(context.TODO(), client)
+	store, err := NewRedisStore(context.TODO(), client, timeKit.Hour)
 	if err != nil {
 		panic(err)
 	}

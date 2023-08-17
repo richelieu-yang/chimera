@@ -17,6 +17,8 @@ const (
 	Hour                      = time.Hour
 	Day                       = 24 * time.Hour
 	Week                      = 7 * Day
+
+	HalfHour = time.Minute * 30
 )
 
 /*

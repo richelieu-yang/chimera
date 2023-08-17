@@ -21,6 +21,9 @@ import (
 
 // RedisStore stores gorilla sessions in Redis
 type RedisStore struct {
+	// Richelieu: MaxAge == 0的情况下，session键的超时时间
+	expirationForZeroMaxAge time.Duration
+
 	// client to connect to redis
 	client redis.UniversalClient
 	// default options to use when a new session is created
@@ -37,8 +40,15 @@ type RedisStore struct {
 type KeyGenFunc func() (string, error)
 
 // NewRedisStore returns a new RedisStore with default configuration
-func NewRedisStore(ctx context.Context, client redis.UniversalClient) (*RedisStore, error) {
+/*
+@param expirationForZeroMaxAge	(a) MaxAge == 0的情况下，此属性才有效
+								(b) 传值可以参考 redisKit.Client 的 Set().
+*/
+func NewRedisStore(ctx context.Context, client redis.UniversalClient, expirationForZeroMaxAge time.Duration) (*RedisStore, error) {
 	rs := &RedisStore{
+		// Richelieu
+		expirationForZeroMaxAge: expirationForZeroMaxAge,
+
 		options: sessions.Options{
 			Path:   "/",
 			MaxAge: 86400 * 30,
@@ -152,7 +162,7 @@ func (s *RedisStore) save(ctx context.Context, session *sessions.Session) error 
 	//return s.client.Set(ctx, s.keyPrefix+session.ID, b, time.Duration(session.Options.MaxAge)*time.Second).Err()
 	var expiration time.Duration
 	if session.Options.MaxAge == 0 {
-		expiration = time.Hour
+		expiration = s.expirationForZeroMaxAge
 	} else {
 		expiration = time.Duration(session.Options.MaxAge) * time.Second
 	}
