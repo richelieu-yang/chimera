@@ -34,7 +34,8 @@ func TestRedisStore(t *testing.T) {
 	}
 	client := redis.NewClient(redisOptions)
 
-	store, err := NewRedisStore(context.TODO(), client, timeKit.Hour)
+	/* ------------------------------- store starts ------------------------------- */
+	store, err := NewRedisStore(context.TODO(), client, timeKit.HalfHour)
 	if err != nil {
 		panic(err)
 	}
@@ -51,6 +52,7 @@ func TestRedisStore(t *testing.T) {
 		Secure:   false,
 		SameSite: http.SameSiteDefaultMode,
 	})
+	/* ------------------------------- store ends ------------------------------- */
 
 	// 自定义: cookie的value，也是Redis中的key的后半部分
 	store.KeyGen(func() (string, error) {

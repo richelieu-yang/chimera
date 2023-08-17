@@ -45,8 +45,8 @@ type KeyGenFunc func() (string, error)
 								(b) 传值可以参考 redisKit.Client 的 Set().
 */
 func NewRedisStore(ctx context.Context, client redis.UniversalClient, expirationForZeroMaxAge time.Duration) (*RedisStore, error) {
+	// Richelieu
 	rs := &RedisStore{
-		// Richelieu
 		expirationForZeroMaxAge: expirationForZeroMaxAge,
 
 		options: sessions.Options{
