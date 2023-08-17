@@ -41,12 +41,18 @@ type KeyGenFunc func() (string, error)
 
 // NewRedisStore returns a new RedisStore with default configuration
 /*
-@param redisKeyPrefix 			Redis中的key的前缀
+PS:
+(1) cookie的value 即 Redis中对应的键.
+
+@param redisKeyPrefix 			Redis中session键的前半部分（固定）
+@param keyGen					 Redis中session键的后半部分（不固定，动态生成）
+								(a) 可以为nil，将采用默认值
 @param opts 					Cookie的属性
 @param expirationForZeroMaxAge	(a) sessions.Options.MaxAge == 0的情况下，此属性才有效
 								(b) 传值可以参考 redisKit.Client 的 Set().
 */
-func NewRedisStore(ctx context.Context, client redis.UniversalClient, redisKeyPrefix string, opts sessions.Options, expirationForZeroMaxAge time.Duration) (*RedisStore, error) {
+func NewRedisStore(ctx context.Context, client redis.UniversalClient, redisKeyPrefix string, keyGen KeyGenFunc,
+	opts sessions.Options, expirationForZeroMaxAge time.Duration) (*RedisStore, error) {
 	// Richelieu
 	if err := client.Ping(ctx).Err(); err != nil {
 		return nil, err
@@ -54,18 +60,27 @@ func NewRedisStore(ctx context.Context, client redis.UniversalClient, redisKeyPr
 
 	store := &RedisStore{
 		expirationForZeroMaxAge: expirationForZeroMaxAge,
-
-		options: sessions.Options{
-			Path:   "/",
-			MaxAge: 86400 * 30,
-		},
-		client:     client,
-		keyPrefix:  "session:",
-		keyGen:     generateRandomKey,
+		//options: sessions.Options{
+		//	Path:   "/",
+		//	MaxAge: 86400 * 30,
+		//},
+		client: client,
+		//keyPrefix:  "session:",
+		//keyGen:     generateRandomKey,
 		serializer: GobSerializer{},
 	}
+
+	// Redis中session键的前半部分（固定）
 	store.KeyPrefix(redisKeyPrefix)
+
+	// Redis中session键的后半部分（不固定，动态生成）
+	if keyGen == nil {
+		keyGen = generateRandomKey
+	}
+	store.KeyGen(keyGen)
+
 	store.Options(opts)
+
 	return store, nil
 }
 

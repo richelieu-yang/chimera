@@ -41,17 +41,15 @@ func TestRedisStore(t *testing.T) {
 		Secure:   false,
 		SameSite: http.SameSiteDefaultMode,
 	}
-	store, err := NewRedisStore(context.TODO(), client, redisKeyPrefix, opts, timeKit.HalfHour)
+	keyGen := func() (string, error) {
+		return idKit.NewULID(), nil
+	}
+	store, err := NewRedisStore(context.TODO(), client, redisKeyPrefix, keyGen, opts, timeKit.Minute*10)
 	if err != nil {
 		panic(err)
 	}
 	//defer store.Close()
 	/* ------------------------------- store ends ------------------------------- */
-
-	// 自定义: cookie的value，也是Redis中的key的后半部分
-	store.KeyGen(func() (string, error) {
-		return idKit.NewULID(), nil
-	})
 
 	engine := gin.Default()
 	engine.Any("/test", func(ctx *gin.Context) {
