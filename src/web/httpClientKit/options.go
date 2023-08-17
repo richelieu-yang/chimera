@@ -1,6 +1,10 @@
 package httpClientKit
 
-import "time"
+import (
+	"crypto/tls"
+	"net/http"
+	"time"
+)
 
 const (
 	// DefaultTimeout 发送请求的默认超时时间.
@@ -22,6 +26,17 @@ type (
 
 	Option func(opts *options)
 )
+
+func (opts *options) newHttpClient() *http.Client {
+	return &http.Client{
+		Timeout: opts.timeout,
+		Transport: &http.Transport{
+			TLSClientConfig: &tls.Config{
+				InsecureSkipVerify: !opts.safe,
+			},
+		},
+	}
+}
 
 func loadOptions(s ...Option) *options {
 	opts := &options{}

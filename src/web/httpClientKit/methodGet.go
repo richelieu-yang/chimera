@@ -23,7 +23,7 @@ func Get(url string, options ...Option) (int, []byte, error) {
 
 // GetForResponse
 /*
-@return !!!: 第一个返回值如果不为nil的话，一般来说需要手动调用 "resp.Body.Close()"
+!!!: 第2个返回值 == nil 的情况下，需要手动调用 resp.Body.Close() 来手动关闭 第1个返回值.
 */
 func GetForResponse(url string, options ...Option) (*http.Response, error) {
 	opts := loadOptions(options...)
@@ -35,7 +35,7 @@ func GetForResponse(url string, options ...Option) (*http.Response, error) {
 	url = urlKit.AttachQueryParamsToUrl(url, opts.queryParams)
 
 	// client
-	client := newHttpClient(opts.timeout, opts.safe)
+	client := opts.newHttpClient()
 
 	// req
 	req, err := http.NewRequest("GET", url, nil)

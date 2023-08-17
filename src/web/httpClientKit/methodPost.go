@@ -24,7 +24,7 @@ func Post(url string, options ...Option) (int, []byte, error) {
 
 // PostForResponse
 /*
-@return !!!: 第一个返回值如果不为nil的话，一般来说需要手动调用 "resp.Body.Close()"
+!!!: 第2个返回值 == nil 的情况下，需要手动调用 resp.Body.Close() 来手动关闭 第1个返回值.
 */
 func PostForResponse(url string, options ...Option) (*http.Response, error) {
 	opts := loadOptions(options...)
@@ -48,7 +48,7 @@ func PostForResponse(url string, options ...Option) (*http.Response, error) {
 	req.Header.Add("Content-Type", "charset=utf-8")
 
 	// client
-	client := newHttpClient(opts.timeout, opts.safe)
+	client := opts.newHttpClient()
 
 	return client.Do(req)
 }

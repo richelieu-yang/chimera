@@ -7,7 +7,7 @@ import (
 )
 
 func TestGet(t *testing.T) {
-	url := "http://127.0.0.1/ping"
+	url := "https://www.baidu.com"
 
 	logrus.Info(0)
 	code, data, err := Get(url /*, WithTimeout(time.Second*3)*/)
@@ -16,5 +16,5 @@ func TestGet(t *testing.T) {
 		panic(err)
 	}
 	fmt.Println(code)
-	fmt.Println(data)
+	fmt.Println(string(data))
 }

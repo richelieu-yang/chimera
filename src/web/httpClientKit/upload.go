@@ -88,7 +88,7 @@ func UploadForResponse(url string, fileParams map[string]string, options ...Opti
 	req.Header.Add("Content-Type", "charset=utf-8")
 
 	// client
-	client := newHttpClient(opts.timeout, opts.safe)
+	client := opts.newHttpClient()
 
 	return client.Do(req)
 }
