@@ -9,6 +9,13 @@ var (
 	// Is reports whether any error in err's tree matches target.
 	Is func(err, target error) bool = errors.Is
 
+	// As
+	/*
+		finds the first error in err's tree that matches target, and if one is found, sets
+		target to that error value and returns true. Otherwise, it returns false.
+	*/
+	As func(err error, target any) bool = errors.As
+
 	// Equal 错误比较
 	Equal func(err, target error) bool = gerror.Equal
 
