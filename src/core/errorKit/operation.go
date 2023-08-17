@@ -6,13 +6,24 @@ import (
 )
 
 var (
-	// Is reports whether any error in err's tree matches target.
+	// Is 传参err 的错误链中，是否存在和 传参target 匹配的error实例？
+	/*
+		reports whether any error in err's tree matches target.
+
+		PS: 支持第三方依赖 "github.com/gogf/gf/v2/errors/gerror".
+	*/
 	Is func(err, target error) bool = errors.Is
 
 	// As
 	/*
+		查找 传参err 的错误链中与 传参target 匹配的第一个错误，
+		(1) 如果找到，则 将 传参target 设置为该错误值 && 返回true
+		(2) 否则 返回false。
+
 		finds the first error in err's tree that matches target, and if one is found, sets
 		target to that error value and returns true. Otherwise, it returns false.
+
+		PS: 支持第三方依赖 "github.com/gogf/gf/v2/errors/gerror".
 
 		@param target 不能为nil，否则会 panic
 	*/
