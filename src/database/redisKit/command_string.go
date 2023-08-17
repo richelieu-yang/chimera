@@ -17,9 +17,9 @@ import (
 @param key 			可以为""
 @param value 		支持的类型: string、[]byte、int、float64、bool(true: "1"; false: "0")...
 					不支持的类型（会返回error）: map、自定义结构体...
-@param expiration 	e.g. 120*time.Second			120s后过期
+@param expiration 	e.g. 120*time.Second		120s后过期
 					 	 0 						持久化的键（即TTL为-1），无论：键是否存在、存在的键是否有超时时间
-					 	 -1(即redis.KeepTTL)		保持已经存在的TTL（需要确保Redis版本 >= 6.0，否则会返回error: ERR syntax error）
+					 	 -1(即redis.KeepTTL)	保持已经存在的TTL（需要确保Redis版本 >= 6.0，否则会返回error: ERR syntax error）
 */
 func (client *Client) Set(ctx context.Context, key string, value interface{}, expiration time.Duration) (bool, error) {
 	cmd := client.universalClient.Set(ctx, key, value, expiration)
