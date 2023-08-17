@@ -2,37 +2,32 @@ package main
 
 import (
 	"context"
-	"errors"
 	"fmt"
+	"net/http"
 	"time"
 )
 
 func main() {
-	ctx0, _ := context.WithTimeoutCause(context.TODO(), time.Second, errors.New("timeout"))
-	ctx1, cancel := context.WithCancelCause(context.TODO())
-	cancel = cancel
+	ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
+	defer cancel()
 
-	//cancel(nil)
-	time.Sleep(time.Second * 2)
+	req, err := http.NewRequestWithContext(ctx, "GET", "http://127.0.0.1/ping", nil)
+	if err != nil {
+		fmt.Println("Error:", err)
+		return
+	}
 
-	fmt.Println(ctx0.Err())
-	fmt.Println(ctx1.Err())
+	client := http.Client{}
+	resp, err := client.Do(req)
+	if err != nil {
+		fmt.Println("Error:", err)
+		return
+	}
+	defer resp.Body.Close()
 
-	go func() {
-		select {
-		case <-ctx0.Done():
-			fmt.Println("ctx0.Done()")
-		}
-	}()
-
-	go func() {
-		select {
-		case <-ctx1.Done():
-			fmt.Println("ctx1.Done()")
-		}
-	}()
-
-	for {
-
+	if resp.StatusCode == http.StatusOK {
+		fmt.Println("Request successful")
+	} else {
+		fmt.Println("Request failed with status:", resp.Status)
 	}
 }

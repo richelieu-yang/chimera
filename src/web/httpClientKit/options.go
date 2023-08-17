@@ -4,11 +4,6 @@ import "time"
 
 const (
 	// DefaultTimeout 发送请求的默认超时时间.
-	/*
-		PS:
-		(1) 个人实测，对于 http.Client 结构体，Timeout 默认为30s.
-		(2) e.g. yozo的网访问谷歌必定超时.
-	*/
 	DefaultTimeout = time.Second * 10
 )
 
@@ -18,6 +13,7 @@ type (
 		timeout time.Duration
 		// safe 默认false（跳过ssl证书验证，即使url 以https开头 && 证书非法，请求也能成功）
 		safe bool
+
 		// queryParams 适用于: POST、GET
 		queryParams map[string]string
 		// postParams 适用于: POST

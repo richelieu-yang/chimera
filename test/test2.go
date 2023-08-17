@@ -1,38 +1,20 @@
 package main
 
 import (
-	"context"
-	"errors"
-	"fmt"
+	"github.com/gin-gonic/gin"
+	"net/http"
 	"time"
 )
 
 func main() {
-	ctx, cancel := context.WithCancelCause(context.TODO())
-	ctx1, _ := context.WithTimeoutCause(context.TODO(), time.Second, errors.New("timeout"))
-	cancel = cancel
+	engine := gin.Default()
 
-	//cancel(nil)
-	time.Sleep(time.Second * 2)
+	engine.Any("/ping", func(ctx *gin.Context) {
+		time.Sleep(time.Second * 60)
+		ctx.String(http.StatusOK, "OK")
+	})
 
-	fmt.Println(ctx1.Err())
-	fmt.Println(ctx.Err())
-
-	go func() {
-		select {
-		case <-ctx1.Done():
-			fmt.Println("ctx1.Done()")
-		}
-	}()
-
-	go func() {
-		select {
-		case <-ctx.Done():
-			fmt.Println("ctx.Done()")
-		}
-	}()
-
-	for {
-
+	if err := engine.Run(":80"); err != nil {
+		panic(engine)
 	}
 }
