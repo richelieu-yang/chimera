@@ -7,8 +7,7 @@ import (
 // FormatCurrent 格式化 当前时间 为 字符串.
 /*
 e.g.
-	() 		=> "2022-08-13 14:54:44.336"
-	("") 	=> ""
+("2006-01-02T15:04:05.000") => "2023-08-17T16:05:14.985"
 */
 func FormatCurrent[F ~string](format F) string {
 	return Format(time.Now(), format)

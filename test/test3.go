@@ -2,13 +2,9 @@ package main
 
 import (
 	"fmt"
-	"github.com/richelieu-yang/chimera/v2/src/core/strKit"
 	"github.com/richelieu-yang/chimera/v2/src/core/timeKit"
 )
 
 func main() {
-	fmt.Sprintf("%d %s", 1, "a")
-	strKit.Format("%d %s", 1, "a")
-
-	fmt.Println(timeKit.GetNetworkTime())
+	fmt.Println(timeKit.FormatCurrent("2006-01-02T15:04:05.000"))
 }
