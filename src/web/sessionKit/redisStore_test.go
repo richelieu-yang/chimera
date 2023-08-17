@@ -35,23 +35,17 @@ func TestRedisStore(t *testing.T) {
 	client := redis.NewClient(redisOptions)
 
 	/* ------------------------------- store starts ------------------------------- */
-	store, err := NewRedisStore(context.TODO(), client, timeKit.HalfHour)
+	opts := sessions.Options{
+		HttpOnly: false,
+		MaxAge:   0, // 只有 >= 0 的情况下，才会将数据写到Redis中
+		Secure:   false,
+		SameSite: http.SameSiteDefaultMode,
+	}
+	store, err := NewRedisStore(context.TODO(), client, redisKeyPrefix, opts, timeKit.HalfHour)
 	if err != nil {
 		panic(err)
 	}
 	//defer store.Close()
-
-	// 自定义: Redis中的key的前缀
-	store.KeyPrefix(redisKeyPrefix)
-
-	// 自定义: cookie的属性（配置）
-	store.Options(sessions.Options{
-		HttpOnly: false,
-		MaxAge:   0, // 只有 >= 0 的情况下，才会将数据写到Redis中
-
-		Secure:   false,
-		SameSite: http.SameSiteDefaultMode,
-	})
 	/* ------------------------------- store ends ------------------------------- */
 
 	// 自定义: cookie的value，也是Redis中的key的后半部分

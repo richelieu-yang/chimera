@@ -41,12 +41,18 @@ type KeyGenFunc func() (string, error)
 
 // NewRedisStore returns a new RedisStore with default configuration
 /*
-@param expirationForZeroMaxAge	(a) MaxAge == 0的情况下，此属性才有效
+@param redisKeyPrefix 			Redis中的key的前缀
+@param opts 					Cookie的属性
+@param expirationForZeroMaxAge	(a) sessions.Options.MaxAge == 0的情况下，此属性才有效
 								(b) 传值可以参考 redisKit.Client 的 Set().
 */
-func NewRedisStore(ctx context.Context, client redis.UniversalClient, expirationForZeroMaxAge time.Duration) (*RedisStore, error) {
+func NewRedisStore(ctx context.Context, client redis.UniversalClient, redisKeyPrefix string, opts sessions.Options, expirationForZeroMaxAge time.Duration) (*RedisStore, error) {
 	// Richelieu
-	rs := &RedisStore{
+	if err := client.Ping(ctx).Err(); err != nil {
+		return nil, err
+	}
+
+	store := &RedisStore{
 		expirationForZeroMaxAge: expirationForZeroMaxAge,
 
 		options: sessions.Options{
@@ -58,8 +64,9 @@ func NewRedisStore(ctx context.Context, client redis.UniversalClient, expiration
 		keyGen:     generateRandomKey,
 		serializer: GobSerializer{},
 	}
-
-	return rs, rs.client.Ping(ctx).Err()
+	store.KeyPrefix(redisKeyPrefix)
+	store.Options(opts)
+	return store, nil
 }
 
 // Get returns a session for the given name after adding it to the registry.
