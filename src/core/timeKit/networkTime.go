@@ -1,9 +1,8 @@
 package timeKit
 
 import (
-	"crypto/tls"
 	"github.com/richelieu-yang/chimera/v2/src/core/errorKit"
-	"net/http"
+	"github.com/richelieu-yang/chimera/v2/src/web/httpClientKit"
 	"time"
 )
 
@@ -31,6 +30,7 @@ func GetNetworkTime() (time.Time, string, error) {
 		t      time.Time
 	}
 
+	// 超时时间设置的短一点，以防内网环境启动服务耗时太长.
 	var timeout = time.Second * 3
 	var ch = make(chan *bean, len(networkTimeSources))
 
@@ -51,30 +51,27 @@ func GetNetworkTime() (time.Time, string, error) {
 	case b := <-ch:
 		return b.t, b.source, nil
 	case <-time.After(timeout):
-		return time.Time{}, "", errorKit.New("timeout(%v)", timeout)
+		return time.Time{}, "", errorKit.New("timeout(%s)", timeout)
 	}
 }
 
 func getNetworkTimeBySource(url string, timeout time.Duration) (time.Time, error) {
-	/*
-		超时时间设置的短一点，以防内网环境启动服务耗时太长.
-		PS:
-		(1) 此处不使用 httpClientKit，原因: 避免import cycle
-		(2) 内网环境，可能的情况: (a)直接返回error; (b)请求超时而返回error.
-	*/
-	client := &http.Client{
-		Timeout: timeout,
-		Transport: &http.Transport{
-			TLSClientConfig: &tls.Config{
-				InsecureSkipVerify: true,
-			},
-		},
-	}
-	req, err := http.NewRequest("GET", url, nil)
-	if err != nil {
-		return time.Time{}, err
-	}
-	resp, err := client.Do(req)
+	resp, err := httpClientKit.GetForResponse(url, httpClientKit.WithTimeout(timeout))
+
+	//client := &http.Client{
+	//	Timeout: timeout,
+	//	Transport: &http.Transport{
+	//		TLSClientConfig: &tls.Config{
+	//			InsecureSkipVerify: true,
+	//		},
+	//	},
+	//}
+	//req, err := http.NewRequest("GET", url, nil)
+	//if err != nil {
+	//	return time.Time{}, err
+	//}
+	//resp, err := client.Do(req)
+
 	if err != nil {
 		return time.Time{}, err
 	}
