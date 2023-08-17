@@ -2,6 +2,7 @@ package redisKit
 
 import (
 	"context"
+	"fmt"
 	"github.com/richelieu-yang/chimera/v2/src/confKit"
 	"github.com/richelieu-yang/chimera/v2/src/consts"
 	"github.com/richelieu-yang/chimera/v2/src/core/pathKit"
@@ -29,9 +30,12 @@ func TestSetUp(t *testing.T) {
 		logrus.Fatal(err)
 	}
 
-	flag, err := client.HExists(context.TODO(), "ccc1", "2")
-	if err != nil {
-		logrus.Fatal(err)
-	}
-	println("HExists:", flag)
+	//flag, err := client.HExists(context.TODO(), "ccc1", "2")
+	//if err != nil {
+	//	logrus.Fatal(err)
+	//}
+	//println("HExists:", flag)
+
+	fmt.Println(client.Set(context.TODO(), "222", "222", -1))
+
 }
