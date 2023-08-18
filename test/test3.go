@@ -2,13 +2,21 @@ package main
 
 import (
 	"fmt"
-	"github.com/richelieu-yang/chimera/v2/src/core/timeKit"
-	"time"
+	"net/url"
 )
 
 func main() {
-	now := time.Now()
-	fmt.Println(now) // 2023-08-18 15:24:03.167655 +0800 CST m=+0.004041126
-	t := timeKit.ToZeroAM(now)
-	fmt.Println(t) // 2023-08-18 00:00:00 +0800 CST
+	addr := "http://localhost?wifi=true&carrier=#Staysafe AIS&os=android"
+
+	u0, err := url.Parse(addr)
+	if err != nil {
+		panic(err)
+	}
+	fmt.Println(u0)
+
+	u1, err := url.ParseRequestURI(addr)
+	if err != nil {
+		panic(err)
+	}
+	fmt.Println(u1)
 }
