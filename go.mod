@@ -8,6 +8,7 @@ require (
 	github.com/bytedance/sonic v1.10.0
 	github.com/dablelv/go-huge-util v0.0.48
 	github.com/deckarep/golang-set/v2 v2.3.1
+	github.com/duke-git/lancet/v2 v2.2.4
 	github.com/dustin/go-humanize v1.0.1
 	github.com/emersion/go-imap v1.2.1
 	github.com/emersion/go-imap-id v0.0.0-20190926060100-f94a56b9ecde

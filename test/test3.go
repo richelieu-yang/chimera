@@ -2,21 +2,18 @@ package main
 
 import (
 	"fmt"
-	"net/url"
+	"github.com/duke-git/lancet/v2/random"
 )
 
 func main() {
-	addr := "http://localhost?wifi=true&carrier=#Staysafe AIS&os=android"
-
-	u0, err := url.Parse(addr)
-	if err != nil {
-		panic(err)
+	for i := 0; i < 100000; i++ {
+		tmp := random.RandInt(0, 100)
+		if tmp == 100 {
+			panic("--------")
+		}
+		fmt.Println(tmp)
 	}
-	fmt.Println(u0)
 
-	u1, err := url.ParseRequestURI(addr)
-	if err != nil {
-		panic(err)
-	}
-	fmt.Println(u1)
+	random.UUIdV4()
+
 }
