@@ -36,7 +36,7 @@ func TestRedisStore(t *testing.T) {
 	// Redis中的key的前缀（value为 string 类型）
 	redisKeyPrefix := "session:"
 	opts := sessions.Options{
-		HttpOnly: false,
+		HttpOnly: true,
 		MaxAge:   0, // 只有 >= 0 的情况下，才会将数据写到Redis中
 		Secure:   false,
 		SameSite: http.SameSiteDefaultMode,
