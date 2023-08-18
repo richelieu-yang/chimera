@@ -6,9 +6,11 @@ import (
 
 // ConvertLocation 时区转换.
 /*
+PS: 返回值是个副本，不会修改传参t.
+
 @param loc 目标时区
 
-e.g. UTC+8 转 UTC+0
+e.g. UTC+8(CST) 转 UTC+0
 	2022-05-05 14:33:40.562899 +0800 CST m=+0.001585418 => 2022-05-05 06:33:40.562899 +0000 UTC
 */
 func ConvertLocation(t time.Time, loc *time.Location) time.Time {
