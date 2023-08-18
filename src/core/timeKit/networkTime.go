@@ -77,6 +77,7 @@ func getNetworkTimeBySource(url string, timeout time.Duration) (time.Time, error
 	}
 	defer resp.Body.Close()
 
+	// e.g."Fri, 18 Aug 2023 07:15:26 GMT"
 	timeString := resp.Header.Get("Date")
 	t, err := Parse(string(FormatNetwork), timeString)
 	if err != nil {

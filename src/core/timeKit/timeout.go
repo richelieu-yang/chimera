@@ -14,6 +14,7 @@ func SetTimeout(fun func(), duration time.Duration) *time.Timer {
 	if fun == nil {
 		return nil
 	}
+
 	return time.AfterFunc(duration, fun)
 }
 
@@ -21,5 +22,6 @@ func ClearTimeout(timer *time.Timer) {
 	if timer == nil {
 		return
 	}
+
 	timer.Stop()
 }
