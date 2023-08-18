@@ -83,5 +83,5 @@ func getNetworkTimeBySource(url string, timeout time.Duration) (time.Time, error
 	if err != nil {
 		return time.Time{}, err
 	}
-	return ConvertToLocalLocation(t), nil
+	return ConvertLocation(t, time.Local), nil
 }

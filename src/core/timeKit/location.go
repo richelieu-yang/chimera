@@ -1,31 +1,21 @@
 package timeKit
 
 import (
-	"github.com/richelieu-yang/chimera/v2/src/core/errorKit"
 	"time"
 )
 
-// ConvertToLocalLocation 转换为本地时区的时间.
-func ConvertToLocalLocation(t time.Time) time.Time {
-	return t.In(time.Local)
-}
-
-func ConvertToUTC(t time.Time) time.Time {
-	return t.In(time.UTC)
-}
-
-// ConvertByLocation 时区转换
+// ConvertLocation 时区转换.
 /*
-@param loc 目标时区（不能为nil！！！）
+@param loc 目标时区
 
 e.g. UTC+8 转 UTC+0
-2022-05-05 14:33:40.562899 +0800 CST m=+0.001585418 => 2022-05-05 06:33:40.562899 +0000 UTC
+	2022-05-05 14:33:40.562899 +0800 CST m=+0.001585418 => 2022-05-05 06:33:40.562899 +0000 UTC
 */
-func ConvertByLocation(t time.Time, loc *time.Location) (time.Time, error) {
+func ConvertLocation(t time.Time, loc *time.Location) time.Time {
 	if loc == nil {
-		return time.Time{}, errorKit.New("loc is nil")
+		loc = time.Local
 	}
-	return t.In(loc), nil
+	return t.In(loc)
 }
 
 // LoadLocation
@@ -36,6 +26,4 @@ LoadLocation的输入参数的取值，除了该函数的源代码中可看到�
 
 @param name e.g. "Asia/Chongqing"
 */
-func LoadLocation(name string) (*time.Location, error) {
-	return time.LoadLocation(name)
-}
+var LoadLocation func(name string) (*time.Location, error) = time.LoadLocation
