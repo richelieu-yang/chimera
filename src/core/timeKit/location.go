@@ -26,6 +26,7 @@ LoadLocation的输入参数的取值，除了该函数的源代码中可看到�
 在Asia这个目录，我看到了Chongqing，Hong_Kong，但没Beijing。在国外获取中国北京时间，要用”PRC”，当然”Asia/Chongqing”也是个方法
 参考：https://blog.csdn.net/qq_26981997/article/details/53454606
 
-@param name e.g. "Asia/Chongqing"
+@param name (a) 可以为""（将返回 time.UTC）
+			(b) e.g. "Asia/Chongqing"
 */
 var LoadLocation func(name string) (*time.Location, error) = time.LoadLocation
