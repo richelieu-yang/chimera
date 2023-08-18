@@ -2,9 +2,11 @@ package main
 
 import (
 	"fmt"
-	"github.com/richelieu-yang/chimera/v2/src/core/timeKit"
+	"time"
 )
 
 func main() {
-	fmt.Println(timeKit.FormatCurrent("2006-01-02T15:04:05.000"))
+	now := time.Now()
+	now = time.Date(now.Year(), now.Month(), now.Day(), 0, 0, 0, 0, time.Local)
+	fmt.Println(now)
 }
