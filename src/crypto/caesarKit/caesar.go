@@ -2,7 +2,7 @@ package caesarKit
 
 import "bytes"
 
-// Encrypt
+// Encrypt 凯撒密码加密.
 /*
 PS: 仅加密大小写的英文字母.
 
