@@ -2,6 +2,11 @@ package caesarKit
 
 import "bytes"
 
+// Encrypt
+/*
+@param shift 推荐值: (1) [0, 25]
+					(2) 不推荐使用 26*n(n >= 0)，因为这样加密了个寂寞
+*/
 func Encrypt(plainText string, shift uint8) string {
 	shift = polyfillShift(shift)
 

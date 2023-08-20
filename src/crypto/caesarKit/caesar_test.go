@@ -7,7 +7,7 @@ import (
 
 func TestEncryptAndDecrypt(t *testing.T) {
 	plainText := "测试 abcDEF"
-	var shift uint8 = 100
+	var shift uint8 = 53
 
 	cipherText := Encrypt(plainText, shift)
 	decryptedText := Decrypt(cipherText, shift)
@@ -18,5 +18,23 @@ func TestEncryptAndDecrypt(t *testing.T) {
 		panic("not equal")
 	} else {
 		fmt.Println("equal")
+	}
+}
+
+func TestEncryptAndDecryptAll(t *testing.T) {
+	check := func(shift uint8) {
+		plainText := "测试 abcDEF"
+		cipherText := Encrypt(plainText, shift)
+		decryptedText := Decrypt(cipherText, shift)
+
+		if plainText != decryptedText {
+			panic("not equal")
+		}
+	}
+
+	var i uint8
+	for i = 0; i <= 100; i++ {
+		fmt.Println("shift: ", i)
+		check(i)
 	}
 }
