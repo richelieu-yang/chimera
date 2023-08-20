@@ -1,19 +1,29 @@
 package caesarKit
 
-func Encrypt(plaintext string, key int) string {
-	ciphertext := ""
+import "bytes"
 
-	for _, char := range plaintext {
+func Encrypt(plainText string, shift uint8) string {
+	shift = polyfillShift(shift)
+
+	buffer := bytes.NewBuffer(nil)
+	for _, char := range plainText {
 		if char >= 'a' && char <= 'z' {
-			char = (char-'a'+rune(key))%26 + 'a'
+			char = (char-'a'+rune(shift))%26 + 'a'
 		} else if char >= 'A' && char <= 'Z' {
-			char = (char-'A'+rune(key))%26 + 'A'
+			char = (char-'A'+rune(shift))%26 + 'A'
 		}
-		ciphertext += string(char)
+		buffer.WriteRune(char)
 	}
-	return ciphertext
+	return buffer.String()
 }
 
-func Decrypt(ciphertext string, key int) string {
-	return Encrypt(ciphertext, 26-key)
+func Decrypt(cipherText string, shift uint8) string {
+	shift = polyfillShift(shift)
+
+	return Encrypt(cipherText, 26-shift)
+}
+
+func polyfillShift(shift uint8) uint8 {
+	// 确保偏移量在0-25之间
+	return shift % 26
 }
