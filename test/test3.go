@@ -7,7 +7,6 @@ import (
 
 func main() {
 	buffer := bytes.NewBuffer(nil)
-	buffer.Write
-	str := buffer.String()
+	str := buffer.String() // ""
 	fmt.Println(str)
 }
