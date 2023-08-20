@@ -40,7 +40,8 @@ func TestEncryptAll(t *testing.T) {
 }
 
 func TestEncryptWithBase64(t *testing.T) {
-	plainText := "测试 ~！@#￥%……&*（）——+·1234567890-=【】、「」|；‘。、，：“《》？abcDEF"
+	//plainText := "测试 ~！@#￥%……&*（）——+·1234567890-=【】、「」|；‘。、，：“《》？abcDEF"
+	plainText := "111000"
 	var shift uint8 = 8
 
 	cipherText := EncryptWithBase64(plainText, shift)
