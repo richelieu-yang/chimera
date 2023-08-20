@@ -11,8 +11,8 @@ func TestEncrypt(t *testing.T) {
 
 	cipherText := Encrypt(plainText, shift)
 	decryptedText := Decrypt(cipherText, shift)
-	fmt.Println("cipherText: ", cipherText)
-	fmt.Println("decryptedText: ", decryptedText)
+	fmt.Println("cipherText:", cipherText)
+	fmt.Println("decryptedText:", decryptedText)
 
 	if plainText != decryptedText {
 		panic("not equal")
@@ -40,7 +40,7 @@ func TestEncryptAll(t *testing.T) {
 }
 
 func TestEncryptWithBase64(t *testing.T) {
-	plainText := "测试 abcDEF"
+	plainText := "测试 ~！@#￥%……&*（）——+·1234567890-=【】、「」|；‘。、，：“《》？abcDEF"
 	var shift uint8 = 8
 
 	cipherText := EncryptWithBase64(plainText, shift)
@@ -48,8 +48,8 @@ func TestEncryptWithBase64(t *testing.T) {
 	if err != nil {
 		panic(err)
 	}
-	fmt.Println("cipherText: ", cipherText)
-	fmt.Println("decryptedText: ", decryptedText)
+	fmt.Println("cipherText:", cipherText)
+	fmt.Println("decryptedText:", decryptedText)
 
 	if plainText != decryptedText {
 		panic("not equal")
