@@ -2,18 +2,50 @@ package main
 
 import (
 	"fmt"
-	"github.com/duke-git/lancet/v2/random"
 )
 
-func main() {
-	for i := 0; i < 100000; i++ {
-		tmp := random.RandInt(0, 100)
-		if tmp == 100 {
-			panic("--------")
+func Encrypt(plaintext string, key int) string {
+	ciphertext := ""
+
+	for _, char := range plaintext {
+		if char >= 'a' && char <= 'z' {
+			char = (char-'a'+rune(key))%26 + 'a'
+		} else if char >= 'A' && char <= 'Z' {
+			char = (char-'A'+rune(key))%26 + 'A'
 		}
-		fmt.Println(tmp)
+		ciphertext += string(char)
 	}
+	return ciphertext
+}
 
-	random.UUIdV4()
+func Decrypt(ciphertext string, key int) string {
+	return Encrypt(ciphertext, 26-key)
+}
 
+//func encryptCaesar(plaintext string, key int) string {
+//	ciphertext := ""
+//
+//	for _, char := range plaintext {
+//		if char >= 'a' && char <= 'z' {
+//			char = (char-'a'+rune(key))%26 + 'a'
+//		} else if char >= 'A' && char <= 'Z' {
+//			char = (char-'A'+rune(key))%26 + 'A'
+//		}
+//		ciphertext += string(char)
+//	}
+//	return ciphertext
+//}
+//
+//func decryptCaesar(ciphertext string, key int) string {
+//	return encryptCaesar(ciphertext, 26-key)
+//}
+
+func main() {
+	plaintext := "hello world"
+	key := 3
+
+	ciphertext := Encrypt(plaintext, key)
+	fmt.Println("cipher text:", ciphertext)
+	decryptedText := Decrypt(ciphertext, key)
+	fmt.Println("decrypted text:", decryptedText)
 }
