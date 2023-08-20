@@ -7,7 +7,7 @@ import (
 
 func TestEncryptAndDecrypt(t *testing.T) {
 	plainText := "测试 abcDEF"
-	var shift uint8 = 53
+	var shift uint8 = 1
 
 	cipherText := Encrypt(plainText, shift)
 	decryptedText := Decrypt(cipherText, shift)
