@@ -55,3 +55,8 @@ e.g.
 	fmt.Println(rst) // 1024
 */
 var Exponent func(x, n int64) int64 = mathutil.Exponent
+
+// Abs 绝对值.
+func Abs[T constraints.Integer | constraints.Float](x T) T {
+	return mathutil.Abs(x)
+}
