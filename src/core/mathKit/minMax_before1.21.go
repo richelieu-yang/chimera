@@ -1,3 +1,5 @@
+//go:build !go1.21
+
 package mathKit
 
 import "golang.org/x/exp/constraints"
