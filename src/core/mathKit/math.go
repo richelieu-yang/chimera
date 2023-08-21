@@ -1,6 +1,7 @@
 package mathKit
 
 import (
+	"github.com/duke-git/lancet/v2/mathutil"
 	"github.com/samber/lo"
 	"golang.org/x/exp/constraints"
 )
@@ -44,3 +45,13 @@ e.g.
 func SumBy[T any, R constraints.Float | constraints.Integer | constraints.Complex](s []T, iteratee func(item T) R) R {
 	return lo.SumBy(s, iteratee)
 }
+
+// Exponent 指数.
+/*
+@return x^n
+
+e.g.
+	rst := mathKit.Exponent(2, 10)
+	fmt.Println(rst) // 1024
+*/
+var Exponent func(x, n int64) int64 = mathutil.Exponent

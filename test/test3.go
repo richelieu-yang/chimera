@@ -1,12 +1,11 @@
 package main
 
 import (
-	"bytes"
 	"fmt"
+	"github.com/richelieu-yang/chimera/v2/src/core/mathKit"
 )
 
 func main() {
-	buffer := bytes.NewBuffer(nil)
-	str := buffer.String() // ""
-	fmt.Println(str)
+	rst := mathKit.Exponent(2, 10)
+	fmt.Println(rst) // 1024
 }

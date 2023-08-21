@@ -23,9 +23,7 @@ e.g.
 (3.6) 	=>	4
 (-3.6) 	=>	-3
 */
-func Ceil(x float64) float64 {
-	return math.Ceil(x)
-}
+var Ceil func(x float64) float64 = math.Ceil
 
 // Floor 向下取整
 /*
@@ -35,6 +33,4 @@ e.g.
 (3.6) 	=>	3
 (-3.6) 	=>	-4
 */
-func Floor(x float64) float64 {
-	return math.Floor(x)
-}
+var Floor func(x float64) float64 = math.Floor
