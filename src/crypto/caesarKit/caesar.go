@@ -39,7 +39,7 @@ func polyfillShift(shift uint8) uint8 {
 	return shift % 26
 }
 
-// EncryptWithBase64
+// EncryptWithRawURLBase64
 /*
 PS: 本函数对 Encrypt 就行了封装，好处: 对所有字符进行加密.
 
@@ -47,19 +47,19 @@ PS: 本函数对 Encrypt 就行了封装，好处: 对所有字符进行加密.
 (1) base64编码(base64.RawURLEncoding)
 (2) 凯撒密码加密
 */
-func EncryptWithBase64(str string, shift uint8) string {
+func EncryptWithRawURLBase64(str string, shift uint8) string {
 	plainText := base64Kit.EncodeStringToString(str, base64Kit.WithEncoding(base64.RawURLEncoding))
 
 	return Encrypt(plainText, shift)
 }
 
-// DecryptWithBase64
+// DecryptWithRawURLBase64
 /*
 流程:
 (1) 凯撒密码解密
 (2) base64解码(base64.RawURLEncoding)
 */
-func DecryptWithBase64(str string, shift uint8) (string, error) {
+func DecryptWithRawURLBase64(str string, shift uint8) (string, error) {
 	cipherText := Decrypt(str, shift)
 
 	decryptedText, err := base64Kit.DecodeStringToString(cipherText, base64Kit.WithEncoding(base64.RawURLEncoding))
