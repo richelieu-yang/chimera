@@ -2,28 +2,22 @@
 
 package mathKit
 
-import "golang.org/x/exp/constraints"
+import (
+	"golang.org/x/exp/constraints"
+)
 
-// Max
-/*
-TODO: go1.21，使用max()（区分go版本）.
-*/
-func Max[T constraints.Ordered](p T, args ...T) T {
-	rst := p
+func Max[T constraints.Ordered](p T, args ...T) (max T) {
+	max = p
 
 	for _, ele := range args {
-		if ele > rst {
-			rst = ele
+		if ele > max {
+			max = ele
 		}
 	}
-	return rst
+	return max
 }
 
-// Min
-/*
-TODO: go1.21，使用min()（区分go版本）.
-*/
-func Min[T constraints.Ordered](p T, args ...T) T {
+func Min[T constraints.Ordered](p T, args ...T) (min T) {
 	rst := p
 
 	for _, ele := range args {
