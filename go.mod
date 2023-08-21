@@ -21,14 +21,14 @@ require (
 	github.com/gin-gonic/gin v1.9.1
 	github.com/go-playground/validator/v10 v10.15.1
 	github.com/go-redsync/redsync/v4 v4.8.1
-	github.com/gogf/gf/v2 v2.5.1
+	github.com/gogf/gf/v2 v2.5.2
 	github.com/golang-jwt/jwt/v5 v5.0.0
 	github.com/google/uuid v1.3.0
 	github.com/gorilla/securecookie v1.1.1
 	github.com/gorilla/sessions v1.2.1
 	github.com/gorilla/websocket v1.5.0
 	github.com/h2non/bimg v1.1.9
-	github.com/jinzhu/copier v0.3.5
+	github.com/jinzhu/copier v0.4.0
 	github.com/jordan-wright/email v4.0.1-0.20210109023952-943e75fe5223+incompatible
 	github.com/json-iterator/go v1.1.12
 	github.com/klauspost/compress v1.16.7
@@ -50,7 +50,7 @@ require (
 	github.com/sony/sonyflake v1.2.0
 	github.com/spf13/cast v1.5.1
 	github.com/spf13/viper v1.16.0
-	github.com/zeromicro/go-zero v1.5.4
+	github.com/zeromicro/go-zero v1.5.5
 	github.com/zeromicro/zero-contrib/logx/logrusx v0.0.0-20230807142214-5952d42ba776
 	go.etcd.io/etcd/client/v3 v3.5.9
 	go.opentelemetry.io/otel v1.16.0
@@ -61,7 +61,7 @@ require (
 	golang.org/x/image v0.11.0
 	google.golang.org/grpc v1.57.0
 	gorm.io/driver/mysql v1.5.1
-	gorm.io/gorm v1.25.3
+	gorm.io/gorm v1.25.4
 )
 
 require (
@@ -149,16 +149,16 @@ require (
 	go.opentelemetry.io/otel/metric v1.16.0 // indirect
 	go.opentelemetry.io/otel/trace v1.16.0 // indirect
 	go.uber.org/atomic v1.10.0 // indirect
-	go.uber.org/automaxprocs v1.5.2 // indirect
+	go.uber.org/automaxprocs v1.5.3 // indirect
 	go.uber.org/multierr v1.10.0 // indirect
 	golang.org/x/arch v0.3.0 // indirect
-	golang.org/x/crypto v0.11.0 // indirect
+	golang.org/x/crypto v0.12.0 // indirect
 	golang.org/x/mod v0.12.0 // indirect
-	golang.org/x/net v0.12.0 // indirect
+	golang.org/x/net v0.14.0 // indirect
 	golang.org/x/oauth2 v0.7.0 // indirect
 	golang.org/x/sync v0.2.0 // indirect
 	golang.org/x/sys v0.11.0 // indirect
-	golang.org/x/term v0.10.0 // indirect
+	golang.org/x/term v0.11.0 // indirect
 	golang.org/x/text v0.12.0 // indirect
 	google.golang.org/api v0.122.0 // indirect
 	google.golang.org/appengine v1.6.7 // indirect
