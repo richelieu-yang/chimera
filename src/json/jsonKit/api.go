@@ -16,10 +16,10 @@ type (
 	}
 )
 
-func GetAPI() API {
+func GetDefaultAPI() API {
 	return defaultAPI
 }
 
-func SetAPI(api API) {
+func SetDefaultAPI(api API) {
 	defaultAPI = api
 }
