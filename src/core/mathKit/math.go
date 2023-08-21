@@ -6,6 +6,14 @@ import (
 	"golang.org/x/exp/constraints"
 )
 
+// Average 计算平均数.
+/*
+PS: 可能需要对返回值进行四舍五入.
+*/
+func Average[T constraints.Integer | constraints.Float](numbers ...T) T {
+	return mathutil.Average[T](numbers...)
+}
+
 // Clamp clamps number within the inclusive lower and upper bounds.
 /*
 case value < min: 	返回min
