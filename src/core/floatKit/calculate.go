@@ -51,36 +51,39 @@ func Mul(delta float64, ps ...float64) float64 {
 }
 
 // Div 除法（不额外处理小数位）
-func Div(delta float64, ps ...float64) float64 {
-	if ps == nil {
-		return delta
+func Div(x float64, y ...float64) float64 {
+	if y == nil {
+		return x
 	}
 
-	tmp := decimal.NewFromFloat(delta)
-	for _, p := range ps {
+	tmp := decimal.NewFromFloat(x)
+	for _, p := range y {
 		tmp = tmp.Div(decimal.NewFromFloat(p))
 	}
 	value, _ := tmp.Float64()
 	return value
 }
 
-// DivRound 除法（四舍五入），divides and rounds to a given precision
+// DivAndRound 除法（四舍五入），divides and rounds to a given precision
 /*
-@param precision 小数位数
+@param places 小数位数
 
 e.g.
 (4, 1, 2) =>		0.5
 (4, 1, 3) => 		0.3333
 (4, 0.123456) => 	0.1235
 */
-func DivRound(precision int32, delta float64, ps ...float64) float64 {
-	tmp := decimal.NewFromFloat(delta)
-	if ps != nil {
-		for _, p := range ps {
+func DivAndRound(places int32, x float64, y ...float64) float64 {
+	tmp := decimal.NewFromFloat(x)
+	if y != nil {
+		for _, p := range y {
 			tmp = tmp.Div(decimal.NewFromFloat(p))
 		}
 	}
-	tmp = tmp.Round(precision)
+
+	// 相较于 Div，多了这一行
+	tmp = tmp.Round(places)
+
 	value, _ := tmp.Float64()
 	return value
 }
