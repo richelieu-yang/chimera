@@ -1,7 +1,6 @@
 package zapKit
 
 import (
-	"github.com/richelieu-yang/chimera/v2/src/core/errorKit"
 	"go.uber.org/zap"
 	"go.uber.org/zap/zapcore"
 	"io"
@@ -13,10 +12,6 @@ import (
 @param level 	e.g. zap.InfoLevel
 */
 func NewLogger(writer io.Writer, level zapcore.Level) (*zap.Logger, error) {
-	if writer == nil {
-		return nil, errorKit.New("writer == nil")
-	}
-
 	encoder := getEncoder()
 	writeSyncer := zapcore.AddSync(writer)
 	atomicLevel := zap.NewAtomicLevel()
