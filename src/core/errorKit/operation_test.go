@@ -1,7 +1,6 @@
 package errorKit
 
 import (
-	"errors"
 	"fmt"
 	"github.com/redis/go-redis/v9"
 	"testing"
@@ -37,7 +36,32 @@ func TestAs(t *testing.T) {
 	err1 := Wrap(err, "1")
 
 	target := &myError{}
-	if ok := errors.As(err1, target); !ok {
+	if ok := As(err1, target); !ok {
+		panic("ok == false")
+	}
+	fmt.Println(target.Text) // cyy
+	if err.Text != target.Text {
+		panic("not equal")
+	}
+}
+
+type myError1 struct {
+	Text string
+}
+
+func (err *myError1) Error() string {
+	return err.Text
+}
+
+func TestAs1(t *testing.T) {
+	err := &myError1{
+		Text: "cyy",
+	}
+	err1 := Wrap(err, "1")
+
+	target := &myError1{}
+	// 相较于 TestAs，多了个 &
+	if ok := As(err1, &target); !ok {
 		panic("ok == false")
 	}
 	fmt.Println(target.Text) // cyy
