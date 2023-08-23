@@ -1,33 +1,20 @@
 package main
 
 import (
-	"context"
-	"fmt"
-	"net/http"
+	"github.com/richelieu-yang/chimera/v2/src/core/cpuKit"
+	"github.com/richelieu-yang/chimera/v2/src/log/logrusKit"
+	"github.com/sirupsen/logrus"
 	"time"
 )
 
+func init() {
+	cpuKit.SetUp()
+}
+
 func main() {
-	ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
-	defer cancel()
+	logrusKit.MustSetUp(nil)
 
-	req, err := http.NewRequestWithContext(ctx, "GET", "http://127.0.0.1/ping", nil)
-	if err != nil {
-		fmt.Println("Error:", err)
-		return
-	}
-
-	client := http.Client{}
-	resp, err := client.Do(req)
-	if err != nil {
-		fmt.Println("Error:", err)
-		return
-	}
-	defer resp.Body.Close()
-
-	if resp.StatusCode == http.StatusOK {
-		fmt.Println("Request successful")
-	} else {
-		fmt.Println("Request failed with status:", resp.Status)
-	}
+	logrus.Info("sleep starts")
+	time.Sleep(time.Second * 3)
+	logrus.Info("sleep ends")
 }
