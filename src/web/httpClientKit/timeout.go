@@ -10,13 +10,13 @@ import (
 // IsTimeoutError 是否是请求超时错误?
 func IsTimeoutError(err error) (flag bool) {
 	if err != nil {
-		/* (1) context.Context + http.NewRequestWithContext() */
+		/* (1) 处理：context.Context + http.NewRequestWithContext() */
 		if errors.Is(err, context.DeadlineExceeded) {
 			flag = true
 			return
 		}
 
-		/* (2) http.Client 结构体的 Timeout 字段 */
+		/* (2) 处理：http.Client 结构体的 Timeout 字段 */
 		tmp := &url.Error{}
 		// !!!: 由于url.Error{}结构体的Error()方法绑在 结构体指针 上，tmp前面要多个"&"
 		if errors.As(err, &tmp) {
