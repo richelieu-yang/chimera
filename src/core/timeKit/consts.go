@@ -49,11 +49,12 @@ const (
 	// FormatEntire 完整的格式
 	FormatEntire  TimeFormat = "2006-01-02 15:04:05.000Z07:00 MST"
 	FormatEntire1 TimeFormat = "2006-01-02T15:04:05.000Z07:00 MST"
+	FormatEntire2 TimeFormat = "2006-01-02T15:04:05.000Z07:00"
+
+	// FormatNetwork 网络的格式
+	FormatNetwork TimeFormat = "Mon, 02 Jan 2006 15:04:05 MST"
 
 	FormatA TimeFormat = "2006-01-02 15:04:05"
 	FormatB TimeFormat = "2006-01-02 3:04:05.000 PM Mon Jan"
 	FormatC TimeFormat = "3:04:05.000 PM Mon Jan"
-
-	// FormatNetwork 网络的格式
-	FormatNetwork TimeFormat = "Mon, 02 Jan 2006 15:04:05 MST"
 )
