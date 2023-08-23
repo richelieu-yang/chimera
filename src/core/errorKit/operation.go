@@ -16,6 +16,8 @@ var (
 
 	// As
 	/*
+		Deprecated: 建议直接使用 errors.As（原因: 使用错误的话IDE会有警告）.
+
 		查找 传参err 的错误链中与 传参target 匹配的第一个错误，
 		(1) 如果找到，则 将 传参target 设置为该错误值 && 返回true
 		(2) 否则 返回false。

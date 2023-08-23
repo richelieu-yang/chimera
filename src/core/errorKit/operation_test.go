@@ -1,6 +1,7 @@
 package errorKit
 
 import (
+	"errors"
 	"fmt"
 	"github.com/redis/go-redis/v9"
 	"testing"
@@ -36,9 +37,8 @@ func TestAs(t *testing.T) {
 	err1 := Wrap(err, "1")
 
 	target := myError{}
-
-	if ok := As(err1, &target); !ok {
-		panic(false)
+	if ok := errors.As(err1, &target); !ok {
+		panic("ok == false")
 	}
 	fmt.Println(target.Text) // cyy
 	if err.Text != target.Text {
