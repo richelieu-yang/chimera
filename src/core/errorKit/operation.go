@@ -18,10 +18,13 @@ var (
 	/*
 		Deprecated: 建议直接使用 errors.As（原因: 使用错误的话IDE会有警告）.
 
-		查找 传参err 的错误链中与 传参target 匹配的第一个错误，
-		(1) 如果找到，则 将 传参target 设置为该错误值 && 返回true
-		(2) 否则 返回false。
+		!!!:
+		对于传参target，
+		(1) 如果 Error() 绑定在 结构体 上，需要 1个 '&';
+		(2) 如果 Error() 绑定在 结构体指针 上，需要 2个 '&'.
 
+		查找 传参err 的错误链中与 传参target 匹配的第一个错误，(1) 如果找到，则 将 传参target 设置为该错误值 && 返回true;
+														(2) 否则 返回false.
 		finds the first error in err's tree that matches target, and if one is found, sets
 		target to that error value and returns true. Otherwise, it returns false.
 

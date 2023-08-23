@@ -36,8 +36,8 @@ func TestAs(t *testing.T) {
 	}
 	err1 := Wrap(err, "1")
 
-	target := myError{}
-	if ok := errors.As(err1, &target); !ok {
+	target := &myError{}
+	if ok := errors.As(err1, target); !ok {
 		panic("ok == false")
 	}
 	fmt.Println(target.Text) // cyy

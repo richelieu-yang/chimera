@@ -3,7 +3,6 @@ package httpClientKit
 import (
 	"context"
 	"errors"
-	"github.com/richelieu-yang/chimera/v2/src/core/errorKit"
 	"net/url"
 )
 
@@ -18,7 +17,8 @@ func IsTimeoutError(err error) (flag bool) {
 
 		/* (2) http.Client 结构体的 Timeout 字段 */
 		tmp := &url.Error{}
-		if errorKit.As(err, tmp) {
+		// 由于url.Error{}结构体的Error()方法绑在 指针 上，tmp前面多个"&"
+		if errors.As(err, &tmp) {
 			if tmp.Timeout() {
 				flag = true
 				return
