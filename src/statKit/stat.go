@@ -2,7 +2,7 @@ package statKit
 
 import (
 	"github.com/richelieu-yang/chimera/v2/src/core/cpuKit"
-	"github.com/richelieu-yang/chimera/v2/src/core/floatKit"
+	"github.com/richelieu-yang/chimera/v2/src/core/mathKit"
 	"github.com/richelieu-yang/chimera/v2/src/core/memoryKit"
 	"github.com/richelieu-yang/chimera/v2/src/core/osKit"
 	"github.com/richelieu-yang/chimera/v2/src/dataSizeKit"
@@ -94,7 +94,7 @@ func GetStats() (rst *Stats) {
 			if err != nil {
 				cpuStats.UsageError = err
 			} else {
-				cpuStats.Usage = floatKit.Round(usage, 2)
+				cpuStats.Usage = mathKit.Round(usage, 2)
 			}
 		}
 	}()
@@ -112,7 +112,7 @@ func GetStats() (rst *Stats) {
 				diskStats.UsageError = err
 			} else {
 				diskStats.Path = stats.Path
-				diskStats.Usage = floatKit.Round(stats.UsedPercent, 2)
+				diskStats.Usage = mathKit.Round(stats.UsedPercent, 2)
 			}
 		}
 	}()
@@ -166,7 +166,7 @@ func GetStats() (rst *Stats) {
 				machineStats.Total = dataSizeKit.ToReadableStringWithIEC(stats.Total)
 				machineStats.Available = dataSizeKit.ToReadableStringWithIEC(stats.Available)
 				machineStats.Used = dataSizeKit.ToReadableStringWithIEC(stats.Used)
-				machineStats.UsedPercent = floatKit.Round(stats.UsedPercent, 2)
+				machineStats.UsedPercent = mathKit.Round(stats.UsedPercent, 2)
 				machineStats.Free = dataSizeKit.ToReadableStringWithIEC(stats.Free)
 			}
 
