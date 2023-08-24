@@ -10,11 +10,11 @@ import (
 	"net/http"
 )
 
-// RegisterHandlersToRoute 将多个相同的处理器，注册到1个路由
+// RegisterRoute 将多个相同的处理器，注册到1个路由
 /*
 @param methods nil => 接收所有类型method的请求.	e.g. http.MethodGet、http.MethodPost
 */
-func RegisterHandlersToRoute(group IGroup, route string, methods []string, handlers ...gin.HandlerFunc) {
+func RegisterRoute(group IGroup, route string, methods []string, handlers ...gin.HandlerFunc) {
 	if len(handlers) == 0 {
 		return
 	}
@@ -30,10 +30,10 @@ func RegisterHandlersToRoute(group IGroup, route string, methods []string, handl
 	return
 }
 
-// RegisterHandlersToRoutes 将多个相同的处理器，注册到多个路由
-func RegisterHandlersToRoutes(group IGroup, routes []string, methods []string, handlers ...gin.HandlerFunc) {
+// RegisterRoutes 将多个相同的处理器，注册到多个路由
+func RegisterRoutes(group IGroup, routes []string, methods []string, handlers ...gin.HandlerFunc) {
 	for _, route := range routes {
-		RegisterHandlersToRoute(group, route, methods, handlers...)
+		RegisterRoute(group, route, methods, handlers...)
 	}
 }
 
@@ -69,7 +69,7 @@ func NoRouteByDefault(engine IEngine) error {
 	}
 
 	htmlPath := pathKit.Join(dir, relPath)
-	LoadHtmlFiles(engine, htmlPath)
+	engine.LoadHTMLFiles(htmlPath)
 	NoRoute(engine, func(ctx *gin.Context) {
 		ctx.HTML(http.StatusNotFound, fileKit.GetFileName(htmlPath), gin.H{
 			"urlPath": ctx.Request.URL.Path,
