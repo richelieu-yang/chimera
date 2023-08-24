@@ -105,6 +105,7 @@ e.g.4	将 wss://127.0.0.1:8888/test 转发给 ws://127.0.0.1:80/ws/connect
 scheme="http" addr="127.0.0.1:80" reqUrlPath=ptrKit.ToPtr("/ws/connect")
 */
 func proxy(w http.ResponseWriter, r *http.Request, scheme, addr string, errorLogger *log.Logger, reqUrlPath *string, queryParams map[string]string) error {
+	// 重置 Request.Body（r.Body可以为nil）
 	ok, err := ResetRequestBody(r)
 	if err != nil {
 		return err
@@ -112,7 +113,6 @@ func proxy(w http.ResponseWriter, r *http.Request, scheme, addr string, errorLog
 	if !ok {
 		return errorKit.New("fail to reset request body")
 	}
-	//// 重置 Request.Body（r.Body可以为nil）
 	//if seeker, ok := r.Body.(io.Seeker); ok {
 	//	_, err := seeker.Seek(0, io.SeekStart)
 	//	if err != nil {
@@ -127,8 +127,9 @@ func proxy(w http.ResponseWriter, r *http.Request, scheme, addr string, errorLog
 	default:
 		return errorKit.New("invalid scheme: %s", scheme)
 	}
-	if strKit.IsEmpty(addr) {
-		return errorKit.New("addr is empty")
+
+	if err := strKit.AssertNotEmpty(addr, "addr"); err != nil {
+		return err
 	}
 
 	director := func(req *http.Request) {
