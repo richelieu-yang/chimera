@@ -4,7 +4,6 @@ import (
 	"github.com/richelieu-yang/chimera/v2/src/core/errorKit"
 	"github.com/richelieu-yang/chimera/v2/src/core/strKit"
 	"github.com/richelieu-yang/chimera/v2/src/urlKit"
-	"io"
 	"log"
 	"net/http"
 	"net/http/httputil"
@@ -106,13 +105,20 @@ e.g.4	将 wss://127.0.0.1:8888/test 转发给 ws://127.0.0.1:80/ws/connect
 scheme="http" addr="127.0.0.1:80" reqUrlPath=ptrKit.ToPtr("/ws/connect")
 */
 func proxy(w http.ResponseWriter, r *http.Request, scheme, addr string, errorLogger *log.Logger, reqUrlPath *string, queryParams map[string]string) error {
-	// 重置 Request.Body（r.Body可以为nil）
-	if seeker, ok := r.Body.(io.Seeker); ok {
-		_, err := seeker.Seek(0, io.SeekStart)
-		if err != nil {
-			return err
-		}
+	ok, err := ResetRequestBody(r)
+	if err != nil {
+		return err
 	}
+	if !ok {
+		return errorKit.New("fail to reset request body")
+	}
+	//// 重置 Request.Body（r.Body可以为nil）
+	//if seeker, ok := r.Body.(io.Seeker); ok {
+	//	_, err := seeker.Seek(0, io.SeekStart)
+	//	if err != nil {
+	//		return err
+	//	}
+	//}
 
 	scheme = strKit.EmptyToDefault(scheme, "http", true)
 	switch scheme {
@@ -125,7 +131,6 @@ func proxy(w http.ResponseWriter, r *http.Request, scheme, addr string, errorLog
 		return errorKit.New("addr is empty")
 	}
 
-	var err error
 	director := func(req *http.Request) {
 		req.URL.Scheme = scheme
 		req.URL.Host = addr
