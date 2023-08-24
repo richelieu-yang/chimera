@@ -58,7 +58,7 @@ PS: 转发请求前如果想变更请求头(Header)，可以在调用此函数�
 */
 func Proxy(w http.ResponseWriter, r *http.Request, scheme, addr string, options ...ProxyOption) error {
 	opts := loadOptions(options...)
-	return proxy(w, r, scheme, addr, opts.errorLogger, opts.reqUrlPath, opts.queryParams)
+	return opts.proxy(w, r, scheme, addr)
 }
 
 // proxy
@@ -104,7 +104,7 @@ scheme="http" addr="127.0.0.1:8889" reqUrlPath=ptrKit.ToPtr("/group1/test1")
 e.g.4	将 wss://127.0.0.1:8888/test 转发给 ws://127.0.0.1:80/ws/connect
 scheme="http" addr="127.0.0.1:80" reqUrlPath=ptrKit.ToPtr("/ws/connect")
 */
-func proxy(w http.ResponseWriter, r *http.Request, scheme, addr string, errorLogger *log.Logger, reqUrlPath *string, queryParams map[string]string) error {
+func (opts *proxyOptions) proxy(w http.ResponseWriter, r *http.Request, scheme, addr string) error {
 	// 重置 Request.Body（r.Body可以为nil）
 	ok, err := ResetRequestBody(r)
 	if err != nil {
@@ -135,14 +135,14 @@ func proxy(w http.ResponseWriter, r *http.Request, scheme, addr string, errorLog
 	director := func(req *http.Request) {
 		req.URL.Scheme = scheme
 		req.URL.Host = addr
-		if reqUrlPath != nil {
-			req.URL.Path = *reqUrlPath
+		if opts.reqUrlPath != nil {
+			req.URL.Path = *opts.reqUrlPath
 		}
-		req.URL.RawQuery = urlKit.AttachQueryParamsToRawQuery(req.URL.RawQuery, queryParams)
+		req.URL.RawQuery = urlKit.AttachQueryParamsToRawQuery(req.URL.RawQuery, opts.queryParams)
 	}
 	reverseProxy := &httputil.ReverseProxy{
 		Director: director,
-		ErrorLog: errorLogger,
+		ErrorLog: opts.errorLogger,
 		ErrorHandler: func(rw http.ResponseWriter, req *http.Request, e error) {
 			err = e
 		},
