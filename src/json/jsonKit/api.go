@@ -1,5 +1,7 @@
 package jsonKit
 
+import jsoniter "github.com/json-iterator/go"
+
 var library string
 var defaultAPI API = nil
 
@@ -25,6 +27,7 @@ func GetDefaultAPI() API {
 	return defaultAPI
 }
 
-//func SetDefaultAPI(api API) {
-//	defaultAPI = api
-//}
+func useJsonIterator() {
+	library = "json-iterator/go"
+	defaultAPI = jsoniter.ConfigDefault
+}
