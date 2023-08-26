@@ -3,5 +3,6 @@
 package jsonKit
 
 func init() {
-	useJsonIterator()
+	library = "json-iterator/go"
+	defaultAPI = jsoniter.ConfigDefault
 }
