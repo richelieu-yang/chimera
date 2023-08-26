@@ -1,6 +1,6 @@
 module github.com/richelieu-yang/chimera/v2
 
-go 1.21
+go 1.20
 
 require (
 	github.com/apache/pulsar-client-go v0.11.0
@@ -18,7 +18,6 @@ require (
 	github.com/gin-contrib/cors v1.4.0
 	github.com/gin-contrib/gzip v0.0.6
 	github.com/gin-contrib/pprof v1.4.0
-	github.com/gin-contrib/size v0.0.0-20230212012657-e14a14094dc4
 	github.com/gin-gonic/gin v1.9.1
 	github.com/go-kratos/kratos/v2 v2.7.0
 	github.com/go-playground/validator/v10 v10.15.1

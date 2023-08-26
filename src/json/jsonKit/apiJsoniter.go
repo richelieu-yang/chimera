@@ -1,4 +1,4 @@
-//go:build !((linux || windows || darwin) && amd64)
+//go:build !amd64 || !go1.16
 
 package jsonKit
 
