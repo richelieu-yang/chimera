@@ -13,6 +13,7 @@ import (
 	"github.com/richelieu-yang/chimera/v2/src/diskKit"
 	"github.com/richelieu-yang/chimera/v2/src/dockerKit"
 	"github.com/richelieu-yang/chimera/v2/src/ipKit"
+	"github.com/richelieu-yang/chimera/v2/src/json/jsonKit"
 	"github.com/richelieu-yang/chimera/v2/src/processKit"
 	"github.com/shirou/gopsutil/v3/docker"
 	"github.com/sirupsen/logrus"
@@ -45,6 +46,9 @@ func PrintBasicDetails(logger *logrus.Logger) {
 	logger.Infof("[CHIMERA, PATH] temporary directory: [%s].", pathKit.GetTempDir())
 	logger.Infof("[CHIMERA, PATH] SelfDir: [%s].", pathKit.SelfDir())
 	logger.Infof("[CHIMERA, PATH] MainPkgPath: [%s].", pathKit.MainPkgPath())
+
+	// json
+	logger.Infof("[CHIMERA, JSON] library: [%s].", jsonKit.GetLibrary())
 
 	// time
 	systemTime := timeKit.GetSystemTime()
