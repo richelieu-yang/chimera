@@ -1,5 +1,5 @@
 // 编译标签(build tag): 参考gin中的"sonic.go"
-//go:build amd64 && go1.16 && !go1.22
+//go:build amd64 && go1.16
 
 package jsonKit
 
