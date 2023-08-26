@@ -9,6 +9,12 @@ import (
 func main() {
 	logrusKit.MustSetUp(nil)
 
+	defer func() {
+		if obj := recover(); obj != nil {
+			logrus.Infof("recover: [%T, %v].", obj, obj)
+		}
+	}()
+
 	m := map[string]interface{}{
 		"0": 0,
 		"1": 1,
