@@ -20,7 +20,7 @@ func DownloadToFile(url, filePath string) error {
 	//	return err
 	//}
 
-	client := NewClient()
+	client := GetDefaultClient()
 	_, err := client.R().SetOutputFile(filePath).Get(url)
 	if err != nil {
 		return err
@@ -38,7 +38,7 @@ func DownloadToWriter(url string, writer io.Writer) error {
 		return err
 	}
 
-	client := NewClient()
+	client := GetDefaultClient()
 	_, err := client.R().SetOutput(writer).Get(url)
 	if err != nil {
 		return err

@@ -15,7 +15,7 @@ func TestNewClient(t *testing.T) {
 	url := "https://www.baidu.com/"
 	//url := "https://127.0.0.1/test"
 
-	client := NewClient()
+	client := GetDefaultClient()
 	resp := client.Get(url).Do()
 	if resp.Err != nil {
 		panic(resp.Err)
@@ -38,7 +38,7 @@ func TestNewClient1(t *testing.T) {
 	url := "https://www.baidu.com/"
 	//url := "https://127.0.0.1/test"
 
-	client := NewClient()
+	client := GetDefaultClient()
 	resp, err := client.R().Get(url)
 	if err != nil {
 		panic(err)
