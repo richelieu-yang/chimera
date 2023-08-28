@@ -8,6 +8,8 @@ github(3.5k Star)
 
 #### Close
 不需要手动调用 resp.Body.Close()（无论是 普通GET、POST请求 还是 下载请求）.
+e.g.
+    普通GET请求，调用 Do() 时就已经将 resp.Body 关闭了，不管你后续读不读 resp.Body 的内容.
 
 #### 请求超时（2选1; 推荐使用第1种）
 (1) 调用 Client.SetTimeout() 设置超时时间（imroc/req默认: 2 * time.Minute）
