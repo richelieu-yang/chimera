@@ -1,8 +1,9 @@
 package timeKit
 
 import (
+	"github.com/imroc/req/v3"
 	"github.com/richelieu-yang/chimera/v2/src/core/errorKit"
-	"github.com/richelieu-yang/chimera/v2/src/web/httpClientKit"
+	"github.com/richelieu-yang/chimera/v2/src/web/reqKit"
 	"time"
 )
 
@@ -30,14 +31,18 @@ func GetNetworkTime() (time.Time, string, error) {
 		t      time.Time
 	}
 
-	// 超时时间设置的短一点，以防内网环境启动服务耗时太长.
+	// 超时时间设置的短一点，以防内网环境启动服务耗时太长
 	var timeout = time.Second * 3
 	var ch = make(chan *bean, len(networkTimeSources))
+
+	// 共用一个client
+	client := reqKit.NewClient()
+	client.SetTimeout(timeout)
 
 	// 起多个goroutine同时获取网络时间，只要有一个成功获取到，此方法就返回值
 	for _, source := range networkTimeSources {
 		go func(url string) {
-			t, err := getNetworkTimeBySource(url, timeout)
+			t, err := getNetworkTimeBySource(client, url)
 			if err != nil {
 				return
 			}
@@ -55,31 +60,15 @@ func GetNetworkTime() (time.Time, string, error) {
 	}
 }
 
-func getNetworkTimeBySource(url string, timeout time.Duration) (time.Time, error) {
-	resp, err := httpClientKit.GetForResponse(url, httpClientKit.WithTimeout(timeout))
-
-	//client := &http.Client{
-	//	Timeout: timeout,
-	//	Transport: &http.Transport{
-	//		TLSClientConfig: &tls.Config{
-	//			InsecureSkipVerify: true,
-	//		},
-	//	},
-	//}
-	//req, err := http.NewRequest("GET", url, nil)
-	//if err != nil {
-	//	return time.Time{}, err
-	//}
-	//resp, err := client.Do(req)
-
-	if err != nil {
-		return time.Time{}, err
+func getNetworkTimeBySource(client *req.Client, url string) (time.Time, error) {
+	resp := client.Get(url).Do()
+	if resp.Err != nil {
+		return time.Time{}, resp.Err
 	}
-	defer resp.Body.Close()
 
 	// e.g."Fri, 18 Aug 2023 07:15:26 GMT"
-	timeString := resp.Header.Get("Date")
-	t, err := Parse(string(FormatNetwork), timeString)
+	dateStr := resp.Header.Get("Date")
+	t, err := Parse(string(FormatNetwork), dateStr)
 	if err != nil {
 		return time.Time{}, err
 	}
