@@ -7,7 +7,7 @@ github(3.5k Star)
     https://req.cool/zh/docs/prologue/quickstart/
 
 #### Close
-不需要手动调用 resp.Body.Close().
+不需要手动调用 resp.Body.Close()（无论是 普通GET、POST请求 还是 下载请求）.
 
 ## go-resty/resty 参考
 github(8.2k Star)
