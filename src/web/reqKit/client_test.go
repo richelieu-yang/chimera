@@ -8,7 +8,6 @@ import (
 
 func TestNewClient(t *testing.T) {
 	/*
-
 		PS:
 		(1) 通过判断 resp.Err 来判断是否发生 error.
 		(2) 任何情况下返回的 “resp” 永远不会是 nil，可以放心的直接判断。

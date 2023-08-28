@@ -6,6 +6,10 @@ github(3.5k Star)
 快速开始（中文）
     https://req.cool/zh/docs/prologue/quickstart/
 
+#### Close
+不需要手动调用 resp.Body.Close().
+
 ## go-resty/resty 参考
 github(8.2k Star)
     https://github.com/go-resty/resty
+
