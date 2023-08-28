@@ -20,7 +20,8 @@ func TestNewClient(t *testing.T) {
 	if resp.Err != nil {
 		panic(resp.Err)
 	}
-	defer resp.Body.Close()
+	// 不需要手动关闭
+	//defer resp.Body.Close()
 
 	if !resp.IsSuccessState() {
 		panic(errors.New(fmt.Sprintf("error status: %s", resp.GetStatus())))
@@ -42,7 +43,8 @@ func TestNewClient1(t *testing.T) {
 	if err != nil {
 		panic(err)
 	}
-	defer resp.Body.Close()
+	// 不需要手动关闭
+	//defer resp.Body.Close()
 
 	if !resp.IsSuccessState() {
 		panic(errors.New(fmt.Sprintf("error status: %s", resp.GetStatus())))
