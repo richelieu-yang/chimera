@@ -9,6 +9,7 @@ import (
 func main() {
 	logrusKit.MustSetUp(nil)
 
+	// 看下能否 恢复
 	defer func() {
 		if obj := recover(); obj != nil {
 			logrus.Infof("recover: [%T, %v].", obj, obj)
@@ -16,7 +17,7 @@ func main() {
 	}()
 
 	m := map[string]interface{}{
-		"0": 0,
+		"0": 3.1415926,
 		"1": 1,
 	}
 	jsonStr, err := sonic.ConfigStd.MarshalToString(m)
