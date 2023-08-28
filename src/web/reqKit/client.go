@@ -3,6 +3,7 @@ package reqKit
 import (
 	"github.com/imroc/req/v3"
 	"github.com/richelieu-yang/chimera/v2/src/json/jsonKit"
+	"time"
 )
 
 var defaultClient = NewClient()
@@ -18,6 +19,9 @@ func GetDefaultClient() *req.Client {
 
 func NewClient() *req.Client {
 	client := req.C()
+
+	// timeout（默认的2min太长了）
+	client.SetTimeout(time.Second * 15)
 
 	// 自动探测字符集并解码到 utf-8（默认就是启用）
 	client.EnableAutoDecode()
