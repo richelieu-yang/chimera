@@ -6,7 +6,7 @@ logrus:
 
 gin:
   # Gin的模式（默认: debug，可选值: debug|release|test）
-  mode: release
+  mode: debug
   hostName:
   # http端口号（默认: 80）
   port: 80
@@ -50,7 +50,7 @@ gin:
 #          - "*.yozo.com"
   ssl:
     # 是否配置ssl？
-    access: false
+    access: true
     # 证书文件(建议".pem")
     certFile: /Users/richelieu/GolandProjects/chimera/chimera-lib/ssl.pem
     # key文件(".key")
