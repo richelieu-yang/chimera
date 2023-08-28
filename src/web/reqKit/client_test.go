@@ -3,7 +3,6 @@ package reqKit
 import (
 	"errors"
 	"fmt"
-	"io"
 	"testing"
 )
 
@@ -22,17 +21,20 @@ func TestNewClient(t *testing.T) {
 		if resp.Err != nil {
 			panic(resp.Err)
 		}
-		defer resp.Body.Close()
+		defer func() {
+			if resp.Body != nil {
+				_ = resp.Body.Close()
+			}
+		}()
 
 		if !resp.IsSuccessState() {
-			panic(errors.New(fmt.Sprintf("error state: %d", resp.StatusCode)))
+			panic(errors.New(fmt.Sprintf("error status: %s", resp.GetStatus())))
 		}
 
-		data, err := io.ReadAll(resp.Body)
-		if err != nil {
-			panic(err)
-		}
-		fmt.Println(string(data))
+		str := resp.String()
+		fmt.Println("length:", len(str))
+
+		fmt.Println("total time:", resp.TotalTime().String())
 	}
 
 }
