@@ -21,11 +21,7 @@ func TestNewClient(t *testing.T) {
 	if resp.Err != nil {
 		panic(resp.Err)
 	}
-	defer func() {
-		if resp.Body != nil {
-			_ = resp.Body.Close()
-		}
-	}()
+	defer resp.Body.Close()
 
 	if !resp.IsSuccessState() {
 		panic(errors.New(fmt.Sprintf("error status: %s", resp.GetStatus())))
@@ -47,11 +43,7 @@ func TestNewClient1(t *testing.T) {
 	if err != nil {
 		panic(err)
 	}
-	defer func() {
-		if resp.Body != nil {
-			_ = resp.Body.Close()
-		}
-	}()
+	defer resp.Body.Close()
 
 	if !resp.IsSuccessState() {
 		panic(errors.New(fmt.Sprintf("error status: %s", resp.GetStatus())))
