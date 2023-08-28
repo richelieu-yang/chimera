@@ -32,6 +32,7 @@ func TestNewClient(t *testing.T) {
 		}
 
 		str := resp.String()
+		fmt.Println(str)
 		fmt.Println("length:", len(str))
 
 		fmt.Println("total time:", resp.TotalTime().String())
