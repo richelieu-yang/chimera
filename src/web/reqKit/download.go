@@ -24,7 +24,8 @@ func DownloadToFile(url, filePath string) error {
 	if err != nil {
 		return err
 	}
-	defer resp.Body.Close()
+	//defer resp.Body.Close()
+	resp = resp
 	return nil
 }
 

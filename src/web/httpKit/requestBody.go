@@ -29,8 +29,10 @@ func MakeRequestBodySeekable(req *http.Request) error {
 	if err != nil {
 		return err
 	}
-	readSeeker := bytes.NewReader(data)
-	req.Body = ioKit.NopCloserToReadSeeker(readSeeker)
+
+	// bytes.NewReader() 的返回值实现了 io.Seeker 接口
+	reader := bytes.NewReader(data)
+	req.Body = ioKit.NopCloser(reader)
 	return nil
 }
 
