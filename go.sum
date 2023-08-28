@@ -758,8 +758,8 @@ github.com/emersion/go-imap v1.2.1/go.mod h1:Qlx1FSx2FTxjnjWpIlVNEuX+ylerZQNFE5N
 github.com/emersion/go-imap-id v0.0.0-20190926060100-f94a56b9ecde h1:43mBoVwooyLm1+1YVf5nvn1pSFWhw7rOpcrp1Jg/qk0=
 github.com/emersion/go-imap-id v0.0.0-20190926060100-f94a56b9ecde/go.mod h1:sPwp0FFboaK/bxsrUz1lNrDMUCsZUsKC5YuM4uRVRVs=
 github.com/emersion/go-message v0.15.0/go.mod h1:wQUEfE+38+7EW8p8aZ96ptg6bAb1iwdgej19uXASlE4=
-github.com/emersion/go-message v0.16.0 h1:uZLz8ClLv3V5fSFF/fFdW9jXjrZkXIpE1Fn8fKx7pO4=
-github.com/emersion/go-message v0.16.0/go.mod h1:pDJDgf/xeUIF+eicT6B/hPX/ZbEorKkUMPOxrPVG2eQ=
+github.com/emersion/go-message v0.17.0 h1:NIdSKHiVUx4qKqdd0HyJFD41cW8iFguM2XJnRZWQH04=
+github.com/emersion/go-message v0.17.0/go.mod h1:/9Bazlb1jwUNB0npYYBsdJ2EMOiiyN3m5UVHbY7GoNw=
 github.com/emersion/go-sasl v0.0.0-20200509203442-7bfe0ed36a21 h1:OJyUGMJTzHTd1XQp98QTaHernxMYzRaOasRir9hUlFQ=
 github.com/emersion/go-sasl v0.0.0-20200509203442-7bfe0ed36a21/go.mod h1:iL2twTeMvZnrg54ZoPDNfJaJaqy0xIQFuBdrLsmspwQ=
 github.com/emersion/go-textwrapper v0.0.0-20200911093747-65d896831594 h1:IbFBtwoTQyw0fIM5xv1HF+Y+3ZijDR839WMulgxCcUY=

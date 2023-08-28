@@ -14,7 +14,7 @@ require (
 	github.com/dustin/go-humanize v1.0.1
 	github.com/emersion/go-imap v1.2.1
 	github.com/emersion/go-imap-id v0.0.0-20190926060100-f94a56b9ecde
-	github.com/emersion/go-message v0.16.0
+	github.com/emersion/go-message v0.17.0
 	github.com/fatih/structs v1.1.0
 	github.com/gabriel-vasile/mimetype v1.4.2
 	github.com/gin-contrib/cors v1.4.0
