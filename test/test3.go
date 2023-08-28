@@ -1,16 +1,22 @@
 package main
 
 import (
-	"encoding/json"
-
-	"github.com/bytedance/go-tagexpr/v2/binding"
-	"github.com/cloudwego/hertz/pkg/app/server/render"
+	"fmt"
+	"github.com/richelieu-yang/chimera/v2/src/web/reqKit"
+	"time"
 )
 
 func main() {
-	// Render
-	render.ResetJSONMarshal(json.Marshal)
+	client := reqKit.GetDefaultClient()
 
-	// Binding
-	binding.ResetJSONUnmarshaler(json.Unmarshal)
+	client.SetTimeout(time.Second * 2)
+	//ctx, _ := context.WithTimeout(context.TODO(), time.Second*2)
+
+	resp := client.Get("http://127.0.0.1/test").Do(ctx)
+	if resp.Err != nil {
+		fmt.Println(reqKit.IsTimeoutError(resp.Err))
+		panic(resp.Err)
+	}
+	fmt.Println(resp.String())
+	fmt.Println(resp.ToString())
 }

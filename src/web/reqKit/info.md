@@ -9,6 +9,10 @@ github(3.5k Star)
 #### Close
 不需要手动调用 resp.Body.Close()（无论是 普通GET、POST请求 还是 下载请求）.
 
+#### 请求超时（2选1）
+(1) 调用 Client.SetTimeout() 设置超时时间（imroc/req默认: 2 * time.Minute）
+(2) 调用 Request.Do() 时传参（context.Context类型）
+
 ## go-resty/resty 参考
 github(8.2k Star)
     https://github.com/go-resty/resty
