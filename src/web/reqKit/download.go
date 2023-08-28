@@ -12,13 +12,13 @@ func DownloadToFile(url, filePath string) error {
 	if err := httpKit.AssertHttpUrl(url); err != nil {
 		return err
 	}
-	// filePath
+	// filePath（此处无需创建父目录，因为 imroc/req库 内部会创建）
 	if err := fileKit.AssertNotExistOrIsFile(filePath); err != nil {
 		return err
 	}
-	if err := fileKit.MkParentDirs(filePath); err != nil {
-		return err
-	}
+	//if err := fileKit.MkParentDirs(filePath); err != nil {
+	//	return err
+	//}
 
 	client := NewClient()
 	_, err := client.R().SetOutputFile(filePath).Get(url)
