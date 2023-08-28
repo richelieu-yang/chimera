@@ -1,7 +1,7 @@
 package jsonKit
 
 func Marshal(v interface{}) ([]byte, error) {
-	return defaultAPI.Marshal(v)
+	return api.Marshal(v)
 }
 
 // MarshalIndent
@@ -9,11 +9,11 @@ func Marshal(v interface{}) ([]byte, error) {
 @param indent 为了兼容性，用"    "（4个空格）替代"\t"
 */
 func MarshalIndent(v interface{}, prefix, indent string) ([]byte, error) {
-	return defaultAPI.MarshalIndent(v, prefix, indent)
+	return api.MarshalIndent(v, prefix, indent)
 }
 
 func MarshalToString(v interface{}) (string, error) {
-	return defaultAPI.MarshalToString(v)
+	return api.MarshalToString(v)
 }
 
 // MarshalIndentToString
@@ -26,9 +26,9 @@ func MarshalIndentToString(v interface{}, prefix, indent string) (string, error)
 }
 
 func Unmarshal(data []byte, v interface{}) error {
-	return defaultAPI.Unmarshal(data, v)
+	return api.Unmarshal(data, v)
 }
 
 func UnmarshalFromString(str string, v interface{}) error {
-	return defaultAPI.UnmarshalFromString(str, v)
+	return api.UnmarshalFromString(str, v)
 }
