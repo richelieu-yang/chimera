@@ -9,10 +9,8 @@ var defaultClient = NewClient()
 
 // GetDefaultClient
 /*
-重用 Client
-	https://req.cool/zh/docs/tutorial/best-practices/#%e9%87%8d%e7%94%a8-client
-
-不要每次发请求都创建 Client，造成不必要的开销，通常可以复用同一 Client 发所有请求.
+重用Client https://req.cool/zh/docs/tutorial/best-practices/#%e9%87%8d%e7%94%a8-client
+	不要每次发请求都创建 Client，造成不必要的开销，通常可以复用同一 Client 发所有请求.
 */
 func GetDefaultClient() *req.Client {
 	return defaultClient
