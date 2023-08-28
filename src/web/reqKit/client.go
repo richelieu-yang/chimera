@@ -8,7 +8,7 @@ import (
 func NewClient() *req.Client {
 	client := req.C()
 
-	// 默认就是启用，自动探测字符集并解码到 utf-8
+	// 自动探测字符集并解码到 utf-8（默认就是启用）
 	client.EnableAutoDecode()
 
 	// 不验证非法的证书（默认验证）
