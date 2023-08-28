@@ -1,4 +1,4 @@
-## imroc/req 参考
+## imroc/req 参考（本包使用的是 imroc/req）
 GO语言最好用的HTTP请求库
     https://www.bilibili.com/video/BV1Mu4y197dA/
 github(3.5k Star)
