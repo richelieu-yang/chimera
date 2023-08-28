@@ -25,6 +25,7 @@ func DownloadToFile(url, filePath string) error {
 	if err != nil {
 		return err
 	}
+	// 无需手动关闭
 	//defer resp.Body.Close()
 	return nil
 }
@@ -44,6 +45,7 @@ func DownloadToWriter(url string, writer io.Writer) error {
 	if err != nil {
 		return err
 	}
+	// 无需手动关闭
 	//defer resp.Body.Close()
 	return nil
 }
