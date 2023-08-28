@@ -3,6 +3,7 @@ package timeKit
 import (
 	"github.com/imroc/req/v3"
 	"github.com/richelieu-yang/chimera/v2/src/core/errorKit"
+	"github.com/richelieu-yang/chimera/v2/src/core/strKit"
 	"github.com/richelieu-yang/chimera/v2/src/web/reqKit"
 	"time"
 )
@@ -28,7 +29,7 @@ PS: 获取不到的话，返回机器时间.
 func GetNetworkTime() (time.Time, string, error) {
 	type bean struct {
 		source string
-		t      time.Time
+		time   time.Time
 	}
 
 	// 超时时间设置的短一点，以防内网环境启动服务耗时太长
@@ -48,13 +49,13 @@ func GetNetworkTime() (time.Time, string, error) {
 			}
 			ch <- &bean{
 				source: url,
-				t:      t,
+				time:   t,
 			}
 		}(source)
 	}
 	select {
 	case b := <-ch:
-		return b.t, b.source, nil
+		return b.time, b.source, nil
 	case <-time.After(timeout):
 		return time.Time{}, "", errorKit.New("timeout(%s)", timeout)
 	}
@@ -68,6 +69,10 @@ func getNetworkTimeBySource(client *req.Client, url string) (time.Time, error) {
 
 	// e.g."Fri, 18 Aug 2023 07:15:26 GMT"
 	dateStr := resp.Header.Get("Date")
+	if err := strKit.AssertNotEmpty(dateStr, "dateStr"); err != nil {
+		return time.Time{}, err
+	}
+
 	t, err := Parse(string(FormatNetwork), dateStr)
 	if err != nil {
 		return time.Time{}, err
