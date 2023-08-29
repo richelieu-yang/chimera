@@ -15,7 +15,7 @@ import (
 			(2) 指针类型 || 结构体实例
 
 e.g.
-	b := &Bean{
+	b := &bean{
 		Id: 666,
 	}
 	src := map[string]interface{}{
@@ -55,7 +55,8 @@ PS:
 (2) 不使用 github.com/mohae/deepcopy: 	虽然效果一样，但不推荐使用（star少; 最后更新时间2017）
 (3) 不使用 github.com/jinzhu/copier: 	深拷贝有bug，详见"Golang.wps"
 
-@param src 可以为nil（此时将返回: nil, nil）
+@param src	(1) 可以为nil（此时将返回: nil, nil）
+			(2) 结构体指针 || map实例 || slice实例
 
 e.g. 传参为nil的情况
 	a, err := copyKit.DeepCopy[interface{}](nil)
