@@ -26,6 +26,16 @@ func GetInt64FieldFromString(jsonStr, path string) int64 {
 	return result.Int()
 }
 
+func GetFloat64Field(jsonData []byte, path string) float64 {
+	result := gjson.GetBytes(jsonData, path)
+	return result.Float()
+}
+
+func GetFloat64FieldFromString(jsonStr, path string) float64 {
+	result := gjson.Get(jsonStr, path)
+	return result.Float()
+}
+
 func GetBoolField(jsonData []byte, path string) bool {
 	result := gjson.GetBytes(jsonData, path)
 	return result.Bool()
