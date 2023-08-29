@@ -56,7 +56,7 @@ PS:
 (3) 不使用 github.com/jinzhu/copier: 	深拷贝有bug，详见"Golang.wps"
 
 @param src	(1) 可以为nil（此时将返回: nil, nil）
-			(2) 结构体指针 || map实例 || slice实例
+			(2) 必须是: 结构体指针 || map实例 || slice实例
 
 e.g. 传参为nil的情况
 	a, err := copyKit.DeepCopy[interface{}](nil)

@@ -1,4 +1,4 @@
-//go:build !amd64 || !go1.16
+//go:build !amd64 || !go1.16 || !avx
 
 package jsonKit
 
