@@ -11,7 +11,9 @@ import (
 
 // ObtainGetParam 从url获取参数
 /*
-Deprecated: 使用原生方法.
+Deprecated: 使用原生方法，用法更加丰富.
+
+PS: 不需要额外手动解码.
 */
 func ObtainGetParam(ctx *gin.Context, key string) string {
 	return ctx.Query(key)
@@ -19,60 +21,55 @@ func ObtainGetParam(ctx *gin.Context, key string) string {
 
 // ObtainPostParam
 /*
-Deprecated: 使用原生方法.
+Deprecated: 使用原生方法，用法更加丰富.
 
-支持的Content-Type: multipart/form-data、x-www-form-urlencoded ...
+PS:
+(1) 不需要额外手动解码.
+(2) 支持的Content-Type: multipart/form-data、x-www-form-urlencoded ...
 */
 func ObtainPostParam(ctx *gin.Context, key string) string {
 	return ctx.PostForm(key)
 }
 
-// ObtainParam 获取请求参数（优先级: GET > POST）
+// ObtainParam 获取请求参数（顺序: GET、POST）.
 /*
-Deprecated: 使用原生方法.
+PS: 不需要额外手动解码.
 */
 func ObtainParam(ctx *gin.Context, key string) string {
 	// (1) GET
-	value := ObtainGetParam(ctx, key)
+	value := ctx.Query(key)
 	if strKit.IsNotEmpty(value) {
 		return value
 	}
-
 	// (2) POST
-	return ObtainPostParam(ctx, key)
+	return ctx.PostForm(key)
 }
 
-// ObtainBoolParam Deprecated: 使用原生方法.
 func ObtainBoolParam(ctx *gin.Context, key string) (bool, error) {
 	value := ObtainParam(ctx, key)
 	return boolKit.ToBoolE(value)
 }
 
-// ObtainIntParam Deprecated: 使用原生方法.
 func ObtainIntParam(ctx *gin.Context, key string) (int, error) {
 	value := ObtainParam(ctx, key)
 	return intKit.ToIntE(value)
 }
 
-// ObtainInt32Param Deprecated: 使用原生方法.
 func ObtainInt32Param(ctx *gin.Context, key string) (int32, error) {
 	value := ObtainParam(ctx, key)
 	return intKit.ToInt32E(value)
 }
 
-// ObtainInt64Param Deprecated: 使用原生方法.
 func ObtainInt64Param(ctx *gin.Context, key string) (int64, error) {
 	value := ObtainParam(ctx, key)
 	return intKit.ToInt64E(value)
 }
 
-// ObtainFloat32Param Deprecated: 使用原生方法.
 func ObtainFloat32Param(ctx *gin.Context, key string) (float32, error) {
 	value := ObtainParam(ctx, key)
 	return floatKit.ToFloat32E(value)
 }
 
-// ObtainFloat64Param Deprecated: 使用原生方法.
 func ObtainFloat64Param(ctx *gin.Context, key string) (float64, error) {
 	value := ObtainParam(ctx, key)
 	return floatKit.ToFloat64E(value)
@@ -80,8 +77,6 @@ func ObtainFloat64Param(ctx *gin.Context, key string) (float64, error) {
 
 // ObtainFormFileContent form请求，根据 传参key 获取文件的字节流.（单文件上传）
 /*
-Deprecated: 使用原生方法.
-
 @return 文件内容 + 文件名 + 错误
 */
 func ObtainFormFileContent(ctx *gin.Context, key string) ([]byte, string, error) {
