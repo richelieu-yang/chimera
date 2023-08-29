@@ -1,7 +1,7 @@
 package jsonKit
 
 var library string
-var api API = nil
+var defaultApi API = nil
 
 type (
 	API interface {
@@ -22,5 +22,5 @@ func GetLibrary() string {
 }
 
 func GetAPI() API {
-	return api
+	return defaultApi
 }

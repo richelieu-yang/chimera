@@ -13,7 +13,7 @@ import (
 */
 func init() {
 	library = "bytedance/sonic"
-	api = sonic.ConfigDefault
+	defaultApi = sonic.ConfigDefault
 
 	/*
 		amd64 CPU，不支持 avx指令集 的情况下，下面的代码会报错 SIGILL: illegal instruction

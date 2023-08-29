@@ -6,5 +6,5 @@ import jsoniter "github.com/json-iterator/go"
 
 func init() {
 	library = "json-iterator/go"
-	api = jsoniter.ConfigDefault
+	defaultApi = jsoniter.ConfigDefault
 }

@@ -2,7 +2,7 @@ package jsonKit
 
 func MarshalWithAPI(api API, v interface{}) ([]byte, error) {
 	if api == nil {
-		api = api
+		api = defaultApi
 	}
 
 	return api.Marshal(v)
@@ -14,7 +14,7 @@ func MarshalWithAPI(api API, v interface{}) ([]byte, error) {
 */
 func MarshalIndentWithAPI(api API, v interface{}, prefix, indent string) ([]byte, error) {
 	if api == nil {
-		api = api
+		api = defaultApi
 	}
 
 	return api.MarshalIndent(v, prefix, indent)
@@ -22,7 +22,7 @@ func MarshalIndentWithAPI(api API, v interface{}, prefix, indent string) ([]byte
 
 func MarshalToStringWithAPI(api API, v interface{}) (string, error) {
 	if api == nil {
-		api = api
+		api = defaultApi
 	}
 
 	return api.MarshalToString(v)
@@ -39,7 +39,7 @@ func MarshalIndentToStringWithAPI(api API, v interface{}, prefix, indent string)
 
 func UnmarshalWithAPI(api API, data []byte, v interface{}) error {
 	if api == nil {
-		api = api
+		api = defaultApi
 	}
 
 	return api.Unmarshal(data, v)
@@ -47,7 +47,7 @@ func UnmarshalWithAPI(api API, data []byte, v interface{}) error {
 
 func UnmarshalFromStringWithAPI(api API, str string, v interface{}) error {
 	if api == nil {
-		api = api
+		api = defaultApi
 	}
 
 	return api.UnmarshalFromString(str, v)
