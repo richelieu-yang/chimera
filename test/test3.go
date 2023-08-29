@@ -1,22 +1,22 @@
 package main
 
 import (
-	"fmt"
-	"github.com/richelieu-yang/chimera/v2/src/web/reqKit"
-	"time"
+	"github.com/bytedance/sonic"
+	"github.com/sirupsen/logrus"
 )
 
 func main() {
-	client := reqKit.GetDefaultClient()
-
-	client.SetTimeout(time.Second * 2)
-	//ctx, _ := context.WithTimeout(context.TODO(), time.Second*2)
-
-	resp := client.Get("http://127.0.0.1/test").Do(ctx)
-	if resp.Err != nil {
-		fmt.Println(reqKit.IsTimeoutError(resp.Err))
-		panic(resp.Err)
+	api := sonic.ConfigStd
+	m := map[string]interface{}{
+		"0": 3.1415926,
+		"1": 1,
 	}
-	fmt.Println(resp.String())
-	fmt.Println(resp.ToString())
+	jsonStr, err := api.MarshalToString(m)
+	if err != nil {
+		logrus.Fatal(err)
+	}
+	var m1 map[string]interface{}
+	if err := api.UnmarshalFromString(jsonStr, &m1); err != nil {
+		logrus.Fatal(err)
+	}
 }

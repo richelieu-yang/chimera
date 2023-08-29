@@ -19,16 +19,17 @@ func init() {
 		amd64 CPU，不支持 avx指令集 的情况下，下面的代码会报错 SIGILL: illegal instruction
 		（启动时报错退出进程 总好过 运行时报错退出进程）
 	*/
+	api := sonic.ConfigStd
 	m := map[string]interface{}{
 		"0": 3.1415926,
 		"1": 1,
 	}
-	jsonStr, err := sonic.ConfigStd.MarshalToString(m)
+	jsonStr, err := api.MarshalToString(m)
 	if err != nil {
 		logrus.Fatal(err)
 	}
 	var m1 map[string]interface{}
-	if err := sonic.ConfigStd.UnmarshalFromString(jsonStr, &m1); err != nil {
+	if err := api.UnmarshalFromString(jsonStr, &m1); err != nil {
 		logrus.Fatal(err)
 	}
 }
