@@ -10,12 +10,17 @@ import (
 )
 
 // ObtainGetParam 从url获取参数
+/*
+Deprecated: 使用原生方法.
+*/
 func ObtainGetParam(ctx *gin.Context, key string) string {
 	return ctx.Query(key)
 }
 
 // ObtainPostParam
 /*
+Deprecated: 使用原生方法.
+
 支持的Content-Type: multipart/form-data、x-www-form-urlencoded ...
 */
 func ObtainPostParam(ctx *gin.Context, key string) string {
@@ -23,6 +28,9 @@ func ObtainPostParam(ctx *gin.Context, key string) string {
 }
 
 // ObtainParam 获取请求参数（优先级: GET > POST）
+/*
+Deprecated: 使用原生方法.
+*/
 func ObtainParam(ctx *gin.Context, key string) string {
 	// (1) GET
 	value := ObtainGetParam(ctx, key)
@@ -34,31 +42,37 @@ func ObtainParam(ctx *gin.Context, key string) string {
 	return ObtainPostParam(ctx, key)
 }
 
+// ObtainBoolParam Deprecated: 使用原生方法.
 func ObtainBoolParam(ctx *gin.Context, key string) (bool, error) {
 	value := ObtainParam(ctx, key)
 	return boolKit.ToBoolE(value)
 }
 
+// ObtainIntParam Deprecated: 使用原生方法.
 func ObtainIntParam(ctx *gin.Context, key string) (int, error) {
 	value := ObtainParam(ctx, key)
 	return intKit.ToIntE(value)
 }
 
+// ObtainInt32Param Deprecated: 使用原生方法.
 func ObtainInt32Param(ctx *gin.Context, key string) (int32, error) {
 	value := ObtainParam(ctx, key)
 	return intKit.ToInt32E(value)
 }
 
+// ObtainInt64Param Deprecated: 使用原生方法.
 func ObtainInt64Param(ctx *gin.Context, key string) (int64, error) {
 	value := ObtainParam(ctx, key)
 	return intKit.ToInt64E(value)
 }
 
+// ObtainFloat32Param Deprecated: 使用原生方法.
 func ObtainFloat32Param(ctx *gin.Context, key string) (float32, error) {
 	value := ObtainParam(ctx, key)
 	return floatKit.ToFloat32E(value)
 }
 
+// ObtainFloat64Param Deprecated: 使用原生方法.
 func ObtainFloat64Param(ctx *gin.Context, key string) (float64, error) {
 	value := ObtainParam(ctx, key)
 	return floatKit.ToFloat64E(value)
@@ -66,6 +80,8 @@ func ObtainFloat64Param(ctx *gin.Context, key string) (float64, error) {
 
 // ObtainFormFileContent form请求，根据 传参key 获取文件的字节流.（单文件上传）
 /*
+Deprecated: 使用原生方法.
+
 @return 文件内容 + 文件名 + 错误
 */
 func ObtainFormFileContent(ctx *gin.Context, key string) ([]byte, string, error) {
