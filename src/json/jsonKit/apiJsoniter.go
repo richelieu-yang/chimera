@@ -1,4 +1,4 @@
-//go:build !amd64 || !go1.16 || !avx
+//go:build !sonic || !avx || !go1.16 || !amd64 || !(linux || windows || darwin)
 
 package jsonKit
 
