@@ -2,15 +2,20 @@ package main
 
 import (
 	"fmt"
-	"github.com/richelieu-yang/chimera/v2/src/core/timeKit"
-	"github.com/richelieu-yang/chimera/v2/src/log/logrusKit"
-	"time"
+	"github.com/gin-gonic/gin"
+	"net/http"
 )
 
 func main() {
-	logrusKit.MustSetUp(nil)
+	engine := gin.Default()
 
-	fmt.Println(timeKit.GetNetworkTime())
+	engine.Any("/test", func(ctx *gin.Context) {
+		a := ctx.PostForm("a")
+		fmt.Printf("a: [%s].\n", a)
+		ctx.String(http.StatusOK, a)
+	})
 
-	time.Sleep(time.Second * 10)
+	if err := engine.Run(":12345"); err != nil {
+		panic(err)
+	}
 }
