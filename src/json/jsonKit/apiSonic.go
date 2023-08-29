@@ -5,6 +5,8 @@ package jsonKit
 
 import (
 	"github.com/bytedance/sonic"
+	jsoniter "github.com/json-iterator/go"
+	"github.com/klauspost/cpuid/v2"
 	"github.com/richelieu-yang/chimera/v2/src/core/cpuKit"
 	"github.com/sirupsen/logrus"
 )
@@ -16,10 +18,14 @@ func init() {
 	library = "bytedance/sonic"
 	defaultApi = sonic.ConfigDefault
 
-	cpuKit.GetFeatureSet
+	if !cpuKit.HasFeature(cpuid.AVX) {
+		library = "json-iterator/go(fallback)"
+		defaultApi = jsoniter.ConfigDefault
+		return
+	}
 
 	/*
-		amd64 CPU，不支持 avx指令集 的情况下，下面的代码会报错 SIGILL: illegal instruction
+		amd64 CPU && 不支持 avx指令集 的情况下，下面的代码会报错 SIGILL: illegal instruction
 		（启动时报错退出进程 总好过 运行时报错退出进程）
 	*/
 	api := sonic.ConfigStd
