@@ -45,7 +45,16 @@ func GetLogicalCores() int {
 // GetCpuNumber returns the number of logical CPUs usable by the current process.
 var GetCpuNumber func() int = runtime.NumCPU
 
+// GetFeatureSet 获取CPU支持的指令集s.
 var GetFeatureSet func() []string = cpuid.CPU.FeatureSet
+
+// HasFeature CPU是否支持特定指令集？
+/*
+@param id e.g. cpuid.AVX
+*/
+func HasFeature(id cpuid.FeatureID) bool {
+	return cpuid.CPU.Has(id)
+}
 
 func GetFamily() int {
 	return cpuid.CPU.Family

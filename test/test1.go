@@ -9,7 +9,10 @@ import (
 
 func init() {
 	cpuKit.SetUp()
-	logrusKit.MustSetUp(nil)
+	logrusKit.MustSetUp(&logrusKit.Config{
+		Level:      "",
+		PrintBasic: true,
+	})
 }
 
 func main() {

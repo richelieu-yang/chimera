@@ -6,6 +6,7 @@ require (
 	github.com/apache/pulsar-client-go v0.11.0
 	github.com/apache/rocketmq-clients/golang/v5 v5.0.1-rc.4
 	github.com/bytedance/sonic v1.10.0
+	github.com/cloudwego/hertz v0.6.7
 	github.com/dablelv/go-huge-util v0.0.48
 	github.com/deckarep/golang-set/v2 v2.3.1
 	github.com/duke-git/lancet/v2 v2.2.5
@@ -20,7 +21,7 @@ require (
 	github.com/gin-contrib/pprof v1.4.0
 	github.com/gin-gonic/gin v1.9.1
 	github.com/go-kratos/kratos/v2 v2.7.0
-	github.com/go-playground/validator/v10 v10.15.1
+	github.com/go-playground/validator/v10 v10.15.2
 	github.com/go-redsync/redsync/v4 v4.8.1
 	github.com/gogf/gf/v2 v2.5.2
 	github.com/golang-jwt/jwt/v5 v5.0.0
@@ -81,10 +82,13 @@ require (
 	github.com/beorn7/perks v1.0.1 // indirect
 	github.com/bits-and-blooms/bitset v1.4.0 // indirect
 	github.com/buger/jsonparser v1.1.1 // indirect
+	github.com/bytedance/go-tagexpr/v2 v2.9.2 // indirect
+	github.com/bytedance/gopkg v0.0.0-20220413063733-65bf48ffb3a7 // indirect
 	github.com/census-instrumentation/opencensus-proto v0.4.1 // indirect
 	github.com/cespare/xxhash/v2 v2.2.0 // indirect
 	github.com/chenzhuoyu/base64x v0.0.0-20230717121745-296ad89f973d // indirect
 	github.com/chenzhuoyu/iasm v0.9.0 // indirect
+	github.com/cloudwego/netpoll v0.3.2 // indirect
 	github.com/coreos/go-semver v0.3.1 // indirect
 	github.com/coreos/go-systemd/v22 v22.5.0 // indirect
 	github.com/danieljoos/wincred v1.1.2 // indirect
@@ -119,6 +123,8 @@ require (
 	github.com/hashicorp/errwrap v1.1.0 // indirect
 	github.com/hashicorp/go-multierror v1.1.1 // indirect
 	github.com/hashicorp/hcl v1.0.0 // indirect
+	github.com/henrylee2cn/ameda v1.4.10 // indirect
+	github.com/henrylee2cn/goutil v0.0.0-20210127050712-89660552f6f8 // indirect
 	github.com/jinzhu/inflection v1.0.0 // indirect
 	github.com/jinzhu/now v1.1.5 // indirect
 	github.com/jmespath/go-jmespath v0.3.0 // indirect
@@ -132,6 +138,7 @@ require (
 	github.com/modern-go/concurrent v0.0.0-20180306012644-bacd9c7ef1dd // indirect
 	github.com/mtibben/percent v0.2.1 // indirect
 	github.com/natefinch/lumberjack v2.0.0+incompatible // indirect
+	github.com/nyaruka/phonenumbers v1.0.55 // indirect
 	github.com/onsi/ginkgo/v2 v2.11.0 // indirect
 	github.com/pelletier/go-toml/v2 v2.0.9 // indirect
 	github.com/pierrec/lz4 v2.0.5+incompatible // indirect

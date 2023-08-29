@@ -5,6 +5,7 @@ package jsonKit
 
 import (
 	"github.com/bytedance/sonic"
+	"github.com/richelieu-yang/chimera/v2/src/core/cpuKit"
 	"github.com/sirupsen/logrus"
 )
 
@@ -14,6 +15,8 @@ import (
 func init() {
 	library = "bytedance/sonic"
 	defaultApi = sonic.ConfigDefault
+
+	cpuKit.GetFeatureSet
 
 	/*
 		amd64 CPU，不支持 avx指令集 的情况下，下面的代码会报错 SIGILL: illegal instruction
