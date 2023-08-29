@@ -38,6 +38,24 @@ func GetInt64SliceFieldFromString(jsonStr, path string) (s []int64) {
 	return
 }
 
+func GetFloat64SliceField(jsonData []byte, path string) (s []float64) {
+	result := gjson.GetBytes(jsonData, path)
+
+	for _, item := range result.Array() {
+		s = append(s, item.Float())
+	}
+	return
+}
+
+func GetFloat64SliceFieldFromString(jsonStr, path string) (s []float64) {
+	result := gjson.Get(jsonStr, path)
+
+	for _, item := range result.Array() {
+		s = append(s, item.Float())
+	}
+	return
+}
+
 func GetBoolSliceField(jsonData []byte, path string) (s []bool) {
 	result := gjson.GetBytes(jsonData, path)
 
