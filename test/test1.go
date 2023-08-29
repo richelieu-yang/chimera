@@ -2,14 +2,18 @@ package main
 
 import (
 	"github.com/bytedance/sonic"
+	"github.com/richelieu-yang/chimera/v2/src/core/cpuKit"
 	"github.com/richelieu-yang/chimera/v2/src/log/logrusKit"
 	"github.com/sirupsen/logrus"
 )
 
-func main() {
+func init() {
+	cpuKit.SetUp()
 	logrusKit.MustSetUp(nil)
+}
 
-	// 看下能否 恢复
+func main() {
+	// 看下能否恢复
 	defer func() {
 		if obj := recover(); obj != nil {
 			logrus.Infof("recover: [%T, %v].", obj, obj)
@@ -29,4 +33,5 @@ func main() {
 	if err := sonic.ConfigStd.UnmarshalFromString(jsonStr, &m1); err != nil {
 		logrus.Fatal(err)
 	}
+	logrus.Info("end")
 }
