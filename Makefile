@@ -1,7 +1,7 @@
 app=test1
 path=test/$(app).go
 
-all: windows-amd64 darwin-arm64 linux-amd64 linux-arm64 linux-loong64 linux-mips64 linux-mips64le
+all: windows-amd64 darwin-arm64 linux-amd64 linux-amd64-avx linux-arm64 linux-loong64 linux-mips64 linux-mips64le
 
 darwin-arm64:
 	@rm -rf $(app)-darwin-arm64
@@ -9,13 +9,18 @@ darwin-arm64:
 
 windows-amd64:
 	@rm -rf $(app)-windows-amd64.exe
-	@CGO_ENABLED=0 GOOS=windows GOARCH=amd64 go build -tags="sonic avx" -o $(app)-windows-amd64.exe $(path)
+	@CGO_ENABLED=0 GOOS=windows GOARCH=amd64 go build -tags=jsoniter -o $(app)-windows-amd64.exe $(path)
 	@upx -9 $(app)-windows-amd64.exe
 
-linux-amd64:
+linux-amd64-noavx:
 	@rm -rf $(app)-linux-amd64
-	@CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build -tags="sonic avx" -o $(app)-linux-amd64 $(path)
+	@CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build -tags=jsoniter -o $(app)-linux-amd64 $(path)
 	@upx -9 $(app)-linux-amd64
+
+linux-amd64:
+	@rm -rf $(app)-linux-amd64-avx
+	@CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build -tags="sonic avx" -o $(app)-linux-amd64-avx $(path)
+	@upx -9 $(app)-linux-amd64-avx
 
 linux-arm64:
 	@rm -rf $(app)-linux-arm64

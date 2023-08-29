@@ -18,7 +18,7 @@ func init() {
 	defaultApi = sonic.ConfigDefault
 
 	if !cpuKit.HasFeature(cpuid.AVX) {
-		logrus.Fatal("AVX isn't supported!")
+		logrus.Fatal("AVX isn't supported by CPU!")
 		return
 	}
 
