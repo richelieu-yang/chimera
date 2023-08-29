@@ -6,7 +6,7 @@ import (
 	"testing"
 )
 
-func TestNewClient(t *testing.T) {
+func TestGet(t *testing.T) {
 	/*
 		PS:
 		(1) 通过判断 resp.Err 来判断是否发生 error.
@@ -34,7 +34,7 @@ func TestNewClient(t *testing.T) {
 	fmt.Println("total time:", resp.TotalTime().String())
 }
 
-func TestNewClient1(t *testing.T) {
+func TestGet1(t *testing.T) {
 	url := "https://www.baidu.com/"
 	//url := "https://127.0.0.1/test"
 
