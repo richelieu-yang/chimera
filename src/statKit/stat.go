@@ -90,7 +90,7 @@ func GetStats() (rst *Stats) {
 		var cpuStats = &CpuStats{}
 		rst.Cpu = cpuStats
 		{
-			usage, err := cpuKit.GetUsage()
+			usage, err := cpuKit.GetUsagePercent()
 			if err != nil {
 				cpuStats.UsageError = err
 			} else {

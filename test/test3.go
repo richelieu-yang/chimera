@@ -1,11 +1,14 @@
 package main
 
 import (
-	"github.com/cloudwego/hertz/pkg/app/server"
+	"github.com/shirou/gopsutil/v3/process"
 )
 
 func main() {
-	h := server.New()
-	// 我们通常推荐使用 Spin
-	h.Spin()
+	pid := 100
+	p, err := process.NewProcess(pid)
+	if err != nil {
+		panic(err)
+	}
+	p.CPUPercent()
 }
