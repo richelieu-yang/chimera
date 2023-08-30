@@ -1,8 +1,16 @@
 package main
 
-import "github.com/richelieu-yang/chimera/v2/src/core/fileKit"
+import (
+	"bufio"
+	"fmt"
+	"github.com/richelieu-yang/chimera/v2/src/core/fileKit"
+)
 
 func main() {
-	fileKit.ReadFile()
-	fileKit.ReadFileToString()
+	i := 0
+
+	fileKit.ReadFileByLine("a.txt", func(scan *bufio.Scanner) {
+		i++
+		fmt.Println(i, scan.Text())
+	})
 }

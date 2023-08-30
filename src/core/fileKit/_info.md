@@ -36,3 +36,10 @@ https://mp.weixin.qq.com/s/St2EtX8s-V4okM9DpEzz7g
 (3) 逐个单词读取
 (4) 以数据块的形式读取文件
 (5) 二进制读取
+
+## 按行读取文件
+Golang 按行读取文件的三种方法
+    https://blog.csdn.net/K346K346/article/details/130337527
+(1) 使用 bufio.Scanner 读取文件
+(2) 使用 bufio.Reader 读取文件
+(3) 使用 bufio.Reader 的 ReadLine 读取文件
