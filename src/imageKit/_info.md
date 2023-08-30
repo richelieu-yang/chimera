@@ -23,18 +23,15 @@ h2non/bimg 提供以下出片处理 API：
     EXIF元数据（大小，Alpha通道，配置文件，方向...）修改
     修剪（libvips 8.6+）
 
-## problems
-将透明背景的PNG转换为JPG（或JPEG），默认背景色为黑色
-    https://www.zongscan.com/demo333/95729.html
-
 ## davidbyttow/govips
 GO语言高性能图片处理库govips
-    https://www.bilibili.com/video/BV1L14y1i7iG/
-github: 
-    https://github.com/davidbyttow/govips
+https://www.bilibili.com/video/BV1L14y1i7iG/
+github:
+https://github.com/davidbyttow/govips
 服务器（linux || darwin）需要安装库：
 (1) libvips
 (2) gcc
 
-
-
+## problems
+将透明背景的PNG转换为JPG（或JPEG），默认背景色为黑色
+    https://www.zongscan.com/demo333/95729.html
