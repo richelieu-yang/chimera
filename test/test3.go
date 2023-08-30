@@ -2,15 +2,26 @@ package main
 
 import (
 	"bufio"
-	"fmt"
-	"github.com/richelieu-yang/chimera/v2/src/core/fileKit"
+	"github.com/sirupsen/logrus"
+	"os"
 )
 
-func main() {
-	i := 0
+var path = "a.txt"
 
-	fileKit.ReadFileByLine("a.txt", func(scan *bufio.Scanner) {
+func main() {
+	file, err := os.Open(path)
+	if err != nil {
+		panic(err)
+	}
+	defer file.Close()
+
+	i := 0
+	scanner := bufio.NewScanner(file)
+	for scanner.Scan() {
 		i++
-		fmt.Println(i, scan.Text())
-	})
+		logrus.Infof("%d %s", i, scanner.Text())
+	}
+	if err := scanner.Err(); err != nil {
+		panic(err)
+	}
 }

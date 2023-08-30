@@ -1,4 +1,4 @@
-TODO:
+## TODO
 (1) Go语言：识别全格式图片并执行相应的编码保存（支持webp） https://www.meiwen.com.cn/subject/gfiomctx.html
     image.Decode
 (2) webp格式图片
@@ -26,5 +26,15 @@ h2non/bimg 提供以下出片处理 API：
 ## problems
 将透明背景的PNG转换为JPG（或JPEG），默认背景色为黑色
     https://www.zongscan.com/demo333/95729.html
+
+## davidbyttow/govips
+GO语言高性能图片处理库govips
+    https://www.bilibili.com/video/BV1L14y1i7iG/
+github: 
+    https://github.com/davidbyttow/govips
+服务器（linux || darwin）需要安装库：
+(1) libvips
+(2) gcc
+
 
 
