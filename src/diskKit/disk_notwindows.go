@@ -2,7 +2,7 @@
 
 package diskKit
 
-func GetDiskUsageStat() (*DiskUsageStats, error) {
+func GetDiskUsageStats() (*DiskUsageStats, error) {
 	path := "/"
 	return GetDiskUsageStatsByPath(path)
 }

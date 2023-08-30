@@ -122,7 +122,7 @@ func PrintBasicDetails(logger *logrus.Logger) {
 	}
 
 	// disk
-	if stats, err := diskKit.GetDiskUsageStat(); err != nil {
+	if stats, err := diskKit.GetDiskUsageStats(); err != nil {
 		logger.WithError(err).Warn("[CHIMERA, DISK] fail to get disk usage stats")
 	} else {
 		str := fmt.Sprintf("path: %s, free: %s, used: %s, total: %s, used percent: %.2f%%",
