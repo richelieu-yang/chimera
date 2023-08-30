@@ -25,9 +25,9 @@ h2non/bimg 提供以下出片处理 API：
 
 ## davidbyttow/govips
 GO语言高性能图片处理库govips
-https://www.bilibili.com/video/BV1L14y1i7iG/
+    https://www.bilibili.com/video/BV1L14y1i7iG/
 github:
-https://github.com/davidbyttow/govips
+    https://github.com/davidbyttow/govips
 服务器（linux || darwin）需要安装库：
 (1) libvips
 (2) gcc
