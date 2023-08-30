@@ -18,25 +18,10 @@ import (
 
 type (
 	Stats struct {
-		//Cpu *CpuStats `json:"cpu"`
-		//
-		//Disk *DiskStats `json:"disk"`
-
 		Program *ProgramStats `json:"program"`
 
 		Machine *MachineStats `json:"machine"`
 	}
-
-	//CpuStats struct {
-	//	Usage      float64 `json:"usage,omitempty"`
-	//	UsageError error   `json:"usageError,omitempty"`
-	//}
-	//
-	//DiskStats struct {
-	//	Path       string  `json:"path,omitempty"`
-	//	Usage      float64 `json:"usage,omitempty"`
-	//	UsageError error   `json:"usageError,omitempty"`
-	//}
 
 	ProgramStats struct {
 		PID            int `json:"pid"`
@@ -56,9 +41,9 @@ type (
 		CpuUsagePercent      float64 `json:"cpuUsagePercent"`
 		CpuUsagePercentError error   `json:"cpuUsagePercentError,omitempty"`
 
-		DiskPath       string  `json:"diskPath,omitempty"`
-		DiskUsage      float64 `json:"diskUsage,omitempty"`
-		DiskUsageError error   `json:"diskUsageError,omitempty"`
+		DiskPath              string  `json:"diskPath,omitempty"`
+		DiskUsagePercent      float64 `json:"diskUsagePercent,omitempty"`
+		DiskUsagePercentError error   `json:"diskUsagePercentError,omitempty"`
 
 		// ProcessCount 进程数
 		ProcessCount      int   `json:"processCount,omitempty"`
@@ -91,14 +76,13 @@ type (
 PS: 由于获取CPU使用率耗时较长，本函数内部使用 sync.WaitGroup.
 */
 func GetStats() *Stats {
-	var wg sync.WaitGroup
-
 	pStats := &ProgramStats{}
 	mStats := &MachineStats{}
 	rst := &Stats{
 		Program: pStats,
 		Machine: mStats,
 	}
+	var wg sync.WaitGroup
 
 	/* program */
 	wg.Add(1)
@@ -115,10 +99,10 @@ func GetStats() *Stats {
 		pStats.NumGC = stats.NumGC
 		pStats.EnableGC = stats.EnableGC
 
-		if usage, err := cpuKit.GetUsagePercentByProcess(int32(pStats.PID)); err != nil {
+		if usagePercent, err := cpuKit.GetUsagePercentByProcess(int32(pStats.PID)); err != nil {
 			pStats.CpuUsagePercentError = err
 		} else {
-			pStats.CpuUsagePercent = usage
+			pStats.CpuUsagePercent = mathKit.Round(usagePercent, 2)
 		}
 	}()
 
@@ -128,11 +112,11 @@ func GetStats() *Stats {
 	go func() {
 		defer wg.Done()
 
-		usage, err := cpuKit.GetUsagePercent()
+		usagePercent, err := cpuKit.GetUsagePercent()
 		if err != nil {
 			mStats.CpuUsagePercentError = err
 		} else {
-			mStats.CpuUsagePercent = usage
+			mStats.CpuUsagePercent = mathKit.Round(usagePercent, 2)
 		}
 	}()
 
@@ -143,10 +127,10 @@ func GetStats() *Stats {
 
 		stats, err := diskKit.GetDiskUsageStats()
 		if err != nil {
-			mStats.DiskUsageError = err
+			mStats.DiskUsagePercentError = err
 		} else {
 			mStats.DiskPath = stats.Path
-			mStats.DiskUsage = stats.UsedPercent
+			mStats.DiskUsagePercent = mathKit.Round(stats.UsedPercent, 2)
 		}
 	}()
 
