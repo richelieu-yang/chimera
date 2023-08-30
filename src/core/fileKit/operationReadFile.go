@@ -30,12 +30,8 @@ func ReadFile(filePath string) ([]byte, error) {
 	return os.ReadFile(filePath)
 }
 
-func ReadFileString(filePath string) (string, error) {
-	if err := AssertExistAndIsFile(filePath); err != nil {
-		return "", err
-	}
-
-	data, err := os.ReadFile(filePath)
+func ReadFileToString(filePath string) (string, error) {
+	data, err := ReadFile(filePath)
 	return string(data), err
 }
 
@@ -43,8 +39,12 @@ func ReadFileString(filePath string) (string, error) {
 /*
 @param path .lua文件的路径
 */
-func ReadLuaFile(path string) (string, error) {
-	file, err := os.Open(path)
+func ReadLuaFile(filePath string) (string, error) {
+	if err := AssertExistAndIsFile(filePath); err != nil {
+		return "", err
+	}
+
+	file, err := os.Open(filePath)
 	defer file.Close()
 	if err != nil {
 		return "", err
