@@ -1,14 +1,12 @@
 package main
 
 import (
-	"github.com/shirou/gopsutil/v3/process"
+	"fmt"
+	"github.com/richelieu-yang/chimera/v2/src/json/jsonKit"
+	"github.com/richelieu-yang/chimera/v2/src/statKit"
 )
 
 func main() {
-	pid := 100
-	p, err := process.NewProcess(pid)
-	if err != nil {
-		panic(err)
-	}
-	p.CPUPercent()
+	stats := statKit.GetStats()
+	fmt.Println(jsonKit.MarshalIndentToString(stats, "", "    "))
 }

@@ -98,6 +98,9 @@ func GetUsagePercentByProcess(pid int32) (float64, error) {
 }
 
 // GetUsagePercentByCurrentProcess 获取 当前进程 的CPU使用百分比.
+/*
+PS: 类似Linux命令: top -p ${pid}
+*/
 func GetUsagePercentByCurrentProcess() (float64, error) {
 	var pid = int32(os.Getpid())
 	return GetUsagePercentByProcess(pid)

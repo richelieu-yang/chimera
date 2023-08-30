@@ -11,6 +11,7 @@ import (
 	"github.com/richelieu-yang/chimera/v2/src/log/logrusKit"
 	"github.com/richelieu-yang/chimera/v2/src/processKit"
 	"github.com/sirupsen/logrus"
+	"os"
 	"runtime"
 	"sync"
 )
@@ -38,6 +39,7 @@ type (
 	}
 
 	ProgramStats struct {
+		PID            int `json:"pid"`
 		GoroutineCount int `json:"goroutineCount"`
 
 		Alloc      string `json:"alloc"`
@@ -45,6 +47,9 @@ type (
 		Sys        string `json:"sys"`
 		NumGC      uint32 `json:"numGC"`
 		EnableGC   bool   `json:"enableGC"`
+
+		CpuUsage      float64 `json:"cpuUsage"`
+		CpuUsageError error   `json:"cpuUsageError,omitempty"`
 	}
 
 	MachineStats struct {
@@ -76,7 +81,7 @@ type (
 
 // GetStats
 /*
-PS: 由于获取CPU使用率耗时较长，使用 sync.WaitGroup.
+PS: 由于获取CPU使用率耗时较长，本函数内部使用 sync.WaitGroup.
 */
 func GetStats() (rst *Stats) {
 	rst = &Stats{}
@@ -122,18 +127,24 @@ func GetStats() (rst *Stats) {
 	go func() {
 		defer wg.Done()
 
-		var programStats = &ProgramStats{}
-		rst.Program = programStats
+		var pStats = &ProgramStats{}
+		rst.Program = pStats
 		{
+			pStats.PID = os.Getpid()
+			pStats.GoroutineCount = runtime.NumGoroutine()
+
 			stats := memoryKit.GetProgramMemoryStats()
+			pStats.Alloc = dataSizeKit.ToReadableStringWithIEC(stats.Alloc)
+			pStats.TotalAlloc = dataSizeKit.ToReadableStringWithIEC(stats.TotalAlloc)
+			pStats.Sys = dataSizeKit.ToReadableStringWithIEC(stats.Sys)
+			pStats.NumGC = stats.NumGC
+			pStats.EnableGC = stats.EnableGC
 
-			programStats.GoroutineCount = runtime.NumGoroutine()
-
-			programStats.Alloc = dataSizeKit.ToReadableStringWithIEC(stats.Alloc)
-			programStats.TotalAlloc = dataSizeKit.ToReadableStringWithIEC(stats.TotalAlloc)
-			programStats.Sys = dataSizeKit.ToReadableStringWithIEC(stats.Sys)
-			programStats.NumGC = stats.NumGC
-			programStats.EnableGC = stats.EnableGC
+			if usage, err := cpuKit.GetUsagePercentByProcess(int32(pStats.PID)); err != nil {
+				pStats.CpuUsageError = err
+			} else {
+				pStats.CpuUsage = usage
+			}
 		}
 	}()
 
@@ -142,57 +153,57 @@ func GetStats() (rst *Stats) {
 	go func() {
 		defer wg.Done()
 
-		var machineStats = &MachineStats{}
-		rst.Machine = machineStats
+		var mStats = &MachineStats{}
+		rst.Machine = mStats
 		{
 			count, err := processKit.GetProcessCount()
 			if err != nil {
-				machineStats.ProcessCountError = err
+				mStats.ProcessCountError = err
 			} else {
-				machineStats.ProcessCount = count
+				mStats.ProcessCount = count
 			}
 
 			count1, err := processKit.GetProcessThreadCount()
 			if err != nil {
-				machineStats.ProcessThreadCountError = err
+				mStats.ProcessThreadCountError = err
 			} else {
-				machineStats.ProcessThreadCount = count1
+				mStats.ProcessThreadCount = count1
 			}
 
 			stats, err := memoryKit.GetMachineMemoryStats()
 			if err != nil {
-				machineStats.MemoryStatsError = err
+				mStats.MemoryStatsError = err
 			} else {
-				machineStats.Total = dataSizeKit.ToReadableStringWithIEC(stats.Total)
-				machineStats.Available = dataSizeKit.ToReadableStringWithIEC(stats.Available)
-				machineStats.Used = dataSizeKit.ToReadableStringWithIEC(stats.Used)
-				machineStats.UsedPercent = mathKit.Round(stats.UsedPercent, 2)
-				machineStats.Free = dataSizeKit.ToReadableStringWithIEC(stats.Free)
+				mStats.Total = dataSizeKit.ToReadableStringWithIEC(stats.Total)
+				mStats.Available = dataSizeKit.ToReadableStringWithIEC(stats.Available)
+				mStats.Used = dataSizeKit.ToReadableStringWithIEC(stats.Used)
+				mStats.UsedPercent = mathKit.Round(stats.UsedPercent, 2)
+				mStats.Free = dataSizeKit.ToReadableStringWithIEC(stats.Free)
 			}
 
 			// ulimit -u
 			if tmp, err := osKit.GetMaxProcessThreadCountByUser(); err != nil {
-				machineStats.MaxProcessThreadCountByUserError = err.Error()
+				mStats.MaxProcessThreadCountByUserError = err.Error()
 			} else {
-				machineStats.MaxProcessThreadCountByUser = tmp
+				mStats.MaxProcessThreadCountByUser = tmp
 			}
 			// kernel.pid_max
 			if tmp, err := osKit.GetPidMax(); err != nil {
-				machineStats.PidMaxError = err.Error()
+				mStats.PidMaxError = err.Error()
 			} else {
-				machineStats.PidMax = tmp
+				mStats.PidMax = tmp
 			}
 			// kernel.threads-max
 			if tmp, err := osKit.GetThreadsMax(); err != nil {
-				machineStats.ThreadsMaxError = err.Error()
+				mStats.ThreadsMaxError = err.Error()
 			} else {
-				machineStats.ThreadsMax = tmp
+				mStats.ThreadsMax = tmp
 			}
 			// vm.max_map_count
 			if tmp, err := osKit.GetMaxMapCount(); err != nil {
-				machineStats.MaxMapCountError = err.Error()
+				mStats.MaxMapCountError = err.Error()
 			} else {
-				machineStats.MaxMapCount = tmp
+				mStats.MaxMapCount = tmp
 			}
 		}
 	}()
