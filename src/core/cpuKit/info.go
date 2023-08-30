@@ -46,6 +46,9 @@ func GetLogicalCores() int {
 var GetCpuNumber func() int = runtime.NumCPU
 
 // GetFeatureSet 获取CPU支持的指令集s.
+/*
+Linux命令: cat /proc/cpuinfo
+*/
 var GetFeatureSet func() []string = cpuid.CPU.FeatureSet
 
 // HasFeature CPU是否支持特定指令集？
