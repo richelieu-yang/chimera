@@ -1,9 +1,9 @@
-涉及标准库：
-os
-io
-io/ioutil
-bufio
-path/filepath
+## 涉及标准库：
+    os
+    io
+    io/ioutil
+    bufio
+    path/filepath
 
 ## gfile
 文件管理-gfile https://goframe.org/pages/viewpage.action?pageId=1114225
@@ -29,3 +29,10 @@ h2non/filetype（Deprecated: 最后更新时间2021/1/21）:
 gabriel-vasile/mimetype:
     https://github.com/gabriel-vasile/mimetype
 
+## Go语言读取文件的几种方式
+https://mp.weixin.qq.com/s/St2EtX8s-V4okM9DpEzz7g
+(1) 整个文件读取
+(2) 按行读取
+(3) 逐个单词读取
+(4) 以数据块的形式读取文件
+(5) 二进制读取

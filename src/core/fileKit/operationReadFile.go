@@ -35,37 +35,52 @@ func ReadFileToString(filePath string) (string, error) {
 	return string(data), err
 }
 
-// ReadLuaFile 按行读取 .lua文件 的内容.
+// ReadFileByLine
 /*
-@param path .lua文件的路径
+@param f 调用scan.Bytes() || scan.Text()
 */
-func ReadLuaFile(filePath string) (string, error) {
+func ReadFileByLine(filePath string, f func(scan *bufio.Scanner)) error {
 	if err := AssertExistAndIsFile(filePath); err != nil {
-		return "", err
+		return err
 	}
 
 	file, err := os.Open(filePath)
 	defer file.Close()
 	if err != nil {
-		return "", err
+		return err
 	}
 
-	var buffer = bytes.Buffer{}
 	scan := bufio.NewScanner(file)
 	for scan.Scan() {
-		line := scan.Text()
-		line = strKit.TrimSpace(line)
-		// 忽略"空行"和"注释行"
-		if strKit.IsEmpty(line) || strKit.StartWith(line, "--") {
-			continue
-		}
-		// 加个空格
-		buffer.WriteString(line + " ")
-
-		//line := scan.Bytes()
-		//buffer.Write(line)
+		// 自定义
+		f(scan)
 	}
 	if err := scan.Err(); err != nil {
+		return err
+	}
+	return nil
+}
+
+// ReadLuaFileToString 按行读取 .lua文件 的内容.
+/*
+@param path .lua文件的路径
+*/
+func ReadLuaFileToString(filePath string) (string, error) {
+	var buffer = bytes.Buffer{}
+
+	err := ReadFileByLine(filePath, func(scan *bufio.Scanner) {
+		text := scan.Text()
+		text = strKit.TrimSpace(text)
+
+		// 忽略"空行"和"注释行"
+		if strKit.IsEmpty(text) || strKit.StartWith(text, "--") {
+			return
+		}
+		buffer.WriteString(text)
+		// 加个空格
+		buffer.WriteString(" ")
+	})
+	if err != nil {
 		return "", err
 	}
 	return buffer.String(), nil
