@@ -35,7 +35,7 @@ func Setup(logPath string) error {
 		logger = logrusKit.NewLogger(logrusKit.WithOutput(f))
 	}
 
-	c, _, err := cronKit.NewCronWithTask("@every 15s", func() {
+	c, _, err := cronKit.NewCronWithTask("@every 20s", func() {
 		PrintStats(logger)
 	})
 	if err != nil {
