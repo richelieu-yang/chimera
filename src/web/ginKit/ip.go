@@ -2,7 +2,7 @@ package ginKit
 
 import "github.com/gin-gonic/gin"
 
-// GetClientIp 获取客户端的ip.
+// GetClientIp 获取客户端的ip（有可能获得浏览器ip）.
 /*
 PS: 为了更加准确的获取客户端ip，可以同时使用 Context.ClientIP() 和 Engine.TrustedPlatform （此外还需配置代理），详见参考.
 
