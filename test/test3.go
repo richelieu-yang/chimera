@@ -1,27 +1,32 @@
 package main
 
 import (
-	"bufio"
+	"github.com/gin-gonic/gin"
 	"github.com/sirupsen/logrus"
-	"os"
+	"net/http"
 )
 
 var path = "a.txt"
 
 func main() {
-	file, err := os.Open(path)
-	if err != nil {
-		panic(err)
-	}
-	defer file.Close()
+	engine := gin.Default()
 
-	i := 0
-	scanner := bufio.NewScanner(file)
-	for scanner.Scan() {
-		i++
-		logrus.Infof("%d %s", i, scanner.Text())
-	}
-	if err := scanner.Err(); err != nil {
+	engine.Use(func(ctx *gin.Context) {
+		logrus.WithFields(logrus.Fields{
+			"path":     ctx.Request.URL.Path,
+			"rawQuery": ctx.Request.URL.RawQuery,
+			"RemoteIP": ctx.RemoteIP(),
+			"ClientIP": ctx.ClientIP(),
+		}).Info("[DEBUG] Receive a request.")
+
+		ctx.Next()
+	})
+
+	engine.Any("/test", func(ctx *gin.Context) {
+		ctx.String(http.StatusOK, "ojbk")
+	})
+
+	if err := engine.Run(":8888"); err != nil {
 		panic(err)
 	}
 }

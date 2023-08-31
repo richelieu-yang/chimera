@@ -2,23 +2,22 @@ package ginKit
 
 import "github.com/gin-gonic/gin"
 
-// GetClientIp 获取客户端的ip（有可能获得浏览器ip）.
+// GetClientIp 获取客户端IP地址（客户端的真实IP地址，但结果并不总是可靠的）.
 /*
-PS: 为了更加准确的获取客户端ip，可以同时使用 Context.ClientIP() 和 Engine.TrustedPlatform （此外还需配置代理），详见参考.
+在Gin框架中，ctx.ClientIP() VS ctx.RemoteIP():
 
-参考：
-gin框架中设置信任代理IP并获取远程客户端IP
-	https://www.cnblogs.com/mayanan/p/15703234.html
-gin获取用户请求IP
-	https://blog.csdn.net/weixin_45867397/article/details/122849424
-
+(1) 当客户端直接连接到服务器时，RemoteIP 和 ClientIP 方法返回的结果相同。
+(2) 当客户端通过代理服务器连接时，这两个方法返回的结果可能会不同。此时，RemoteIP 方法返回代理服务器的 IP 地址，而 ClientIP 方法则尝试从 HTTP 请求头中获取客户端的真实 IP 地址。
 e.g.
-	访问url为"http://localhost/test"，返回值则为"::1"
+	ClientIP 方法首先检查 HTTP 请求头中的 X-Forwarded-For 和 X-Real-Ip 字段。如果这些字段存在，则 ClientIP 方法会返回其中的值作为客户端的真实 IP 地址。如果这些字段不存在，则 ClientIP 方法会返回与 RemoteIP 方法相同的结果。
+总结:
+	在使用Gin框架时，如果您希望获取客户端的真实 IP 地址，应该使用 ClientIP 方法而不是 RemoteIP 方法。但是，请注意，由于客户端可以伪造 HTTP 请求头中的 X-Forwarded-For 和 X-Real-Ip 字段，因此 ClientIP 方法返回的结果并不总是可靠的。在某些情况下，您可能需要使用其他方法来验证客户端的真实 IP 地址。
 */
 func GetClientIp(ctx *gin.Context) string {
-	/*
-		Context.RemoteIP(): 无代理返回客户端IP，有代理返回代理IP
-		Context.ClientIP(): 无论是否有代理，都会返回客户端IP（代理比如Nginx也需要配置；方法体内部会调用 Context.RemoteIP()）
-	*/
 	return ctx.ClientIP()
+}
+
+// GetRemoteIP 获取客户端IP地址（客户端的远程IP地址）.
+func GetRemoteIP(ctx *gin.Context) string {
+	return ctx.RemoteIP()
 }
