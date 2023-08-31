@@ -33,6 +33,7 @@ func TestGetRegion(t *testing.T) {
 	}
 	searcher = tmpSearcher
 
+	//ip := "10.0.9.141"
 	ip := "218.90.174.146"
 	fmt.Println(GetRegion(ip))
 }
