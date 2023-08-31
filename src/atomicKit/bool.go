@@ -2,6 +2,4 @@ package atomicKit
 
 import "github.com/gogf/gf/v2/container/gtype"
 
-func NewBool(value ...bool) *gtype.Bool {
-	return gtype.NewBool(value...)
-}
+var NewBool func(value ...bool) *gtype.Bool = gtype.NewBool

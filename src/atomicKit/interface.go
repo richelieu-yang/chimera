@@ -8,6 +8,4 @@ import (
 /*
 PS: 对 atomic.Value 进行了封装.
 */
-func NewInterface(value ...interface{}) *gtype.Interface {
-	return gtype.NewInterface(value...)
-}
+var NewInterface func(value ...interface{}) *gtype.Interface = gtype.NewInterface

@@ -2,14 +2,8 @@ package atomicKit
 
 import "github.com/gogf/gf/v2/container/gtype"
 
-func NewUint(value ...uint) *gtype.Uint {
-	return gtype.NewUint(value...)
-}
+var NewUint func(value ...uint) *gtype.Uint = gtype.NewUint
 
-func NewUint32(value ...uint32) *gtype.Uint32 {
-	return gtype.NewUint32(value...)
-}
+var NewUint32 func(value ...uint32) *gtype.Uint32 = gtype.NewUint32
 
-func NewUint64(value ...uint64) *gtype.Uint64 {
-	return gtype.NewUint64(value...)
-}
+var NewUint64 func(value ...uint64) *gtype.Uint64 = gtype.NewUint64

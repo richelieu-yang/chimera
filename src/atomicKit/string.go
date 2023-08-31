@@ -6,6 +6,4 @@ import "github.com/gogf/gf/v2/container/gtype"
 /*
 PS: 对 atomic.Value 进行了封装.
 */
-func NewString(value ...string) *gtype.String {
-	return gtype.NewString(value...)
-}
+var NewString func(value ...string) *gtype.String = gtype.NewString
