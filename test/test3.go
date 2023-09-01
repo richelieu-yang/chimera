@@ -1,32 +1,23 @@
 package main
 
 import (
-	"github.com/gin-gonic/gin"
+	"github.com/richelieu-yang/chimera/v2/src/core/setKit"
+	"github.com/richelieu-yang/chimera/v2/src/idKit"
 	"github.com/sirupsen/logrus"
-	"net/http"
 )
 
-var path = "a.txt"
-
 func main() {
-	engine := gin.Default()
+	set := setKit.NewSet[string](true)
 
-	engine.Use(func(ctx *gin.Context) {
-		logrus.WithFields(logrus.Fields{
-			"path":     ctx.Request.URL.Path,
-			"rawQuery": ctx.Request.URL.RawQuery,
-			"RemoteIP": ctx.RemoteIP(),
-			"ClientIP": ctx.ClientIP(),
-		}).Info("[DEBUG] Receive a request.")
+	go func() {
+		logrus.Info(set.)
+	}()
 
-		ctx.Next()
-	})
-
-	engine.Any("/test", func(ctx *gin.Context) {
-		ctx.String(http.StatusOK, "ojbk")
-	})
-
-	if err := engine.Run(":8888"); err != nil {
-		panic(err)
+	for {
+		id := idKit.NewUUID()
+		if set.Contains(id) {
+			panic("already exists, id: " + id)
+		}
+		set.Add(id)
 	}
 }

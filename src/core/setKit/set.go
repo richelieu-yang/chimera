@@ -24,3 +24,10 @@ func NewSetFromMapKeys[T comparable, V any](threadSafe bool, val map[T]V) mapset
 	}
 	return mapset.NewThreadUnsafeSetFromMapKeys(val)
 }
+
+func NewSetWithSize[T comparable](threadSafe bool, cardinality int) mapset.Set[T] {
+	if threadSafe {
+		return mapset.NewSetWithSize[T](cardinality)
+	}
+	return mapset.NewThreadUnsafeSetWithSize[T](cardinality)
+}
