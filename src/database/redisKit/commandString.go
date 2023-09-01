@@ -150,6 +150,12 @@ Redis Incr 命令将 key 中储存的数字值增一。
 (1) 如果 key 不存在，那么 key 的值会先被初始化为 0 ，然后再执行 INCR 操作。
 (2) 如果值包含错误的类型，或字符串类型的值不能表示为数字，那么返回一个错误。
 (3) 本操作的值限制在 64 位(bit)有符号数字表示之内。
+
+e.g. 	key不存在的情况
+	(context.Background(), "a") => 1 <nil>
+
+e.g.1	key存在且key为"1"的情况
+	(context.Background(), "a") => 2 <nil>
 */
 func (client *Client) Incr(ctx context.Context, key string) (int64, error) {
 	cmd := client.universalClient.Incr(ctx, key)

@@ -30,12 +30,5 @@ func TestSetUp(t *testing.T) {
 		logrus.Fatal(err)
 	}
 
-	//flag, err := client.HExists(context.TODO(), "ccc1", "2")
-	//if err != nil {
-	//	logrus.Fatal(err)
-	//}
-	//println("HExists:", flag)
-
-	fmt.Println(client.Set(context.TODO(), "222", "222", -1))
-
+	fmt.Println(client.Incr(context.Background(), "a"))
 }
