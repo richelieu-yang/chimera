@@ -149,7 +149,7 @@ func (client *Client) MGet(ctx context.Context, keys ...string) ([]interface{}, 
 Redis Incr 命令将 key 中储存的数字值增一。
 (1) 如果 key 不存在，那么 key 的值会先被初始化为 0 ，然后再执行 INCR 操作。
 (2) 如果值包含错误的类型，或字符串类型的值不能表示为数字，那么返回一个错误。
-(3) 本操作的值限制在 64 位(bit)有符号数字表示之内（范围: [-9223372036854775808, 9223372036854775807]）。
+(3) 本操作的值限制在 64 位(bit)有符号数字表示之内（范围: [math.MinInt64, math.MaxInt64]，即[-9223372036854775808, 9223372036854775807]）。
 
 @param key 	(1) 可以不存在
 			(2) 可以为""
@@ -177,7 +177,7 @@ func (client *Client) Incr(ctx context.Context, key string) (int64, error) {
 Redis Incrby 命令将 key 中储存的数字加上指定的增量值。
 (1) 如果 key 不存在，那么 key 的值会先被初始化为 0 ，然后再执行 INCRBY 命令。
 (2) 如果值包含错误的类型，或字符串类型的值不能表示为数字，那么返回一个错误。
-(3) 本操作的值限制在 64 位(bit)有符号数字表示之内。
+(3) 本操作的值限制在 64 位(bit)有符号数字表示之内（范围: [math.MinInt64, math.MaxInt64]，即[-9223372036854775808, 9223372036854775807]）。
 */
 func (client *Client) IncrBy(ctx context.Context, key string, value int64) (int64, error) {
 	cmd := client.universalClient.IncrBy(ctx, key, value)
@@ -201,7 +201,7 @@ func (client *Client) IncrByFloat(ctx context.Context, key string, value float64
 Redis Decr 命令将 key 中储存的数字值减一。
 (1) 如果 key 不存在，那么 key 的值会先被初始化为 0 ，然后再执行 DECR 操作。
 (2) 如果值包含错误的类型，或字符串类型的值不能表示为数字，那么返回一个错误。
-(3) 本操作的值限制在 64 位(bit)有符号数字表示之内。
+(3) 本操作的值限制在 64 位(bit)有符号数字表示之内（范围: [math.MinInt64, math.MaxInt64]，即[-9223372036854775808, 9223372036854775807]）。
 */
 func (client *Client) Decr(ctx context.Context, key string) (int64, error) {
 	cmd := client.universalClient.Decr(ctx, key)
@@ -214,7 +214,10 @@ func (client *Client) Decr(ctx context.Context, key string) (int64, error) {
 Redis Decrby 命令将 key 所储存的值减去指定的减量值。
 (1) 如果 key 不存在，那么 key 的值会先被初始化为 0 ，然后再执行 DECRBY 操作。
 (2) 如果值包含错误的类型，或字符串类型的值不能表示为数字，那么返回一个错误。
-(3) 本操作的值限制在 64 位(bit)有符号数字表示之内。
+(3) 本操作的值限制在 64 位(bit)有符号数字表示之内（范围: [math.MinInt64, math.MaxInt64]，即[-9223372036854775808, 9223372036854775807]）。
+
+e.g.	key存在&&value为"-9223372036854775808"的情况（将返回error）
+	(context.Background(), "a") => 0 ERR increment or decrement would overflow
 */
 func (client *Client) DecrBy(ctx context.Context, key string, decrement int64) (int64, error) {
 	cmd := client.universalClient.DecrBy(ctx, key, decrement)

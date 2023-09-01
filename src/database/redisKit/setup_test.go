@@ -30,5 +30,5 @@ func TestSetUp(t *testing.T) {
 		logrus.Fatal(err)
 	}
 
-	fmt.Println(client.Incr(context.Background(), ""))
+	fmt.Println(client.Decr(context.Background(), "a"))
 }
