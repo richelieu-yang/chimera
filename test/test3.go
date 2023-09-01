@@ -2,8 +2,8 @@ package main
 
 import (
 	"fmt"
+	"github.com/richelieu-yang/chimera/v2/src/dataSizeKit"
 	"github.com/richelieu-yang/chimera/v2/src/log/logrusKit"
-	"math"
 )
 
 func init() {
@@ -11,6 +11,8 @@ func init() {
 }
 
 func main() {
-	fmt.Println(math.MinInt64)
-	fmt.Println(math.MaxInt64)
+	fmt.Println(dataSizeKit.ToReadableStringWithIEC(9223372036854775807))
+
+	//fmt.Println(math.MinInt64)
+	//fmt.Println(math.MaxInt64)
 }
