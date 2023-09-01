@@ -183,7 +183,10 @@ func (client *Client) IncrByFloat(ctx context.Context, key string, value float64
 // Decr
 /*
 命令说明:
-
+Redis Decr 命令将 key 中储存的数字值减一。
+(1) 如果 key 不存在，那么 key 的值会先被初始化为 0 ，然后再执行 DECR 操作。
+(2) 如果值包含错误的类型，或字符串类型的值不能表示为数字，那么返回一个错误。
+(3) 本操作的值限制在 64 位(bit)有符号数字表示之内。
 */
 func (client *Client) Decr(ctx context.Context, key string) (int64, error) {
 	cmd := client.universalClient.Decr(ctx, key)
@@ -193,7 +196,10 @@ func (client *Client) Decr(ctx context.Context, key string) (int64, error) {
 // DecrBy
 /*
 命令说明:
-
+Redis Decrby 命令将 key 所储存的值减去指定的减量值。
+(1) 如果 key 不存在，那么 key 的值会先被初始化为 0 ，然后再执行 DECRBY 操作。
+(2) 如果值包含错误的类型，或字符串类型的值不能表示为数字，那么返回一个错误。
+(3) 本操作的值限制在 64 位(bit)有符号数字表示之内。
 */
 func (client *Client) DecrBy(ctx context.Context, key string, decrement int64) (int64, error) {
 	cmd := client.universalClient.DecrBy(ctx, key, decrement)
