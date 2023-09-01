@@ -12,7 +12,7 @@ import (
 	"github.com/richelieu-yang/chimera/v2/src/dataSizeKit"
 	"github.com/richelieu-yang/chimera/v2/src/diskKit"
 	"github.com/richelieu-yang/chimera/v2/src/dockerKit"
-	"github.com/richelieu-yang/chimera/v2/src/ipKit"
+	"github.com/richelieu-yang/chimera/v2/src/ip/ipKit"
 	"github.com/richelieu-yang/chimera/v2/src/json/jsonKit"
 	"github.com/richelieu-yang/chimera/v2/src/processKit"
 	"github.com/shirou/gopsutil/v3/docker"

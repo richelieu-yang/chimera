@@ -28,7 +28,8 @@ func SetUp(xdbPath string) error {
 /*
 PS:
 (1) 需要先加载 ip2region.xdb
-(2) IP地址查询 - 在线工具（可以查看本机的外网ip）: https://tool.lu/ip/
+(2) 此函数可以安全用于并发
+(3) IP地址查询 - 在线工具（可以查看本机的外网ip）: https://tool.lu/ip/
 
 @return 第1个返回值的格式: 国家|区域|省份|城市|ISP
 
