@@ -7,7 +7,7 @@ import (
 
 // NewUniqueId 通过Redis生成唯一id.
 /*
-PS: 返回值可以用作 分布式唯一id.
+PS: 返回值可以用作"分布式唯一id".
 
 @param key 	(1) 可以不存在
 			(2) 可以为""
