@@ -154,17 +154,23 @@ Redis Incr 命令将 key 中储存的数字值增一。
 @param key 	(1) 可以不存在
 			(2) 可以为""
 
-e.g. 	key不存在的情况
+e.g. 	key不存在
 	(context.Background(), "a") => 1 <nil>
 
-e.g.1	key存在&&value为"1"的情况
+e.g.1	key存在&&value为"1"
 	(context.Background(), "a") => 2 <nil>
 
-e.g.2	key存在&&value为"-1000"的情况
+e.g.2	key存在&&value为"-1000"
 	(context.Background(), "a") => -999 <nil>
 
-e.g.3	key存在&&value为"9223372036854775807"的情况（将返回error）
+e.g.3	key存在&&value为"9223372036854775807"（将返回error）
 	(context.Background(), "a") => 0 ERR increment or decrement would overflow
+
+e.g.4	key存在&&value为"3.1415926"（将返回error）
+	(context.Background(), "a") => 0 ERR value is not an integer or out of range
+
+e.g.5	key存在但类型为list
+	(context.Background(), "a") => 0 WRONGTYPE Operation against a key holding the wrong kind of value
 */
 func (client *Client) Incr(ctx context.Context, key string) (int64, error) {
 	cmd := client.universalClient.Incr(ctx, key)
@@ -216,7 +222,7 @@ Redis Decrby 命令将 key 所储存的值减去指定的减量值。
 (2) 如果值包含错误的类型，或字符串类型的值不能表示为数字，那么返回一个错误。
 (3) 本操作的值限制在 64 位(bit)有符号数字表示之内（范围: [math.MinInt64, math.MaxInt64]，即[-9223372036854775808, 9223372036854775807]）。
 
-e.g.	key存在&&value为"-9223372036854775808"的情况（将返回error）
+e.g.	key存在&&value为"-9223372036854775808"（将返回error）
 	(context.Background(), "a") => 0 ERR increment or decrement would overflow
 */
 func (client *Client) DecrBy(ctx context.Context, key string, decrement int64) (int64, error) {
