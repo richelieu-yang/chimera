@@ -159,6 +159,9 @@ e.g.1	key存在&&value为"1"的情况
 
 e.g.2	key存在&&value为"-1000"的情况
 	(context.Background(), "a") => -999 <nil>
+
+e.g.3	key存在&&value为"9223372036854775807"的情况（将返回error）
+	(context.Background(), "a") => 0 ERR increment or decrement would overflow
 */
 func (client *Client) Incr(ctx context.Context, key string) (int64, error) {
 	cmd := client.universalClient.Incr(ctx, key)
