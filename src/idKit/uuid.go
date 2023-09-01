@@ -5,8 +5,12 @@ import (
 	"github.com/richelieu-yang/chimera/v2/src/core/strKit"
 )
 
-// NewUUID UUIDv4（不建议用作分布式唯一id）
+// NewUUID UUIDv4
 /*
+Deprecated: use NewULID instead.
+
+PS: 重复概率非常低，不建议用作分布式唯一id.
+
 @return 长度36
 
 e.g.
