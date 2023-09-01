@@ -156,6 +156,9 @@ e.g. 	key不存在的情况
 
 e.g.1	key存在且key为"1"的情况
 	(context.Background(), "a") => 2 <nil>
+
+e.g.2	key存在且key为"-1000"的情况
+	(context.Background(), "a") => -999 <nil>
 */
 func (client *Client) Incr(ctx context.Context, key string) (int64, error) {
 	cmd := client.universalClient.Incr(ctx, key)
