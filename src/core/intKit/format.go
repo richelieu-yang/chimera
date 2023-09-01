@@ -17,3 +17,8 @@ var (
 	*/
 	FormatUint func(i uint64, base int) string = strconv.FormatUint
 )
+
+// Int64ToString 类型转换: int64 => string
+func Int64ToString(i int64) string {
+	return strconv.FormatInt(i, 10)
+}
