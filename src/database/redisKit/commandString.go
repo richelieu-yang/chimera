@@ -169,7 +169,7 @@ e.g.3	key存在&&value为"9223372036854775807"（将返回error）
 e.g.4	key存在&&value为"3.1415926"（将返回error）
 	(context.Background(), "a") => 0 ERR value is not an integer or out of range
 
-e.g.5	key存在但类型为list
+e.g.5	key存在但类型为list（将返回error）
 	(context.Background(), "a") => 0 WRONGTYPE Operation against a key holding the wrong kind of value
 */
 func (client *Client) Incr(ctx context.Context, key string) (int64, error) {
