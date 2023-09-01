@@ -142,3 +142,74 @@ func (client *Client) MGet(ctx context.Context, keys ...string) ([]interface{}, 
 	cmd := client.universalClient.MGet(ctx, keys...)
 	return cmd.Result()
 }
+
+// Incr
+/*
+命令说明:
+Redis Incr 命令将 key 中储存的数字值增一。
+(1) 如果 key 不存在，那么 key 的值会先被初始化为 0 ，然后再执行 INCR 操作。
+(2) 如果值包含错误的类型，或字符串类型的值不能表示为数字，那么返回一个错误。
+(3) 本操作的值限制在 64 位(bit)有符号数字表示之内。
+*/
+func (client *Client) Incr(ctx context.Context, key string) (int64, error) {
+	cmd := client.universalClient.Incr(ctx, key)
+	return cmd.Result()
+}
+
+// IncrBy
+/*
+命令说明:
+Redis Incrby 命令将 key 中储存的数字加上指定的增量值。
+(1) 如果 key 不存在，那么 key 的值会先被初始化为 0 ，然后再执行 INCRBY 命令。
+(2) 如果值包含错误的类型，或字符串类型的值不能表示为数字，那么返回一个错误。
+(3) 本操作的值限制在 64 位(bit)有符号数字表示之内。
+*/
+func (client *Client) IncrBy(ctx context.Context, key string, value int64) (int64, error) {
+	cmd := client.universalClient.IncrBy(ctx, key, value)
+	return cmd.Result()
+}
+
+// IncrByFloat
+/*
+命令说明:
+Redis Incrbyfloat 命令为 key 中所储存的值加上指定的浮点数增量值。
+(1) 如果 key 不存在，那么 INCRBYFLOAT 会先将 key 的值设为 0 ，再执行加法操作。
+*/
+func (client *Client) IncrByFloat(ctx context.Context, key string, value float64) (float64, error) {
+	cmd := client.universalClient.IncrByFloat(ctx, key, value)
+	return cmd.Result()
+}
+
+// Decr
+/*
+命令说明:
+
+*/
+func (client *Client) Decr(ctx context.Context, key string) (int64, error) {
+	cmd := client.universalClient.Decr(ctx, key)
+	return cmd.Result()
+}
+
+// DecrBy
+/*
+命令说明:
+
+*/
+func (client *Client) DecrBy(ctx context.Context, key string, decrement int64) (int64, error) {
+	cmd := client.universalClient.DecrBy(ctx, key, decrement)
+	return cmd.Result()
+}
+
+// Append
+/*
+命令说明:
+Redis Append 命令用于为指定的 key 追加值。
+(1) 如果 key 已经存在并且是一个字符串， APPEND 命令将 value 追加到 key 原来的值的末尾。
+(2) 如果 key 不存在， APPEND 就简单地将给定 key 设为 value ，就像执行 SET key value 一样。
+
+@return 追加后值的长度
+*/
+func (client *Client) Append(ctx context.Context, key, value string) (int64, error) {
+	cmd := client.universalClient.Append(ctx, key, value)
+	return cmd.Result()
+}
