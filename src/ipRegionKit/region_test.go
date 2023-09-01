@@ -1,4 +1,4 @@
-package ipKit
+package ipRegionKit
 
 import (
 	"fmt"

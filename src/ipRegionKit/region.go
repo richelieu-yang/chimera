@@ -1,4 +1,4 @@
-package ipKit
+package ipRegionKit
 
 import (
 	"github.com/lionsoul2014/ip2region/binding/golang/xdb"
