@@ -13,7 +13,7 @@ import (
 
 func TestMustSetUp(t *testing.T) {
 	type config struct {
-		Gin *Config `json:"Gin"`
+		Gin Config `json:"Gin"`
 	}
 
 	wd, err := pathKit.ReviseWorkingDirInTestMode(consts.ProjectName)
@@ -25,12 +25,16 @@ func TestMustSetUp(t *testing.T) {
 	c := &config{}
 	path := "chimera-lib/config.yaml"
 	confKit.MustLoad(path, c)
+
 	MustSetUp(c.Gin, nil, func(engine *gin.Engine) error {
 		engine.Any("/test", func(ctx *gin.Context) {
 			//if err := httpKit.Proxy(ctx.Writer, ctx.Request, "http", "127.0.0.1:8080"); err != nil {
 			//	ctx.ToDSN(http.StatusInternalServerError, err.Error())
 			//	return
 			//}
+
+			ctx.Bind()
+			ctx.ShouldBind()
 
 			time.Sleep(time.Second * 3)
 
