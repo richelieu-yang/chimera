@@ -16,6 +16,7 @@ import (
 func init() {
 	library = "bytedance/sonic"
 	defaultApi = sonic.ConfigDefault
+	stdApi = sonic.ConfigStd
 
 	if !cpuKit.HasFeature(cpuid.AVX) {
 		logrus.Fatal("AVX isn't supported by CPU!!!")

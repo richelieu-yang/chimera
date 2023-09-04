@@ -25,8 +25,6 @@ func main() {
 	engine.POST("/test", func(ctx *gin.Context) {
 		param := &Param{}
 
-		ctx.ShouldBindBodyWith()
-
 		if err := ctx.BindJSON(&param); err != nil {
 			logrus.WithError(err).Error("fail to bind")
 			return

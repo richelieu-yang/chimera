@@ -1,7 +1,12 @@
 package jsonKit
 
 var library string
+
+// defaultApi 默认的API
 var defaultApi API = nil
+
+// stdApi 标准的API（会对map的keys排序）
+var stdApi API = nil
 
 type (
 	API interface {
