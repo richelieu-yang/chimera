@@ -1,5 +1,7 @@
 package redisKit
 
+import "github.com/richelieu-yang/chimera/v2/src/compareKit"
+
 type (
 	Config struct {
 		UserName string `json:"userName,optional"`
@@ -11,10 +13,10 @@ type (
 
 		Mode Mode `json:"mode,default=0,options=0|2|3"`
 
-		SingleNodeConfig   *SingleNodeConfig   `json:"singleNodeConfig"`
-		MasterSlaverConfig *MasterSlaverConfig `json:"masterSlaverConfig"`
-		SentinelConfig     *SentinelConfig     `json:"sentinelConfig"`
-		ClusterConfig      *ClusterConfig      `json:"clusterConfig"`
+		SingleNodeConfig   SingleNodeConfig   `json:"singleNodeConfig"`
+		MasterSlaverConfig MasterSlaverConfig `json:"masterSlaverConfig"`
+		SentinelConfig     SentinelConfig     `json:"sentinelConfig"`
+		ClusterConfig      ClusterConfig      `json:"clusterConfig"`
 	}
 
 	SingleNodeConfig struct {
@@ -46,33 +48,45 @@ type (
 	}
 )
 
-// Simplify 简化，去掉与 Config.Mode 无关的配置
-func (rc *Config) Simplify() {
-	if rc == nil {
-		return
+func (config Config) Equal(config1 Config) bool {
+	if config.UserName != config1.UserName {
+		return false
+	}
+	if config.Password != config1.Password {
+		return false
 	}
 
-	switch rc.Mode {
-	case ModeSingleNode:
-		rc.MasterSlaverConfig = nil
-		rc.SentinelConfig = nil
-		rc.ClusterConfig = nil
-	case ModeMasterSlaver:
-		rc.SingleNodeConfig = nil
-		rc.SentinelConfig = nil
-		rc.ClusterConfig = nil
-	case ModeSentinel:
-		rc.SingleNodeConfig = nil
-		rc.MasterSlaverConfig = nil
-		rc.ClusterConfig = nil
-	case ModeCluster:
-		rc.SingleNodeConfig = nil
-		rc.MasterSlaverConfig = nil
-		rc.SentinelConfig = nil
-	default:
-		rc.SingleNodeConfig = nil
-		rc.MasterSlaverConfig = nil
-		rc.SentinelConfig = nil
-		rc.ClusterConfig = nil
+	if config.MinIdleConns != config1.MinIdleConns {
+		return false
 	}
+	if config.MaxIdleConns != config1.MaxIdleConns {
+		return false
+	}
+	if config.PoolSize != config1.PoolSize {
+		return false
+	}
+
+	if config.Mode != config1.Mode {
+		return false
+	}
+	switch config.Mode {
+	case ModeSingleNode:
+		if !compareKit.Equal(config.SingleNodeConfig, config1.SingleNodeConfig) {
+			return false
+		}
+	case ModeMasterSlaver:
+		if !compareKit.Equal(config.MasterSlaverConfig, config1.MasterSlaverConfig) {
+			return false
+		}
+	case ModeSentinel:
+		if !compareKit.Equal(config.SentinelConfig, config1.SentinelConfig) {
+			return false
+		}
+	case ModeCluster:
+		if !compareKit.Equal(config.ClusterConfig, config1.ClusterConfig) {
+			return false
+		}
+	}
+
+	return true
 }

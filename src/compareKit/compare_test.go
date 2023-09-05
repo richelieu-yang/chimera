@@ -21,24 +21,36 @@ func TestEqual(t *testing.T) {
 	fmt.Println(Equal(b0, b1))
 }
 
+type wrapper struct {
+	Bean *bean
+}
+
 type bean struct {
 	Name   string
 	Lovers []string
 }
 
-func (b *bean) Equal(b1 *bean) bool {
+func (b bean) Equal(b1 bean) bool {
 	return b.Name == b1.Name
 }
 
-// 结构体实现了: (T) Equal(T) bool 或者 (T) Equal(I) bool
+// TestEqual1 结构体实现了: (T) Equal(T) bool 或者 (T) Equal(I) bool
+/*
+!!!:
+(1) receiver建议为 值类型.
+*/
 func TestEqual1(t *testing.T) {
-	b0 := &bean{
-		Name:   "张三",
-		Lovers: []string{"李四"},
+	w0 := &wrapper{
+		Bean: &bean{
+			Name:   "张三",
+			Lovers: []string{"李四"},
+		},
 	}
-	b1 := &bean{
-		Name:   "张三",
-		Lovers: []string{"李4"},
+	w1 := &wrapper{
+		Bean: &bean{
+			Name:   "张三",
+			Lovers: []string{"李4"},
+		},
 	}
-	fmt.Println(Equal(b0, b1))
+	fmt.Println(Equal(w0, w1))
 }
