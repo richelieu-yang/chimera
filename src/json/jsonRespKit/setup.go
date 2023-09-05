@@ -50,10 +50,11 @@ func SetUp(respProvider RespProvider, options ...Option) (err error) {
 			return err
 		}
 	}
-	for _, data := range opts.fileDataSlice {
-
+	for _, fd := range opts.fileDataSlice {
+		if err := readFileData(fd); err != nil {
+			return err
+		}
 	}
-
 	api = opts.api
 	return nil
 }

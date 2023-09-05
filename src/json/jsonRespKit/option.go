@@ -9,7 +9,7 @@ type (
 		api jsonKit.API
 
 		filePathSlice []string
-		fileDataSlice [][]byte
+		fileDataSlice []*FileData
 	}
 
 	Option func(opts *options)
@@ -31,7 +31,7 @@ func WithFilePathSlice(filePathSlice []string) Option {
 	}
 }
 
-func WithFileDataSlice(fileDataSlice [][]byte) Option {
+func WithFileDataSlice(fileDataSlice []*FileData) Option {
 	return func(opts *options) {
 		opts.fileDataSlice = fileDataSlice
 	}

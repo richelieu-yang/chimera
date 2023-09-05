@@ -31,18 +31,20 @@ func readFile(filePath string) error {
 	if err := confKit.ReadFileAs(filePath, nil, &m); err != nil {
 		return err
 	}
-
 	msgMap = mapKit.Merge(msgMap, m)
 	return nil
 }
 
-func read(data []byte, fileType string) error {
+func readFileData(fd *FileData) error {
+	if fd == nil {
+		return nil
+	}
+
 	m := make(map[string]string)
-	err := confKit.ReadAs(data, fileType, nil, &m)
+	err := confKit.ReadAs(fd.Data, fd.FileType, nil, &m)
 	if err != nil {
 		return err
 	}
-
 	msgMap = mapKit.Merge(msgMap, m)
 	return nil
 }
