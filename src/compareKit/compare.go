@@ -10,4 +10,7 @@ PS:
 var Equal func(x, y interface{}, opts ...cmp.Option) bool = cmp.Equal
 
 // Diff 获取差异.
+/*
+@return 如果为""则说明两个传参一致.
+*/
 var Diff func(x, y interface{}, opts ...cmp.Option) string = cmp.Diff

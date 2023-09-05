@@ -2,8 +2,11 @@ package main
 
 import (
 	"fmt"
+	"github.com/richelieu-yang/chimera/v2/src/compareKit"
 )
 
 func main() {
-	fmt.Println(compareKit.Diff("1234", "1234"))
+	str := compareKit.Diff("1234", "1234")
+	fmt.Println(str)
+	fmt.Println(str == "")
 }
