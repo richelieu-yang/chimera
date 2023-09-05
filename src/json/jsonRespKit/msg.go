@@ -41,8 +41,7 @@ func readFileData(fd *FileData) error {
 	}
 
 	m := make(map[string]string)
-	err := confKit.ReadAs(fd.Data, fd.FileType, nil, &m)
-	if err != nil {
+	if err := confKit.ReadAs(fd.Data, fd.FileType, nil, &m); err != nil {
 		return err
 	}
 	msgMap = mapKit.Merge(msgMap, m)
