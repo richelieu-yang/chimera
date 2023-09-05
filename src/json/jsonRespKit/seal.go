@@ -1,4 +1,4 @@
-package jsonResplKit
+package jsonRespKit
 
 import (
 	"fmt"
