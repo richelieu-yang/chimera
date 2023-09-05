@@ -24,9 +24,6 @@ func SealFully(code, msg string, data interface{}, msgArgs ...interface{}) (stri
 	if strKit.IsNotEmpty(msg) && msgArgs != nil {
 		msg = fmt.Sprintf(msg, msgArgs...)
 	}
-	if msgProcessor != nil {
-		msg = msgProcessor(msg)
-	}
 
 	bean := provider(code, msg, data)
 	return api.MarshalToString(bean)

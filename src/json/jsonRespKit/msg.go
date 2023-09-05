@@ -6,20 +6,17 @@ import (
 	"github.com/richelieu-yang/chimera/v2/src/core/mapKit"
 )
 
+type FileData struct {
+	Data []byte
+	// FileType 文件的类型，e.g. "properties"、"yaml"、"ini"...
+	FileType string
+}
+
 /*
 key:	code
 value:	message
 */
 var msgMap = make(map[string]string)
-
-func readFiles(paths ...string) error {
-	for _, path := range paths {
-		if err := readFile(path); err != nil {
-			return err
-		}
-	}
-	return nil
-}
 
 // readFile 读取message文件，加到 msgMap 中.
 /*

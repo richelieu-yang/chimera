@@ -7,6 +7,9 @@ import (
 type (
 	options struct {
 		api jsonKit.API
+
+		filePathSlice []string
+		fileDataSlice [][]byte
 	}
 
 	Option func(opts *options)
@@ -19,6 +22,18 @@ type (
 func WithAPI(api jsonKit.API) Option {
 	return func(opts *options) {
 		opts.api = api
+	}
+}
+
+func WithFilePathSlice(filePathSlice []string) Option {
+	return func(opts *options) {
+		opts.filePathSlice = filePathSlice
+	}
+}
+
+func WithFileDataSlice(fileDataSlice [][]byte) Option {
+	return func(opts *options) {
+		opts.fileDataSlice = fileDataSlice
 	}
 }
 

@@ -20,28 +20,40 @@ var (
 
 	// api 用于序列化json
 	api jsonKit.API = nil
-
-	// msgProcessor 供外部对最终message进行二开
-	msgProcessor func(string) string = nil
 )
 
-func MustSetUp(respProvider RespProvider, msgFilePaths []string, options ...Option) {
-	if err := SetUp(respProvider, msgFilePaths, options...); err != nil {
+func MustSetUp(respProvider RespProvider, options ...Option) {
+	if err := SetUp(respProvider, options...); err != nil {
 		logrusKit.DisableQuote(nil)
 		logrus.Fatalf("%+v", err)
 	}
 }
 
-func SetUp(respProvider RespProvider, msgFilePaths []string, options ...Option) error {
-	if err := interfaceKit.AssertNotNil(respProvider, "respProvider"); err != nil {
+func SetUp(respProvider RespProvider, options ...Option) (err error) {
+	defer func() {
+		if err != nil {
+			api = nil
+			provider = nil
+			msgMap = make(map[string]string)
+		}
+	}()
+
+	err = interfaceKit.AssertNotNil(respProvider, "respProvider")
+	if err != nil {
 		return err
 	}
-	if err := readFiles(msgFilePaths...); err != nil {
-		return err
+	provider = respProvider
+
+	opts := loadOptions(options...)
+	for _, path := range opts.filePathSlice {
+		if err := readFile(path); err != nil {
+			return err
+		}
+	}
+	for _, data := range opts.fileDataSlice {
+
 	}
 
-	provider = respProvider
-	opts := loadOptions(options...)
 	api = opts.api
 	return nil
 }
