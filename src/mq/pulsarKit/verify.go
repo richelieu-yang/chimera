@@ -40,8 +40,8 @@ func verify(verifyConfig VerifyConfig) (err error) {
 		// 不验证
 		return nil
 	}
-	topic := verifyConfig.Topic
 
+	topic := verifyConfig.Topic
 	dir, _ := pathKit.GetUniqueTempDir()
 	timeStr := timeKit.FormatCurrent(timeKit.FormatFileName)
 	consumerLogPath := pathKit.Join(dir, fmt.Sprintf("pulsar_verify_consumer_%s.log", timeStr))

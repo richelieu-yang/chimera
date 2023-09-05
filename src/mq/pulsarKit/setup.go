@@ -3,16 +3,13 @@ package pulsarKit
 import (
 	"context"
 	"github.com/apache/pulsar-client-go/pulsar"
-	"github.com/richelieu-yang/chimera/v2/src/core/errorKit"
 	"github.com/richelieu-yang/chimera/v2/src/log/logrusKit"
 	"github.com/sirupsen/logrus"
-	"sync"
 )
 
-var setupOnce sync.Once
 var config *Config
 
-func MustSetUp(config *Config) {
+func MustSetUp(config Config) {
 	err := SetUp(config)
 	if err != nil {
 		logrusKit.DisableQuote(nil)
@@ -20,20 +17,16 @@ func MustSetUp(config *Config) {
 	}
 }
 
-func SetUp(pulsarConfig *Config) (err error) {
-	setupOnce.Do(func() {
-		config = pulsarConfig
-		if config == nil {
-			err = errorKit.New("config == nil")
-		} else {
-			err = verify(config.VerifyConfig)
-		}
+func SetUp(pulsarConfig Config) (err error) {
+	defer func() {
 		if err != nil {
 			config = nil
 		}
-	})
+	}()
 
-	return err
+	config = &pulsarConfig
+	err = verify(config.VerifyConfig)
+	return
 }
 
 // NewProducer
