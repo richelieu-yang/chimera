@@ -10,7 +10,7 @@ import (
 type (
 	// RespProvider
 	/*
-		@return 建议是个结构体实例 && 加上json tag
+		@return 建议是个加上json tag的结构体实例指针
 	*/
 	RespProvider func(code, msg string, data interface{}) interface{}
 )
