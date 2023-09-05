@@ -30,7 +30,7 @@ func loadOptions(optionSlice ...Option) *options {
 		option(opts)
 	}
 	if opts.api == nil {
-		opts.api = jsonKit.GetAPI()
+		opts.api = jsonKit.GetDefaultApi()
 	}
 	return opts
 }

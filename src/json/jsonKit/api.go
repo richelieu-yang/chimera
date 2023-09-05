@@ -26,6 +26,10 @@ func GetLibrary() string {
 	return library
 }
 
-func GetAPI() API {
+func GetDefaultApi() API {
 	return defaultApi
+}
+
+func GetStdApi() API {
+	return stdApi
 }

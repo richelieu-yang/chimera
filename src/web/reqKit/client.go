@@ -32,7 +32,7 @@ func NewClient() *req.Client {
 	client.EnableInsecureSkipVerify()
 
 	// 自定义 Marshal 和 Unmarshal
-	api := jsonKit.GetAPI()
+	api := jsonKit.GetDefaultApi()
 	client.SetJsonMarshal(api.Marshal).SetJsonUnmarshal(api.Unmarshal)
 
 	return client
