@@ -2,47 +2,19 @@ package main
 
 import (
 	"fmt"
-	jsoniter "github.com/json-iterator/go"
-	"github.com/richelieu-yang/chimera/v2/src/copyKit"
-	"github.com/richelieu-yang/chimera/v2/src/json/jsonKit"
+	"github.com/richelieu-yang/chimera/v2/src/web/httpClientKit"
+	"sync"
 )
 
-type Bean struct {
-	Id int
-}
-
 func main() {
-	b := &Bean{
-		Id: 666,
+	var wg sync.WaitGroup
+	for i := 0; i < 3; i++ {
+		wg.Add(1)
+		go func(i int) {
+			defer wg.Done()
+			_, data, _ := httpClientKit.Get("http://127.0.0.1:9942/ws/api/suicide")
+			fmt.Println(string(data))
+		}(i)
 	}
-	src := map[string]interface{}{
-		"b":   false,
-		"tmp": b,
-	}
-	var dest map[string]interface{}
-
-	dest, err := copyKit.DeepCopy(src)
-	if err != nil {
-		panic(err)
-	}
-
-	////dest = deepcopy.Copy(src).(map[string]interface{})
-	//
-	////dest = DeepCopy(src).(map[string]interface{})
-	//
-	//dest = map[string]interface{}{}
-	//if err := copier.CopyWithOption(&dest, src, copier.Option{
-	//	DeepCopy: true,
-	//}); err != nil {
-	//	panic(err)
-	//}
-
-	fmt.Println(src)
-	fmt.Println(dest)
-
-	src["b"] = true
-	b.Id = 777
-
-	fmt.Println(jsonKit.MarshalToStringWithAPI(jsoniter.ConfigCompatibleWithStandardLibrary, src))
-	fmt.Println(jsonKit.MarshalToStringWithAPI(jsoniter.ConfigCompatibleWithStandardLibrary, dest))
+	wg.Wait()
 }
