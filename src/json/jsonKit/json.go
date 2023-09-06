@@ -48,7 +48,8 @@ func MarshalIndentToString(v interface{}, prefix, indent string) (string, error)
 
 // Unmarshal 反序列化
 /*
-@param v 必须是指针（结构体实例指针 || map实例指针 || slice实例指针）
+@param v	(1) 必须是指针（结构体实例指针 || map实例指针 || slice实例指针）;
+			(2) 如果为 slice 或 map 类型，值可以为nil.
 */
 func Unmarshal(data []byte, v interface{}) error {
 	return defaultApi.Unmarshal(data, v)
