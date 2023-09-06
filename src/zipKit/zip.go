@@ -1,7 +1,7 @@
 package zipKit
 
 import (
-	"github.com/dablelv/go-huge-util/zip"
+	"github.com/dablelv/cyan/zip"
 )
 
 // Zip 压缩文件（或目录）
@@ -14,6 +14,4 @@ PS:
 @param zipPath 	e.g."archive.zip"
 @param paths	多个文件（或目录）的路径
 */
-func Zip(zipPath string, paths ...string) error {
-	return zip.Zip(zipPath, paths...)
-}
+var Zip func(zipPath string, paths ...string) error = zip.Zip

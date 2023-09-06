@@ -1,13 +1,9 @@
 package zipKit
 
-import (
-	"github.com/dablelv/go-huge-util/zip"
-)
+import "github.com/dablelv/cyan/zip"
 
 // Unzip 解压
 /*
 @param zipPath e.g."archive.zip"
 */
-func Unzip(zipPath, dstDir string) error {
-	return zip.Unzip(zipPath, dstDir)
-}
+var Unzip func(zipPath, dstDir string) error = zip.Unzip
