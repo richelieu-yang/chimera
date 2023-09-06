@@ -28,8 +28,8 @@ type (
 		BodyLimit     int64                                `json:"bodyLimit,default=-1,range=[-1:]" yaml:"bodyLimit"`
 		Gzip          bool                                 `json:"gzip,default=false" yaml:"gzip"`
 		XFrameOptions string                               `json:"xFrameOptions,optional" yaml:"xFrameOptions"`
-		Cors          CorsConfig                           `json:"cors"`
-		Referer       []*refererKit.RefererVerifierBuilder `json:"referer,optional"`
+		Cors          CorsConfig                           `json:"cors" yaml:"cors"`
+		Referer       []*refererKit.RefererVerifierBuilder `json:"referer,optional" yaml:"referer"`
 	}
 
 	// CorsConfig cors（跨源资源共享）的配置

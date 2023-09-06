@@ -9,13 +9,13 @@ import (
 )
 
 type RefererVerifierBuilder struct {
-	None    bool
-	Blocked bool
+	None    bool `json:"none" yaml:"none"`
+	Blocked bool `json:"blocked" yaml:"blocked"`
 
 	// Route 路由的正则字符串
-	Route string
+	Route string `json:"route" yaml:"route"`
 	// ServerNames referer白名单的正则字符串s
-	ServerNames []string
+	ServerNames []string `json:"serverNames" yaml:"serverNames"`
 }
 
 func (builder *RefererVerifierBuilder) Build() (*RefererVerifier, error) {
