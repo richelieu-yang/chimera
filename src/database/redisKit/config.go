@@ -4,26 +4,26 @@ import "github.com/richelieu-yang/chimera/v2/src/compareKit"
 
 type (
 	Config struct {
-		UserName string `json:"userName,optional"`
-		Password string `json:"password,optional"`
+		UserName string `json:"userName,optional" yaml:"userName"`
+		Password string `json:"password,optional" yaml:"password"`
 
-		MinIdleConns int `json:"minIdleConns,default=64,range=[32:1000000]"`
-		MaxIdleConns int `json:"maxIdleConns,default=256,range=[32:1000000]"`
-		PoolSize     int `json:"poolSize,default=512,range=[32:1000000]"`
+		//MinIdleConns int `json:"minIdleConns,default=128,range=[32:1000000]" yaml:"minIdleConns"`
+		//MaxIdleConns int `json:"maxIdleConns,default=2048,range=[32:1000000]" yaml:"maxIdleConns"`
+		//PoolSize     int `json:"poolSize,default=512,range=[32:1000000]" yaml:"poolSize"`
 
-		Mode Mode `json:"mode,default=0,options=0|2|3"`
+		Mode Mode `json:"mode,default=0,options=0|2|3" yaml:"mode"`
 
-		SingleNodeConfig   *SingleNodeConfig   `json:"singleNodeConfig"`
-		MasterSlaverConfig *MasterSlaverConfig `json:"masterSlaverConfig"`
-		SentinelConfig     *SentinelConfig     `json:"sentinelConfig"`
-		ClusterConfig      *ClusterConfig      `json:"clusterConfig"`
+		SingleNodeConfig   *SingleNodeConfig   `json:"singleNodeConfig" yaml:"singleNodeConfig"`
+		MasterSlaverConfig *MasterSlaverConfig `json:"masterSlaverConfig" yaml:"masterSlaverConfig"`
+		SentinelConfig     *SentinelConfig     `json:"sentinelConfig" yaml:"sentinelConfig"`
+		ClusterConfig      *ClusterConfig      `json:"clusterConfig" yaml:"clusterConfig"`
 	}
 
 	SingleNodeConfig struct {
 		// Addr host:port address.
-		Addr string `json:"addr"`
+		Addr string `json:"addr" yaml:"addr"`
 		// DB Database to be selected after connecting to the server.
-		DB int `json:"db,default=0"`
+		DB int `json:"db,default=0" yaml:"db"`
 	}
 
 	MasterSlaverConfig struct {
@@ -31,10 +31,10 @@ type (
 
 	SentinelConfig struct {
 		// MasterName The master name.
-		MasterName string `json:"masterName,default=mymaster"`
+		MasterName string `json:"masterName,default=mymaster" yaml:"masterName"`
 		// SentinelAddrs A seed list of host:port addresses of sentinel nodes.
-		SentinelAddrs []string `json:"sentinelAddrs"`
-		DB            int      `json:"db,default=0"`
+		SentinelAddrs []string `json:"sentinelAddrs" yaml:"sentinelAddrs"`
+		DB            int      `json:"db,default=0" yaml:"db"`
 	}
 
 	ClusterConfig struct {
@@ -44,7 +44,7 @@ type (
 			可以是: 所有的 master 的地址，
 			也可以是: 所有的 master + slave 的地址（推荐）.
 		*/
-		Addrs []string `json:"addrs"`
+		Addrs []string `json:"addrs" yaml:"addrs"`
 	}
 )
 
@@ -53,16 +53,6 @@ func (config Config) Equal(config1 Config) bool {
 		return false
 	}
 	if config.Password != config1.Password {
-		return false
-	}
-
-	if config.MinIdleConns != config1.MinIdleConns {
-		return false
-	}
-	if config.MaxIdleConns != config1.MaxIdleConns {
-		return false
-	}
-	if config.PoolSize != config1.PoolSize {
 		return false
 	}
 

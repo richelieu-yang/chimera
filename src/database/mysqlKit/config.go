@@ -10,27 +10,27 @@ type (
 	Config struct {
 		DsnConfig
 
-		Log  LogConfig  `json:"log"`
-		Pool PoolConfig `json:"pool"`
+		Log  LogConfig  `json:"log" yaml:"log"`
+		Pool PoolConfig `json:"pool" yaml:"pool"`
 	}
 
 	DsnConfig struct {
-		UserName string `json:"userName"`
-		Password string `json:"password,optional"`
+		UserName string `json:"userName" yaml:"userName"`
+		Password string `json:"password,optional" yaml:"password"`
 		// Host e.g."127.0.0.1:3306"
-		Host   string `json:"host"`
-		DBName string `json:"dbName"`
+		Host   string `json:"host" yaml:"host"`
+		DBName string `json:"dbName" yaml:"dbName"`
 	}
 
 	LogConfig struct {
-		SlowThreshold time.Duration   `json:"slowThreshold,default=200ms"`
-		LogLevel      logger.LogLevel `json:"logLevel,default=4,options=1|2|3|4"`
+		SlowThreshold time.Duration   `json:"slowThreshold,default=200ms" yaml:"slowThreshold"`
+		LogLevel      logger.LogLevel `json:"logLevel,default=4,options=1|2|3|4" yaml:"logLevel"`
 	}
 
 	PoolConfig struct {
-		MaxIdleConns    int           `json:"maxIdleConns,default=32"`
-		MaxOpenConns    int           `json:"maxOpenConns,default=128"`
-		ConnMaxLifetime time.Duration `json:"connMaxLifetime,default=30m"`
+		MaxIdleConns    int           `json:"maxIdleConns,default=32" yaml:"maxIdleConns"`
+		MaxOpenConns    int           `json:"maxOpenConns,default=128" yaml:"maxOpenConns"`
+		ConnMaxLifetime time.Duration `json:"connMaxLifetime,default=30m" yaml:"connMaxLifetime"`
 	}
 )
 

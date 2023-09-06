@@ -59,9 +59,6 @@ gin:
 redis:
   userName:
   password:
-  minIdleConns: 64
-  maxIdleConns: 256
-  poolSize: 512
   # 默认值: -1
   # 0: 单点
   # 1: 主从（暂不支持）
@@ -87,14 +84,6 @@ redis:
       - 192.168.1.25:6383
       - 192.168.1.25:6384
       - 192.168.1.25:6385
-
-#rocketmq5:
-#  endpoint: localhost:8081
-#  # 用于验证endpoint（收发消息）的topic
-#  topicToVerify: test
-#  credentials:
-#    accessKey:
-#    accessSecret:
 
 pulsar:
   addresses:

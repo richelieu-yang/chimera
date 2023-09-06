@@ -105,10 +105,6 @@ func newBaseOptions(config *Config) *redis.UniversalOptions {
 	return &redis.UniversalOptions{
 		Username: config.UserName,
 		Password: config.Password,
-
-		MinIdleConns: config.MinIdleConns,
-		MaxIdleConns: config.MaxIdleConns,
-		PoolSize:     config.PoolSize,
 	}
 }
 
