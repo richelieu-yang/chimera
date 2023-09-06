@@ -13,10 +13,10 @@ type (
 
 		Mode Mode `json:"mode,default=0,options=0|2|3"`
 
-		SingleNodeConfig   SingleNodeConfig   `json:"singleNodeConfig"`
-		MasterSlaverConfig MasterSlaverConfig `json:"masterSlaverConfig"`
-		SentinelConfig     SentinelConfig     `json:"sentinelConfig"`
-		ClusterConfig      ClusterConfig      `json:"clusterConfig"`
+		SingleNodeConfig   *SingleNodeConfig   `json:"singleNodeConfig"`
+		MasterSlaverConfig *MasterSlaverConfig `json:"masterSlaverConfig"`
+		SentinelConfig     *SentinelConfig     `json:"sentinelConfig"`
+		ClusterConfig      *ClusterConfig      `json:"clusterConfig"`
 	}
 
 	SingleNodeConfig struct {

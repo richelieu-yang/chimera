@@ -2,6 +2,7 @@ package redisKit
 
 import (
 	"context"
+	"errors"
 	"github.com/redis/go-redis/v9"
 	"github.com/richelieu-yang/chimera/v2/src/core/errorKit"
 	"github.com/richelieu-yang/chimera/v2/src/core/strKit"
@@ -88,7 +89,7 @@ func NewClient(config *Config) (client *Client, err error) {
 	defer cancel()
 	str, err := client.Ping(ctx)
 	if err != nil {
-		if err == context.DeadlineExceeded {
+		if errors.Is(err, context.DeadlineExceeded) {
 			err = errorKit.New("fail to ping within timeout(%s)", pingTimeout)
 		}
 		return
@@ -119,10 +120,8 @@ func newSingleNodeOptions(config *Config) (*redis.UniversalOptions, error) {
 	}
 
 	opts := newBaseOptions(config)
-
 	opts.Addrs = []string{c.Addr}
 	opts.DB = c.DB
-
 	return opts, nil
 }
 
@@ -142,12 +141,10 @@ func newSentinelOptions(config *Config) (*redis.UniversalOptions, error) {
 	}
 
 	opts := newBaseOptions(config)
-
 	// MasterName默认为"mymaster"
 	opts.MasterName = strKit.EmptyToDefault(c.MasterName, "mymaster", true)
 	opts.Addrs = c.SentinelAddrs
 	opts.DB = c.DB
-
 	return opts, nil
 }
 
@@ -159,8 +156,6 @@ func newClusterOptions(config *Config) (*redis.UniversalOptions, error) {
 	}
 
 	opts := newBaseOptions(config)
-
 	opts.Addrs = c.Addrs
-
 	return opts, nil
 }
