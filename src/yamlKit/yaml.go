@@ -7,13 +7,13 @@ import (
 
 // Marshal
 /*
-PS: 需要搭配 yaml tag 一起使用.
+PS: 需要搭配 yaml tag 一起使用，不识别 json tag.
 */
 var Marshal func(in interface{}) (out []byte, err error) = yaml.Marshal
 
 // MarshalToString
 /*
-PS: 需要搭配 yaml tag 一起使用.
+PS: 需要搭配 yaml tag 一起使用，不识别 json tag.
 
 @param in 建议为结构体实例指针 || map实例 || slice实例
 */
@@ -25,7 +25,7 @@ func MarshalToString(in interface{}) (string, error) {
 // MarshalToFile
 /*
 PS:
-(1) 需要搭配 yaml tag 一起使用.
+(1) 需要搭配 yaml tag 一起使用，不识别 json tag.
 (2) 对 传参filePath 的验证和断言在 fileKit.WriteToFile 里面.
 
 @param in		建议为结构体实例指针 || map实例 || slice实例
@@ -45,7 +45,7 @@ func MarshalToFile(in interface{}, filePath string) error {
 /*
 Deprecated: Use confKit.MustLoad || confKit.LoadFromYamlBytes instead.
 
-PS: 需要搭配 yaml tag 一起使用.
+PS: 需要搭配 yaml tag 一起使用，不识别 json tag.
 */
 var Unmarshal func(in []byte, out interface{}) (err error) = yaml.Unmarshal
 
@@ -53,7 +53,7 @@ var Unmarshal func(in []byte, out interface{}) (err error) = yaml.Unmarshal
 /*
 Deprecated: Use confKit.MustLoad || confKit.LoadFromYamlBytes instead.
 
-PS: 需要搭配 yaml tag 一起使用.
+PS: 需要搭配 yaml tag 一起使用，不识别 json tag.
 */
 func UnmarshalFromString(in string, out interface{}) error {
 	return Unmarshal([]byte(in), out)
