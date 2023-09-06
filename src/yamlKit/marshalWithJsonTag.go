@@ -12,7 +12,8 @@ import (
 PS:
 (1) 适用场景: 有json tag，没有yaml tag.
 (2) 缺陷: 	(a) 传参in 不能为slice实例;
-			(b) map是无序的键值对集合，生成的yaml会有点乱（即使按照key排序）.
+			(b) map是无序的键值对集合，生成的yaml会有点乱（即使按照key排序）;
+			(c) key中如果有大写字母，全部会变成小写字母.
 */
 func MarshalToFileWithJsonTag(in interface{}, filePath string) error {
 	if err := fileKit.AssertNotExistOrIsFile(filePath); err != nil {
