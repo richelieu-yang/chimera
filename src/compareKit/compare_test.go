@@ -38,7 +38,7 @@ func (b bean) Equal(b1 bean) bool {
 /*
 !!!:
 (1) Equal方法的receiver为 指针类型 && 比较的是 结构体实例指针 的情况下，将返回true;
-(2) Equal方法的receiver为 指针类型 && 比较的是 结构体实例 的情况下，将返回false（因为debug没有走到Equal方法）.
+(2) Equal方法的receiver为 指针类型 && 比较的是 结构体实例 的情况下，将返回false（debug时，没有走到Equal方法）.
 (3) Equal方法的receiver为 值类型类型，比较的无论是 结构体实例指针 还是 结构体实例，将返回true.
 */
 func TestEqual1(t *testing.T) {
