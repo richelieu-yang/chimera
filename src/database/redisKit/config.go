@@ -7,12 +7,7 @@ type (
 		UserName string `json:"userName,optional" yaml:"userName"`
 		Password string `json:"password,optional" yaml:"password"`
 
-		//MinIdleConns int `json:"minIdleConns,default=128,range=[32:1000000]" yaml:"minIdleConns"`
-		//MaxIdleConns int `json:"maxIdleConns,default=2048,range=[32:1000000]" yaml:"maxIdleConns"`
-		//PoolSize     int `json:"poolSize,default=512,range=[32:1000000]" yaml:"poolSize"`
-
-		Mode Mode `json:"mode,default=0,options=0|2|3" yaml:"mode"`
-
+		Mode               Mode                `json:"mode,default=0,options=0|2|3" yaml:"mode"`
 		SingleNodeConfig   *SingleNodeConfig   `json:"singleNodeConfig" yaml:"singleNodeConfig"`
 		MasterSlaverConfig *MasterSlaverConfig `json:"masterSlaverConfig" yaml:"masterSlaverConfig"`
 		SentinelConfig     *SentinelConfig     `json:"sentinelConfig" yaml:"sentinelConfig"`
