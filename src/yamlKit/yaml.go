@@ -5,10 +5,16 @@ import (
 	"gopkg.in/yaml.v3"
 )
 
+// Marshal
+/*
+PS: 需要搭配 yaml tag 一起使用.
+*/
 var Marshal func(in interface{}) (out []byte, err error) = yaml.Marshal
 
 // MarshalToString
 /*
+PS: 需要搭配 yaml tag 一起使用.
+
 @param in 建议为结构体实例指针 || map实例 || slice实例
 */
 func MarshalToString(in interface{}) (string, error) {
@@ -18,7 +24,9 @@ func MarshalToString(in interface{}) (string, error) {
 
 // MarshalToFile
 /*
-PS: 对 传参filePath 的验证和断言在 fileKit.WriteToFile 里面.
+PS:
+(1) 需要搭配 yaml tag 一起使用.
+(2) 对 传参filePath 的验证和断言在 fileKit.WriteToFile 里面.
 
 @param in		建议为结构体实例指针 || map实例 || slice实例
 @param filePath (1) .yaml 格式的文件
@@ -36,12 +44,16 @@ func MarshalToFile(in interface{}, filePath string) error {
 // Unmarshal
 /*
 Deprecated: Use confKit.MustLoad || confKit.LoadFromYamlBytes instead.
+
+PS: 需要搭配 yaml tag 一起使用.
 */
 var Unmarshal func(in []byte, out interface{}) (err error) = yaml.Unmarshal
 
 // UnmarshalFromString
 /*
 Deprecated: Use confKit.MustLoad || confKit.LoadFromYamlBytes instead.
+
+PS: 需要搭配 yaml tag 一起使用.
 */
 func UnmarshalFromString(in string, out interface{}) error {
 	return Unmarshal([]byte(in), out)
