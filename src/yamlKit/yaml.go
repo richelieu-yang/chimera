@@ -21,7 +21,7 @@ func MarshalToString(in interface{}) (string, error) {
 PS: 对 传参filePath 的验证和断言在 fileKit.WriteToFile 里面.
 
 @param in		建议为结构体实例指针 || map实例 || slice实例
-@param filePath (1) .yaml格式的文件
+@param filePath (1) .yaml 格式的文件
 				(2) 不存在的话，会创建一个新的文件
 				(3) 存在且是个文件的话，会 "覆盖" 掉旧的（并不会加到该文件的最后面）
 */
