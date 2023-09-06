@@ -26,7 +26,7 @@ PS:
 
 e.g.
 	mime := mimeTypeKit.Detect(nil)
-	fmt.Println(mime.ToDSN()) // "text/plain"
+	fmt.Println(mime.ToDsnString()) // "text/plain"
 */
 var Detect func(in []byte) *mimetype.MIME = mimetype.Detect
 
@@ -44,9 +44,9 @@ TODO: https://github.com/gabriel-vasile/mimetype
 
 e.g.
 	mime, _ := mimeTypeKit.DetectFile("/Users/richelieu/Desktop/未命名.wps")
-	fmt.Println(mime.ToDSN()) // application/x-ole-storage
+	fmt.Println(mime.ToDsnString()) // application/x-ole-storage
 
 	mime, _ = mimeTypeKit.DetectFile("/Users/richelieu/Desktop/download.pdf")
-	fmt.Println(mime.ToDSN()) // application/pdf
+	fmt.Println(mime.ToDsnString()) // application/pdf
 */
 var DetectFile func(path string) (*mimetype.MIME, error) = mimetype.DetectFile

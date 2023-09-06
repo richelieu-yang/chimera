@@ -34,7 +34,7 @@ type (
 	}
 )
 
-func (c *DsnConfig) ToDSN() string {
+func (c *DsnConfig) ToDsnString() string {
 	// 参考 https://github.com/go-sql-driver/mysql#dsn-data-source-name 获取详情
 	return fmt.Sprintf("%s:%s@tcp(%s)/%s?charset=utf8mb4&parseTime=True&loc=Local",
 		c.UserName,

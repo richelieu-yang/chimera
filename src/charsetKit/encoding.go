@@ -23,12 +23,12 @@ package charsetKit
 //
 //// Utf8ToGbkString UTF-8 => GBK
 //func Utf8ToGbkString(str string) (string, int, error) {
-//	return transform.ToDSN(simplifiedchinese.GBK.NewEncoder(), str)
+//	return transform.ToDsnString(simplifiedchinese.GBK.NewEncoder(), str)
 //}
 //
 //// GbkToUtf8String GBK => UTF-8
 //func GbkToUtf8String(str string) (string, int, error) {
-//	return transform.ToDSN(simplifiedchinese.GBK.NewDecoder(), str)
+//	return transform.ToDsnString(simplifiedchinese.GBK.NewDecoder(), str)
 //}
 //
 //// Utf8ToGbk UTF-8 => GBK

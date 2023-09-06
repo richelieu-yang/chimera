@@ -42,7 +42,7 @@ func Status(w http.ResponseWriter, code int) {
 
 // RespondString
 /*
-参考: gin里面的 Context.ToDSN() .
+参考: gin里面的 Context.ToDsnString() .
 */
 func RespondString(w http.ResponseWriter, code int, format string, values ...any) error {
 	data := strKit.StringToBytes(fmt.Sprintf(format, values...))
