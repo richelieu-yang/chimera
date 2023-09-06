@@ -9,8 +9,10 @@ import (
 
 // MarshalToFileWithJsonTag
 /*
-适用场景: 有json tag，没有yaml tag.
-缺陷: 传参in 不能为slice实例.
+PS:
+(1) 适用场景: 有json tag，没有yaml tag.
+(2) 缺陷: 	(a) 传参in 不能为slice实例;
+			(b) map是无序的键值对集合，生成的yaml会有点乱（即使按照key排序）.
 */
 func MarshalToFileWithJsonTag(in interface{}, filePath string) error {
 	if err := fileKit.AssertNotExistOrIsFile(filePath); err != nil {
@@ -21,7 +23,7 @@ func MarshalToFileWithJsonTag(in interface{}, filePath string) error {
 	}
 
 	// 结构体实例 => json
-	data, err := jsonKit.Marshal(in)
+	jsonData, err := jsonKit.Marshal(in)
 	if err != nil {
 		return err
 	}
@@ -29,7 +31,7 @@ func MarshalToFileWithJsonTag(in interface{}, filePath string) error {
 	// viper读取json，然后导出为yaml
 	v := viper.New()
 	v.SetConfigType("json")
-	if err := v.ReadConfig(ioKit.NewReader(data)); err != nil {
+	if err := v.ReadConfig(ioKit.NewReader(jsonData)); err != nil {
 		return err
 	}
 	return v.WriteConfigAs(filePath)
@@ -37,8 +39,10 @@ func MarshalToFileWithJsonTag(in interface{}, filePath string) error {
 
 // MarshalToFileWithJsonTag1
 /*
-适用场景: 有json tag，没有yaml tag.
-缺陷: 传参in 不能为slice实例.
+PS:
+(1) 适用场景: 有json tag，没有yaml tag.
+(2) 缺陷: 	(a) 传参in 不能为slice实例;
+			(b) map是无序的键值对集合，生成的yaml会有点乱（即使按照key排序）.
 */
 func MarshalToFileWithJsonTag1(in interface{}, filePath string) error {
 	// 结构体实例 => json
