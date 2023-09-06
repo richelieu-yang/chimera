@@ -38,26 +38,26 @@ func MarshalToFileWithJsonTag(in interface{}, filePath string) error {
 	return v.WriteConfigAs(filePath)
 }
 
-// MarshalToFileWithJsonTag1
-/*
-PS:
-(1) 适用场景: 有json tag，没有yaml tag.
-(2) 缺陷: 	(a) 传参in 不能为slice实例;
-			(b) map是无序的键值对集合，生成的yaml会有点乱（即使按照key排序）.
-*/
-func MarshalToFileWithJsonTag1(in interface{}, filePath string) error {
-	// 结构体实例 => json
-	jsonData, err := jsonKit.Marshal(in)
-	if err != nil {
-		return err
-	}
-
-	// json => map
-	m := map[string]interface{}{}
-	if err := jsonKit.Unmarshal(jsonData, &m); err != nil {
-		return err
-	}
-
-	// map => yaml文本
-	return MarshalToFile(m, filePath)
-}
+//// MarshalToFileWithJsonTag1
+///*
+//PS:
+//(1) 适用场景: 有json tag，没有yaml tag.
+//(2) 缺陷: 	(a) 传参in 不能为slice实例;
+//			(b) map是无序的键值对集合，生成的yaml会有点乱（即使按照key排序）.
+//*/
+//func MarshalToFileWithJsonTag1(in interface{}, filePath string) error {
+//	// 结构体实例 => json
+//	jsonData, err := jsonKit.Marshal(in)
+//	if err != nil {
+//		return err
+//	}
+//
+//	// json => map
+//	m := map[string]interface{}{}
+//	if err := jsonKit.Unmarshal(jsonData, &m); err != nil {
+//		return err
+//	}
+//
+//	// map => yaml文本
+//	return MarshalToFile(m, filePath)
+//}
