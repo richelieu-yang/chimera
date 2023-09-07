@@ -5,6 +5,9 @@ type (
 		// StatusCode http状态码（默认200，即 http.StatusOK）
 		StatusCode int
 
+		// Object json对象（不为nil的情况下，序列化为json并响应给前端）
+		Object interface{}
+
 		// Text 响应字符串（也可以是json）
 		Text string
 

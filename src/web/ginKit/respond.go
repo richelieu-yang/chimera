@@ -16,26 +16,6 @@ import (
 	"unicode"
 )
 
-// RespondText 响应文本.
-/*
-@param args 用于替换 传参format 中的格式占位符（%s、%d...）
-*/
-func RespondText(ctx *gin.Context, statusCode int, format string, args ...interface{}) {
-	SetCacheControlNoCache(ctx)
-
-	ctx.String(statusCode, format, args...)
-}
-
-// RespondJson 响应json字符串.
-/*
-@param h gin.H is a shortcut for map[string]interface{}
-*/
-func RespondJson(ctx *gin.Context, statusCode int, h gin.H) {
-	SetCacheControlNoCache(ctx)
-
-	ctx.JSON(statusCode, h)
-}
-
 // RespondFile
 /*
 PS:
@@ -71,7 +51,6 @@ func RespondFileContent(ctx *gin.Context, httpStatusCode int, name, contentType 
 	// application/octet-stream: 二进制流数据（如常见的文件下载）
 	contentType = strKit.EmptyToDefault(contentType, "application/octet-stream; charset=utf-8", true)
 	ctx.Header("Content-Type", contentType)
-
 	ctx.Header("Content-Length", intKit.IntToString(len(data)))
 
 	if strKit.IsNotEmpty(name) {
@@ -142,7 +121,7 @@ func RespondError(ctx *gin.Context, statusCode int, err error) {
 	if statusCode <= 0 {
 		statusCode = http.StatusInternalServerError
 	}
-	RespondText(ctx, statusCode, message)
+	ctx.String(statusCode, message)
 }
 
 func RespondPanic(ctx *gin.Context, err any) {
@@ -153,7 +132,7 @@ func RespondPanic(ctx *gin.Context, err any) {
 		message = "err == nil"
 	}
 
-	RespondText(ctx, httpStatusCode.Panic, message)
+	ctx.String(httpStatusCode.Panic, message)
 }
 
 func RespondPackageOrError(ctx *gin.Context, pack *ResponsePackage, err error) {
@@ -195,12 +174,19 @@ func RespondPackage(ctx *gin.Context, pack *ResponsePackage) {
 	if statusCode <= 0 {
 		statusCode = http.StatusOK
 	}
-	// (1) 文本（包括json）
-	if strKit.IsNotEmpty(pack.Text) {
-		RespondText(ctx, statusCode, pack.Text)
+
+	// (1) json对象
+	if pack.Object != nil {
+		ctx.JSON(statusCode, pack.Object)
 		return
 	}
-	// (2) 文件（路径）
+
+	// (2) 纯文本（包括json）
+	if strKit.IsNotEmpty(pack.Text) {
+		ctx.String(statusCode, pack.Text)
+		return
+	}
+	// (3) 文件（路径）
 	if strKit.IsNotEmpty(pack.FilePath) {
 		if strKit.IsEmpty(pack.FileName) {
 			pack.FileName = fileKit.GetFileName(pack.FilePath)
@@ -208,11 +194,12 @@ func RespondPackage(ctx *gin.Context, pack *ResponsePackage) {
 		RespondFile(ctx, statusCode, pack.FilePath, pack.FileName)
 		return
 	}
-	// (3) 文件（内容）
+	// (4) 文件（内容）
 	if pack.FileContent != nil {
 		RespondFileContent(ctx, statusCode, pack.FileName, pack.ContentType, pack.FileContent)
 		return
 	}
 
+	// 只有响应的http状态码
 	ctx.Status(statusCode)
 }
