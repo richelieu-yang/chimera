@@ -1,30 +1,21 @@
 package jsonRespKit
 
-import (
-	"fmt"
-	"github.com/richelieu-yang/chimera/v2/src/core/strKit"
-)
+import "github.com/richelieu-yang/chimera/v2/src/json/jsonKit"
 
-// Seal
+// Seal 封装成响应结构体实例，再序列化为json.
 /*
 PS: 需要先成功调用 MustSetUp || SetUp.
 */
 func Seal(code string, data interface{}, msgArgs ...interface{}) (string, error) {
-	return SealFully(code, "", data, msgArgs...)
+	bean := Pack(code, data, msgArgs...)
+	return jsonKit.MarshalToString(bean)
 }
 
-// SealFully
+// SealFully 封装成响应结构体实例，再序列化为json.
 /*
 PS: 需要先成功调用 MustSetUp || SetUp.
 */
 func SealFully(code, msg string, data interface{}, msgArgs ...interface{}) (string, error) {
-	if strKit.IsEmpty(msg) {
-		msg = msgMap[code]
-	}
-	if strKit.IsNotEmpty(msg) && msgArgs != nil {
-		msg = fmt.Sprintf(msg, msgArgs...)
-	}
-
-	bean := provider(code, msg, data)
-	return api.MarshalToString(bean)
+	bean := PackFully(code, msg, data, msgArgs...)
+	return jsonKit.MarshalToString(bean)
 }
