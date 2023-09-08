@@ -11,22 +11,22 @@ import (
 	"strings"
 )
 
-// GetRequestURI 带query
+// GetRoute 获取: 路由（不带query）.
 /*
 e.g.
-http://127.0.0.1/a/b?1=1&2=2 => "/a/b?1=1&2=2"
+	http://127.0.0.1/a/b?1=1&2=2 => "/a/b"
 */
-func GetRequestURI(req *http.Request) string {
-	return req.RequestURI
+func GetRoute(req *http.Request) string {
+	return req.URL.Path
 }
 
-// GetURLPath 不带query
+// GetRouteWithQuery 获取: 路由（带query）.
 /*
 e.g.
-http://127.0.0.1/a/b?1=1&2=2 => "/a/b"
+	http://127.0.0.1/a/b?1=1&2=2 => "/a/b?1=1&2=2"
 */
-func GetURLPath(req *http.Request) string {
-	return req.URL.Path
+func GetRouteWithQuery(req *http.Request) string {
+	return req.RequestURI
 }
 
 // GetURLRawQuery
