@@ -5,7 +5,7 @@ import (
 )
 
 func TestSetUp(t *testing.T) {
-	pulsarConfig := &Config{
+	pulsarConfig := Config{
 		Addresses: []string{"127.0.0.1:6650"},
 		//Addresses: []string{"192.168.80.27:6650", "192.168.80.42:6650", "192.168.80.43:6650"},
 		//Addresses: []string{"192.168.1.128:6650"},
@@ -15,7 +15,7 @@ func TestSetUp(t *testing.T) {
 			Print: true,
 		},
 	}
-	MustSetUp(pulsarConfig)
+	MustSetUp(pulsarConfig, "")
 
 	//topic := "test"
 	//consumer, err := NewConsumer(context.TODO(), pulsar.ConsumerOptions{

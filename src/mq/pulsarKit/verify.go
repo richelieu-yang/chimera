@@ -35,17 +35,27 @@ PS:
 可能失败的原因：
 （1）pulsar的进程在，但启动报错（存储空间爆了）
 */
-func verify(verifyConfig VerifyConfig) (err error) {
+func verify(verifyConfig VerifyConfig, tmpDirPath string) (err error) {
 	if strKit.IsBlank(verifyConfig.Topic) {
 		// 不验证
 		return nil
 	}
 
 	topic := verifyConfig.Topic
-	dir, _ := pathKit.GetUniqueTempDir()
+
+	if strKit.IsEmpty(tmpDirPath) {
+		tmpDirPath, err = pathKit.GetUniqueTempDir()
+		if err != nil {
+			return err
+		}
+	} else {
+		if err := fileKit.AssertExistAndIsDir(tmpDirPath); err != nil {
+			return err
+		}
+	}
 	timeStr := timeKit.FormatCurrent(timeKit.FormatFileName)
-	consumerLogPath := pathKit.Join(dir, fmt.Sprintf("pulsar_verify_consumer_%s.log", timeStr))
-	producerLogPath := pathKit.Join(dir, fmt.Sprintf("pulsar_verify_producer_%s.log", timeStr))
+	consumerLogPath := pathKit.Join(tmpDirPath, fmt.Sprintf("pulsar_verify_consumer_%s.log", timeStr))
+	producerLogPath := pathKit.Join(tmpDirPath, fmt.Sprintf("pulsar_verify_producer_%s.log", timeStr))
 
 	// 是否打印日志到控制台？
 	printFlag := verifyConfig.Print

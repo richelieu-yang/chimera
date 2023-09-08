@@ -9,15 +9,15 @@ import (
 
 var config *Config
 
-func MustSetUp(config Config) {
-	err := SetUp(config)
+func MustSetUp(config Config, tmpDirPath string) {
+	err := SetUp(config, tmpDirPath)
 	if err != nil {
 		logrusKit.DisableQuote(nil)
 		logrus.Fatalf("%+v", err)
 	}
 }
 
-func SetUp(pulsarConfig Config) (err error) {
+func SetUp(pulsarConfig Config, tmpDirPath string) (err error) {
 	defer func() {
 		if err != nil {
 			config = nil
@@ -25,7 +25,7 @@ func SetUp(pulsarConfig Config) (err error) {
 	}()
 
 	config = &pulsarConfig
-	err = verify(config.VerifyConfig)
+	err = verify(config.VerifyConfig, tmpDirPath)
 	return
 }
 
