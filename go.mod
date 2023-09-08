@@ -21,7 +21,7 @@ require (
 	github.com/gin-gonic/gin v1.9.1
 	github.com/go-kratos/kratos/v2 v2.7.0
 	github.com/go-playground/validator/v10 v10.15.3
-	github.com/go-redsync/redsync/v4 v4.8.2
+	github.com/go-redsync/redsync/v4 v4.9.0
 	github.com/gogf/gf/v2 v2.5.2
 	github.com/golang-jwt/jwt/v5 v5.0.0
 	github.com/google/go-cmp v0.5.9
@@ -30,7 +30,7 @@ require (
 	github.com/gorilla/sessions v1.2.1
 	github.com/gorilla/websocket v1.5.0
 	github.com/h2non/bimg v1.1.9
-	github.com/imroc/req/v3 v3.41.11
+	github.com/imroc/req/v3 v3.41.12
 	github.com/jinzhu/copier v0.4.0
 	github.com/jordan-wright/email v4.0.1-0.20210109023952-943e75fe5223+incompatible
 	github.com/json-iterator/go v1.1.12
