@@ -41,6 +41,7 @@ func verify(verifyConfig VerifyConfig, tmpDirPath string) (err error) {
 		return nil
 	}
 
+	ulid := idKit.NewULID()
 	topic := verifyConfig.Topic
 
 	if strKit.IsEmpty(tmpDirPath) {
@@ -54,8 +55,8 @@ func verify(verifyConfig VerifyConfig, tmpDirPath string) (err error) {
 		}
 	}
 	timeStr := timeKit.FormatCurrent(timeKit.FormatFileName)
-	consumerLogPath := pathKit.Join(tmpDirPath, fmt.Sprintf("pulsar_verify_consumer_%s.log", timeStr))
-	producerLogPath := pathKit.Join(tmpDirPath, fmt.Sprintf("pulsar_verify_producer_%s.log", timeStr))
+	consumerLogPath := pathKit.Join(tmpDirPath, fmt.Sprintf("pulsar_verify_consumer_%s_%s.log", timeStr, ulid))
+	producerLogPath := pathKit.Join(tmpDirPath, fmt.Sprintf("pulsar_verify_producer_%s_%s.log", timeStr, ulid))
 
 	// 是否打印日志到控制台？
 	printFlag := verifyConfig.Print
@@ -80,16 +81,16 @@ func verify(verifyConfig VerifyConfig, tmpDirPath string) (err error) {
 		}
 	}()
 
-	err = _verify(cLogger, topic, consumerLogPath, producerLogPath)
+	err = _verify(cLogger, topic, consumerLogPath, producerLogPath, ulid)
 	return
 }
 
-func _verify(logger *logrus.Logger, topic, consumerLogPath, producerLogPath string) error {
+func _verify(logger *logrus.Logger, topic, consumerLogPath, producerLogPath, ulid string) error {
 	ctx0, cancel := context.WithTimeout(context.TODO(), connectTimeout)
 	defer cancel()
 	consumer, err := NewConsumer(ctx0, pulsar.ConsumerOptions{
 		Topic:            topic,
-		SubscriptionName: fmt.Sprintf("verify_%s_%d", idKit.NewUUID(), randomKit.Int(0, 10000000)),
+		SubscriptionName: fmt.Sprintf("verify_%s_%d", ulid, randomKit.Int(0, 10000000)),
 		Type:             pulsar.Exclusive,
 	}, consumerLogPath)
 	if err != nil {
@@ -109,7 +110,6 @@ func _verify(logger *logrus.Logger, topic, consumerLogPath, producerLogPath stri
 	defer producer.Close()
 
 	timeStr := timeKit.FormatCurrent(timeKit.FormatCommon)
-	ulid := idKit.NewULID()
 	texts := []string{
 		fmt.Sprintf("%s&&%s&&%s", ulid, timeStr, "$0"),
 		fmt.Sprintf("%s&&%s&&%s", ulid, timeStr, "$1"),
