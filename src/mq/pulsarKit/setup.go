@@ -9,6 +9,10 @@ import (
 
 var config *Config
 
+// MustSetUp
+/*
+@param tmpDirPath 用于存放生成日志文件的临时目录（可以为空字符串，此时将采用默认值: 系统临时目录）
+*/
 func MustSetUp(config Config, tmpDirPath string) {
 	err := SetUp(config, tmpDirPath)
 	if err != nil {
