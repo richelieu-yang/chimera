@@ -1,4 +1,4 @@
-## 在线Aes加密/解密（有Go代码）
+## 在线Aes加密/解密
 https://lovefree.cc/aes
 
 ## 加密模式

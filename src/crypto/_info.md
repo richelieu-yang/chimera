@@ -9,6 +9,10 @@ Go 常用加密解密算法总结
     https://mp.weixin.qq.com/s?__biz=Mzg5NTYxMTAzOQ==&mid=2247495912&idx=2&sn=d19693bd64810f86a4291e3a21236c6d
 
 ## 第三方依赖
+zeromicro/go-zero: 
+    core/codec包
+gogf/gf: 
+    crypto包
 goencrypt（已经3年未更新了）:
     https://github.com/marspere/goencrypt
 goEncrypt:
