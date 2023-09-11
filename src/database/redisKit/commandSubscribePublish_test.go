@@ -39,28 +39,43 @@ func TestClient_SubscribeAndPublish1(t *testing.T) {
 	}
 	client = client
 
-	pubSub := client.Subscribe(context.TODO(), "__keyevent@0__:expired")
-	defer pubSub.Close()
+	/* 方法1 */
+	//go func() {
+	//	pubSub := client.Subscribe(context.TODO(), "__keyevent@0__:expired")
+	//	defer pubSub.Close()
+	//
+	//	for {
+	//		msg, err := pubSub.ReceiveMessage(context.TODO())
+	//		if err != nil {
+	//			panic(err)
+	//		}
+	//		logrus.WithFields(logrus.Fields{
+	//			"channel": msg.Channel,
+	//			"payLoad": msg.Payload, // 过期的键（key）
+	//		}).Info("Receive a message.")
+	//	}
+	//}()
+	/* 方法2 */
 	go func() {
-		for {
-			msg, err := pubSub.ReceiveMessage(context.TODO())
-			if err != nil {
-				panic(err)
-			}
+		pubSub := client.Subscribe(context.TODO(), "__keyevent@0__:expired")
+		defer pubSub.Close()
+
+		ch := pubSub.Channel()
+		for msg := range ch {
 			logrus.WithFields(logrus.Fields{
 				"channel": msg.Channel,
-				"payLoad": msg.Payload,
+				"payLoad": msg.Payload, // 过期的键（key）
 			}).Info("Receive a message.")
 		}
 	}()
 
 	go func() {
-		flag, err := client.Set(context.TODO(), "a", "aaa", time.Second*5)
+		flag, err := client.Set(context.TODO(), "a", "aaa", time.Second*3)
 		if err != nil {
 			panic(err)
 		}
 		logrus.Infof("flag: %t", flag)
 	}()
 
-	time.Sleep(time.Second * 100)
+	time.Sleep(time.Second * 5)
 }
