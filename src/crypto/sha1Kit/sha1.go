@@ -1,6 +1,8 @@
 package sha1Kit
 
 import (
+	"crypto/sha1"
+	"encoding/hex"
 	"github.com/gogf/gf/v2/crypto/gsha1"
 	"github.com/richelieu-yang/chimera/v2/src/core/fileKit"
 )
@@ -20,11 +22,11 @@ func EncryptFile(filePath string) (string, error) {
 	return gsha1.EncryptFile(filePath)
 }
 
-//// EncryptData
-///*
-//参考: gsha1.Encrypt
-//*/
-//func EncryptData(data []byte) string {
-//	r := sha1.Sum(data)
-//	return hex.EncodeToString(r[:])
-//}
+// EncryptData
+/*
+参考: gsha1.Encrypt.
+*/
+func EncryptData(data []byte) string {
+	r := sha1.Sum(data)
+	return hex.EncodeToString(r[:])
+}
