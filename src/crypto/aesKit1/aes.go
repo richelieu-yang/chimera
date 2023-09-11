@@ -2,7 +2,7 @@
 /*
 更多可以参考：https://github.com/hwholiday/learning_tools/blob/master/encryption_algorithm/aes.go
 */
-package aesKit
+package aesKit1
 
 import "bytes"
 

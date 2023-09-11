@@ -5,7 +5,7 @@ AES/ECB/PKCS5Padding
 缺点：代码中有 panic
 秘钥：长度必须是 16、24、32 中的一个！
 */
-package aesKit
+package aesKit1
 
 import (
 	"crypto/aes"
