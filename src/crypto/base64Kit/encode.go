@@ -17,8 +17,8 @@ func Encode(src []byte, options ...Base64Option) []byte {
 }
 
 // EncodeToString []byte => string
-func EncodeToString(str []byte, options ...Base64Option) string {
-	return string(Encode(str, options...))
+func EncodeToString(src []byte, options ...Base64Option) string {
+	return string(Encode(src, options...))
 }
 
 // EncodeString string => []byte
