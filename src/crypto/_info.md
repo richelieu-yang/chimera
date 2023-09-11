@@ -2,12 +2,6 @@
 (1) 可以参考 GoFrame 中的加密解密: https://goframe.org/pages/viewpage.action?pageId=1114868
 (2) 可以参考 go-zero 中的core/codec: 其中有gzip、rsa、aesecb.
 
-## 加密模式 
-加密模式（ECB、CBC、CFB）
-
-## 填充方式
-填充方式（ZeroPadding、PKCS5Padding）
-
 ## 参考
 Golang DES 加解密如何实现？
     https://mp.weixin.qq.com/s/yxK6y3EirIzafS4l9LnLfQ
