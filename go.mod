@@ -8,7 +8,7 @@ require (
 	github.com/bytedance/sonic v1.10.0
 	github.com/dablelv/cyan v0.0.51
 	github.com/deckarep/golang-set/v2 v2.3.1
-	github.com/duke-git/lancet/v2 v2.2.5
+	github.com/duke-git/lancet/v2 v2.2.6
 	github.com/dustin/go-humanize v1.0.1
 	github.com/emersion/go-imap v1.2.1
 	github.com/emersion/go-imap-id v0.0.0-20190926060100-f94a56b9ecde
@@ -22,7 +22,7 @@ require (
 	github.com/go-kratos/kratos/v2 v2.7.0
 	github.com/go-playground/validator/v10 v10.15.3
 	github.com/go-redsync/redsync/v4 v4.9.4
-	github.com/gogf/gf/v2 v2.5.2
+	github.com/gogf/gf/v2 v2.5.3
 	github.com/golang-jwt/jwt/v5 v5.0.0
 	github.com/google/go-cmp v0.5.9
 	github.com/google/uuid v1.3.1
