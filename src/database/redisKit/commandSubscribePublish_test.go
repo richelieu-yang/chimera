@@ -39,7 +39,7 @@ func TestClient_SubscribeAndPublish1(t *testing.T) {
 	}
 	client = client
 
-	/* 方法1 */
+	/* pubSub方法1 */
 	//go func() {
 	//	pubSub := client.Subscribe(context.TODO(), "__keyevent@0__:expired")
 	//	defer pubSub.Close()
@@ -55,7 +55,7 @@ func TestClient_SubscribeAndPublish1(t *testing.T) {
 	//		}).Info("Receive a message.")
 	//	}
 	//}()
-	/* 方法2 */
+	/* pubSub方法2 */
 	go func() {
 		pubSub := client.Subscribe(context.TODO(), "__keyevent@0__:expired")
 		defer pubSub.Close()
