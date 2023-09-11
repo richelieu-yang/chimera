@@ -2,7 +2,7 @@ package redisKit
 
 import "context"
 
-// Publish
+// Publish 发布.
 /*
 参考: https://www.runoob.com/redis/pub-sub-publish.html
 
@@ -11,6 +11,5 @@ import "context"
 命令返回值:	接收到信息的订阅者数量.
 */
 func (client *Client) Publish(ctx context.Context, channel string, message interface{}) (int64, error) {
-	cmd := client.universalClient.Publish(ctx, channel, message)
-	return cmd.Result()
+	return client.universalClient.Publish(ctx, channel, message).Result()
 }
