@@ -7,6 +7,11 @@ import (
 
 // Subscribe 频道的订阅（对频道的完全匹配）.
 /*
+PS:
+(1) 建议 起一个goroutine 来进行订阅操作.
+(2) *redis.PubSub实例的2种使用方法:	(a) PubSub.Channel()（推荐）
+									(b) PubSub.ReceiveMessage()
+
 命令说明:	订阅给定的一个或多个频道的信息.
 命令语法:	SUBSCRIBE channel [channel ...]
 命令返回值:	接收到的信息.
