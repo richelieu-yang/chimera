@@ -11,7 +11,9 @@ import (
 命令语法:	SUBSCRIBE channel [channel ...]
 命令返回值:	接收到的信息.
 
-@param channels e.g."__keyevent@0__:expired"
+e.g. 监听 db0 中key的超时
+	!!!: 需要先配置好Redis并重启，详见"Redis.wps".
+	传参channels: "__keyevent@0__:expired"
 */
 func (client *Client) Subscribe(ctx context.Context, channels ...string) *redis.PubSub {
 	return client.universalClient.Subscribe(ctx, channels...)
@@ -27,7 +29,9 @@ PS: 每个模式以 * 作为匹配符，e.g.
 命令语法:	PSUBSCRIBE pattern [pattern ...]
 命令返回值:	接收到的信息.
 
-@param patterns e.g."__keyevent@*__:expired"
+e.g. 监听 所有db 中key的超时
+	!!!: 需要先配置好Redis并重启，详见"Redis.wps".
+	传参channels: "__keyevent@*__:expired"
 */
 func (client *Client) PSubscribe(ctx context.Context, patterns ...string) *redis.PubSub {
 	return client.universalClient.PSubscribe(ctx, patterns...)
