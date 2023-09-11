@@ -2,11 +2,11 @@ package redisKit
 
 import (
 	"context"
-	"fmt"
 	"github.com/richelieu-yang/chimera/v2/src/atomicKit"
 	"github.com/richelieu-yang/chimera/v2/src/confKit"
 	"github.com/richelieu-yang/chimera/v2/src/consts"
 	"github.com/richelieu-yang/chimera/v2/src/core/pathKit"
+	"github.com/richelieu-yang/chimera/v2/src/idKit"
 	"github.com/sirupsen/logrus"
 	"testing"
 	"time"
@@ -42,9 +42,9 @@ func TestClient_SubscribeAndPublish1(t *testing.T) {
 	client = client
 
 	flag := atomicKit.NewBool()
-	fmt.Println(flag.Val()) // false
+	id := idKit.NewULID()
 
-	/* pubSub方法1 */
+	/* pubSub使用方法1 */
 	//go func() {
 	//	pubSub := client.Subscribe(context.TODO(), "__keyevent@0__:expired")
 	//	defer pubSub.Close()
@@ -60,7 +60,7 @@ func TestClient_SubscribeAndPublish1(t *testing.T) {
 	//		}).Info("Receive a message.")
 	//	}
 	//}()
-	/* pubSub方法2 */
+	/* pubSub使用方法2 */
 	go func() {
 		pubSub := client.Subscribe(context.TODO(), "__keyevent@0__:expired")
 		defer pubSub.Close()
@@ -71,16 +71,21 @@ func TestClient_SubscribeAndPublish1(t *testing.T) {
 				"channel": msg.Channel,
 				"payLoad": msg.Payload, // 过期的键（key）
 			}).Info("Receive a message.")
+			if msg.Payload == id {
+				flag.Cas(false, true)
+			}
 		}
 	}()
 
 	go func() {
-		flag, err := client.Set(context.TODO(), "a", "aaa", time.Second*3)
+		_, err := client.Set(context.TODO(), id, "1", time.Second*3)
 		if err != nil {
 			panic(err)
 		}
-		logrus.Infof("flag: %t", flag)
 	}()
 
 	time.Sleep(time.Second * 5)
+	if !flag.Val() {
+		panic("value of param flag is [false]")
+	}
 }
