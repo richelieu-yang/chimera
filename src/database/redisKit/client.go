@@ -43,11 +43,11 @@ func (client *Client) GetUniversalClient() redis.UniversalClient {
 @return	(1) 两个返回值，必定有一个为nil，另一个非nil；
 		(2) Cluster模式下，第1个返回值的类型: *redis.ClusterClient.
 */
-func NewClient(config *Config) (client *Client, err error) {
-	if config == nil {
-		err = errorKit.New("config == nil")
-		return
-	}
+func NewClient(config Config) (client *Client, err error) {
+	//if config == nil {
+	//	err = errorKit.New("config == nil")
+	//	return
+	//}
 
 	var opts *redis.UniversalOptions
 	switch config.Mode {
@@ -101,7 +101,7 @@ func NewClient(config *Config) (client *Client, err error) {
 	return
 }
 
-func newBaseOptions(config *Config) *redis.UniversalOptions {
+func newBaseOptions(config Config) *redis.UniversalOptions {
 	return &redis.UniversalOptions{
 		Username: config.UserName,
 		Password: config.Password,
@@ -109,7 +109,7 @@ func newBaseOptions(config *Config) *redis.UniversalOptions {
 }
 
 // newSingleNodeOptions 单点模式
-func newSingleNodeOptions(config *Config) (*redis.UniversalOptions, error) {
+func newSingleNodeOptions(config Config) (*redis.UniversalOptions, error) {
 	c := config.SingleNodeConfig
 	if c == nil {
 		return nil, errorKit.New("SingleNodeConfig is nil")
@@ -122,12 +122,12 @@ func newSingleNodeOptions(config *Config) (*redis.UniversalOptions, error) {
 }
 
 // newMasterSlaverOptions 主从模式
-func newMasterSlaverOptions(config *Config) (*redis.UniversalOptions, error) {
+func newMasterSlaverOptions(config Config) (*redis.UniversalOptions, error) {
 	return nil, errorKit.New("mode(%d) is unsupported now", config.Mode)
 }
 
 // newSentinelOptions 哨兵模式
-func newSentinelOptions(config *Config) (*redis.UniversalOptions, error) {
+func newSentinelOptions(config Config) (*redis.UniversalOptions, error) {
 	c := config.SentinelConfig
 	if c == nil {
 		return nil, errorKit.New("SentinelConfig is nil")
@@ -145,7 +145,7 @@ func newSentinelOptions(config *Config) (*redis.UniversalOptions, error) {
 }
 
 // newClusterOptions cluster模式
-func newClusterOptions(config *Config) (*redis.UniversalOptions, error) {
+func newClusterOptions(config Config) (*redis.UniversalOptions, error) {
 	c := config.ClusterConfig
 	if c == nil {
 		return nil, errorKit.New("ClusterConfig is nil")

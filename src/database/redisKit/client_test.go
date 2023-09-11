@@ -9,7 +9,7 @@ import (
 
 // TestSingleNodeMode 测试Redis的Cluster集群模式
 func TestSingleNodeMode(test *testing.T) {
-	config := &Config{
+	config := Config{
 		UserName: "",
 		Password: "",
 		Mode:     ModeSingleNode,
@@ -50,7 +50,7 @@ func TestSingleNodeMode(test *testing.T) {
 }
 
 func TestClusterMode(test *testing.T) {
-	config := &Config{
+	config := Config{
 		UserName:           "",
 		Password:           "",
 		Mode:               ModeCluster,

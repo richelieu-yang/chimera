@@ -18,7 +18,7 @@ func TestSetUp(t *testing.T) {
 	println("wd:", wd)
 
 	type config struct {
-		Redis *Config `json:"redis"`
+		Redis Config `json:"redis"`
 	}
 	c := &config{}
 	path := "chimera-lib/config.yaml"
