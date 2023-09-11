@@ -2,6 +2,8 @@ package redisKit
 
 import (
 	"context"
+	"fmt"
+	"github.com/richelieu-yang/chimera/v2/src/atomicKit"
 	"github.com/richelieu-yang/chimera/v2/src/confKit"
 	"github.com/richelieu-yang/chimera/v2/src/consts"
 	"github.com/richelieu-yang/chimera/v2/src/core/pathKit"
@@ -38,6 +40,9 @@ func TestClient_SubscribeAndPublish1(t *testing.T) {
 		panic(err)
 	}
 	client = client
+
+	flag := atomicKit.NewBool()
+	fmt.Println(flag.Val()) // false
 
 	/* pubSub方法1 */
 	//go func() {
