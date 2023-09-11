@@ -11,8 +11,7 @@ import (
 命令语法: GEOADD key longitude latitude member [longitude latitude member ...]
 */
 func (client *Client) GeoAdd(ctx context.Context, key string, geoLocation ...*redis.GeoLocation) (int64, error) {
-	cmd := client.universalClient.GeoAdd(ctx, key, geoLocation...)
-	return cmd.Result()
+	return client.universalClient.GeoAdd(ctx, key, geoLocation...).Result()
 }
 
 // GeoPos
@@ -21,8 +20,7 @@ func (client *Client) GeoAdd(ctx context.Context, key string, geoLocation ...*re
 命令语法: GEOPOS key member [member ...]
 */
 func (client *Client) GeoPos(ctx context.Context, key string, members ...string) ([]*redis.GeoPos, error) {
-	cmd := client.universalClient.GeoPos(ctx, key, members...)
-	return cmd.Result()
+	return client.universalClient.GeoPos(ctx, key, members...).Result()
 }
 
 // GeoDist
@@ -31,6 +29,5 @@ func (client *Client) GeoPos(ctx context.Context, key string, members ...string)
 命令语法: GEODIST key member1 member2 [m|km|ft|mi]
 */
 func (client *Client) GeoDist(ctx context.Context, key string, member1, member2, unit string) (float64, error) {
-	cmd := client.universalClient.GeoDist(ctx, key, member1, member2, unit)
-	return cmd.Result()
+	return client.universalClient.GeoDist(ctx, key, member1, member2, unit).Result()
 }
