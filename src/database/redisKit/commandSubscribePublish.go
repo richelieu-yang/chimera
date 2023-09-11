@@ -11,6 +11,7 @@ PS:
 (1) 建议 起一个goroutine 来进行订阅操作.
 (2) *redis.PubSub实例的2种使用方法:	(a) PubSub.Channel()（推荐）
 									(b) PubSub.ReceiveMessage()
+(3) 取消订阅详见"_info.md".
 
 命令说明:	订阅给定的一个或多个频道的信息.
 命令语法:	SUBSCRIBE channel [channel ...]
