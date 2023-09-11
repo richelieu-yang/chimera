@@ -78,7 +78,7 @@ func TestClient_SubscribeAndPublish1(t *testing.T) {
 	}()
 
 	go func() {
-		_, err := client.Set(context.TODO(), id, "1", time.Second*3)
+		_, err := client.Set(context.TODO(), id, "test", time.Second*3)
 		if err != nil {
 			panic(err)
 		}
