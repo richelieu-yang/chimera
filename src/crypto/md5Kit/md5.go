@@ -9,9 +9,11 @@ import (
 /*
 Deprecated: 不推荐使用此法，应该明确 传参data 的类型.
 */
-func Encrypt(data interface{}) (string, error) {
-	return gmd5.Encrypt(data)
-}
+var Encrypt func(data interface{}) (string, error) = gmd5.Encrypt
+
+var EncryptBytes func(data []byte) (string, error) = gmd5.EncryptBytes
+
+var EncryptString func(data string) (string, error) = gmd5.EncryptString
 
 // EncryptFile
 /*
@@ -22,16 +24,7 @@ func EncryptFile(filePath string) (string, error) {
 	if err := fileKit.AssertExistAndIsFile(filePath); err != nil {
 		return "", err
 	}
-
 	return gmd5.EncryptFile(filePath)
-}
-
-func EncryptBytes(data []byte) (string, error) {
-	return gmd5.EncryptBytes(data)
-}
-
-func EncryptString(data string) (string, error) {
-	return gmd5.EncryptString(data)
 }
 
 //// GetFromFile 获取文件的md5
