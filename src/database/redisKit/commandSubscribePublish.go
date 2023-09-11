@@ -39,7 +39,7 @@ func (client *Client) PSubscribe(ctx context.Context, patterns ...string) *redis
 
 // SSubscribe
 /*
-TODO: 目前还未在网上找到"ssubscribe"命令的相关说明,
+TODO: 目前还未在网上找到"SSUBSCRIBE"命令的相关说明,
 */
 func (client *Client) SSubscribe(ctx context.Context, channels ...string) *redis.PubSub {
 	return client.universalClient.SSubscribe(ctx, channels...)
