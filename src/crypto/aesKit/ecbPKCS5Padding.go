@@ -5,7 +5,7 @@ import (
 	"github.com/zeromicro/go-zero/core/codec"
 )
 
-// EncryptEcbPKCS5PaddingToString 明文(string) => 密文(string)
+// EncryptEcbPKCS5PaddingToString 明文([]byte) => 密文(base64 string)
 /*
 @param key 	密钥（must be 16/24/32 bit length）
 */
@@ -17,7 +17,7 @@ func EncryptEcbPKCS5PaddingToString(key []byte, plainData []byte) (string, error
 	return base64Kit.EncodeToString(cipherData), nil
 }
 
-// DecryptEcbPKCS5PaddingFromString 密文(string) => 明文(string)
+// DecryptEcbPKCS5PaddingFromString 密文(base64 string) => 明文([]byte)
 /*
 @param key 	密钥（must be 16/24/32 bit length）
 */
