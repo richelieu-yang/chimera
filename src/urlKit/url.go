@@ -33,3 +33,14 @@ e.g.
 var Parse func(rawURL string) (*url.URL, error) = url.Parse
 
 var ParseRequestURI func(rawURL string) (*url.URL, error) = url.ParseRequestURI
+
+func PolyfillUrl(reqUrl string) (string, error) {
+	u, err := Parse(reqUrl)
+	if err != nil {
+		return "", err
+	}
+
+	// !!!: 不要只使用 URL.String() ，原因: 该方法内部直接使用了 RawQuery 属性（满足条件的话），导致如果 RawQuery 中包含未处理字符（比如中文），返回值中还是包含未处理字符
+	u.RawQuery = u.Query().Encode()
+	return u.String(), nil
+}
