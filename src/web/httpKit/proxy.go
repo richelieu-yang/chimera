@@ -11,6 +11,7 @@ import (
 
 type (
 	proxyOptions struct {
+		scheme      string
 		errorLogger *log.Logger
 		reqUrlPath  *string
 		queryParams map[string][]string
@@ -24,7 +25,14 @@ func loadOptions(options ...ProxyOption) *proxyOptions {
 	for _, option := range options {
 		option(opts)
 	}
+	opts.scheme = strKit.EmptyToDefault(opts.scheme, "http", true)
 	return opts
+}
+
+func WithScheme(scheme string) ProxyOption {
+	return func(opts *proxyOptions) {
+		opts.scheme = scheme
+	}
 }
 
 func WithErrorLogger(errorLogger *log.Logger) ProxyOption {
@@ -56,9 +64,9 @@ PS: 转发请求前如果想变更请求头(Header)，可以在调用此函数�
 @param w e.g.ctx.Writer
 @param r e.g.ctx.Request
 */
-func Proxy(w http.ResponseWriter, r *http.Request, scheme, addr string, options ...ProxyOption) error {
+func Proxy(w http.ResponseWriter, r *http.Request, addr string, options ...ProxyOption) error {
 	opts := loadOptions(options...)
-	return opts.proxy(w, r, scheme, addr)
+	return opts.proxy(w, r, addr)
 }
 
 // proxy
@@ -104,8 +112,8 @@ scheme="http" addr="127.0.0.1:8889" reqUrlPath=ptrKit.ToPtr("/group1/test1")
 e.g.4	将 wss://127.0.0.1:8888/test 转发给 ws://127.0.0.1:80/ws/connect
 scheme="http" addr="127.0.0.1:80" reqUrlPath=ptrKit.ToPtr("/ws/connect")
 */
-func (opts *proxyOptions) proxy(w http.ResponseWriter, r *http.Request, scheme, addr string) error {
-	// 重置 Request.Body（r.Body可以为nil）
+func (opts *proxyOptions) proxy(w http.ResponseWriter, r *http.Request, addr string) error {
+	// reset Request.Body
 	ok, err := ResetRequestBody(r)
 	if err != nil {
 		return err
@@ -114,20 +122,22 @@ func (opts *proxyOptions) proxy(w http.ResponseWriter, r *http.Request, scheme, 
 		return errorKit.New("fail to reset request body")
 	}
 
-	scheme = strKit.EmptyToDefault(scheme, "http", true)
-	switch scheme {
-	case "https":
-	case "http":
-	default:
-		return errorKit.New("invalid scheme: %s", scheme)
-	}
+	//// scheme
+	//scheme = strKit.EmptyToDefault(scheme, "http", true)
+	//switch scheme {
+	//case "https":
+	//case "http":
+	//default:
+	//	return errorKit.New("invalid scheme: %s", scheme)
+	//}
 
+	// addr
 	if err := strKit.AssertNotEmpty(addr, "addr"); err != nil {
 		return err
 	}
 
 	director := func(req *http.Request) {
-		req.URL.Scheme = scheme
+		req.URL.Scheme = opts.scheme
 		req.URL.Host = addr
 		if opts.reqUrlPath != nil {
 			req.URL.Path = *opts.reqUrlPath
