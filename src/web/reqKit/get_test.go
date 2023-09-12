@@ -13,9 +13,7 @@ func TestGet(t *testing.T) {
 		(1) 通过判断 resp.Err 来判断是否发生 error.
 		(2) 任何情况下返回的 “resp” 永远不会是 nil，可以放心的直接判断。
 	*/
-	//url := "https://www.baidu.com/"
-	//url := "https://127.0.0.1/test"
-	url := "http://127.0.0.1/测试.wps"
+	url := "http://127.0.0.1/s/测试.wps"
 	url, err := urlKit.PolyfillUrl(url, nil)
 	if err != nil {
 		panic(err)
