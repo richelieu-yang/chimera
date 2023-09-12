@@ -44,5 +44,6 @@ func GetForResponse(url string, options ...Option) (*http.Response, error) {
 		return nil, err
 	}
 
+	// send
 	return client.Do(req)
 }
