@@ -28,7 +28,6 @@ require (
 	github.com/google/uuid v1.3.1
 	github.com/gorilla/securecookie v1.1.1
 	github.com/gorilla/sessions v1.2.1
-	github.com/gorilla/websocket v1.5.0
 	github.com/h2non/bimg v1.1.9
 	github.com/imroc/req/v3 v3.41.12
 	github.com/jinzhu/copier v0.4.0
