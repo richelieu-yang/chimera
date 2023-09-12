@@ -11,7 +11,7 @@ import (
 	"os"
 )
 
-// Upload Deprecated: 使用 reqKit.
+// Upload Deprecated: Use reqKit instead.
 func Upload(url string, fileParams map[string]string, options ...Option) (int, []byte, error) {
 	resp, err := UploadForResponse(url, fileParams, options...)
 	if err != nil {
@@ -26,10 +26,8 @@ func Upload(url string, fileParams map[string]string, options ...Option) (int, [
 	return resp.StatusCode, data, nil
 }
 
-// UploadForResponse
+// UploadForResponse Deprecated: Use reqKit instead.
 /*
-Deprecated: 使用 reqKit.
-
 @param fileParams 	(1)可以为nil或空;
 					(2)key: 键, value: 要上传文件的路径.
 @return !!!: 第一个返回值如果不为nil的话，一般来说需要手动调用 "resp.Body.Close()"

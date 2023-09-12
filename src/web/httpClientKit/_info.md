@@ -1,3 +1,6 @@
+## Deprecated
+Use reqKit instead.
+
 ## 请求超时     
 http请求超时，用Go语言处理变得更简洁了
     https://mp.weixin.qq.com/s/FDTpVwLYbQAj4RMAN-nJEg
