@@ -1,5 +1,11 @@
 ## !!!
 (1) 请求的url地址，建议先使用 urlKit.PolyfillUrl() 对其进行处理.
+e.g.
+    url := "http://127.0.0.1/测试.wps"
+    url, err := urlKit.PolyfillUrl(url, nil)
+    if err != nil {
+        panic(err)
+    }
 
 ## (1) imroc/req 参考（本包使用的是 imroc/req）
 GO语言最好用的HTTP请求库

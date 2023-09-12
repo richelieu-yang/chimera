@@ -3,6 +3,7 @@ package reqKit
 import (
 	"errors"
 	"fmt"
+	"github.com/richelieu-yang/chimera/v2/src/urlKit"
 	"testing"
 )
 
@@ -15,6 +16,10 @@ func TestGet(t *testing.T) {
 	//url := "https://www.baidu.com/"
 	//url := "https://127.0.0.1/test"
 	url := "http://127.0.0.1/测试.wps"
+	url, err := urlKit.PolyfillUrl(url, nil)
+	if err != nil {
+		panic(err)
+	}
 
 	client := GetDefaultClient()
 	resp := client.Get(url).Do()
@@ -38,6 +43,10 @@ func TestGet(t *testing.T) {
 func TestGet1(t *testing.T) {
 	url := "https://www.baidu.com/"
 	//url := "https://127.0.0.1/test"
+	url, err := urlKit.PolyfillUrl(url, nil)
+	if err != nil {
+		panic(err)
+	}
 
 	client := GetDefaultClient()
 	resp, err := client.R().Get(url)
