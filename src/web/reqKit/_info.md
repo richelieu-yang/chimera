@@ -1,3 +1,6 @@
+## !!!
+(1) 请求的url地址，建议先使用 urlKit.PolyfillUrl() 对其进行处理.
+
 ## (1) imroc/req 参考（本包使用的是 imroc/req）
 GO语言最好用的HTTP请求库
     https://www.bilibili.com/video/BV1Mu4y197dA/
