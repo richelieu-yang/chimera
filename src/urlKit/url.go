@@ -40,7 +40,7 @@ func PolyfillUrl(reqUrl string) (string, error) {
 		return "", err
 	}
 
-	// !!!: 不要只使用 URL.String() ，原因: 该方法内部直接使用了 RawQuery 属性（满足条件的话），导致如果 RawQuery 中包含未处理字符（比如中文），返回值中还是包含未处理字符
+	// !!!: 不要只使用 URL.String() ，原因: 该方法内部直接使用了 RawQuery 属性（满足条件的话），导致如果 RawQuery 中包含未处理字符（比如中文），返回值中还是会包含未处理字符
 	u.RawQuery = u.Query().Encode()
 	return u.String(), nil
 }
