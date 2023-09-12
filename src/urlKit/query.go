@@ -2,9 +2,27 @@ package urlKit
 
 import (
 	"github.com/richelieu-yang/chimera/v2/src/core/strKit"
+	"net/url"
 )
 
-// ToQueryString
+// ParseQuery
+/*
+e.g.
+	u, err := urlKit.Parse("http://localhost:8080/go?a=123&b=456")
+	if err != nil {
+		panic(err)
+	}
+	fmt.Println(u.RawQuery) // a=123&b=456
+
+	m, err := urlKit.ParseQuery(u.RawQuery)
+	if err != nil {
+		panic(err)
+	}
+	fmt.Println(m) 			// map[a:[123] b:[456]]
+*/
+var ParseQuery func(query string) (url.Values, error) = url.ParseQuery
+
+// ToQueryString Deprecated: use url.Values instead.
 /*
 @param m 会对值进行 编码 操作
 @return 可能为""

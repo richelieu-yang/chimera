@@ -33,20 +33,3 @@ e.g.
 var Parse func(rawURL string) (*url.URL, error) = url.Parse
 
 var ParseRequestURI func(rawURL string) (*url.URL, error) = url.ParseRequestURI
-
-// ParseQuery
-/*
-e.g.
-	u, err := urlKit.Parse("http://localhost:8080/go?a=123&b=456")
-	if err != nil {
-		panic(err)
-	}
-	fmt.Println(u.RawQuery) // a=123&b=456
-
-	m, err := urlKit.ParseQuery(u.RawQuery)
-	if err != nil {
-		panic(err)
-	}
-	fmt.Println(m) 			// map[a:[123] b:[456]]
-*/
-var ParseQuery func(query string) (url.Values, error) = url.ParseQuery
