@@ -22,6 +22,23 @@ e.g.
 */
 var ParseQuery func(query string) (url.Values, error) = url.ParseQuery
 
+// AddToValues
+/*
+@param m !!!: 值中的字符串应当是未处理（编码）过的
+*/
+func AddToValues(values url.Values, m map[string][]string) url.Values {
+	if values == nil {
+		values = make(map[string][]string)
+	}
+
+	for k, s := range m {
+		for _, v := range s {
+			values.Add(k, v)
+		}
+	}
+	return values
+}
+
 // ToQueryString Deprecated: use url.Values instead.
 /*
 @param m 会对值进行 编码 操作

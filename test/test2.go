@@ -3,6 +3,7 @@ package main
 import (
 	"fmt"
 	"github.com/richelieu-yang/chimera/v2/src/urlKit"
+	"net/url"
 )
 
 func main() {
@@ -10,6 +11,8 @@ func main() {
 	//reqUrl := "http://127.0.0.1:8888/s/%E6%B5%8B%E8%AF%95.wps?a=%E6%B5%8B%E8%AF%95&b=b#%E4%B8%AD%E9%83%A8"
 
 	fmt.Println(urlKit.PolyfillUrl(reqUrl))
+
+	url.Values{}
 
 	//u, err := url.Parse(reqUrl)
 	//if err != nil {
