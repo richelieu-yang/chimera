@@ -24,7 +24,7 @@ var ParseQuery func(query string) (url.Values, error) = url.ParseQuery
 
 // AddToValues
 /*
-@param m !!!: 值中的字符串应当是未处理（编码）过的
+@param m !!!: 值中切片中的字符串应当是未处理（编码）过的
 @return 必定不为nil
 */
 func AddToValues(values url.Values, params map[string][]string) url.Values {

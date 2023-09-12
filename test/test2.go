@@ -3,16 +3,21 @@ package main
 import (
 	"fmt"
 	"github.com/richelieu-yang/chimera/v2/src/urlKit"
-	"net/url"
 )
 
 func main() {
-	reqUrl := "http://127.0.0.1:8888/s/测试.wps?a=测试&b=b#中部"
+	//http: //127.0.0.1:8888/s/%E6%B5%8B%E8%AF%95.wps?a=%E6%B5%8B%%E8%AF%95&b=b#%E4%B8%AD%E9%83%A8
+
+	//reqUrl := "http://127.0.0.1:8888/s/测试.wps?a=测试&b=b#中部"
 	//reqUrl := "http://127.0.0.1:8888/s/%E6%B5%8B%E8%AF%95.wps?a=%E6%B5%8B%E8%AF%95&b=b#%E4%B8%AD%E9%83%A8"
+
+	reqUrl := "http://127.0.0.1:8888/s/测试.wps?a=测%试"
+	// http://127.0.0.1:8888/s/%E6%B5%8B%E8%AF%95.wps?a=%E6%B5%8B%%E8%AF%95&b=b#%E4%B8%AD%E9%83%A8
+	//  http://127.0.0.1:8888/s/%E6%B5%8B%E8%AF%95.wps?a=%E6%B5%8B%%E8%AF%95&b=b#%E4%B8%AD%E9%83%A8
 
 	fmt.Println(urlKit.PolyfillUrl(reqUrl))
 
-	url.Values{}
+	//url.Values{}
 
 	//u, err := url.Parse(reqUrl)
 	//if err != nil {
