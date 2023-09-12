@@ -5,7 +5,10 @@ import "net/url"
 // Parse 解析url（http、https、rtsp、rtmp等协议）
 /*
 PS:
-(1) url.Parse VS url.ParseRequestURI: 当要解析的url字符串中包含有字符“#”时，使用url.Parse解析，会导致#后面的参数解析不出来。而使用ParseRequestURI就能解析到.
+(1) URL.EscapedPath():		处理过的 path
+(2) URL.EscapedFragment():	处理过的 fragment
+(3) Values.Encode():		处理过的 query string
+(4) url.Parse VS url.ParseRequestURI: 当要解析的url字符串中包含有字符“#”时，使用url.Parse解析，会导致#后面的参数解析不出来。而使用ParseRequestURI就能解析到.
 	使用场景:
 		(a) 不关心#后面的数据，使用: url.Parse
 		(b) 关心#后面的数据，使用: url.ParseRequestURI
