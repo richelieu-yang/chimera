@@ -134,7 +134,7 @@ func (opts *proxyOptions) proxy(w http.ResponseWriter, r *http.Request, scheme, 
 		}
 
 		// 可能会修改 req.URL.RawQuery
-		urlKit.AddToRawQuery(req.URL, opts.queryParams)
+		urlKit.AddQueryParamsToRawQuery(req.URL, opts.queryParams)
 	}
 	reverseProxy := &httputil.ReverseProxy{
 		Director: director,

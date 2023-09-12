@@ -21,12 +21,12 @@ e.g.
 */
 var ParseQuery func(query string) (url.Values, error) = url.ParseQuery
 
-// AddToValues
+// AddQueryParamsToValues
 /*
 @param queryParams !!!: 值中切片中的字符串应当是未处理（编码）过的
 @return 必定不为nil
 */
-func AddToValues(values url.Values, queryParams map[string][]string) url.Values {
+func AddQueryParamsToValues(values url.Values, queryParams map[string][]string) url.Values {
 	if values == nil {
 		values = make(map[string][]string)
 	}
@@ -39,14 +39,29 @@ func AddToValues(values url.Values, queryParams map[string][]string) url.Values 
 	return values
 }
 
-// AddToRawQuery
+// AddQueryParamsToRawQuery
 /*
 PS: 可能会修改 req.URL.RawQuery.
 */
-func AddToRawQuery(u *url.URL, queryParams map[string][]string) {
+func AddQueryParamsToRawQuery(u *url.URL, queryParams map[string][]string) {
 	values := u.Query()
-	values = AddToValues(values, queryParams)
+	values = AddQueryParamsToValues(values, queryParams)
 	u.RawQuery = values.Encode()
+}
+
+func AddQueryParamsToUrl(reqUrl string, queryParams map[string][]string) (string, error) {
+	u, err := Parse(reqUrl)
+	if err != nil {
+		return "", err
+	}
+
+	/*
+		!!!: 不要只使用 URL.String() ，原因: 该方法内部直接使用了 RawQuery 属性（满足条件的话），导致如果 RawQuery 中包含未处理字符（比如中文），返回值中还是会包含未处理字符
+		TODO: 后续看官方是否会修改 URL.String() 中对query的处理.
+	*/
+	AddQueryParamsToRawQuery(u, queryParams)
+
+	return u.String(), nil
 }
 
 //// ToQueryString Deprecated: use url.Values instead.
