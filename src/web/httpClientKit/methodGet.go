@@ -22,10 +22,8 @@ func Get(url string, options ...Option) (int, []byte, error) {
 	return resp.StatusCode, data, nil
 }
 
-// GetForResponse
+// GetForResponse Deprecated: 使用 reqKit.
 /*
-Deprecated: 使用 reqKit.
-
 !!!: 第2个返回值 == nil 的情况下，需要手动调用 resp.Body.Close() 来手动关闭 第1个返回值.
 */
 func GetForResponse(url string, options ...Option) (*http.Response, error) {
