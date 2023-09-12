@@ -25,13 +25,14 @@ var ParseQuery func(query string) (url.Values, error) = url.ParseQuery
 // AddToValues
 /*
 @param m !!!: 值中的字符串应当是未处理（编码）过的
+@return 必定不为nil
 */
-func AddToValues(values url.Values, m map[string][]string) url.Values {
+func AddToValues(values url.Values, params map[string][]string) url.Values {
 	if values == nil {
 		values = make(map[string][]string)
 	}
 
-	for k, s := range m {
+	for k, s := range params {
 		for _, v := range s {
 			values.Add(k, v)
 		}
