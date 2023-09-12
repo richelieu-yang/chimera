@@ -1,7 +1,6 @@
 package urlKit
 
 import (
-	"github.com/richelieu-yang/chimera/v2/src/core/strKit"
 	"net/url"
 )
 
@@ -50,33 +49,33 @@ func AddToRawQuery(u *url.URL, queryParams map[string][]string) {
 	u.RawQuery = values.Encode()
 }
 
-// ToQueryString Deprecated: use url.Values instead.
-/*
-@param m 会对值进行 编码 操作
-@return 可能为""
-
-e.g.
-	(nil) => ""
-e.g.1
-	m := map[string]string{
-		"a": "test",
-		"b": "测试",
-	}
-	fmt.Println(urlKit.ToQueryString(m)) // a=test&b=%E6%B5%8B%E8%AF%95
-*/
-func ToQueryString(queryParams map[string]string) string {
-	var str string
-
-	for k, v := range queryParams {
-		// PS: k和v都有可能是""
-		if strKit.IsNotEmpty(str) {
-			str += "&"
-		}
-		if strKit.IsNotEmpty(v) {
-			str += k + "=" + EncodeURIComponent(v)
-		} else {
-			str += k
-		}
-	}
-	return str
-}
+//// ToQueryString Deprecated: use url.Values instead.
+///*
+//@param m 会对值进行 编码 操作
+//@return 可能为""
+//
+//e.g.
+//	(nil) => ""
+//e.g.1
+//	m := map[string]string{
+//		"a": "test",
+//		"b": "测试",
+//	}
+//	fmt.Println(urlKit.ToQueryString(m)) // a=test&b=%E6%B5%8B%E8%AF%95
+//*/
+//func ToQueryString(queryParams map[string]string) string {
+//	var str string
+//
+//	for k, v := range queryParams {
+//		// PS: k和v都有可能是""
+//		if strKit.IsNotEmpty(str) {
+//			str += "&"
+//		}
+//		if strKit.IsNotEmpty(v) {
+//			str += k + "=" + EncodeURIComponent(v)
+//		} else {
+//			str += k
+//		}
+//	}
+//	return str
+//}
