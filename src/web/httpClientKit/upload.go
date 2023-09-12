@@ -39,7 +39,10 @@ func UploadForResponse(url string, fileParams map[string]string, options ...Opti
 	if err := httpKit.AssertHttpUrl(url); err != nil {
 		return nil, err
 	}
-	url = urlKit.AttachQueryParamsToUrl(url, opts.queryParams)
+	url, err := urlKit.PolyfillUrl(url, opts.queryParams)
+	if err != nil {
+		return nil, err
+	}
 
 	// payload
 	payload := &bytes.Buffer{}

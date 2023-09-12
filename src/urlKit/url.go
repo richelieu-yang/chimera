@@ -42,7 +42,7 @@ var ParseRequestURI func(rawURL string) (*url.URL, error) = url.ParseRequestURI
 @param queryParams 额外的query参数，	(1) 没有可传nil
 									(2) 值中切片中的字符串应当是未处理（编码）过的
 */
-func PolyfillUrl(reqUrl string, extraQueryParams map[string][]string) (string, error) {
+func PolyfillUrl(reqUrl string, queryParams map[string][]string) (string, error) {
 	u, err := Parse(reqUrl)
 	if err != nil {
 		return "", err
@@ -52,8 +52,6 @@ func PolyfillUrl(reqUrl string, extraQueryParams map[string][]string) (string, e
 		!!!: 不要只使用 URL.String() ，原因: 该方法内部直接使用了 RawQuery 属性（满足条件的话），导致如果 RawQuery 中包含未处理字符（比如中文），返回值中还是会包含未处理字符
 		TODO: 后续看官方是否会修改 URL.String() 中对query的处理.
 	*/
-	values := u.Query()
-	AddToValues(values, extraQueryParams)
-	u.RawQuery = values.Encode()
+	AddToRawQuery(u, queryParams)
 	return u.String(), nil
 }

@@ -13,7 +13,7 @@ type (
 	proxyOptions struct {
 		errorLogger *log.Logger
 		reqUrlPath  *string
-		queryParams map[string]string
+		queryParams map[string][]string
 	}
 
 	ProxyOption func(opts *proxyOptions)
@@ -43,7 +43,7 @@ func WithReqUrlPath(reqUrlPath *string) ProxyOption {
 	}
 }
 
-func WithQueryParams(queryParams map[string]string) ProxyOption {
+func WithQueryParams(queryParams map[string][]string) ProxyOption {
 	return func(opts *proxyOptions) {
 		opts.queryParams = queryParams
 	}
@@ -113,12 +113,6 @@ func (opts *proxyOptions) proxy(w http.ResponseWriter, r *http.Request, scheme, 
 	if !ok {
 		return errorKit.New("fail to reset request body")
 	}
-	//if seeker, ok := r.Body.(io.Seeker); ok {
-	//	_, err := seeker.Seek(0, io.SeekStart)
-	//	if err != nil {
-	//		return err
-	//	}
-	//}
 
 	scheme = strKit.EmptyToDefault(scheme, "http", true)
 	switch scheme {
@@ -138,7 +132,9 @@ func (opts *proxyOptions) proxy(w http.ResponseWriter, r *http.Request, scheme, 
 		if opts.reqUrlPath != nil {
 			req.URL.Path = *opts.reqUrlPath
 		}
-		req.URL.RawQuery = urlKit.AttachQueryParamsToRawQuery(req.URL.RawQuery, opts.queryParams)
+
+		// 可能会修改 req.URL.RawQuery
+		urlKit.AddToRawQuery(req.URL, opts.queryParams)
 	}
 	reverseProxy := &httputil.ReverseProxy{
 		Director: director,

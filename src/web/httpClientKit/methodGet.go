@@ -33,7 +33,10 @@ func GetForResponse(url string, options ...Option) (*http.Response, error) {
 	if err := httpKit.AssertHttpUrl(url); err != nil {
 		return nil, err
 	}
-	url = urlKit.AttachQueryParamsToUrl(url, opts.queryParams)
+	url, err := urlKit.PolyfillUrl(url, opts.queryParams)
+	if err != nil {
+		return nil, err
+	}
 
 	// client
 	client := opts.newHttpClient()

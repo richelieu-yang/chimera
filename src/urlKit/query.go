@@ -24,20 +24,30 @@ var ParseQuery func(query string) (url.Values, error) = url.ParseQuery
 
 // AddToValues
 /*
-@param m !!!: 值中切片中的字符串应当是未处理（编码）过的
+@param queryParams !!!: 值中切片中的字符串应当是未处理（编码）过的
 @return 必定不为nil
 */
-func AddToValues(values url.Values, params map[string][]string) url.Values {
+func AddToValues(values url.Values, queryParams map[string][]string) url.Values {
 	if values == nil {
 		values = make(map[string][]string)
 	}
 
-	for k, s := range params {
+	for k, s := range queryParams {
 		for _, v := range s {
 			values.Add(k, v)
 		}
 	}
 	return values
+}
+
+// AddToRawQuery
+/*
+PS: 可能会修改 req.URL.RawQuery.
+*/
+func AddToRawQuery(u *url.URL, queryParams map[string][]string) {
+	values := u.Query()
+	values = AddToValues(values, queryParams)
+	u.RawQuery = values.Encode()
 }
 
 // ToQueryString Deprecated: use url.Values instead.
@@ -69,37 +79,4 @@ func ToQueryString(queryParams map[string]string) string {
 		}
 	}
 	return str
-}
-
-// AttachQueryParamsToUrl
-/*
-@param url 	(1) 原则上，不能为""，应该以"http://"或"https://"开头
-			(2) 不能是Request.URL.RawQuery
-*/
-func AttachQueryParamsToUrl(url string, queryParams map[string]string) string {
-	queryStr := ToQueryString(queryParams)
-	if strKit.IsEmpty(queryStr) {
-		return url
-	}
-
-	i := strKit.Index(url, "?")
-	if i == -1 {
-		return url + "?" + queryStr
-	} else if i == len(url)-1 {
-		// 传参url最后一个字符为"?"
-		return url + queryStr
-	}
-	return url + "&" + queryStr
-}
-
-// AttachQueryParamsToRawQuery
-/*
-@param rawQuery 可能为""
-*/
-func AttachQueryParamsToRawQuery(rawQuery string, queryParams map[string]string) string {
-	tmp := ToQueryString(queryParams)
-	if strKit.IsEmpty(rawQuery) {
-		return tmp
-	}
-	return rawQuery + "&" + tmp
 }

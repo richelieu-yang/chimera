@@ -19,7 +19,7 @@ type (
 		safe bool
 
 		// queryParams 适用于: POST、GET
-		queryParams map[string]string
+		queryParams map[string][]string
 		// postParams 适用于: POST
 		postParams map[string]string
 	}
@@ -76,7 +76,7 @@ func WithSafe(safe bool) Option {
 /*
 适用于: GET、POST
 */
-func WithQueryParams(queryParams map[string]string) Option {
+func WithQueryParams(queryParams map[string][]string) Option {
 	return func(opts *options) {
 		opts.queryParams = queryParams
 	}
