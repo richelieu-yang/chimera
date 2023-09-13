@@ -11,9 +11,9 @@ PS: 返回值调用Close()将什么都不会做，直接返回nil.
 var NopCloser func(reader io.Reader) io.ReadCloser = io.NopCloser
 
 func NopCloserToReadSeeker(readSeeker io.ReadSeeker) io.ReadSeekCloser {
-	return nil
-	//NewReadSeekCloser(func(reader io.Reader) io.Read)
-	//ReadSeeker
+	return &readSeekCloser{
+		readSeeker: readSeeker,
+	}
 }
 
 //type nopCloserToWriter struct {
