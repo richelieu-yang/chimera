@@ -15,13 +15,17 @@ type (
 		errorLogger *log.Logger
 		reqUrlPath  *string
 		queryParams map[string][]string
+		// resetBody 默认: true
+		resetBody bool
 	}
 
 	ProxyOption func(opts *proxyOptions)
 )
 
 func loadOptions(options ...ProxyOption) *proxyOptions {
-	opts := &proxyOptions{}
+	opts := &proxyOptions{
+		resetBody: true,
+	}
 	for _, option := range options {
 		option(opts)
 	}
@@ -54,6 +58,13 @@ func WithReqUrlPath(reqUrlPath *string) ProxyOption {
 func WithQueryParams(queryParams map[string][]string) ProxyOption {
 	return func(opts *proxyOptions) {
 		opts.queryParams = queryParams
+	}
+}
+
+// WithResetBody 转发请求前，是否重置request body
+func WithResetBody(flag bool) ProxyOption {
+	return func(opts *proxyOptions) {
+		opts.resetBody = flag
 	}
 }
 
@@ -114,12 +125,14 @@ scheme="http" addr="127.0.0.1:80" reqUrlPath=ptrKit.ToPtr("/ws/connect")
 */
 func (opts *proxyOptions) proxy(w http.ResponseWriter, r *http.Request, addr string) error {
 	// reset Request.Body
-	ok, err := ResetRequestBody(r)
-	if err != nil {
-		return err
-	}
-	if !ok {
-		return errorKit.New("fail to reset request body")
+	if opts.resetBody {
+		ok, err := ResetRequestBody(r)
+		if err != nil {
+			return err
+		}
+		if !ok {
+			return errorKit.New("fail to reset request body")
+		}
 	}
 
 	//// scheme
@@ -136,6 +149,7 @@ func (opts *proxyOptions) proxy(w http.ResponseWriter, r *http.Request, addr str
 		return err
 	}
 
+	var err error
 	director := func(req *http.Request) {
 		req.URL.Scheme = opts.scheme
 		req.URL.Host = addr
