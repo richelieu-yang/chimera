@@ -4,6 +4,7 @@ import (
 	"bytes"
 	"github.com/richelieu-yang/chimera/v2/src/core/errorKit"
 	"github.com/richelieu-yang/chimera/v2/src/core/ioKit"
+	"github.com/richelieu-yang/chimera/v2/src/urlKit"
 	"io"
 	"net/http"
 )
@@ -58,4 +59,21 @@ func ResetRequestBody(req *http.Request) error {
 		return err
 	}
 	return nil
+}
+
+// ToRequestBodyString
+/*
+条件:
+(1) POST
+(2) x-www-form-urlencoded
+
+e.g.
+	m := map[string][]string{
+		"a": []string{"test"},
+		"b": []string{"测试"},
+	}
+	fmt.Println(ToRequestBodyString(m)) // a=test&b=%E6%B5%8B%E8%AF%95
+*/
+func ToRequestBodyString(m map[string][]string) string {
+	return urlKit.ToEscapedQueryString(m)
 }
