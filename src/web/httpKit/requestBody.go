@@ -49,7 +49,7 @@ func ResetRequestBody(req *http.Request) error {
 		// 不能重置
 		return errorKit.New("body(%T) is unable to seek", req.Body)
 	}
-	_, err := seeker.Seek(0, io.SeekStart)
+	_, err := ioKit.SeekToStart(seeker)
 	if err != nil {
 		// 重置失败
 		return err
