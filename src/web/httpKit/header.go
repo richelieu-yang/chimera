@@ -108,11 +108,11 @@ func AddHeaderIfMissing(header http.Header, key, value string) {
 	}
 }
 
-// AddHeaderIgnoreCaseIfMissing
+// AddHeaderIfMissingIgnoreCase
 /*
 PS: 不区分大小写.
 */
-func AddHeaderIgnoreCaseIfMissing(header http.Header, key, value string) {
+func AddHeaderIfMissingIgnoreCase(header http.Header, key, value string) {
 	if !HeaderContainsValueIgnoreCase(header, key, value) {
 		header.Add(key, value)
 	}
