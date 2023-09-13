@@ -2,6 +2,7 @@ package httpKit
 
 import (
 	"bytes"
+	"github.com/richelieu-yang/chimera/v2/src/core/errorKit"
 	"github.com/richelieu-yang/chimera/v2/src/core/ioKit"
 	"io"
 	"net/http"
@@ -9,8 +10,6 @@ import (
 
 // MakeRequestBodySeekable
 /*
-PS: Gin不需要调用此方法.
-
 PS:
 (1) 一般与 proxy() 搭配使用.
 (2) 某个路由涉及代理（请求转发）的话，需要在handler里面首先调用此方法.
@@ -29,9 +28,9 @@ func MakeRequestBodySeekable(req *http.Request) error {
 	if err != nil {
 		return err
 	}
-	// bytes.NewReader() 的返回值实现了 io.Seeker 接口
+	// bytes.NewReader() 的返回值实现了 io.Reader、io.Seeker 接口
 	reader := bytes.NewReader(data)
-	req.Body = ioKit.NopCloser(reader)
+	req.Body = ioKit.NopCloserToReadSeeker(reader)
 	return nil
 }
 
@@ -39,18 +38,21 @@ func MakeRequestBodySeekable(req *http.Request) error {
 /*
 PS: req.Body可以为nil.
 */
-func ResetRequestBody(req *http.Request) (bool, error) {
+func ResetRequestBody(req *http.Request) error {
 	if req.Body == nil || req.Body == http.NoBody {
-		return true, nil
+		// 无需重置
+		return nil
 	}
 
 	seeker, ok := req.Body.(io.Seeker)
-	if ok {
-		_, err := seeker.Seek(0, io.SeekStart)
-		if err != nil {
-			return false, err
-		}
-		return true, nil
+	if !ok {
+		// 不能重置
+		return errorKit.New("body(%T) is unable to seek", req.Body)
 	}
-	return false, nil
+	_, err := seeker.Seek(0, io.SeekStart)
+	if err != nil {
+		// 重置失败
+		return err
+	}
+	return nil
 }
