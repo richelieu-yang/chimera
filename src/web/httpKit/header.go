@@ -87,11 +87,12 @@ func GetOrigin(header http.Header) string {
 e.g.
 	header := make(map[string][]string)
 
-	fmt.Println(header)					// map[]
-	httpKit.AddHeader(header, "k", "0")
-	fmt.Println(header)					// map[K:[0]]
-	httpKit.AddHeader(header, "k", "1")
-	fmt.Println(header)					// map[K:[0 1]]
+	AddHeader(header, "k", "0")
+	fmt.Println(header) 		// map[K:[0]]
+	AddHeader(header, "k", "1")
+	fmt.Println(header) 		// map[K:[0 1]]
+	AddHeader(header, "k", "1")
+	fmt.Println(header) 		// map[K:[0 1 1]]
 */
 func AddHeader(header http.Header, key, value string) {
 	header.Add(key, value)
