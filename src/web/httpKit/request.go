@@ -1,10 +1,7 @@
 package httpKit
 
 import (
-	"io"
 	"net/http"
-	"net/url"
-	"strings"
 )
 
 // GetRoute 获取: 路由（不带query）.
@@ -40,22 +37,6 @@ func GetURLRawQuery(req *http.Request) string {
 */
 func GetProto(req *http.Request) string {
 	return req.Proto
-}
-
-// OverrideRequestBody 覆盖请求body.
-func OverrideRequestBody(req *http.Request, m map[string][]string) {
-	var values url.Values = m
-	content := values.Encode()
-
-	//content := urlKit.ToQueryString(m)
-
-	reader := strings.NewReader(content)
-
-	// 下面2行代码二选一，都可以
-	//req.Body = &Repeat{Reader: reader, Offset: 0}
-	req.Body = io.NopCloser(reader)
-
-	req.ContentLength = int64(len(content))
 }
 
 // GetRequestUrl 返回当前接口的url.

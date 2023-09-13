@@ -7,6 +7,7 @@ import (
 	"github.com/richelieu-yang/chimera/v2/src/urlKit"
 	"io"
 	"net/http"
+	"strings"
 )
 
 // MakeRequestBodySeekable
@@ -76,4 +77,17 @@ e.g.
 */
 func ToRequestBodyString(m map[string][]string) string {
 	return urlKit.ToEscapedQueryString(m)
+}
+
+// OverrideRequestBody 覆盖request body.
+/*
+条件:
+(1) POST
+(2) x-www-form-urlencoded
+*/
+func OverrideRequestBody(req *http.Request, m map[string][]string) {
+	content := ToRequestBodyString(m)
+	reader := strings.NewReader(content)
+	req.Body = ioKit.NopCloser(reader)
+	req.ContentLength = int64(len(content))
 }

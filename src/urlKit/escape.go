@@ -2,14 +2,14 @@ package urlKit
 
 import "net/url"
 
-// EncodeURIComponent 编码
+// EncodeURIComponent 编码.
 /*
 e.g.
 ("") => ""
 */
 var EncodeURIComponent func(s string) string = url.QueryEscape
 
-// DecodeURIComponent 解码
+// DecodeURIComponent 解码.
 /*
 e.g.
 ("") => "", nil
