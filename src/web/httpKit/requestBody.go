@@ -9,7 +9,7 @@ import (
 
 // MakeRequestBodySeekable
 /*
-Deprecated: Gin不需要调用此方法.
+PS: Gin不需要调用此方法.
 
 PS:
 (1) 一般与 proxy() 搭配使用.
