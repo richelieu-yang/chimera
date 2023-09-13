@@ -22,7 +22,7 @@ require (
 	github.com/go-kratos/kratos/v2 v2.7.0
 	github.com/go-playground/validator/v10 v10.15.3
 	github.com/go-redsync/redsync/v4 v4.9.4
-	github.com/gogf/gf/v2 v2.5.3
+	github.com/gogf/gf/v2 v2.5.4
 	github.com/golang-jwt/jwt/v5 v5.0.0
 	github.com/google/go-cmp v0.5.9
 	github.com/google/uuid v1.3.1
@@ -56,7 +56,7 @@ require (
 	github.com/zeromicro/go-zero v1.5.5
 	github.com/zeromicro/zero-contrib/logx/logrusx v0.0.0-20230807142214-5952d42ba776
 	go.etcd.io/etcd/client/v3 v3.5.9
-	go.opentelemetry.io/otel v1.17.0
+	go.opentelemetry.io/otel v1.18.0
 	go.opentelemetry.io/otel/exporters/jaeger v1.17.0
 	go.opentelemetry.io/otel/sdk v1.17.0
 	go.uber.org/automaxprocs v1.5.3
@@ -164,8 +164,8 @@ require (
 	go.etcd.io/etcd/api/v3 v3.5.9 // indirect
 	go.etcd.io/etcd/client/pkg/v3 v3.5.9 // indirect
 	go.opencensus.io v0.24.0 // indirect
-	go.opentelemetry.io/otel/metric v1.17.0 // indirect
-	go.opentelemetry.io/otel/trace v1.17.0 // indirect
+	go.opentelemetry.io/otel/metric v1.18.0 // indirect
+	go.opentelemetry.io/otel/trace v1.18.0 // indirect
 	go.uber.org/atomic v1.10.0 // indirect
 	go.uber.org/multierr v1.10.0 // indirect
 	golang.org/x/arch v0.3.0 // indirect

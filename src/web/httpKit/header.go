@@ -6,8 +6,16 @@ key: 不区分大小写
 package httpKit
 
 import (
+	"github.com/richelieu-yang/chimera/v2/src/core/mapKit"
 	"net/http"
 )
+
+// HeaderToMap http.Header（即 map[string][]string） => map[string]interface{}
+func HeaderToMap(header http.Header) map[string]interface{} {
+	return mapKit.MapValues(header, func(value []string, key string) interface{} {
+		return value
+	})
+}
 
 // AddHeader
 /*

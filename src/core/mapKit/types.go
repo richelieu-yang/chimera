@@ -8,6 +8,9 @@ func MapKeys[K comparable, V any, R comparable](in map[K]V, iteratee func(value 
 }
 
 // MapValues 修改map实例的 值类型（value）
+/*
+@return 必定不为nil
+*/
 func MapValues[K comparable, V any, R any](in map[K]V, iteratee func(value V, key K) R) map[K]R {
 	return lo.MapValues(in, iteratee)
 }
