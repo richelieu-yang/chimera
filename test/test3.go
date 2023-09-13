@@ -2,26 +2,25 @@ package main
 
 import (
 	"fmt"
+	"github.com/gin-gonic/gin"
+	"github.com/richelieu-yang/chimera/v2/src/core/ioKit"
 	"net/http"
 )
 
 func main() {
-	http.HandleFunc("/events", func(w http.ResponseWriter, r *http.Request) {
-		flusher, ok := w.(http.Flusher)
-		if !ok {
-			http.Error(w, "Streaming unsupported!", http.StatusInternalServerError)
+	engine := gin.Default()
+
+	engine.Any("/test", func(ctx *gin.Context) {
+		str, err := ioKit.ReadStringFromReader(ctx.Request.Body)
+		if err != nil {
+			ctx.String(http.StatusInternalServerError, err.Error())
 			return
 		}
-
-		w.Header().Set("Content-Type", "text/event-stream")
-		w.Header().Set("Cache-Control", "no-cache")
-		w.Header().Set("Connection", "keep-alive")
-
-		for i := 1; i <= 10; i++ {
-			fmt.Fprintf(w, "data: Message %d\n\n", i)
-			flusher.Flush()
-		}
+		fmt.Println(str)
+		ctx.String(http.StatusOK, str)
 	})
 
-	http.ListenAndServe(":8080", nil)
+	if err := engine.Run(":80"); err != nil {
+		panic(err)
+	}
 }

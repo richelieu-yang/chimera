@@ -38,3 +38,9 @@ func ToBufioReader(reader io.Reader) *bufio.Reader {
 func ReadFromReader(reader io.Reader) ([]byte, error) {
 	return io.ReadAll(reader)
 }
+
+// ReadStringFromReader 读取io.Reader的内容（io.Reader => string）
+func ReadStringFromReader(reader io.Reader) (string, error) {
+	data, err := io.ReadAll(reader)
+	return string(data), err
+}
