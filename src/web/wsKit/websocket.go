@@ -1,9 +1,13 @@
 package wsKit
 
 import (
+	"github.com/gorilla/websocket"
 	"github.com/richelieu-yang/chimera/v2/src/web/httpKit"
 	"net/http"
 )
+
+// IsWebSocketUpgrade 是否是WebSocket请求？
+var IsWebSocketUpgrade func(r *http.Request) bool = websocket.IsWebSocketUpgrade
 
 // PolyfillWebSocketRequest
 /*
