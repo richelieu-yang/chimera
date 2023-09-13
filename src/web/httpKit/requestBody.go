@@ -10,6 +10,9 @@ import (
 
 // MakeRequestBodySeekable
 /*
+Go语言: 如何让 request.Body 可以多次读取
+	https://www.cnblogs.com/ayanmw/p/17191530.html
+
 PS:
 (1) 一般与 proxy() 搭配使用;
 (2) 某个路由涉及代理（请求转发）的话，需要在handler里面 首先 调用此方法.
