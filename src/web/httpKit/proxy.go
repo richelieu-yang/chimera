@@ -61,7 +61,7 @@ func WithQueryParams(queryParams map[string][]string) ProxyOption {
 	}
 }
 
-// WithResetBody 转发请求前，是否重置request body
+// WithResetBody 转发请求前，是否重置request body?
 func WithResetBody(flag bool) ProxyOption {
 	return func(opts *proxyOptions) {
 		opts.resetBody = flag
