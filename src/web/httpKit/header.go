@@ -7,6 +7,8 @@ package httpKit
 
 import (
 	"github.com/richelieu-yang/chimera/v2/src/core/mapKit"
+	"github.com/richelieu-yang/chimera/v2/src/core/sliceKit"
+	"github.com/richelieu-yang/chimera/v2/src/core/strKit"
 	"net/http"
 )
 
@@ -15,21 +17,6 @@ func HeaderToMap(header http.Header) map[string]interface{} {
 	return mapKit.MapValues(header, func(value []string, key string) interface{} {
 		return value
 	})
-}
-
-// AddHeader
-/*
-e.g.
-	header := make(map[string][]string)
-
-	fmt.Println(header)					// map[]
-	httpKit.AddHeader(header, "k", "0")
-	fmt.Println(header)					// map[K:[0]]
-	httpKit.AddHeader(header, "k", "1")
-	fmt.Println(header)					// map[K:[0 1]]
-*/
-func AddHeader(header http.Header, key, value string) {
-	header.Add(key, value)
 }
 
 // SetHeader
@@ -93,4 +80,39 @@ func GetUserAgent(header http.Header) string {
 // GetOrigin 获取请求的Origin
 func GetOrigin(header http.Header) string {
 	return GetHeader(header, "Origin")
+}
+
+// AddHeader
+/*
+e.g.
+	header := make(map[string][]string)
+
+	fmt.Println(header)					// map[]
+	httpKit.AddHeader(header, "k", "0")
+	fmt.Println(header)					// map[K:[0]]
+	httpKit.AddHeader(header, "k", "1")
+	fmt.Println(header)					// map[K:[0 1]]
+*/
+func AddHeader(header http.Header, key, value string) {
+	header.Add(key, value)
+}
+
+// ContainsValue Header中，指定key对应的value切片是否包含指定value？
+/*
+PS: 区分大小写.
+*/
+func ContainsValue(header http.Header, key, value string) bool {
+	values := header.Values(key)
+	return sliceKit.Contains(values, value)
+}
+
+// ContainsValueIgnoreCase Header中，指定key对应的value切片是否包含指定value？\
+/*
+PS: 不区分大小写.
+*/
+func ContainsValueIgnoreCase(header http.Header, key, value string) bool {
+	values := header.Values(key)
+	return sliceKit.ContainsBy(values, func(item string) bool {
+		return strKit.EqualsIgnoreCase(item, value)
+	})
 }
