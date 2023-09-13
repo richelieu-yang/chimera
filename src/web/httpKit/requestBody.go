@@ -16,7 +16,8 @@ PS:
 (2) 某个路由涉及代理（请求转发）的话，需要在handler里面首先调用此方法.
 */
 func MakeRequestBodySeekable(req *http.Request) error {
-	if req.Body == nil {
+	// 特殊情况: req.Body == http.NoBody，http客户端发的是post请求，但是没有request body（即没post参数）
+	if req.Body == nil || req.Body == http.NoBody {
 		return nil
 	}
 
@@ -24,12 +25,10 @@ func MakeRequestBodySeekable(req *http.Request) error {
 		// 已经实现了 io.Seeker，避免重复调用
 		return nil
 	}
-
 	data, err := io.ReadAll(req.Body)
 	if err != nil {
 		return err
 	}
-
 	// bytes.NewReader() 的返回值实现了 io.Seeker 接口
 	reader := bytes.NewReader(data)
 	req.Body = ioKit.NopCloser(reader)
@@ -41,7 +40,7 @@ func MakeRequestBodySeekable(req *http.Request) error {
 PS: req.Body可以为nil.
 */
 func ResetRequestBody(req *http.Request) (bool, error) {
-	if req.Body == nil {
+	if req.Body == nil || req.Body == http.NoBody {
 		return true, nil
 	}
 
