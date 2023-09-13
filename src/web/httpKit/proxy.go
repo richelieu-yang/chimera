@@ -1,7 +1,6 @@
 package httpKit
 
 import (
-	"github.com/richelieu-yang/chimera/v2/src/core/errorKit"
 	"github.com/richelieu-yang/chimera/v2/src/core/strKit"
 	"github.com/richelieu-yang/chimera/v2/src/urlKit"
 	"log"
@@ -114,12 +113,8 @@ scheme="http" addr="127.0.0.1:80" reqUrlPath=ptrKit.ToPtr("/ws/connect")
 */
 func (opts *proxyOptions) proxy(w http.ResponseWriter, r *http.Request, addr string) error {
 	// reset Request.Body
-	ok, err := ResetRequestBody(r)
-	if err != nil {
+	if err := ResetRequestBody(r); err != nil {
 		return err
-	}
-	if !ok {
-		return errorKit.New("fail to reset request body")
 	}
 
 	//// scheme
@@ -136,6 +131,7 @@ func (opts *proxyOptions) proxy(w http.ResponseWriter, r *http.Request, addr str
 		return err
 	}
 
+	var err error
 	director := func(req *http.Request) {
 		req.URL.Scheme = opts.scheme
 		req.URL.Host = addr
