@@ -6,13 +6,13 @@ import (
 
 var (
 	// Copy 复制文件（或目录）
-	Copy func(src string, dst string) error = gfile.Copy
+	Copy func(src string, dst string, option ...gfile.CopyOption) error = gfile.Copy
 
 	// CopyFile 复制文件
-	CopyFile func(src, dst string) (err error) = gfile.CopyFile
+	CopyFile func(src, dst string, option ...gfile.CopyOption) (err error) = gfile.CopyFile
 
 	// CopyDir 复制目录
-	CopyDir func(src string, dst string) (err error) = gfile.CopyDir
+	CopyDir func(src string, dst string, option ...gfile.CopyOption) (err error) = gfile.CopyDir
 )
 
 //// CopyFile 复制单个文件.
