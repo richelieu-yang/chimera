@@ -98,6 +98,26 @@ func AddHeader(header http.Header, key, value string) {
 	header.Add(key, value)
 }
 
+// AddHeaderIfMissing
+/*
+PS: 区分大小写.
+*/
+func AddHeaderIfMissing(header http.Header, key, value string) {
+	if !HeaderContainsValue(header, key, value) {
+		header.Add(key, value)
+	}
+}
+
+// AddHeaderIgnoreCaseIfMissing
+/*
+PS: 不区分大小写.
+*/
+func AddHeaderIgnoreCaseIfMissing(header http.Header, key, value string) {
+	if !HeaderContainsValueIgnoreCase(header, key, value) {
+		header.Add(key, value)
+	}
+}
+
 // HeaderContainsValue Header中，指定key对应的value切片是否包含指定value？
 /*
 PS: 区分大小写.
