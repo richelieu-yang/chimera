@@ -49,10 +49,12 @@ func UploadForResponse(url string, fileParams map[string]string, options ...Opti
 	writer := multipart.NewWriter(payload)
 	// 可能会多次关闭 multipart.Writer实例
 	defer writer.Close()
-	for k, v := range opts.postParams {
-		// PS: 此处无需对v进行编码操作
-		if err := writer.WriteField(k, v); err != nil {
-			return nil, err
+	for k, s := range opts.postParams {
+		for _, v := range s {
+			// PS: 此处无需对v进行编码操作
+			if err := writer.WriteField(k, v); err != nil {
+				return nil, err
+			}
 		}
 	}
 	for field, path := range fileParams {

@@ -21,7 +21,7 @@ type (
 		// queryParams 适用于: POST、GET
 		queryParams map[string][]string
 		// postParams 适用于: POST
-		postParams map[string]string
+		postParams map[string][]string
 	}
 
 	Option func(opts *options)
@@ -86,7 +86,7 @@ func WithQueryParams(queryParams map[string][]string) Option {
 /*
 适用于: POST
 */
-func WithPostParams(postParams map[string]string) Option {
+func WithPostParams(postParams map[string][]string) Option {
 	return func(opts *options) {
 		opts.postParams = postParams
 	}

@@ -40,7 +40,8 @@ func PostForResponse(url string, options ...Option) (*http.Response, error) {
 	}
 
 	// payload
-	payload := strings.NewReader(urlKit.ToBodyString(opts.postParams))
+	content := httpKit.ToRequestBodyString(opts.postParams)
+	payload := strings.NewReader(content)
 
 	// req
 	req, err := http.NewRequest("POST", url, payload)
