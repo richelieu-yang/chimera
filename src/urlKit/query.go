@@ -8,8 +8,8 @@ import (
 /*
 @return 处理过的query string（可直接放到url中）
 */
-func ToEscapedQueryString(m map[string][]string) string {
-	var values url.Values = m
+func ToEscapedQueryString[T ~map[string][]string](m T) string {
+	var values = url.Values(m)
 	return values.Encode()
 }
 
