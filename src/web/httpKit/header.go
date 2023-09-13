@@ -97,20 +97,20 @@ func AddHeader(header http.Header, key, value string) {
 	header.Add(key, value)
 }
 
-// ContainsValue Header中，指定key对应的value切片是否包含指定value？
+// HeaderContainsValue Header中，指定key对应的value切片是否包含指定value？
 /*
 PS: 区分大小写.
 */
-func ContainsValue(header http.Header, key, value string) bool {
+func HeaderContainsValue(header http.Header, key, value string) bool {
 	values := header.Values(key)
 	return sliceKit.Contains(values, value)
 }
 
-// ContainsValueIgnoreCase Header中，指定key对应的value切片是否包含指定value？\
+// HeaderContainsValueIgnoreCase Header中，指定key对应的value切片是否包含指定value？\
 /*
 PS: 不区分大小写.
 */
-func ContainsValueIgnoreCase(header http.Header, key, value string) bool {
+func HeaderContainsValueIgnoreCase(header http.Header, key, value string) bool {
 	values := header.Values(key)
 	return sliceKit.ContainsBy(values, func(item string) bool {
 		return strKit.EqualsIgnoreCase(item, value)
