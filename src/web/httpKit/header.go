@@ -24,7 +24,6 @@ func HeaderToMap(header http.Header) map[string]interface{} {
 e.g.
 	header := make(map[string][]string)
 
-	fmt.Println(header) 				// map[]
 	httpKit.AddHeader(header, "k", "0")
 	fmt.Println(header) 				// map[K:[0]]
 	httpKit.AddHeader(header, "k", "1")
@@ -41,6 +40,26 @@ func SetHeader(header http.Header, key, value string) {
 		return
 	}
 	header.Set(key, value)
+}
+
+// SetHeaderIfMissing
+/*
+PS: 区分大小写.
+*/
+func SetHeaderIfMissing(header http.Header, key, value string) {
+	if !HeaderContainsValue(header, key, value) {
+		SetHeader(header, key, value)
+	}
+}
+
+// SetHeaderIfMissingIgnoreCase
+/*
+PS: 不区分大小写.
+*/
+func SetHeaderIfMissingIgnoreCase(header http.Header, key, value string) {
+	if !HeaderContainsValueIgnoreCase(header, key, value) {
+		SetHeader(header, key, value)
+	}
 }
 
 // GetHeader
@@ -104,7 +123,7 @@ PS: 区分大小写.
 */
 func AddHeaderIfMissing(header http.Header, key, value string) {
 	if !HeaderContainsValue(header, key, value) {
-		header.Add(key, value)
+		AddHeader(header, key, value)
 	}
 }
 
@@ -114,7 +133,7 @@ PS: 不区分大小写.
 */
 func AddHeaderIfMissingIgnoreCase(header http.Header, key, value string) {
 	if !HeaderContainsValueIgnoreCase(header, key, value) {
-		header.Add(key, value)
+		AddHeader(header, key, value)
 	}
 }
 

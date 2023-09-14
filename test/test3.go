@@ -1,23 +1,18 @@
 package main
 
 import (
-	"fmt"
 	"github.com/gin-gonic/gin"
-	"io"
+	"net/http"
 )
 
 func main() {
 	engine := gin.Default()
 
-	engine.POST("/test", func(ctx *gin.Context) {
-		_, ok := ctx.Request.Body.(io.Seeker)
-		fmt.Println(ok)
-
-		//fmt.Println(ctx.PostForm("a"))
-		//fmt.Println(ctx.PostFormArray("a"))
+	engine.Any("/test", func(ctx *gin.Context) {
+		ctx.String(http.StatusOK, "OK")
 	})
 
-	if err := engine.Run(":80"); err != nil {
+	if err := engine.Run(":8888"); err != nil {
 		panic(err)
 	}
 }
