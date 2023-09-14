@@ -24,11 +24,13 @@ func TestSetUp(t *testing.T) {
 	path := "chimera-lib/config.yaml"
 	confKit.MustLoad(path, c)
 	MustSetUp(c.Redis)
-
 	client, err := GetClient()
 	if err != nil {
 		logrus.Fatal(err)
 	}
+	client = client
 
-	fmt.Println(client.Incr(context.Background(), "a"))
+	{
+		fmt.Println(client.Publish(context.TODO(), "WsKill", 1))
+	}
 }
