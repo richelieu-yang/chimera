@@ -1,18 +1,27 @@
 package main
 
 import (
-	"github.com/gin-gonic/gin"
-	"net/http"
+	"fmt"
+	"github.com/richelieu-yang/chimera/v2/src/json/jsonKit"
 )
 
+type Person struct {
+	Name string `json:"name"`
+	Age  int    `json:"age"`
+}
+
+type Employee struct {
+	Person   `json:",inline"`
+	Position []string
+}
+
 func main() {
-	engine := gin.Default()
-
-	engine.Any("/test", func(ctx *gin.Context) {
-		ctx.String(http.StatusOK, "OK")
-	})
-
-	if err := engine.Run(":8888"); err != nil {
-		panic(err)
+	e := Employee{
+		Person: Person{
+			Name: "John Doe",
+			Age:  30,
+		},
+		Position: []string{"Software Engineer"},
 	}
+	fmt.Println(jsonKit.MarshalIndentToString(e, "", "    "))
 }
