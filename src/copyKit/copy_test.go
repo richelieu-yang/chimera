@@ -35,3 +35,14 @@ func TestDeepCopy(t *testing.T) {
 	fmt.Println(jsonKit.MarshalToStringWithAPI(jsoniter.ConfigCompatibleWithStandardLibrary, src))
 	fmt.Println(jsonKit.MarshalToStringWithAPI(jsoniter.ConfigCompatibleWithStandardLibrary, dest))
 }
+
+// case: 传参为 nil
+func TestDeepCopy1(t *testing.T) {
+	var m map[string]interface{} = nil
+
+	m1, err := DeepCopy(m)
+	if err != nil {
+		panic(err)
+	}
+	fmt.Println(m1 == nil) // true
+}
