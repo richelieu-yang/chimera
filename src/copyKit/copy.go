@@ -47,7 +47,7 @@ func Copy(dest, src interface{}) error {
 	})
 }
 
-// DeepCopy 深拷贝
+// DeepCopy 深拷贝（通过GoFrame中的 gutil）.
 /*
 PS:
 (1) unable to copy unexported fields in a struct (lowercase field names)
