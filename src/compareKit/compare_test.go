@@ -54,5 +54,16 @@ func TestEqual1(t *testing.T) {
 			Lovers: []string{"李4"},
 		},
 	}
-	fmt.Println(Equal(w0, w1))
+	fmt.Println(Equal(w0, w1)) // true
+}
+
+func TestEqual2(t *testing.T) {
+	// 值都为nil，但类型不同
+	var obj1 []string = nil
+	var obj2 map[string][]string = nil
+	fmt.Println(Equal(obj1, obj2)) // false
+
+	// 值都为nil，且类型相同
+	var obj3 map[string][]string = nil
+	fmt.Println(Equal(obj2, obj3)) // true
 }
