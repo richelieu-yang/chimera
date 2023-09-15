@@ -15,7 +15,7 @@ type (
 	}
 
 	SingleNodeConfig struct {
-		// Addr host:port address.
+		// Addr address(host:port)
 		Addr string `json:"addr" yaml:"addr"`
 		// DB Database to be selected after connecting to the server.
 		DB int `json:"db,default=0" yaml:"db"`
