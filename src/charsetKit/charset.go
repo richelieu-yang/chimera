@@ -6,19 +6,11 @@ import "github.com/gogf/gf/v2/encoding/gcharset"
 /*
 支持的字符集（charset）: "UTF-8"、"GBK"、"Big5"等，更多详见: https://goframe.org/pages/viewpage.action?pageId=1114178.
 */
-func Convert(dstCharset string, srcCharset string, src string) (dst string, err error) {
-	return gcharset.Convert(dstCharset, src, src)
-}
+var Convert func(dstCharset string, srcCharset string, src string) (dst string, err error) = gcharset.Convert
 
 // IsSupported 是否支持 指定字符集 ？
-func IsSupported(charset string) bool {
-	return gcharset.Supported(charset)
-}
+var IsSupported func(charset string) bool = gcharset.Supported
 
-func ToUTF8(srcCharset string, src string) (dst string, err error) {
-	return gcharset.ToUTF8(srcCharset, src)
-}
+var ToUTF8 func(srcCharset string, src string) (dst string, err error) = gcharset.ToUTF8
 
-func UTF8To(dstCharset string, src string) (dst string, err error) {
-	return gcharset.UTF8To(dstCharset, src)
-}
+var UTF8To func(dstCharset string, src string) (dst string, err error) = gcharset.UTF8To
