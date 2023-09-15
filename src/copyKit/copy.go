@@ -55,29 +55,7 @@ PS:
 (3) 不使用 github.com/jinzhu/copier: 	深拷贝有bug，详见"Golang.wps"
 
 @param src	(1) 可以为nil（此时将返回: nil, nil）
-			(2) 必须是: 结构体指针 || map实例 || slice实例
-
-e.g. 传参为nil的情况
-	a, err := copyKit.DeepCopy[interface{}](nil)
-	if err != nil {
-		panic(err)
-	}
-	fmt.Println(a)
-	fmt.Println(a == nil) // true
-
-	b, err := copyKit.DeepCopy[[]int](nil)
-	if err != nil {
-		panic(err)
-	}
-	fmt.Println(b)
-	fmt.Println(b == nil) // true
-
-	c, err := copyKit.DeepCopy[map[string]interface{}](nil)
-	if err != nil {
-		panic(err)
-	}
-	fmt.Println(c)
-	fmt.Println(c == nil) // true
+			(2) 必须是: 结构体实例的指针 || map实例 || slice实例
 */
 func DeepCopy[T any](src T) (dest T, err error) {
 	obj := gutil.Copy(src)
