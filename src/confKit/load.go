@@ -58,19 +58,3 @@ func Load(path string, ptr any, options ...conf.Option) error {
 	}
 	return conf.Load(path, ptr, options...)
 }
-
-//// MustLoadFromJsonBytes 加载 .json 格式的配置文件内容.
-//func MustLoadFromJsonBytes(jsonContent []byte, v any) {
-//	if err := LoadFromJsonBytes(jsonContent, v); err != nil {
-//		logrusKit.DisableQuote(nil)
-//		logrus.Fatalf("%+v", err)
-//	}
-//}
-//
-//// MustLoadFromYamlBytes 加载 .yaml 格式的配置文件内容.
-//func MustLoadFromYamlBytes(yamlContent []byte, v any) {
-//	if err := LoadFromYamlBytes(yamlContent, v); err != nil {
-//		logrusKit.DisableQuote(nil)
-//		logrus.Fatalf("%+v", err)
-//	}
-//}
