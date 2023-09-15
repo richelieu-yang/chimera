@@ -28,6 +28,7 @@ func TestDeepCopy(t *testing.T) {
 	fmt.Println(src)
 	fmt.Println(dest)
 
+	// 修改src的内容（并不会影响dest）
 	src["b"] = true
 	b.Id = 777
 

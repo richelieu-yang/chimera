@@ -4,7 +4,6 @@ import (
 	"github.com/gogf/gf/v2/util/gutil"
 	"github.com/jinzhu/copier"
 	"github.com/richelieu-yang/chimera/v2/src/core/errorKit"
-	"github.com/richelieu-yang/chimera/v2/src/core/interfaceKit"
 )
 
 // Copy 浅拷贝
@@ -81,10 +80,6 @@ e.g. 传参为nil的情况
 	fmt.Println(c == nil) // true
 */
 func DeepCopy[T any](src T) (dest T, err error) {
-	if interfaceKit.IsNil(src) {
-		return
-	}
-
 	obj := gutil.Copy(src)
 	var ok bool
 	if dest, ok = obj.(T); ok {
