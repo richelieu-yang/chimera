@@ -6,6 +6,9 @@ import (
 
 var (
 	// Copy 复制文件（或目录）
+	/*
+		PS: 可以设置权限.
+	*/
 	Copy func(src string, dst string, option ...gfile.CopyOption) error = gfile.Copy
 
 	// CopyFile 复制文件
