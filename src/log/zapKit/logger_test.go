@@ -8,7 +8,7 @@ import (
 
 func TestNewLogger(t *testing.T) {
 	// 日志文件会生成在当前.go文件的同目录下
-	writer, err := fileKit.NewFileInAppendMode("aaa.log")
+	writer, err := fileKit.CreateInAppendMode("aaa.log")
 	if err != nil {
 		panic(err)
 	}

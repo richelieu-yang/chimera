@@ -41,7 +41,7 @@ func setUp(config *Config) (err error) {
 		var logger *zap.Logger
 		if strKit.IsNotEmpty(config.LogPath) {
 			var writer io.Writer
-			writer, err = fileKit.NewFileInAppendMode(config.LogPath)
+			writer, err = fileKit.CreateInAppendMode(config.LogPath)
 			if err != nil {
 				return
 			}

@@ -32,7 +32,7 @@ func TestSetUp(t *testing.T) {
 
 	c := &config{}
 	confKit.MustLoad("chimera-lib/config.yaml", c)
-	f, err := fileKit.NewFile("gorm.log")
+	f, err := fileKit.Create("gorm.log")
 	if err != nil {
 		panic(err)
 	}

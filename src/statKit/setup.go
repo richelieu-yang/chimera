@@ -28,7 +28,7 @@ func Setup(logPath string) error {
 		if err := fileKit.MkParentDirs(logPath); err != nil {
 			return err
 		}
-		f, err := fileKit.NewFileInAppendMode(logPath)
+		f, err := fileKit.CreateInAppendMode(logPath)
 		if err != nil {
 			return err
 		}

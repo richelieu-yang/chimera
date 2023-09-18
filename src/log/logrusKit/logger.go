@@ -87,7 +87,7 @@ func NewLogger(options ...LoggerOption) *logrus.Logger {
 
 // NewFileLogger 输出到文件(not rotatable).
 func NewFileLogger(filePath string, options ...LoggerOption) (*logrus.Logger, error) {
-	file, err := fileKit.NewFileInAppendMode(filePath)
+	file, err := fileKit.CreateInAppendMode(filePath)
 	if err != nil {
 		return nil, err
 	}
