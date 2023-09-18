@@ -55,6 +55,7 @@ require (
 	github.com/spf13/viper v1.16.0
 	github.com/tidwall/gjson v1.16.0
 	github.com/zeromicro/go-zero v1.5.5
+	github.com/zeromicro/zero-contrib/logx/logrusx v0.0.0-20230807142214-5952d42ba776
 	go.etcd.io/etcd/client/v3 v3.5.9
 	go.uber.org/automaxprocs v1.5.3
 	go.uber.org/zap v1.26.0
