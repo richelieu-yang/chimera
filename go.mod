@@ -36,7 +36,7 @@ require (
 	github.com/json-iterator/go v1.1.12
 	github.com/klauspost/compress v1.16.7
 	github.com/klauspost/cpuid/v2 v2.2.5
-	github.com/lionsoul2014/ip2region/binding/golang v0.0.0-20230731060429-6ed8bf011875
+	github.com/lionsoul2014/ip2region/binding/golang v0.0.0-20230918035219-0c68fd1ed811
 	github.com/matoous/go-nanoid/v2 v2.0.0
 	github.com/mitchellh/go-homedir v1.1.0
 	github.com/mitchellh/mapstructure v1.5.0

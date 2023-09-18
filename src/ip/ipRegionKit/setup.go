@@ -18,8 +18,13 @@ func MustSetUp(xdbPath string) {
 	}
 }
 
-func SetUp(xdbPath string) error {
-	var err error
+func SetUp(xdbPath string) (err error) {
+	defer func() {
+		if err != nil {
+			searcher = nil
+		}
+	}()
+
 	searcher, err = loadXdbFile(xdbPath)
 	return err
 }
