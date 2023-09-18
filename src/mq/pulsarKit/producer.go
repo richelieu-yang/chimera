@@ -3,6 +3,7 @@ package pulsarKit
 import (
 	"context"
 	"github.com/apache/pulsar-client-go/pulsar"
+	"github.com/richelieu-yang/chimera/v2/src/core/errorKit"
 	"time"
 )
 
@@ -52,6 +53,7 @@ func NewProducerOriginally(ctx context.Context, addresses []string, options puls
 		}
 		producer, err = client.CreateProducer(options)
 		if err != nil {
+			err = errorKit.Wrap(err, "client fails to create producer")
 			errCh <- err
 			return
 		}

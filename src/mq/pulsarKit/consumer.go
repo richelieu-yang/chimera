@@ -3,6 +3,7 @@ package pulsarKit
 import (
 	"context"
 	"github.com/apache/pulsar-client-go/pulsar"
+	"github.com/richelieu-yang/chimera/v2/src/core/errorKit"
 )
 
 type (
@@ -44,6 +45,7 @@ func NewConsumerOriginally(ctx context.Context, addresses []string, options puls
 		}
 		consumer, err = client.Subscribe(options)
 		if err != nil {
+			err = errorKit.Wrap(err, "client fails to subscribe")
 			errCh <- err
 			return
 		}
