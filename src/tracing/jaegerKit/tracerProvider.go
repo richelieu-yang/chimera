@@ -10,10 +10,11 @@ import (
 
 // NewTracerProvider
 /*
-@param url 连接的jaeger服务（collector || agent）
+PS:
+(1) agent		默认端口: 6831
+(2) collector	默认端口: 14268
 
-e.g. url
-	"http://localhost:14268/api/traces"
+@param url 连接的jaeger服务（agent || collector），e.g."http://localhost:14268/api/traces"
 */
 func NewTracerProvider(url, service, environment string, id int64) (*trace.TracerProvider, error) {
 	/*
