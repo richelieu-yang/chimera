@@ -2,7 +2,6 @@ package fileKit
 
 import (
 	"github.com/gogf/gf/v2/os/gfile"
-	"github.com/richelieu-yang/chimera/v2/src/core/strKit"
 	"os"
 	"path/filepath"
 	"time"
@@ -37,55 +36,6 @@ var (
 	*/
 	Truncate func(path string, size int) (err error) = gfile.Truncate
 )
-
-// NewFile 创建文件（读写权限、文件不存在就创建、打开并清空文件）.
-func NewFile(filePath string) (*os.File, error) {
-	if err := AssertNotExistOrIsFile(filePath); err != nil {
-		return nil, err
-	}
-	if err := MkParentDirs(filePath); err != nil {
-		return nil, err
-	}
-
-	// flag: O_RDWR|O_CREATE|O_TRUNC
-	return os.Create(filePath)
-}
-
-// NewFileInAppendMode 创建文件（读写权限、文件不存在就创建、追加模式）.
-func NewFileInAppendMode(filePath string) (*os.File, error) {
-	if err := AssertNotExistOrIsFile(filePath); err != nil {
-		return nil, err
-	}
-	if err := MkParentDirs(filePath); err != nil {
-		return nil, err
-	}
-
-	return os.OpenFile(filePath, os.O_RDWR|os.O_CREATE|os.O_APPEND, 0666)
-}
-
-// NewTemporaryFile 在指定目录下，生成临时文件.
-/*
-@param dirPath 如果为""，临时文件将生成在 系统临时目录 内；如果为"."，临时文件将生成在 当前目录 内.
-
-e.g.
-pattern: "tempfile_test" 		=> 临时文件的文件名: "tempfile_test2594316144"
-pattern: "tempfile_test*" 		=> 临时文件的文件名: "tempfile_test827818253"
-pattern: "tempfile_test*.xyz" 	=> 临时文件的文件名: "tempfile_test3617672388.xyz"
-*/
-func NewTemporaryFile(dirPath, pattern string) (*os.File, error) {
-	if err := AssertNotExistOrIsDir(dirPath); err != nil {
-		return nil, err
-	}
-	if err := MkDirs(dirPath); err != nil {
-		return nil, err
-	}
-
-	if err := strKit.AssertNotBlank(pattern, "pattern"); err != nil {
-		return nil, err
-	}
-
-	return os.CreateTemp(dirPath, pattern)
-}
 
 // EmptyDir 清空目录：删掉目录中的文件和子目录（递归），但该目录本身不会被删掉.
 /*
