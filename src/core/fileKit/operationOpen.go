@@ -20,17 +20,6 @@ var (
 					(2) e.g.0666 || os.ModePerm ...
 	*/
 	OpenFile func(path string, flag int, perm os.FileMode) (*os.File, error) = gfile.OpenFile
-
-	//// Create 创建文件（目录不行）.
-	///*
-	//	PS:
-	//	(1) flag == O_RDWR|O_CREATE|O_TRUNC
-	//	(2) 读写权限（0666）；
-	//	(3) path不存在，会创建；
-	//	(4) path存在 && 是文件，会清空该文件内容；
-	//	(5) path存在 && 是目录，会返回error.
-	//*/
-	//Create func(path string) (*os.File, error) = gfile.Create
 )
 
 // Create 创建文件（读写权限、文件不存在就创建、打开并清空文件）.
