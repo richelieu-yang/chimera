@@ -25,7 +25,7 @@ func init() {
 
 	/*
 		amd64 CPU && 不支持 avx指令集 的情况下，下面的代码会报错 SIGILL: illegal instruction
-		（启动时报错退出进程 总好过 运行时报错退出进程）
+		PS: 启动时报错退出程序 总好过 运行时报错退出程序.
 	*/
 	api := sonic.ConfigStd
 	m := map[string]interface{}{
