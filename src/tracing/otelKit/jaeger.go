@@ -1,4 +1,4 @@
-package jaegerKit
+package otelKit
 
 import (
 	"go.opentelemetry.io/otel/attribute"
@@ -8,7 +8,7 @@ import (
 	semconv "go.opentelemetry.io/otel/semconv/v1.17.0"
 )
 
-// NewTracerProvider
+// NewJaegerTracerProvider
 /*
 PS:
 (1) agent		默认端口: 6831
@@ -17,7 +17,7 @@ PS:
 
 @param url 连接的jaeger服务（agent || collector），e.g."http://localhost:14268/api/traces"
 */
-func NewTracerProvider(url, service, environment string, id int64) (*trace.TracerProvider, error) {
+func NewJaegerTracerProvider(url, service, environment string, id int64) (*trace.TracerProvider, error) {
 	/*
 		创建jaeger provider.
 		PS: 可以直接连collector，也可以连agent
