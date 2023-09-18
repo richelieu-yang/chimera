@@ -1,7 +1,22 @@
 package main
 
-func main() {
-	//gfile.Copy()
+import (
+	"github.com/bytedance/sonic"
+	"github.com/sirupsen/logrus"
+)
 
-	//fileKit.NewFileInAppendMode()
+func main() {
+	api := sonic.ConfigStd
+	m := map[string]interface{}{
+		"0": 3.1415926,
+		"1": 1,
+	}
+	jsonStr, err := api.MarshalToString(m)
+	if err != nil {
+		logrus.WithError(err).Fatal("sonic fails to marshal")
+	}
+	var m1 map[string]interface{}
+	if err := api.UnmarshalFromString(jsonStr, &m1); err != nil {
+		logrus.WithError(err).Fatal("sonic fails to unmarshal")
+	}
 }
