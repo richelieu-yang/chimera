@@ -204,6 +204,6 @@ func _verify(logger *logrus.Logger, topic, consumerLogPath, producerLogPath, uli
 	case err := <-consumerErrCh:
 		return err
 	case <-time.After(receiveTimeout):
-		return errorKit.New("fail to get all messages within time limit(%s)", receiveTimeout)
+		return errorKit.New("fail to get all messages within timeout(%s)", receiveTimeout)
 	}
 }
