@@ -29,6 +29,7 @@ func (err myError) Error() string {
 	return err.Text
 }
 
+// TestAs receiver为"值类型"
 func TestAs(t *testing.T) {
 	err := myError{
 		Text: "cyy",
@@ -53,6 +54,7 @@ func (err *myError1) Error() string {
 	return err.Text
 }
 
+// TestAs1 receiver为"指针类型"
 func TestAs1(t *testing.T) {
 	err := &myError1{
 		Text: "cyy",
