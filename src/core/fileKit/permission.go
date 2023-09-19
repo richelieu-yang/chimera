@@ -6,8 +6,16 @@ import (
 )
 
 var (
+	// IsReadable
+	/*
+
+	 */
 	IsReadable func(path string) bool = gfile.IsReadable
 
+	// IsWritable
+	/*
+
+	 */
 	IsWritable func(path string) bool = gfile.IsWritable
 )
 
