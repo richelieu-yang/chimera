@@ -6,16 +6,18 @@ import (
 )
 
 var (
-	// IsReadable
+	// IsReadable 是否有 读 权限?
 	/*
-
-	 */
+		e.g.
+			("") => false
+	*/
 	IsReadable func(path string) bool = gfile.IsReadable
 
-	// IsWritable
+	// IsWritable 是否有 写 权限?
 	/*
-
-	 */
+		e.g.
+			("") => false
+	*/
 	IsWritable func(path string) bool = gfile.IsWritable
 )
 
