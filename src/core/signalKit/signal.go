@@ -5,6 +5,7 @@ import (
 	"os"
 	"os/signal"
 	"sync"
+	"syscall"
 )
 
 var monitorOnce sync.Once
@@ -19,7 +20,8 @@ PS:
 func MonitorExitSignal() {
 	monitorOnce.Do(func() {
 		ch := make(chan os.Signal, 1)
-		signal.Notify(ch, exitSignals...)
+		//signal.Notify(ch, exitSignals...)
+		signal.Notify(ch, syscall.SIGUSR1, syscall.SIGUSR2, syscall.SIGTERM)
 
 		go func() {
 			sig := <-ch
