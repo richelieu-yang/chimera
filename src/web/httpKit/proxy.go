@@ -63,9 +63,9 @@ PS: 转发请求前如果想变更请求头(Header)，可以在调用此函数�
 @param w e.g.ctx.Writer
 @param r e.g.ctx.Request
 */
-func Proxy(w http.ResponseWriter, r *http.Request, addr string, options ...ProxyOption) error {
+func Proxy(w http.ResponseWriter, r *http.Request, targetAddr string, options ...ProxyOption) error {
 	opts := loadOptions(options...)
-	return opts.proxy(w, r, addr)
+	return opts.proxy(w, r, targetAddr)
 }
 
 // proxy
