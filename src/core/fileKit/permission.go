@@ -5,10 +5,15 @@ import (
 	"os"
 )
 
+const (
+	// AllPerm 所有权限
+	AllPerm = os.ModePerm
+)
+
 var (
 	// IsReadable 是否有 读 权限?
 	/*
-		@param path
+		@param path 文件（或目录）的路径
 
 		e.g.
 			("") => false
@@ -17,7 +22,7 @@ var (
 
 	// IsWritable 是否有 写 权限?
 	/*
-		@param path
+		@param path 文件（或目录）的路径
 
 		e.g.
 			("") => false

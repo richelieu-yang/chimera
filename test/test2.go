@@ -6,7 +6,7 @@ import (
 )
 
 func main() {
-	path := "/Users/richelieu/Downloads/a.txt"
+	path := "/Users/richelieu/Downloads"
 	fmt.Println(fileKit.IsReadable(path))
 	fmt.Println(fileKit.IsWritable(path))
 }
