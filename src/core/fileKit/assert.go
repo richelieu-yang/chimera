@@ -88,3 +88,52 @@ func AssertExistAndIsDir(path string) error {
 	}
 	return nil
 }
+
+// AssertReadableAndWritable
+/*
+前提: path 非blank && 存在.
+*/
+func AssertReadableAndWritable(path string) error {
+	if strKit.IsBlank(path) {
+		return errorKit.NewSkip(1, "[%s] path(%s) is blank", funcKit.GetFuncName(1), path)
+	}
+
+	if !Exists(path) {
+		return errorKit.NewSkip(1, "[%s] path(%s) doesn't exist", funcKit.GetFuncName(1), path)
+	}
+	if !IsReadable(path) {
+		return errorKit.NewSkip(1, "[%s] path(%s) isn't readable", funcKit.GetFuncName(1), path)
+	}
+	if !IsWritable(path) {
+		return errorKit.NewSkip(1, "[%s] path(%s) isn't writable", funcKit.GetFuncName(1), path)
+	}
+	return nil
+}
+
+func AssertReadable(path string) error {
+	if strKit.IsBlank(path) {
+		return errorKit.NewSkip(1, "[%s] path(%s) is blank", funcKit.GetFuncName(1), path)
+	}
+
+	if !Exists(path) {
+		return errorKit.NewSkip(1, "[%s] path(%s) doesn't exist", funcKit.GetFuncName(1), path)
+	}
+	if !IsReadable(path) {
+		return errorKit.NewSkip(1, "[%s] path(%s) isn't readable", funcKit.GetFuncName(1), path)
+	}
+	return nil
+}
+
+func AssertWritable(path string) error {
+	if strKit.IsBlank(path) {
+		return errorKit.NewSkip(1, "[%s] path(%s) is blank", funcKit.GetFuncName(1), path)
+	}
+
+	if !Exists(path) {
+		return errorKit.NewSkip(1, "[%s] path(%s) doesn't exist", funcKit.GetFuncName(1), path)
+	}
+	if !IsWritable(path) {
+		return errorKit.NewSkip(1, "[%s] path(%s) isn't writable", funcKit.GetFuncName(1), path)
+	}
+	return nil
+}
