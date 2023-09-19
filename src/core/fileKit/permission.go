@@ -8,6 +8,8 @@ import (
 var (
 	// IsReadable 是否有 读 权限?
 	/*
+		@param path
+
 		e.g.
 			("") => false
 	*/
@@ -15,6 +17,8 @@ var (
 
 	// IsWritable 是否有 写 权限?
 	/*
+		@param path
+
 		e.g.
 			("") => false
 	*/
