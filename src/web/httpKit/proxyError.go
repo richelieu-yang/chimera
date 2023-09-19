@@ -5,7 +5,7 @@ import (
 	"net"
 )
 
-// IsProxyDialError 代理请求返回error时，是否是因为dial目标地址失败？
+// IsProxyDialError 代理请求返回的error，是否是因为dial目标地址失败？
 func IsProxyDialError(err error) bool {
 	opErr := &net.OpError{}
 	if errors.As(err, &opErr) {
