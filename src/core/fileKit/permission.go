@@ -14,6 +14,7 @@ var (
 	// IsReadable 是否有 读 权限?
 	/*
 		@param path 文件（或目录）的路径
+		@return 传参path不存在的话，将返回false
 
 		e.g.
 			("") => false
@@ -23,6 +24,7 @@ var (
 	// IsWritable 是否有 写 权限?
 	/*
 		@param path 文件（或目录）的路径
+		@return 传参path不存在的话，将返回false
 
 		e.g.
 			("") => false
