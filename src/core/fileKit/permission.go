@@ -8,6 +8,9 @@ import (
 const (
 	// AllPerm 所有权限
 	AllPerm = os.ModePerm
+
+	// SafePerm 只有你自己有 写 权限
+	SafePerm os.FileMode = 0644
 )
 
 var (
