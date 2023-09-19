@@ -2,7 +2,7 @@ package main
 
 import (
 	"github.com/richelieu-yang/chimera/v2/src/core/fileKit"
-	"sigs.k8s.io/yaml"
+	"github.com/richelieu-yang/chimera/v2/src/yaml/k8sYamlKit"
 )
 
 type Person struct {
@@ -19,12 +19,12 @@ func main() {
 	}
 
 	var p Person
-	if err := yaml.Unmarshal(data, &p); err != nil {
+	if err := k8sYamlKit.Unmarshal(data, &p); err != nil {
 		panic(err)
 	}
 	p.Age++
 
-	data, err = yaml.Marshal(&p)
+	data, err = k8sYamlKit.Marshal(&p)
 	if err != nil {
 		panic(err)
 	}
