@@ -12,6 +12,7 @@ type (
 	proxyOptions struct {
 		scheme      string
 		errorLogger *log.Logger
+		// reqUrlPath 请求路由
 		reqUrlPath  *string
 		queryParams map[string][]string
 	}
