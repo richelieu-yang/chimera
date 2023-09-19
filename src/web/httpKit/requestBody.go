@@ -4,6 +4,7 @@ import (
 	"bytes"
 	"github.com/richelieu-yang/chimera/v2/src/core/errorKit"
 	"github.com/richelieu-yang/chimera/v2/src/core/ioKit"
+	"github.com/richelieu-yang/chimera/v2/src/core/strKit"
 	"github.com/richelieu-yang/chimera/v2/src/urlKit"
 	"io"
 	"net/http"
@@ -21,7 +22,7 @@ PS:
 */
 func MakeRequestBodySeekable(req *http.Request) error {
 	// 特殊情况: req.Body == http.NoBody，http客户端发的是post请求，但是没有request body（即没post参数）
-	if req.Body == nil || req.Body == http.NoBody {
+	if strKit.EqualsIgnoreCase(req.Method, http.MethodGet) || req.Body == nil || req.Body == http.NoBody {
 		return nil
 	}
 
@@ -44,7 +45,7 @@ func MakeRequestBodySeekable(req *http.Request) error {
 PS: req.Body可以为nil.
 */
 func ResetRequestBody(req *http.Request) error {
-	if req.Body == nil || req.Body == http.NoBody {
+	if strKit.EqualsIgnoreCase(req.Method, http.MethodGet) || req.Body == nil || req.Body == http.NoBody {
 		// 无需重置
 		return nil
 	}
