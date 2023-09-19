@@ -34,7 +34,7 @@ require (
 	github.com/jinzhu/copier v0.4.0
 	github.com/jordan-wright/email v4.0.1-0.20210109023952-943e75fe5223+incompatible
 	github.com/json-iterator/go v1.1.12
-	github.com/klauspost/compress v1.16.7
+	github.com/klauspost/compress v1.17.0
 	github.com/klauspost/cpuid/v2 v2.2.5
 	github.com/lionsoul2014/ip2region/binding/golang v0.0.0-20230918035219-0c68fd1ed811
 	github.com/matoous/go-nanoid/v2 v2.0.0
