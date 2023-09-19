@@ -6,6 +6,7 @@ import (
 	"github.com/richelieu-yang/chimera/v2/src/core/fileKit"
 	"github.com/richelieu-yang/chimera/v2/src/crypto/base64Kit"
 	"github.com/richelieu-yang/chimera/v2/src/web/httpClientKit"
+	"os"
 	"regexp"
 )
 
@@ -74,10 +75,10 @@ func DecodeFromBase64(base64 []byte) ([]byte, error) {
 /*
 @param target 要生成的图片的路径
 */
-func DecodeToImageFile(base64 []byte, dest string) error {
+func DecodeToImageFile(base64 []byte, dest string, perm os.FileMode) error {
 	data, err := DecodeFromBase64(base64)
 	if err != nil {
 		return err
 	}
-	return fileKit.WriteToFile(data, dest)
+	return fileKit.WriteToFile(data, dest, perm)
 }

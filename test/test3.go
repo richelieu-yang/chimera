@@ -1,32 +1,47 @@
 package main
 
 import (
-	"github.com/richelieu-yang/chimera/v2/src/core/signalKit"
-	"github.com/richelieu-yang/chimera/v2/src/log/logrusKit"
+	"fmt"
+	"gopkg.in/yaml.v3"
+	"os"
 )
 
-func init() {
-	logrusKit.MustSetUp(nil)
-	signalKit.MonitorExitSignal()
-}
-
 func main() {
+	// 读取 YAML 文件
+	file, err := os.Open("example.yaml")
+	if err != nil {
+		panic(err)
+	}
+	defer file.Close()
 
-	//logrus.RegisterExitHandler(func() {
-	//	fmt.Println("0")
-	//	time.Sleep(time.Second * 3)
-	//	fmt.Println("1")
-	//})
-	//logrus.RegisterExitHandler(func() {
-	//	fmt.Println("2")
-	//	time.Sleep(time.Second * 10)
-	//	fmt.Println("3")
-	//})
-	//
-	//fmt.Println("PID", processKit.PID)
-	//
-	////time.Sleep(time.Second)
-	////os.Exit(1)
-	//for {
-	//}
+	// 解析 YAML 文件
+	var data map[string]interface{}
+	decoder := yaml.NewDecoder(file)
+	err = decoder.Decode(&data)
+	if err != nil {
+		panic(err)
+	}
+
+	// 修改数据
+	data["name"] = "new-name"
+
+	// 将数据转换为 YAML 字符串
+	yamlBytes, err := yaml.Marshal(data)
+	if err != nil {
+		panic(err)
+	}
+
+	// 将 YAML 字符串写入文件
+	file, err = os.Create("example.yaml")
+	if err != nil {
+		panic(err)
+	}
+	defer file.Close()
+
+	_, err = file.Write(yamlBytes)
+	if err != nil {
+		panic(err)
+	}
+
+	fmt.Println("文件已保存")
 }

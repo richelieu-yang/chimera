@@ -1,6 +1,9 @@
 package jsonKit
 
-import "github.com/richelieu-yang/chimera/v2/src/core/fileKit"
+import (
+	"github.com/richelieu-yang/chimera/v2/src/core/fileKit"
+	"os"
+)
 
 func Marshal(v interface{}) ([]byte, error) {
 	return defaultApi.Marshal(v)
@@ -29,12 +32,12 @@ PS:
 				(2) 不存在的话，会创建一个新的文件
 				(3) 存在且是个文件的话，会 "覆盖" 掉旧的（并不会加到该文件的最后面）
 */
-func MarshalToFile(in interface{}, filePath string) error {
+func MarshalToFile(in interface{}, filePath string, perm os.FileMode) error {
 	data, err := MarshalIndent(in, "", "    ")
 	if err != nil {
 		return err
 	}
-	return fileKit.WriteToFile(data, filePath)
+	return fileKit.WriteToFile(data, filePath, perm)
 }
 
 // MarshalIndentToString

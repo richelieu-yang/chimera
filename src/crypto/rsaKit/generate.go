@@ -7,6 +7,7 @@ import (
 	"encoding/pem"
 	"github.com/richelieu-yang/chimera/v2/src/core/errorKit"
 	"github.com/richelieu-yang/chimera/v2/src/core/fileKit"
+	"os"
 )
 
 // GenerateKeyFiles 生成: 公钥 && 私钥
@@ -17,16 +18,16 @@ import (
 @param priPath	生成私钥文件的位置
 @param pubPath	生成公钥文件的位置
 */
-func GenerateKeyFiles(bits int, format KeyFormat, password, priPath, pubPath string) error {
+func GenerateKeyFiles(bits int, format KeyFormat, password, priPath, pubPath string, perm os.FileMode) error {
 	pri, pub, err := GenerateKeys(bits, format, password)
 	if err != nil {
 		return err
 	}
 
-	if err := fileKit.WriteToFile(pri, priPath); err != nil {
+	if err := fileKit.WriteToFile(pri, priPath, perm); err != nil {
 		return err
 	}
-	if err := fileKit.WriteToFile(pub, pubPath); err != nil {
+	if err := fileKit.WriteToFile(pub, pubPath, perm); err != nil {
 		return err
 	}
 	return nil
