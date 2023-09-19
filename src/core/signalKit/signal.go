@@ -13,19 +13,20 @@ import (
 @param exitFunc (1) 可以为nil
 				(2) 一般用于清理痕迹（毁尸灭迹）
 */
-func MonitorExitSignal(exitFunc func(os.Signal)) {
+func MonitorExitSignal() {
 	ch := make(chan os.Signal, 1)
 	signal.Notify(ch, exitSignals...)
 
 	go func() {
 		sig := <-ch
+		logrus.WithField("signal", sig.String()).Fatal("Receive an exit signal.")
 
-		logrus.WithField("signal", sig.String()).Warn("receive a signal and this process will exit")
-		if exitFunc != nil {
-			logrus.Debug("exitFunc starts")
-			exitFunc(sig)
-			logrus.Debug("exitFunc ends")
-		}
-		os.Exit(0)
+		//logrus.WithField("signal", sig.String()).Warn("receive a signal and this process will exit")
+		//if exitFunc != nil {
+		//	logrus.Debug("exitFunc starts")
+		//	exitFunc(sig)
+		//	logrus.Debug("exitFunc ends")
+		//}
+		//os.Exit(0)
 	}()
 }
