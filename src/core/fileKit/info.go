@@ -17,9 +17,6 @@ var (
 	*/
 	Stat func(path string) (os.FileInfo, error) = gfile.Stat
 
-	IsReadable func(path string) bool = gfile.IsReadable
-	IsWritable func(path string) bool = gfile.IsWritable
-
 	// IsEmpty checks whether the given `path` is empty.
 	/*
 		If `path` is a folder, it checks if there's any file under it.
@@ -110,17 +107,4 @@ func getDirSize(dirPath string) (int64, error) {
 		return 0, err
 	}
 	return bytes, nil
-}
-
-// GetFileMode get mode and permission bits of file/directory
-func GetFileMode(path string) (os.FileMode, error) {
-	if err := AssertExist(path); err != nil {
-		return 0, err
-	}
-
-	fileInfo, err := os.Stat(path)
-	if err != nil {
-		return 0, err
-	}
-	return fileInfo.Mode(), nil
 }
