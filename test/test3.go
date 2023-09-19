@@ -1,47 +1,28 @@
 package main
 
 import (
-	"fmt"
-	"gopkg.in/yaml.v3"
-	"os"
+	"github.com/richelieu-yang/chimera/v2/src/core/fileKit"
+	"syscall"
 )
 
-func main() {
-	// 读取 YAML 文件
-	file, err := os.Open("example.yaml")
-	if err != nil {
-		panic(err)
+// HaveReadWriteAccess 当前用户对指定文件是否有 读写权限 ?
+func HaveReadWriteAccess(path string) error {
+	if err := fileKit.AssertExist(path); err != nil {
+		return err
 	}
-	defer file.Close()
+	return syscall.Access(path, syscall.O_RDWR)
+}
 
-	// 解析 YAML 文件
-	var data map[string]interface{}
-	decoder := yaml.NewDecoder(file)
-	err = decoder.Decode(&data)
-	if err != nil {
-		panic(err)
+func HaveWriteAccess(path string) error {
+	if err := fileKit.AssertExist(path); err != nil {
+		return err
 	}
+	return syscall.Access(path, syscall.O_WRONLY)
+}
 
-	// 修改数据
-	data["name"] = "new-name"
-
-	// 将数据转换为 YAML 字符串
-	yamlBytes, err := yaml.Marshal(data)
-	if err != nil {
-		panic(err)
+func HaveReadAccess(path string) error {
+	if err := fileKit.AssertExist(path); err != nil {
+		return err
 	}
-
-	// 将 YAML 字符串写入文件
-	file, err = os.Create("example.yaml")
-	if err != nil {
-		panic(err)
-	}
-	defer file.Close()
-
-	_, err = file.Write(yamlBytes)
-	if err != nil {
-		panic(err)
-	}
-
-	fmt.Println("文件已保存")
+	return syscall.Access(path, syscall.O_RDONLY)
 }
