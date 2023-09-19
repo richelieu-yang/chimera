@@ -13,7 +13,7 @@ func TestProxy(t *testing.T) {
 		err := Proxy(ctx.Writer, ctx.Request, "127.0.0.1:8888")
 		if err != nil {
 			if IsProxyDialError(err) {
-				ctx.String(http.StatusOK, "proxy dial error")
+				ctx.String(520, "proxy dial error")
 				return
 			}
 
