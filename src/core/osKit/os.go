@@ -1,6 +1,7 @@
 package osKit
 
 import (
+	"github.com/dablelv/cyan/os"
 	"runtime"
 	"strconv"
 )
@@ -24,14 +25,10 @@ func init() {
 	BITS = strconv.IntSize
 }
 
-func IsWindows() bool {
-	return OS == `windows`
-}
+var (
+	IsWin func() bool = os.IsWin
 
-func IsMac() bool {
-	return OS == `darwin`
-}
+	IsLinux func() bool = os.IsLinux
 
-func IsLinux() bool {
-	return OS == `linux`
-}
+	IsMac func() bool = os.IsMac
+)
