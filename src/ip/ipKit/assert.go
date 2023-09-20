@@ -1,9 +1,9 @@
 package ipKit
 
 import (
-	"github.com/go-playground/validator/v10"
 	"github.com/richelieu-yang/chimera/v2/src/core/errorKit"
 	"github.com/richelieu-yang/chimera/v2/src/funcKit"
+	"github.com/richelieu-yang/chimera/v2/src/validateKit"
 )
 
 // AssertIPv4
@@ -15,10 +15,8 @@ e.g.
 	("::1")	 			=> test/test1.go:12|main [Assertion failed] ipv4(::1) is invalid(Key: '' Error:Field validation for '' failed on the 'ipv4' tag)
 */
 func AssertIPv4(ipv4 string) error {
-	validate := validator.New()
-	err := validate.Var(ipv4, "required,ipv4")
-	if err != nil {
-		return errorKit.NewSkip(1, "[%s] ipv4(%s) is invalid with error(%s)", funcKit.GetFuncName(1), ipv4, err.Error())
+	if err := validateKit.IPv4(ipv4); err != nil {
+		return errorKit.NewSkip(1, "[%s] ipv4(%s) is invalid because of error(%s)", funcKit.GetFuncName(1), ipv4, err.Error())
 	}
 	return nil
 }

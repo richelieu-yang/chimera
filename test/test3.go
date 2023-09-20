@@ -1,10 +1,11 @@
 package main
 
-import (
-	"github.com/go-playground/validator/v10"
-)
+import "github.com/richelieu-yang/chimera/v2/src/ip/ipKit"
 
 func main() {
-	v := validator.New()
+	ip := "127.001"
 
+	if err := ipKit.AssertIPv4(ip); err != nil {
+		panic(err)
+	}
 }
