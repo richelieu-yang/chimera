@@ -34,3 +34,19 @@ func TestNewPool(t *testing.T) {
 		time.Sleep(time.Millisecond * 100)
 	}
 }
+
+func TestNewPool1(t *testing.T) {
+	pool, err := NewPool(1)
+	if err != nil {
+		logrus.WithError(err).Fatal("0")
+	}
+
+	err = pool.Submit(func() {
+		panic(111)
+	})
+	if err != nil {
+		logrus.WithError(err).Fatal("1")
+	}
+
+	time.Sleep(time.Second * 3)
+}
