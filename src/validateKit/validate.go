@@ -21,8 +21,8 @@ func New(tagNameArgs ...string) *validator.Validate {
 	return v
 }
 
-// ValidateField 验证字段.
-func ValidateField(field interface{}, tag string) error {
+// Field 验证字段.
+func Field(field interface{}, tag string) error {
 	v := New()
 	return v.Var(field, tag)
 }
@@ -33,10 +33,11 @@ func ValidateField(field interface{}, tag string) error {
 		fmt.Println(validateKit.Required(""))    // Key: '' Error:Field validation for '' failed on the 'required' tag
 		fmt.Println(validateKit.Required(nil))   // Key: '' Error:Field validation for '' failed on the 'required' tag
 		fmt.Println(validateKit.Required("aaa")) // <nil>
+		fmt.Println(validateKit.Required(0))     // Key: '' Error:Field validation for '' failed on the 'required' tag
 		fmt.Println(validateKit.Required(1))     // <nil>
 */
 func Required(field interface{}) error {
-	return ValidateField(field, "required")
+	return Field(field, "required")
 }
 
 // IP
@@ -47,15 +48,15 @@ func Required(field interface{}) error {
 		fmt.Println(validateKit.IP("127.001"))   // Key: '' Error:Field validation for '' failed on the 'ip' tag
 */
 func IP(field interface{}) error {
-	return ValidateField(field, "ip")
+	return Field(field, "ip")
 }
 
 func IPv4(field interface{}) error {
-	return ValidateField(field, "ipv4")
+	return Field(field, "ipv4")
 }
 
 func Email(field interface{}) error {
-	return ValidateField(field, "email")
+	return Field(field, "email")
 }
 
 // HttpUrl
@@ -69,7 +70,7 @@ func Email(field interface{}) error {
 		fmt.Println(validateKit.HttpUrl("ftp://github.com/go-playground/validator"))   // Key: '' Error:Field validation for '' failed on the 'http_url' tag
 */
 func HttpUrl(field interface{}) error {
-	return ValidateField(field, "http_url")
+	return Field(field, "http_url")
 }
 
 // Json 字符串值是否为有效的JSON.
@@ -81,7 +82,7 @@ func HttpUrl(field interface{}) error {
 		fmt.Println(validateKit.Json("[}")) // Key: '' Error:Field validation for '' failed on the 'json' tag
 */
 func Json(field interface{}) error {
-	return ValidateField(field, "json")
+	return Field(field, "json")
 }
 
 // File 字符串值是否包含有效的文件路径，以及该文件是否存在于计算机上.
@@ -103,5 +104,5 @@ func Json(field interface{}) error {
 		fmt.Println(validateKit.File("chimera-lib\\config.yaml")) // Key: '' Error:Field validation for '' failed on the 'file' tag
 */
 func File(field interface{}) error {
-	return ValidateField(field, "file")
+	return Field(field, "file")
 }

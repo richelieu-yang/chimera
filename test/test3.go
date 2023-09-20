@@ -6,16 +6,9 @@ import (
 )
 
 func main() {
-	fmt.Println(validateKit.File("")) // Key: '' Error:Field validation for '' failed on the 'file' tag
-
-	// 目录存在
-	fmt.Println(validateKit.File("chimera-lib"))                                         // Key: '' Error:Field validation for '' failed on the 'file' tag
-	fmt.Println(validateKit.File("/Users/richelieu/GolandProjects/chimera/chimera-lib")) // Key: '' Error:Field validation for '' failed on the 'file' tag
-	// 文件存在
-	fmt.Println(validateKit.File("chimera-lib/config.yaml"))                                         // <nil>
-	fmt.Println(validateKit.File("/Users/richelieu/GolandProjects/chimera/chimera-lib/config.yaml")) // <nil>
-	// 文件不存在
-	fmt.Println(validateKit.File("/Users/richelieu/GolandProjects/chimera/chimera-lib/config111.yaml")) // Key: '' Error:Field validation for '' failed on the 'file' tag
-	// 无效的文件路径
-	fmt.Println(validateKit.File("chimera-lib\\config.yaml")) // Key: '' Error:Field validation for '' failed on the 'file' tag
+	fmt.Println(validateKit.Required(""))    // Key: '' Error:Field validation for '' failed on the 'required' tag
+	fmt.Println(validateKit.Required(nil))   // Key: '' Error:Field validation for '' failed on the 'required' tag
+	fmt.Println(validateKit.Required("aaa")) // <nil>
+	fmt.Println(validateKit.Required(0))     // Key: '' Error:Field validation for '' failed on the 'required' tag
+	fmt.Println(validateKit.Required(1))     // <nil>
 }
