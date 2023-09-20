@@ -83,6 +83,7 @@ func StopCron(c *cron.Cron) {
 	if c == nil {
 		return
 	}
+
 	ctx := c.Stop()
 	// 如果存在正在执行的任务，会阻塞直到它完成
 	select {
