@@ -27,6 +27,29 @@ func ValidateField(field interface{}, tag string) error {
 	return v.Var(field, tag)
 }
 
+// Required
+/*
+	e.g.
+	fmt.Println(validateKit.Required(""))    // Key: '' Error:Field validation for '' failed on the 'required' tag
+	fmt.Println(validateKit.Required(nil))   // Key: '' Error:Field validation for '' failed on the 'required' tag
+	fmt.Println(validateKit.Required("aaa")) // <nil>
+	fmt.Println(validateKit.Required(1))     // <nil>
+*/
+func Required(field interface{}) error {
+	return ValidateField(field, "required")
+}
+
+// IP
+/*
+	e.g.
+	fmt.Println(validateKit.IP(""))          // Key: '' Error:Field validation for '' failed on the 'ip' tag
+	fmt.Println(validateKit.IP("127.0.0.1")) // <nil>
+	fmt.Println(validateKit.IP("127.001"))   // Key: '' Error:Field validation for '' failed on the 'ip' tag
+*/
+func IP(field interface{}) error {
+	return ValidateField(field, "ip")
+}
+
 func IPv4(field interface{}) error {
 	return ValidateField(field, "ipv4")
 }
@@ -35,6 +58,14 @@ func Email(field interface{}) error {
 	return ValidateField(field, "email")
 }
 
+// HttpUrl
+/*
+	e.g.
+	fmt.Println(validateKit.HttpUrl(""))                                           // Key: '' Error:Field validation for '' failed on the 'http_url' tag
+	fmt.Println(validateKit.HttpUrl("https://github.com/go-playground/validator")) // <nil>
+	fmt.Println(validateKit.HttpUrl("http://github.com/go-playground/validator"))  // <nil>
+	fmt.Println(validateKit.HttpUrl("ftp://github.com/go-playground/validator"))   // Key: '' Error:Field validation for '' failed on the 'http_url' tag
+*/
 func HttpUrl(field interface{}) error {
 	return ValidateField(field, "http_url")
 }

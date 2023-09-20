@@ -1,11 +1,12 @@
 package main
 
-import "github.com/richelieu-yang/chimera/v2/src/ip/ipKit"
+import (
+	"fmt"
+	"github.com/richelieu-yang/chimera/v2/src/validateKit"
+)
 
 func main() {
-	ip := "127.001"
-
-	if err := ipKit.AssertIPv4(ip); err != nil {
-		panic(err)
-	}
+	fmt.Println(validateKit.IP(""))          // Key: '' Error:Field validation for '' failed on the 'ip' tag
+	fmt.Println(validateKit.IP("127.0.0.1")) // <nil>
+	fmt.Println(validateKit.IP("127.001"))   // Key: '' Error:Field validation for '' failed on the 'ip' tag
 }
