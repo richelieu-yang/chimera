@@ -44,6 +44,7 @@ require (
 	github.com/nacos-group/nacos-sdk-go v1.1.4
 	github.com/natefinch/lumberjack/v3 v3.0.0-alpha
 	github.com/oklog/ulid/v2 v2.1.0
+	github.com/panjf2000/ants/v2 v2.8.2
 	github.com/redis/go-redis/v9 v9.1.0
 	github.com/robfig/cron/v3 v3.0.1
 	github.com/samber/lo v1.38.1
