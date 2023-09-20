@@ -1,8 +1,10 @@
 ## Go几种读取配置文件的方式
 https://mp.weixin.qq.com/s/LCbA4r8euBzHIUJjGBBxFg
-#### viper
+#### spf13/viper
     https://github.com/spf13/viper
-#### configor
+#### jinzhu/configor（最后更新时间: 2020/11/18）
     https://github.com/jinzhu/configor
+
+
 
 
