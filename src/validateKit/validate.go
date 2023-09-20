@@ -6,6 +6,10 @@ import (
 	"github.com/richelieu-yang/chimera/v2/src/core/strKit"
 )
 
+// New
+/*
+@param tagNameArgs 不传参的话，将采用默认的tag name（"validate"）
+*/
 func New(tagNameArgs ...string) *validator.Validate {
 	v := validator.New(validator.WithRequiredStructEnabled())
 
@@ -15,6 +19,12 @@ func New(tagNameArgs ...string) *validator.Validate {
 	}
 
 	return v
+}
+
+// ValidateField 验证字段.
+func ValidateField(field interface{}, tag string) error {
+	v := New()
+	return v.Var(field, tag)
 }
 
 func IPv4(field interface{}) error {
