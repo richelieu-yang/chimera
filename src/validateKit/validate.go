@@ -27,7 +27,7 @@ func Field(field interface{}, tag string) error {
 	return v.Var(field, tag)
 }
 
-// Required
+// Required 必填，非零值（zero value）
 /*
 	e.g.
 		fmt.Println(validateKit.Required(""))    // Key: '' Error:Field validation for '' failed on the 'required' tag
