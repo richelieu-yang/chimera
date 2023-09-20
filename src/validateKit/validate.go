@@ -16,3 +16,8 @@ func New(tagNameArgs ...string) *validator.Validate {
 
 	return v
 }
+
+func ValidateIPv4(field interface{}) error {
+	v := New()
+	return v.Var(field, "ipv4")
+}
