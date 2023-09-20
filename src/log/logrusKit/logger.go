@@ -101,5 +101,6 @@ func DisposeLogger(logger *logrus.Logger) error {
 	if logger == nil {
 		return nil
 	}
+
 	return ioKit.TryToClose(logger.Out)
 }
