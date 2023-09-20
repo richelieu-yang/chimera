@@ -6,14 +6,13 @@ import (
 	"github.com/richelieu-yang/chimera/v2/src/validateKit"
 )
 
-// AssertIPv4
-/*
-e.g.
-	("192.168.9.254")	=> nil
-	("127.0.0.1")	 	=> nil
-	("localhost")	 	=> test/test1.go:11|main [Assertion failed] ipv4(localhost) is invalid(Key: '' Error:Field validation for '' failed on the 'ipv4' tag)
-	("::1")	 			=> test/test1.go:12|main [Assertion failed] ipv4(::1) is invalid(Key: '' Error:Field validation for '' failed on the 'ipv4' tag)
-*/
+func AssertIP(ip string) error {
+	if err := validateKit.IP(ip); err != nil {
+		return errorKit.NewSkip(1, "[%s] ip(%s) is invalid because of error(%s)", funcKit.GetFuncName(1), ip, err.Error())
+	}
+	return nil
+}
+
 func AssertIPv4(ipv4 string) error {
 	if err := validateKit.IPv4(ipv4); err != nil {
 		return errorKit.NewSkip(1, "[%s] ipv4(%s) is invalid because of error(%s)", funcKit.GetFuncName(1), ipv4, err.Error())

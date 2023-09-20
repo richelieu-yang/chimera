@@ -71,3 +71,15 @@ func Email(field interface{}) error {
 func HttpUrl(field interface{}) error {
 	return ValidateField(field, "http_url")
 }
+
+// Json
+/*
+	e.g.
+		fmt.Println(validateKit.Json(""))   // Key: '' Error:Field validation for '' failed on the 'json' tag
+		fmt.Println(validateKit.Json("[]")) // <nil>
+		fmt.Println(validateKit.Json("{}")) // <nil>
+		fmt.Println(validateKit.Json("[}")) // Key: '' Error:Field validation for '' failed on the 'json' tag
+*/
+func Json(field interface{}) error {
+	return ValidateField(field, "json")
+}
