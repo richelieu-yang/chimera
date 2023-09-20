@@ -9,6 +9,8 @@ import (
 
 // MustLoad 读取配置文件并反序列化为 指定结构体指针ptr
 /*
+使用 go-zero/core/conf 的缺陷: 不能自动将string类型转换为int类型，会直接返回error.
+
 PS:
 (1) default对应的是 该行被注释掉（而非值为空） 的情况;
 (2) default和 '|' 一起使用;
