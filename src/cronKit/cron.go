@@ -12,8 +12,8 @@ import (
 !!!:
 (1) 想要通过修改机器时间来验证的话，需要先改时间，再启动cron.
 (2) 返回的 *cron.Cron实例 要调用 Run() || Start() 以启动
-	Run()	会阻塞 调用此方法的goroutine，
-	Start()	不会阻塞 调用此方法的goroutine
+	(a) Run()	会阻塞 调用此方法的goroutine，
+	(b) Start()	不会阻塞 调用此方法的goroutine
 
 定时任务-表达式
 	https://goframe.org/pages/viewpage.action?pageId=30736411
@@ -71,4 +71,21 @@ func NewCronWithJob(spec string, job cron.Job) (*cron.Cron, cron.EntryID, error)
 		return nil, 0, err
 	}
 	return c, entryId, nil
+}
+
+// StopCron
+/*
+!!!:
+(1) 调用此函数可能会 阻塞 调用的goroutine.
+(2) 可以多次调用 Cron.Stop()，虽然只有第一次有意义，但至少不会panic
+*/
+func StopCron(c *cron.Cron) {
+	if c == nil {
+		return
+	}
+	ctx := c.Stop()
+	// 如果存在正在执行的任务，会阻塞直到它完成
+	select {
+	case <-ctx.Done():
+	}
 }
