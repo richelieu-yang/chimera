@@ -28,16 +28,13 @@ func ValidateField(field interface{}, tag string) error {
 }
 
 func IPv4(field interface{}) error {
-	v := New()
-	return v.Var(field, "ipv4")
+	return ValidateField(field, "ipv4")
 }
 
 func Email(field interface{}) error {
-	v := New()
-	return v.Var(field, "email")
+	return ValidateField(field, "email")
 }
 
 func HttpUrl(field interface{}) error {
-	v := New()
-	return v.Var(field, "http_url")
+	return ValidateField(field, "http_url")
 }
