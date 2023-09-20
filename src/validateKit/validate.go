@@ -72,7 +72,7 @@ func HttpUrl(field interface{}) error {
 	return ValidateField(field, "http_url")
 }
 
-// Json
+// Json 字符串值是否为有效的JSON.
 /*
 	e.g.
 		fmt.Println(validateKit.Json(""))   // Key: '' Error:Field validation for '' failed on the 'json' tag
@@ -82,4 +82,26 @@ func HttpUrl(field interface{}) error {
 */
 func Json(field interface{}) error {
 	return ValidateField(field, "json")
+}
+
+// File 字符串值是否包含有效的文件路径，以及该文件是否存在于计算机上.
+/*
+	PS: 传参对应的应当是"文件"，是"目录"的话会返回error.
+
+	e.g.
+		fmt.Println(validateKit.File("")) // Key: '' Error:Field validation for '' failed on the 'file' tag
+
+		// 目录存在
+		fmt.Println(validateKit.File("chimera-lib"))                                         // Key: '' Error:Field validation for '' failed on the 'file' tag
+		fmt.Println(validateKit.File("/Users/richelieu/GolandProjects/chimera/chimera-lib")) // Key: '' Error:Field validation for '' failed on the 'file' tag
+		// 文件存在
+		fmt.Println(validateKit.File("chimera-lib/config.yaml"))                                         // <nil>
+		fmt.Println(validateKit.File("/Users/richelieu/GolandProjects/chimera/chimera-lib/config.yaml")) // <nil>
+		// 文件不存在
+		fmt.Println(validateKit.File("/Users/richelieu/GolandProjects/chimera/chimera-lib/config111.yaml")) // Key: '' Error:Field validation for '' failed on the 'file' tag
+		// 无效的文件路径
+		fmt.Println(validateKit.File("chimera-lib\\config.yaml")) // Key: '' Error:Field validation for '' failed on the 'file' tag
+*/
+func File(field interface{}) error {
+	return ValidateField(field, "file")
 }
