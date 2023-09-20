@@ -7,23 +7,30 @@ import (
 )
 
 type bean struct {
-	Name string `json:"name,default=cyy"`
+	Age int `json:"age"`
 }
 
 func main() {
-	jsonStr := "{}"
-	b := &bean{}
-
-	if err := confKit.LoadFromJsonText(jsonStr, b); err != nil {
+	m := map[string]interface{}{
+		"age": "11111",
+	}
+	jsonStr, err := jsonKit.MarshalToString(m)
+	if err != nil {
 		panic(err)
 	}
 
-	//if err := jsonKit.UnmarshalFromString(jsonStr, b); err != nil {
+	b := &bean{}
+	//if err := confKit.LoadFromJsonText(jsonStr, b); err != nil {
 	//	panic(err)
 	//}
-	//if err := confKit.ReadAs([]byte(jsonStr), "json", nil, b); err != nil {
-	//	panic(err)
-	//}
+
+	if err := jsonKit.UnmarshalFromString(jsonStr, b); err != nil {
+		panic(err)
+	}
+
+	if err := confKit.ReadAs([]byte(jsonStr), "json", nil, b); err != nil {
+		panic(err)
+	}
 
 	fmt.Println(jsonKit.MarshalIndentToString(b, "", "    "))
 
