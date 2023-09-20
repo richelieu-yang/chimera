@@ -21,3 +21,13 @@ func IPv4(field interface{}) error {
 	v := New()
 	return v.Var(field, "ipv4")
 }
+
+func Email(field interface{}) error {
+	v := New()
+	return v.Var(field, "email")
+}
+
+func HttpUrl(field interface{}) error {
+	v := New()
+	return v.Var(field, "http_url")
+}
