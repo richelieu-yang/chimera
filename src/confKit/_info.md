@@ -6,7 +6,7 @@ https://mp.weixin.qq.com/s/LCbA4r8euBzHIUJjGBBxFg
     https://github.com/jinzhu/configor
 
 ## spf13/viper VS go-zero conf VS json-iterator/go
-从json字符串反序列化为结构体实例（某些值应当为int类型，但json中的确实string类型）
+json字符串 反序列化为 结构体实例（某些值应当为int类型，但json中的却是string类型）
 (a) spf13/viper:        反序列化成功（但spf13/viper不支持通过json tag设置默认值）.    
 (b) go-zero conf:       反序列化直接返回error.
 (c) json-iterator/go:   反序列化直接返回error.
