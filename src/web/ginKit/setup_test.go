@@ -8,7 +8,6 @@ import (
 	"github.com/sirupsen/logrus"
 	"net/http"
 	"testing"
-	"time"
 )
 
 func TestMustSetUp(t *testing.T) {
@@ -33,10 +32,10 @@ func TestMustSetUp(t *testing.T) {
 			//	return
 			//}
 
-			ctx.Bind()
-			ctx.ShouldBind()
-
-			time.Sleep(time.Second * 3)
+			//ctx.Bind()
+			//ctx.ShouldBind()
+			//
+			//time.Sleep(time.Second * 3)
 
 			ctx.String(http.StatusOK, "hello")
 		})
