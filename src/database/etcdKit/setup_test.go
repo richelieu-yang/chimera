@@ -14,7 +14,7 @@ func TestMustSetUp(t *testing.T) {
 	if osKit.IsWindows() {
 		path = "D:\\GolandProjects\\chimera\\chimera-lib\\config.yaml"
 	} else {
-		path = "/Users/richelieu/GolandProjects/chimera/chimera-lib/config.yaml"
+		path = "/Users/richelieu/GolandProjects/chimera/_chimera-lib/config.yaml"
 	}
 
 	type config struct {

@@ -28,7 +28,7 @@ func TestNewProducer(t *testing.T) {
 		RocketMQ5 *Config `json:"rocketmq5,optional"`
 	}
 	c := &config{}
-	confKit.MustLoad("chimera-lib/config.yaml", c)
+	confKit.MustLoad("_chimera-lib/config.yaml", c)
 	c.RocketMQ5.ClientLogPath = "producer.log"
 	MustSetUp(c.RocketMQ5)
 

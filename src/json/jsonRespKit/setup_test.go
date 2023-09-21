@@ -26,7 +26,7 @@ func TestMustSetUp(t *testing.T) {
 		}
 	}
 
-	MustSetUp(provider, WithFilePathSlice([]string{"chimera-lib/msg.properties"}))
+	MustSetUp(provider, WithFilePathSlice([]string{"_chimera-lib/msg.properties"}))
 
 	fmt.Println(Seal("0", nil))
 	fmt.Println(Seal("42", 666, "tester"))

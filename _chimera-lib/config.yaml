@@ -52,9 +52,9 @@ gin:
     # 是否配置ssl？
     access: false
     # 证书文件(建议".pem")
-    certFile: /Users/richelieu/GolandProjects/chimera/chimera-lib/ssl.pem
+    certFile: /Users/richelieu/GolandProjects/chimera/_chimera-lib/ssl.pem
     # key文件(".key")
-    keyFile: /Users/richelieu/GolandProjects/chimera/chimera-lib/ssl.key
+    keyFile: /Users/richelieu/GolandProjects/chimera/_chimera-lib/ssl.key
 
 redis:
   userName:

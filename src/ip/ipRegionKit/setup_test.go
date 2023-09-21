@@ -15,7 +15,7 @@ func TestGetRegion(t *testing.T) {
 	}
 	logrus.Infof("wd: [%s].", wd)
 
-	xdbPath := "chimera-lib/ip2region.xdb"
+	xdbPath := "_chimera-lib/ip2region.xdb"
 	MustSetUp(xdbPath)
 
 	//ip := "10.0.9.141"

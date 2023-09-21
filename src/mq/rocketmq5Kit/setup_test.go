@@ -20,6 +20,6 @@ func TestMustSetUp(t *testing.T) {
 	}
 
 	c := &config{}
-	confKit.MustLoad("chimera-lib/config.yaml", c)
+	confKit.MustLoad("_chimera-lib/config.yaml", c)
 	fmt.Println(c)
 }

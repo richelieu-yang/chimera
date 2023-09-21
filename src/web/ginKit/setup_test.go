@@ -23,7 +23,7 @@ func TestMustSetUp(t *testing.T) {
 	logrus.Infof("wd: [%s].", wd)
 
 	c := &config{}
-	path := "chimera-lib/config.yaml"
+	path := "_chimera-lib/config.yaml"
 	confKit.MustLoad(path, c)
 
 	MustSetUp(c.Gin, nil, func(engine *gin.Engine) error {

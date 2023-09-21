@@ -29,7 +29,7 @@ func TestClient_SubscribeAndPublish(t *testing.T) {
 		Redis Config `json:"redis"`
 	}
 	c := &config{}
-	path := "chimera-lib/config.yaml"
+	path := "_chimera-lib/config.yaml"
 	confKit.MustLoad(path, c)
 	MustSetUp(c.Redis)
 	client, err := GetClient()
@@ -107,7 +107,7 @@ func TestClient_SubscribeAndPublish1(t *testing.T) {
 		Redis Config `json:"redis"`
 	}
 	c := &config{}
-	path := "chimera-lib/config.yaml"
+	path := "_chimera-lib/config.yaml"
 	confKit.MustLoad(path, c)
 	MustSetUp(c.Redis)
 	client, err := GetClient()
