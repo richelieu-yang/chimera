@@ -13,15 +13,15 @@ var config *Config
 /*
 @param tmpDirPath 用于存放生成日志文件的临时目录（可以为空字符串，此时将采用默认值: 系统临时目录）
 */
-func MustSetUp(config Config, tmpDirPath string) {
-	err := SetUp(config, tmpDirPath)
+func MustSetUp(config Config) {
+	err := SetUp(config)
 	if err != nil {
 		logrusKit.DisableQuote(nil)
 		logrus.Fatalf("%+v", err)
 	}
 }
 
-func SetUp(pulsarConfig Config, tmpDirPath string) (err error) {
+func SetUp(pulsarConfig Config) (err error) {
 	defer func() {
 		if err != nil {
 			config = nil
@@ -29,7 +29,7 @@ func SetUp(pulsarConfig Config, tmpDirPath string) (err error) {
 	}()
 
 	config = &pulsarConfig
-	err = verify(config.VerifyConfig, tmpDirPath)
+	err = verify(config.VerifyConfig)
 	return
 }
 

@@ -35,7 +35,7 @@ PS:
 可能失败的原因：
 （1）pulsar的进程在，但启动报错（存储空间爆了）
 */
-func verify(verifyConfig VerifyConfig, tmpDirPath string) (err error) {
+func verify(verifyConfig VerifyConfig) (err error) {
 	if strKit.IsBlank(verifyConfig.Topic) {
 		// 不验证
 		return nil
@@ -44,15 +44,10 @@ func verify(verifyConfig VerifyConfig, tmpDirPath string) (err error) {
 	ulid := idKit.NewULID()
 	topic := verifyConfig.Topic
 
-	if strKit.IsEmpty(tmpDirPath) {
-		tmpDirPath, err = pathKit.GetUniqueTempDir()
-		if err != nil {
-			return err
-		}
-	} else {
-		if err := fileKit.AssertExistAndIsDir(tmpDirPath); err != nil {
-			return err
-		}
+	// 对应客户端日志s生成在 临时目录 下
+	tmpDirPath, err := pathKit.GetTempDir()
+	if err != nil {
+		return err
 	}
 	timeStr := timeKit.FormatCurrent(timeKit.FormatFileName)
 	consumerLogPath := pathKit.Join(tmpDirPath, fmt.Sprintf("pulsar_verify_consumer_%s_%s.log", timeStr, ulid))

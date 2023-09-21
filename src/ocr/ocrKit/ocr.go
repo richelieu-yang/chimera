@@ -44,7 +44,7 @@ func GetText(imgPath string, languages ...string) (string, error) {
 		return "", err
 	}
 
-	tempDir, err := pathKit.GetUniqueTempDir()
+	tempDir, err := pathKit.GetTempDir()
 	if err != nil {
 		return "", err
 	}

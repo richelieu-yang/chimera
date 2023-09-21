@@ -61,7 +61,7 @@ func AttachDefaultNoRoute(engine IEngine) error {
 	relPath := "resources/html/404.html"
 
 	/* 将内置的404页面解压到临时目录中 */
-	dir, err := pathKit.GetUniqueTempDir()
+	dir, err := pathKit.GetTempDir()
 	if err != nil {
 		return err
 	}
