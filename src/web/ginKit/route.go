@@ -10,8 +10,10 @@ import (
 	"net/http"
 )
 
-// RegisterRoute 将多个相同的处理器，注册到1个路由.
+// RegisterRoute
 /*
+适用场景: 1个路由，n个Method.
+
 @param methods nil => 接收所有类型method的请求.	e.g. http.MethodGet、http.MethodPost
 */
 func RegisterRoute(group IGroup, route string, methods []string, handlers ...gin.HandlerFunc) {
