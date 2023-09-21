@@ -40,13 +40,13 @@ func RegisterRoutes(group IGroup, routes []string, methods []string, handlers ..
 	}
 }
 
-func AttachDefaultFavicon(group IGroup) error {
+func AttachDefaultFavicon(engine *gin.Engine) error {
 	iconData, err := resources.Asset("_resources/icon/favicon.ico")
 	if err != nil {
 		return err
 	}
 
-	group.Any("/favicon.ico", func(ctx *gin.Context) {
+	engine.GET("/favicon.ico", func(ctx *gin.Context) {
 		RespondIcon(ctx, http.StatusOK, iconData)
 	})
 	return nil
