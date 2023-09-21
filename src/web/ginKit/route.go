@@ -39,7 +39,7 @@ func RegisterRoutes(group IGroup, routes []string, methods []string, handlers ..
 	}
 }
 
-func FaviconByDefault(group IGroup) error {
+func AttachDefaultFavicon(group IGroup) error {
 	iconData, err := resources.Asset("resources/icon/favicon.ico")
 	if err != nil {
 		return err
@@ -56,8 +56,8 @@ func NoRoute(engine IEngine, handlers ...gin.HandlerFunc) {
 	engine.NoRoute(handlers...)
 }
 
-// NoRouteByDefault 使用自带的404页面
-func NoRouteByDefault(engine IEngine) error {
+// AttachDefaultNoRoute 使用自带的404页面.
+func AttachDefaultNoRoute(engine IEngine) error {
 	relPath := "resources/html/404.html"
 
 	/* 将内置的404页面解压到临时目录中 */

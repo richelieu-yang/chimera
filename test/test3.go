@@ -1,20 +1,25 @@
 package main
 
 import (
-	"fmt"
-	"github.com/richelieu-yang/chimera/v2/src/validateKit"
+	"github.com/gin-gonic/gin"
+	"github.com/richelieu-yang/chimera/v2/src/core/fileKit"
+	"github.com/richelieu-yang/chimera/v2/src/resources"
+	"net/http"
 )
 
 func main() {
-	if err := validateKit.Field("3.14", "numeric"); err != nil {
-		fmt.Println(err.Error())
-	} else {
-		fmt.Println("ok")
-	}
+	engine := gin.Default()
 
-	//if err := validateKit.Field(0, "required,min=-1,max=100"); err != nil {
-	//	fmt.Println(err.Error()) // Key: '' Error:Field validation for '' failed on the 'required' tag
-	//} else {
-	//	fmt.Println("ok")
-	//}
+	fs := resources.AssetFile()
+	engine.StaticFS("/s", fs)
+
+	engine.NoRoute(func(ctx *gin.Context) {
+		ctx.HTML(http.StatusNotFound, fileKit.GetFileName("404.html"), gin.H{
+			"urlPath": ctx.Request.URL.Path,
+		})
+	})
+
+	if err := engine.Run(":80"); err != nil {
+		panic(err)
+	}
 }

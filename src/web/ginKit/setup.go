@@ -68,6 +68,16 @@ func setUp(config Config, recoveryMiddleware gin.HandlerFunc, businessLogic func
 		return err
 	}
 
+	// favicon
+	if err := AttachDefaultFavicon(engine); err != nil {
+		return err
+	}
+
+	// 404
+	if err := AttachDefaultNoRoute(engine); err != nil {
+		return err
+	}
+
 	if businessLogic != nil {
 		if err := businessLogic(engine); err != nil {
 			return errorKit.Wrap(err, "fail to execute businessLogic()")
