@@ -63,7 +63,7 @@ PS: 会在临时目录下生成文件，注意不要删掉他们!!!
 */
 func AttachDefaultNoRoute(engine IEngine) error {
 	/* 将内置的404页面解压到 临时目录 中 */
-	relativePath := "resources/html/404.html"
+	relativePath := "_resources/html/404.html"
 	tempDir, err := pathKit.GetTempDir()
 	if err != nil {
 		return err
