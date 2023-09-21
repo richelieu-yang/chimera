@@ -4,9 +4,10 @@ package ginKit
 
 import (
 	"github.com/gin-gonic/gin"
+	"github.com/richelieu-yang/chimera/v2/internal/resources"
 	"github.com/richelieu-yang/chimera/v2/src/core/fileKit"
 	"github.com/richelieu-yang/chimera/v2/src/core/pathKit"
-	"github.com/richelieu-yang/chimera/v2/src/resources"
+	"github.com/richelieu-yang/chimera/v2/src/web/httpKit"
 	"net/http"
 )
 
@@ -40,7 +41,7 @@ func RegisterRoutes(group IGroup, routes []string, methods []string, handlers ..
 }
 
 func AttachDefaultFavicon(group IGroup) error {
-	iconData, err := resources.Asset("resources/icon/favicon.ico")
+	iconData, err := resources.Asset("_resources/icon/favicon.ico")
 	if err != nil {
 		return err
 	}
@@ -57,24 +58,28 @@ func NoRoute(engine IEngine, handlers ...gin.HandlerFunc) {
 }
 
 // AttachDefaultNoRoute 使用自带的404页面.
+/*
+PS: 会在临时目录下生成文件，注意不要删掉他们!!!
+*/
 func AttachDefaultNoRoute(engine IEngine) error {
-	relPath := "resources/html/404.html"
-
-	/* 将内置的404页面解压到临时目录中 */
-	dir, err := pathKit.GetTempDir()
+	/* 将内置的404页面解压到 临时目录 中 */
+	relativePath := "resources/html/404.html"
+	tempDir, err := pathKit.GetTempDir()
 	if err != nil {
 		return err
 	}
-	err = resources.RestoreAsset(dir, relPath)
+	err = resources.RestoreAsset(tempDir, relativePath)
 	if err != nil {
 		return err
 	}
 
-	htmlPath := pathKit.Join(dir, relPath)
+	/* 加载解压出的html页面 */
+	htmlPath := pathKit.Join(tempDir, relativePath)
 	engine.LoadHTMLFiles(htmlPath)
+
 	NoRoute(engine, func(ctx *gin.Context) {
 		ctx.HTML(http.StatusNotFound, fileKit.GetFileName(htmlPath), gin.H{
-			"urlPath": ctx.Request.URL.Path,
+			"route": httpKit.GetRoute(ctx.Request),
 		})
 	})
 
