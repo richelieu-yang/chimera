@@ -1,7 +1,4 @@
-// Package consts
-/*
-本库的全局常量.
-*/
+// Package consts 本库的全局常量.
 package consts
 
 const (
