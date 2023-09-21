@@ -7,7 +7,15 @@ import (
 	"os"
 )
 
-// MkDirs 为目录路径，创建（一级或多级）目录.
+func MkDirs(dirPaths ...string) error {
+	return MkDirsWithPerm(os.ModePerm, dirPaths...)
+}
+
+func MkParentDirs(paths ...string) error {
+	return MkParentDirsWithPerm(os.ModePerm, paths...)
+}
+
+// MkDirsWithPerm 为目录路径，创建（一级或多级）目录.
 /*
 PS:
 (1) 如果目录已经存在，将返回nil；
@@ -25,7 +33,7 @@ e.g.1 Mac
 (".")					=>	nil（什么都不会做）
 ("./")					=>	nil（什么都不会做）
 */
-func MkDirs(dirPaths ...string) error {
+func MkDirsWithPerm(perm os.FileMode, dirPaths ...string) error {
 	for _, dirPath := range dirPaths {
 		// os.MkdirAll() 的第一个传参
 		// (1) 如果为""会返回error(mkdir : no such file or directory)
@@ -34,15 +42,15 @@ func MkDirs(dirPaths ...string) error {
 			continue
 		}
 
-		if err := os.MkdirAll(dirPath, os.ModePerm); err != nil {
-			err = errorKit.Wrap(err, `fail with dirPath(%s) and perm(%d)`, dirPath, os.ModePerm)
+		if err := os.MkdirAll(dirPath, perm); err != nil {
+			err = errorKit.Wrap(err, `fail with dirPath(%s) and perm(%d)`, dirPath, perm)
 			return err
 		}
 	}
 	return nil
 }
 
-// MkParentDirs 为父路径，创建（一级或多级）目录.
+// MkParentDirsWithPerm 为父路径，创建（一级或多级）目录.
 /*
 @param filePaths （文件 || 目录）路径s（相对路径 || 绝对路径）
 
@@ -50,11 +58,11 @@ e.g.
 ("")	=> nil
 (".")	=> nil
 */
-func MkParentDirs(paths ...string) error {
+func MkParentDirsWithPerm(perm os.FileMode, paths ...string) error {
 	for _, path := range paths {
 		// Richelieu: 为防止 import cycle，不直接使用 pathKit.ParentDir
 		parentDir := gfile.Dir(path)
-		if err := MkDirs(parentDir); err != nil {
+		if err := MkDirsWithPerm(perm, parentDir); err != nil {
 			return err
 		}
 	}
