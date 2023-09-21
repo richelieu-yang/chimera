@@ -21,7 +21,8 @@ PS:
 (1) 如果目录已经存在，将返回nil；
 (2) 如果 传参dirPath 对应的是个已存在的文件，将返回error（"mkdir {xxx}: not a directory"）.
 
-@param dirPaths 目录路径s（相对路径 || 绝对路径）
+@param perm		e.g. os.ModePerm
+@param dirPaths	目录路径s（相对路径 || 绝对路径）
 
 e.g.
 ("i:/test/test.exe") 	=> 	路径没问题且目录不存在的情况下，会在i盘创建"test"、"test.exe"两个目录
@@ -52,7 +53,8 @@ func MkDirsWithPerm(perm os.FileMode, dirPaths ...string) error {
 
 // MkParentDirsWithPerm 为父路径，创建（一级或多级）目录.
 /*
-@param filePaths （文件 || 目录）路径s（相对路径 || 绝对路径）
+@param perm			e.g. os.ModePerm
+@param filePaths 	（文件 || 目录）路径s（相对路径 || 绝对路径）
 
 e.g.
 ("")	=> nil
