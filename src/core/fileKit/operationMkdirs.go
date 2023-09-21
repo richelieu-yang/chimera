@@ -35,7 +35,7 @@ func MkDirs(dirPaths ...string) error {
 		}
 
 		if err := os.MkdirAll(dirPath, os.ModePerm); err != nil {
-			err = errorKit.Wrap(err, `os.MkdirAll failed for dirPath "%s" with perm "%d"`, dirPath, os.ModePerm)
+			err = errorKit.Wrap(err, `fail with dirPath(%s) and perm(%d)`, dirPath, os.ModePerm)
 			return err
 		}
 	}
@@ -52,7 +52,7 @@ e.g.
 */
 func MkParentDirs(paths ...string) error {
 	for _, path := range paths {
-		// Richelieu: 为防止 import cycle，不直接使用 pathKit.GetParentDir()
+		// Richelieu: 为防止 import cycle，不直接使用 pathKit.ParentDir
 		parentDir := gfile.Dir(path)
 		if err := MkDirs(parentDir); err != nil {
 			return err
