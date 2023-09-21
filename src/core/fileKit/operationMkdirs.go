@@ -25,14 +25,14 @@ PS:
 @param dirPaths	目录路径s（相对路径 || 绝对路径）
 
 e.g.
-("i:/test/test.exe") 	=> 	路径没问题且目录不存在的情况下，会在i盘创建"test"、"test.exe"两个目录
-("i:/test1/test2/")		=>	路径没问题且目录不存在的情况下，会在i盘创建"test1"、"test2"两个目录
+	("i:/test/test.exe") 	=> 	路径没问题且目录不存在的情况下，会在i盘创建"test"、"test.exe"两个目录
+	("i:/test1/test2/")		=>	路径没问题且目录不存在的情况下，会在i盘创建"test1"、"test2"两个目录
 
 e.g.1 Mac
-("")					=>	nil（什么都不会做）
-("/")					=>	nil（什么都不会做）
-(".")					=>	nil（什么都不会做）
-("./")					=>	nil（什么都不会做）
+	("")					=>	nil（什么都不会做）
+	("/")					=>	nil（什么都不会做）
+	(".")					=>	nil（什么都不会做）
+	("./")					=>	nil（什么都不会做）
 */
 func MkDirsWithPerm(perm os.FileMode, dirPaths ...string) error {
 	for _, dirPath := range dirPaths {
@@ -57,8 +57,8 @@ func MkDirsWithPerm(perm os.FileMode, dirPaths ...string) error {
 @param filePaths 	（文件 || 目录）路径s（相对路径 || 绝对路径）
 
 e.g.
-("")	=> nil
-(".")	=> nil
+	("")	=> nil
+	(".")	=> nil
 */
 func MkParentDirsWithPerm(perm os.FileMode, paths ...string) error {
 	for _, path := range paths {
