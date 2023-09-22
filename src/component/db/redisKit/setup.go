@@ -26,7 +26,7 @@ func SetUp(config Config) (err error) {
 */
 func GetClient() (*Client, error) {
 	if client == nil {
-		return nil, errorKit.New("hasn't been set up")
+		return nil, errorKit.New("uninitialized component")
 	}
 	return client, nil
 }
