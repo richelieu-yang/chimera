@@ -2,6 +2,7 @@ package excelKit
 
 import (
 	"github.com/richelieu-yang/chimera/v2/src/core/fileKit"
+	"github.com/xuri/excelize/v2"
 )
 
 // NewEmptyFile 新建1个空白的Excel文件（其内只有1个空白的工作表，表名为"Sheet1"）

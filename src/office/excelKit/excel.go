@@ -17,7 +17,7 @@ func ConvertAxisToRowCol(axis string) (int, int, error) {
 	if !re.MatchString(axis) {
 		return 0, 0, errorKit.New("axis(%s) is invalid", axis)
 	}
-	var tmp [][]string = re.FindAllStringSubmatch(axis, -1)
+	var tmp = re.FindAllStringSubmatch(axis, -1)
 	if len(tmp) != 1 {
 		return 0, 0, errorKit.New("axis(%s) is invalid", axis)
 	}
