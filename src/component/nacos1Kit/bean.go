@@ -1,4 +1,4 @@
-package nacosKit
+package nacos1Kit
 
 type (
 	NacosConfig struct {

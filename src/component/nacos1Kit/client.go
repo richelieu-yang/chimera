@@ -3,7 +3,7 @@
 官方文档（英文）：https://github.com/nacos-group/nacos-sdk-go
 官方文档（中文）：https://github.com/nacos-group/nacos-sdk-go/blob/master/README_CN.md
 */
-package nacosKit
+package nacos1Kit
 
 import (
 	"github.com/nacos-group/nacos-sdk-go/clients"

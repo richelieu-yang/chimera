@@ -3,7 +3,7 @@
  * weight必须满足条件:	>= 0 && <= 10000
  * score必须满足条件: 	>= 0 && <= 100
  */
-package nacosKit
+package nacos1Kit
 
 import (
 	"github.com/richelieu-yang/chimera/v2/src/core/errorKit"

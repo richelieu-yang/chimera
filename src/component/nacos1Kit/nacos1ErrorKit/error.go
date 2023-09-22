@@ -1,4 +1,4 @@
-package nacosErrorKit
+package nacos1ErrorKit
 
 // IsInstanceListEmpty
 /**

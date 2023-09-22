@@ -6,7 +6,7 @@ api说明：
 官方demo：
 	https://github.com/nacos-group/nacos-sdk-go/blob/master/example/config/main.go
 */
-package nacosKit
+package nacos1Kit
 
 import (
 	"github.com/nacos-group/nacos-sdk-go/clients/config_client"

@@ -1,5 +1,5 @@
 // Package nacosKit
-package nacosKit
+package nacos1Kit
 
 import (
 	"github.com/nacos-group/nacos-sdk-go/clients/naming_client"

@@ -1,4 +1,4 @@
-package nacosKit
+package nacos1Kit
 
 import "github.com/richelieu-yang/chimera/v2/src/core/ptrKit"
 
