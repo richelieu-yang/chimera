@@ -2,7 +2,7 @@ package wsKit
 
 import (
 	"github.com/gorilla/websocket"
-	"github.com/richelieu-yang/chimera/v2/src/web/httpKit"
+	"github.com/richelieu-yang/chimera/v2/src/component/web/httpKit"
 	"net/http"
 )
 

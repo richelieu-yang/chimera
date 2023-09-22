@@ -1,8 +1,8 @@
 package httpClientKit
 
 import (
+	httpKit2 "github.com/richelieu-yang/chimera/v2/src/component/web/httpKit"
 	"github.com/richelieu-yang/chimera/v2/src/urlKit"
-	"github.com/richelieu-yang/chimera/v2/src/web/httpKit"
 	"io"
 	"net/http"
 	"strings"
@@ -31,7 +31,7 @@ func PostForResponse(url string, options ...Option) (*http.Response, error) {
 	opts := loadOptions(options...)
 
 	// url
-	if err := httpKit.AssertHttpUrl(url); err != nil {
+	if err := httpKit2.AssertHttpUrl(url); err != nil {
 		return nil, err
 	}
 	url, err := urlKit.PolyfillUrl(url, opts.queryParams)
@@ -40,7 +40,7 @@ func PostForResponse(url string, options ...Option) (*http.Response, error) {
 	}
 
 	// payload
-	content := httpKit.ToRequestBodyString(opts.postParams)
+	content := httpKit2.ToRequestBodyString(opts.postParams)
 	payload := strings.NewReader(content)
 
 	// req

@@ -1,9 +1,9 @@
 package ginKit
 
 import (
+	"github.com/richelieu-yang/chimera/v2/src/component/web/refererKit"
 	"github.com/richelieu-yang/chimera/v2/src/core/fileKit"
 	"github.com/richelieu-yang/chimera/v2/src/core/interfaceKit"
-	"github.com/richelieu-yang/chimera/v2/src/web/refererKit"
 )
 
 type (

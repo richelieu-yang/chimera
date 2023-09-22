@@ -1,108 +1,33 @@
 package excelKit
 
 import (
-	"fmt"
-	"github.com/richelieu-yang/chimera/v2/src/core/errorKit"
-	"regexp"
-	"strconv"
+	"github.com/richelieu-yang/chimera/v2/src/core/fileKit"
+	"github.com/xuri/excelize/v2"
+	"io"
 )
 
-// ConvertAxisToRowCol
+var NewFile func(opts ...excelize.Options) *excelize.File = excelize.NewFile
+
+var OpenFile func(filename string, opts ...excelize.Options) (*excelize.File, error) = excelize.OpenFile
+
+var OpenReader func(r io.Reader, opts ...excelize.Options) (*excelize.File, error) = excelize.OpenReader
+
+// NewEmptyFile 新建1个空白的Excel文件（其内只有1个空白的工作表，表名为"Sheet1"）
 /*
-e.g.
-("C2") =>
+@param path 文件的路径（如果文件已经存在，会覆盖它）
 */
-func ConvertAxisToRowCol(axis string) (int, int, error) {
-	re := regexp.MustCompile(`^([A-Z]+)(\d+)$`)
-	if !re.MatchString(axis) {
-		return 0, 0, errorKit.New("axis(%s) is invalid", axis)
-	}
-	var tmp = re.FindAllStringSubmatch(axis, -1)
-	if len(tmp) != 1 {
-		return 0, 0, errorKit.New("axis(%s) is invalid", axis)
-	}
-	var s []string = tmp[0]
-	if len(s) != 3 {
-		return 0, 0, errorKit.New("axis(%s) is invalid", axis)
+func NewEmptyFile(path string, opts ...excelize.Options) (*excelize.File, error) {
+	if err := fileKit.MkParentDirs(path); err != nil {
+		return nil, err
 	}
 
-	colStr := s[1]
-	rowStr := s[2]
-
-	fmt.Println(rowStr, colStr)
-
-	// TODO:
-	return 0, 0, nil
-}
-
-// ConvertRowColToAxis
-/*
-e.g.
-(1, 2) => "C2", nil
-*/
-func ConvertRowColToAxis(row, col int) (string, error) {
-	str, err := ConvertColToString(col)
+	f := excelize.NewFile()
+	err := f.SaveAs(path, opts...)
 	if err != nil {
-		return "", err
+		defer func(f *excelize.File) {
+			_ = f.Close()
+		}(f)
+		return nil, err
 	}
-	str1, err := ConvertRowToString(row)
-	if err != nil {
-		return "", err
-	}
-	return str + str1, nil
-}
-
-//func ConvertStringToRow(str string) (int, error) {
-//	row, err := strconv.Atoi(str)
-//	if err != nil {
-//		return 0, err
-//	}
-//	row--
-//	if row < 0 || row > MaxRow {
-//		return 0, errorKit.New("row(%d) is invalid", row)
-//	}
-//	return row, nil
-//}
-//
-//func ConvertStringToCol(str string) (int, error) {
-//
-//}
-
-func ConvertRowToString(row int) (string, error) {
-	if row < 0 || row > MaxRow {
-		return "", errorKit.New("row(%d) is invalid", row)
-	}
-	return strconv.Itoa(row + 1), nil
-}
-
-// ConvertColToString
-/*
-e.g.
-(0) 	=> "A", nil
-(16368) => "XEO", nil
-*/
-func ConvertColToString(col int) (string, error) {
-	/* ts */
-	//convertToString(col: number): string {
-	//	var rst = "";
-	//
-	//	while (col >= 0) {
-	//	rst = ToDsnString.fromCharCode(65 + col % 26) + rst;
-	//	col = (col / 26 | 0) - 1;
-	//}
-	//	return rst;
-	//}
-
-	if col < 0 || col > MaxCol {
-		return "", errorKit.New("col(%d) is invalid", col)
-	}
-
-	str := ""
-	for col >= 0 {
-		// 由于确定不存在中文字符的情况，此处使用 byte 而非 rune
-		var tmp = byte('A' + col%26)
-		str = string(tmp) + str
-		col = col/26 - 1
-	}
-	return str, nil
+	return f, nil
 }

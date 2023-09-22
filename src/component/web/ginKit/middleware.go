@@ -3,9 +3,9 @@ package ginKit
 import (
 	"github.com/gin-contrib/gzip"
 	"github.com/gin-gonic/gin"
+	"github.com/richelieu-yang/chimera/v2/src/component/web/refererKit"
 	"github.com/richelieu-yang/chimera/v2/src/core/sliceKit"
 	"github.com/richelieu-yang/chimera/v2/src/core/strKit"
-	"github.com/richelieu-yang/chimera/v2/src/web/refererKit"
 	"net/http"
 )
 

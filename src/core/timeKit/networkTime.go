@@ -2,9 +2,9 @@ package timeKit
 
 import (
 	"github.com/imroc/req/v3"
+	"github.com/richelieu-yang/chimera/v2/src/component/web/reqKit"
 	"github.com/richelieu-yang/chimera/v2/src/core/errorKit"
 	"github.com/richelieu-yang/chimera/v2/src/core/strKit"
-	"github.com/richelieu-yang/chimera/v2/src/web/reqKit"
 	"time"
 )
 

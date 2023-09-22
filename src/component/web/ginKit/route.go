@@ -5,9 +5,9 @@ package ginKit
 import (
 	"github.com/gin-gonic/gin"
 	"github.com/richelieu-yang/chimera/v2/internal/resources"
+	"github.com/richelieu-yang/chimera/v2/src/component/web/httpKit"
 	"github.com/richelieu-yang/chimera/v2/src/core/fileKit"
 	"github.com/richelieu-yang/chimera/v2/src/core/pathKit"
-	"github.com/richelieu-yang/chimera/v2/src/web/httpKit"
 	"net/http"
 )
 

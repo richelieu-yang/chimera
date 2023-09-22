@@ -2,10 +2,10 @@ package baiduOcrKit
 
 import (
 	"fmt"
+	"github.com/richelieu-yang/chimera/v2/src/component/web/httpClientKit"
 	"github.com/richelieu-yang/chimera/v2/src/core/errorKit"
 	"github.com/richelieu-yang/chimera/v2/src/core/strKit"
 	"github.com/richelieu-yang/chimera/v2/src/json/jsonKit"
-	"github.com/richelieu-yang/chimera/v2/src/web/httpClientKit"
 	"sync"
 	"time"
 )
