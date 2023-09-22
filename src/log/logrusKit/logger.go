@@ -9,11 +9,14 @@ import (
 
 type (
 	loggerOptions struct {
-		formatter    logrus.Formatter
+		// formatter 日志格式
+		formatter logrus.Formatter
+		// reportCaller 默认: true
 		reportCaller bool
-		level        logrus.Level
-		output       io.Writer
-		// msgPrefix 输出的msg属性的前缀
+		// level 日志级别，默认: logrus.DebugLevel
+		level  logrus.Level
+		output io.Writer
+		// msgPrefix 日志输出的msg属性的前缀，默认: ""
 		msgPrefix string
 	}
 
@@ -55,10 +58,10 @@ func loadOptions(options ...LoggerOption) *loggerOptions {
 	opts := &loggerOptions{
 		formatter:    nil,
 		reportCaller: true,
-		// 默认: debug
-		level: logrus.DebugLevel,
+		level:        logrus.DebugLevel,
 		// 默认: 输出到控制台
-		output: nil,
+		output:    nil,
+		msgPrefix: "",
 	}
 
 	for _, option := range options {
