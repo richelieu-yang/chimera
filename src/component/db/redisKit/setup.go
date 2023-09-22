@@ -1,7 +1,6 @@
 package redisKit
 
 import (
-	"github.com/richelieu-yang/chimera/v2/src/core/errorKit"
 	"github.com/richelieu-yang/chimera/v2/src/log/logrusKit"
 	"github.com/sirupsen/logrus"
 )
@@ -26,7 +25,8 @@ func SetUp(config Config) (err error) {
 */
 func GetClient() (*Client, error) {
 	if client == nil {
-		return nil, errorKit.New("uninitialized component")
+		return nil, NotSetupError
 	}
+
 	return client, nil
 }

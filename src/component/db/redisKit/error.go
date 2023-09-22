@@ -1,4 +1,4 @@
-package etcdKit
+package redisKit
 
 import "github.com/richelieu-yang/chimera/v2/src/core/errorKit"
 

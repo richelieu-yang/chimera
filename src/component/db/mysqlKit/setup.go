@@ -70,7 +70,7 @@ func SetUp(config *Config, output io.Writer) error {
 
 func GetDB() (*gorm.DB, error) {
 	if db == nil {
-		return nil, errorKit.New("uninitialized component")
+		return nil, NotSetupError
 	}
 	return db, nil
 }

@@ -37,7 +37,7 @@ func SetUp() (err error) {
 // NewNamingClient 创建 服务发现(naming) 客户端.
 func NewNamingClient() (naming_client.INamingClient, error) {
 	if clientConfig == nil || serverConfigs == nil {
-		return nil, UninitializedError
+		return nil, NotSetUpError
 	}
 
 	return clients.NewNamingClient(
@@ -51,7 +51,7 @@ func NewNamingClient() (naming_client.INamingClient, error) {
 // NewConfigClient 创建 动态配置(config) 客户端.
 func NewConfigClient() (config_client.IConfigClient, error) {
 	if clientConfig == nil || serverConfigs == nil {
-		return nil, UninitializedError
+		return nil, NotSetUpError
 	}
 
 	return clients.NewConfigClient(
