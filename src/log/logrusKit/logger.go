@@ -3,6 +3,7 @@ package logrusKit
 import (
 	"github.com/richelieu-yang/chimera/v2/src/core/fileKit"
 	"github.com/richelieu-yang/chimera/v2/src/core/ioKit"
+	"github.com/richelieu-yang/chimera/v2/src/core/strKit"
 	"github.com/sirupsen/logrus"
 	"io"
 )
@@ -93,6 +94,13 @@ func NewLogger(options ...LoggerOption) *logrus.Logger {
 	if opts.output != nil {
 		logger.SetOutput(opts.output)
 	}
+
+	// msgPrefix
+	if strKit.IsNotEmpty(opts.msgPrefix) {
+		hook := &defaultPrefixHook{prefix: opts.msgPrefix}
+		logger.AddHook(hook)
+	}
+
 	return logger
 }
 

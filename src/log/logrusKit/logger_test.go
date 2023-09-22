@@ -7,6 +7,11 @@ import (
 )
 
 func TestNewLogger(t *testing.T) {
+	logger := NewLogger(WithMsgPrefix("[TEST]"))
+	logger.Info("hello world")
+}
+
+func TestNewLogger1(t *testing.T) {
 	/* 输出到控制台 */
 	logger := NewLogger()
 	logger.Info("to defaultOutput")
