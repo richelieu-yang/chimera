@@ -13,6 +13,8 @@ type (
 		reportCaller bool
 		level        logrus.Level
 		output       io.Writer
+		// msgPrefix 输出的msg属性的前缀
+		msgPrefix string
 	}
 
 	LoggerOption func(opts *loggerOptions)
@@ -39,6 +41,12 @@ func WithLevel(level logrus.Level) LoggerOption {
 func WithOutput(output io.Writer) LoggerOption {
 	return func(opts *loggerOptions) {
 		opts.output = output
+	}
+}
+
+func WithMsgPrefix(msgPrefix string) LoggerOption {
+	return func(opts *loggerOptions) {
+		opts.msgPrefix = msgPrefix
 	}
 }
 
