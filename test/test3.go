@@ -18,12 +18,27 @@ func (hook *PrefixHook) Fire(entry *logrus.Entry) error {
 }
 
 func (hook *PrefixHook) Levels() []logrus.Level {
-	return logrus.AllLevels
+	//return logrus.AllLevels
+
+	// 只有 INFO、WARN 级别
+	return []logrus.Level{logrus.InfoLevel, logrus.WarnLevel}
 }
 
 func main() {
-	logrus.Info("0") // time="2023-09-22T14:37:33+08:00" level=info msg=0
+	logrus.SetLevel(logrus.TraceLevel)
+
+	logrus.Trace("Trace")
+	logrus.Debug("Debug")
+	logrus.Info("Info")
+	logrus.Warn("Warn")
+	logrus.Error("Error")
+
+	logrus.Info("------------")
 
 	logrus.AddHook(&PrefixHook{Prefix: "[TEST]"})
-	logrus.Info("1") // time="2023-09-22T14:37:33+08:00" level=info msg="[TEST] 1"
+	logrus.Trace("Trace")
+	logrus.Debug("Debug")
+	logrus.Info("Info")
+	logrus.Warn("Warn")
+	logrus.Error("Error")
 }
