@@ -6,13 +6,13 @@ import (
 	"github.com/apache/pulsar-client-go/pulsar"
 	"github.com/richelieu-yang/chimera/v2/src/core/errorKit"
 	"github.com/richelieu-yang/chimera/v2/src/core/fileKit"
+	"github.com/richelieu-yang/chimera/v2/src/core/mathKit"
 	"github.com/richelieu-yang/chimera/v2/src/core/pathKit"
 	"github.com/richelieu-yang/chimera/v2/src/core/sliceKit"
 	"github.com/richelieu-yang/chimera/v2/src/core/strKit"
 	"github.com/richelieu-yang/chimera/v2/src/core/timeKit"
 	"github.com/richelieu-yang/chimera/v2/src/idKit"
 	"github.com/richelieu-yang/chimera/v2/src/log/logrusKit"
-	"github.com/richelieu-yang/chimera/v2/src/operationKit"
 	"github.com/richelieu-yang/chimera/v2/src/randomKit"
 	"github.com/sirupsen/logrus"
 	"time"
@@ -55,7 +55,7 @@ func verify(verifyConfig VerifyConfig) (err error) {
 
 	// 是否打印日志到控制台？
 	printFlag := verifyConfig.Print
-	level := operationKit.Ternary(printFlag, logrus.DebugLevel, logrus.PanicLevel)
+	level := mathKit.Ternary(printFlag, logrus.DebugLevel, logrus.PanicLevel)
 	cLogger := logrusKit.NewLogger(logrusKit.WithLevel(level))
 	cLogger.Infof("[Verify] consumerLogPath: [%s].", consumerLogPath)
 	cLogger.Infof("[Verify] producerLogPath: [%s].", producerLogPath)
