@@ -7,6 +7,8 @@ import (
 )
 
 type defaultPrefixHook struct {
+	logrus.Hook
+
 	prefix string
 }
 
