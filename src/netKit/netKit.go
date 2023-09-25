@@ -6,25 +6,19 @@ import (
 	"time"
 )
 
-// Dial
-/*
-判断指定ip和port能否连通.
+var (
+	DialTimeout func(network, address string, timeout time.Duration) (net.Conn, error) = net.DialTimeout
+)
 
-PS: 超时时间（timeout）默认为300ms.
-*/
-func Dial(addr string) (bool, error) {
-	return DialTimeout(addr, time.Millisecond*500)
-}
-
-// DialTimeout
+// CanDial
 /*
-判断指定ip和port能否连通（在指定时限内）.
+@return 返回值如果为nil，说明能dial成功
 */
-func DialTimeout(addr string, timeout time.Duration) (bool, error) {
-	conn, err := net.DialTimeout("tcp", addr, timeout)
+func CanDial(addr string, timeout time.Duration) error {
+	conn, err := DialTimeout("tcp", addr, timeout)
 	if err != nil {
-		return false, err
+		return err
 	}
 	defer conn.Close()
-	return true, nil
+	return nil
 }
