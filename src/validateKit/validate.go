@@ -21,6 +21,12 @@ func New(tagNameArgs ...string) *validator.Validate {
 	return v
 }
 
+// Struct 验证结构体.
+func Struct(s interface{}) error {
+	v := New()
+	return v.Struct(s)
+}
+
 // Field 验证字段.
 func Field(field interface{}, tag string) error {
 	v := New()

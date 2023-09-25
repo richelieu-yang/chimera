@@ -10,6 +10,7 @@ import (
 	"github.com/richelieu-yang/chimera/v2/src/log/logrusKit"
 	"github.com/richelieu-yang/chimera/v2/src/netKit"
 	"github.com/richelieu-yang/chimera/v2/src/urlKit"
+	"github.com/richelieu-yang/chimera/v2/src/validateKit"
 	"github.com/sirupsen/logrus"
 	"net/url"
 )
@@ -41,6 +42,11 @@ func SetUp(config Config, options ...constant.ClientOption) (err error) {
 			serverConfigs = nil
 		}
 	}()
+
+	/* (0) validate */
+	if err = validateKit.Struct(config); err != nil {
+		return err
+	}
 
 	/* (1) clientConfig */
 	options1 := []constant.ClientOption{

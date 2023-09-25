@@ -1,17 +1,15 @@
 package main
 
 import (
-	"fmt"
-	"github.com/richelieu-yang/chimera/v2/src/urlKit"
+	"github.com/richelieu-yang/chimera/v2/src/component/nacosKit"
 )
 
 func main() {
-	url, err := urlKit.Parse("http://localhost:8848/nacos")
-	if err != nil {
-		panic(err)
+	config := nacosKit.Config{
+		NamespaceId: "",
+		//Addresses:   []string{"http://localhost:8848/nacos"},
+		Addresses: nil,
 	}
-	fmt.Println(url.Hostname())
-	fmt.Println(url.Port())
-	fmt.Println(url.Scheme)
-	fmt.Println(url.Path)
+
+	nacosKit.MustSetUp(config)
 }
