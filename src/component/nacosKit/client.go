@@ -84,7 +84,8 @@ func NewNamingClient(options ...constant.ClientOption) (naming_client.INamingCli
 	})
 	if err != nil {
 		// TODO: 此处比较low，比较错误的文本内容，看后续库有没有更新吧.
-		if !strKit.EqualsIgnoreCase(err.Error(), "instance list is empty!") {
+		tmp := "instance list is empty!"
+		if !strKit.EqualsIgnoreCase(err.Error(), tmp) {
 			err = errorKit.Wrap(err, "Fail to pass verification, check the configuration please!")
 			return nil, err
 		}

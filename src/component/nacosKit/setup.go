@@ -68,17 +68,17 @@ func SetUp(config Config, options ...constant.ClientOption) (err error) {
 		var u *url.URL
 		u, err = urlKit.Parse(addr)
 		if err != nil {
-			err = errorKit.Wrap(err, "fail to parse address(%s)", addr)
+			err = errorKit.Wrap(err, "Fail to parse address(%s).", addr)
 			return
 		}
 		var port uint64
 		port, err = intKit.ToUint64E(u.Port())
 		if err != nil {
-			err = errorKit.Wrap(err, "invalid address(%s) with port string(%s)", addr, u.Port())
+			err = errorKit.Wrap(err, "Invalid address(%s) with port string(%s).", addr, u.Port())
 			return
 		}
 		if err = netKit.AssertValidPort(int(port)); err != nil {
-			err = errorKit.Wrap(err, "invalid address(%s)  with port(%d)", addr, port)
+			err = errorKit.Wrap(err, "Invalid address(%s) with port(%d).", addr, port)
 			return
 		}
 
@@ -90,7 +90,7 @@ func SetUp(config Config, options ...constant.ClientOption) (err error) {
 		})
 	}
 	if sliceKit.IsEmpty(serverConfigs) {
-		err = errorKit.New("no valid address")
+		err = errorKit.New("No valid address.")
 		return
 	}
 
@@ -117,7 +117,7 @@ func GetClientConfigCopy(options ...constant.ClientOption) (*constant.ClientConf
 	// 深拷贝
 	clientConfig1, err := copyKit.DeepCopy(clientConfig)
 	if err != nil {
-		return nil, errorKit.Wrap(err, "fail to deep copy")
+		return nil, errorKit.Wrap(err, "Fail to deep copy.")
 	}
 
 	// 再次修改 *constant.ClientConfig
