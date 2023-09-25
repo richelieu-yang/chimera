@@ -26,7 +26,7 @@ Linux端口分配: https://blog.csdn.net/zh2508/article/details/104888743
 5000—65535 	由服务器端程序自由分配（65535 = 2 ^ 16 - 1）
 */
 func IsValidPort(port int) bool {
-	return port >= 0 && port <= MaxPort
+	return port > 0 && port <= MaxPort
 }
 
 // IsLocalPortAvailable 本地端口是否可用（即未被占用）？

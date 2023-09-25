@@ -58,7 +58,7 @@ func SetUp(config Config, options ...constant.ClientOption) (err error) {
 		return
 	}
 	for _, addr := range config.Addresses {
-		if strKit.IsEmpty(addr) {
+		if strKit.IsBlank(addr) {
 			continue
 		}
 
