@@ -6,6 +6,7 @@ package jsonKit
 import (
 	"github.com/bytedance/sonic"
 	"github.com/klauspost/cpuid/v2"
+	"github.com/richelieu-yang/chimera/v2/src/compareKit"
 	"github.com/richelieu-yang/chimera/v2/src/consts"
 	"github.com/richelieu-yang/chimera/v2/src/core/cpuKit"
 	"github.com/sirupsen/logrus"
@@ -32,6 +33,13 @@ func init() {
 	m := map[string]interface{}{
 		"0": 3.1415926,
 		"1": 1,
+		"2": true,
+		"3": `~!@#$%^&*()_+{}|:"><?	
+qwdqw强	\t\r\n无敌
+qwdqwd
+威尔法
+496465~·《》？L:"{}|,./l;'[]\/*-的确
+`,
 	}
 	jsonData, err := api.Marshal(m)
 	if err != nil {
@@ -40,5 +48,8 @@ func init() {
 	var m1 map[string]interface{}
 	if err := api.Unmarshal(jsonData, &m1); err != nil {
 		logrus.WithError(err).Fatal("[%s, JSON] Sonic fails to unmarshal!!!", consts.ProjectUpperName)
+	}
+	if compareKit.Equal(m, m1) {
+		logrus.Fatalf("[%s, JSON] m and m1 aren't identical!!!", consts.ProjectUpperName)
 	}
 }
