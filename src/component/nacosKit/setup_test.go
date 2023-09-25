@@ -1,15 +1,14 @@
 package nacosKit
 
 import (
-	"fmt"
-	"github.com/nacos-group/nacos-sdk-go/v2/vo"
 	"testing"
 )
 
 func TestMustSetUp(t *testing.T) {
 	config := Config{
 		NamespaceId: "",
-		Addresses:   []string{"http://localhost:8849/nacos111"},
+		Addresses:   []string{"http://localhost:8848/nacos"},
+		//Addresses:   []string{"http://localhost:8849/nacos111"},
 	}
 
 	MustSetUp(config)
@@ -20,14 +19,23 @@ func TestMustSetUp(t *testing.T) {
 	}
 	defer cc.CloseClient()
 
-	text, err := cc.GetConfig(vo.ConfigParam{
-		DataId: "2",
-		//Group:  "group",
-	})
-	if err != nil {
-		panic(err)
-	}
-	fmt.Println(text)
+	//nc, err := NewNamingClient()
+	//if err != nil {
+	//	panic(err)
+	//}
+	//defer nc.CloseClient()
+
+	//ulid := idKit.NewULID()
+	//ulid = ulid
+	//text, err := cc.GetConfig(vo.ConfigParam{
+	//	//DataId: "1",
+	//	DataId: ulid,
+	//	//Group:  ulid,
+	//})
+	//if err != nil {
+	//	panic(err)
+	//}
+	//fmt.Println(text)
 
 	//cc.ListenConfig(vo.ConfigParam{
 	//	DataId: "",
