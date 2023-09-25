@@ -129,5 +129,10 @@ mysql:
     # set the maximum amount of time a connection may be reused
     ConnMaxLifetime: 30m
 
+nacos:
+  # 本服务默认的命名空间的id，为空则使用 public（保留空间）
+  namespaceId:
+  addresses:
+    - http://localhost:8848/nacos
 
 

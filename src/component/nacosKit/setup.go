@@ -25,7 +25,16 @@ func MustSetUp() {
 	}
 }
 
-func SetUp(config Config, clientLogDir, clientCacheDir string, logLevel string) (err error) {
+func SetUp(config Config, clientLogDir, clientCacheDir string, options ...constant.ClientOption) (err error) {
+	clientConfig = *constant.NewClientConfig(
+		constant.WithNamespaceId("e525eafa-f7d7-4029-83d9-008937f9d468"), //当namespace是public时，此处填空字符串。
+		constant.WithTimeoutMs(5000),
+		constant.WithNotLoadCacheAtStart(true),
+		constant.WithLogDir("/tmp/nacos/log"),
+		constant.WithCacheDir("/tmp/nacos/cache"),
+		constant.WithLogLevel("debug"),
+	)
+
 	defer func() {
 		if err != nil {
 			clientConfig = nil
