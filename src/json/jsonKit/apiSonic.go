@@ -9,6 +9,7 @@ import (
 	"github.com/richelieu-yang/chimera/v2/src/compareKit"
 	"github.com/richelieu-yang/chimera/v2/src/consts"
 	"github.com/richelieu-yang/chimera/v2/src/core/cpuKit"
+	"github.com/richelieu-yang/chimera/v2/src/log/logrusKit"
 	"github.com/sirupsen/logrus"
 )
 
@@ -50,6 +51,8 @@ qwdqwd
 		logrus.WithError(err).Fatal("[%s, JSON] Sonic fails to unmarshal!!!", consts.ProjectUpperName)
 	}
 	if compareKit.Equal(m, m1) {
-		logrus.Fatalf("[%s, JSON] m and m1 aren't identical!!!", consts.ProjectUpperName)
+		logrusKit.DisableQuote(nil)
+		diff := compareKit.Diff(m, m1)
+		logrus.Fatalf("[%s, JSON] diff between m and m1:\n%s\n", consts.ProjectUpperName, diff)
 	}
 }
