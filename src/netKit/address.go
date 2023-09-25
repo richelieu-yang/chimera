@@ -19,8 +19,8 @@ import (
 type (
 	Address struct {
 		// Hostname 也可以是ip
-		Hostname string
-		Port     int
+		Hostname string `json:"hostname" yaml:"hostname"`
+		Port     int    `json:"port" yaml:"port"`
 	}
 )
 

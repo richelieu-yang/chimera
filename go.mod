@@ -54,7 +54,7 @@ require (
 	github.com/sony/sonyflake v1.2.0
 	github.com/spf13/cast v1.5.1
 	github.com/spf13/viper v1.16.0
-	github.com/tidwall/gjson v1.16.0
+	github.com/tidwall/gjson v1.17.0
 	github.com/xuri/excelize/v2 v2.8.0
 	github.com/zeromicro/go-zero v1.5.5
 	github.com/zeromicro/zero-contrib/logx/logrusx v0.0.0-20230807142214-5952d42ba776

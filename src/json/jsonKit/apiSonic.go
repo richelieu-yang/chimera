@@ -6,6 +6,7 @@ package jsonKit
 import (
 	"github.com/bytedance/sonic"
 	"github.com/klauspost/cpuid/v2"
+	"github.com/richelieu-yang/chimera/v2/src/consts"
 	"github.com/richelieu-yang/chimera/v2/src/core/cpuKit"
 	"github.com/sirupsen/logrus"
 )
@@ -19,7 +20,7 @@ func init() {
 	stdApi = sonic.ConfigStd
 
 	if !cpuKit.HasFeature(cpuid.AVX) {
-		logrus.Fatal("AVX isn't supported by CPU!!!")
+		logrus.Fatalf("[%s, JSON] AVX isn't supported by CPU!!!", consts.ProjectUpperName)
 		return
 	}
 
@@ -32,12 +33,12 @@ func init() {
 		"0": 3.1415926,
 		"1": 1,
 	}
-	jsonStr, err := api.MarshalToString(m)
+	jsonData, err := api.Marshal(m)
 	if err != nil {
-		logrus.WithError(err).Fatal("sonic fails to marshal")
+		logrus.WithError(err).Fatal("[%s, JSON] Sonic fails to marshal!!!", consts.ProjectUpperName)
 	}
 	var m1 map[string]interface{}
-	if err := api.UnmarshalFromString(jsonStr, &m1); err != nil {
-		logrus.WithError(err).Fatal("sonic fails to unmarshal")
+	if err := api.Unmarshal(jsonData, &m1); err != nil {
+		logrus.WithError(err).Fatal("[%s, JSON] Sonic fails to unmarshal!!!", consts.ProjectUpperName)
 	}
 }

@@ -6,6 +6,8 @@ import (
 	"github.com/nacos-group/nacos-sdk-go/v2/clients/naming_client"
 	"github.com/nacos-group/nacos-sdk-go/v2/common/constant"
 	"github.com/nacos-group/nacos-sdk-go/v2/vo"
+	"github.com/richelieu-yang/chimera/v2/src/copyKit"
+	"github.com/richelieu-yang/chimera/v2/src/core/errorKit"
 	"github.com/richelieu-yang/chimera/v2/src/log/logrusKit"
 	"github.com/sirupsen/logrus"
 )
@@ -23,7 +25,7 @@ func MustSetUp() {
 	}
 }
 
-func SetUp() (err error) {
+func SetUp(config Config, clientLogDir, clientCacheDir string, logLevel string) (err error) {
 	defer func() {
 		if err != nil {
 			clientConfig = nil
@@ -34,29 +36,61 @@ func SetUp() (err error) {
 	return
 }
 
-// NewNamingClient 创建 服务发现(naming) 客户端.
+// NewNamingClient
+/*
+PS:
+*/
 func NewNamingClient() (naming_client.INamingClient, error) {
+	return NewNamingClientWithNamespaceId(nil)
+}
+
+// NewNamingClientWithNamespaceId 创建 服务发现(naming) 客户端.
+/*
+@param namespaceId 可以为""（此时namespace是public）
+*/
+func NewNamingClientWithNamespaceId(namespaceId *string) (naming_client.INamingClient, error) {
 	if clientConfig == nil || serverConfigs == nil {
 		return nil, NotSetUpError
 	}
 
+	clientConfig1, err := copyKit.DeepCopy(clientConfig)
+	if err != nil {
+		return nil, errorKit.Wrap(err, "fail to deep copy")
+	}
+	if namespaceId != nil {
+		clientConfig1.NamespaceId = *namespaceId
+	}
 	return clients.NewNamingClient(
 		vo.NacosClientParam{
-			ClientConfig:  clientConfig,
+			ClientConfig:  clientConfig1,
 			ServerConfigs: serverConfigs,
 		},
 	)
 }
 
-// NewConfigClient 创建 动态配置(config) 客户端.
 func NewConfigClient() (config_client.IConfigClient, error) {
+	return NewConfigClientWithNamespaceId(nil)
+}
+
+// NewConfigClientWithNamespaceId 创建 动态配置(config) 客户端.
+/*
+@param namespaceId 可以为""（此时namespace是public）
+*/
+func NewConfigClientWithNamespaceId(namespaceId *string) (config_client.IConfigClient, error) {
 	if clientConfig == nil || serverConfigs == nil {
 		return nil, NotSetUpError
 	}
 
+	clientConfig1, err := copyKit.DeepCopy(clientConfig)
+	if err != nil {
+		return nil, errorKit.Wrap(err, "fail to deep copy")
+	}
+	if namespaceId != nil {
+		clientConfig1.NamespaceId = *namespaceId
+	}
 	return clients.NewConfigClient(
 		vo.NacosClientParam{
-			ClientConfig:  clientConfig,
+			ClientConfig:  clientConfig1,
 			ServerConfigs: serverConfigs,
 		},
 	)
