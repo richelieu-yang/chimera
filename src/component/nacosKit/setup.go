@@ -31,9 +31,9 @@ func MustSetUp(config Config, options ...constant.ClientOption) {
 // SetUp
 /*
 @param options		!!!:
-					(1) 建议配置 客户端的缓存目录（default value is current path）	constant.WithCacheDir
-					(2) 建议配置 客户端的日志目录（default is current path）			constant.WithLogDir
-					(3) 建议配置 客户端的日志级别（default value is info）			constant.WithLogLevel	"debug" || "info"...
+					(1) 建议配置 客户端的缓存目录（default is current path）		constant.WithCacheDir
+					(2) 建议配置 客户端的日志目录（default is current path）		constant.WithLogDir
+					(3) 建议配置 客户端的日志级别（default value is info）		constant.WithLogLevel	"debug" || "info"...
 */
 func SetUp(config Config, options ...constant.ClientOption) (err error) {
 	defer func() {
