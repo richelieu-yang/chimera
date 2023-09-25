@@ -133,7 +133,6 @@ nacos:
   # 本服务默认的命名空间的id，配置 "" 和 "public" 效果一样（都是使用保留空间public）
   # !!!: 是 id 不是 name.
   namespaceId:
+  # Nacos服务器的地址
   addresses:
     - http://localhost:8848/nacos
-
-
