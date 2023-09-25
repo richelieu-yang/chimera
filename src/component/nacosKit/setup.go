@@ -94,7 +94,7 @@ func SetUp(config Config, options ...constant.ClientOption) (err error) {
 		return
 	}
 
-	/* (3) test */
+	/* (3) test（以防配置有问题） */
 	cc, err := NewConfigClient()
 	if err != nil {
 		return
