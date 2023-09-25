@@ -8,8 +8,14 @@ import (
 	"github.com/nacos-group/nacos-sdk-go/v2/vo"
 	"github.com/richelieu-yang/chimera/v2/src/copyKit"
 	"github.com/richelieu-yang/chimera/v2/src/core/errorKit"
+	"github.com/richelieu-yang/chimera/v2/src/core/intKit"
+	"github.com/richelieu-yang/chimera/v2/src/core/sliceKit"
+	"github.com/richelieu-yang/chimera/v2/src/core/strKit"
 	"github.com/richelieu-yang/chimera/v2/src/log/logrusKit"
+	"github.com/richelieu-yang/chimera/v2/src/netKit"
+	"github.com/richelieu-yang/chimera/v2/src/urlKit"
 	"github.com/sirupsen/logrus"
+	"net/url"
 )
 
 var (
@@ -17,30 +23,73 @@ var (
 	serverConfigs []constant.ServerConfig
 )
 
-func MustSetUp() {
-	err := SetUp()
+func MustSetUp(config Config, options ...constant.ClientOption) {
+	err := SetUp(config, options...)
 	if err != nil {
 		logrusKit.DisableQuote(nil)
 		logrus.Fatalf("%+v", err)
 	}
 }
 
-func SetUp(config Config, clientLogDir, clientCacheDir string, options ...constant.ClientOption) (err error) {
-	clientConfig = *constant.NewClientConfig(
-		constant.WithNamespaceId("e525eafa-f7d7-4029-83d9-008937f9d468"), //当namespace是public时，此处填空字符串。
-		constant.WithTimeoutMs(5000),
-		constant.WithNotLoadCacheAtStart(true),
-		constant.WithLogDir("/tmp/nacos/log"),
-		constant.WithCacheDir("/tmp/nacos/cache"),
-		constant.WithLogLevel("debug"),
-	)
-
+// SetUp
+/*
+@param options		!!!:
+					(1) 建议配置 客户端的缓存目录（default value is current path）	constant.WithCacheDir
+					(2) 建议配置 客户端的日志目录（default is current path）			constant.WithLogDir
+					(3) 建议配置 客户端的日志级别（default value is info）			constant.WithLogLevel
+*/
+func SetUp(config Config, options ...constant.ClientOption) (err error) {
 	defer func() {
 		if err != nil {
 			clientConfig = nil
 			serverConfigs = nil
 		}
 	}()
+
+	/* (1) clientConfig */
+	options1 := []constant.ClientOption{
+		constant.WithNamespaceId(config.NamespaceId),
+	}
+	options1 = append(options1, options...)
+	clientConfig = constant.NewClientConfig(options1...)
+
+	/* (2) serverConfigs */
+	if err = sliceKit.AssertNotEmpty(config.Addresses, "config.Addresses"); err != nil {
+		return
+	}
+	for _, addr := range config.Addresses {
+		if strKit.IsEmpty(addr) {
+			continue
+		}
+
+		var u *url.URL
+		u, err = urlKit.Parse(addr)
+		if err != nil {
+			err = errorKit.Wrap(err, "fail to parse address(%s)", addr)
+			return
+		}
+		var port uint64
+		port, err = intKit.ToUint64E(u.Port())
+		if err != nil {
+			err = errorKit.Wrap(err, "invalid address(%s) with port string(%s)", addr, u.Port())
+			return
+		}
+		if err = netKit.AssertValidPort(int(port)); err != nil {
+			err = errorKit.Wrap(err, "invalid address(%s)  with port(%d)", addr, port)
+			return
+		}
+
+		serverConfigs = append(serverConfigs, constant.ServerConfig{
+			Scheme:      u.Scheme,
+			IpAddr:      u.Hostname(),
+			Port:        port,
+			ContextPath: u.Path,
+		})
+	}
+	if sliceKit.IsEmpty(serverConfigs) {
+		err = errorKit.New("no valid address")
+		return
+	}
 
 	return
 }
