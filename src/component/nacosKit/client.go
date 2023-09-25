@@ -10,6 +10,8 @@ import (
 
 // NewConfigClient 创建 动态配置(config) 客户端.
 /*
+!!!: 需要先set up.
+
 @param options 可以用于修改: NamespaceId...
 */
 func NewConfigClient(options ...constant.ClientOption) (config_client.IConfigClient, error) {
@@ -29,6 +31,8 @@ func NewConfigClient(options ...constant.ClientOption) (config_client.IConfigCli
 
 // NewNamingClient 创建 服务发现(naming) 客户端.
 /*
+!!!: 需要先set up.
+
 @param options 可以用于修改: NamespaceId...
 */
 func NewNamingClient(options ...constant.ClientOption) (naming_client.INamingClient, error) {
