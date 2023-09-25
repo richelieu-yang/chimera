@@ -45,6 +45,7 @@ func SetUp(config Config, options ...constant.ClientOption) (err error) {
 	/* (1) clientConfig */
 	options1 := []constant.ClientOption{
 		constant.WithNamespaceId(config.NamespaceId),
+		constant.WithNotLoadCacheAtStart(true),
 	}
 	options1 = append(options1, options...)
 	clientConfig = constant.NewClientConfig(options1...)
@@ -86,6 +87,18 @@ func SetUp(config Config, options ...constant.ClientOption) (err error) {
 		err = errorKit.New("no valid address")
 		return
 	}
+
+	/* (3) test */
+	cc, err := NewConfigClient()
+	if err != nil {
+		return
+	}
+	defer cc.CloseClient()
+	nc, err := NewNamingClient()
+	if err != nil {
+		return
+	}
+	defer nc.CloseClient()
 
 	return
 }
