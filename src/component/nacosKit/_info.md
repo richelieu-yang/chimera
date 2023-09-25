@@ -1,6 +1,6 @@
 ## 参考
-https://github.com/nacos-group/nacos-sdk-go/blob/master/README_CN.md
+"Nacos2.x - Golang.wps"
 
-## 使用限制
-* 支持Go>=v1.15版本
-* 支持Nacos>2.x版本
+## 获取配置
+* Group字段实际上可以不传，将采用默认值 "DEFAULT_GROUP"
+* DataId 和 Group 对应的配置不存在的情况，将返回 ("", nil)
