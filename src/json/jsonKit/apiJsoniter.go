@@ -10,4 +10,6 @@ func init() {
 	library = "json-iterator/go"
 	defaultApi = jsoniter.ConfigDefault
 	stdApi = jsoniter.ConfigCompatibleWithStandardLibrary
+
+	testAPI()
 }
