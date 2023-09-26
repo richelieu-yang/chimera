@@ -2,6 +2,7 @@ package mysqlKit
 
 import (
 	"github.com/richelieu-yang/chimera/v2/src/core/errorKit"
+	"github.com/richelieu-yang/chimera/v2/src/core/interfaceKit"
 	"github.com/richelieu-yang/chimera/v2/src/log/logrusKit"
 	"github.com/sirupsen/logrus"
 	"gorm.io/driver/mysql"
@@ -26,8 +27,8 @@ func MustSetUp(config *Config, output io.Writer) {
 @param output 客户端的日志输出（nil: 输出到控制台）
 */
 func SetUp(config *Config, output io.Writer) error {
-	if config == nil {
-		return errorKit.New("config == nil")
+	if err := interfaceKit.AssertNotNil(config, "config"); err != nil {
+		return err
 	}
 
 	/* logger */
