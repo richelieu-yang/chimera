@@ -5,6 +5,7 @@ import (
 	"github.com/richelieu-yang/chimera/v2/src/copyKit"
 	"github.com/richelieu-yang/chimera/v2/src/core/errorKit"
 	"github.com/richelieu-yang/chimera/v2/src/core/intKit"
+	"github.com/richelieu-yang/chimera/v2/src/core/interfaceKit"
 	"github.com/richelieu-yang/chimera/v2/src/core/sliceKit"
 	"github.com/richelieu-yang/chimera/v2/src/core/strKit"
 	"github.com/richelieu-yang/chimera/v2/src/log/logrusKit"
@@ -20,7 +21,7 @@ var (
 	serverConfigs []constant.ServerConfig
 )
 
-func MustSetUp(config Config, options ...constant.ClientOption) {
+func MustSetUp(config *Config, options ...constant.ClientOption) {
 	err := SetUp(config, options...)
 	if err != nil {
 		logrusKit.DisableQuote(nil)
@@ -35,7 +36,7 @@ func MustSetUp(config Config, options ...constant.ClientOption) {
 					(2) 建议配置 客户端的日志目录（default is current path）		constant.WithLogDir
 					(3) 建议配置 客户端的日志级别（default value is info）		constant.WithLogLevel	"debug" || "info"...
 */
-func SetUp(config Config, options ...constant.ClientOption) (err error) {
+func SetUp(config *Config, options ...constant.ClientOption) (err error) {
 	defer func() {
 		if err != nil {
 			clientConfig = nil
@@ -44,8 +45,11 @@ func SetUp(config Config, options ...constant.ClientOption) (err error) {
 	}()
 
 	/* (0) validate */
+	if err = interfaceKit.AssertNotNil(config, "config"); err != nil {
+		return
+	}
 	if err = validateKit.Struct(config); err != nil {
-		return err
+		return
 	}
 
 	/* (1) clientConfig */
