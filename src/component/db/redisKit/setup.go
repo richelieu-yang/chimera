@@ -7,14 +7,14 @@ import (
 
 var client *Client
 
-func MustSetUp(config Config) {
+func MustSetUp(config *Config) {
 	if err := SetUp(config); err != nil {
 		logrusKit.DisableQuote(nil)
 		logrus.Fatalf("%+v", err)
 	}
 }
 
-func SetUp(config Config) (err error) {
+func SetUp(config *Config) (err error) {
 	client, err = NewClient(config)
 	return
 }

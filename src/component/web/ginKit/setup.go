@@ -4,12 +4,13 @@ import (
 	"github.com/gin-contrib/pprof"
 	"github.com/gin-gonic/gin"
 	"github.com/richelieu-yang/chimera/v2/src/core/errorKit"
+	"github.com/richelieu-yang/chimera/v2/src/core/interfaceKit"
 	"github.com/richelieu-yang/chimera/v2/src/log/logrusKit"
 	"github.com/richelieu-yang/chimera/v2/src/netKit"
 	"github.com/sirupsen/logrus"
 )
 
-func MustSetUp(config Config, recoveryMiddleware gin.HandlerFunc, businessLogic func(engine *gin.Engine) error) {
+func MustSetUp(config *Config, recoveryMiddleware gin.HandlerFunc, businessLogic func(engine *gin.Engine) error) {
 	err := setUp(config, recoveryMiddleware, businessLogic)
 	if err != nil {
 		logrusKit.DisableQuote(nil)
@@ -25,7 +26,10 @@ PS: 正常执行的情况下，此方法会阻塞调用的协程.
 @param recoveryMiddleware 	可以为nil（将采用默认值 gin.Recovery()）
 @param businessLogic 		可以为nil；业务逻辑，可以在其中进行 路由绑定 等操作...
 */
-func setUp(config Config, recoveryMiddleware gin.HandlerFunc, businessLogic func(engine *gin.Engine) error) error {
+func setUp(config *Config, recoveryMiddleware gin.HandlerFunc, businessLogic func(engine *gin.Engine) error) error {
+	if err := interfaceKit.AssertNotNil(config, "config"); err != nil {
+		return err
+	}
 	if err := config.Verify(); err != nil {
 		return err
 	}
