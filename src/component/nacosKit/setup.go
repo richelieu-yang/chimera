@@ -55,7 +55,7 @@ func SetUp(config *Config, options ...constant.ClientOption) (err error) {
 	/* (1) clientConfig */
 	options1 := []constant.ClientOption{
 		constant.WithNamespaceId(config.NamespaceId),
-		constant.WithBeatInterval(3000), // 3000ms
+		constant.WithBeatInterval(5000), // 5000ms
 		constant.WithNotLoadCacheAtStart(true),
 	}
 	options1 = append(options1, options...)
