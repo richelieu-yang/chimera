@@ -5,7 +5,6 @@ import (
 	"errors"
 	"github.com/redis/go-redis/v9"
 	"github.com/richelieu-yang/chimera/v2/src/core/errorKit"
-	"github.com/richelieu-yang/chimera/v2/src/core/interfaceKit"
 	"github.com/richelieu-yang/chimera/v2/src/core/strKit"
 	"time"
 )
@@ -45,10 +44,6 @@ func (client *Client) GetUniversalClient() redis.UniversalClient {
 		(2) Cluster模式下，第1个返回值的类型: *redis.ClusterClient.
 */
 func NewClient(config Config) (client *Client, err error) {
-	if err := interfaceKit.AssertNotNil(config, "config"); err != nil {
-		return nil, err
-	}
-
 	var opts *redis.UniversalOptions
 	switch config.Mode {
 	case ModeSingleNode:
