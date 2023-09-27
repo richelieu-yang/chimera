@@ -7,7 +7,9 @@ import (
 
 // SetUp
 /*
-PS: vips 8.14.5支持的格式: webp、heif、pdf、png、tiff、svg、jp2k、gif、jpeg、magick.
+PS:
+(1) vips 8.14.5支持的格式: webp、heif、pdf、png、tiff、svg、jp2k、gif、jpeg、magick.
+(2) macOS需要设置环境变量（否则govips may not compile）: export CGO_CFLAGS_ALLOW="-Xpreprocessor"
 
 @param config 可以为nil（使用默认配置: concurrency=1 cache_max_files=0 cache_max_mem=52428800 cache_max=100）
 */
