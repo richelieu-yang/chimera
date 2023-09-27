@@ -22,10 +22,7 @@ func Setup(logPath string) error {
 		// (1) 输出到: 控制台
 	} else {
 		// (2) 输出到: 文件日志
-		if err := fileKit.AssertNotExistOrIsFile(logPath); err != nil {
-			return err
-		}
-		if err := fileKit.MkParentDirs(logPath); err != nil {
+		if err := fileKit.AssertNotExistOrIsFile(logPath, true); err != nil {
 			return err
 		}
 		f, err := fileKit.CreateInAppendMode(logPath)

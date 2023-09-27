@@ -9,10 +9,7 @@ import "os"
 				(2) 存在且是个文件的话，会 "覆盖" 掉旧的（并不会加到该文件的最后面）.
 */
 func WriteToFile(data []byte, filePath string, perm os.FileMode) error {
-	if err := AssertNotExistOrIsFile(filePath); err != nil {
-		return err
-	}
-	if err := MkParentDirs(filePath); err != nil {
+	if err := AssertNotExistOrIsFile(filePath, true); err != nil {
 		return err
 	}
 

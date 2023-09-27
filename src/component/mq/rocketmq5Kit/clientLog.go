@@ -17,13 +17,10 @@ func initClientLog(path string) error {
 		}
 	} else {
 		// (2) 输出到日志文件
-		if err := fileKit.AssertNotExistOrIsFile(path); err != nil {
+		if err := fileKit.AssertNotExistOrIsFile(path, true); err != nil {
 			return err
 		}
 		dir := pathKit.ParentDir(path)
-		if err := fileKit.MkDirs(dir); err != nil {
-			return err
-		}
 		name := fileKit.GetFileName(path)
 
 		if err := osKit.SetEnvs(map[string]string{

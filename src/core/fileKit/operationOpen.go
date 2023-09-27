@@ -35,10 +35,7 @@ PS:
 func Create(filePath string) (*os.File, error) {
 	//return gfile.Create(filePath)
 
-	if err := AssertNotExistOrIsFile(filePath); err != nil {
-		return nil, err
-	}
-	if err := MkParentDirs(filePath); err != nil {
+	if err := AssertNotExistOrIsFile(filePath, true); err != nil {
 		return nil, err
 	}
 	return OpenFile(filePath, os.O_RDWR|os.O_CREATE|os.O_TRUNC, 0644)
@@ -51,10 +48,7 @@ TODO: perm 权限可自定义，看后续 gfile 后不会完善.
 func CreateInAppendMode(filePath string) (*os.File, error) {
 	//return gfile.Create(filePath)
 
-	if err := AssertNotExistOrIsFile(filePath); err != nil {
-		return nil, err
-	}
-	if err := MkParentDirs(filePath); err != nil {
+	if err := AssertNotExistOrIsFile(filePath, true); err != nil {
 		return nil, err
 	}
 	return OpenFile(filePath, os.O_RDWR|os.O_CREATE|os.O_APPEND, 0644)

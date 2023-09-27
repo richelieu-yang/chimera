@@ -20,10 +20,7 @@ var NewLogger func(out io.Writer, prefix string, flag int) *log.Logger = log.New
 				(2) 文件存在，新的内容会append
 */
 func NewFileLogger(filePath, prefix string, perm os.FileMode) (*log.Logger, error) {
-	if err := fileKit.AssertNotExistOrIsFile(filePath); err != nil {
-		return nil, err
-	}
-	if err := fileKit.MkParentDirs(filePath); err != nil {
+	if err := fileKit.AssertNotExistOrIsFile(filePath, true); err != nil {
 		return nil, err
 	}
 
