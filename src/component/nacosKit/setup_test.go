@@ -13,43 +13,20 @@ func TestMustSetUp(t *testing.T) {
 
 	MustSetUp(config)
 
-	client, err := NewNamingClient()
+	namingClient, err := NewNamingClient()
 	if err != nil {
 		panic(err)
 	}
-	defer client.CloseClient()
-	ok, err := client.RegisterInstance(vo.RegisterInstanceParam{
-		Ip:       "127.0.0.1",
-		Port:     12345,
-		Weight:   100,
-		Enable:   true,
-		Healthy:  true,
-		Metadata: nil,
-		//ClusterName: "",
-		ServiceName: "test-service",
-		//GroupName:   "",
-		Ephemeral: false,
+	defer namingClient.CloseClient()
+	configClient, err := NewConfigClient()
+	if err != nil {
+		panic(err)
+	}
+	defer configClient.CloseClient()
+
+	configClient.GetConfig(vo.ConfigParam{
+		DataId: "common",
+		//Group:  "",
 	})
-	if err != nil {
-		panic(err)
-	}
-	if !ok {
-		panic("fail to register")
-	}
 
-	for {
-	}
-
-	//client.UpdateInstance(vo.UpdateInstanceParam{
-	//	Ip:          "",
-	//	Port:        0,
-	//	Weight:      0,
-	//	Enable:      false,
-	//	Healthy:     false,
-	//	Metadata:    nil,
-	//	ClusterName: "",
-	//	ServiceName: "",
-	//	GroupName:   "",
-	//	Ephemeral:   false,
-	//})
 }

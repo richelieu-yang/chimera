@@ -19,3 +19,11 @@ mem.VirtualMemoryStat 结构体的字段:
 (5) Free		空闲状态的内存
 */
 var GetMachineMemoryStats func() (*mem.VirtualMemoryStat, error) = mem.VirtualMemory
+
+func GetAvailableMachineMemory() (uint64, error) {
+	stat, err := GetMachineMemoryStats()
+	if err != nil {
+		return 0, err
+	}
+	return stat.Available, nil
+}
