@@ -1,7 +1,9 @@
 package main
 
-import "github.com/richelieu-yang/chimera/v2/src/image/vipsKit"
+import (
+	"fmt"
+)
 
 func main() {
-	vipsKit.SetUp(nil)
+	fmt.Println("666")
 }
