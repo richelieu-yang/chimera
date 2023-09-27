@@ -64,10 +64,7 @@ pattern: "tempfile_test*" 		=> 临时文件的文件名: "tempfile_test827818253
 pattern: "tempfile_test*.xyz" 	=> 临时文件的文件名: "tempfile_test3617672388.xyz"
 */
 func NewTemporaryFile(dirPath, pattern string) (*os.File, error) {
-	if err := AssertNotExistOrIsDir(dirPath); err != nil {
-		return nil, err
-	}
-	if err := MkDirs(dirPath); err != nil {
+	if err := AssertNotExistOrIsDir(dirPath, true); err != nil {
 		return nil, err
 	}
 	if err := strKit.AssertNotBlank(pattern, "pattern"); err != nil {

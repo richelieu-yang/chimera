@@ -22,10 +22,7 @@ func GetWorkingDir() string {
 
 // ChangeWorkingDir 设置 当前工作目录的绝对路径
 func ChangeWorkingDir(dir string) error {
-	if err := fileKit.AssertNotExistOrIsDir(dir); err != nil {
-		return err
-	}
-	if err := fileKit.MkDirs(dir); err != nil {
+	if err := fileKit.AssertNotExistOrIsDir(dir, true); err != nil {
 		return err
 	}
 
