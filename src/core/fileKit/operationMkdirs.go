@@ -7,21 +7,12 @@ import (
 	"os"
 )
 
-func MkDirs(dirPaths ...string) error {
-	return MkDirsWithPerm(os.ModePerm, dirPaths...)
-}
-
-func MkParentDirs(paths ...string) error {
-	return MkParentDirsWithPerm(os.ModePerm, paths...)
-}
-
-// MkDirsWithPerm 为目录路径，创建（一级或多级）目录.
+// MkDirs 为目录路径，创建（一级或多级）目录.
 /*
 PS:
 (1) 如果目录已经存在，将返回nil；
 (2) 如果 传参dirPath 对应的是个已存在的文件，将返回error（"mkdir {xxx}: not a directory"）.
 
-@param perm		一般都是用077权限，e.g. os.ModePerm
 @param dirPaths	目录路径s（相对路径 || 绝对路径）
 
 e.g.
@@ -34,7 +25,9 @@ e.g.1 Mac
 	(".")					=>	nil（什么都不会做）
 	("./")					=>	nil（什么都不会做）
 */
-func MkDirsWithPerm(perm os.FileMode, dirPaths ...string) error {
+func MkDirs(dirPaths ...string) error {
+	var perm os.FileMode = 0777
+
 	for _, dirPath := range dirPaths {
 		// os.MkdirAll() 的第一个传参:
 		// (1) 如果为""会返回error(mkdir : no such file or directory)
@@ -51,20 +44,19 @@ func MkDirsWithPerm(perm os.FileMode, dirPaths ...string) error {
 	return nil
 }
 
-// MkParentDirsWithPerm 为父路径，创建（一级或多级）目录.
+// MkParentDirs 为父路径，创建（一级或多级）目录.
 /*
-@param perm			e.g. os.ModePerm
-@param filePaths 	（文件 || 目录）路径s（相对路径 || 绝对路径）
+@param filePaths （文件 || 目录）路径s（相对路径 || 绝对路径）
 
 e.g.
 	("")	=> nil
 	(".")	=> nil
 */
-func MkParentDirsWithPerm(perm os.FileMode, paths ...string) error {
+func MkParentDirs(paths ...string) error {
 	for _, path := range paths {
 		// Richelieu: 为防止 import cycle，不直接使用 pathKit.ParentDir
 		parentDir := gfile.Dir(path)
-		if err := MkDirsWithPerm(perm, parentDir); err != nil {
+		if err := MkDirs(parentDir); err != nil {
 			return err
 		}
 	}

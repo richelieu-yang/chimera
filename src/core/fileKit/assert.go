@@ -25,15 +25,27 @@ func AssertExist(path string) error {
 /*
 通过的情况: 	不存在 || 存在但是个文件
 不通过的情况:	存在但是个目录
+
+@param mkdirArgs true: path不存在的话，为其创建父目录（可多级）
 */
-func AssertNotExistOrIsFile(path string) error {
+func AssertNotExistOrIsFile(path string, mkdirArgs ...bool) error {
 	if strKit.IsBlank(path) {
 		return errorKit.NewSkip(1, "[%s] path(%s) is blank", funcKit.GetFuncName(1), path)
 	}
-
 	if Exists(path) && IsDir(path) {
 		return errorKit.NewSkip(1, "[%s] path(%s) exists but it is a directory", funcKit.GetFuncName(1), path)
 	}
+
+	var flag bool
+	if mkdirArgs != nil {
+		flag = mkdirArgs[0]
+	}
+	if flag {
+		if err := MkParentDirs(path); err != nil {
+			return err
+		}
+	}
+
 	return nil
 }
 
@@ -41,15 +53,27 @@ func AssertNotExistOrIsFile(path string) error {
 /*
 通过的情况: 	不存在 || 存在但是个目录
 不通过的情况:	存在但是个文件
+
+@param mkdirArgs true: path不存在的话，为其创建目录（可多级）
 */
-func AssertNotExistOrIsDir(path string) error {
+func AssertNotExistOrIsDir(path string, mkdirArgs ...bool) error {
 	if strKit.IsBlank(path) {
 		return errorKit.NewSkip(1, "[%s] path(%s) is blank", funcKit.GetFuncName(1), path)
 	}
-
 	if Exists(path) && IsFile(path) {
 		return errorKit.NewSkip(1, "[%s] path(%s) exists but it is a file", funcKit.GetFuncName(1), path)
 	}
+
+	var flag bool
+	if mkdirArgs != nil {
+		flag = mkdirArgs[0]
+	}
+	if flag {
+		if err := MkDirs(path); err != nil {
+			return err
+		}
+	}
+
 	return nil
 }
 

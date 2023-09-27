@@ -23,8 +23,8 @@ func main() {
 		panic(err)
 	}
 
-	ep := vips.NewWebpExportParams()
-	image1bytes, _, err := image1.ExportWebp(ep)
+	exportParams := vips.NewWebpExportParams()
+	image1bytes, _, err := image1.ExportWebp(exportParams)
 	if err != nil {
 		panic(err)
 	}
