@@ -117,3 +117,7 @@ func Json(field interface{}) error {
 func File(field interface{}) error {
 	return Field(field, "file")
 }
+
+func Port(field interface{}) error {
+	return Field(field, "gt=0,lte=65535")
+}
