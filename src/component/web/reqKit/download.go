@@ -13,7 +13,7 @@ func DownloadToFile(url, filePath string) error {
 		return err
 	}
 	// filePath
-	if err := fileKit.AssertNotExistOrIsFile(filePath, true); err != nil {
+	if err := fileKit.AssertNotExistOrIsFile(filePath); err != nil {
 		return err
 	}
 

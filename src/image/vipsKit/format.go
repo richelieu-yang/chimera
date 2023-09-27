@@ -7,7 +7,7 @@ import (
 )
 
 func ToWebp(src, dest string, exportParams *vips.WebpExportParams) error {
-	if err := fileKit.AssertNotExistOrIsFile(dest, true); err != nil {
+	if err := fileKit.AssertNotExistOrIsFile(dest); err != nil {
 		return err
 	}
 

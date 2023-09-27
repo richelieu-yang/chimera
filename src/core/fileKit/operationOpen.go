@@ -35,7 +35,7 @@ PS:
 func Create(filePath string) (*os.File, error) {
 	//return gfile.Create(filePath)
 
-	if err := AssertNotExistOrIsFile(filePath, true); err != nil {
+	if err := AssertNotExistOrIsFile(filePath); err != nil {
 		return nil, err
 	}
 	return OpenFile(filePath, os.O_RDWR|os.O_CREATE|os.O_TRUNC, 0644)
@@ -48,7 +48,7 @@ TODO: perm 权限可自定义，看后续 gfile 后不会完善.
 func CreateInAppendMode(filePath string) (*os.File, error) {
 	//return gfile.Create(filePath)
 
-	if err := AssertNotExistOrIsFile(filePath, true); err != nil {
+	if err := AssertNotExistOrIsFile(filePath); err != nil {
 		return nil, err
 	}
 	return OpenFile(filePath, os.O_RDWR|os.O_CREATE|os.O_APPEND, 0644)
@@ -64,7 +64,7 @@ pattern: "tempfile_test*" 		=> 临时文件的文件名: "tempfile_test827818253
 pattern: "tempfile_test*.xyz" 	=> 临时文件的文件名: "tempfile_test3617672388.xyz"
 */
 func NewTemporaryFile(dirPath, pattern string) (*os.File, error) {
-	if err := AssertNotExistOrIsDir(dirPath, true); err != nil {
+	if err := AssertNotExistOrIsDir(dirPath); err != nil {
 		return nil, err
 	}
 	if err := strKit.AssertNotBlank(pattern, "pattern"); err != nil {
