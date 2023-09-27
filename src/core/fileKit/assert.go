@@ -36,7 +36,7 @@ func AssertNotExistOrIsFile(path string, mkdirArgs ...bool) error {
 		return errorKit.NewSkip(1, "[%s] path(%s) exists but it is a directory", funcKit.GetFuncName(1), path)
 	}
 
-	var flag bool
+	var flag bool = true
 	if mkdirArgs != nil {
 		flag = mkdirArgs[0]
 	}
@@ -64,7 +64,7 @@ func AssertNotExistOrIsDir(path string, mkdirArgs ...bool) error {
 		return errorKit.NewSkip(1, "[%s] path(%s) exists but it is a file", funcKit.GetFuncName(1), path)
 	}
 
-	var flag bool
+	var flag bool = true
 	if mkdirArgs != nil {
 		flag = mkdirArgs[0]
 	}
