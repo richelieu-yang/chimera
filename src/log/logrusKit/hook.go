@@ -20,8 +20,8 @@ func (hook *defaultPrefixHook) Fire(entry *logrus.Entry) error {
 }
 
 func (hook *defaultPrefixHook) Levels() []logrus.Level {
-	//return logrus.AllLevels
+	//// 只有 INFO、WARN 级别
+	//return []logrus.Level{logrus.InfoLevel, logrus.WarnLevel}
 
-	// 只有 INFO、WARN 级别
-	return []logrus.Level{logrus.InfoLevel, logrus.WarnLevel}
+	return logrus.AllLevels
 }
