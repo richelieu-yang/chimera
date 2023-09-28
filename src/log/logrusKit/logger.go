@@ -17,7 +17,10 @@ type (
 		// level 日志级别，默认: logrus.DebugLevel
 		level  logrus.Level
 		output io.Writer
-		// msgPrefix 日志输出的msg属性的前缀，默认: ""
+		// msgPrefix 日志输出的msg属性的前缀（默认: ""）
+		/*
+			PS: 如果不为""的话，拼接时会在 msgPrefix 和 msg 间加个空格.
+		*/
 		msgPrefix string
 	}
 
