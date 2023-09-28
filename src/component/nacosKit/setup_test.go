@@ -29,10 +29,9 @@ func TestMustSetUp(t *testing.T) {
 		Ip:   "127.0.0.1",
 		Port: 80,
 		/*
-			0: 			注册（或更新）成功，但实例不健康（即使 Healthy 为 true）
-			12345.67:	注册（或更新）失败，error: retry 3 times request failed!: request return error code 500
+			有效范围: [0.0, 10000, 0]
 		*/
-		Weight:      10000,
+		Weight:      10000.01,
 		Enable:      true,
 		Healthy:     true,
 		Metadata:    nil,
