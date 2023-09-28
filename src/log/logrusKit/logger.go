@@ -6,6 +6,7 @@ import (
 	"github.com/richelieu-yang/chimera/v2/src/core/strKit"
 	"github.com/sirupsen/logrus"
 	"io"
+	"os"
 )
 
 type (
@@ -83,7 +84,8 @@ func loadOptions(options ...LoggerOption) *loggerOptions {
 // NewLogger
 /*
 PS:
-(1) 如果希望 输出到文件 且 rotatable，可以使用 WithOutput()，详见下例.
+(1) 默认输出到 控制台(os.Stderr);
+(2) 如果希望 输出到文件 且 rotatable，可以使用 WithOutput()，详见下例.
 
 @param options 可以什么都不配置（此时输出到控制台）
 */
@@ -107,14 +109,26 @@ func NewLogger(options ...LoggerOption) *logrus.Logger {
 	return logger
 }
 
-// NewFileLogger 输出到文件(not rotatable).
+// NewFileLogger 输出到 文件(not rotatable).
 func NewFileLogger(filePath string, options ...LoggerOption) (*logrus.Logger, error) {
 	file, err := fileKit.CreateInAppendMode(filePath)
 	if err != nil {
 		return nil, err
 	}
-	option := WithOutput(file)
-	options = append(options, option)
+
+	options = append(options, WithOutput(file))
+	return NewLogger(options...), nil
+}
+
+// NewFileAndStdoutLogger 同时输出到 文件(not rotatable) 和 os.Stdout.
+func NewFileAndStdoutLogger(filePath string, options ...LoggerOption) (*logrus.Logger, error) {
+	f, err := fileKit.CreateInAppendMode(filePath)
+	if err != nil {
+		return nil, err
+	}
+	output := ioKit.MultiWriter(f, os.Stdout)
+
+	options = append(options, WithOutput(output))
 	return NewLogger(options...), nil
 }
 
