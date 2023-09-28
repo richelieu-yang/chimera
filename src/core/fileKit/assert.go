@@ -26,7 +26,8 @@ func AssertExist(path string) error {
 通过的情况: 	不存在 || 存在但是个文件
 不通过的情况:	存在但是个目录
 
-@param mkdirArgs true: path不存在的话，为其创建父目录（可多级）
+@param mkdirArgs 	(1) true: path不存在的话，为其创建父目录（可多级）
+					(2) 默认: true
 */
 func AssertNotExistOrIsFile(path string, mkdirArgs ...bool) error {
 	if strKit.IsBlank(path) {
@@ -54,7 +55,8 @@ func AssertNotExistOrIsFile(path string, mkdirArgs ...bool) error {
 通过的情况: 	不存在 || 存在但是个目录
 不通过的情况:	存在但是个文件
 
-@param mkdirArgs true: path不存在的话，为其创建目录（可多级）
+@param mkdirArgs	(1) true: path不存在的话，为其创建目录（可多级）
+					(2) 默认: true
 */
 func AssertNotExistOrIsDir(path string, mkdirArgs ...bool) error {
 	if strKit.IsBlank(path) {
