@@ -1,16 +1,18 @@
 package main
 
 import (
-	"github.com/richelieu-yang/chimera/v2/src/image/vipsKit"
+	"github.com/richelieu-yang/chimera/v2/src/log/logrusKit"
 )
 
 func main() {
-	vipsKit.SetUp(nil)
+	logger0 := logrusKit.NewLogger()
+	logger1 := logrusKit.NewLogger()
 
-	if err := vipsKit.ToWebp("iShot_2023-09-27_14.57.56.png", "1.webp", nil); err != nil {
-		panic(err)
-	}
-	if err := vipsKit.ToWebp("iShot_2023-09-27_14.57.56.png", "2.webp", nil); err != nil {
-		panic(err)
-	}
+	logger0.Info("0")
+	logger1.Info("1")
+
+	logrusKit.DisableQuote(logger1)
+
+	logger0.Info("0")
+	logger1.Info("1")
 }

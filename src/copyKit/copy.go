@@ -63,6 +63,6 @@ func DeepCopy[T any](src T) (dest T, err error) {
 	if dest, ok = obj.(T); ok {
 		return
 	}
-	err = errorKit.New("types of src(%T) and dest(%T) are different", src, dest)
+	err = errorKit.New("Fail to deep copy because types of src(%T) and dest(%T) are different.", src, dest)
 	return
 }

@@ -76,12 +76,12 @@ require (
 )
 
 require (
-	contrib.go.opencensus.io/exporter/ocagent v0.6.0 // indirect
+	contrib.go.opencensus.io/exporter/ocagent v0.7.0 // indirect
 	github.com/99designs/go-keychain v0.0.0-20191008050251-8e49817e8af4 // indirect
 	github.com/99designs/keyring v1.2.1 // indirect
 	github.com/AthenZ/athenz v1.10.39 // indirect
-	github.com/DataDog/zstd v1.5.0 // indirect
-	github.com/aliyun/alibaba-cloud-sdk-go v1.61.1704 // indirect
+	github.com/DataDog/zstd v1.5.5 // indirect
+	github.com/aliyun/alibaba-cloud-sdk-go v1.62.567 // indirect
 	github.com/andybalholm/brotli v1.0.5 // indirect
 	github.com/ardielle/ardielle-go v1.5.2 // indirect
 	github.com/beorn7/perks v1.0.1 // indirect
@@ -140,6 +140,7 @@ require (
 	github.com/mtibben/percent v0.2.1 // indirect
 	github.com/natefinch/lumberjack v2.0.0+incompatible // indirect
 	github.com/onsi/ginkgo/v2 v2.12.0 // indirect
+	github.com/opentracing/opentracing-go v1.2.1-0.20220228012449-10b1cf09e00b // indirect
 	github.com/pelletier/go-toml/v2 v2.1.0 // indirect
 	github.com/pierrec/lz4 v2.0.5+incompatible // indirect
 	github.com/pkg/errors v0.9.1 // indirect

@@ -13,16 +13,24 @@ type (
 	loggerOptions struct {
 		// formatter 日志格式
 		formatter logrus.Formatter
+
 		// reportCaller 默认: true
 		reportCaller bool
+
 		// level 日志级别，默认: logrus.DebugLevel
-		level  logrus.Level
+		level logrus.Level
+
+		// output 默认: os.Stderr
 		output io.Writer
+
 		// msgPrefix 日志输出的msg属性的前缀（默认: ""）
 		/*
 			PS: 如果不为""的话，拼接时会在 msgPrefix 和 msg 间加个空格.
 		*/
 		msgPrefix string
+
+		// disableQuote 默认: false
+		disableQuote bool
 	}
 
 	LoggerOption func(opts *loggerOptions)
@@ -58,6 +66,12 @@ func WithMsgPrefix(msgPrefix string) LoggerOption {
 	}
 }
 
+func WithDisableQuote(disableQuote bool) LoggerOption {
+	return func(opts *loggerOptions) {
+		opts.disableQuote = disableQuote
+	}
+}
+
 func loadOptions(options ...LoggerOption) *loggerOptions {
 	/* 默认值s */
 	opts := &loggerOptions{
@@ -65,19 +79,19 @@ func loadOptions(options ...LoggerOption) *loggerOptions {
 		reportCaller: true,
 		level:        logrus.DebugLevel,
 		// 默认: 输出到控制台
-		output:    nil,
-		msgPrefix: "",
+		output:       nil,
+		msgPrefix:    "",
+		disableQuote: false,
 	}
 
 	for _, option := range options {
 		option(opts)
 	}
 
-	// 容错，以防 调用方 瞎传
+	// 容错，以防"调用方"瞎传
 	if opts.formatter == nil {
-		opts.formatter = DefaultTextFormatter
+		opts.formatter = NewDefaultTextFormatter()
 	}
-
 	return opts
 }
 
@@ -104,6 +118,10 @@ func NewLogger(options ...LoggerOption) *logrus.Logger {
 	if strKit.IsNotEmpty(opts.msgPrefix) {
 		hook := &defaultPrefixHook{prefix: opts.msgPrefix}
 		logger.AddHook(hook)
+	}
+
+	if opts.disableQuote {
+		DisableQuote(logger)
 	}
 
 	return logger

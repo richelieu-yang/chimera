@@ -9,9 +9,9 @@ import (
 	"strings"
 )
 
-var (
-	DefaultTextFormatter = NewTextFormatter("")
-)
+func NewDefaultTextFormatter() *logrus.TextFormatter {
+	return NewTextFormatter("")
+}
 
 // NewTextFormatter
 /*
