@@ -19,7 +19,7 @@ import (
 (1) 需要先set up.
 (2) config_client.IConfigClient 实例，如果不用了需要"手动关闭".
 
-@param options 可以用于修改: NamespaceId...
+@param options 可以用于修改: NamespaceId、CacheDir、LogDir、LogLevel...
 */
 func NewConfigClient(options ...constant.ClientOption) (config_client.IConfigClient, error) {
 	if clientConfig == nil || serverConfigs == nil {
