@@ -31,7 +31,7 @@ func NewCorsMiddleware(origins []string) gin.HandlerFunc {
 		// 允许的请求方式，默认值是 GET，POST，PUT，PATCH，DELETE，HEAD，和 OPTIONS
 		AllowMethods: []string{"GET", "POST", "PUT", "PATCH", "DELETE", "HEAD", "OPTIONS"},
 		// 用在对预请求的响应中，指示实际的请求中可以使用哪些 HTTP 请求头
-		AllowHeaders: []string{"Origin", "Content-Length", "Content-Type", "Authorization"},
+		AllowHeaders: []string{"Content-Type", "Content-Length", "Authorization", "Accept", "Origin", "X-Requested-With"},
 		// 可以在响应中显示的请求头
 		ExposeHeaders: []string{"Content-Length", "Content-Type", "Last-Modified"},
 		// 预请求的结果能被缓存多久
@@ -46,7 +46,7 @@ func NewCorsMiddleware(origins []string) gin.HandlerFunc {
 		// 允许使用 WebSocket 协议
 		AllowWebSockets: true,
 		// 允许使用 file:// 协议
-		AllowFiles: true,
+		AllowFiles: false,
 	}
 	if len(origins) > 0 {
 		/*
