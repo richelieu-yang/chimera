@@ -1,6 +1,7 @@
 package logrusKit
 
 import (
+	"errors"
 	"fmt"
 	"github.com/richelieu-yang/chimera/v2/src/core/cpuKit"
 	"github.com/richelieu-yang/chimera/v2/src/core/memoryKit"
@@ -51,14 +52,15 @@ func PrintBasicDetails(logger *logrus.Logger) {
 	logger.Infof("[CHIMERA, JSON] library: [%s].", jsonKit.GetLibrary())
 
 	// time
-	systemTime := timeKit.GetSystemTime()
-	zoneName, zoneOffset := systemTime.Zone()
-	logger.Infof("[CHIMERA, TIME] system time: [%v], zone: [%s, %d].", systemTime, zoneName, zoneOffset)
-	if networkTime, source, err := timeKit.GetNetworkTime(); err != nil {
-		logger.WithError(err).Warn("[CHIMERA, TIME] fail to get network time")
-	} else {
-		logger.Infof("[CHIMERA, TIME] network time: [%v], source: [%s].", networkTime, source)
-	}
+	machineTime := timeKit.GetMachineTime()
+	zoneName, zoneOffset := machineTime.Zone()
+	logger.Infof("[CHIMERA, TIME] machine time: [%v], zone: [%s, %d].", machineTime, zoneName, zoneOffset)
+	// Richelieu: 先注释掉，以防导致拖延服务启动3s
+	//if networkTime, source, err := timeKit.GetNetworkTime(); err != nil {
+	//	logger.WithError(err).Warn("[CHIMERA, TIME] fail to get network time")
+	//} else {
+	//	logger.Infof("[CHIMERA, TIME] network time: [%v], source: [%s].", networkTime, source)
+	//}
 
 	// ip
 	if ips, err := ipKit.GetLocalIPs(); err != nil {
@@ -109,7 +111,8 @@ func PrintBasicDetails(logger *logrus.Logger) {
 
 	// memory
 	if stats, err := memoryKit.GetMachineMemoryStats(); err != nil {
-		logger.WithError(err).Fatal("[CHIMERA, MEMORY] fail to get machine memory stats")
+		logger.WithError(err).Fatal("[CHIMERA, MEMORY] Fail to get machine memory stats.")
+		return
 	} else {
 		str := fmt.Sprintf("total: %s, available: %s, used: %s, free: %s, used percent: %.2f%%",
 			dataSizeKit.ToReadableStringWithIEC(stats.Total),
@@ -123,7 +126,7 @@ func PrintBasicDetails(logger *logrus.Logger) {
 
 	// disk
 	if stats, err := diskKit.GetDiskUsageStats(); err != nil {
-		logger.WithError(err).Warn("[CHIMERA, DISK] fail to get disk usage stats")
+		logger.WithError(err).Warn("[CHIMERA, DISK] Fail to get disk usage stats.")
 	} else {
 		str := fmt.Sprintf("path: %s, free: %s, used: %s, total: %s, used percent: %.2f%%",
 			stats.Path,
@@ -137,10 +140,10 @@ func PrintBasicDetails(logger *logrus.Logger) {
 
 	// docker
 	if dockerIds, err := dockerKit.GetDockerIdList(); err != nil {
-		if err == docker.ErrDockerNotAvailable {
-			logger.Info("[CHIMERA, DOCKER] docker isn't available")
+		if errors.Is(err, docker.ErrDockerNotAvailable) {
+			logger.Info("[CHIMERA, DOCKER] Docker isn't available.")
 		} else {
-			logger.WithError(err).Warn("[CHIMERA, DOCKER] Fail to get docker id list")
+			logger.WithError(err).Warn("[CHIMERA, DOCKER] Fail to get docker id list.")
 		}
 	} else {
 		logger.Infof("[CHIMERA, DOCKER] docker id list: %v.", dockerIds)

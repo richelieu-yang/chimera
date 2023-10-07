@@ -7,12 +7,10 @@ import (
 	"time"
 )
 
-// GetSystemTime 获取系统时间（机器时间；本地时间；time.Local）.
-func GetSystemTime() time.Time {
-	return time.Now()
-}
+// GetMachineTime 获取系统时间（机器时间；本地时间；time.Local）.
+var GetMachineTime func() time.Time = time.Now
 
-// SetSystemTime 设置系统时间（机器时间）
+// SetMachineTime 设置系统时间（机器时间）
 /*
 PS:
 (1) 通过date命令设置root权限，需要root权限.
@@ -20,7 +18,7 @@ PS:
 
 @param password root用户的密码
 */
-func SetSystemTime(t time.Time, rootPassword string) error {
+func SetMachineTime(t time.Time, rootPassword string) error {
 	// 将时间转换为（date命令认可的）字符串
 	format := "010215042006.05"
 	timeStr := Format(t, TimeFormat(format))
@@ -36,12 +34,12 @@ func SetSystemTime(t time.Time, rootPassword string) error {
 	return err
 }
 
-// CorrectSystemTime （根据网络时间）纠正系统时间
-func CorrectSystemTime(rootPassword string) (t time.Time, err error) {
+// CorrectMachineTime （根据网络时间）纠正系统时间
+func CorrectMachineTime(rootPassword string) (t time.Time, err error) {
 	t, _, err = GetNetworkTime()
 	if err != nil {
 		return
 	}
-	err = SetSystemTime(t, rootPassword)
+	err = SetMachineTime(t, rootPassword)
 	return
 }
