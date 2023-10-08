@@ -1,11 +1,14 @@
 package otelKit
 
 import (
+	"context"
+	"github.com/sirupsen/logrus"
 	"go.opentelemetry.io/otel/attribute"
 	"go.opentelemetry.io/otel/exporters/jaeger"
 	"go.opentelemetry.io/otel/sdk/resource"
 	"go.opentelemetry.io/otel/sdk/trace"
 	semconv "go.opentelemetry.io/otel/semconv/v1.17.0"
+	"time"
 )
 
 // NewJaegerTracerProvider
@@ -38,4 +41,16 @@ func NewJaegerTracerProvider(url, service, environment string, id int64) (*trace
 		)),
 	)
 	return tp, nil
+}
+
+func ShutdownJaegerTracerProvider(tp *trace.TracerProvider) {
+	if tp == nil {
+		return
+	}
+
+	ctx, cancel := context.WithTimeout(context.TODO(), time.Second*5)
+	defer cancel()
+	if err := tp.Shutdown(ctx); err != nil {
+		logrus.WithError(err).Error("Fail to shutdown Jaeger tracer provider.")
+	}
 }
