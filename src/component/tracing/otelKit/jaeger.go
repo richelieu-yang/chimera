@@ -15,7 +15,7 @@ PS:
 (2) collector	默认端口: 14268
 (3) 创建 TracerProvider 成功的情况下（即第2个返回值为nil），建议调用 otel.SetTracerProvider().
 
-@param url 连接的jaeger服务（agent || collector），e.g."http://localhost:14268/api/traces"
+@param url 连接的jaeger服务（agent || collector） e.g."http://localhost:14268/api/traces"
 */
 func NewJaegerTracerProvider(url, service, environment string, id int64) (*trace.TracerProvider, error) {
 	/*
