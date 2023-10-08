@@ -5,6 +5,7 @@ import (
 	"github.com/gin-gonic/gin"
 	"github.com/sirupsen/logrus"
 	"go.opentelemetry.io/otel"
+	"go.opentelemetry.io/otel/attribute"
 	"net/http"
 	"sync"
 	"testing"
@@ -27,12 +28,22 @@ func TestNewJaegerTracerProvider(t *testing.T) {
 		_, span := tracer.Start(ctx, "a")
 		defer span.End()
 
+		span.SetAttributes(attribute.KeyValue{
+			Key:   "a",
+			Value: attribute.StringValue("a"),
+		})
+
 		time.Sleep(time.Second * 2)
 	}
 	b := func(ctx context.Context) {
 		tracer := otel.Tracer("my-tracer")
 		_, span := tracer.Start(ctx, "b")
 		defer span.End()
+
+		span.SetAttributes(attribute.KeyValue{
+			Key:   "b",
+			Value: attribute.StringValue("b"),
+		})
 
 		time.Sleep(time.Second * 3)
 	}
