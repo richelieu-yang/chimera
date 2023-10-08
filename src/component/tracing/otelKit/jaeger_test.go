@@ -1,27 +1,56 @@
 package otelKit
 
 import (
+	"context"
+	"github.com/gin-gonic/gin"
+	"github.com/sirupsen/logrus"
 	"go.opentelemetry.io/otel"
 	"net/http"
+	"sync"
 	"testing"
+	"time"
 )
 
 func TestNewJaegerTracerProvider(t *testing.T) {
-	tp, err := NewJaegerTracerProvider("http://localhost:14268/api/traces", "service", "environment", 1)
+	tp, err := NewJaegerTracerProvider("http://localhost:14268/api/traces", "test", "environment", 666)
 	if err != nil {
 		panic(err)
 	}
 	otel.SetTracerProvider(tp)
 
-	http.HandleFunc("/test", func(w http.ResponseWriter, r *http.Request) {
-		ctx := r.Context()
+	a := func(ctx context.Context, wg *sync.WaitGroup) {
+		defer wg.Done()
+
+		time.Sleep(time.Second)
+
 		tracer := otel.Tracer("my-tracer")
-		_, span := tracer.Start(ctx, "spanName")
+		_, span := tracer.Start(ctx, "a")
 		defer span.End()
 
-		_, _ = w.Write([]byte("Hello, World!"))
+		time.Sleep(time.Second * 2)
+	}
+	b := func(ctx context.Context) {
+		tracer := otel.Tracer("my-tracer")
+		_, span := tracer.Start(ctx, "b")
+		defer span.End()
+
+		time.Sleep(time.Second * 3)
+	}
+	engine := gin.Default()
+	engine.Any("/test", func(ctx *gin.Context) {
+		tracer := otel.Tracer("my-tracer")
+		spanCtx, span := tracer.Start(ctx, "spanName")
+		defer span.End()
+
+		wg := new(sync.WaitGroup)
+		wg.Add(1)
+		go a(spanCtx, wg)
+		b(spanCtx)
+
+		wg.Wait()
+		ctx.String(http.StatusOK, "hello")
 	})
-	if err := http.ListenAndServe(":8080", nil); err != nil {
-		panic(err)
+	if err := engine.Run(":80"); err != nil {
+		logrus.Fatal(engine)
 	}
 }
