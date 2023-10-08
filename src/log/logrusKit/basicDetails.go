@@ -27,70 +27,64 @@ func PrintBasicDetails(logger *logrus.Logger) {
 	}
 
 	logger.Infof("[CHIMERA] ===================================================================================")
-
 	logger.Infof("[CHIMERA, PROCESS] pid: [%d].", processKit.PID)
 
-	// golang
+	/* golang */
 	logger.Infof("[CHIMERA, GO] version: [%s].", runtimeKit.GoVersion)
 	logger.Infof("[CHIMERA, GO] GOROOT: [%s].", runtimeKit.GoRoot)
 
-	// os
+	/* os */
 	printOsInfo()
 
-	// user
+	/* user */
 	logger.Infof("[CHIMERA, USER] name: [%s].", userKit.GetName())
 	logger.Infof("[CHIMERA, USER] user name: [%s].", userKit.GetUserName())
 	logger.Infof("[CHIMERA, PATH] home dir: [%s].", userKit.GetUserHomeDir())
 
-	// path
+	/* path */
 	logger.Infof("[CHIMERA, PATH] working directory: [%s].", pathKit.GetWorkingDir())
 	logger.Infof("[CHIMERA, PATH] temporary directory: [%s].", pathKit.GetOsTempDir())
 	logger.Infof("[CHIMERA, PATH] SelfDir: [%s].", pathKit.SelfDir())
 	logger.Infof("[CHIMERA, PATH] MainPkgPath: [%s].", pathKit.MainPkgPath())
 
-	// json
+	/* json */
 	logger.Infof("[CHIMERA, JSON] library: [%s].", jsonKit.GetLibrary())
 
-	// time
+	/* time */
 	machineTime := timeKit.GetMachineTime()
 	zoneName, zoneOffset := machineTime.Zone()
 	logger.Infof("[CHIMERA, TIME] machine time: [%v], zone: [%s, %d].", machineTime, zoneName, zoneOffset)
-	// Richelieu: 先注释掉，以防导致拖延服务启动3s
+	// Richelieu: 先注释掉，以防（断网或弱网环境下）导致拖延服务启动3s
 	//if networkTime, source, err := timeKit.GetNetworkTime(); err != nil {
 	//	logger.WithError(err).Warn("[CHIMERA, TIME] fail to get network time")
 	//} else {
 	//	logger.Infof("[CHIMERA, TIME] network time: [%v], source: [%s].", networkTime, source)
 	//}
 
-	// ip
+	/* ip */
 	if ips, err := ipKit.GetLocalIPs(); err != nil {
-		logger.WithError(err).Warn("[CHIMERA, IP] fail to get local ips")
+		logger.WithError(err).Warn("[CHIMERA, IP] Fail to get local ips.")
 	} else {
 		logger.Infof("[CHIMERA, IP] local IPs: %s.", ips)
 	}
 	if ip, err := ipKit.GetOutboundIP(); err != nil {
-		logger.WithError(err).Warn("[CHIMERA, IP] fail to get outbound ip")
+		logger.WithError(err).Warn("[CHIMERA, IP] Fail to get outbound ip.")
 	} else {
 		logger.Infof("[CHIMERA, IP] outbound IP: [%s].", ip)
 	}
 
-	// host
+	/* host */
 	if hostInfo, err := runtimeKit.GetHostInfo(); err != nil {
-		logger.WithError(err).Warn("[CHIMERA, HOST] fail to get host stats")
+		logger.WithError(err).Warn("[CHIMERA, HOST] Fail to get host info.")
 	} else {
 		logger.Infof("[CHIMERA, HOST] host name: [%s].", hostInfo.Hostname)
 	}
 
-	// cpu
+	/* cpu */
 	logger.Infof("[CHIMERA, CPU] in a virtual machine? [%t].", cpuKit.InVirtualMachine())
-	//logger.Infof("[CHIMERA, CPU] family: [%d].", cpuKit.GetFamily())
-	//logger.Infof("[CHIMERA, CPU] model: [%d].", cpuKit.GetModel())
 	logger.Infof("[CHIMERA, CPU] vendor id: [%s].", cpuKit.GetVendorID())
 	logger.Infof("[CHIMERA, CPU] vendor string: [%s].", cpuKit.GetVendorString())
 	logger.Infof("[CHIMERA, CPU] brand name: [%s].", cpuKit.GetBrandName())
-	//logger.Infof("[CHIMERA, CPU] physical cores: [%d].", cpuKit.GetPhysicalCores())
-	//logger.Infof("[CHIMERA, CPU] threads per core: [%d].", cpuKit.GetThreadsPerCore())
-	//logger.Infof("[CHIMERA, CPU] logical cores: [%d].", cpuKit.GetLogicalCores())
 	logger.Infof("[CHIMERA, CPU] CPU number: [%d].", cpuKit.GetCpuNumber())
 	logger.Infof("[CHIMERA, CPU] features: [%s].", sliceKit.Join(cpuKit.GetFeatureSet(), ","))
 	logger.Infof("[CHIMERA, CPU] frequency: [%d]hz.", cpuKit.GetFrequency())
@@ -100,7 +94,7 @@ func PrintBasicDetails(logger *logrus.Logger) {
 		logger.Infof("[CHIMERA, CPU] usage percent: [%.2f]%%.", cpuPercent)
 	}
 
-	//// mac
+	/* mac */
 	//if macAddresses, err := runtimeKit.GetMacAddresses(); err != nil {
 	//	logger.WithFields(logger.Fields{
 	//		"error": err.Error(),
@@ -109,7 +103,7 @@ func PrintBasicDetails(logger *logrus.Logger) {
 	//	logger.Infof("[CHIMERA, MAC] mac addresses: [%v].", macAddresses)
 	//}
 
-	// memory
+	/* memory */
 	if stats, err := memoryKit.GetMachineMemoryStats(); err != nil {
 		logger.WithError(err).Fatal("[CHIMERA, MEMORY] Fail to get machine memory stats.")
 		return
@@ -124,7 +118,7 @@ func PrintBasicDetails(logger *logrus.Logger) {
 		logger.Infof("[CHIMERA, MEMORY] machine memory stats: [%s].", str)
 	}
 
-	// disk
+	/* disk */
 	if stats, err := diskKit.GetDiskUsageStats(); err != nil {
 		logger.WithError(err).Warn("[CHIMERA, DISK] Fail to get disk usage stats.")
 	} else {
@@ -138,7 +132,7 @@ func PrintBasicDetails(logger *logrus.Logger) {
 		logger.Infof("[CHIMERA, DISK] disk usage stats: [%s].", str)
 	}
 
-	// docker
+	/* docker */
 	if dockerIds, err := dockerKit.GetDockerIdList(); err != nil {
 		if errors.Is(err, docker.ErrDockerNotAvailable) {
 			logger.Info("[CHIMERA, DOCKER] Docker isn't available.")
