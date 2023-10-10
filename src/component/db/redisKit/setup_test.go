@@ -23,7 +23,7 @@ func TestSetUp(t *testing.T) {
 	c := &config{}
 	path := "_chimera-lib/config.yaml"
 	confKit.MustLoad(path, c)
-	MustSetUp(c.Redis)
+	MustSetUp(&c.Redis)
 	client, err := GetClient()
 	if err != nil {
 		logrus.Fatal(err)
