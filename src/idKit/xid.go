@@ -7,7 +7,7 @@ import (
 
 // NewXid
 /*
-@return 长度(len())为20
+@return 长度(len())固定为20
 */
 func NewXid() string {
 	return xid.New().String()
