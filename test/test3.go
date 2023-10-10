@@ -6,6 +6,12 @@ import (
 )
 
 func main() {
-	id := xid.New()
-	fmt.Println(id.String())
+	for i := 0; i < 1000; i++ {
+		str := xid.New().String()
+		fmt.Println(str)
+		fmt.Println(len(str))
+		if len(str) != 20 {
+			panic(len(str))
+		}
+	}
 }
