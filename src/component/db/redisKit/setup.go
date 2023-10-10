@@ -23,6 +23,14 @@ func SetUp(config *Config) (err error) {
 	return
 }
 
+func MustGetClient() *Client {
+	client, err := GetClient()
+	if err != nil {
+		logrus.Fatal(err)
+	}
+	return client
+}
+
 // GetClient
 /*
 前提: 成功调用 SetUp() || MustSetUp().
@@ -31,6 +39,5 @@ func GetClient() (*Client, error) {
 	if client == nil {
 		return nil, NotSetupError
 	}
-
 	return client, nil
 }
