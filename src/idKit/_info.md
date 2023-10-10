@@ -24,3 +24,15 @@ Format: tttttttttteeeeeeeeeeeeeeee where t is time and e is entropy.
 ## xid
 xid是由时间戳、进程id、Mac地址、随机数组成。有序性来源于对随机数部分的原子+1.  
 ![_img.png](_img.png)
+
+## didi/tinyid
+官方中文wiki:  
+    https://github.com/didi/tinyid/wiki  
+
+#### 2种访问方式: 
+* http方式
+* java-client方式
+
+#### Golang访问tinyid
+
+
