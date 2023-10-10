@@ -6,9 +6,14 @@ import (
 )
 
 // XAdd [生产者] 添加消息到末尾（如果指定的队列不存在，则创建一个队列）.
-func (client *Client) XAdd(ctx context.Context, a *redis.XAddArgs) (string, error) {
+/*
+@param a 	redis.XAddArgs.Stream字段必需，对应Redis中的key（stream类型）
+@return 	id: 消息的id
+*/
+func (client *Client) XAdd(ctx context.Context, a *redis.XAddArgs) (id string, err error) {
 	cmd := client.universalClient.XAdd(ctx, a)
-	return cmd.Result()
+	id, err = cmd.Result()
+	return
 }
 
 // XDel 删除消息.
