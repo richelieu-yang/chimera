@@ -8,7 +8,7 @@ import (
 // XAdd [生产者] 添加消息到末尾（如果指定的队列不存在，则创建一个队列）.
 /*
 @param a 	(1) 必需字段: Stream、Values
-			(2) redis.XAddArgs.Stream字段对应Redis中的key（stream类型）
+			(2) Stream字段对应: Redis中的key（stream类型）
 @return 	id: 消息的id
 */
 func (client *Client) XAdd(ctx context.Context, a *redis.XAddArgs) (id string, err error) {
