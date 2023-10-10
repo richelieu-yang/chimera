@@ -17,3 +17,10 @@ ULID：Universally Unique Lexicographically Sortable Identifier（通用唯一�
 ULID 是既基于时间戳又基于随机数，时间戳精确到毫秒，毫秒内有1.21e + 24个随机数，不存在冲突的风险，而且转换成字符串比 UUID 更加友好。
 Format: tttttttttteeeeeeeeeeeeeeee where t is time and e is entropy.
 
+## 参考
+10分钟搞定！Golang分布式ID集合  
+    https://mp.weixin.qq.com/s/TUsF3SgEgu4VOdosuiPurQ  
+
+## xid
+xid是由时间戳、进程id、Mac地址、随机数组成。有序性来源于对随机数部分的原子+1.  
+![_img.png](_img.png)
