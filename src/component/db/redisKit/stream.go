@@ -17,7 +17,7 @@ func (client *Client) XDel(ctx context.Context, stream string, ids ...string) (i
 	return cmd.Result()
 }
 
-// XGroupCreate [消费者]
+// XGroupCreate [消费者] 创建消费者组.
 func (client *Client) XGroupCreate(ctx context.Context, stream, group, start string) (string, error) {
 	cmd := client.universalClient.XGroupCreate(ctx, stream, group, start)
 	return cmd.Result()
@@ -33,7 +33,7 @@ func (client *Client) XReadStreams(ctx context.Context, streams ...string) ([]re
 	return cmd.Result()
 }
 
-// XReadGroup [消费者]
+// XReadGroup [消费者] 读取消费组中的消息.
 func (client *Client) XReadGroup(ctx context.Context, a *redis.XReadGroupArgs) ([]redis.XStream, error) {
 	cmd := client.universalClient.XReadGroup(ctx, a)
 	return cmd.Result()
