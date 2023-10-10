@@ -26,3 +26,8 @@ func (client *Client) XReadStreams(ctx context.Context, streams ...string) ([]re
 	cmd := client.universalClient.XReadStreams(ctx, streams...)
 	return cmd.Result()
 }
+
+func (client *Client) XGroupCreate(ctx context.Context, stream, group, start string) (string, error) {
+	cmd := client.universalClient.XGroupCreate(ctx, stream, group, start)
+	return cmd.Result()
+}

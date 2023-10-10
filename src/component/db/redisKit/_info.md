@@ -32,8 +32,10 @@ Redis Cluster中使用Lua脚本
 
 ## Stream（Redis5.0新增）
 #### 参考
-Redis Stream | 菜鸟教程
-    https://www.runoob.com/redis/redis-stream.html
+Redis Stream | 菜鸟教程  
+    https://www.runoob.com/redis/redis-stream.html  
+Go：基于Redis Stream构建可扩展事件流  
+    https://zhuanlan.zhihu.com/p/403638258  
 
 #### VS 发布订阅 (pub/sub)
 * 发布订阅 (pub/sub) 有个缺点就是消息无法持久化，如果出现网络断开、Redis 宕机等，消息就会被丢弃.
