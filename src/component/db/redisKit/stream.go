@@ -30,8 +30,17 @@ func (client *Client) XDel(ctx context.Context, stream string, ids ...string) (i
 }
 
 // XGroupCreate [消费者] 创建消费者组.
+/*
+PS:
+(1) 如果 传参stream 对应的key不存在，将返回error（ERR The XGROUP subcommand requires the key to exist. Note that for CREATE you may want to use the MKSTREAM option to create an empty stream automatically.）.
+*/
 func (client *Client) XGroupCreate(ctx context.Context, stream, group, start string) (string, error) {
 	cmd := client.universalClient.XGroupCreate(ctx, stream, group, start)
+	return cmd.Result()
+}
+
+func (client *Client) XGroupCreateMkStream(ctx context.Context, stream, group, start string) (string, error) {
+	cmd := client.universalClient.XGroupCreateMkStream(ctx, stream, group, start)
 	return cmd.Result()
 }
 
