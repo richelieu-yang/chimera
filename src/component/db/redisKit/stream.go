@@ -80,6 +80,13 @@ func (client *Client) XReadStreams(ctx context.Context, streams ...string) ([]re
 }
 
 // XReadGroup [消费者] 读取消费组中的消息.
+/*
+XReadGroupArgs结构体
+	Group: 		消费组名
+	Consumer: 	消费者名
+	Count:		读取数量
+	Block:		阻塞时间
+*/
 func (client *Client) XReadGroup(ctx context.Context, a *redis.XReadGroupArgs) ([]redis.XStream, error) {
 	cmd := client.universalClient.XReadGroup(ctx, a)
 	return cmd.Result()
