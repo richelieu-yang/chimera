@@ -25,7 +25,7 @@ func (client *Client) XAdd(ctx context.Context, a *redis.XAddArgs) (id string, e
 	return
 }
 
-// XDel 删除消息.
+// XDel 删除Stream中的特定消息.
 func (client *Client) XDel(ctx context.Context, stream string, ids ...string) (int64, error) {
 	cmd := client.universalClient.XDel(ctx, stream, ids...)
 	return cmd.Result()
