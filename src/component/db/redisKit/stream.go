@@ -90,6 +90,7 @@ XReadGroupArgs结构体
 	Consumer: 	消费者名
 	Count:		读取数量
 	Block:		阻塞时间
+	Streams:	要读取的所有Stream（!!!: 最后一个应该是 ">"）
 */
 func (client *Client) XReadGroup(ctx context.Context, a *redis.XReadGroupArgs) ([]redis.XStream, error) {
 	cmd := client.universalClient.XReadGroup(ctx, a)
