@@ -3,6 +3,8 @@ package redisKit
 import (
 	"context"
 	"github.com/redis/go-redis/v9"
+	"github.com/richelieu-yang/chimera/v2/src/core/errorKit"
+	"github.com/richelieu-yang/chimera/v2/src/core/strKit"
 )
 
 // XAdd [生产者] 添加消息到末尾（如果指定的队列不存在，则创建一个队列）.
@@ -32,16 +34,35 @@ func (client *Client) XDel(ctx context.Context, stream string, ids ...string) (i
 // XGroupCreate [消费者] 创建消费者组.
 /*
 PS:
-(1) 如果 传参stream 对应的key不存在，将返回error（ERR The XGROUP subcommand requires the key to exist. Note that for CREATE you may want to use the MKSTREAM option to create an empty stream automatically.）.
+(1) 如果 stream 对应的key:	(a) 存在，do nothing;
+							(b) 不存在，将返回error（ERR The XGROUP subcommand requires the key to exist. Note that for CREATE you may want to use the MKSTREAM option to create an empty stream automatically.）.
 */
-func (client *Client) XGroupCreate(ctx context.Context, stream, group, start string) (string, error) {
-	cmd := client.universalClient.XGroupCreate(ctx, stream, group, start)
-	return cmd.Result()
+func (client *Client) XGroupCreate(ctx context.Context, stream, group, start string) error {
+	resp, err := client.universalClient.XGroupCreate(ctx, stream, group, start).Result()
+	if err != nil {
+		return err
+	}
+	if !strKit.EqualsIgnoreCase(resp, "OK") {
+		return errorKit.New("invalid resp(%s)", resp)
+	}
+	return nil
 }
 
-func (client *Client) XGroupCreateMkStream(ctx context.Context, stream, group, start string) (string, error) {
-	cmd := client.universalClient.XGroupCreateMkStream(ctx, stream, group, start)
-	return cmd.Result()
+// XGroupCreateMkStream [消费者] 创建消费者组.
+/*
+PS:
+(1) 如果 stream 对应的key:	(a) 存在，do nothing;
+							(b) 不存在，将自动创建一个空的stream.
+*/
+func (client *Client) XGroupCreateMkStream(ctx context.Context, stream, group, start string) error {
+	resp, err := client.universalClient.XGroupCreateMkStream(ctx, stream, group, start).Result()
+	if err != nil {
+		return err
+	}
+	if !strKit.EqualsIgnoreCase(resp, "OK") {
+		return errorKit.New("invalid resp(%s)", resp)
+	}
+	return nil
 }
 
 func (client *Client) XRead(ctx context.Context, a *redis.XReadArgs) ([]redis.XStream, error) {
