@@ -85,12 +85,12 @@ func (client *Client) XReadStreams(ctx context.Context, streams ...string) ([]re
 
 // XReadGroup [消费者] 读取消费组中的消息.
 /*
-XReadGroupArgs结构体
-	Group: 		消费组名
-	Consumer: 	消费者名
-	Count:		读取数量
-	Block:		阻塞时间
-	Streams:	要读取的所有Stream（!!!: 最后一个应该是 ">"）
+XReadGroupArgs结构体:
+	Group 		消费组名
+	Consumer	消费者名
+	Count		读取数量
+	Block		阻塞时间
+	Streams		要读取的所有Stream（!!!: (1) 数量应当>=2; (2) 最后一个元素应该是 ">"）
 */
 func (client *Client) XReadGroup(ctx context.Context, a *redis.XReadGroupArgs) ([]redis.XStream, error) {
 	cmd := client.universalClient.XReadGroup(ctx, a)
