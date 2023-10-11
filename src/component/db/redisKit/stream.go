@@ -33,9 +33,12 @@ func (client *Client) XDel(ctx context.Context, stream string, ids ...string) (i
 
 // XGroupCreate [消费者] 创建消费者组.
 /*
+@Deprecated: Use XGroupCreateMkStream instead.
+
 PS:
 (1) 如果 stream 对应的key:	(a) 存在，do nothing;
 							(b) 不存在，将返回error（ERR The XGROUP subcommand requires the key to exist. Note that for CREATE you may want to use the MKSTREAM option to create an empty stream automatically.）.
+(2) 如果 group 已经存在，将返回error(BUSYGROUP Consumer Group name already exists).
 */
 func (client *Client) XGroupCreate(ctx context.Context, stream, group, start string) error {
 	resp, err := client.universalClient.XGroupCreate(ctx, stream, group, start).Result()
@@ -53,6 +56,7 @@ func (client *Client) XGroupCreate(ctx context.Context, stream, group, start str
 PS:
 (1) 如果 stream 对应的key:	(a) 存在，do nothing;
 							(b) 不存在，将自动创建一个空的stream.
+(2) 如果 group 已经存在，将返回error(BUSYGROUP Consumer Group name already exists).
 */
 func (client *Client) XGroupCreateMkStream(ctx context.Context, stream, group, start string) error {
 	resp, err := client.universalClient.XGroupCreateMkStream(ctx, stream, group, start).Result()
