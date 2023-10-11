@@ -20,6 +20,7 @@ func TestSetUp(t *testing.T) {
 	type config struct {
 		Redis Config `json:"redis"`
 	}
+
 	c := &config{}
 	path := "_chimera-lib/config.yaml"
 	confKit.MustLoad(path, c)

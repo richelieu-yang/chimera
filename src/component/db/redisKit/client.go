@@ -85,12 +85,14 @@ func NewClient(config Config) (client *Client, err error) {
 	str, err := client.Ping(ctx)
 	if err != nil {
 		if errors.Is(err, context.DeadlineExceeded) {
-			err = errorKit.New("fail to ping within timeout(%s)", pingTimeout)
+			err = errorKit.New("initial ping timeout(%s)", pingTimeout)
+		} else {
+			err = errorKit.Wrap(err, "initial ping fails")
 		}
 		return
 	}
 	if !strKit.EqualsIgnoreCase(str, "PONG") {
-		err = errorKit.New("result(%s) of ping in invalid", str)
+		err = errorKit.New("result(%s) of initial ping is invalid", str)
 		return
 	}
 	return

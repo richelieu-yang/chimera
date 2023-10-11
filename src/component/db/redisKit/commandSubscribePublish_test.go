@@ -31,7 +31,7 @@ func TestClient_SubscribeAndPublish(t *testing.T) {
 	c := &config{}
 	path := "_chimera-lib/config.yaml"
 	confKit.MustLoad(path, c)
-	MustSetUp(c.Redis)
+	MustSetUp(&c.Redis)
 	client, err := GetClient()
 	if err != nil {
 		panic(err)
@@ -109,7 +109,7 @@ func TestClient_SubscribeAndPublish1(t *testing.T) {
 	c := &config{}
 	path := "_chimera-lib/config.yaml"
 	confKit.MustLoad(path, c)
-	MustSetUp(c.Redis)
+	MustSetUp(&c.Redis)
 	client, err := GetClient()
 	if err != nil {
 		panic(err)
