@@ -32,6 +32,7 @@ func TestSetUp(t *testing.T) {
 	client = client
 
 	{
-		fmt.Println(client.Publish(context.TODO(), "WsKill", 1))
+		fmt.Println(client.XDel(context.TODO(), "tickets", "1697005411917-0"))
+		fmt.Println(client.XDel(context.TODO(), "tickets", "1697005411917-0"))
 	}
 }

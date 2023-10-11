@@ -26,6 +26,10 @@ func (client *Client) XAdd(ctx context.Context, a *redis.XAddArgs) (id string, e
 }
 
 // XDel 删除Stream中的特定消息.
+/*
+@return (1) 删除成功: 返回(1, nil)
+		(2) 删除失败: 返回(0, nil)（e.g. stream 和 id 对应的消息不存在）
+*/
 func (client *Client) XDel(ctx context.Context, stream string, ids ...string) (int64, error) {
 	cmd := client.universalClient.XDel(ctx, stream, ids...)
 	return cmd.Result()
@@ -93,6 +97,9 @@ func (client *Client) XReadGroup(ctx context.Context, a *redis.XReadGroupArgs) (
 }
 
 // XAck [消费者] 将消息标记为"已处理".
+/*
+PS: 并不会删除对应消息.
+*/
 func (client *Client) XAck(ctx context.Context, stream, group string, ids ...string) (int64, error) {
 	cmd := client.universalClient.XAck(ctx, stream, group, ids...)
 	return cmd.Result()
