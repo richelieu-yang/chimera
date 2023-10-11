@@ -8,3 +8,20 @@ Logrus也提供了一些有用的特性，如：
 * 可以使用钩子（Hooks）来在每次写入日志时执行一些操作，如发送邮件、写入数据库等；
 * 可以使用条目（Entry）来记录带有字段的日志信息，或者使用WithFields、WithTime、WithError等方法来创建带有字段的条目；
 * 可以使用日志级别函数（如Info、Warn、Error等）来记录不同级别的日志信息，或者使用Log或Print等方法来记录默认级别的日志信息。
+
+## exit handler
+e.g.
+package main
+
+import (
+"github.com/sirupsen/logrus"
+)
+
+func main() {
+// 程序正常退出不会触发 logrus.RegisterExitHandle() 注册的exit handlers，因此加上此defer语句.
+defer logrus.Fatal("Exit normally.")
+
+	logrus.RegisterExitHandler(func() {
+		logrus.Info(111)
+	})
+}
