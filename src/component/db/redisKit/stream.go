@@ -50,3 +50,9 @@ func (client *Client) XReadGroup(ctx context.Context, a *redis.XReadGroupArgs) (
 	cmd := client.universalClient.XReadGroup(ctx, a)
 	return cmd.Result()
 }
+
+// XAck [消费者] 将消息标记为"已处理".
+func (client *Client) XAck(ctx context.Context, stream, group string, ids ...string) (int64, error) {
+	cmd := client.universalClient.XAck(ctx, stream, group, ids...)
+	return cmd.Result()
+}
