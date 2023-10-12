@@ -8,8 +8,12 @@ import (
 func main() {
 	m := map[string]interface{}{
 		"a": 0,
-		"b": 1,
 	}
-	fmt.Println(mapKit.Obtain(m, "a")) // 0 true
-	fmt.Println(mapKit.Obtain(m, "c")) // <nil> false
+
+	err := mapKit.SetSafelyAndHandleOldValue(m, "a", 1, func(v interface{}) error {
+		fmt.Println(v)
+		return nil
+	})
+	fmt.Println(err)
+	fmt.Println(m)
 }
