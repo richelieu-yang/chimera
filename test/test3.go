@@ -1,14 +1,15 @@
 package main
 
 import (
-	"github.com/sirupsen/logrus"
+	"fmt"
+	"github.com/richelieu-yang/chimera/v2/src/core/mapKit"
 )
 
 func main() {
-	// 程序正常退出不会触发 logrus.RegisterExitHandle() 注册的exit handlers，因此加上此defer语句
-	defer logrus.Fatal("Exit normally.")
-
-	logrus.RegisterExitHandler(func() {
-		logrus.Info(111)
-	})
+	m := map[string]interface{}{
+		"a": 0,
+		"b": 1,
+	}
+	fmt.Println(mapKit.Obtain(m, "a")) // 0 true
+	fmt.Println(mapKit.Obtain(m, "c")) // <nil> false
 }

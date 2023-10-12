@@ -6,6 +6,24 @@ import (
 	"github.com/richelieu-yang/chimera/v2/src/core/strKit"
 )
 
+// Obtain
+/*
+@return (1) 第1个返回值: 如果key存在于m中，为key对应的值；否则为V类型的零值.
+		(2) 第2个返回值: key是否存在于m中.
+
+e.g.
+	m := map[string]interface{}{
+		"a": 0,
+		"b": 1,
+	}
+	fmt.Println(mapKit.Obtain(m, "a")) // 0 true
+	fmt.Println(mapKit.Obtain(m, "c")) // <nil> false
+*/
+func Obtain[K comparable, V any](m map[K]V, key K) (V, bool) {
+	v, ok := m[key]
+	return v, ok
+}
+
 // Get
 /*
 @param m 	可以为nil
