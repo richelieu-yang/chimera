@@ -86,7 +86,7 @@ func SetSafely[K comparable, V any](m map[K]V, key K, value V) map[K]V {
 /*
 @return 如果不为nil，说明处理旧的值失败，设置值的操作将失败
 */
-func SetSafelyAndHandleOldValue[K comparable, V any](m map[K]V, key K, value V, handler func(v V) error) error {
+func SetSafelyAndHandleOldValue[K comparable, V any](m map[K]V, key K, value V, handler func(v V) error) (map[K]V, error) {
 	var oldValue V
 	var oldExist bool
 
@@ -97,10 +97,12 @@ func SetSafelyAndHandleOldValue[K comparable, V any](m map[K]V, key K, value V, 
 	}
 
 	if oldExist {
-		return handler(oldValue)
+		if err := handler(oldValue); err != nil {
+			return nil, err
+		}
 	}
 	m[key] = value
-	return nil
+	return m, nil
 }
 
 // Keys creates an array of the map keys.
