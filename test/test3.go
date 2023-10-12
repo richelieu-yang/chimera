@@ -2,18 +2,18 @@ package main
 
 import (
 	"fmt"
-	"github.com/richelieu-yang/chimera/v2/src/core/mapKit"
 )
 
 func main() {
-	m := map[string]interface{}{
-		"a": 0,
-	}
+	fmt.Println("c", test()) // c 2
+}
 
-	err := mapKit.SetSafelyAndHandleOldValue(m, "a", 1, func(v interface{}) error {
-		fmt.Println(v)
-		return nil
-	})
-	fmt.Println(err)
-	fmt.Println(m)
+func test() (rst int) {
+	defer fmt.Println("a", rst) // a 0
+	defer func() {
+		fmt.Println("b", rst) // b 2
+	}()
+
+	rst = 1
+	return 2 // 可以拆分为2行代码: rst = 2 && return
 }
