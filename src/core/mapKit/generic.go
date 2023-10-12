@@ -9,17 +9,18 @@ import (
 @param m 可以为nil（此时返回值固定为false）
 
 e.g.
-(map[string]interface{}(nil), "1") => false
+	(map[string]interface{}(nil), "1") => false
 */
 func Contains[K comparable, V any](m map[K]V, key K) bool {
 	_, ok := m[key]
 	return ok
 }
 
-// ContainKeys 判断 map实例 中是否存在 所有指定的key
+// ContainKeys 判断 map实例 中是否存在 所有指定的key.
 /*
-@param m 可以为nil（此时返回值固定为false）
-@param keys 可以一个key都不传，此时将固定返回true
+@param m 	可以为nil（此时返回值固定为 false）
+@param keys (1) 可以一个key都不传，此时将固定返回 true;
+			(2) 多个key的情况下，只要有1个key不存在于 传参m 中，将返回false.
 */
 func ContainKeys[K comparable, V any](m map[K]V, keys ...K) bool {
 	for _, key := range keys {
