@@ -59,7 +59,7 @@ require (
 	github.com/tidwall/gjson v1.17.0
 	github.com/xuri/excelize/v2 v2.8.0
 	github.com/zeromicro/go-zero v1.5.6
-	github.com/zeromicro/zero-contrib/logx/logrusx v0.0.0-20230807142214-5952d42ba776
+	github.com/zeromicro/zero-contrib/logx/logrusx v0.0.0-20231011030150-b22586752c59
 	go.etcd.io/etcd/client/v3 v3.5.9
 	go.opentelemetry.io/otel v1.17.0
 	go.opentelemetry.io/otel/exporters/jaeger v1.17.0
