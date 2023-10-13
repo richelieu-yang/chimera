@@ -11,7 +11,7 @@ type (
 		HostName string `json:"hostName,optional" yaml:"hostName"`
 		// Port
 		/*
-			-1: 不使用 http port
+			-1（默认）: 不使用 http port
 		*/
 		Port     int  `json:"port,default=-1,range=[-1:65535]" yaml:"port"`
 		Colorful bool `json:"colorful,default=true" yaml:"colorful"`
@@ -24,7 +24,7 @@ type (
 	SslConfig struct {
 		// Port
 		/*
-			-1: 不使用 https port
+			-1（默认）: 不使用 https port
 		*/
 		Port     int    `json:"port,default=-1,range=[-1:65535]" yaml:"port"`
 		Access   bool   `json:"access,default=false" yaml:"access"`
