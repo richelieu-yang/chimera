@@ -106,6 +106,9 @@ func setUp(config *Config, recoveryMiddleware gin.HandlerFunc, businessLogic fun
 			if err := netKit.AssertValidPort(config.Port); err != nil {
 				return errorKit.Wrap(err, "Http port(%d) should be set to a valid value.", config.Port)
 			}
+			if config.Port == ssl.Port {
+				return errorKit.New("Http port and https port are same(%d).", config.Port)
+			}
 
 			go func() {
 				if err := engine.Run(netKit.JoinHostnameAndPort(config.HostName, config.Port)); err != nil {
@@ -115,7 +118,7 @@ func setUp(config *Config, recoveryMiddleware gin.HandlerFunc, businessLogic fun
 				}
 			}()
 			go func() {
-				time.Sleep(time.Millisecond * 50)
+				time.Sleep(time.Millisecond * 20)
 				if err := engine.RunTLS(netKit.JoinHostnameAndPort(config.HostName, ssl.Port), ssl.CertFile, ssl.KeyFile); err != nil {
 					logrus.WithError(err).WithFields(logrus.Fields{
 						"port":     ssl.Port,
