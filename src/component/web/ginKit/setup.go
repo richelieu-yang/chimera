@@ -85,25 +85,25 @@ func setUp(config *Config, recoveryMiddleware gin.HandlerFunc, businessLogic fun
 
 	if businessLogic != nil {
 		if err := businessLogic(engine); err != nil {
-			return errorKit.Wrap(err, "fail to execute businessLogic()")
+			return errorKit.Wrap(err, "Fail to execute businessLogic().")
 		}
 	}
 
 	ssl := config.SSL
-	if ssl.Access {
+	if ssl.Port != -1 {
 		if config.Port == -1 {
 			// (1) https port（本服务使用1个端口）
 			if err := netKit.AssertValidPort(ssl.Port); err != nil {
-				return errorKit.Wrap(err, "https port(%d) should be set to a valid value", ssl.Port)
+				return errorKit.Wrap(err, "Https port(%d) should be set to a valid value.", ssl.Port)
 			}
 			return engine.RunTLS(netKit.JoinHostnameAndPort(config.HostName, ssl.Port), ssl.CertFile, ssl.KeyFile)
 		} else {
 			// (2) https port + http port（本服务使用2个端口）
 			if err := netKit.AssertValidPort(ssl.Port); err != nil {
-				return errorKit.Wrap(err, "https port(%d) should be set to a valid value", ssl.Port)
+				return errorKit.Wrap(err, "Https port(%d) should be set to a valid value.", ssl.Port)
 			}
 			if err := netKit.AssertValidPort(config.Port); err != nil {
-				return errorKit.Wrap(err, "http port(%d) should be set to a valid value", config.Port)
+				return errorKit.Wrap(err, "Http port(%d) should be set to a valid value.", config.Port)
 			}
 
 			go func() {
@@ -126,22 +126,11 @@ func setUp(config *Config, recoveryMiddleware gin.HandlerFunc, businessLogic fun
 		}
 	}
 	// (3) http port（本服务使用1个端口）
+	if config.Port == -1 {
+		return errorKit.New("At least one of http port and https port must be set to a valid value.")
+	}
 	if err := netKit.AssertValidPort(config.Port); err != nil {
-		return errorKit.Wrap(err, "http port(%d) should be set to a valid value", config.Port)
+		return errorKit.Wrap(err, "Http port(%d) should be set to a valid value.", config.Port)
 	}
 	return engine.Run(netKit.JoinHostnameAndPort(config.HostName, config.Port))
-
-	//if config.SSL.Access {
-	//	// https server
-	//	sslConfig := config.SSL
-	//	if err := engine.RunTLS(netKit.JoinHostnameAndPort(config.HostName, config.Port), sslConfig.CertFile, sslConfig.KeyFile); err != nil {
-	//		return err
-	//	}
-	//} else {
-	//	// http server
-	//	if err := engine.Run(netKit.JoinHostnameAndPort(config.HostName, config.Port)); err != nil {
-	//		return err
-	//	}
-	//}
-	//return nil
 }
