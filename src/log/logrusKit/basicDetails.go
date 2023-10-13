@@ -3,6 +3,7 @@ package logrusKit
 import (
 	"errors"
 	"fmt"
+	"github.com/richelieu-yang/chimera/v2/src/consts"
 	"github.com/richelieu-yang/chimera/v2/src/core/cpuKit"
 	"github.com/richelieu-yang/chimera/v2/src/core/memoryKit"
 	"github.com/richelieu-yang/chimera/v2/src/core/pathKit"
@@ -25,8 +26,11 @@ func PrintBasicDetails(logger *logrus.Logger) {
 	if logger == nil {
 		logger = logrus.StandardLogger()
 	}
+	out := logger.Out
 
-	logger.Infof("[CHIMERA] ===================================================================================")
+	_, _ = out.Write([]byte("===========================================================\n"))
+	_, _ = out.Write([]byte(consts.Banner))
+
 	logger.Infof("[CHIMERA, PROCESS] pid: [%d].", processKit.PID)
 
 	/* golang */
@@ -143,5 +147,7 @@ func PrintBasicDetails(logger *logrus.Logger) {
 		logger.Infof("[CHIMERA, DOCKER] docker id list: %v.", dockerIds)
 	}
 
-	logger.Infof("[CHIMERA] ===================================================================================")
+	//logger.Infof("[CHIMERA] ===================================================================================")
+	//_, _ = out.Write([]byte("[CHIMERA] ============================================================================\n"))
+	_, _ = out.Write([]byte("===========================================================\n"))
 }
