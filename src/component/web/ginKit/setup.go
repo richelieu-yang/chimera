@@ -127,7 +127,7 @@ func setUp(config *Config, recoveryMiddleware gin.HandlerFunc, businessLogic fun
 	}
 	// (3) http port（本服务使用1个端口）
 	if config.Port == -1 {
-		return errorKit.New("At least one of http port and https port must be set to a valid value.")
+		return errorKit.New("At least one of http port and https port should be set to a valid value.")
 	}
 	if err := netKit.AssertValidPort(config.Port); err != nil {
 		return errorKit.Wrap(err, "Http port(%d) should be set to a valid value.", config.Port)
