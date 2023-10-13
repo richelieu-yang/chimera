@@ -3,6 +3,7 @@ package ginKit
 import (
 	"github.com/gin-contrib/pprof"
 	"github.com/gin-gonic/gin"
+	"github.com/richelieu-yang/chimera/v2/src/consts"
 	"github.com/richelieu-yang/chimera/v2/src/core/errorKit"
 	"github.com/richelieu-yang/chimera/v2/src/core/interfaceKit"
 	"github.com/richelieu-yang/chimera/v2/src/log/logrusKit"
@@ -88,16 +89,43 @@ func setUp(config *Config, recoveryMiddleware gin.HandlerFunc, businessLogic fun
 		}
 	}
 
-	if config.SSL.Access {
-		// (1) 必定有: , 可能有: http port
-		if err := netKit.AssertValidPort(config.SSL.Port); err != nil {
-			return err
-		}
-		if err := netKit.AssertValidPort(config.Port); err != nil {
-			return err
+	ssl := config.SSL
+	if ssl.Access {
+		if config.Port == -1 {
+			// (1) https port（本服务使用1个端口）
+			if err := netKit.AssertValidPort(ssl.Port); err != nil {
+				return err
+			}
+			return engine.RunTLS(netKit.JoinHostnameAndPort(config.HostName, ssl.Port), ssl.CertFile, ssl.KeyFile)
+		} else {
+			// (2) https port + http port（本服务使用2个端口）
+			if err := netKit.AssertValidPort(ssl.Port); err != nil {
+				return err
+			}
+			if err := netKit.AssertValidPort(config.Port); err != nil {
+				return err
+			}
+
+			go func() {
+				if err := engine.RunTLS(netKit.JoinHostnameAndPort(config.HostName, ssl.Port), ssl.CertFile, ssl.KeyFile); err != nil {
+					logrus.WithError(err).WithFields(logrus.Fields{
+						"port":     ssl.Port,
+						"certFile": ssl.CertFile,
+						"keyFile":  ssl.KeyFile,
+					}).Fatalf("[%s, Gin] Fail to start https server.", consts.UpperProjectName)
+				}
+			}()
+			go func() {
+				if err := engine.Run(netKit.JoinHostnameAndPort(config.HostName, config.Port)); err != nil {
+					logrus.WithError(err).WithFields(logrus.Fields{
+						"port": config.Port,
+					}).Fatalf("[%s, Gin] Fail to start http server.", consts.UpperProjectName)
+				}
+			}()
+			select {}
 		}
 	}
-	// (2) 必定有: http port
+	// (3) http port（本服务使用1个端口）
 	if err := netKit.AssertValidPort(config.Port); err != nil {
 		return err
 	}
