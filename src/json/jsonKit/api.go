@@ -56,14 +56,14 @@ qwdqwd
 
 	jsonData, err := api.Marshal(m)
 	if err != nil {
-		logrus.WithError(err).Fatalf("[%s, JSON] Fail to marshal!!!", consts.ProjectUpperName)
+		logrus.WithError(err).Fatalf("[%s, JSON] Fail to marshal!!!", consts.UpperProjectName)
 	}
 	var m1 map[string]interface{}
 	if err := api.Unmarshal(jsonData, &m1); err != nil {
-		logrus.WithError(err).Fatalf("[%s, JSON] Fail to unmarshal!!!", consts.ProjectUpperName)
+		logrus.WithError(err).Fatalf("[%s, JSON] Fail to unmarshal!!!", consts.UpperProjectName)
 	}
 	if compareKit.Equal(m, m1) {
 		diff := compareKit.Diff(m, m1)
-		logrus.WithField("diff", diff).Fatalf("[%s, JSON] m and m1 are different.", consts.ProjectUpperName)
+		logrus.WithField("diff", diff).Fatalf("[%s, JSON] m and m1 are different.", consts.UpperProjectName)
 	}
 }
