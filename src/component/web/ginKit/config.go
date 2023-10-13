@@ -9,15 +9,24 @@ type (
 	Config struct {
 		Mode     string `json:"mode,default=debug,options=debug|release|test" yaml:"mode"`
 		HostName string `json:"hostName,optional" yaml:"hostName"`
-		Port     int    `json:"port,default=80,range=[1:65535]" yaml:"port"`
-		Colorful bool   `json:"colorful,default=true" yaml:"colorful"`
-		Pprof    bool   `json:"pprof,default=false" yaml:"pprof"`
+		// Port
+		/*
+			-1: 不使用 http port
+		*/
+		Port     int  `json:"port,default=-1,range=[-1:65535]" yaml:"port"`
+		Colorful bool `json:"colorful,default=true" yaml:"colorful"`
+		Pprof    bool `json:"pprof,default=false" yaml:"pprof"`
 
 		SSL        SslConfig        `json:"ssl" yaml:"ssl"`
 		Middleware MiddlewareConfig `json:"middleware" yaml:"middleware"`
 	}
 
 	SslConfig struct {
+		// Port
+		/*
+			-1: 不使用 https port
+		*/
+		Port     int    `json:"port,default=-1,range=[-1:65535]" yaml:"port"`
 		Access   bool   `json:"access,default=false" yaml:"access"`
 		CertFile string `json:"certFile,optional" yaml:"certFile"`
 		KeyFile  string `json:"keyFile,optional" yaml:"keyFile"`

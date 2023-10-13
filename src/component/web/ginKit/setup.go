@@ -89,16 +89,31 @@ func setUp(config *Config, recoveryMiddleware gin.HandlerFunc, businessLogic fun
 	}
 
 	if config.SSL.Access {
-		// https server
-		sslConfig := config.SSL
-		if err := engine.RunTLS(netKit.JoinHostnameAndPort(config.HostName, config.Port), sslConfig.CertFile, sslConfig.KeyFile); err != nil {
+		// (1) 必定有: , 可能有: http port
+		if err := netKit.AssertValidPort(config.SSL.Port); err != nil {
 			return err
 		}
-	} else {
-		// http server
-		if err := engine.Run(netKit.JoinHostnameAndPort(config.HostName, config.Port)); err != nil {
+		if err := netKit.AssertValidPort(config.Port); err != nil {
 			return err
 		}
 	}
-	return nil
+	// (2) 必定有: http port
+	if err := netKit.AssertValidPort(config.Port); err != nil {
+		return err
+	}
+	return engine.Run(netKit.JoinHostnameAndPort(config.HostName, config.Port))
+
+	//if config.SSL.Access {
+	//	// https server
+	//	sslConfig := config.SSL
+	//	if err := engine.RunTLS(netKit.JoinHostnameAndPort(config.HostName, config.Port), sslConfig.CertFile, sslConfig.KeyFile); err != nil {
+	//		return err
+	//	}
+	//} else {
+	//	// http server
+	//	if err := engine.Run(netKit.JoinHostnameAndPort(config.HostName, config.Port)); err != nil {
+	//		return err
+	//	}
+	//}
+	//return nil
 }

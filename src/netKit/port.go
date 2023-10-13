@@ -6,6 +6,9 @@ import (
 )
 
 const (
+	DefaultHttpPort  = 80
+	DefaultHttpsPort = 443
+
 	// MaxPort 65535 == 0xFFFF
 	MaxPort = 0xFFFF
 )
