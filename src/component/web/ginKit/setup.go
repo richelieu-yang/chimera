@@ -9,6 +9,7 @@ import (
 	"github.com/richelieu-yang/chimera/v2/src/log/logrusKit"
 	"github.com/richelieu-yang/chimera/v2/src/netKit"
 	"github.com/sirupsen/logrus"
+	"time"
 )
 
 func MustSetUp(config *Config, recoveryMiddleware gin.HandlerFunc, businessLogic func(engine *gin.Engine) error) {
@@ -107,19 +108,20 @@ func setUp(config *Config, recoveryMiddleware gin.HandlerFunc, businessLogic fun
 			}
 
 			go func() {
+				if err := engine.Run(netKit.JoinHostnameAndPort(config.HostName, config.Port)); err != nil {
+					logrus.WithError(err).WithFields(logrus.Fields{
+						"port": config.Port,
+					}).Fatalf("[%s, Gin] Fail to start http server.", consts.UpperProjectName)
+				}
+			}()
+			go func() {
+				time.Sleep(time.Millisecond * 50)
 				if err := engine.RunTLS(netKit.JoinHostnameAndPort(config.HostName, ssl.Port), ssl.CertFile, ssl.KeyFile); err != nil {
 					logrus.WithError(err).WithFields(logrus.Fields{
 						"port":     ssl.Port,
 						"certFile": ssl.CertFile,
 						"keyFile":  ssl.KeyFile,
 					}).Fatalf("[%s, Gin] Fail to start https server.", consts.UpperProjectName)
-				}
-			}()
-			go func() {
-				if err := engine.Run(netKit.JoinHostnameAndPort(config.HostName, config.Port)); err != nil {
-					logrus.WithError(err).WithFields(logrus.Fields{
-						"port": config.Port,
-					}).Fatalf("[%s, Gin] Fail to start http server.", consts.UpperProjectName)
 				}
 			}()
 			select {}
