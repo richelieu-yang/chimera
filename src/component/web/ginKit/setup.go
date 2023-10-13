@@ -94,16 +94,16 @@ func setUp(config *Config, recoveryMiddleware gin.HandlerFunc, businessLogic fun
 		if config.Port == -1 {
 			// (1) https port（本服务使用1个端口）
 			if err := netKit.AssertValidPort(ssl.Port); err != nil {
-				return err
+				return errorKit.Wrap(err, "https port(%d) should be set to a valid value", ssl.Port)
 			}
 			return engine.RunTLS(netKit.JoinHostnameAndPort(config.HostName, ssl.Port), ssl.CertFile, ssl.KeyFile)
 		} else {
 			// (2) https port + http port（本服务使用2个端口）
 			if err := netKit.AssertValidPort(ssl.Port); err != nil {
-				return err
+				return errorKit.Wrap(err, "https port(%d) should be set to a valid value", ssl.Port)
 			}
 			if err := netKit.AssertValidPort(config.Port); err != nil {
-				return err
+				return errorKit.Wrap(err, "http port(%d) should be set to a valid value", config.Port)
 			}
 
 			go func() {
@@ -127,7 +127,7 @@ func setUp(config *Config, recoveryMiddleware gin.HandlerFunc, businessLogic fun
 	}
 	// (3) http port（本服务使用1个端口）
 	if err := netKit.AssertValidPort(config.Port); err != nil {
-		return err
+		return errorKit.Wrap(err, "http port(%d) should be set to a valid value", config.Port)
 	}
 	return engine.Run(netKit.JoinHostnameAndPort(config.HostName, config.Port))
 
