@@ -1137,6 +1137,8 @@ github.com/linkedin/goavro/v2 v2.9.8 h1:jN50elxBsGBDGVDEKqUlDuU1cFwJ11K/yrJCBMe/
 github.com/linkedin/goavro/v2 v2.9.8/go.mod h1:UgQUb2N/pmueQYH9bfqFioWxzYCZXSfF8Jw03O5sjqA=
 github.com/lionsoul2014/ip2region/binding/golang v0.0.0-20231008093706-3ef87ff7272b h1:5htBifSGhpXFOGTCfTFz0x5Kn41UyHRN6ovFGV376G8=
 github.com/lionsoul2014/ip2region/binding/golang v0.0.0-20231008093706-3ef87ff7272b/go.mod h1:C5LA5UO2ZXJrLaPLYtE1wUJMiyd/nwWaCO5cw/2pSHs=
+github.com/lionsoul2014/ip2region/binding/golang v0.0.0-20231013030745-3066d243cd04 h1:FfdA6VoXuyjsRqZlbm5H97zGtmlcM/yB6k1Expsym1E=
+github.com/lionsoul2014/ip2region/binding/golang v0.0.0-20231013030745-3066d243cd04/go.mod h1:C5LA5UO2ZXJrLaPLYtE1wUJMiyd/nwWaCO5cw/2pSHs=
 github.com/lufia/plan9stats v0.0.0-20211012122336-39d0f177ccd0/go.mod h1:zJYVVT2jmtg6P3p1VtQj7WsuWi/y4VnjVBn7F8KPB3I=
 github.com/lufia/plan9stats v0.0.0-20230326075908-cb1d2100619a h1:N9zuLhTvBSRt0gWSiJswwQ2HqDmtX/ZCDJURnKUt1Ik=
 github.com/lufia/plan9stats v0.0.0-20230326075908-cb1d2100619a/go.mod h1:JKx41uQRwqlTZabZc+kILPrO/3jlKnQ2Z8b7YiVw5cE=
