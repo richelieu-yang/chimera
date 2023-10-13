@@ -2,9 +2,12 @@ package main
 
 import (
 	"fmt"
+	"github.com/google/wire"
 )
 
 func main() {
+	wire.NewSet()
+
 	fmt.Println("c", test()) // c 2
 }
 
@@ -15,5 +18,6 @@ func test() (rst int) {
 	}()
 
 	rst = 1
-	return 2 // 可以拆分为2行代码: rst = 2 && return
+	rst = 2
+	return
 }
