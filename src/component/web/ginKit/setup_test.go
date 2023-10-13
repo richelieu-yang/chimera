@@ -12,7 +12,7 @@ import (
 
 func TestMustSetUp(t *testing.T) {
 	type config struct {
-		Gin Config `json:"Gin"`
+		Gin *Config `json:"Gin"`
 	}
 
 	wd, err := pathKit.ReviseWorkingDirInTestMode(consts.ProjectName)
