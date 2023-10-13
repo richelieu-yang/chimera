@@ -20,7 +20,7 @@ func init() {
 	stdApi = sonic.ConfigStd
 
 	if !cpuKit.HasFeature(cpuid.AVX) {
-		logrus.Fatalf("[%s, JSON] AVX isn't supported by CPU!!!", consts.UpperProjectName)
+		logrus.Fatalf("[%s, JSON, SONIC] AVX isn't supported by CPU!!!", consts.UpperProjectName)
 		return
 	}
 
