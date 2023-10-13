@@ -114,7 +114,7 @@ func setUp(config *Config, recoveryMiddleware gin.HandlerFunc, businessLogic fun
 				if err := engine.Run(netKit.JoinHostnameAndPort(config.HostName, config.Port)); err != nil {
 					logrus.WithError(err).WithFields(logrus.Fields{
 						"port": config.Port,
-					}).Fatalf("[%s, Gin] Fail to start http server.", consts.UpperProjectName)
+					}).Fatalf("[%s, GIN] Fail to start http server.", consts.UpperProjectName)
 				}
 			}()
 			go func() {
@@ -124,7 +124,7 @@ func setUp(config *Config, recoveryMiddleware gin.HandlerFunc, businessLogic fun
 						"port":     ssl.Port,
 						"certFile": ssl.CertFile,
 						"keyFile":  ssl.KeyFile,
-					}).Fatalf("[%s, Gin] Fail to start https server.", consts.UpperProjectName)
+					}).Fatalf("[%s, GIN] Fail to start https server.", consts.UpperProjectName)
 				}
 			}()
 			select {}
