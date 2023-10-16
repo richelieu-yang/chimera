@@ -25,7 +25,7 @@ type (
 	}
 )
 
-func (client *Client) GetKey(key string) string {
+func (client *Client) GetKeyWithPrefix(key string) string {
 	return client.prefix + key
 }
 
