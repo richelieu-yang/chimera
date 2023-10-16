@@ -11,7 +11,6 @@ func ToJpeg(src, dest string, exportParams *vips.JpegExportParams) error {
 		return err
 	}
 
-	// 默认值
 	if exportParams == nil {
 		exportParams = vips.NewJpegExportParams()
 		exportParams.Quality = 100
@@ -34,7 +33,6 @@ func ToPng(src, dest string, exportParams *vips.PngExportParams) error {
 		return err
 	}
 
-	// 默认值
 	if exportParams == nil {
 		exportParams = vips.NewPngExportParams()
 		exportParams.Quality = 100
@@ -85,7 +83,6 @@ func ToTiff(src, dest string, exportParams *vips.TiffExportParams) error {
 		return err
 	}
 
-	// 默认值
 	if exportParams == nil {
 		exportParams = vips.NewTiffExportParams()
 		exportParams.Quality = 100
@@ -108,7 +105,6 @@ func ToGif(src, dest string, exportParams *vips.GifExportParams) error {
 		return err
 	}
 
-	// 默认值
 	if exportParams == nil {
 		exportParams = vips.NewGifExportParams()
 		exportParams.Quality = 100
@@ -131,7 +127,6 @@ func ToAvif(src, dest string, exportParams *vips.AvifExportParams) error {
 		return err
 	}
 
-	// 默认值
 	if exportParams == nil {
 		exportParams = vips.NewAvifExportParams()
 		exportParams.Quality = 100
