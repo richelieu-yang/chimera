@@ -1,4 +1,4 @@
-// Package confKit
+// Package viperKit
 /*
 支持的配置文件格式（详见viper.go）:
 "yaml", "yml", "json", "toml", "hcl", "tfvars",
