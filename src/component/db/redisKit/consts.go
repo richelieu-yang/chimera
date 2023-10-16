@@ -6,7 +6,7 @@ type (
 )
 
 const (
-	// SingleNodeMode 单点集群
+	// SingleNodeMode 单点
 	SingleNodeMode Mode = "singleNode"
 	// MasterSlaverMode 主从集群
 	MasterSlaverMode Mode = "masterSlaver"
@@ -15,6 +15,6 @@ const (
 	// ClusterMode cluster集群
 	ClusterMode Mode = "cluster"
 
-	// DefaultMasterName 哨兵模式下
+	// DefaultMasterName 哨兵模式，默认的MasterName
 	DefaultMasterName = "mymaster"
 )
