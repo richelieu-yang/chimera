@@ -10,10 +10,8 @@ PS:
 (3) Values.Encode():		处理过的 query string
 (4) url.Parse VS url.ParseRequestURI: 当要解析的url字符串中包含有字符“#”时，使用url.Parse解析，会导致#后面的参数解析不出来。而使用ParseRequestURI就能解析到.
 	使用场景:
-		(a) 不关心#后面的数据，使用: url.Parse
-		(b) 关心#后面的数据，使用: url.ParseRequestURI
-	go中url.ParseRequestURI和url.Parse函数的踩坑记
-		https://mp.weixin.qq.com/s/L8vNnzyyg6vMxXP1Hxii6Q
+		(a) 不关心#后面的数据，使用: 	url.Parse
+		(b) 关心#后面的数据，使用: 	url.ParseRequestURI
 
 GoLand教程-Go URL解析
 	https://mp.weixin.qq.com/s/i6uEUzvu5BPna5QtSYDSMQ
