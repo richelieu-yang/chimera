@@ -72,15 +72,11 @@ func readFile(filePath string, defaultMap map[string]interface{}) (*viper.Viper,
 	}
 
 	v := viper.New()
-	v.SetConfigFile(filePath)
-
-	// 设置默认值
 	for key, value := range defaultMap {
 		v.SetDefault(key, value)
 	}
-
-	err := v.ReadInConfig()
-	if err != nil {
+	v.SetConfigFile(filePath)
+	if err := v.ReadInConfig(); err != nil {
 		return nil, err
 	}
 	return v, nil
