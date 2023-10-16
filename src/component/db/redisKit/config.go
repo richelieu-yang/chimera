@@ -4,9 +4,9 @@ import "github.com/richelieu-yang/chimera/v2/src/compareKit"
 
 type (
 	Config struct {
-		UserName string `json:"userName,optional" yaml:"userName"`
-		Password string `json:"password,optional" yaml:"password"`
-		Prefix   string `json:"prefix,optional" yaml:"prefix"`
+		UserName string `json:"userName" yaml:"userName"`
+		Password string `json:"password" yaml:"password"`
+		Prefix   string `json:"prefix" yaml:"prefix"`
 
 		Mode         Mode                `json:"mode" yaml:"mode"`
 		SingleNode   *SingleNodeConfig   `json:"singleNode" yaml:"singleNode"`
@@ -19,7 +19,7 @@ type (
 		// Addr address(host:port)
 		Addr string `json:"addr" yaml:"addr"`
 		// DB Database to be selected after connecting to the server.
-		DB int `json:"db,default=0" yaml:"db"`
+		DB int `json:"db" yaml:"db"`
 	}
 
 	MasterSlaverConfig struct {
@@ -27,10 +27,10 @@ type (
 
 	SentinelConfig struct {
 		// MasterName The master name.
-		MasterName string `json:"masterName,default=mymaster" yaml:"masterName"`
+		MasterName string `json:"masterName" yaml:"masterName"`
 		// SentinelAddrs A seed list of host:port addresses of sentinel nodes.
 		SentinelAddrs []string `json:"sentinelAddrs" yaml:"sentinelAddrs"`
-		DB            int      `json:"db,default=0" yaml:"db"`
+		DB            int      `json:"db" yaml:"db"`
 	}
 
 	ClusterConfig struct {
