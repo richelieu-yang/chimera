@@ -10,7 +10,6 @@ package viperKit
 
 import (
 	"github.com/mitchellh/mapstructure"
-	"github.com/richelieu-yang/chimera/v2/src/core/errorKit"
 	"github.com/richelieu-yang/chimera/v2/src/core/fileKit"
 	"github.com/richelieu-yang/chimera/v2/src/core/ioKit"
 	"github.com/richelieu-yang/chimera/v2/src/core/ptrKit"
@@ -24,7 +23,7 @@ import (
 @param ptr			指针，且不能为nil
 */
 func ReadAs(data []byte, configType string, defaultMap map[string]interface{}, ptr interface{}) error {
-	if err := checkParamPtr(ptr); err != nil {
+	if err := ptrKit.AssertNotNilAndIsPointer(ptr); err != nil {
 		return err
 	}
 
@@ -53,7 +52,7 @@ PS:
 @param ptr			（不能为nil） 指针
 */
 func ReadFileAs(filePath string, defaultMap map[string]interface{}, ptr interface{}) error {
-	if err := checkParamPtr(ptr); err != nil {
+	if err := ptrKit.AssertNotNilAndIsPointer(ptr); err != nil {
 		return err
 	}
 
@@ -65,17 +64,6 @@ func ReadFileAs(filePath string, defaultMap map[string]interface{}, ptr interfac
 		// 如果指针ptr对应的类型是个子类的话，需要如此进行设置，否则父类的属性都会是对应类型的零值！
 		dc.Squash = true
 	})
-}
-
-// checkParamPtr 检查传参ptr：要求是指针且不为nil
-func checkParamPtr(ptr interface{}) error {
-	if ptr == nil {
-		return errorKit.New("ptr is nil")
-	}
-	if !ptrKit.IsPointer(ptr) {
-		return errorKit.New("ptr isn't a pointer")
-	}
-	return nil
 }
 
 func readFile(filePath string, defaultMap map[string]interface{}) (*viper.Viper, error) {
