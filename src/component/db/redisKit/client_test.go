@@ -12,7 +12,7 @@ func TestSingleNodeMode(test *testing.T) {
 	config := Config{
 		UserName: "",
 		Password: "",
-		Mode:     ModeSingleNode,
+		Mode:     SingleNodeMode,
 		SingleNodeConfig: &SingleNodeConfig{
 			Addr: "127.0.0.1:6379",
 			DB:   10,
@@ -53,7 +53,7 @@ func TestClusterMode(test *testing.T) {
 	config := Config{
 		UserName:           "",
 		Password:           "",
-		Mode:               ModeCluster,
+		Mode:               ClusterMode,
 		SingleNodeConfig:   nil,
 		MasterSlaverConfig: nil,
 		SentinelConfig:     nil,

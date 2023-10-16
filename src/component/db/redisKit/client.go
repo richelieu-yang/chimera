@@ -57,13 +57,13 @@ func (client *Client) GetUniversalClient() redis.UniversalClient {
 func NewClient(config Config) (client *Client, err error) {
 	var opts *redis.UniversalOptions
 	switch config.Mode {
-	case ModeSingleNode:
+	case SingleNodeMode:
 		opts, err = newSingleNodeOptions(config)
-	case ModeMasterSlaver:
+	case MasterSlaverMode:
 		opts, err = newMasterSlaverOptions(config)
-	case ModeSentinel:
+	case SentinelMode:
 		opts, err = newSentinelOptions(config)
-	case ModeCluster:
+	case ClusterMode:
 		opts, err = newClusterOptions(config)
 	default:
 		err = errorKit.New("mode(%d) is invalid", config.Mode)
