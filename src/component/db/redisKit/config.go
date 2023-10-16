@@ -8,11 +8,11 @@ type (
 		Password string `json:"password,optional" yaml:"password"`
 		Prefix   string `json:"prefix,optional" yaml:"prefix"`
 
-		Mode               Mode                `json:"mode,default=0,options=0|2|3" yaml:"mode"`
-		SingleNodeConfig   *SingleNodeConfig   `json:"singleNode" yaml:"singleNode"`
-		MasterSlaverConfig *MasterSlaverConfig `json:"masterSlaver" yaml:"masterSlaver"`
-		SentinelConfig     *SentinelConfig     `json:"sentinel" yaml:"sentinel"`
-		ClusterConfig      *ClusterConfig      `json:"cluster" yaml:"cluster"`
+		Mode         Mode                `json:"mode" yaml:"mode"`
+		SingleNode   *SingleNodeConfig   `json:"singleNode" yaml:"singleNode"`
+		MasterSlaver *MasterSlaverConfig `json:"masterSlaver" yaml:"masterSlaver"`
+		Sentinel     *SentinelConfig     `json:"sentinel" yaml:"sentinel"`
+		Cluster      *ClusterConfig      `json:"cluster" yaml:"cluster"`
 	}
 
 	SingleNodeConfig struct {
@@ -57,19 +57,19 @@ func (config Config) Equal(config1 Config) bool {
 	}
 	switch config.Mode {
 	case SingleNodeMode:
-		if !compareKit.Equal(config.SingleNodeConfig, config1.SingleNodeConfig) {
+		if !compareKit.Equal(config.SingleNode, config1.SingleNode) {
 			return false
 		}
 	case MasterSlaverMode:
-		if !compareKit.Equal(config.MasterSlaverConfig, config1.MasterSlaverConfig) {
+		if !compareKit.Equal(config.MasterSlaver, config1.MasterSlaver) {
 			return false
 		}
 	case SentinelMode:
-		if !compareKit.Equal(config.SentinelConfig, config1.SentinelConfig) {
+		if !compareKit.Equal(config.Sentinel, config1.Sentinel) {
 			return false
 		}
 	case ClusterMode:
-		if !compareKit.Equal(config.ClusterConfig, config1.ClusterConfig) {
+		if !compareKit.Equal(config.Cluster, config1.Cluster) {
 			return false
 		}
 	}
