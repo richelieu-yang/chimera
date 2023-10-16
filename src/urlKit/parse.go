@@ -12,6 +12,8 @@ PS:
 	使用场景:
 		(a) 不关心#后面的数据，使用: url.Parse
 		(b) 关心#后面的数据，使用: url.ParseRequestURI
+	go中url.ParseRequestURI和url.Parse函数的踩坑记
+		https://mp.weixin.qq.com/s/L8vNnzyyg6vMxXP1Hxii6Q
 
 GoLand教程-Go URL解析
 	https://mp.weixin.qq.com/s/i6uEUzvu5BPna5QtSYDSMQ
