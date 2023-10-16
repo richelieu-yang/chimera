@@ -6,10 +6,7 @@ import (
 
 // NewSet
 /*
-PS:
-(1) Set: 无序；不允许重复.
-
-@param threadSafe	是否goroutines安全？
+@param threadSafe	是否并发安全？
 */
 func NewSet[T comparable](threadSafe bool, args ...T) mapset.Set[T] {
 	if threadSafe {
