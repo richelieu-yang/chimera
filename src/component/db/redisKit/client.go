@@ -25,6 +25,10 @@ type (
 	}
 )
 
+func (client *Client) GetKey(key string) string {
+	return client.prefix + key
+}
+
 func (client *Client) Close() error {
 	if client != nil && client.universalClient != nil {
 		return client.universalClient.Close()
