@@ -1,4 +1,4 @@
-## go-zero/core/conf(v1.5.6) 支持的文件格式
+## go-zero/core/conf(v1.5.6) 支持读取的配置文件格式
 * .json
 * .toml
 * .yaml
