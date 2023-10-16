@@ -52,12 +52,7 @@ func ToPng(src, dest string, exportParams *vips.PngExportParams) error {
 	return os.WriteFile(dest, imageData, 0644)
 }
 
-func ToWebp(src, dest string, exportParams *vips.WebpExportParams) error {
-	if err := fileKit.AssertNotExistOrIsFile(dest); err != nil {
-		return err
-	}
-
-	// 默认值
+func ToWebpData(src string, exportParams *vips.WebpExportParams) ([]byte, error) {
 	if exportParams == nil {
 		exportParams = vips.NewWebpExportParams()
 		exportParams.Quality = 100
@@ -65,13 +60,23 @@ func ToWebp(src, dest string, exportParams *vips.WebpExportParams) error {
 
 	imageRef, err := Read(src, nil)
 	if err != nil {
-		return err
+		return nil, err
 	}
 
 	imageData, _, err := imageRef.ExportWebp(exportParams)
+	return imageData, err
+}
+
+func ToWebp(src, dest string, exportParams *vips.WebpExportParams) error {
+	if err := fileKit.AssertNotExistOrIsFile(dest); err != nil {
+		return err
+	}
+
+	imageData, err := ToWebpData(src, exportParams)
 	if err != nil {
 		return err
 	}
+
 	return os.WriteFile(dest, imageData, 0644)
 }
 
