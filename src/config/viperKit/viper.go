@@ -6,7 +6,7 @@
 "properties", "props", "prop",
 "ini"
 */
-package confKit
+package viperKit
 
 import (
 	"github.com/mitchellh/mapstructure"

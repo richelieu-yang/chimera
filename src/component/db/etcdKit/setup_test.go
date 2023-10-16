@@ -2,7 +2,7 @@ package etcdKit
 
 import (
 	"context"
-	"github.com/richelieu-yang/chimera/v2/src/confKit"
+	"github.com/richelieu-yang/chimera/v2/src/config/confKit"
 	"github.com/richelieu-yang/chimera/v2/src/core/osKit"
 	"github.com/sirupsen/logrus"
 	clientv3 "go.etcd.io/etcd/client/v3"

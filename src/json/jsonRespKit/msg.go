@@ -1,7 +1,7 @@
 package jsonRespKit
 
 import (
-	"github.com/richelieu-yang/chimera/v2/src/confKit"
+	"github.com/richelieu-yang/chimera/v2/src/config/viperKit"
 	"github.com/richelieu-yang/chimera/v2/src/core/fileKit"
 	"github.com/richelieu-yang/chimera/v2/src/core/mapKit"
 )
@@ -28,7 +28,7 @@ func readFile(filePath string) error {
 	}
 
 	m := make(map[string]string)
-	if err := confKit.ReadFileAs(filePath, nil, &m); err != nil {
+	if err := viperKit.ReadFileAs(filePath, nil, &m); err != nil {
 		return err
 	}
 	msgMap = mapKit.Merge(msgMap, m)
@@ -41,7 +41,7 @@ func readFileData(fd *FileData) error {
 	}
 
 	m := make(map[string]string)
-	if err := confKit.ReadAs(fd.Data, fd.FileType, nil, &m); err != nil {
+	if err := viperKit.ReadAs(fd.Data, fd.FileType, nil, &m); err != nil {
 		return err
 	}
 	msgMap = mapKit.Merge(msgMap, m)
