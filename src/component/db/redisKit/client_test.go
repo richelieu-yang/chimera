@@ -13,13 +13,13 @@ func TestSingleNodeMode(test *testing.T) {
 		UserName: "",
 		Password: "",
 		Mode:     SingleNodeMode,
-		SingleNodeConfig: &SingleNodeConfig{
+		SingleNode: &SingleNodeConfig{
 			Addr: "127.0.0.1:6379",
 			DB:   10,
 		},
-		MasterSlaverConfig: nil,
-		SentinelConfig:     nil,
-		ClusterConfig:      nil,
+		MasterSlaver: nil,
+		Sentinel:     nil,
+		Cluster:      nil,
 	}
 	client, err := NewClient(config)
 	if err != nil {
@@ -51,13 +51,10 @@ func TestSingleNodeMode(test *testing.T) {
 
 func TestClusterMode(test *testing.T) {
 	config := Config{
-		UserName:           "",
-		Password:           "",
-		Mode:               ClusterMode,
-		SingleNodeConfig:   nil,
-		MasterSlaverConfig: nil,
-		SentinelConfig:     nil,
-		ClusterConfig: &ClusterConfig{
+		UserName: "",
+		Password: "",
+		Mode:     ClusterMode,
+		Cluster: &ClusterConfig{
 			Addrs: []string{
 				//"127.0.0.1:6380",
 				//"127.0.0.1:6381",

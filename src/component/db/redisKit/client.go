@@ -119,7 +119,7 @@ func newBaseOptions(config Config) *redis.UniversalOptions {
 
 // newSingleNodeOptions 单点模式
 func newSingleNodeOptions(config Config) (*redis.UniversalOptions, error) {
-	c := config.SingleNodeConfig
+	c := config.SingleNode
 	if c == nil {
 		return nil, errorKit.New("SingleNodeConfig is nil")
 	}
@@ -137,7 +137,7 @@ func newMasterSlaverOptions(config Config) (*redis.UniversalOptions, error) {
 
 // newSentinelOptions 哨兵模式
 func newSentinelOptions(config Config) (*redis.UniversalOptions, error) {
-	c := config.SentinelConfig
+	c := config.Sentinel
 	if c == nil {
 		return nil, errorKit.New("SentinelConfig is nil")
 	}
@@ -154,7 +154,7 @@ func newSentinelOptions(config Config) (*redis.UniversalOptions, error) {
 
 // newClusterOptions cluster模式
 func newClusterOptions(config Config) (*redis.UniversalOptions, error) {
-	c := config.ClusterConfig
+	c := config.Cluster
 	if c == nil {
 		return nil, errorKit.New("ClusterConfig is nil")
 	}
