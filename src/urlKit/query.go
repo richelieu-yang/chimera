@@ -4,15 +4,6 @@ import (
 	"net/url"
 )
 
-// ToEscapedQueryString
-/*
-@return 处理过的query string（可直接放到url中）
-*/
-func ToEscapedQueryString[T ~map[string][]string](m T) string {
-	var values = url.Values(m)
-	return values.Encode()
-}
-
 // ParseQuery
 /*
 e.g.
@@ -29,6 +20,15 @@ e.g.
 	fmt.Println(m) 			// map[a:[123] b:[456]]
 */
 var ParseQuery func(query string) (url.Values, error) = url.ParseQuery
+
+// ToEscapedQueryString
+/*
+@return 处理过的query string（可直接放到url中）
+*/
+func ToEscapedQueryString[T ~map[string][]string](m T) string {
+	var values = url.Values(m)
+	return values.Encode()
+}
 
 // AddQueryParamsToValues
 /*
@@ -58,8 +58,8 @@ func AddQueryParamsToRawQuery(u *url.URL, queryParams map[string][]string) {
 	u.RawQuery = values.Encode()
 }
 
-func AddQueryParamsToUrl(reqUrl string, queryParams map[string][]string) (string, error) {
-	u, err := Parse(reqUrl)
+func AddQueryParamsToUrl(rawURL string, queryParams map[string][]string) (string, error) {
+	u, err := ParseRequestURI(rawURL)
 	if err != nil {
 		return "", err
 	}

@@ -21,6 +21,11 @@ func TestParse(t *testing.T) {
 		panic(err)
 	}
 
+	v0 := u0.Query()
+	v1 := u1.Query()
+	v0 = v0
+	v1 = v1
+
 	fmt.Println(u0.String())
 	fmt.Println(u1.String())
 }
