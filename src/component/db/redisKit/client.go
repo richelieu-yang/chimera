@@ -146,8 +146,7 @@ func newSentinelOptions(config Config) (*redis.UniversalOptions, error) {
 	}
 
 	opts := newBaseOptions(config)
-	// MasterName默认为"mymaster"
-	opts.MasterName = strKit.EmptyToDefault(c.MasterName, "mymaster", true)
+	opts.MasterName = strKit.EmptyToDefault(c.MasterName, DefaultMasterName, true)
 	opts.Addrs = c.SentinelAddrs
 	opts.DB = c.DB
 	return opts, nil

@@ -14,4 +14,7 @@ const (
 	ModeSentinel Mode = 2
 	// ModeCluster cluster集群
 	ModeCluster Mode = 3
+
+	// DefaultMasterName 哨兵模式下
+	DefaultMasterName = "mymaster"
 )
