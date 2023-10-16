@@ -46,8 +46,6 @@ github(2.4k Star):
     EXIF元数据（大小，Alpha通道，配置文件，方向...）修改
     修剪（libvips 8.6+）
 
-
-
 ## problems
 将透明背景的PNG转换为JPG（或JPEG），默认背景色为黑色
     https://www.zongscan.com/demo333/95729.html
