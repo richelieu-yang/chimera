@@ -1,10 +1,19 @@
 package main
 
 import (
-	"github.com/google/wire"
+	"fmt"
 )
 
 func main() {
-	wire.NewSet()
+	fmt.Println(test()) // 1
+}
 
+func test() int {
+	a := 1
+
+	defer func() {
+		a = 2
+	}()
+
+	return a
 }
