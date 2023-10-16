@@ -146,7 +146,9 @@ func ToAvif(src, dest string, exportParams *vips.AvifExportParams) error {
 
 // ToHeif
 /*
-PS: iphone使用 heif格式 存储照片（占用内存比JPEG格式少）.
+PS:
+(1) iphone使用 heif格式 存储照片（占用内存比JPEG格式少）.
+(2) 常见的HEIF封装类型文件有 HEIC 和 AVIF.
 */
 func ToHeif(src, dest string, exportParams *vips.HeifExportParams) error {
 	if err := fileKit.AssertNotExistOrIsFile(dest); err != nil {
