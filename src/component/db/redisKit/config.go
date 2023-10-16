@@ -6,6 +6,7 @@ type (
 	Config struct {
 		UserName string `json:"userName,optional" yaml:"userName"`
 		Password string `json:"password,optional" yaml:"password"`
+		Prefix   string `json:"prefix,optional" yaml:"prefix"`
 
 		Mode               Mode                `json:"mode,default=0,options=0|2|3" yaml:"mode"`
 		SingleNodeConfig   *SingleNodeConfig   `json:"singleNodeConfig" yaml:"singleNodeConfig"`

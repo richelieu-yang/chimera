@@ -57,6 +57,8 @@ gin:
     keyFile: /Users/richelieu/GolandProjects/chimera/_chimera-lib/ssl.key
 
 redis:
+  # key的前缀（默认: ""）!!!: 此处配置项仅用于代码中获取，真正实现得靠业务自己
+  prefix:
   userName:
   password:
   # 默认值: -1
