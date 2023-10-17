@@ -62,12 +62,12 @@ redis:
   prefix:
   userName:
   password:
-  # 默认值: -1
+  # Redis集群模式
   # singleNode:   单点
   # masterSlaver: 主从集群（暂不支持）
   # sentinel:     哨兵集群
   # cluster:      cluster集群
-  mode: 0
+  mode: singleNode
   # 单点的配置
   singleNode:
     addr: 127.0.0.1:6379

@@ -16,9 +16,14 @@ func MustSetUp(config *Config) {
 }
 
 func SetUp(config *Config) (err error) {
+	if err := config.Validate(); err != nil {
+		return err
+	}
+
 	if err := interfaceKit.AssertNotNil(config, "config"); err != nil {
 		return err
 	}
+
 	client, err = NewClient(*config)
 	return
 }

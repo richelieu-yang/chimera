@@ -1,6 +1,10 @@
 package redisKit
 
-import "github.com/richelieu-yang/chimera/v2/src/compareKit"
+import (
+	"github.com/richelieu-yang/chimera/v2/src/compareKit"
+	"github.com/richelieu-yang/chimera/v2/src/core/interfaceKit"
+	"github.com/richelieu-yang/chimera/v2/src/validateKit"
+)
 
 type (
 	Config struct {
@@ -8,7 +12,7 @@ type (
 		Password string `json:"password" yaml:"password"`
 		Prefix   string `json:"prefix" yaml:"prefix"`
 
-		Mode         Mode                `json:"mode" yaml:"mode"`
+		Mode         Mode                `json:"mode" yaml:"mode" validate:"oneof=singleNode sentinel cluster"`
 		SingleNode   *SingleNodeConfig   `json:"singleNode" yaml:"singleNode"`
 		MasterSlaver *MasterSlaverConfig `json:"masterSlaver" yaml:"masterSlaver"`
 		Sentinel     *SentinelConfig     `json:"sentinel" yaml:"sentinel"`
@@ -43,6 +47,18 @@ type (
 		Addrs []string `json:"addrs" yaml:"addrs"`
 	}
 )
+
+func (config *Config) Validate() error {
+	if err := interfaceKit.AssertNotNil(config, "config"); err != nil {
+		return err
+	}
+
+	v := validateKit.New()
+	if err := v.Struct(config); err != nil {
+		return err
+	}
+	return nil
+}
 
 func (config Config) Equal(config1 Config) bool {
 	if config.UserName != config1.UserName {

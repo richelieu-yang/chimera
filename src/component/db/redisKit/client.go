@@ -66,7 +66,7 @@ func NewClient(config Config) (client *Client, err error) {
 	case ClusterMode:
 		opts, err = newClusterOptions(config)
 	default:
-		err = errorKit.New("mode(%d) is invalid", config.Mode)
+		err = errorKit.New("mode(%s) is invalid", config.Mode)
 	}
 	if err != nil {
 		return

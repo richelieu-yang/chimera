@@ -3,7 +3,7 @@ package redisKit
 import (
 	"context"
 	"fmt"
-	"github.com/richelieu-yang/chimera/v2/src/config/confKit"
+	"github.com/richelieu-yang/chimera/v2/src/config/viperKit"
 	"github.com/richelieu-yang/chimera/v2/src/consts"
 	"github.com/richelieu-yang/chimera/v2/src/core/pathKit"
 	"github.com/sirupsen/logrus"
@@ -18,13 +18,16 @@ func TestSetUp(t *testing.T) {
 	println("wd:", wd)
 
 	type config struct {
-		Redis Config `json:"redis"`
+		Redis *Config `json:"redis"`
 	}
 
-	c := &config{}
 	path := "_chimera-lib/config.yaml"
-	confKit.MustLoad(path, c)
-	MustSetUp(&c.Redis)
+	c := &config{}
+	if err := viperKit.ReadFileAs(path, nil, c); err != nil {
+		panic(err)
+	}
+
+	MustSetUp(c.Redis)
 	client, err := GetClient()
 	if err != nil {
 		logrus.Fatal(err)
