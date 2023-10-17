@@ -3,6 +3,7 @@ module github.com/richelieu-yang/chimera/v2
 go 1.21
 
 require (
+	fyne.io/fyne/v2 v2.4.1
 	github.com/apache/pulsar-client-go v0.11.0
 	github.com/apache/rocketmq-clients/golang/v5 v5.0.1-rc.5
 	github.com/bytedance/sonic v1.10.2
@@ -79,6 +80,7 @@ require (
 
 require (
 	contrib.go.opencensus.io/exporter/ocagent v0.6.0 // indirect
+	fyne.io/systray v1.10.1-0.20230722100817-88df1e0ffa9a // indirect
 	github.com/99designs/go-keychain v0.0.0-20191008050251-8e49817e8af4 // indirect
 	github.com/99designs/keyring v1.2.1 // indirect
 	github.com/AthenZ/athenz v1.10.39 // indirect
@@ -97,15 +99,22 @@ require (
 	github.com/coreos/go-semver v0.3.1 // indirect
 	github.com/coreos/go-systemd/v22 v22.5.0 // indirect
 	github.com/danieljoos/wincred v1.1.2 // indirect
+	github.com/davecgh/go-spew v1.1.2-0.20180830191138-d8f796af33cc // indirect
 	github.com/dchest/siphash v1.2.3 // indirect
 	github.com/dgryski/go-rendezvous v0.0.0-20200823014737-9f7001d12a5f // indirect
 	github.com/dvsekhvalnov/jose2go v1.5.0 // indirect
 	github.com/emersion/go-sasl v0.0.0-20200509203442-7bfe0ed36a21 // indirect
 	github.com/emersion/go-textwrapper v0.0.0-20200911093747-65d896831594 // indirect
 	github.com/fatih/color v1.15.0 // indirect
+	github.com/fredbi/uri v1.0.0 // indirect
 	github.com/fsnotify/fsnotify v1.6.0 // indirect
+	github.com/fyne-io/gl-js v0.0.0-20220119005834-d2da28d9ccfe // indirect
+	github.com/fyne-io/glfw-js v0.0.0-20220120001248-ee7290d23504 // indirect
+	github.com/fyne-io/image v0.0.0-20220602074514-4956b0afb3d2 // indirect
 	github.com/gaukas/godicttls v0.0.4 // indirect
 	github.com/gin-contrib/sse v0.1.0 // indirect
+	github.com/go-gl/gl v0.0.0-20211210172815-726fda9656d6 // indirect
+	github.com/go-gl/glfw/v3.3/glfw v0.0.0-20221017161538-93cebf72946b // indirect
 	github.com/go-logr/logr v1.2.4 // indirect
 	github.com/go-logr/stdr v1.2.2 // indirect
 	github.com/go-ole/go-ole v1.3.0 // indirect
@@ -113,8 +122,11 @@ require (
 	github.com/go-playground/universal-translator v0.18.1 // indirect
 	github.com/go-sql-driver/mysql v1.7.1 // indirect
 	github.com/go-task/slim-sprig v0.0.0-20230315185526-52ccab3ef572 // indirect
+	github.com/go-text/render v0.0.0-20230619120952-35bccb6164b8 // indirect
+	github.com/go-text/typesetting v0.0.0-20230616162802-9c17dd34aa4a // indirect
 	github.com/goccy/go-json v0.10.2 // indirect
 	github.com/godbus/dbus v0.0.0-20190726142602-4481cbc300e2 // indirect
+	github.com/godbus/dbus/v5 v5.1.0 // indirect
 	github.com/gogo/protobuf v1.3.2 // indirect
 	github.com/golang-jwt/jwt v3.2.1+incompatible // indirect
 	github.com/golang/groupcache v0.0.0-20210331224755-41bb18bfe9da // indirect
@@ -122,6 +134,7 @@ require (
 	github.com/golang/protobuf v1.5.3 // indirect
 	github.com/golang/snappy v0.0.4 // indirect
 	github.com/google/pprof v0.0.0-20230901174712-0191c66da455 // indirect
+	github.com/gopherjs/gopherjs v1.17.2 // indirect
 	github.com/grpc-ecosystem/grpc-gateway/v2 v2.15.0 // indirect
 	github.com/gsterjov/go-libsecret v0.0.0-20161001094733-a6f4afe4910c // indirect
 	github.com/hashicorp/errwrap v1.1.0 // indirect
@@ -130,6 +143,7 @@ require (
 	github.com/jinzhu/inflection v1.0.0 // indirect
 	github.com/jinzhu/now v1.1.5 // indirect
 	github.com/jmespath/go-jmespath v0.3.0 // indirect
+	github.com/jsummers/gobmp v0.0.0-20151104160322-e2ba15ffa76e // indirect
 	github.com/leodido/go-urn v1.2.4 // indirect
 	github.com/linkedin/goavro/v2 v2.9.8 // indirect
 	github.com/lufia/plan9stats v0.0.0-20230326075908-cb1d2100619a // indirect
@@ -145,6 +159,7 @@ require (
 	github.com/pelletier/go-toml/v2 v2.1.0 // indirect
 	github.com/pierrec/lz4 v2.0.5+incompatible // indirect
 	github.com/pkg/errors v0.9.1 // indirect
+	github.com/pmezard/go-difflib v1.0.1-0.20181226105442-5d4384ee4fb2 // indirect
 	github.com/power-devops/perfstat v0.0.0-20221212215047-62379fc7944b // indirect
 	github.com/prometheus/client_golang v1.16.0 // indirect
 	github.com/prometheus/client_model v0.3.0 // indirect
@@ -163,7 +178,11 @@ require (
 	github.com/spaolacci/murmur3 v1.1.0 // indirect
 	github.com/spf13/afero v1.10.0 // indirect
 	github.com/spf13/pflag v1.0.5 // indirect
+	github.com/srwiley/oksvg v0.0.0-20221011165216-be6e8873101c // indirect
+	github.com/srwiley/rasterx v0.0.0-20220730225603-2ab79fcdd4ef // indirect
+	github.com/stretchr/testify v1.8.4 // indirect
 	github.com/subosito/gotenv v1.6.0 // indirect
+	github.com/tevino/abool v1.2.0 // indirect
 	github.com/tidwall/match v1.1.1 // indirect
 	github.com/tidwall/pretty v1.2.0 // indirect
 	github.com/tklauser/go-sysconf v0.3.12 // indirect
@@ -173,6 +192,7 @@ require (
 	github.com/valyala/fastrand v1.1.0 // indirect
 	github.com/xuri/efp v0.0.0-20230802181842-ad255f2331ca // indirect
 	github.com/xuri/nfp v0.0.0-20230819163627-dc951e3ffe1a // indirect
+	github.com/yuin/goldmark v1.5.5 // indirect
 	github.com/yusufpapurcu/wmi v1.2.3 // indirect
 	go.etcd.io/etcd/api/v3 v3.5.9 // indirect
 	go.etcd.io/etcd/client/pkg/v3 v3.5.9 // indirect
@@ -182,6 +202,7 @@ require (
 	go.uber.org/multierr v1.10.0 // indirect
 	golang.org/x/arch v0.5.0 // indirect
 	golang.org/x/crypto v0.14.0 // indirect
+	golang.org/x/mobile v0.0.0-20230531173138-3c911d8e3eda // indirect
 	golang.org/x/mod v0.13.0 // indirect
 	golang.org/x/net v0.17.0 // indirect
 	golang.org/x/oauth2 v0.13.0 // indirect
@@ -199,4 +220,5 @@ require (
 	gopkg.in/ini.v1 v1.67.0 // indirect
 	gopkg.in/natefinch/lumberjack.v2 v2.0.0 // indirect
 	gopkg.in/yaml.v2 v2.4.0 // indirect
+	honnef.co/go/js/dom v0.0.0-20210725211120-f030747120f2 // indirect
 )
