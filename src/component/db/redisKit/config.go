@@ -33,7 +33,7 @@ type (
 		// MasterName The master name.
 		MasterName string `json:"masterName" yaml:"masterName"`
 		// Addrs A seed list of host:port addresses of sentinel nodes.
-		Addrs []string `json:"addrs" yaml:"addrs" validate:"required"`
+		Addrs []string `json:"addrs" yaml:"addrs" validate:"required,dive,hostname_port"`
 		DB    int      `json:"db" yaml:"db" validate:"gte=0"`
 	}
 
@@ -44,7 +44,7 @@ type (
 			可以是: 所有的 master 的地址，
 			也可以是: 所有的 master + slave 的地址（推荐）.
 		*/
-		Addrs []string `json:"addrs" yaml:"addrs" validate:"required"`
+		Addrs []string `json:"addrs" yaml:"addrs" validate:"required,dive,hostname_port"`
 	}
 )
 
