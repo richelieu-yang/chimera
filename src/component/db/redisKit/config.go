@@ -3,7 +3,6 @@ package redisKit
 import (
 	"github.com/richelieu-yang/chimera/v2/src/compareKit"
 	"github.com/richelieu-yang/chimera/v2/src/core/errorKit"
-	"github.com/richelieu-yang/chimera/v2/src/core/interfaceKit"
 	"github.com/richelieu-yang/chimera/v2/src/validateKit"
 )
 
@@ -49,14 +48,14 @@ type (
 	}
 )
 
+// Validate
+/*
+PS: config可能为nil.
+*/
 func (config *Config) Validate() error {
-	if err := interfaceKit.AssertNotNil(config, "config"); err != nil {
-		return err
-	}
-
 	v := validateKit.New()
 	if err := v.Struct(config); err != nil {
-		return err
+		return errorKit.Wrap(err, "Fail to validate.")
 	}
 
 	switch config.Mode {
