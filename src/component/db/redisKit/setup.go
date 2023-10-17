@@ -1,7 +1,6 @@
 package redisKit
 
 import (
-	"github.com/richelieu-yang/chimera/v2/src/core/interfaceKit"
 	"github.com/richelieu-yang/chimera/v2/src/log/logrusKit"
 	"github.com/sirupsen/logrus"
 )
@@ -17,10 +16,6 @@ func MustSetUp(config *Config) {
 
 func SetUp(config *Config) (err error) {
 	if err := config.Validate(); err != nil {
-		return err
-	}
-
-	if err := interfaceKit.AssertNotNil(config, "config"); err != nil {
 		return err
 	}
 
