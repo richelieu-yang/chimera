@@ -119,23 +119,19 @@ func _verify(logger *logrus.Logger, topic, consumerLogPath, producerLogPath, uli
 	defer cancel()
 	go func() {
 		defer func() {
-			logger.Info("[Pulsar, Verify, Consumer] goroutine ends")
+			logger.Info("(CONSUMER) Goroutine ends.")
 		}()
 
 		s := sliceKit.Copy(texts)
 		for {
 			msg, err := consumer.Receive(consumerCtx)
 			if err != nil {
-				logger.WithFields(logrus.Fields{
-					"error": err.Error(),
-				}).Info("[Pulsar, Verify, Consumer] fail to receive")
+				logger.WithError(err).Info("(CONSUMER) Fail to receive.")
 				consumerErrCh <- err
 				break
 			}
 			if err := consumer.Ack(msg); err != nil {
-				logger.WithFields(logrus.Fields{
-					"error": err.Error(),
-				}).Info("[Pulsar, Verify, Consumer] fail to ack")
+				logger.WithError(err).Info("(CONSUMER) Fail to ack.")
 				consumerErrCh <- err
 				break
 			}
@@ -148,10 +144,10 @@ func _verify(logger *logrus.Logger, topic, consumerLogPath, producerLogPath, uli
 				"left":  left,
 				"valid": ok,
 				"text":  text,
-			}).Info("[Pulsar, Verify, Consumer] receive a message")
+			}).Info("(CONSUMER) Receive a message.")
 
 			if ok && left == 0 {
-				logger.Info("[Pulsar, Verify, Consumer] receive all messages!")
+				logger.Info("(CONSUMER) Receive all messages!")
 				ch <- struct{}{}
 				break
 			}
@@ -161,7 +157,7 @@ func _verify(logger *logrus.Logger, topic, consumerLogPath, producerLogPath, uli
 	/* producer */
 	go func() {
 		defer func() {
-			logger.Info("[Pulsar, Verify, Producer] goroutine ends")
+			logger.Info("(PRODUCER) Goroutine ends.")
 		}()
 
 		for _, text := range texts {
@@ -178,13 +174,13 @@ func _verify(logger *logrus.Logger, topic, consumerLogPath, producerLogPath, uli
 				logger.WithFields(logrus.Fields{
 					"text":  text,
 					"error": err.Error(),
-				}).Error("[Pulsar, Verify, Producer] fail to send")
+				}).Error("(PRODUCER) Fail to send.")
 				producerErrCh <- err
 				break
 			}
 			logger.WithFields(logrus.Fields{
 				"text": text,
-			}).Info("[Pulsar, Verify, Producer] succeeded to send")
+			}).Info("(PRODUCER) Manager to send.")
 		}
 	}()
 

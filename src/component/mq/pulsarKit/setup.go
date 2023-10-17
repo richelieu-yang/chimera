@@ -15,8 +15,7 @@ var config *Config
 @param topicForVerify 用于验证的topic（为""则不验证）
 */
 func MustSetUp(config *Config, topicForVerify string) {
-	err := SetUp(config, topicForVerify)
-	if err != nil {
+	if err := SetUp(config, topicForVerify); err != nil {
 		logrusKit.DisableQuote(nil)
 		logrus.Fatalf("%+v", err)
 	}
