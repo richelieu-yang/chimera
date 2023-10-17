@@ -67,7 +67,7 @@ redis:
   #   masterSlaver: 主从集群（暂不支持）
   #   sentinel:     哨兵集群
   #   cluster:      cluster集群
-  mode: sentinel
+  mode: cluster
   singleNode:
     addr: 127.0.0.1:6379
     db: 0
