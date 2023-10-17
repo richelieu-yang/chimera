@@ -63,24 +63,21 @@ redis:
   userName:
   password:
   # Redis集群模式
-  # singleNode:   单点
-  # masterSlaver: 主从集群（暂不支持）
-  # sentinel:     哨兵集群
-  # cluster:      cluster集群
+  #   singleNode:   单点
+  #   masterSlaver: 主从集群（暂不支持）
+  #   sentinel:     哨兵集群
+  #   cluster:      cluster集群
   mode: singleNode
-  # 单点的配置
   singleNode:
     addr: 127.0.0.1:6379
     db: 0
-  # 哨兵集群的配置
   sentinel:
     masterName: mymaster
-    sentinelAddrs:
+    addrs:
       - 172.18.21.17:26380
       - 172.18.21.17:26381
       - 172.18.21.17:26382
     db: 0
-  # cluster集群的配置
   cluster:
     # 可以是: 所有的 master 的地址，也可以是: 所有的 master + slave 的地址（推荐）.
     addrs:

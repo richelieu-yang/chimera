@@ -141,13 +141,13 @@ func newSentinelOptions(config Config) (*redis.UniversalOptions, error) {
 	if c == nil {
 		return nil, errorKit.New("SentinelConfig is nil")
 	}
-	if len(c.SentinelAddrs) == 0 {
-		return nil, errorKit.New("length of SentinelAddrs is 0")
+	if len(c.Addrs) == 0 {
+		return nil, errorKit.New("length of Addrs is 0")
 	}
 
 	opts := newBaseOptions(config)
 	opts.MasterName = strKit.EmptyToDefault(c.MasterName, DefaultMasterName, true)
-	opts.Addrs = c.SentinelAddrs
+	opts.Addrs = c.Addrs
 	opts.DB = c.DB
 	return opts, nil
 }

@@ -22,7 +22,7 @@ type (
 
 	SingleNodeConfig struct {
 		// Addr address(host:port)
-		Addr string `json:"addr" yaml:"addr"`
+		Addr string `json:"addr" yaml:"addr" validate:"required"`
 		// DB Database to be selected after connecting to the server.
 		DB int `json:"db" yaml:"db" validate:"gte=0"`
 	}
@@ -33,9 +33,9 @@ type (
 	SentinelConfig struct {
 		// MasterName The master name.
 		MasterName string `json:"masterName" yaml:"masterName"`
-		// SentinelAddrs A seed list of host:port addresses of sentinel nodes.
-		SentinelAddrs []string `json:"sentinelAddrs" yaml:"sentinelAddrs"`
-		DB            int      `json:"db" yaml:"db" validate:"gte=0"`
+		// Addrs A seed list of host:port addresses of sentinel nodes.
+		Addrs []string `json:"addrs" yaml:"addrs" validate:"required"`
+		DB    int      `json:"db" yaml:"db" validate:"gte=0"`
 	}
 
 	ClusterConfig struct {
@@ -45,7 +45,7 @@ type (
 			可以是: 所有的 master 的地址，
 			也可以是: 所有的 master + slave 的地址（推荐）.
 		*/
-		Addrs []string `json:"addrs" yaml:"addrs"`
+		Addrs []string `json:"addrs" yaml:"addrs" validate:"required"`
 	}
 )
 
