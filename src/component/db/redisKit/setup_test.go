@@ -15,13 +15,13 @@ func TestSetUp(t *testing.T) {
 	if err != nil {
 		panic(err)
 	}
-	println("wd:", wd)
+	logrus.Infof("wd: [%s].", wd)
+	path := "_chimera-lib/config.yaml"
 
 	type config struct {
 		Redis *Config `json:"redis"`
 	}
 
-	path := "_chimera-lib/config.yaml"
 	c := &config{}
 	if err := viperKit.ReadFileAs(path, nil, c); err != nil {
 		panic(err)

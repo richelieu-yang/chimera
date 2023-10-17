@@ -3,6 +3,7 @@ package pulsarKit
 import (
 	"context"
 	"github.com/apache/pulsar-client-go/pulsar"
+	"github.com/richelieu-yang/chimera/v2/src/core/errorKit"
 	"github.com/richelieu-yang/chimera/v2/src/log/logrusKit"
 	"github.com/richelieu-yang/chimera/v2/src/validateKit"
 	"github.com/sirupsen/logrus"
@@ -36,6 +37,7 @@ func SetUp(pc *Config, topicForVerify string) (err error) {
 
 	// verify
 	if err = verify(topicForVerify); err != nil {
+		err = errorKit.Wrap(err, "Fail to verify")
 		return
 	}
 

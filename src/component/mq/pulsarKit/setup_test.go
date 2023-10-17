@@ -1,17 +1,30 @@
 package pulsarKit
 
 import (
+	"github.com/richelieu-yang/chimera/v2/src/config/viperKit"
+	"github.com/richelieu-yang/chimera/v2/src/consts"
+	"github.com/richelieu-yang/chimera/v2/src/core/pathKit"
+	"github.com/sirupsen/logrus"
 	"testing"
 )
 
 func TestSetUp(t *testing.T) {
-	pulsarConfig := &Config{
-		//Addrs: []string{"127.0.0.1:6650"},
-		Addrs: []string{"192.168.80.27:6650", "192.168.80.42:6650", "192.168.80.43:6650"},
-		//Addrs: []string{"192.168.1.128:6650"},
-		//Addrs: []string{"192.168.0.247:6650"},
+	wd, err := pathKit.ReviseWorkingDirInTestMode(consts.ProjectName)
+	if err != nil {
+		panic(err)
 	}
-	MustSetUp(pulsarConfig, "test")
+	logrus.Infof("wd: [%s].", wd)
+	path := "_chimera-lib/config.yaml"
+
+	type config struct {
+		Pulsar *Config `json:"pulsar"`
+	}
+
+	c := &config{}
+	if err := viperKit.ReadFileAs(path, nil, c); err != nil {
+		panic(err)
+	}
+	MustSetUp(c.Pulsar, "test")
 
 	//topic := "test"
 	//consumer, err := NewConsumer(context.TODO(), pulsar.ConsumerOptions{
