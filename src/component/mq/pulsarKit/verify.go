@@ -68,7 +68,7 @@ func verify(topicForVerify string) (err error) {
 			if err := fileKit.Remove(producerLogPath); err != nil {
 				logger.WithError(err).Error("Fail to delete producerLogPath.")
 			} else {
-				logger.Info("Delete producerLogPath")
+				logger.Info("Delete producerLogPath.")
 			}
 		}
 	}()
