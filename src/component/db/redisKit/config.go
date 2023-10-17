@@ -21,7 +21,7 @@ type (
 
 	SingleNodeConfig struct {
 		// Addr address(host:port)
-		Addr string `json:"addr" yaml:"addr" validate:"required"`
+		Addr string `json:"addr" yaml:"addr" validate:"hostname_port"`
 		// DB Database to be selected after connecting to the server.
 		DB int `json:"db" yaml:"db" validate:"gte=0"`
 	}
@@ -55,7 +55,7 @@ PS: config可能为nil.
 func (config *Config) Validate() error {
 	v := validateKit.New()
 	if err := v.Struct(config); err != nil {
-		return errorKit.Wrap(err, "Fail to validate.")
+		return errorKit.Wrap(err, "Fail to validate")
 	}
 
 	switch config.Mode {

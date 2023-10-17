@@ -20,14 +20,18 @@ func (u *User) Validate() error {
 }
 
 func main() {
-	u := &User{
-		Email:    "",
-		Password: "",
-		Token:    "111",
-	}
+	//u := &User{
+	//	Email:    "",
+	//	Password: "",
+	//	Token:    "111",
+	//}
 
 	v := validateKit.New()
-	if err := v.Struct(u); err != nil {
+	if err := v.Var("10.0.9.141:6379", "hostname_port"); err != nil {
 		panic(err)
 	}
+
+	//if err := v.Struct(u); err != nil {
+	//	panic(err)
+	//}
 }

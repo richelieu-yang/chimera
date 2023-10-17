@@ -56,37 +56,37 @@ gin:
     # key文件(".key")
     keyFile: /Users/richelieu/GolandProjects/chimera/_chimera-lib/ssl.key
 
-#redis:
-#  # key的前缀（默认: ""）
-#  # !!!: 此处配置项仅用于代码中获取，真正实现得靠业务自己（go-redis不支持）
-#  prefix:
-#  userName:
-#  password:
-#  # Redis集群模式
-#  #   singleNode:   单点
-#  #   masterSlaver: 主从集群（暂不支持）
-#  #   sentinel:     哨兵集群
-#  #   cluster:      cluster集群
-#  mode: singleNode
-#  singleNode:
-#    addr: 127.0.0.1:6379
-#    db: 0
-#  sentinel:
-#    masterName: mymaster
-#    addrs:
-#      - 172.18.21.17:26380
-#      - 172.18.21.17:26381
-#      - 172.18.21.17:26382
-#    db: 0
-#  cluster:
-#    # 可以是: 所有的 master 的地址，也可以是: 所有的 master + slave 的地址（推荐）.
-#    addrs:
-#      - 192.168.1.25:6380
-#      - 192.168.1.25:6381
-#      - 192.168.1.25:6382
-#      - 192.168.1.25:6383
-#      - 192.168.1.25:6384
-#      - 192.168.1.25:6385
+redis:
+  # key的前缀（默认: ""）
+  # !!!: 此处配置项仅用于代码中获取，真正实现得靠业务自己（go-redis不支持）
+  prefix:
+  userName:
+  password:
+  # Redis集群模式
+  #   singleNode:   单点
+  #   masterSlaver: 主从集群（暂不支持）
+  #   sentinel:     哨兵集群
+  #   cluster:      cluster集群
+  mode: sentinel
+  singleNode:
+    addr: 127.0.0.1:6379
+    db: 0
+  sentinel:
+    masterName: mymaster
+    addrs:
+      - 172.18.21.17:26380
+      - 172.18.21.17:26381
+      - 172.18.21.17:26382
+    db: 0
+  cluster:
+    # 可以是: 所有的 master 的地址，也可以是: 所有的 master + slave 的地址（推荐）.
+    addrs:
+      - 192.168.1.25:6380
+      - 192.168.1.25:6381
+      - 192.168.1.25:6382
+      - 192.168.1.25:6383
+      - 192.168.1.25:6384
+      - 192.168.1.25:6385
 
 pulsar:
   addresses:
