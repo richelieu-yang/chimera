@@ -2,6 +2,7 @@ package redisKit
 
 import (
 	"github.com/richelieu-yang/chimera/v2/src/compareKit"
+	"github.com/richelieu-yang/chimera/v2/src/core/errorKit"
 	"github.com/richelieu-yang/chimera/v2/src/core/interfaceKit"
 	"github.com/richelieu-yang/chimera/v2/src/validateKit"
 )
@@ -23,7 +24,7 @@ type (
 		// Addr address(host:port)
 		Addr string `json:"addr" yaml:"addr"`
 		// DB Database to be selected after connecting to the server.
-		DB int `json:"db" yaml:"db"`
+		DB int `json:"db" yaml:"db" validate:"gte=0"`
 	}
 
 	MasterSlaverConfig struct {
@@ -34,7 +35,7 @@ type (
 		MasterName string `json:"masterName" yaml:"masterName"`
 		// SentinelAddrs A seed list of host:port addresses of sentinel nodes.
 		SentinelAddrs []string `json:"sentinelAddrs" yaml:"sentinelAddrs"`
-		DB            int      `json:"db" yaml:"db"`
+		DB            int      `json:"db" yaml:"db" validate:"gte=0"`
 	}
 
 	ClusterConfig struct {
@@ -57,6 +58,38 @@ func (config *Config) Validate() error {
 	if err := v.Struct(config); err != nil {
 		return err
 	}
+
+	switch config.Mode {
+	case SingleNodeMode:
+		config.MasterSlaver = nil
+		config.Sentinel = nil
+		config.Cluster = nil
+
+		if err := v.Struct(config.SingleNode); err != nil {
+			return err
+		}
+	case SentinelMode:
+		config.SingleNode = nil
+		config.MasterSlaver = nil
+		config.Cluster = nil
+
+		if err := v.Struct(config.Sentinel); err != nil {
+			return err
+		}
+	case ClusterMode:
+		config.SingleNode = nil
+		config.MasterSlaver = nil
+		config.Sentinel = nil
+
+		if err := v.Struct(config.Cluster); err != nil {
+			return err
+		}
+	case MasterSlaverMode:
+		fallthrough
+	default:
+		return errorKit.New("invalid mode(%s)", config.Mode)
+	}
+
 	return nil
 }
 
