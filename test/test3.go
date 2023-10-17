@@ -1,6 +1,8 @@
 package main
 
-import "github.com/richelieu-yang/chimera/v2/src/validateKit"
+import (
+	"github.com/richelieu-yang/chimera/v2/src/validateKit"
+)
 
 type User struct {
 	Emails []string `validate:"required"`

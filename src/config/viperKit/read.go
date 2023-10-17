@@ -22,9 +22,9 @@ import (
 @param defaultMap 	默认值，可以为nil
 @param ptr			指针，且不能为nil
 */
-func ReadAs(data []byte, configType string, defaultMap map[string]interface{}, ptr interface{}) error {
+func ReadAs(data []byte, configType string, defaultMap map[string]interface{}, ptr interface{}) (*viper.Viper, error) {
 	if err := ptrKit.AssertNotNilAndIsPointer(ptr); err != nil {
-		return err
+		return nil, err
 	}
 
 	v := viper.New()
@@ -33,12 +33,16 @@ func ReadAs(data []byte, configType string, defaultMap map[string]interface{}, p
 	}
 	v.SetConfigType(configType)
 	if err := v.ReadConfig(ioKit.NewReader(data)); err != nil {
-		return err
+		return nil, err
 	}
-	return v.Unmarshal(ptr, func(dc *mapstructure.DecoderConfig) {
+	err := v.Unmarshal(ptr, func(dc *mapstructure.DecoderConfig) {
 		// 如果指针ptr对应的类型是个子类的话，需要如此进行设置，否则父类的属性都会是对应类型的零值！
 		dc.Squash = true
 	})
+	if err != nil {
+		return nil, err
+	}
+	return v, nil
 }
 
 // ReadFileAs 读取配置文件，并反序列化.
@@ -51,19 +55,23 @@ PS:
 @param defaultMap 	（可以为nil） 默认值；key如果有多层的话，用"."分隔，e.g. "WoService.LowerLimit"
 @param ptr			（不能为nil） 指针
 */
-func ReadFileAs(filePath string, defaultMap map[string]interface{}, ptr interface{}) error {
+func ReadFileAs(filePath string, defaultMap map[string]interface{}, ptr interface{}) (*viper.Viper, error) {
 	if err := ptrKit.AssertNotNilAndIsPointer(ptr); err != nil {
-		return err
+		return nil, err
 	}
 
 	v, err := readFile(filePath, defaultMap)
 	if err != nil {
-		return err
+		return nil, err
 	}
-	return v.Unmarshal(ptr, func(dc *mapstructure.DecoderConfig) {
+	err = v.Unmarshal(ptr, func(dc *mapstructure.DecoderConfig) {
 		// 如果指针ptr对应的类型是个子类的话，需要如此进行设置，否则父类的属性都会是对应类型的零值！
 		dc.Squash = true
 	})
+	if err != nil {
+		return nil, err
+	}
+	return v, nil
 }
 
 func readFile(filePath string, defaultMap map[string]interface{}) (*viper.Viper, error) {
