@@ -4,6 +4,7 @@ import (
 	"context"
 	"github.com/apache/pulsar-client-go/pulsar"
 	"github.com/richelieu-yang/chimera/v2/src/log/logrusKit"
+	"github.com/richelieu-yang/chimera/v2/src/validateKit"
 	"github.com/sirupsen/logrus"
 )
 
@@ -11,25 +12,34 @@ var config *Config
 
 // MustSetUp
 /*
-@param tmpDirPath 用于存放生成日志文件的临时目录（可以为空字符串，此时将采用默认值: 系统临时目录）
+@param topicForVerify 用于验证的topic（为""则不验证）
 */
-func MustSetUp(config *Config) {
-	err := SetUp(config)
+func MustSetUp(config *Config, topicForVerify string) {
+	err := SetUp(config, topicForVerify)
 	if err != nil {
 		logrusKit.DisableQuote(nil)
 		logrus.Fatalf("%+v", err)
 	}
 }
 
-func SetUp(pulsarConfig *Config) (err error) {
+func SetUp(pc *Config, topicForVerify string) (err error) {
 	defer func() {
 		if err != nil {
 			config = nil
 		}
 	}()
 
-	config = pulsarConfig
-	err = verify(config.VerifyConfig)
+	v := validateKit.New()
+	if err = v.Struct(pc); err != nil {
+		return
+	}
+	config = pc
+
+	// verify
+	if err = verify(topicForVerify); err != nil {
+		return
+	}
+
 	return
 }
 
@@ -45,7 +55,7 @@ func NewProducer(ctx context.Context, options pulsar.ProducerOptions, clientLogP
 		return nil, NotSetupError
 	}
 
-	return NewProducerOriginally(ctx, config.Addresses, options, clientLogPath)
+	return NewProducerOriginally(ctx, config.Addrs, options, clientLogPath)
 }
 
 // NewConsumer
@@ -60,5 +70,5 @@ func NewConsumer(ctx context.Context, options pulsar.ConsumerOptions, clientLogP
 		return nil, NotSetupError
 	}
 
-	return NewConsumerOriginally(ctx, config.Addresses, options, clientLogPath)
+	return NewConsumerOriginally(ctx, config.Addrs, options, clientLogPath)
 }

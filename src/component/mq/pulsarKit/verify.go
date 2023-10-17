@@ -6,7 +6,6 @@ import (
 	"github.com/apache/pulsar-client-go/pulsar"
 	"github.com/richelieu-yang/chimera/v2/src/core/errorKit"
 	"github.com/richelieu-yang/chimera/v2/src/core/fileKit"
-	"github.com/richelieu-yang/chimera/v2/src/core/mathKit"
 	"github.com/richelieu-yang/chimera/v2/src/core/pathKit"
 	"github.com/richelieu-yang/chimera/v2/src/core/sliceKit"
 	"github.com/richelieu-yang/chimera/v2/src/core/strKit"
@@ -35,14 +34,13 @@ PS:
 可能失败的原因：
 （1）pulsar的进程在，但启动报错（存储空间爆了）
 */
-func verify(verifyConfig VerifyConfig) (err error) {
-	if strKit.IsBlank(verifyConfig.Topic) {
+func verify(topicForVerify string) (err error) {
+	if strKit.IsBlank(topicForVerify) {
 		// 不验证
 		return nil
 	}
 
 	ulid := idKit.NewULID()
-	topic := verifyConfig.Topic
 
 	// 对应客户端日志s生成在 临时目录 下
 	tmpDirPath, err := pathKit.GetTempDir()
@@ -54,29 +52,28 @@ func verify(verifyConfig VerifyConfig) (err error) {
 	producerLogPath := pathKit.Join(tmpDirPath, fmt.Sprintf("pulsar_verify_producer_%s_%s.log", timeStr, ulid))
 
 	// 是否打印日志到控制台？
-	printFlag := verifyConfig.Print
-	level := mathKit.Ternary(printFlag, logrus.DebugLevel, logrus.PanicLevel)
-	cLogger := logrusKit.NewLogger(logrusKit.WithLevel(level))
-	cLogger.Infof("[Verify] consumerLogPath: [%s].", consumerLogPath)
-	cLogger.Infof("[Verify] producerLogPath: [%s].", producerLogPath)
+	level := logrus.DebugLevel
+	logger := logrusKit.NewLogger(logrusKit.WithLevel(level), logrusKit.WithMsgPrefix("[PULSAR, VERIFY]"))
+	logger.Infof("consumerLogPath: [%s].", consumerLogPath)
+	logger.Infof("producerLogPath: [%s].", producerLogPath)
 
 	defer func() {
 		if err == nil {
 			// 验证成功的情况下，删掉客户端日志文件
 			if err := fileKit.Remove(consumerLogPath); err != nil {
-				cLogger.WithError(err).Error("[Verify] fail to delete consumerLogPath")
+				logger.WithError(err).Error("Fail to delete consumerLogPath.")
 			} else {
-				cLogger.Info("[Verify] delete consumerLogPath")
+				logger.Info("Delete consumerLogPath.")
 			}
 			if err := fileKit.Remove(producerLogPath); err != nil {
-				cLogger.WithError(err).Error("[Verify] fail to delete producerLogPath")
+				logger.WithError(err).Error("Fail to delete producerLogPath.")
 			} else {
-				cLogger.Info("[Verify] delete producerLogPath")
+				logger.Info("Delete producerLogPath")
 			}
 		}
 	}()
 
-	err = _verify(cLogger, topic, consumerLogPath, producerLogPath, ulid)
+	err = _verify(logger, topicForVerify, consumerLogPath, producerLogPath, ulid)
 	return
 }
 

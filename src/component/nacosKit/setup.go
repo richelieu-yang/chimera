@@ -62,7 +62,7 @@ func SetUp(config *Config, options ...constant.ClientOption) (err error) {
 	clientConfig = constant.NewClientConfig(options1...)
 
 	/* (2) serverConfigs */
-	if err = sliceKit.AssertNotEmpty(config.Addresses, "config.Addresses"); err != nil {
+	if err = sliceKit.AssertNotEmpty(config.Addresses, "config.Addrs"); err != nil {
 		return
 	}
 	for _, addr := range config.Addresses {
