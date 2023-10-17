@@ -8,7 +8,11 @@ import (
 
 // New
 /*
-@param tagNameArgs 不传参的话，将采用默认的tag name（"validate"）
+PS:
+(1) 默认的tag name: "validate";
+(2) Gin使用的tag name: "binding".
+
+@param tagNameArgs 不传参的话，将采用默认的tag name
 */
 func New(tagNameArgs ...string) *validator.Validate {
 	v := validator.New(validator.WithRequiredStructEnabled())
