@@ -22,6 +22,7 @@ type (
 	SingleNodeConfig struct {
 		// Addr address(host:port)
 		Addr string `json:"addr" yaml:"addr" validate:"hostname_port"`
+
 		// DB Database to be selected after connecting to the server.
 		DB int `json:"db" yaml:"db" validate:"gte=0"`
 	}
@@ -32,9 +33,11 @@ type (
 	SentinelConfig struct {
 		// MasterName The master name.
 		MasterName string `json:"masterName" yaml:"masterName"`
+
 		// Addrs A seed list of host:port addresses of sentinel nodes.
 		Addrs []string `json:"addrs" yaml:"addrs" validate:"required,dive,hostname_port"`
-		DB    int      `json:"db" yaml:"db" validate:"gte=0"`
+
+		DB int `json:"db" yaml:"db" validate:"gte=0"`
 	}
 
 	ClusterConfig struct {
