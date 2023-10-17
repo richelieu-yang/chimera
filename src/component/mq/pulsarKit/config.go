@@ -2,7 +2,7 @@ package pulsarKit
 
 type (
 	Config struct {
-		// Addrs Broker地址
+		// Addrs Broker地址(s)
 		Addrs []string `json:"addrs" yaml:"addrs" validate:"required,gte=1,dive,hostname_port"`
 	}
 
