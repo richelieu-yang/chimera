@@ -13,13 +13,13 @@ func TestSingleNodeMode(test *testing.T) {
 		UserName: "",
 		Password: "",
 		Mode:     SingleNodeMode,
-		SingleNode: &SingleNodeConfig{
+		Single: &SingleConfig{
 			Addr: "127.0.0.1:6379",
 			DB:   10,
 		},
-		MasterSlaver: nil,
-		Sentinel:     nil,
-		Cluster:      nil,
+		MasterSlave: nil,
+		Sentinel:    nil,
+		Cluster:     nil,
 	}
 	client, err := NewClient(config)
 	if err != nil {

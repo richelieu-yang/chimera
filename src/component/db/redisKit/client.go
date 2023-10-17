@@ -119,9 +119,9 @@ func newBaseOptions(config Config) *redis.UniversalOptions {
 
 // newSingleNodeOptions 单点模式
 func newSingleNodeOptions(config Config) (*redis.UniversalOptions, error) {
-	c := config.SingleNode
+	c := config.Single
 	if c == nil {
-		return nil, errorKit.New("SingleNodeConfig is nil")
+		return nil, errorKit.New("SingleConfig is nil")
 	}
 
 	opts := newBaseOptions(config)

@@ -63,12 +63,12 @@ redis:
   userName:
   password:
   # Redis集群模式
-  #   singleNode:   单点
-  #   masterSlaver: 主从集群（暂不支持）
+  #   single:       单点
+  #   masterSlave:  主从集群（暂不支持）
   #   sentinel:     哨兵集群
   #   cluster:      cluster集群
-  mode: singleNode
-  singleNode:
+  mode: single
+  single:
     addr: 127.0.0.1:6379
     db: 0
   sentinel:

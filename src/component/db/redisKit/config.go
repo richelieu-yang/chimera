@@ -12,14 +12,14 @@ type (
 		Password string `json:"password" yaml:"password"`
 		Prefix   string `json:"prefix" yaml:"prefix"`
 
-		Mode         Mode                `json:"mode" yaml:"mode" validate:"oneof=singleNode sentinel cluster"`
-		SingleNode   *SingleNodeConfig   `json:"singleNode" yaml:"singleNode"`
-		MasterSlaver *MasterSlaverConfig `json:"masterSlaver" yaml:"masterSlaver"`
-		Sentinel     *SentinelConfig     `json:"sentinel" yaml:"sentinel"`
-		Cluster      *ClusterConfig      `json:"cluster" yaml:"cluster"`
+		Mode        Mode               `json:"mode" yaml:"mode" validate:"oneof=single sentinel cluster"`
+		Single      *SingleConfig      `json:"single" yaml:"singleNode"`
+		MasterSlave *MasterSlaveConfig `json:"masterSlave" yaml:"masterSlaver"`
+		Sentinel    *SentinelConfig    `json:"sentinel" yaml:"sentinel"`
+		Cluster     *ClusterConfig     `json:"cluster" yaml:"cluster"`
 	}
 
-	SingleNodeConfig struct {
+	SingleConfig struct {
 		// Addr address(host:port)
 		Addr string `json:"addr" yaml:"addr" validate:"hostname_port"`
 
@@ -27,7 +27,7 @@ type (
 		DB int `json:"db" yaml:"db" validate:"gte=0"`
 	}
 
-	MasterSlaverConfig struct {
+	MasterSlaveConfig struct {
 	}
 
 	SentinelConfig struct {
@@ -63,24 +63,24 @@ func (config *Config) Validate() error {
 
 	switch config.Mode {
 	case SingleNodeMode:
-		config.MasterSlaver = nil
+		config.MasterSlave = nil
 		config.Sentinel = nil
 		config.Cluster = nil
 
-		if err := v.Struct(config.SingleNode); err != nil {
+		if err := v.Struct(config.Single); err != nil {
 			return err
 		}
 	case SentinelMode:
-		config.SingleNode = nil
-		config.MasterSlaver = nil
+		config.Single = nil
+		config.MasterSlave = nil
 		config.Cluster = nil
 
 		if err := v.Struct(config.Sentinel); err != nil {
 			return err
 		}
 	case ClusterMode:
-		config.SingleNode = nil
-		config.MasterSlaver = nil
+		config.Single = nil
+		config.MasterSlave = nil
 		config.Sentinel = nil
 
 		if err := v.Struct(config.Cluster); err != nil {
@@ -108,11 +108,11 @@ func (config Config) Equal(config1 Config) bool {
 	}
 	switch config.Mode {
 	case SingleNodeMode:
-		if !compareKit.Equal(config.SingleNode, config1.SingleNode) {
+		if !compareKit.Equal(config.Single, config1.Single) {
 			return false
 		}
 	case MasterSlaverMode:
-		if !compareKit.Equal(config.MasterSlaver, config1.MasterSlaver) {
+		if !compareKit.Equal(config.MasterSlave, config1.MasterSlave) {
 			return false
 		}
 	case SentinelMode:
