@@ -13,8 +13,6 @@ PS: 返回值可以用作"分布式唯一id".
 			(2) 可以为""
 */
 func (client *Client) NewUniqueId(ctx context.Context, key string) (string, error) {
-	key = client.GetKeyWithPrefix(key)
-
 	i, err := client.Incr(ctx, key)
 	if err != nil {
 		return "", err
