@@ -25,6 +25,10 @@ type (
 	}
 )
 
+func (client *Client) GetPrefix() string {
+	return client.keyPrefix
+}
+
 func (client *Client) GetKeyWithPrefix(key string) string {
 	return client.keyPrefix + key
 }
