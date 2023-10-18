@@ -29,8 +29,7 @@ func SetUp(pc *Config, verifyConfig *VerifyConfig) (err error) {
 		}
 	}()
 
-	v := validateKit.New()
-	if err = v.Struct(pc); err != nil {
+	if err = validateKit.Struct(pc); err != nil {
 		return
 	}
 	config = pc
