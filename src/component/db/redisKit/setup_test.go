@@ -23,7 +23,7 @@ func TestSetUp(t *testing.T) {
 	}
 
 	c := &config{}
-	if err := viperKit.ReadFileAs(path, nil, c); err != nil {
+	if _, err := viperKit.ReadFileAs(path, nil, c); err != nil {
 		panic(err)
 	}
 

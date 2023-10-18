@@ -2,6 +2,9 @@ package nacosKit
 
 import (
 	"github.com/nacos-group/nacos-sdk-go/v2/vo"
+	"github.com/richelieu-yang/chimera/v2/src/config/viperKit"
+	"github.com/richelieu-yang/chimera/v2/src/consts"
+	"github.com/richelieu-yang/chimera/v2/src/core/pathKit"
 	"github.com/richelieu-yang/chimera/v2/src/log/logrusKit"
 	"github.com/sirupsen/logrus"
 	"testing"
@@ -10,14 +13,22 @@ import (
 func TestMustSetUp(t *testing.T) {
 	logrusKit.MustSetUp(nil)
 
-	config := &Config{
-		NamespaceId: "6393fde0-464c-43e1-9c4e-60f4f372a74f",
-		Addrs: []string{
-			"http://localhost:8848/nacos",
-		},
+	wd, err := pathKit.ReviseWorkingDirInTestMode(consts.ProjectName)
+	if err != nil {
+		panic(err)
+	}
+	logrus.Infof("wd: [%s].", wd)
+	path := "_chimera-lib/config.yaml"
+
+	type config struct {
+		Nacos *Config `json:"nacos"`
 	}
 
-	MustSetUp(config)
+	c := &config{}
+	if _, err := viperKit.ReadFileAs(path, nil, c); err != nil {
+		panic(err)
+	}
+	MustSetUp(c.Nacos)
 
 	namingClient, err := NewNamingClient()
 	if err != nil {
