@@ -1,6 +1,7 @@
 package main
 
 import (
+	"fmt"
 	"github.com/richelieu-yang/chimera/v2/src/validateKit"
 )
 
@@ -12,8 +13,9 @@ func main() {
 	u := &User{
 		Emails: []string{},
 	}
-	v := validateKit.New()
-	if err := v.Struct(u); err != nil {
-		panic(err) // panic: Key: 'User.Emails' Error:Field validation for 'Emails' failed on the 'gt' tag
+	u = nil
+	if err := validateKit.Struct(u); err != nil {
+		fmt.Println(err.Error())
+		panic(err) //
 	}
 }

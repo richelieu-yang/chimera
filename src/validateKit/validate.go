@@ -26,6 +26,9 @@ func New(tagNameArgs ...string) *validator.Validate {
 }
 
 // Struct 验证结构体.
+/*
+@param s 如果为nil，将返回error(e.g. validator: (nil *main.User))
+*/
 func Struct(s interface{}) error {
 	v := New()
 	return v.Struct(s)
