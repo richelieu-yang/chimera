@@ -15,14 +15,14 @@ var config *Config
 /*
 @param topicForVerify 用于验证的topic（为""则不验证）
 */
-func MustSetUp(config *Config, topicForVerify string) {
-	if err := SetUp(config, topicForVerify); err != nil {
+func MustSetUp(config *Config, topicForVerify string, printFlag bool) {
+	if err := SetUp(config, topicForVerify, printFlag); err != nil {
 		logrusKit.DisableQuote(nil)
 		logrus.Fatalf("%+v", err)
 	}
 }
 
-func SetUp(pc *Config, topicForVerify string) (err error) {
+func SetUp(pc *Config, topicForVerify string, printFlag bool) (err error) {
 	defer func() {
 		if err != nil {
 			config = nil
@@ -36,7 +36,7 @@ func SetUp(pc *Config, topicForVerify string) (err error) {
 	config = pc
 
 	// verify
-	if err = verify(topicForVerify); err != nil {
+	if err = verify(topicForVerify, printFlag); err != nil {
 		err = errorKit.Wrap(err, "Fail to verify")
 		return
 	}

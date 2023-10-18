@@ -6,6 +6,7 @@ import (
 	"github.com/apache/pulsar-client-go/pulsar"
 	"github.com/richelieu-yang/chimera/v2/src/core/errorKit"
 	"github.com/richelieu-yang/chimera/v2/src/core/fileKit"
+	"github.com/richelieu-yang/chimera/v2/src/core/mathKit"
 	"github.com/richelieu-yang/chimera/v2/src/core/pathKit"
 	"github.com/richelieu-yang/chimera/v2/src/core/sliceKit"
 	"github.com/richelieu-yang/chimera/v2/src/core/strKit"
@@ -34,7 +35,7 @@ PS:
 可能失败的原因：
 （1）pulsar的进程在，但启动报错（存储空间爆了）
 */
-func verify(topicForVerify string) (err error) {
+func verify(topicForVerify string, printFlag bool) (err error) {
 	if strKit.IsBlank(topicForVerify) {
 		// 不验证
 		return nil
@@ -52,7 +53,7 @@ func verify(topicForVerify string) (err error) {
 	producerLogPath := pathKit.Join(tmpDirPath, fmt.Sprintf("pulsar_verify_producer_%s_%s.log", timeStr, ulid))
 
 	// 是否打印日志到控制台？
-	level := logrus.DebugLevel
+	level := mathKit.Ternary(printFlag, logrus.DebugLevel, logrus.PanicLevel)
 	logger := logrusKit.NewLogger(logrusKit.WithLevel(level), logrusKit.WithMsgPrefix("[PULSAR, VERIFY]"))
 	logger.Infof("consumerLogPath: [%s].", consumerLogPath)
 	logger.Infof("producerLogPath: [%s].", producerLogPath)

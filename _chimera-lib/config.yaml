@@ -134,5 +134,5 @@ nacos:
   # !!!: 是 id 不是 name.
   namespaceId:
   # Nacos服务器的地址
-  addresses:
+  addrs:
     - http://localhost:8848/nacos
