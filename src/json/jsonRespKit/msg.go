@@ -28,7 +28,7 @@ func readFile(filePath string) error {
 	}
 
 	m := make(map[string]string)
-	if err := viperKit.ReadFileAs(filePath, nil, &m); err != nil {
+	if _, err := viperKit.UnmarshalFromFile(filePath, nil, &m); err != nil {
 		return err
 	}
 	msgMap = mapKit.Merge(msgMap, m)
@@ -41,7 +41,7 @@ func readFileData(fd *FileData) error {
 	}
 
 	m := make(map[string]string)
-	if err := viperKit.ReadAs(fd.Data, fd.FileType, nil, &m); err != nil {
+	if _, err := viperKit.Unmarshal(fd.Data, fd.FileType, nil, &m); err != nil {
 		return err
 	}
 	msgMap = mapKit.Merge(msgMap, m)

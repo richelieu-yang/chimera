@@ -17,7 +17,7 @@ func TestLoadProperties(t *testing.T) {
 
 	path := "_test.properties"
 	c := &config{}
-	_, err := ReadFileAs(path, nil, c)
+	_, err := UnmarshalFromFile(path, nil, c)
 	if err != nil {
 		panic(err)
 	}
