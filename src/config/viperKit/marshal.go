@@ -8,6 +8,9 @@ import (
 
 // MarshalToFile
 /*
+Deprecated: 不建议用此方法，	(1) 转换为 .yaml 还是用 yamlKit 吧;
+							(2) 转换为 .properties 有问题.
+
 @param obj 如果为nil，将返回error
 */
 func MarshalToFile(obj interface{}, target string) error {
