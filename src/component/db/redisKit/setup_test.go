@@ -41,6 +41,6 @@ func TestSetUp(t *testing.T) {
 		}
 		defer mu.Unlock()
 
-		time.Sleep(time.Second * 10)
+		time.Sleep(time.Second * 3)
 	}
 }

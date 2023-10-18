@@ -11,7 +11,7 @@ type (
 		UserName string `json:"userName" yaml:"userName"`
 		Password string `json:"password" yaml:"password"`
 		// KeyPrefix key的前缀，不能包含特殊字符（e.g.'*'）
-		KeyPrefix string `json:"keyPrefix" yaml:"keyPrefix"`
+		KeyPrefix string `json:"keyPrefix" yaml:"keyPrefix" validate:"excludes=*"`
 
 		Mode        Mode               `json:"mode" yaml:"mode" validate:"oneof=single sentinel cluster"`
 		Single      *SingleConfig      `json:"single" yaml:"singleNode"`
