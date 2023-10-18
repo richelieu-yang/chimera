@@ -53,11 +53,14 @@ type (
 
 // Validate
 /*
-PS: config可能为nil.
+PS:
+(1) config可能为nil，此时将返回error;
+(2) 此方法体内不能调用 validateKit.Struct，以免发生递归死循环（但可以调用 validateKit.New）.
 */
 func (config *Config) Validate() error {
-	if err := validateKit.Struct(config); err != nil {
-		return errorKit.Wrap(err, "Fail to validate")
+	v := validateKit.New()
+	if err := v.Struct(config); err != nil {
+		return err
 	}
 
 	switch config.Mode {
@@ -66,7 +69,7 @@ func (config *Config) Validate() error {
 		config.Sentinel = nil
 		config.Cluster = nil
 
-		if err := validateKit.Struct(config.Single); err != nil {
+		if err := v.Struct(config.Single); err != nil {
 			return err
 		}
 	case SentinelMode:
@@ -74,7 +77,7 @@ func (config *Config) Validate() error {
 		config.MasterSlave = nil
 		config.Cluster = nil
 
-		if err := validateKit.Struct(config.Sentinel); err != nil {
+		if err := v.Struct(config.Sentinel); err != nil {
 			return err
 		}
 	case ClusterMode:
@@ -82,7 +85,7 @@ func (config *Config) Validate() error {
 		config.MasterSlave = nil
 		config.Sentinel = nil
 
-		if err := validateKit.Struct(config.Cluster); err != nil {
+		if err := v.Struct(config.Cluster); err != nil {
 			return err
 		}
 	case MasterSlaveMode:
