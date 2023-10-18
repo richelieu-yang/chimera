@@ -104,12 +104,12 @@ func _verify(logger *logrus.Logger, topic, consumerLogPath, producerLogPath, uli
 
 	timeStr := timeKit.FormatCurrent(timeKit.FormatCommon)
 	texts := []string{
-		fmt.Sprintf("%s&&%s&&%s", ulid, timeStr, "$0"),
-		fmt.Sprintf("%s&&%s&&%s", ulid, timeStr, "$1"),
-		fmt.Sprintf("%s&&%s&&%s", ulid, timeStr, "$2"),
-		fmt.Sprintf("%s&&%s&&%s", ulid, timeStr, "$3"),
-		fmt.Sprintf("%s&&%s&&%s", ulid, timeStr, "$4"),
-		fmt.Sprintf("%s&&%s&&%s", ulid, timeStr, "$5"),
+		fmt.Sprintf("%s&&%s&&%s", timeStr, ulid, "$0"),
+		fmt.Sprintf("%s&&%s&&%s", timeStr, ulid, "$1"),
+		fmt.Sprintf("%s&&%s&&%s", timeStr, ulid, "$2"),
+		fmt.Sprintf("%s&&%s&&%s", timeStr, ulid, "$3"),
+		fmt.Sprintf("%s&&%s&&%s", timeStr, ulid, "$4"),
+		fmt.Sprintf("%s&&%s&&%s", timeStr, ulid, "$5"),
 	}
 	var ch = make(chan struct{}, 1)
 	var consumerErrCh = make(chan error, 1)

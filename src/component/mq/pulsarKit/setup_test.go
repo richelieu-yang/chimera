@@ -21,10 +21,10 @@ func TestSetUp(t *testing.T) {
 	}
 
 	c := &config{}
-	if err := viperKit.ReadFileAs(path, nil, c); err != nil {
+	if _, err := viperKit.ReadFileAs(path, nil, c); err != nil {
 		panic(err)
 	}
-	MustSetUp(c.Pulsar, "test")
+	MustSetUp(c.Pulsar, "test", true)
 
 	//topic := "test"
 	//consumer, err := NewConsumer(context.TODO(), pulsar.ConsumerOptions{

@@ -13,7 +13,8 @@ var config *Config
 
 // MustSetUp
 /*
-@param topicForVerify 用于验证的topic（为""则不验证）
+@param topicForVerify 	用于验证的topic（为""则不验证）
+@param printFlag 		是否输出 verify相关的输出？
 */
 func MustSetUp(config *Config, topicForVerify string, printFlag bool) {
 	if err := SetUp(config, topicForVerify, printFlag); err != nil {
