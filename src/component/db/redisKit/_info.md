@@ -29,6 +29,9 @@ Redis Cluster中使用Lua脚本
 ## Stream（Redis5.0新增）
 详见"Redis.wps".
 
-## TODO: key的前缀
+## TODO: key的前缀prefix
+go-redis目前还不支持:
+    https://github.com/redis/go-redis/issues/607
+
 在go-redis库中，你可以通过在每个键前面添加一个字符串来设置键的前缀。但是，go-redis库本身并没有提供直接设置键前缀的功能。
 如果你需要在所有键前面添加一个公共的前缀，你可能需要自己实现这个功能。一种可能的方法是: 创建一个包装器函数，该函数接受一个键作为参数，然后返回一个带有前缀的键。
