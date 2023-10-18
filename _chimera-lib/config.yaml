@@ -58,8 +58,9 @@ gin:
 
 redis:
   # key的前缀（默认: ""）
-  # !!!: 此处配置项仅用于代码中获取，真正实现得靠业务自己（go-redis不支持）
-  prefix:
+  # !!!:  (1) 不能包含特殊字符（e.g.'*'）;
+  #       (2) 不影响 RandomKey 方法.
+  keyPrefix:
   userName:
   password:
   # Redis集群模式

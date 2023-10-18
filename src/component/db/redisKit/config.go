@@ -10,7 +10,8 @@ type (
 	Config struct {
 		UserName string `json:"userName" yaml:"userName"`
 		Password string `json:"password" yaml:"password"`
-		Prefix   string `json:"prefix" yaml:"prefix"`
+		// KeyPrefix key的前缀，不能包含特殊字符（e.g.'*'）
+		KeyPrefix string `json:"keyPrefix" yaml:"keyPrefix"`
 
 		Mode        Mode               `json:"mode" yaml:"mode" validate:"oneof=single sentinel cluster"`
 		Single      *SingleConfig      `json:"single" yaml:"singleNode"`

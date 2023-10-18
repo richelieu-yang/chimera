@@ -30,12 +30,15 @@ PS:
 	e.g.1
 		如果配置后，整体retry周期 > Redis中key的TTL，当上一个锁的key超时后，你就能获取到锁了（假如没有其他人也在抢锁）.
 
-@param name 建议以 "mutex:" 为前缀
+@param name (1) 建议以 "mutex:" 为前缀
+			(2) 被用作写入Redis的key，string类型
 
 e.g. 将TTL修改为30s（原8s）
 NewDistributedMutex("name", redsync.WithExpiry(time.Second * 30))
 */
 func (client *Client) NewDistributedMutex(name string, options ...redsync.Option) *redsync.Mutex {
+	name = client.GetKeyWithPrefix(name)
+
 	pool := goredis.NewPool(client.universalClient) // or, pool := redigo.NewPool(...)
 	sync := redsync.New(pool)
 	return sync.NewMutex(name, options...)
