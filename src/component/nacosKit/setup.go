@@ -45,6 +45,7 @@ func SetUp(config *Config, options ...constant.ClientOption) (err error) {
 
 	/* (0) validate */
 	if err = validateKit.Struct(config); err != nil {
+		err = errorKit.Wrap(err, "Fail to verify")
 		return
 	}
 

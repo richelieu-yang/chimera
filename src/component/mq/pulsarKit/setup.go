@@ -30,6 +30,7 @@ func SetUp(pc *Config, verifyConfig *VerifyConfig) (err error) {
 	}()
 
 	if err = validateKit.Struct(pc); err != nil {
+		err = errorKit.Wrap(err, "Fail to verify")
 		return
 	}
 	config = pc

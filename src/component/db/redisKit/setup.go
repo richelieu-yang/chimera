@@ -1,6 +1,7 @@
 package redisKit
 
 import (
+	"github.com/richelieu-yang/chimera/v2/src/core/errorKit"
 	"github.com/richelieu-yang/chimera/v2/src/log/logrusKit"
 	"github.com/sirupsen/logrus"
 )
@@ -15,8 +16,9 @@ func MustSetUp(config *Config) {
 }
 
 func SetUp(config *Config) (err error) {
-	if err := config.Validate(); err != nil {
-		return err
+	if err = config.Validate(); err != nil {
+		err = errorKit.Wrap(err, "Fail to verify")
+		return
 	}
 
 	client, err = NewClient(*config)
