@@ -8,9 +8,9 @@ import (
 
 type (
 	Config struct {
-		UserName string `json:"userName" yaml:"userName"`
-		Password string `json:"password" yaml:"password"`
-		Prefix   string `json:"prefix" yaml:"prefix"`
+		UserName  string `json:"userName" yaml:"userName"`
+		Password  string `json:"password" yaml:"password"`
+		KeyPrefix string `json:"keyPrefix" yaml:"keyPrefix"`
 
 		Mode        Mode               `json:"mode" yaml:"mode" validate:"oneof=single sentinel cluster"`
 		Single      *SingleConfig      `json:"single" yaml:"singleNode"`
