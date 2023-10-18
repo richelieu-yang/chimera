@@ -25,8 +25,6 @@ e.g.
 传参key不存在的情况 => ("none", nil)
 */
 func (client *Client) Type(ctx context.Context, key string) (string, error) {
-	key = client.GetKeyWithPrefix(key)
-
 	cmd := client.universalClient.Type(ctx, key)
 	return cmd.Result()
 }
@@ -38,10 +36,6 @@ func (client *Client) Type(ctx context.Context, key string) (string, error) {
 命令返回值:	若 key 存在返回 1 ，否则返回 0.
 */
 func (client *Client) Exists(ctx context.Context, keys ...string) (bool, error) {
-	for i, key := range keys {
-		keys[i] = client.GetKeyWithPrefix(key)
-	}
-
 	cmd := client.universalClient.Exists(ctx, keys...)
 	i, err := cmd.Result()
 	if err != nil {
@@ -57,10 +51,6 @@ func (client *Client) Exists(ctx context.Context, keys ...string) (bool, error) 
 命令返回值:	被删除 key 的数量。
 */
 func (client *Client) Del(ctx context.Context, keys ...string) (int64, error) {
-	for i, key := range keys {
-		keys[i] = client.GetKeyWithPrefix(key)
-	}
-
 	cmd := client.universalClient.Del(ctx, keys...)
 	return cmd.Result()
 }
@@ -74,8 +64,6 @@ func (client *Client) Del(ctx context.Context, keys ...string) (int64, error) {
 			(3) 否则，以毫秒为单位，返回 key 的剩余生存时间
 */
 func (client *Client) TTL(ctx context.Context, key string) (time.Duration, error) {
-	key = client.GetKeyWithPrefix(key)
-
 	cmd := client.universalClient.TTL(ctx, key)
 	return cmd.Result()
 }
@@ -91,8 +79,6 @@ key不存在	=> (false, nil)
 key存在		=> (true, nil)
 */
 func (client *Client) Expire(ctx context.Context, key string, expiration time.Duration) (bool, error) {
-	key = client.GetKeyWithPrefix(key)
-
 	cmd := client.universalClient.Expire(ctx, key, expiration)
 	return cmd.Result()
 }
@@ -104,8 +90,6 @@ func (client *Client) Expire(ctx context.Context, key string, expiration time.Du
 命令返回值:	设置成功返回 1 。 当 key 不存在或者不能为 key 设置过期时间时(比如在低于 2.1.3 版本的 Redis 中你尝试更新 key 的过期时间)返回 0 。
 */
 func (client *Client) ExpireAt(ctx context.Context, key string, tm time.Time) (bool, error) {
-	key = client.GetKeyWithPrefix(key)
-
 	cmd := client.universalClient.ExpireAt(ctx, key, tm)
 	return cmd.Result()
 }
@@ -117,8 +101,6 @@ func (client *Client) ExpireAt(ctx context.Context, key string, tm time.Time) (b
 命令返回值:	当过期时间移除成功时，返回 1 。 如果 key 不存在或 key 没有设置过期时间，返回 0 。
 */
 func (client *Client) Persist(ctx context.Context, key string) (bool, error) {
-	key = client.GetKeyWithPrefix(key)
-
 	cmd := client.universalClient.Persist(ctx, key)
 	return cmd.Result()
 }
@@ -131,8 +113,6 @@ e.g.
 db为空（或者不存在与 传参match 响应的key） => ([]string{}, nil)（第一个返回值不为nil）
 */
 func (client *Client) Keys(ctx context.Context, pattern string) ([]string, error) {
-	pattern = client.GetKeyWithPrefix(pattern)
-
 	cmd := client.universalClient.Keys(ctx, pattern)
 	return cmd.Result()
 }
@@ -152,8 +132,6 @@ e.g. db为空（|| db中不存在符合条件的key）
 (context.TODO(), 0, "*", 10) => ([]string{}, 0, nil)
 */
 func (client *Client) Scan(ctx context.Context, cursor uint64, match string, count int64) ([]string, uint64, error) {
-	match = client.GetKeyWithPrefix(match)
-
 	cmd := client.universalClient.Scan(ctx, cursor, match, count)
 	return cmd.Result()
 }
@@ -173,8 +151,6 @@ e.g. db为空（|| db中不存在符合条件的key）
 (context.TODO(), "*", 10) => ([]string{}, nil)
 */
 func (client *Client) ScanFully(ctx context.Context, match string, count int64) ([]string, error) {
-	match = client.GetKeyWithPrefix(match)
-
 	if count < 1 {
 		return nil, errorKit.New("invalid count(%d)", count)
 	}
@@ -256,8 +232,6 @@ func scanFullyInOneNode(client redis.UniversalClient, ctx context.Context, match
 
 // RandomKey
 /*
-PS: 此时配置中的 key keyPrefix 无效.
-
 命令说明:	从当前数据库中随机返回一个 key.
 命令语法:	RANDOMKEY
 命令返回值:	当数据库不为空时，返回一个 key；当数据库为空时，返回 nil（windows 系统返回 null）.
@@ -276,9 +250,6 @@ func (client *Client) RandomKey(ctx context.Context) (string, error) {
 	当 OLD_KEY_NAME 和 NEW_KEY_NAME 相同，或者 OLD_KEY_NAME 不存在时，返回一个错误。 当 NEW_KEY_NAME 已经存在时， RENAME 命令将覆盖旧值。
 */
 func (client *Client) Rename(ctx context.Context, key, newKey string) (string, error) {
-	key = client.GetKeyWithPrefix(key)
-	newKey = client.GetKeyWithPrefix(newKey)
-
 	cmd := client.universalClient.Rename(ctx, key, newKey)
 	return cmd.Result()
 }
@@ -290,9 +261,6 @@ func (client *Client) Rename(ctx context.Context, key, newKey string) (string, e
 命令返回值:	修改成功时，返回 1 。 如果 NEW_KEY_NAME 已经存在，返回 0 。
 */
 func (client *Client) RenameNX(ctx context.Context, key, newKey string) (bool, error) {
-	key = client.GetKeyWithPrefix(key)
-	newKey = client.GetKeyWithPrefix(newKey)
-
 	cmd := client.universalClient.RenameNX(ctx, key, newKey)
 	return cmd.Result()
 }

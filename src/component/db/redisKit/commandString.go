@@ -24,8 +24,6 @@ import (
 												(b) 键不存在:	持久化的键
 */
 func (client *Client) Set(ctx context.Context, key string, value interface{}, expiration time.Duration) (bool, error) {
-	key = client.GetKeyWithPrefix(key)
-
 	cmd := client.universalClient.Set(ctx, key, value, expiration)
 	str, err := cmd.Result()
 	if err != nil {
@@ -45,8 +43,6 @@ PS: 如果传参key已经存在，不会修改该key的TTL.
 @return 第一个返回值代表: 是否设置成功
 */
 func (client *Client) SetNX(ctx context.Context, key string, value interface{}, expiration time.Duration) (bool, error) {
-	key = client.GetKeyWithPrefix(key)
-
 	cmd := client.universalClient.SetNX(ctx, key, value, expiration)
 	return cmd.Result()
 }
@@ -60,8 +56,6 @@ Deprecated: 个人感觉在 go-redis 中，使用 Set 就够了.
 命令返回值:	设置成功时返回 OK 。
 */
 func (client *Client) SetEx(ctx context.Context, key string, value interface{}, expiration time.Duration) (bool, error) {
-	key = client.GetKeyWithPrefix(key)
-
 	cmd := client.universalClient.SetEx(ctx, key, value, expiration)
 	str, err := cmd.Result()
 	if err != nil {
@@ -75,8 +69,6 @@ func (client *Client) SetEx(ctx context.Context, key string, value interface{}, 
 Redis的数据类型详解 https://blog.csdn.net/m0_53474063/article/details/112647028
 */
 func (client *Client) SetXX(ctx context.Context, key string, value interface{}, expiration time.Duration) (bool, error) {
-	key = client.GetKeyWithPrefix(key)
-
 	cmd := client.universalClient.SetXX(ctx, key, value, expiration)
 	return cmd.Result()
 }
@@ -88,12 +80,6 @@ func (client *Client) SetXX(ctx context.Context, key string, value interface{}, 
 命令返回值:	总是返回 OK 。
 */
 func (client *Client) MSet(ctx context.Context, values ...interface{}) (bool, error) {
-	for i, v := range values {
-		if i%2 == 0 {
-			values[i] = client.GetKeyWithPrefix1(v)
-		}
-	}
-
 	cmd := client.universalClient.MSet(ctx, values...)
 	str, err := cmd.Result()
 	if err != nil {
@@ -109,12 +95,6 @@ func (client *Client) MSet(ctx context.Context, values ...interface{}) (bool, er
 命令返回值:	当所有 key 都成功设置，返回 1 。 如果所有给定 key 都设置失败(至少有一个 key 已经存在)，那么返回 0 。
 */
 func (client *Client) MSetNX(ctx context.Context, values ...interface{}) (bool, error) {
-	for i, v := range values {
-		if i%2 == 0 {
-			values[i] = client.GetKeyWithPrefix1(v)
-		}
-	}
-
 	cmd := client.universalClient.MSetNX(ctx, values...)
 	return cmd.Result()
 }
@@ -129,8 +109,6 @@ e.g.
 当前db中不存在 传参key => ("", redis.Nil)
 */
 func (client *Client) Get(ctx context.Context, key string) (string, error) {
-	key = client.GetKeyWithPrefix(key)
-
 	cmd := client.universalClient.Get(ctx, key)
 	return cmd.Result()
 }
@@ -143,8 +121,6 @@ PS：
 (3) 如果对应value的类型不为string，会返回error:	WRONGTYPE Operation against a key holding the wrong kind of value
 */
 func (client *Client) GetWithoutRedisNil(ctx context.Context, key string) (string, error) {
-	key = client.GetKeyWithPrefix(key)
-
 	str, err := client.Get(ctx, key)
 	if err != nil {
 		if err != redis.Nil {
@@ -163,10 +139,6 @@ func (client *Client) GetWithoutRedisNil(ctx context.Context, key string) (strin
 命令返回值:	一个包含所有给定 key 的值的列表。
 */
 func (client *Client) MGet(ctx context.Context, keys ...string) ([]interface{}, error) {
-	for i, key := range keys {
-		keys[i] = client.GetKeyWithPrefix(key)
-	}
-
 	cmd := client.universalClient.MGet(ctx, keys...)
 	return cmd.Result()
 }
@@ -201,8 +173,6 @@ e.g.5	key存在但类型为list（将返回error）
 	(context.Background(), "a") => 0 WRONGTYPE Operation against a key holding the wrong kind of value
 */
 func (client *Client) Incr(ctx context.Context, key string) (int64, error) {
-	key = client.GetKeyWithPrefix(key)
-
 	cmd := client.universalClient.Incr(ctx, key)
 	return cmd.Result()
 }
@@ -216,8 +186,6 @@ Redis Incrby 命令将 key 中储存的数字加上指定的增量值。
 (3) 本操作的值限制在 64 位(bit)有符号数字表示之内（范围: [math.MinInt64, math.MaxInt64]，即[-9223372036854775808, 9223372036854775807]）。
 */
 func (client *Client) IncrBy(ctx context.Context, key string, value int64) (int64, error) {
-	key = client.GetKeyWithPrefix(key)
-
 	cmd := client.universalClient.IncrBy(ctx, key, value)
 	return cmd.Result()
 }
@@ -229,8 +197,6 @@ Redis Incrbyfloat 命令为 key 中所储存的值加上指定的浮点数增量
 (1) 如果 key 不存在，那么 INCRBYFLOAT 会先将 key 的值设为 0 ，再执行加法操作。
 */
 func (client *Client) IncrByFloat(ctx context.Context, key string, value float64) (float64, error) {
-	key = client.GetKeyWithPrefix(key)
-
 	cmd := client.universalClient.IncrByFloat(ctx, key, value)
 	return cmd.Result()
 }
@@ -244,8 +210,6 @@ Redis Decr 命令将 key 中储存的数字值减一。
 (3) 本操作的值限制在 64 位(bit)有符号数字表示之内（范围: [math.MinInt64, math.MaxInt64]，即[-9223372036854775808, 9223372036854775807]）。
 */
 func (client *Client) Decr(ctx context.Context, key string) (int64, error) {
-	key = client.GetKeyWithPrefix(key)
-
 	cmd := client.universalClient.Decr(ctx, key)
 	return cmd.Result()
 }
@@ -262,8 +226,6 @@ e.g.	key存在&&value为"-9223372036854775808"（将返回error）
 	(context.Background(), "a") => 0 ERR increment or decrement would overflow
 */
 func (client *Client) DecrBy(ctx context.Context, key string, decrement int64) (int64, error) {
-	key = client.GetKeyWithPrefix(key)
-
 	cmd := client.universalClient.DecrBy(ctx, key, decrement)
 	return cmd.Result()
 }
@@ -278,8 +240,6 @@ Redis Append 命令用于为指定的 key 追加值。
 @return 追加后值的长度
 */
 func (client *Client) Append(ctx context.Context, key, value string) (int64, error) {
-	key = client.GetKeyWithPrefix(key)
-
 	cmd := client.universalClient.Append(ctx, key, value)
 	return cmd.Result()
 }

@@ -1,12 +1,13 @@
 package redisKit
 
 import (
+	"context"
+	"fmt"
 	"github.com/richelieu-yang/chimera/v2/src/config/viperKit"
 	"github.com/richelieu-yang/chimera/v2/src/consts"
 	"github.com/richelieu-yang/chimera/v2/src/core/pathKit"
 	"github.com/sirupsen/logrus"
 	"testing"
-	"time"
 )
 
 func TestSetUp(t *testing.T) {
@@ -34,13 +35,7 @@ func TestSetUp(t *testing.T) {
 	client = client
 
 	{
-		mu := client.NewDistributedMutex("aaa")
-		err := mu.Lock()
-		if err != nil {
-			panic(err)
-		}
-		defer mu.Unlock()
-
-		time.Sleep(time.Second * 3)
+		fmt.Println(client.XDel(context.TODO(), "tickets", "1697005411917-0"))
+		fmt.Println(client.XDel(context.TODO(), "tickets", "1697005411917-0"))
 	}
 }

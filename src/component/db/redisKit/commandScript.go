@@ -12,10 +12,6 @@ import (
 命令语法:	EVAL script numkeys key [key ...] arg [arg ...]
 */
 func (client *Client) Eval(ctx context.Context, script string, keys []string, args ...interface{}) (interface{}, error) {
-	for i, key := range keys {
-		keys[i] = client.GetKeyWithPrefix(key)
-	}
-
 	return client.universalClient.Eval(ctx, script, keys, args...).Result()
 }
 
@@ -28,10 +24,6 @@ PS: 一般与 ScriptLoad 搭配使用.
 命令语法:	EVALSHA sha1 numkeys key [key ...] arg [arg ...]
 */
 func (client *Client) EvalSha(ctx context.Context, sha1 string, keys []string, args ...interface{}) (interface{}, error) {
-	for i, key := range keys {
-		keys[i] = client.GetKeyWithPrefix(key)
-	}
-
 	return client.universalClient.EvalSha(ctx, sha1, keys, args...).Result()
 }
 
