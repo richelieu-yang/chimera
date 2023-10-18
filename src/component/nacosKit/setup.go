@@ -5,7 +5,6 @@ import (
 	"github.com/richelieu-yang/chimera/v2/src/copyKit"
 	"github.com/richelieu-yang/chimera/v2/src/core/errorKit"
 	"github.com/richelieu-yang/chimera/v2/src/core/intKit"
-	"github.com/richelieu-yang/chimera/v2/src/core/interfaceKit"
 	"github.com/richelieu-yang/chimera/v2/src/core/sliceKit"
 	"github.com/richelieu-yang/chimera/v2/src/core/strKit"
 	"github.com/richelieu-yang/chimera/v2/src/log/logrusKit"
@@ -45,9 +44,6 @@ func SetUp(config *Config, options ...constant.ClientOption) (err error) {
 	}()
 
 	/* (0) validate */
-	if err = interfaceKit.AssertNotNil(config, "config"); err != nil {
-		return
-	}
 	if err = validateKit.Struct(config); err != nil {
 		return
 	}
@@ -62,10 +58,10 @@ func SetUp(config *Config, options ...constant.ClientOption) (err error) {
 	clientConfig = constant.NewClientConfig(options1...)
 
 	/* (2) serverConfigs */
-	if err = sliceKit.AssertNotEmpty(config.Addresses, "config.Addrs"); err != nil {
+	if err = sliceKit.AssertNotEmpty(config.Addrs, "config.Addrs"); err != nil {
 		return
 	}
-	for _, addr := range config.Addresses {
+	for _, addr := range config.Addrs {
 		if strKit.IsBlank(addr) {
 			continue
 		}

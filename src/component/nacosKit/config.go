@@ -7,6 +7,6 @@ type (
 		NamespaceId string `json:"namespaceId" yaml:"namespaceId"`
 
 		/* server */
-		Addresses []string `json:"addresses" yaml:"addresses" validate:"required"`
+		Addrs []string `json:"addrs" yaml:"addrs" validate:"required"`
 	}
 )
