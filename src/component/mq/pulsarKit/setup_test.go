@@ -24,7 +24,10 @@ func TestSetUp(t *testing.T) {
 	if _, err := viperKit.ReadFileAs(path, nil, c); err != nil {
 		panic(err)
 	}
-	MustSetUp(c.Pulsar, "test", true)
+	MustSetUp(c.Pulsar, &VerifyConfig{
+		Topic: "test",
+		Print: true,
+	})
 
 	//topic := "test"
 	//consumer, err := NewConsumer(context.TODO(), pulsar.ConsumerOptions{

@@ -35,8 +35,8 @@ PS:
 可能失败的原因：
 （1）pulsar的进程在，但启动报错（存储空间爆了）
 */
-func verify(topicForVerify string, printFlag bool) (err error) {
-	if strKit.IsBlank(topicForVerify) {
+func verify(config *VerifyConfig) (err error) {
+	if config == nil || strKit.IsBlank(config.Topic) {
 		// 不验证
 		return nil
 	}
@@ -53,7 +53,7 @@ func verify(topicForVerify string, printFlag bool) (err error) {
 	producerLogPath := pathKit.Join(tmpDirPath, fmt.Sprintf("pulsar_verify_producer_%s_%s.log", timeStr, ulid))
 
 	// 是否打印日志到控制台？
-	level := mathKit.Ternary(printFlag, logrus.DebugLevel, logrus.PanicLevel)
+	level := mathKit.Ternary(config.Print, logrus.DebugLevel, logrus.PanicLevel)
 	logger := logrusKit.NewLogger(logrusKit.WithLevel(level), logrusKit.WithMsgPrefix("[PULSAR, VERIFY]"))
 	logger.Infof("consumerLogPath: [%s].", consumerLogPath)
 	logger.Infof("producerLogPath: [%s].", producerLogPath)
@@ -74,7 +74,7 @@ func verify(topicForVerify string, printFlag bool) (err error) {
 		}
 	}()
 
-	err = _verify(logger, topicForVerify, consumerLogPath, producerLogPath, ulid)
+	err = _verify(logger, config.Topic, consumerLogPath, producerLogPath, ulid)
 	return
 }
 

@@ -13,17 +13,16 @@ var config *Config
 
 // MustSetUp
 /*
-@param topicForVerify 	用于验证的topic（为""则不验证）
-@param printFlag 		是否输出 verify相关的输出？
+@param verifyConfig		可以为nil（将不验证，但不推荐这么干）
 */
-func MustSetUp(config *Config, topicForVerify string, printFlag bool) {
-	if err := SetUp(config, topicForVerify, printFlag); err != nil {
+func MustSetUp(config *Config, verifyConfig *VerifyConfig) {
+	if err := SetUp(config, verifyConfig); err != nil {
 		logrusKit.DisableQuote(nil)
 		logrus.Fatalf("%+v", err)
 	}
 }
 
-func SetUp(pc *Config, topicForVerify string, printFlag bool) (err error) {
+func SetUp(pc *Config, verifyConfig *VerifyConfig) (err error) {
 	defer func() {
 		if err != nil {
 			config = nil
@@ -37,7 +36,7 @@ func SetUp(pc *Config, topicForVerify string, printFlag bool) (err error) {
 	config = pc
 
 	// verify
-	if err = verify(topicForVerify, printFlag); err != nil {
+	if err = verify(verifyConfig); err != nil {
 		err = errorKit.Wrap(err, "Fail to verify")
 		return
 	}
