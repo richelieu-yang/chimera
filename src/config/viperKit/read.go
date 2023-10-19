@@ -15,6 +15,7 @@ func Read(data []byte, configType string, defaultMap map[string]interface{}) (*v
 	if err := strKit.AssertNotBlank(configType, "configType"); err != nil {
 		return nil, err
 	}
+	configType = PolyfillExtName(configType)
 
 	v := viper.New()
 	for key, value := range defaultMap {

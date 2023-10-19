@@ -8,7 +8,8 @@ import (
 
 // IsExtNameSupported
 /*
-@param extName "json", "toml", "yaml", "yml", "properties", "props", "prop", "hcl", "tfvars", "dotenv", "env", "ini"
+@param extName 	(1) <=> configType
+				(2) "json", "toml", "yaml", "yml", "properties", "props", "prop", "hcl", "tfvars", "dotenv", "env", "ini"
 */
 func IsExtNameSupported(extName string) bool {
 	return sliceKit.Contains(viper.SupportedExts, extName)
@@ -20,7 +21,8 @@ e.g.
 	extname := ".JSON"
 	fmt.Println(viperKit.PolyfillExtName(extname)) // "json"
 
-@param extName "json", "toml", "yaml", "yml", "properties", "props", "prop", "hcl", "tfvars", "dotenv", "env", "ini"
+@param extName 	(1) <=> configType
+				(2) "json", "toml", "yaml", "yml", "properties", "props", "prop", "hcl", "tfvars", "dotenv", "env", "ini"
 */
 func PolyfillExtName(extName string) string {
 	extName = strKit.TrimSpace(extName)
