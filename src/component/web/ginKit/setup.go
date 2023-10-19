@@ -32,9 +32,6 @@ func setUp(config *Config, recoveryMiddleware gin.HandlerFunc, businessLogic fun
 	if err := interfaceKit.AssertNotNil(config, "config"); err != nil {
 		return err
 	}
-	if err := config.Verify(); err != nil {
-		return err
-	}
 
 	// Gin的模式，默认debug模式，后续可以在 businessLogic 里面调整
 	gin.SetMode(config.Mode)
@@ -91,8 +88,8 @@ func setUp(config *Config, recoveryMiddleware gin.HandlerFunc, businessLogic fun
 	}
 
 	ssl := config.SSL
-	if ssl.Port != -1 {
-		if config.Port == -1 {
+	if ssl.Port != 0 {
+		if config.Port == 0 {
 			// (1) https port（本服务使用1个端口）
 			if err := netKit.AssertValidPort(ssl.Port); err != nil {
 				return errorKit.Wrap(err, "Https port(%d) should be set to a valid value.", ssl.Port)
@@ -131,7 +128,7 @@ func setUp(config *Config, recoveryMiddleware gin.HandlerFunc, businessLogic fun
 		}
 	}
 	// (3) http port（本服务使用1个端口）
-	if config.Port == -1 {
+	if config.Port == 0 {
 		return errorKit.New("At least one of http port and https port should be set to a valid value.")
 	}
 	if err := netKit.AssertValidPort(config.Port); err != nil {

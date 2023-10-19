@@ -2,9 +2,6 @@ package ginKit
 
 import (
 	"github.com/richelieu-yang/chimera/v2/src/component/web/refererKit"
-	"github.com/richelieu-yang/chimera/v2/src/core/errorKit"
-	"github.com/richelieu-yang/chimera/v2/src/core/fileKit"
-	"github.com/richelieu-yang/chimera/v2/src/netKit"
 )
 
 type (
@@ -13,7 +10,7 @@ type (
 		HostName string `json:"hostName,optional" yaml:"hostName"`
 		// Port
 		/*
-			-1（默认）: 不使用 http port
+			0（默认）: 不使用 http port
 		*/
 		Port     int  `json:"port,default=-1,range=[-1:65535]" yaml:"port"`
 		Colorful bool `json:"colorful,default=true" yaml:"colorful"`
@@ -26,7 +23,7 @@ type (
 	SslConfig struct {
 		// Port
 		/*
-			-1（默认）: 不使用 https port
+			0（默认）: 不使用 https port
 		*/
 		Port     int    `json:"port,default=-1,range=[-1:65535]" yaml:"port"`
 		CertFile string `json:"certFile,optional" yaml:"certFile"`
@@ -48,20 +45,20 @@ type (
 	}
 )
 
-func (config *Config) Verify() error {
-	// https server
-	ssl := config.SSL
-	if ssl.Port != -1 {
-		if err := netKit.AssertValidPort(ssl.Port); err != nil {
-			return errorKit.Wrap(err, "invalid https port(%d)", ssl.Port)
-		}
-		if err := fileKit.AssertExistAndIsFile(ssl.CertFile); err != nil {
-			return err
-		}
-		if err := fileKit.AssertExistAndIsFile(ssl.KeyFile); err != nil {
-			return err
-		}
-	}
-
-	return nil
-}
+//func (config *Config) Verify() error {
+//	// https server
+//	ssl := config.SSL
+//	if ssl.Port != -1 {
+//		if err := netKit.AssertValidPort(ssl.Port); err != nil {
+//			return errorKit.Wrap(err, "invalid https port(%d)", ssl.Port)
+//		}
+//		if err := fileKit.AssertExistAndIsFile(ssl.CertFile); err != nil {
+//			return err
+//		}
+//		if err := fileKit.AssertExistAndIsFile(ssl.KeyFile); err != nil {
+//			return err
+//		}
+//	}
+//
+//	return nil
+//}
