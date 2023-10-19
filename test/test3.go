@@ -2,15 +2,24 @@ package main
 
 import (
 	"fmt"
-	"github.com/richelieu-yang/chimera/v2/src/core/sliceKit"
+	"runtime/debug"
+	"time"
 )
 
 func main() {
-	s := []int{0, 1, 2}
-	fmt.Println(s) // [0 1 2]
+	defer func() {
+		if obj := recover(); obj != nil {
+			fmt.Println(obj)
+			//debug.PrintStack()
+			debug.Stack()
+		}
+	}()
 
-	sliceKit.ForEach(s, func(item int, index int) {
-		s[index] = item + 1
-	})
-	fmt.Println(s) // [1 2 3]
+	go func() {
+		time.Sleep(time.Second * 3)
+		panic(1)
+	}()
+
+	for {
+	}
 }

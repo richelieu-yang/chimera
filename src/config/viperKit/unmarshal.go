@@ -10,6 +10,7 @@ package viperKit
 
 import (
 	"github.com/mitchellh/mapstructure"
+	"github.com/richelieu-yang/chimera/v2/src/core/fileKit"
 	"github.com/richelieu-yang/chimera/v2/src/core/ptrKit"
 	"github.com/spf13/viper"
 )
@@ -51,6 +52,9 @@ PS:
 @param ptr			（不能为nil） 指针
 */
 func UnmarshalFromFile(filePath string, defaultMap map[string]interface{}, ptr interface{}) (*viper.Viper, error) {
+	if err := fileKit.AssertExistAndIsFile(filePath); err != nil {
+		return nil, err
+	}
 	if err := ptrKit.AssertNotNilAndIsPointer(ptr); err != nil {
 		return nil, err
 	}

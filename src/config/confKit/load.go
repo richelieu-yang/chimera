@@ -7,8 +7,10 @@ import (
 	"github.com/zeromicro/go-zero/core/conf"
 )
 
-// MustLoad 读取配置文件并反序列化为 指定结构体指针ptr
+// MustLoad 读取配置文件并反序列化为 指定结构体指针ptr.
 /*
+Deprecated: 不支持 .properties，字段验证相关还是用 validateKit 吧.
+
 使用 go-zero/core/conf 的缺陷: 不能自动将string类型转换为int类型，会直接返回error.
 
 PS:
@@ -54,9 +56,11 @@ func MustLoad(path string, ptr any, options ...conf.Option) {
 	}
 }
 
+// Load Deprecated: 不支持 .properties，字段验证相关还是用 validateKit 吧.
 func Load(path string, ptr any, options ...conf.Option) error {
 	if err := fileKit.AssertExistAndIsFile(path); err != nil {
 		return err
 	}
+
 	return conf.Load(path, ptr, options...)
 }
