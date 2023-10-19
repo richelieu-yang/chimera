@@ -64,7 +64,7 @@ func (config *Config) Validate() error {
 	}
 
 	switch config.Mode {
-	case SingleMode:
+	case ModeSingle:
 		config.MasterSlave = nil
 		config.Sentinel = nil
 		config.Cluster = nil
@@ -72,7 +72,7 @@ func (config *Config) Validate() error {
 		if err := v.Struct(config.Single); err != nil {
 			return err
 		}
-	case SentinelMode:
+	case ModeSentinel:
 		config.Single = nil
 		config.MasterSlave = nil
 		config.Cluster = nil
@@ -80,7 +80,7 @@ func (config *Config) Validate() error {
 		if err := v.Struct(config.Sentinel); err != nil {
 			return err
 		}
-	case ClusterMode:
+	case ModeCluster:
 		config.Single = nil
 		config.MasterSlave = nil
 		config.Sentinel = nil
@@ -88,7 +88,7 @@ func (config *Config) Validate() error {
 		if err := v.Struct(config.Cluster); err != nil {
 			return err
 		}
-	case MasterSlaveMode:
+	case ModeMasterSlave:
 		fallthrough
 	default:
 		return errorKit.New("invalid mode(%s)", config.Mode)
@@ -109,19 +109,19 @@ func (config Config) Equal(config1 Config) bool {
 		return false
 	}
 	switch config.Mode {
-	case SingleMode:
+	case ModeSingle:
 		if !compareKit.Equal(config.Single, config1.Single) {
 			return false
 		}
-	case MasterSlaveMode:
+	case ModeMasterSlave:
 		if !compareKit.Equal(config.MasterSlave, config1.MasterSlave) {
 			return false
 		}
-	case SentinelMode:
+	case ModeSentinel:
 		if !compareKit.Equal(config.Sentinel, config1.Sentinel) {
 			return false
 		}
-	case ClusterMode:
+	case ModeCluster:
 		if !compareKit.Equal(config.Cluster, config1.Cluster) {
 			return false
 		}
