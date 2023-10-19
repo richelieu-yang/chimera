@@ -11,6 +11,7 @@ package viperKit
 import (
 	"github.com/mitchellh/mapstructure"
 	"github.com/richelieu-yang/chimera/v2/src/core/fileKit"
+	"github.com/richelieu-yang/chimera/v2/src/core/interfaceKit"
 	"github.com/richelieu-yang/chimera/v2/src/core/ptrKit"
 	"github.com/spf13/viper"
 )
@@ -21,12 +22,12 @@ import (
 @param defaultMap 	默认值，可以为nil
 @param ptr			指针，且不能为nil
 */
-func Unmarshal(data []byte, configType string, defaultMap map[string]interface{}, ptr interface{}) (*viper.Viper, error) {
+func Unmarshal(content []byte, configType string, defaultMap map[string]interface{}, ptr interface{}) (*viper.Viper, error) {
 	if err := ptrKit.AssertNotNilAndIsPointer(ptr); err != nil {
 		return nil, err
 	}
 
-	v, err := Read(data, configType, defaultMap)
+	v, err := Read(content, configType, defaultMap)
 	if err != nil {
 		return nil, err
 	}
@@ -39,6 +40,14 @@ func Unmarshal(data []byte, configType string, defaultMap map[string]interface{}
 		return nil, err
 	}
 	return v, nil
+}
+
+func UnmarshalFromData(data *Data, defaultMap map[string]interface{}, ptr interface{}) (*viper.Viper, error) {
+	if err := interfaceKit.AssertNotNil(data, "data"); err != nil {
+		return nil, err
+	}
+
+	return Unmarshal(data.Content, data.Type, defaultMap, ptr)
 }
 
 // UnmarshalFromFile 读取配置文件，并反序列化.

@@ -105,7 +105,7 @@ func RespondFile(w http.ResponseWriter, r *http.Request, code int, filePath, fil
 
 // RespondData 响应字节流（二进制流）
 /*
-参考: gin里面的 Context.Data() .
+参考: gin里面的 Context.Content() .
 
 @return 如果不为nil，建议输出到控制台
 */
