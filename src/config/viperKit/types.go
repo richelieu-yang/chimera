@@ -1,6 +1,7 @@
 package viperKit
 
 type (
+	// Data 配置文件的数据.
 	Data struct {
 		// Content 配置文件的内容
 		Content []byte `json:"data" yaml:"data"`
