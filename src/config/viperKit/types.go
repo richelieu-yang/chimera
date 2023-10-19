@@ -1,5 +1,7 @@
 package viperKit
 
+import "github.com/richelieu-yang/chimera/v2/src/core/fileKit"
+
 type (
 	// Data 配置文件的数据.
 	Data struct {
@@ -10,3 +12,18 @@ type (
 		Type string `json:"type" yaml:"type"`
 	}
 )
+
+func NewDataFromFile(path string) (*Data, error) {
+	if err := fileKit.AssertExistAndIsFile(path); err != nil {
+		return nil, err
+	}
+
+	content, err := fileKit.ReadFile(path)
+	if err != nil {
+		return nil, err
+	}
+	return &Data{
+		Content: content,
+		Type:    GetContentType(path),
+	}, nil
+}
