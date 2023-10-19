@@ -7,5 +7,5 @@ import (
 
 func main() {
 	extname := ".JSON"
-	fmt.Println(viperKit.PolyfillExtName(extname)) // "json"
+	fmt.Println(viperKit.PolyfillContentType(extname)) // "json"
 }
