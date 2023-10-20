@@ -1,23 +1,42 @@
 package main
 
 import (
-	"fmt"
-	"github.com/richelieu-yang/chimera/v2/src/config/viperKit"
-	"github.com/richelieu-yang/chimera/v2/src/json/jsonKit"
+	"github.com/go-playground/validator/v10"
+	"github.com/richelieu-yang/chimera/v2/src/netKit"
+	"github.com/richelieu-yang/chimera/v2/src/validateKit"
+	"reflect"
 )
 
 type config struct {
-	A int `json:"a,default=1"`
-	B int `json:"b,default=2"`
-	C int `json:"c"`
+	A interface{} `json:"a" validate:"port"`
 }
 
 func main() {
-	c := &config{}
-	_, err := viperKit.Unmarshal([]byte("{}"), "json", nil, c)
+	v := validator.New(validator.WithRequiredStructEnabled())
+	err := v.RegisterValidation("port", func(fl validator.FieldLevel) bool {
+		field := fl.Field()
+
+		switch field.Kind() {
+		case reflect.String:
+			return netKit.IsStringValidPort(field.String())
+		default:
+			if field.CanInt() {
+				return netKit.IsValidPort(field.Int())
+			} else if field.CanUint() {
+				return netKit.IsUint64ValidPort(field.Uint())
+			}
+			return false
+		}
+	})
 	if err != nil {
 		panic(err)
 	}
-	str, _ := jsonKit.MarshalIndentToString(c, "", "    ")
-	fmt.Println(str)
+
+	c := &config{
+		A: true,
+	}
+	if err := validateKit.Struct(c); err != nil {
+		//if err := v.Struct(c); err != nil {
+		panic(err)
+	}
 }

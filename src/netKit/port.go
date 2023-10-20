@@ -1,7 +1,7 @@
 package netKit
 
 import (
-	"github.com/richelieu-yang/chimera/v2/src/core/errorKit"
+	"strconv"
 	"time"
 )
 
@@ -11,10 +11,6 @@ const (
 
 	// MaxPort 65535 == 0xFFFF
 	MaxPort = 0xFFFF
-)
-
-var (
-	NoUsablePortError = errorKit.New("no usable port")
 )
 
 // IsValidPort 是否为有效的端口？（根据值范围判断）
@@ -28,7 +24,19 @@ Linux端口分配: https://blog.csdn.net/zh2508/article/details/104888743
 1024—4999 	由客户端程序自由分配
 5000—65535 	由服务器端程序自由分配（65535 = 2 ^ 16 - 1）
 */
-func IsValidPort(port int) bool {
+func IsValidPort(port int64) bool {
+	return port > 0 && port <= MaxPort
+}
+
+func IsStringValidPort(portStr string) bool {
+	port, err := strconv.Atoi(portStr)
+	if err != nil {
+		return false
+	}
+	return IsValidPort(int64(port))
+}
+
+func IsUint64ValidPort(port uint64) bool {
 	return port > 0 && port <= MaxPort
 }
 
@@ -42,7 +50,7 @@ Java，hutool中的NetUtil.isUsableLocalPort()
 golang端口占用检测的使用	https://wenku.baidu.com/view/25716f5b01768e9951e79b89680203d8ce2f6af5.html
 */
 func IsLocalPortAvailable(port int) bool {
-	if !IsValidPort(port) {
+	if !IsValidPort(int64(port)) {
 		return false
 	}
 

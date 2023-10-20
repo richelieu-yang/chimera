@@ -6,7 +6,7 @@ import (
 )
 
 func AssertValidPort(port int) error {
-	if !IsValidPort(port) {
+	if !IsValidPort(int64(port)) {
 		return errorKit.NewSkip(1, "[%s] port(%d) is invalid", funcKit.GetFuncName(1), port)
 	}
 	return nil
