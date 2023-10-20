@@ -2,10 +2,10 @@ package main
 
 import (
 	"fmt"
-	"github.com/richelieu-yang/chimera/v2/src/validateKit"
+	"github.com/richelieu-yang/chimera/v2/src/netKit"
 )
 
 func main() {
-	fmt.Println(validateKit.Field(0, "eq=1|eq=2")) // Key: '' Error:Field validation for '' failed on the 'eq=1|eq=2' tag
-	fmt.Println(validateKit.Field(1, "eq=1|eq=2")) // <nil>
+	fmt.Println(netKit.JoinHostnameAndPort("127.0.0.1", 80)) // 127.0.0.1:80
+	fmt.Println(netKit.JoinHostnameAndPort("", 8888))        // :8888
 }

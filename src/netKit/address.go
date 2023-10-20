@@ -9,7 +9,6 @@ host in js: 	"127.0.0.1:8888"
 package netKit
 
 import (
-	"fmt"
 	"github.com/richelieu-yang/chimera/v2/src/core/errorKit"
 	"github.com/richelieu-yang/chimera/v2/src/core/strKit"
 	"net"
@@ -18,32 +17,41 @@ import (
 
 type (
 	Address struct {
-		// Hostname 也可以是ip
+		// Hostname 包括ip
 		Hostname string `json:"hostname" yaml:"hostname"`
 		Port     int    `json:"port" yaml:"port"`
 	}
 )
 
 func (addr *Address) String() string {
-	return fmt.Sprintf("%s:%d", addr.Hostname, addr.Port)
+	return JoinHostnameAndPort(addr.Hostname, addr.Port)
 }
 
-func JoinHostnameAndPort(hostname string, port int) string {
-	//addr := &Address{
-	//	Hostname: hostname,
-	//	Port:     port,
-	//}
-	//return addr.ToDsnString()
+// JoinHostPort
+/*
+e.g.
+	("127.0.0.1", "80")	=> "127.0.0.1:80"
+	("", "8888") 		=> ":8888"
+*/
+var JoinHostPort func(host, port string) string = net.JoinHostPort
 
+// JoinHostnameAndPort
+/*
+e.g.
+	fmt.Println(netKit.JoinHostnameAndPort("127.0.0.1", 80)) // 127.0.0.1:80
+	fmt.Println(netKit.JoinHostnameAndPort("", 8888))        // :8888
+*/
+func JoinHostnameAndPort(hostname string, port int) string {
+	//return fmt.Sprintf("%s:%d", hostname, port)
 	return net.JoinHostPort(hostname, strconv.Itoa(port))
 }
 
 // ParseToAddress
 /*
 e.g.
-("https://127.0.0.1") 		=> "127.0.0.1:443", nil
-("http://127.0.0.1:8888") 	=> "127.0.0.1:8888", nil
-("https://blog.csdn.net/weixin_52428496/article/details/110159938") => "blog.csdn.net:443", nil
+	("https://127.0.0.1") 		=> "127.0.0.1:443", nil
+	("http://127.0.0.1:8888") 	=> "127.0.0.1:8888", nil
+	("https://blog.csdn.net/weixin_52428496/article/details/110159938") => "blog.csdn.net:443", nil
 */
 func ParseToAddress(str string) (*Address, error) {
 	tmp := strKit.TrimSpace(str)
