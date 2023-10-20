@@ -18,10 +18,10 @@ gin:
   middleware:
     # 是否开启gzip压缩（默认: false）
     gzip: false
-    # 全局对request body的大小限制（整数; 单位: MB; 默认: -1; <=0: 不做限制; >0: 进行限制）
+    # 全局对request body的大小限制（整数; 单位: MB; 默认: 0; <=0: 不做限制; >0: 进行限制）
     # 不建议在此处配置，想限制上传文件大小可以在handler中进行处理
     # TODO: 因为http.MaxBytesReader()，如果涉及"请求转发（代理）"，转发方不要全局配置此属性，否则会导致: 有时成功，有时代理失败（error），有时http客户端失败
-#    bodyLimit: 1
+    bodyLimit: 0
     # 响应头的"X-Frame-Options"（全部小写！），可选值:
     # (1) deny                页面不允许在frame中显示
     # (2) sameorigin          页面允许在相同域名页面的frame中显示

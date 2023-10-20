@@ -2,7 +2,7 @@ package ginKit
 
 import (
 	"github.com/gin-gonic/gin"
-	"github.com/richelieu-yang/chimera/v2/src/config/confKit"
+	"github.com/richelieu-yang/chimera/v2/src/config/viperKit"
 	"github.com/richelieu-yang/chimera/v2/src/consts"
 	"github.com/richelieu-yang/chimera/v2/src/core/pathKit"
 	"github.com/sirupsen/logrus"
@@ -11,19 +11,21 @@ import (
 )
 
 func TestMustSetUp(t *testing.T) {
-	type config struct {
-		Gin *Config `json:"Gin"`
-	}
-
 	wd, err := pathKit.ReviseWorkingDirInTestMode(consts.ProjectName)
 	if err != nil {
 		panic(err)
 	}
 	logrus.Infof("wd: [%s].", wd)
-
-	c := &config{}
 	path := "_chimera-lib/config.yaml"
-	confKit.MustLoad(path, c)
+
+	type config struct {
+		Gin *Config `json:"Gin"`
+	}
+	c := &config{}
+	_, err = viperKit.UnmarshalFromFile(path, nil, c)
+	if err != nil {
+		panic(err)
+	}
 
 	MustSetUp(c.Gin, nil, func(engine *gin.Engine) error {
 		engine.Any("/test", func(ctx *gin.Context) {

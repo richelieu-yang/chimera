@@ -3,7 +3,6 @@ package ginKit
 import (
 	"github.com/gin-contrib/gzip"
 	"github.com/gin-gonic/gin"
-	"github.com/richelieu-yang/chimera/v2/src/component/web/refererKit"
 	"github.com/richelieu-yang/chimera/v2/src/core/sliceKit"
 	"github.com/richelieu-yang/chimera/v2/src/core/strKit"
 	"net/http"
@@ -45,17 +44,17 @@ func attachMiddlewares(engine *gin.Engine, config MiddlewareConfig, recoveryMidd
 		}
 	}
 
-	// referer（必须在cors中间件后面）
-	{
-		refererConfig := config.Referer
-		if refererConfig != nil {
-			middleware, err := refererKit.NewGinRefererMiddleware(refererConfig)
-			if err != nil {
-				return err
-			}
-			engine.Use(middleware)
-		}
-	}
+	//// referer（必须在cors中间件后面）
+	//{
+	//	refererConfig := config.Referer
+	//	if refererConfig != nil {
+	//		middleware, err := refererKit.NewGinRefererMiddleware(refererConfig)
+	//		if err != nil {
+	//			return err
+	//		}
+	//		engine.Use(middleware)
+	//	}
+	//}
 
 	// bodyLimit
 	// TODO: 因为http.MaxBytesReader()，如果涉及"请求转发（代理）"，转发方不要全局配置此属性，否则会导致: 有时成功，有时代理失败（error），有时http客户端失败
