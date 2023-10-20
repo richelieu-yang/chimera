@@ -12,8 +12,8 @@ type (
 		Colorful bool `json:"colorful" yaml:"colorful"`
 		Pprof    bool `json:"pprof" yaml:"pprof"`
 
-		SSL        SslConfig        `json:"ssl" yaml:"ssl" validate:"dive"`
-		Middleware MiddlewareConfig `json:"middleware" yaml:"middleware" validate:"dive"`
+		SSL        SslConfig        `json:"ssl" yaml:"ssl"`
+		Middleware MiddlewareConfig `json:"middleware" yaml:"middleware"`
 	}
 
 	SslConfig struct {
@@ -30,7 +30,7 @@ type (
 		BodyLimit     int64      `json:"bodyLimit" yaml:"bodyLimit"`
 		Gzip          bool       `json:"gzip" yaml:"gzip"`
 		XFrameOptions string     `json:"xFrameOptions" yaml:"xFrameOptions" validate:"omitempty,lowercase,oneof=deny sameorigin|startswith=allow-from "`
-		Cors          CorsConfig `json:"cors" yaml:"cors" validate:"dive"`
+		Cors          CorsConfig `json:"cors" yaml:"cors"`
 		//Referer       []*refererKit.RefererVerifierBuilder `json:"referer" yaml:"referer"`
 	}
 

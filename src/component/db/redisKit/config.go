@@ -14,10 +14,10 @@ type (
 
 		Mode Mode `json:"mode" yaml:"mode" validate:"oneof=single sentinel cluster"`
 
-		Single      *SingleConfig      `json:"single" yaml:"singleNode"`
-		MasterSlave *MasterSlaveConfig `json:"masterSlave" yaml:"masterSlave"`
-		Sentinel    *SentinelConfig    `json:"sentinel" yaml:"sentinel"`
-		Cluster     *ClusterConfig     `json:"cluster" yaml:"cluster"`
+		Single      *SingleConfig      `json:"single" yaml:"singleNode" validate:"-"`
+		MasterSlave *MasterSlaveConfig `json:"masterSlave" yaml:"masterSlave" validate:"-"`
+		Sentinel    *SentinelConfig    `json:"sentinel" yaml:"sentinel" validate:"-"`
+		Cluster     *ClusterConfig     `json:"cluster" yaml:"cluster" validate:"-"`
 	}
 
 	SingleConfig struct {
