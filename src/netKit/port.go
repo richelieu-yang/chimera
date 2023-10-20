@@ -26,7 +26,8 @@ const (
 1024—4999 	由客户端程序自由分配
 5000—65535 	由服务器端程序自由分配（65535 = 2 ^ 16 - 1）
 
-@param obj 支持的类型: reflect.Value、int、uint、string...
+@param obj 	(1) 支持的类型: reflect.Value、int、uint、string...
+			(2) 可以为nil
 */
 func IsValidPort(obj interface{}) bool {
 	if obj == nil {
