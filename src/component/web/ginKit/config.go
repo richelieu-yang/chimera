@@ -1,7 +1,5 @@
 package ginKit
 
-import "github.com/richelieu-yang/chimera/v2/src/component/web/refererKit"
-
 type (
 	Config struct {
 		Mode     string `json:"mode" yaml:"mode" validate:"oneof=debug release test"`
@@ -29,11 +27,11 @@ type (
 	}
 
 	MiddlewareConfig struct {
-		BodyLimit     int64                                `json:"bodyLimit" yaml:"bodyLimit"`
-		Gzip          bool                                 `json:"gzip" yaml:"gzip"`
-		XFrameOptions string                               `json:"xFrameOptions" yaml:"xFrameOptions"`
-		Cors          CorsConfig                           `json:"cors" yaml:"cors" validate:"dive"`
-		Referer       []*refererKit.RefererVerifierBuilder `json:"referer" yaml:"referer"`
+		BodyLimit     int64      `json:"bodyLimit" yaml:"bodyLimit"`
+		Gzip          bool       `json:"gzip" yaml:"gzip"`
+		XFrameOptions string     `json:"xFrameOptions" yaml:"xFrameOptions"`
+		Cors          CorsConfig `json:"cors" yaml:"cors" validate:"dive"`
+		//Referer       []*refererKit.RefererVerifierBuilder `json:"referer" yaml:"referer"`
 	}
 
 	// CorsConfig cors（跨源资源共享）的配置
