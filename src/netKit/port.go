@@ -1,6 +1,8 @@
 package netKit
 
 import (
+	"github.com/richelieu-yang/chimera/v2/src/reflectKit"
+	"reflect"
 	"strconv"
 	"time"
 )
@@ -13,31 +15,48 @@ const (
 	MaxPort = 0xFFFF
 )
 
-// IsValidPort 是否为有效的端口？（根据值范围判断）
+// IsValidPort
 /*
 参考:
-Java，hutool中的NetUtil.isValidPort()
-Linux端口分配: https://blog.csdn.net/zh2508/article/details/104888743
+(1) Java，hutool中的NetUtil.isValidPort()
+(2) Linux端口分配: https://blog.csdn.net/zh2508/article/details/104888743
 
 0 			不使用
 1–1023 		系统保留,只能由root用户使用
 1024—4999 	由客户端程序自由分配
 5000—65535 	由服务器端程序自由分配（65535 = 2 ^ 16 - 1）
-*/
-func IsValidPort(port int64) bool {
-	return port > 0 && port <= MaxPort
-}
 
-func IsStringValidPort(portStr string) bool {
-	port, err := strconv.Atoi(portStr)
-	if err != nil {
+@param obj 支持的类型: reflect.Value、int、uint、string...
+*/
+func IsValidPort(obj interface{}) bool {
+	if obj == nil {
 		return false
 	}
-	return IsValidPort(int64(port))
-}
 
-func IsUint64ValidPort(port uint64) bool {
-	return port > 0 && port <= MaxPort
+	var isValidPort = func(v reflect.Value) bool {
+		switch v.Kind() {
+		case reflect.String:
+			i, err := strconv.Atoi(v.String())
+			if err != nil {
+				return false
+			}
+			return i > 0 && i <= MaxPort
+		default:
+			if v.CanInt() {
+				i := v.Int()
+				return i > 0 && i <= MaxPort
+			} else if v.CanUint() {
+				i := v.Uint()
+				return i > 0 && i <= MaxPort
+			}
+			return false
+		}
+	}
+
+	if v, ok := obj.(reflect.Value); ok {
+		return isValidPort(v)
+	}
+	return isValidPort(reflectKit.ValueOf(obj))
 }
 
 // IsLocalPortAvailable 本地端口是否可用（即未被占用）？
