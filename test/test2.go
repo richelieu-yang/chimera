@@ -6,6 +6,7 @@ import (
 )
 
 func main() {
-	err := validateKit.Var("allow-from 111", "omitempty,lowercase,oneof=deny sameorigin|startswith=allow-from ")
-	fmt.Println(err)
+	fmt.Println(validateKit.Var("", "omitempty,gte=6"))
+	fmt.Println(validateKit.Var("public", "omitempty,gte=6"))
+	fmt.Println(validateKit.Var("publi", "omitempty,gte=6"))
 }
