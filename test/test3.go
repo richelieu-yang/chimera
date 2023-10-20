@@ -21,7 +21,7 @@ func main() {
 	}
 
 	c := &config{
-		A: 0,
+		A: 80,
 	}
 	//if err := validateKit.Struct(c); err != nil {
 	if err := v.Struct(c); err != nil {

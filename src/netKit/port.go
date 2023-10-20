@@ -33,30 +33,30 @@ func IsValidPort(obj interface{}) bool {
 		return false
 	}
 
-	var isValidPort = func(v reflect.Value) bool {
-		switch v.Kind() {
-		case reflect.String:
-			i, err := strconv.Atoi(v.String())
-			if err != nil {
-				return false
-			}
-			return i > 0 && i <= MaxPort
-		default:
-			if v.CanInt() {
-				i := v.Int()
-				return i > 0 && i <= MaxPort
-			} else if v.CanUint() {
-				i := v.Uint()
-				return i > 0 && i <= MaxPort
-			}
+	if v, ok := obj.(reflect.Value); ok {
+		return isReflectValueValidPort(v)
+	}
+	return isReflectValueValidPort(reflectKit.ValueOf(obj))
+}
+
+func isReflectValueValidPort(v reflect.Value) bool {
+	switch v.Kind() {
+	case reflect.String:
+		i, err := strconv.Atoi(v.String())
+		if err != nil {
 			return false
 		}
+		return i > 0 && i <= MaxPort
+	default:
+		if v.CanInt() {
+			i := v.Int()
+			return i > 0 && i <= MaxPort
+		} else if v.CanUint() {
+			i := v.Uint()
+			return i > 0 && i <= MaxPort
+		}
+		return false
 	}
-
-	if v, ok := obj.(reflect.Value); ok {
-		return isValidPort(v)
-	}
-	return isValidPort(reflectKit.ValueOf(obj))
 }
 
 // IsLocalPortAvailable 本地端口是否可用（即未被占用）？
