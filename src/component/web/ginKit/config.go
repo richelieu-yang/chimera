@@ -6,7 +6,7 @@ import (
 
 type (
 	Config struct {
-		Mode     string `json:"mode,default=debug,options=debug|release|test" yaml:"mode"`
+		Mode     string `json:"mode" yaml:"mode" validate:"oneof=debug release test"`
 		HostName string `json:"hostName" yaml:"hostName"`
 		// Port
 		/*
@@ -44,21 +44,3 @@ type (
 		Origins []string `json:"origins" yaml:"origins"`
 	}
 )
-
-//func (config *Config) Verify() error {
-//	// https server
-//	ssl := config.SSL
-//	if ssl.Port != -1 {
-//		if err := netKit.AssertValidPort(ssl.Port); err != nil {
-//			return errorKit.Wrap(err, "invalid https port(%d)", ssl.Port)
-//		}
-//		if err := fileKit.AssertExistAndIsFile(ssl.CertFile); err != nil {
-//			return err
-//		}
-//		if err := fileKit.AssertExistAndIsFile(ssl.KeyFile); err != nil {
-//			return err
-//		}
-//	}
-//
-//	return nil
-//}
