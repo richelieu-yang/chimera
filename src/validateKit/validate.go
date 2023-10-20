@@ -5,7 +5,6 @@ import (
 	"github.com/richelieu-yang/chimera/v2/src/core/sliceKit"
 	"github.com/richelieu-yang/chimera/v2/src/core/strKit"
 	"github.com/richelieu-yang/chimera/v2/src/netKit"
-	"reflect"
 )
 
 // New
@@ -35,7 +34,7 @@ func New(tagNameArgs ...string) *validator.Validate {
 func registerDefaultValidation(v *validator.Validate) error {
 	tag := "port"
 	err := v.RegisterValidation(tag, func(fl validator.FieldLevel) bool {
-		var field reflect.Value = fl.Field()
+		field := fl.Field()
 		return netKit.IsValidPort(field)
 	})
 	if err != nil {
