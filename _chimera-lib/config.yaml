@@ -22,6 +22,10 @@ gin:
     # 不建议在此处配置，想限制上传文件大小可以在handler中进行处理
     # TODO: 因为http.MaxBytesReader()，如果涉及"请求转发（代理）"，转发方不要全局配置此属性，否则会导致: 有时成功，有时代理失败（error），有时http客户端失败
 #    bodyLimit: 1
+    # 响应头的"X-Frame-Options"，可选值
+    # (1) deny                页面不允许在frame中显示
+    # (2) sameorigin          页面允许在相同域名页面的frame中显示
+    # (3) allow-from $(uri)   页面可以在制定来源的frame中显示，e.g. allow-from https://example.com/
     xFrameOptions:
     cors:
       # 是否配置cors？默认: false（此时下面的 origins配置 将无效）
