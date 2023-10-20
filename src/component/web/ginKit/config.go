@@ -1,8 +1,6 @@
 package ginKit
 
-import (
-	"github.com/richelieu-yang/chimera/v2/src/component/web/refererKit"
-)
+import "github.com/richelieu-yang/chimera/v2/src/component/web/refererKit"
 
 type (
 	Config struct {
@@ -12,12 +10,12 @@ type (
 		/*
 			0（默认）: 不使用 http port
 		*/
-		Port     int  `json:"port" yaml:"port"`
+		Port     int  `json:"port" yaml:"port" validate:"port|eq=0"`
 		Colorful bool `json:"colorful" yaml:"colorful"`
 		Pprof    bool `json:"pprof" yaml:"pprof"`
 
-		SSL        SslConfig        `json:"ssl" yaml:"ssl"`
-		Middleware MiddlewareConfig `json:"middleware" yaml:"middleware"`
+		SSL        SslConfig        `json:"ssl" yaml:"ssl" validate:"dive"`
+		Middleware MiddlewareConfig `json:"middleware" yaml:"middleware" validate:"dive"`
 	}
 
 	SslConfig struct {
@@ -25,7 +23,7 @@ type (
 		/*
 			0（默认）: 不使用 https port
 		*/
-		Port     int    `json:"port" yaml:"port"`
+		Port     int    `json:"port" yaml:"port" validate:"port|eq=0"`
 		CertFile string `json:"certFile" yaml:"certFile"`
 		KeyFile  string `json:"keyFile" yaml:"keyFile"`
 	}
@@ -34,13 +32,13 @@ type (
 		BodyLimit     int64                                `json:"bodyLimit" yaml:"bodyLimit"`
 		Gzip          bool                                 `json:"gzip" yaml:"gzip"`
 		XFrameOptions string                               `json:"xFrameOptions" yaml:"xFrameOptions"`
-		Cors          CorsConfig                           `json:"cors" yaml:"cors"`
+		Cors          CorsConfig                           `json:"cors" yaml:"cors" validate:"dive"`
 		Referer       []*refererKit.RefererVerifierBuilder `json:"referer" yaml:"referer"`
 	}
 
 	// CorsConfig cors（跨源资源共享）的配置
 	CorsConfig struct {
 		Access  bool     `json:"access" yaml:"access"`
-		Origins []string `json:"origins" yaml:"origins"`
+		Origins []string `json:"origins" yaml:"origins" validate:"dive,required"`
 	}
 )

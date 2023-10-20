@@ -12,7 +12,8 @@ type (
 		Password  string `json:"password" yaml:"password"`
 		KeyPrefix string `json:"keyPrefix" yaml:"keyPrefix"`
 
-		Mode        Mode               `json:"mode" yaml:"mode" validate:"oneof=single sentinel cluster"`
+		Mode Mode `json:"mode" yaml:"mode" validate:"oneof=single sentinel cluster"`
+
 		Single      *SingleConfig      `json:"single" yaml:"singleNode"`
 		MasterSlave *MasterSlaveConfig `json:"masterSlave" yaml:"masterSlaver"`
 		Sentinel    *SentinelConfig    `json:"sentinel" yaml:"sentinel"`
