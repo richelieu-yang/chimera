@@ -2,19 +2,10 @@ package main
 
 import (
 	"fmt"
-	"github.com/gogf/gf/v2/util/grand"
-	"github.com/richelieu-yang/chimera/v2/src/core/fileKit"
-	"github.com/richelieu-yang/chimera/v2/src/dataSizeKit"
+	"github.com/richelieu-yang/chimera/v2/src/randomKit"
 )
 
 func main() {
-	//data := grand.B(1024)
-	//fmt.Println(string(data))
-
-	tmp := grand.Digits(int(dataSizeKit.MiB))
-	fmt.Println(tmp)
-
-	_ = fileKit.WriteToFile([]byte(tmp), "tmp.txt", 0644)
-
-	//fmt.Println(jsonKit.MarshalToString(nil)) // null <nil>
+	data := randomKit.Bytes(20)
+	fmt.Println(data) // [193 72 130 210 86 72 180 144 91 246 162 215 176 4 169 153 130 140 89 15]
 }
