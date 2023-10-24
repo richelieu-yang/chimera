@@ -6,6 +6,7 @@ import (
 	"github.com/richelieu-yang/chimera/v2/src/consts"
 	"github.com/richelieu-yang/chimera/v2/src/core/pathKit"
 	"github.com/richelieu-yang/chimera/v2/src/log/logrusKit"
+	"github.com/richelieu-yang/chimera/v2/src/randomKit"
 	"github.com/sirupsen/logrus"
 	"testing"
 )
@@ -43,17 +44,17 @@ func TestMustSetUp(t *testing.T) {
 
 	flag, err := namingClient.UpdateInstance(vo.UpdateInstanceParam{
 		Ip:   "127.0.0.1",
-		Port: 80,
+		Port: 8888,
 		/*
 			有效范围: [0.0, 10000, 0]
 		*/
-		Weight:      88,
-		Enable:      true,
-		Healthy:     true,
-		Metadata:    nil,
-		ClusterName: "",
-		ServiceName: "test",
-		GroupName:   "cyy",
+		Weight:   float64(randomKit.Int(0, 1000)),
+		Enable:   true,
+		Healthy:  true,
+		Metadata: nil,
+		//ClusterName: "",
+		ServiceName: "ws",
+		GroupName:   "wo3",
 		Ephemeral:   false,
 	})
 	if err != nil {
