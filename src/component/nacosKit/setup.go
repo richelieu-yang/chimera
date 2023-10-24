@@ -129,3 +129,15 @@ func GetClientConfigCopy(options ...constant.ClientOption) (*constant.ClientConf
 
 	return clientConfig, nil
 }
+
+// GetNamespaceId
+/*
+PS: 如果一个服务仅使用一个NamespaceId，可以调用此方法.
+*/
+func GetNamespaceId() (string, error) {
+	if clientConfig == nil || serverConfigs == nil {
+		return "", NotSetUpError
+	}
+
+	return clientConfig.NamespaceId, nil
+}
