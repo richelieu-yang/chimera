@@ -42,9 +42,16 @@ func TestMustSetUp(t *testing.T) {
 	}
 	defer configClient.CloseClient()
 
-	flag, err := namingClient.UpdateInstance(vo.UpdateInstanceParam{
+	//instance, err := namingClient.SelectOneHealthyInstance(vo.SelectOneHealthInstanceParam{
+	//	ServiceName: "ws",
+	//	GroupName:   "wo3",
+	//})
+	//fmt.Println(instance.Weight)
+	//fmt.Println(instance.Metadata)
+
+	flag, err := namingClient.RegisterInstance(vo.RegisterInstanceParam{
 		Ip:   "127.0.0.1",
-		Port: 8888,
+		Port: 12345,
 		/*
 			有效范围: [0.0, 10000, 0]
 		*/
@@ -53,8 +60,8 @@ func TestMustSetUp(t *testing.T) {
 		Healthy:  true,
 		Metadata: nil,
 		//ClusterName: "",
-		ServiceName: "ws",
-		GroupName:   "wo3",
+		ServiceName: "s",
+		GroupName:   "g",
 		Ephemeral:   false,
 	})
 	if err != nil {
