@@ -47,13 +47,13 @@ func TestMustSetUp(t *testing.T) {
 		/*
 			有效范围: [0.0, 10000, 0]
 		*/
-		Weight:      80,
+		Weight:      88,
 		Enable:      true,
 		Healthy:     true,
 		Metadata:    nil,
 		ClusterName: "",
-		ServiceName: "ws",
-		GroupName:   "wo3",
+		ServiceName: "test",
+		GroupName:   "cyy",
 		Ephemeral:   false,
 	})
 	if err != nil {

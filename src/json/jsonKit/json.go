@@ -17,6 +17,11 @@ func MarshalIndent(v interface{}, prefix, indent string) ([]byte, error) {
 	return defaultApi.MarshalIndent(v, prefix, indent)
 }
 
+// MarshalToString
+/*
+e.g.
+	fmt.Println(jsonKit.MarshalToString(nil)) // null <nil>
+*/
 func MarshalToString(v interface{}) (string, error) {
 	return defaultApi.MarshalToString(v)
 }
