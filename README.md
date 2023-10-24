@@ -18,7 +18,7 @@ dest: resource/ip2region/ip2region.xdb
     https://github.com/samber/lo
 (2) GoFramev2
     https://goframe.org/pages/viewpage.action?pageId=1114859
-(3) lancet
+(3) duke-git/lancet
     官方API说明
         https://www.golancet.cn/api/overview.html
     支持300+常用功能的开源GO语言工具函数库
