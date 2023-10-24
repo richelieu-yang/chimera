@@ -55,8 +55,9 @@ func NewConfigClient(options ...constant.ClientOption) (config_client.IConfigCli
 // NewNamingClient 创建 服务发现(naming) 客户端.
 /*
 !!!:
-(1) 需要先set up.
-(2) naming_client.INamingClient 实例，如果不用了需要"手动关闭".
+(1) 需要先set up;
+(2) naming_client.INamingClient 实例，如果不用了需要"手动关闭";
+(3) !!!: 不要在 Nacos管理页面 上修改服务实例的信息（weight等），否则可能导致后续 RegisterInstance 、UpdateInstance 会失败（虽然方法返回true, nil）.
 
 @param options 可以用于修改: NamespaceId...
 */
