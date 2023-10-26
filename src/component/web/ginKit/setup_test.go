@@ -16,6 +16,7 @@ func TestMustSetUp(t *testing.T) {
 		panic(err)
 	}
 	logrus.Infof("wd: [%s].", wd)
+
 	path := "_chimera-lib/config.yaml"
 
 	type config struct {
