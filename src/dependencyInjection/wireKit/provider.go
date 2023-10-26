@@ -1,0 +1,13 @@
+package wireKit
+
+import "github.com/google/wire"
+
+var (
+	// NewSet 将多个提供者函数添加到一个集合中.
+	/*
+		PS:
+		(1) 如果经常同时使用多个提供者函数，这非常有用;
+		(2) 可以将其他提供者函数集添加到提供者函数集中.
+	*/
+	NewSet func(...interface{}) wire.ProviderSet = wire.NewSet
+)
