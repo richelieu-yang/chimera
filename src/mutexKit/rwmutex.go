@@ -9,7 +9,7 @@ type (
 )
 
 func NewRWMutex() *RWMutex {
-	return &RWMutex{sync.RWMutex{}}
+	return &RWMutex{}
 }
 
 // LockFunc 写锁

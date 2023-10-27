@@ -1,15 +1,16 @@
-package wsKit
+package types
 
 import (
 	"errors"
 	"fmt"
 	"github.com/gorilla/websocket"
 	"github.com/richelieu-yang/chimera/v2/src/component/web/push/pushKit"
+	"github.com/richelieu-yang/chimera/v2/src/component/web/push/pushKit/types"
 )
 
 type WsChannel struct {
-	pushKit.Channel
-	pushKit.BaseChannel
+	types.Channel
+	types.BaseChannel
 
 	conn *websocket.Conn
 }

@@ -1,15 +1,18 @@
-package wsKit
+package types
 
 import (
 	"errors"
+	"fmt"
 	"github.com/gorilla/websocket"
-	"github.com/richelieu-yang/chimera/v2/src/component/web/push/pushKit"
+	"github.com/richelieu-yang/chimera/v2/src/component/web/push/pushKit/types"
+	"github.com/richelieu-yang/chimera/v2/src/component/web/push/wsKit"
 	"github.com/richelieu-yang/chimera/v2/src/core/errorKit"
 	"github.com/richelieu-yang/chimera/v2/src/core/interfaceKit"
+	"github.com/richelieu-yang/chimera/v2/src/core/strKit"
 	"github.com/richelieu-yang/chimera/v2/src/core/timeKit"
 	"github.com/richelieu-yang/chimera/v2/src/idKit"
+	"github.com/richelieu-yang/chimera/v2/src/mutexKit"
 	"net/http"
-	"sync"
 	"time"
 )
 
@@ -19,7 +22,7 @@ type Processor struct {
 
 	idGenerator func() (string, error)
 
-	listener pushKit.Listener
+	listener types.Listener
 }
 
 func (p *Processor) NewChannel(conn *websocket.Conn) (*WsChannel, error) {
@@ -27,38 +30,45 @@ func (p *Processor) NewChannel(conn *websocket.Conn) (*WsChannel, error) {
 	if err != nil {
 		return nil, err
 	}
+	if err := strKit.AssertNotBlank(id, "id"); err != nil {
+		return nil, err
+	}
 
 	return &WsChannel{
-		BaseChannel: pushKit.BaseChannel{
-			Id:     id,
-			Bsid:   "",
-			User:   "",
-			Group:  "",
-			Mutex:  sync.Mutex{},
-			Data:   nil,
-			Closed: false,
+		BaseChannel: types.BaseChannel{
+			Id:       id,
+			Bsid:     "",
+			User:     "",
+			Group:    "",
+			RWMutex:  mutexKit.RWMutex{},
+			Data:     nil,
+			Closed:   false,
+			Listener: p.listener,
 		},
 		conn: conn,
 	}, nil
 }
 
 func (p *Processor) Handle(w http.ResponseWriter, r *http.Request) {
-	PolyfillWebSocketRequest(r)
+	wsKit.PolyfillWebSocketRequest(r)
 
 	// 先判断是不是websocket请求
 	if !websocket.IsWebSocketUpgrade(r) {
-		p.listener.OnFailure(w, r, "Not a websocket upgrade request")
+		failureInfo := "Not a websocket upgrade request"
+		p.listener.OnFailure(w, r, failureInfo)
 		return
 	}
 
 	// Upgrade（升级为WebSocket协议）
-	conn, err := upgrader.Upgrade(w, r, w.Header())
+	conn, err := p.upgrader.Upgrade(w, r, w.Header())
 	if err != nil {
-		err = errorKit.Wrap(err, "Fail to upgrade websocket")
-		p.listener.OnFailure(w, r, err.Error())
+		failureInfo := fmt.Sprintf("Fail to upgrade because of error(%s)", err.Error())
+		p.listener.OnFailure(w, r, failureInfo)
 		return
 	}
-	defer conn.Close()
+	defer func() {
+		_ = conn.Close()
+	}()
 
 	channel, err := p.NewChannel(conn)
 	if err != nil {
@@ -70,13 +80,10 @@ func (p *Processor) Handle(w http.ResponseWriter, r *http.Request) {
 	p.listener.OnHandshake(w, r, channel)
 
 	conn.SetCloseHandler(func(code int, text string) error {
-		p.listener.OnClose(channel, code, text)
-
-		//channel.SetClosed()
-		//
-		//if RemoveChannel(channel) {
-		//	channel.GetListener().OnCloseByFrontend(channel, code, text)
-		//}
+		if channel.SetClosed() {
+			info := fmt.Sprintf("code: %d, text: %s", code, text)
+			p.listener.OnClose(channel, info)
+		}
 
 		// 默认的close handler
 		message := websocket.FormatCloseMessage(code, text)
@@ -88,14 +95,14 @@ func (p *Processor) Handle(w http.ResponseWriter, r *http.Request) {
 	for {
 		messageType, data, err := conn.ReadMessage()
 		if err != nil {
-			channel.SetClosed()
-
-			if RemoveChannel(channel) {
+			if channel.SetClosed() {
 				var closeErr *websocket.CloseError
 				if errors.As(err, &closeErr) {
-					listener.OnCloseByFrontend(channel, closeErr.Code, closeErr.Text)
+					info := fmt.Sprintf("code: %d, text: %s", closeErr.Code, closeErr.Text)
+					p.listener.OnClose(channel, info)
 				} else {
-					listener.OnCloseByBackend(channel)
+					info := fmt.Sprintf("Fail to read message because of error(%s)", err.Error())
+					p.listener.OnClose(channel, info)
 				}
 			}
 			break
@@ -111,7 +118,7 @@ func (p *Processor) Handle(w http.ResponseWriter, r *http.Request) {
 @param idGenerator		可以为nil（使用xid）
 @param listener			不能为nil
 */
-func NewProcessor(handshakeTimeout time.Duration, checkOrigin func(r *http.Request) bool, idGenerator func() (string, error), listener pushKit.Listener) (*Processor, error) {
+func NewProcessor(handshakeTimeout time.Duration, checkOrigin func(r *http.Request) bool, idGenerator func() (string, error), listener types.Listener) (*Processor, error) {
 	handshakeTimeout = timeKit.ToDefaultDurationIfInvalid(handshakeTimeout, time.Second*3)
 	if checkOrigin == nil {
 		checkOrigin = func(r *http.Request) bool {

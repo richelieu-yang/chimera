@@ -3,7 +3,7 @@ package wsKit
 import (
 	"github.com/gin-gonic/gin"
 	"github.com/gorilla/websocket"
-	"github.com/richelieu-yang/chimera/v2/src/component/web/push/pushKit"
+	"github.com/richelieu-yang/chimera/v2/src/component/web/push/pushKit/types"
 	"github.com/richelieu-yang/chimera/v2/src/core/errorKit"
 	"github.com/richelieu-yang/chimera/v2/src/core/interfaceKit"
 	"net/http"
@@ -23,7 +23,7 @@ var upgrader = websocket.Upgrader{
 /*
 @param listener 不能为nil
 */
-func NewGinHandler(listener pushKit.Listener) (gin.HandlerFunc, error) {
+func NewGinHandler(listener types.Listener) (gin.HandlerFunc, error) {
 	httpHandler, err := NewHttpHandler(listener)
 	if err != nil {
 		return nil, err
@@ -38,7 +38,7 @@ func NewGinHandler(listener pushKit.Listener) (gin.HandlerFunc, error) {
 /*
 @param listener 不能为nil
 */
-func NewHttpHandler(listener pushKit.Listener) (func(w http.ResponseWriter, r *http.Request), error) {
+func NewHttpHandler(listener types.Listener) (func(w http.ResponseWriter, r *http.Request), error) {
 	if err := interfaceKit.AssertNotNil(listener, "Listener"); err != nil {
 		return nil, err
 	}

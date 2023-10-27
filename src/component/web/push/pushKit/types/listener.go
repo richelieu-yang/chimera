@@ -1,9 +1,9 @@
-package pushKit
+package types
 
 import "net/http"
 
 type Listener interface {
-	OnFailure(w http.ResponseWriter, r *http.Request, error string)
+	OnFailure(w http.ResponseWriter, r *http.Request, failureInfo string)
 
 	OnHandshake(w http.ResponseWriter, r *http.Request, channel Channel)
 

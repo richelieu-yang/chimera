@@ -11,7 +11,7 @@ type (
 )
 
 func NewMutex() *Mutex {
-	return &Mutex{sync.Mutex{}}
+	return &Mutex{}
 }
 
 func (m *Mutex) LockFunc(f func()) {

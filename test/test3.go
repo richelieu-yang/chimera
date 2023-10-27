@@ -2,9 +2,13 @@ package main
 
 import (
 	"fmt"
-	"github.com/richelieu-yang/chimera/v2/src/idKit"
+	"github.com/richelieu-yang/chimera/v2/src/mutexKit"
 )
 
 func main() {
-	fmt.Println(idKit.NewXid())
+	m := mutexKit.NewRWMutex()
+
+	m.LockFunc(func() {
+		fmt.Println(666)
+	})
 }
