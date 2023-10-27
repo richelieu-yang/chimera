@@ -36,6 +36,10 @@ func (listener *TestListener) OnClose(channel pushKit.Channel, closeInfo string)
 	logrus.WithField("info", closeInfo).Info("OnClose")
 }
 
+// TestNewProcessor
+/*
+url: ws://127.0.0.1/ws
+*/
 func TestNewProcessor(t *testing.T) {
 	listener := &TestListener{}
 	processor, err := NewProcessor(time.Second*3, nil, nil, listener)
