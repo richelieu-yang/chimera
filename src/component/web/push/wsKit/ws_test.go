@@ -22,8 +22,8 @@ func (listener *TestListener) OnHandshake(w http.ResponseWriter, r *http.Request
 
 	_ = channel.Push(pushKit.MessageTypeText, []byte("hello"))
 
-	// 一连接成功，后端就主动断开连接
-	_ = channel.Close()
+	//// 一连接成功，后端就主动断开连接
+	//_ = channel.Close()
 }
 
 // OnMessage 收到 客户端 发来的消息.
