@@ -22,7 +22,7 @@ Format: tttttttttteeeeeeeeeeeeeeee where t is time and e is entropy.
     https://mp.weixin.qq.com/s/TUsF3SgEgu4VOdosuiPurQ  
 
 ## xid
-xid是由时间戳、进程id、Mac地址、随机数组成。有序性来源于对随机数部分的原子+1.  
+xid是由时间戳、Mac地址、进程id（pid）、随机数组成。有序性来源于对随机数部分的原子+1.  
 ![_img.png](_img.png)
 
 ## didi/tinyid
