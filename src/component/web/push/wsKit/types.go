@@ -3,6 +3,7 @@ package wsKit
 import (
 	"github.com/gorilla/websocket"
 	"github.com/richelieu-yang/chimera/v2/src/component/web/push/pushKit"
+	"github.com/richelieu-yang/chimera/v2/src/core/errorKit"
 	"github.com/richelieu-yang/chimera/v2/src/core/interfaceKit"
 	"github.com/richelieu-yang/chimera/v2/src/core/timeKit"
 	"github.com/richelieu-yang/chimera/v2/src/idKit"
@@ -19,9 +20,45 @@ type (
 
 		listener pushKit.Listener
 	}
+
+	WsChannel struct {
+	}
 )
 
+func (p *Processor) NewChannel() *WsChannel {
+
+}
+
 func (p *Processor) Handle(w http.ResponseWriter, r *http.Request) {
+	PolyfillWebSocketRequest(r)
+
+	// 先判断是不是websocket请求
+	if !websocket.IsWebSocketUpgrade(r) {
+		p.listener.OnFailure(w, r, "Not a websocket upgrade request")
+		return
+	}
+
+	// Upgrade（升级为WebSocket协议）
+	conn, err := upgrader.Upgrade(w, r, w.Header())
+	if err != nil {
+		err = errorKit.Wrap(err, "Fail to upgrade websocket")
+		p.listener.OnFailure(w, r, err.Error())
+		return
+	}
+	defer conn.Close()
+
+	conn.SetCloseHandler(func(code int, text string) error {
+		channel.SetClosed()
+
+		if RemoveChannel(channel) {
+			channel.GetListener().OnCloseByFrontend(channel, code, text)
+		}
+
+		// 默认的close handler
+		message := websocket.FormatCloseMessage(code, text)
+		_ = conn.WriteControl(websocket.CloseMessage, message, time.Now().Add(time.Second))
+		return nil
+	})
 
 }
 

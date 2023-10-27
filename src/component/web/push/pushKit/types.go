@@ -1,6 +1,9 @@
 package pushKit
 
-import "net/http"
+import (
+	"net/http"
+	"sync"
+)
 
 type Listener interface {
 	OnFailure(w http.ResponseWriter, r *http.Request, error string)
@@ -14,6 +17,18 @@ type Listener interface {
 	OnMessage(channel Channel, messageType MessageType, data []byte)
 
 	OnClose(channel Channel, code int, text string)
+}
+
+type BaseChannel struct {
+	Id    string `json:"id"`
+	Bsid  string `json:"bsid"`
+	User  string `json:"user"`
+	Group string `json:"group"`
+
+	Lock sync.Mutex `json:"lock"`
+
+	Data   interface{} `json:"data"`
+	Closed bool        `json:"closed"`
 }
 
 type Channel interface {
