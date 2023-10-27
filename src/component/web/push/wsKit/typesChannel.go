@@ -14,6 +14,7 @@ type WsChannel struct {
 	conn *websocket.Conn
 }
 
+// Push 推送消息给客户端.
 func (channel *WsChannel) Push(messageType pushKit.MessageType, data []byte) (err error) {
 	if channel.Closed {
 		return pushKit.ChannelClosedError
@@ -49,6 +50,7 @@ func (channel *WsChannel) Push(messageType pushKit.MessageType, data []byte) (er
 	return
 }
 
+// Close 后端主动关闭通道.
 func (channel *WsChannel) Close() (err error) {
 	if channel.SetClosed() {
 		info := "Closed by backend"
