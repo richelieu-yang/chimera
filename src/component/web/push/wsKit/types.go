@@ -1,6 +1,7 @@
 package wsKit
 
 import (
+	"errors"
 	"github.com/gorilla/websocket"
 	"github.com/richelieu-yang/chimera/v2/src/component/web/push/pushKit"
 	"github.com/richelieu-yang/chimera/v2/src/core/errorKit"
@@ -8,6 +9,7 @@ import (
 	"github.com/richelieu-yang/chimera/v2/src/core/timeKit"
 	"github.com/richelieu-yang/chimera/v2/src/idKit"
 	"net/http"
+	"sync"
 	"time"
 )
 
@@ -22,11 +24,31 @@ type (
 	}
 
 	WsChannel struct {
+		pushKit.Channel
+		pushKit.BaseChannel
+
+		conn *websocket.Conn
 	}
 )
 
-func (p *Processor) NewChannel() *WsChannel {
+func (p *Processor) NewChannel(conn *websocket.Conn) (*WsChannel, error) {
+	id, err := p.idGenerator()
+	if err != nil {
+		return nil, err
+	}
 
+	return &WsChannel{
+		BaseChannel: pushKit.BaseChannel{
+			Id:     id,
+			Bsid:   "",
+			User:   "",
+			Group:  "",
+			Mutex:  sync.Mutex{},
+			Data:   nil,
+			Closed: false,
+		},
+		conn: conn,
+	}, nil
 }
 
 func (p *Processor) Handle(w http.ResponseWriter, r *http.Request) {
@@ -47,12 +69,23 @@ func (p *Processor) Handle(w http.ResponseWriter, r *http.Request) {
 	}
 	defer conn.Close()
 
-	conn.SetCloseHandler(func(code int, text string) error {
-		channel.SetClosed()
+	channel, err := p.NewChannel(conn)
+	if err != nil {
+		err = errorKit.Wrap(err, "Fail to new channel")
+		p.listener.OnFailure(w, r, err.Error())
+		return
+	}
 
-		if RemoveChannel(channel) {
-			channel.GetListener().OnCloseByFrontend(channel, code, text)
-		}
+	p.listener.OnHandshake(w, r, channel)
+
+	conn.SetCloseHandler(func(code int, text string) error {
+		p.listener.OnClose(channel, code, text)
+
+		//channel.SetClosed()
+		//
+		//if RemoveChannel(channel) {
+		//	channel.GetListener().OnCloseByFrontend(channel, code, text)
+		//}
 
 		// 默认的close handler
 		message := websocket.FormatCloseMessage(code, text)
@@ -60,6 +93,24 @@ func (p *Processor) Handle(w http.ResponseWriter, r *http.Request) {
 		return nil
 	})
 
+	/* 接收WebSocket客户端发来的消息 */
+	for {
+		messageType, data, err := conn.ReadMessage()
+		if err != nil {
+			channel.SetClosed()
+
+			if RemoveChannel(channel) {
+				var closeErr *websocket.CloseError
+				if errors.As(err, &closeErr) {
+					listener.OnCloseByFrontend(channel, closeErr.Code, closeErr.Text)
+				} else {
+					listener.OnCloseByBackend(channel)
+				}
+			}
+			break
+		}
+		p.listener.OnMessage(channel, messageType, data)
+	}
 }
 
 // NewProcessor

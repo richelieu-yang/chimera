@@ -6,12 +6,12 @@ import (
 
 type (
 	Mutex struct {
-		*sync.Mutex
+		sync.Mutex
 	}
 )
 
 func NewMutex() *Mutex {
-	return &Mutex{&sync.Mutex{}}
+	return &Mutex{sync.Mutex{}}
 }
 
 func (m *Mutex) LockFunc(f func()) {

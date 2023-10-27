@@ -1,34 +1,22 @@
 package pushKit
 
 import (
+	"github.com/richelieu-yang/chimera/v2/src/mutexKit"
 	"net/http"
-	"sync"
 )
 
 type Listener interface {
 	OnFailure(w http.ResponseWriter, r *http.Request, error string)
 
-	OnHandshake(w http.ResponseWriter, r *http.Request)
+	OnHandshake(w http.ResponseWriter, r *http.Request, channel Channel)
 
 	// OnMessage 收到 客户端 发来的消息.
 	/*
 		PS: 仅适用于WebSocket连接，因为SSE连接是单工的.
 	*/
-	OnMessage(channel Channel, messageType MessageType, data []byte)
+	OnMessage(channel Channel, messageType int, data []byte)
 
 	OnClose(channel Channel, code int, text string)
-}
-
-type BaseChannel struct {
-	Id    string `json:"id"`
-	Bsid  string `json:"bsid"`
-	User  string `json:"user"`
-	Group string `json:"group"`
-
-	Lock sync.Mutex `json:"lock"`
-
-	Data   interface{} `json:"data"`
-	Closed bool        `json:"closed"`
 }
 
 type Channel interface {
@@ -37,4 +25,36 @@ type Channel interface {
 
 	// Close 后端主动关闭通道.
 	Close() error
+}
+
+type BaseChannel struct {
+	Id    string
+	Bsid  string
+	User  string
+	Group string
+
+	RWMutex mutexKit.RWMutex
+
+	Data   interface{}
+	Closed bool
+}
+
+func (channel *BaseChannel) IsClosed() (rst bool) {
+	channel.RWMutex.RLockFunc(func() {
+		rst = channel.Closed
+	})
+	return
+}
+
+func (channel *BaseChannel) SetClosed() {
+	if channel.Closed {
+		return
+	}
+
+	channel.RWMutex.LockFunc(func() {
+		if channel.Closed {
+			return
+		}
+		channel.Closed = true
+	})
 }

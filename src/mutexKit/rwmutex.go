@@ -4,12 +4,12 @@ import "sync"
 
 type (
 	RWMutex struct {
-		*sync.RWMutex
+		sync.RWMutex
 	}
 )
 
 func NewRWMutex() *RWMutex {
-	return &RWMutex{&sync.RWMutex{}}
+	return &RWMutex{sync.RWMutex{}}
 }
 
 // LockFunc 写锁
