@@ -12,7 +12,7 @@ import (
 
 // upgrader 并发安全的
 var upgrader = websocket.Upgrader{
-	HandshakeTimeout: time.Second * 4,
+	HandshakeTimeout: time.Second * 3,
 	CheckOrigin: func(r *http.Request) bool {
 		// 允许跨域
 		return true
