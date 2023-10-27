@@ -49,7 +49,7 @@ func (p *Processor) Handle(w http.ResponseWriter, r *http.Request) {
 	PolyfillWebSocketRequest(r)
 
 	// 先判断是不是websocket请求
-	if !websocket.IsWebSocketUpgrade(r) {
+	if !IsWebSocketUpgrade(r) {
 		failureInfo := "Not a websocket upgrade request"
 		p.listener.OnFailure(w, r, failureInfo)
 		return
@@ -63,7 +63,11 @@ func (p *Processor) Handle(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	defer func() {
-		_ = conn.Close()
+		err0 := conn.Close()
+		err1 := conn.Close()
+
+		fmt.Println(err0)
+		fmt.Println(err1)
 	}()
 
 	channel, err := p.NewChannel(conn)

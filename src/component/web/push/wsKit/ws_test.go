@@ -19,6 +19,8 @@ func (listener *TestListener) OnFailure(w http.ResponseWriter, r *http.Request, 
 
 func (listener *TestListener) OnHandshake(w http.ResponseWriter, r *http.Request, channel pushKit.Channel) {
 	logrus.Info("OnHandshake")
+
+	_ = channel.Push(pushKit.MessageTypeText, []byte("hello"))
 }
 
 // OnMessage 收到 客户端 发来的消息.
