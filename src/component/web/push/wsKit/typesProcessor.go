@@ -62,13 +62,7 @@ func (p *Processor) Handle(w http.ResponseWriter, r *http.Request) {
 		p.listener.OnFailure(w, r, failureInfo)
 		return
 	}
-	defer func() {
-		err0 := conn.Close()
-		err1 := conn.Close()
-
-		fmt.Println(err0)
-		fmt.Println(err1)
-	}()
+	defer conn.Close()
 
 	channel, err := p.NewChannel(conn)
 	if err != nil {
