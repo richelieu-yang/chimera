@@ -21,8 +21,12 @@ Format: tttttttttteeeeeeeeeeeeeeee where t is time and e is entropy.
 10分钟搞定！Golang分布式ID集合  
     https://mp.weixin.qq.com/s/TUsF3SgEgu4VOdosuiPurQ  
 
+## 单进程内，生成唯一id
+使用xid，不推荐使用ulid（如果你的系统时间精度不够高（例如，只能到毫秒级别），或者在同一微秒内需要生成超过2^80个ID，那么就有可能会产生重复的ULID）.
+
 ## xid
-xid是由时间戳、Mac地址、进程id（pid）、随机数组成。有序性来源于对随机数部分的原子+1.  
+xid是由 时间戳、Mac地址、进程id（pid）、随机数 组成。    
+有序性来源于对随机数部分的原子+1.    
 ![_img.png](_img.png)
 
 ## didi/tinyid
