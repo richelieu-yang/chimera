@@ -1,16 +1,12 @@
-package types
+package wsKit
 
 import (
 	"errors"
 	"fmt"
 	"github.com/gorilla/websocket"
-	"github.com/richelieu-yang/chimera/v2/src/component/web/push/pushKit/types"
-	"github.com/richelieu-yang/chimera/v2/src/component/web/push/wsKit"
+	"github.com/richelieu-yang/chimera/v2/src/component/web/push/pushKit"
 	"github.com/richelieu-yang/chimera/v2/src/core/errorKit"
-	"github.com/richelieu-yang/chimera/v2/src/core/interfaceKit"
 	"github.com/richelieu-yang/chimera/v2/src/core/strKit"
-	"github.com/richelieu-yang/chimera/v2/src/core/timeKit"
-	"github.com/richelieu-yang/chimera/v2/src/idKit"
 	"github.com/richelieu-yang/chimera/v2/src/mutexKit"
 	"net/http"
 	"time"
@@ -22,7 +18,7 @@ type Processor struct {
 
 	idGenerator func() (string, error)
 
-	listener types.Listener
+	listener pushKit.Listener
 }
 
 func (p *Processor) NewChannel(conn *websocket.Conn) (*WsChannel, error) {
@@ -35,7 +31,7 @@ func (p *Processor) NewChannel(conn *websocket.Conn) (*WsChannel, error) {
 	}
 
 	return &WsChannel{
-		BaseChannel: types.BaseChannel{
+		BaseChannel: pushKit.BaseChannel{
 			Id:       id,
 			Bsid:     "",
 			User:     "",
@@ -50,7 +46,7 @@ func (p *Processor) NewChannel(conn *websocket.Conn) (*WsChannel, error) {
 }
 
 func (p *Processor) Handle(w http.ResponseWriter, r *http.Request) {
-	wsKit.PolyfillWebSocketRequest(r)
+	PolyfillWebSocketRequest(r)
 
 	// 先判断是不是websocket请求
 	if !websocket.IsWebSocketUpgrade(r) {
@@ -109,44 +105,4 @@ func (p *Processor) Handle(w http.ResponseWriter, r *http.Request) {
 		}
 		p.listener.OnMessage(channel, messageType, data)
 	}
-}
-
-// NewProcessor
-/*
-@param handshakeTimeout	默认3s
-@param checkOrigin		可以为nil（允许所有）
-@param idGenerator		可以为nil（使用xid）
-@param listener			不能为nil
-*/
-func NewProcessor(handshakeTimeout time.Duration, checkOrigin func(r *http.Request) bool, idGenerator func() (string, error), listener types.Listener) (*Processor, error) {
-	handshakeTimeout = timeKit.ToDefaultDurationIfInvalid(handshakeTimeout, time.Second*3)
-	if checkOrigin == nil {
-		checkOrigin = func(r *http.Request) bool {
-			// 允许跨域
-			return true
-		}
-	}
-	upgrader := &websocket.Upgrader{
-		HandshakeTimeout: handshakeTimeout,
-		CheckOrigin: func(r *http.Request) bool {
-			// 允许跨域
-			return true
-		},
-	}
-
-	if idGenerator == nil {
-		idGenerator = func() (string, error) {
-			return idKit.NewXid(), nil
-		}
-	}
-
-	if err := interfaceKit.AssertNotNil(listener, "listener"); err != nil {
-		return nil, err
-	}
-
-	return &Processor{
-		upgrader:    upgrader,
-		idGenerator: idGenerator,
-		listener:    listener,
-	}, nil
 }

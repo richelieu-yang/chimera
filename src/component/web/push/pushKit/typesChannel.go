@@ -1,14 +1,13 @@
-package types
+package pushKit
 
 import (
-	"github.com/richelieu-yang/chimera/v2/src/component/web/push/pushKit"
 	"github.com/richelieu-yang/chimera/v2/src/mutexKit"
 )
 
 type (
 	Channel interface {
 		// Push 推送消息给客户端.
-		Push(messageType pushKit.MessageType, data []byte) error
+		Push(messageType MessageType, data []byte) error
 
 		// Close 后端主动关闭通道.
 		Close() error
