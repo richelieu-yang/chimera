@@ -13,5 +13,5 @@ type Listener interface {
 	*/
 	OnMessage(channel Channel, messageType int, data []byte)
 
-	OnClose(channel Channel, code int, text string)
+	OnClose(channel Channel, closeInfo string)
 }

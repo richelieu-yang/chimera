@@ -13,23 +13,14 @@ import (
 	"time"
 )
 
-type (
-	Processor struct {
-		// upgrader 是并发安全的
-		upgrader *websocket.Upgrader
+type Processor struct {
+	// upgrader 是并发安全的
+	upgrader *websocket.Upgrader
 
-		idGenerator func() (string, error)
+	idGenerator func() (string, error)
 
-		listener pushKit.Listener
-	}
-
-	WsChannel struct {
-		pushKit.Channel
-		pushKit.BaseChannel
-
-		conn *websocket.Conn
-	}
-)
+	listener pushKit.Listener
+}
 
 func (p *Processor) NewChannel(conn *websocket.Conn) (*WsChannel, error) {
 	id, err := p.idGenerator()

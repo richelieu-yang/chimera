@@ -6,7 +6,7 @@ import (
 
 type (
 	Channel interface {
-		// Push 推送（二进制）消息给客户端.
+		// Push 推送消息给客户端.
 		Push(messageType MessageType, data []byte) error
 
 		// Close 后端主动关闭通道.
@@ -23,6 +23,8 @@ type (
 
 		Data   interface{}
 		Closed bool
+
+		Listener Listener
 	}
 )
 
@@ -36,6 +38,8 @@ func (channel *BaseChannel) IsClosed() (rst bool) {
 
 // SetClosed
 /*
+PS: 如果返回值为true，应当触发 listener.onClose().
+
 @return true: 	设置成功
 		false:	设置失败（因为已经被设置关闭）
 */
