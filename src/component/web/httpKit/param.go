@@ -10,34 +10,34 @@ var (
 	defaultMaxMemory int64 = 10 << 20
 )
 
-// GetUrlParam
+// ObtainGetParam
 /*
 [Go] golang获取http中的get传递的参数
 	https://www.cnblogs.com/taoshihan/p/12943118.html
 */
-func GetUrlParam(r *http.Request, key string) string {
+func ObtainGetParam(r *http.Request, key string) string {
 	values := r.URL.Query()
 	return values.Get(key)
 }
 
-// GetUrlParam1
-/*
-[Go] golang获取http中的get传递的参数
-	https://www.cnblogs.com/taoshihan/p/12943118.html
-*/
-func GetUrlParam1(r *http.Request, key string) (string, error) {
-	if err := r.ParseForm(); err != nil {
-		return "", err
-	}
-	return r.FormValue(key), nil
-}
+//// GetUrlParam1
+///*
+//[Go] golang获取http中的get传递的参数
+//	https://www.cnblogs.com/taoshihan/p/12943118.html
+//*/
+//func GetUrlParam1(r *http.Request, key string) (string, error) {
+//	if err := r.ParseForm(); err != nil {
+//		return "", err
+//	}
+//	return r.FormValue(key), nil
+//}
 
-// GetPostParam
+// ObtainPostParam
 /*
 [Go] golang获取http中的get传递的参数
 	https://www.cnblogs.com/taoshihan/p/12943118.html
 */
-func GetPostParam(r *http.Request, key string) (string, error) {
+func ObtainPostParam(r *http.Request, key string) (string, error) {
 	// 解析: application/x-www-form-urlencoded
 	if err := r.ParseForm(); err != nil {
 		return "", err
