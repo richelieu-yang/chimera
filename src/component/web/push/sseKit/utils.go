@@ -19,3 +19,10 @@ func IsSseSupported(w http.ResponseWriter, r *http.Request) (errText string) {
 	}
 	return
 }
+
+// SetHeaders 设置response header.
+func SetHeaders(w http.ResponseWriter) {
+	w.Header().Set("Content-Type", "text/event-stream")
+	w.Header().Set("Cache-Control", "no-cache")
+	w.Header().Set("Connection", "keep-alive")
+}
