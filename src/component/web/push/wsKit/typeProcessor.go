@@ -20,6 +20,8 @@ type WsProcessor struct {
 	idGenerator func() (string, error)
 
 	listener pushKit.Listener
+
+	messageType MessageType
 }
 
 func (p *WsProcessor) HandleWithGin(ctx *gin.Context) {
