@@ -13,7 +13,7 @@ func (e Event) Push(w http.ResponseWriter) error {
 	if err := sse.Encode(w, sse.Event(e)); err != nil {
 		return err
 	}
-	w.(http.Flusher).Flush()
+	//w.(http.Flusher).Flush()
 	return nil
 }
 
