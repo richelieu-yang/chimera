@@ -13,7 +13,10 @@ func (e Event) Push(w http.ResponseWriter) error {
 	if err := sse.Encode(w, sse.Event(e)); err != nil {
 		return err
 	}
-	//w.(http.Flusher).Flush()
+
+	// 没有下面这一代码会导致: 前端无法及时收到推送的消息
+	w.(http.Flusher).Flush()
+
 	return nil
 }
 
