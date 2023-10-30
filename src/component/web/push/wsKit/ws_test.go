@@ -46,7 +46,7 @@ url: ws://127.0.0.1/ws
 */
 func TestNewProcessor(t *testing.T) {
 	listener := &TestListener{}
-	processor, err := NewProcessor(nil, nil, listener, MessageTypeText)
+	processor, err := NewProcessor(nil, nil, listener, MessageTypeBinary)
 	if err != nil {
 		panic(err)
 	}
