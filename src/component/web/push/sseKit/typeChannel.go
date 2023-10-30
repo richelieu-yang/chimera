@@ -1,9 +1,7 @@
 package sseKit
 
 import (
-	"fmt"
 	"github.com/richelieu-yang/chimera/v2/src/component/web/push/pushKit"
-	"github.com/sirupsen/logrus"
 	"net/http"
 )
 
@@ -16,26 +14,29 @@ type SseChannel struct {
 
 // PushMessage 推送消息给客户端.
 func (channel *SseChannel) PushMessage(t messageType, data []byte) (err error) {
-	if channel.Closed {
-		return pushKit.ChannelClosedError
-	}
+	//if channel.Closed {
+	//	return pushKit.ChannelClosedError
+	//}
+	//
+	//// 写锁
+	//channel.RWMutex.LockFunc(func() {
+	//	if channel.Closed {
+	//		err = pushKit.ChannelClosedError
+	//		return
+	//	}
+	//
+	//	_, err := fmt.Fprintf(channel.w, "%s", msg)
+	//	if err != nil {
+	//		logrus.WithError(err).Error("fail to send initial message")
+	//		return
+	//	}
+	//	channel.w.(http.Flusher).Flush()
+	//
+	//})
 
-	// 写锁
-	channel.RWMutex.LockFunc(func() {
-		if channel.Closed {
-			err = pushKit.ChannelClosedError
-			return
-		}
+	panic("TODO")
 
-		_, err := fmt.Fprintf(channel.w, "%s", msg)
-		if err != nil {
-			logrus.WithError(err).Error("fail to send initial message")
-			return
-		}
-		channel.w.(http.Flusher).Flush()
-
-	})
-
+	return nil
 }
 
 // Close 后端主动关闭通道.
