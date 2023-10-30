@@ -50,9 +50,9 @@ func NewProcessor(upgrader *websocket.Upgrader, idGenerator func() (string, erro
 	}
 
 	return &WsProcessor{
-		upgrader:    upgrader,
-		idGenerator: idGenerator,
-		listener:    listener,
-		messageType: messageType,
+		upgrader:           upgrader,
+		idGenerator:        idGenerator,
+		listener:           listener,
+		defaultMessageType: messageType,
 	}, nil
 }

@@ -21,7 +21,7 @@ type WsProcessor struct {
 
 	listener pushKit.Listener
 
-	messageType MessageType
+	defaultMessageType MessageType
 }
 
 func (p *WsProcessor) HandleWithGin(ctx *gin.Context) {
@@ -108,6 +108,7 @@ func (p *WsProcessor) newChannel(conn *websocket.Conn) (pushKit.Channel, error) 
 			Closed:   false,
 			Listener: p.listener,
 		},
-		conn: conn,
+		conn:               conn,
+		defaultMessageType: p.defaultMessageType,
 	}, nil
 }

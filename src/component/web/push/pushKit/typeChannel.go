@@ -9,6 +9,8 @@ type (
 		// Close 后端主动关闭通道.
 		Close() error
 
+		Push(data []byte) error
+
 		IsClosed() (rst bool)
 
 		SetClosed() (flag bool)

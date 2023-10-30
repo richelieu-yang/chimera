@@ -10,7 +10,12 @@ import (
 type WsChannel struct {
 	*pushKit.BaseChannel
 
-	conn *websocket.Conn
+	conn               *websocket.Conn
+	defaultMessageType MessageType
+}
+
+func (channel *WsChannel) Push(data []byte) error {
+	return channel.PushMessage(channel.defaultMessageType, data)
 }
 
 // PushMessage 推送消息给客户端.
