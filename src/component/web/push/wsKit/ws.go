@@ -3,6 +3,7 @@ package wsKit
 import (
 	"github.com/gorilla/websocket"
 	"github.com/richelieu-yang/chimera/v2/src/component/web/push/pushKit"
+	"github.com/richelieu-yang/chimera/v2/src/core/errorKit"
 	"github.com/richelieu-yang/chimera/v2/src/core/interfaceKit"
 	"github.com/richelieu-yang/chimera/v2/src/idKit"
 	"net/http"
@@ -25,12 +26,11 @@ func DefaultUpgrader() *websocket.Upgrader {
 
 // NewProcessor
 /*
-@param handshakeTimeout	默认3s
-@param checkOrigin		可以为nil（允许所有）
+@param upgrader			可以为nil
 @param idGenerator		可以为nil（使用xid）
 @param listener			不能为nil
 */
-func NewProcessor(upgrader *websocket.Upgrader, idGenerator func() (string, error), listener pushKit.Listener) (*WsProcessor, error) {
+func NewProcessor(upgrader *websocket.Upgrader, idGenerator func() (string, error), listener pushKit.Listener, messageType MessageType) (*WsProcessor, error) {
 	if upgrader == nil {
 		upgrader = DefaultUpgrader()
 	}
@@ -42,11 +42,17 @@ func NewProcessor(upgrader *websocket.Upgrader, idGenerator func() (string, erro
 	if err := interfaceKit.AssertNotNil(listener, "listener"); err != nil {
 		return nil, err
 	}
+	switch messageType {
+	case MessageTypeText:
+	case MessageTypeBinary:
+	default:
+		return nil, errorKit.New("invalid message type(%d)", messageType)
+	}
 
 	return &WsProcessor{
 		upgrader:    upgrader,
 		idGenerator: idGenerator,
 		listener:    listener,
-		messageType: 0,
+		messageType: messageType,
 	}, nil
 }
