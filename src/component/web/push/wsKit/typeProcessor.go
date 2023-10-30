@@ -91,7 +91,7 @@ func (p *WsProcessor) Handle(w http.ResponseWriter, r *http.Request) {
 func (p *WsProcessor) newChannel(conn *websocket.Conn) (pushKit.Channel, error) {
 	id, err := p.idGenerator()
 	if err != nil {
-		return nil, err
+		return nil, errorKit.Wrap(err, "Fail to generate id")
 	}
 	if err := strKit.AssertNotBlank(id, "id"); err != nil {
 		return nil, err
