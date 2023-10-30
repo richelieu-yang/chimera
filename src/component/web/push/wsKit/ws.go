@@ -27,12 +27,8 @@ func NewProcessor(handshakeTimeout time.Duration, checkOrigin func(r *http.Reque
 	}
 	upgrader := &websocket.Upgrader{
 		HandshakeTimeout: handshakeTimeout,
-		CheckOrigin: func(r *http.Request) bool {
-			// 允许跨域
-			return true
-		},
+		CheckOrigin:      checkOrigin,
 	}
-
 	if idGenerator == nil {
 		idGenerator = func() (string, error) {
 			return idKit.NewXid(), nil
