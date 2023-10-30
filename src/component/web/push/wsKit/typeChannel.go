@@ -13,17 +13,24 @@ type WsChannel struct {
 	conn *websocket.Conn
 }
 
-// Push 推送消息给客户端.
+// PushMessage 推送消息给客户端.
 /*
-@param messageType websocket.TextMessage || websocket.BinaryMessage
+@param messageType MessageTypeText || MessageTypeBinary
 */
-func (channel *WsChannel) Push(messageType int, data []byte) (err error) {
+func (channel *WsChannel) PushMessage(messageType MessageType, data []byte) (err error) {
+	switch messageType {
+	case MessageTypeText:
+	case MessageTypeBinary:
+	default:
+		err = errorKit.New("invalid message type(%d)", messageType)
+		return
+	}
 	if channel.Closed {
 		return pushKit.ChannelClosedError
 	}
 
 	// 是否推送失败？
-	flag := false
+	failFlag := false
 
 	// 写锁
 	channel.RWMutex.LockFunc(func() {
@@ -32,18 +39,11 @@ func (channel *WsChannel) Push(messageType int, data []byte) (err error) {
 			return
 		}
 
-		switch messageType {
-		case websocket.TextMessage:
-		case websocket.BinaryMessage:
-		default:
-			err = errorKit.New("invalid WebSocket message type(%d)", messageType)
-			return
-		}
-		err = channel.conn.WriteMessage(messageType, data)
-		flag = err != nil
+		err = channel.conn.WriteMessage(int(messageType), data)
+		failFlag = err != nil
 	})
 
-	if flag {
+	if failFlag {
 		// 推送消息失败，基本上就是连接断开了
 		if channel.SetClosed() {
 			info := fmt.Sprintf("Fail to push because of error(%s)", err.Error())

@@ -3,6 +3,7 @@ package sseKit
 import (
 	"fmt"
 	"github.com/richelieu-yang/chimera/v2/src/component/web/push/pushKit"
+	"github.com/richelieu-yang/chimera/v2/src/component/web/push/wsKit"
 	"github.com/sirupsen/logrus"
 	"net/http"
 )
@@ -16,7 +17,7 @@ type SseChannel struct {
 }
 
 // Push 推送消息给客户端.
-func (channel *SseChannel) Push(messageType pushKit.MessageType, data []byte) (err error) {
+func (channel *SseChannel) Push(messageType wsKit.MessageType, data []byte) (err error) {
 	if channel.Closed {
 		return pushKit.ChannelClosedError
 	}

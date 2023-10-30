@@ -1,4 +1,4 @@
-package pushKit
+package wsKit
 
 import "github.com/gorilla/websocket"
 
