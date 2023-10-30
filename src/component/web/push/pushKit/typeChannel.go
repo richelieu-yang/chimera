@@ -6,9 +6,6 @@ import (
 
 type (
 	Channel interface {
-		// Push 推送消息给客户端.
-		Push(messageType MessageType, data []byte) error
-
 		// Close 后端主动关闭通道.
 		Close() error
 	}

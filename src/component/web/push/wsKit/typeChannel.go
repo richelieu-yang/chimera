@@ -1,10 +1,10 @@
 package wsKit
 
 import (
-	"errors"
 	"fmt"
 	"github.com/gorilla/websocket"
 	"github.com/richelieu-yang/chimera/v2/src/component/web/push/pushKit"
+	"github.com/richelieu-yang/chimera/v2/src/core/errorKit"
 )
 
 type WsChannel struct {
@@ -15,10 +15,16 @@ type WsChannel struct {
 }
 
 // Push 推送消息给客户端.
-func (channel *WsChannel) Push(messageType pushKit.MessageType, data []byte) (err error) {
+/*
+@param messageType websocket.TextMessage || websocket.BinaryMessage
+*/
+func (channel *WsChannel) Push(messageType int, data []byte) (err error) {
 	if channel.Closed {
 		return pushKit.ChannelClosedError
 	}
+
+	// 是否推送失败？
+	flag := false
 
 	// 写锁
 	channel.RWMutex.LockFunc(func() {
@@ -27,19 +33,18 @@ func (channel *WsChannel) Push(messageType pushKit.MessageType, data []byte) (er
 			return
 		}
 
-		var t int
 		switch messageType {
-		case pushKit.MessageTypeBinary:
-			t = websocket.BinaryMessage
-		case pushKit.MessageTypeText:
-			fallthrough
+		case websocket.TextMessage:
+		case websocket.BinaryMessage:
 		default:
-			t = websocket.TextMessage
+			err = errorKit.New("invalid WebSocket message type(%d)", messageType)
+			return
 		}
-		err = channel.conn.WriteMessage(t, data)
+		err = channel.conn.WriteMessage(messageType, data)
+		flag = err != nil
 	})
 
-	if err != nil && !errors.Is(err, pushKit.ChannelClosedError) {
+	if flag {
 		// 推送消息失败，基本上就是连接断开了
 		if channel.SetClosed() {
 			info := fmt.Sprintf("Fail to push because of error(%s)", err.Error())
