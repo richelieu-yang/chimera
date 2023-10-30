@@ -8,6 +8,10 @@ type (
 	Channel interface {
 		// Close 后端主动关闭通道.
 		Close() error
+
+		IsClosed() (rst bool)
+
+		SetClosed() (flag bool)
 	}
 
 	BaseChannel struct {

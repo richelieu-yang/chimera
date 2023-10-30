@@ -17,7 +17,7 @@ import (
 @param idGenerator		可以为nil（使用xid）
 @param listener			不能为nil
 */
-func NewProcessor(handshakeTimeout time.Duration, checkOrigin func(r *http.Request) bool, idGenerator func() (string, error), listener pushKit.Listener) (*Processor, error) {
+func NewProcessor(handshakeTimeout time.Duration, checkOrigin func(r *http.Request) bool, idGenerator func() (string, error), listener pushKit.Listener) (*WsProcessor, error) {
 	handshakeTimeout = timeKit.ToDefaultDurationIfInvalid(handshakeTimeout, time.Second*3)
 	if checkOrigin == nil {
 		checkOrigin = func(r *http.Request) bool {
@@ -39,7 +39,7 @@ func NewProcessor(handshakeTimeout time.Duration, checkOrigin func(r *http.Reque
 		return nil, err
 	}
 
-	return &Processor{
+	return &WsProcessor{
 		upgrader:    upgrader,
 		idGenerator: idGenerator,
 		listener:    listener,

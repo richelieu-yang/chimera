@@ -8,8 +8,7 @@ import (
 )
 
 type WsChannel struct {
-	pushKit.Channel
-	pushKit.BaseChannel
+	*pushKit.BaseChannel
 
 	conn *websocket.Conn
 }

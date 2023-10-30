@@ -3,6 +3,7 @@ package wsKit
 import (
 	"errors"
 	"fmt"
+	"github.com/gin-gonic/gin"
 	"github.com/gorilla/websocket"
 	"github.com/richelieu-yang/chimera/v2/src/component/web/push/pushKit"
 	"github.com/richelieu-yang/chimera/v2/src/core/errorKit"
@@ -12,7 +13,7 @@ import (
 	"time"
 )
 
-type Processor struct {
+type WsProcessor struct {
 	// upgrader 是并发安全的
 	upgrader *websocket.Upgrader
 
@@ -21,31 +22,11 @@ type Processor struct {
 	listener pushKit.Listener
 }
 
-func (p *Processor) NewChannel(conn *websocket.Conn) (*WsChannel, error) {
-	id, err := p.idGenerator()
-	if err != nil {
-		return nil, err
-	}
-	if err := strKit.AssertNotBlank(id, "id"); err != nil {
-		return nil, err
-	}
-
-	return &WsChannel{
-		BaseChannel: pushKit.BaseChannel{
-			Id:       id,
-			Bsid:     "",
-			User:     "",
-			Group:    "",
-			RWMutex:  mutexKit.RWMutex{},
-			Data:     nil,
-			Closed:   false,
-			Listener: p.listener,
-		},
-		conn: conn,
-	}, nil
+func (p *WsProcessor) HandleWithGin(ctx *gin.Context) {
+	p.Handle(ctx.Writer, ctx.Request)
 }
 
-func (p *Processor) Handle(w http.ResponseWriter, r *http.Request) {
+func (p *WsProcessor) Handle(w http.ResponseWriter, r *http.Request) {
 	PolyfillWebSocketRequest(r)
 
 	// 先判断是不是websocket请求
@@ -64,7 +45,7 @@ func (p *Processor) Handle(w http.ResponseWriter, r *http.Request) {
 	}
 	defer conn.Close()
 
-	channel, err := p.NewChannel(conn)
+	channel, err := p.newChannel(conn)
 	if err != nil {
 		err = errorKit.Wrap(err, "Fail to new channel")
 		p.listener.OnFailure(w, r, err.Error())
@@ -103,4 +84,28 @@ func (p *Processor) Handle(w http.ResponseWriter, r *http.Request) {
 		}
 		p.listener.OnMessage(channel, messageType, data)
 	}
+}
+
+func (p *WsProcessor) newChannel(conn *websocket.Conn) (pushKit.Channel, error) {
+	id, err := p.idGenerator()
+	if err != nil {
+		return nil, err
+	}
+	if err := strKit.AssertNotBlank(id, "id"); err != nil {
+		return nil, err
+	}
+
+	return &WsChannel{
+		BaseChannel: &pushKit.BaseChannel{
+			Id:       id,
+			Bsid:     "",
+			User:     "",
+			Group:    "",
+			RWMutex:  mutexKit.RWMutex{},
+			Data:     nil,
+			Closed:   false,
+			Listener: p.listener,
+		},
+		conn: conn,
+	}, nil
 }
