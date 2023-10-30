@@ -6,7 +6,6 @@ import (
 	"github.com/sirupsen/logrus"
 	"net/http"
 	"testing"
-	"time"
 )
 
 type TestListener struct {
@@ -20,7 +19,7 @@ func (listener *TestListener) OnFailure(w http.ResponseWriter, r *http.Request, 
 func (listener *TestListener) OnHandshake(w http.ResponseWriter, r *http.Request, channel pushKit.Channel) {
 	logrus.Info("OnHandshake")
 
-	_ = channel.Push(MessageTypeText, []byte("hello"))
+	_ = channel.Push([]byte("hello"))
 
 	//// 一连接成功，后端就主动断开连接
 	//_ = channel.Close()
@@ -47,7 +46,7 @@ url: ws://127.0.0.1/ws
 */
 func TestNewProcessor(t *testing.T) {
 	listener := &TestListener{}
-	processor, err := NewProcessor(time.Second*3, nil, nil, listener)
+	processor, err := NewProcessor(nil, nil, listener, MessageTypeText)
 	if err != nil {
 		panic(err)
 	}
