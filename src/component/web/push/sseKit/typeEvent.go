@@ -19,7 +19,7 @@ func (e Event) Push(w http.ResponseWriter) error {
 
 // MessageEvent 定义SSE事件.
 /*
-Deprecated: 使用 github.com/gin-contrib/sse 中的 sse.Event.
+Deprecated: Use sse.Event of github.com/gin-contrib/sse instead.
 */
 type MessageEvent struct {
 	// Id
