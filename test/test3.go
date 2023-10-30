@@ -4,9 +4,18 @@ import (
 	"bytes"
 	"compress/flate"
 	"fmt"
+	"github.com/gin-contrib/sse"
 )
 
 func main() {
+	sse.Event{
+		Event: "",
+		Id:    "",
+		Retry: 0,
+		Data:  nil,
+	}
+	sse.Encode()
+
 	// 原始数据
 	data := []byte("Hello, world!")
 

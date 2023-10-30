@@ -1,6 +1,8 @@
 package sseKit
 
-import "net/http"
+import (
+	"net/http"
+)
 
 // IsSseSupported
 /*

@@ -21,7 +21,7 @@ type WsProcessor struct {
 
 	listener pushKit.Listener
 
-	defaultMessageType MessageType
+	defaultMessageType messageType
 }
 
 func (p *WsProcessor) HandleWithGin(ctx *gin.Context) {

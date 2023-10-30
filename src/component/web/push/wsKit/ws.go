@@ -30,7 +30,7 @@ func DefaultUpgrader() *websocket.Upgrader {
 @param idGenerator		可以为nil（使用xid）
 @param listener			不能为nil
 */
-func NewProcessor(upgrader *websocket.Upgrader, idGenerator func() (string, error), listener pushKit.Listener, messageType MessageType) (*WsProcessor, error) {
+func NewProcessor(upgrader *websocket.Upgrader, idGenerator func() (string, error), listener pushKit.Listener, messageType messageType) (*WsProcessor, error) {
 	if upgrader == nil {
 		upgrader = DefaultUpgrader()
 	}

@@ -1,10 +1,10 @@
 package sseKit
 
-type MessageType uint
+type messageType uint
 
 const (
 	// MessageTypeRaw
-	MessageTypeRaw MessageType = iota + 1
+	MessageTypeRaw messageType = iota + 1
 
 	// MessageTypeEncode
 	MessageTypeEncode

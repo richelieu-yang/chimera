@@ -2,9 +2,9 @@ package wsKit
 
 import "github.com/gorilla/websocket"
 
-type MessageType uint
+type messageType uint
 
 const (
-	MessageTypeText   MessageType = websocket.TextMessage
-	MessageTypeBinary MessageType = websocket.BinaryMessage
+	MessageTypeText   messageType = websocket.TextMessage
+	MessageTypeBinary messageType = websocket.BinaryMessage
 )

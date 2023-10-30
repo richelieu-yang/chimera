@@ -2,10 +2,25 @@ package sseKit
 
 import (
 	"fmt"
+	"github.com/gin-contrib/sse"
 	"github.com/richelieu-yang/chimera/v2/src/urlKit"
+	"net/http"
 )
 
-// MessageEvent 定义SSE事件
+type Event sse.Event
+
+func (e Event) Push(w http.ResponseWriter) error {
+	if err := sse.Encode(w, sse.Event(e)); err != nil {
+		return err
+	}
+	w.(http.Flusher).Flush()
+	return nil
+}
+
+// MessageEvent 定义SSE事件.
+/*
+Deprecated: 使用 github.com/gin-contrib/sse 中的 sse.Event.
+*/
 type MessageEvent struct {
 	// Id
 	/*
