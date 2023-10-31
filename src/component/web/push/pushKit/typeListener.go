@@ -1,11 +1,18 @@
 package pushKit
 
-import "net/http"
+import (
+	"github.com/richelieu-yang/chimera/v2/src/core/interfaceKit"
+	"net/http"
+)
 
 var mListener = &managerListener{}
 
-func NewListeners(listener Listener) Listeners {
-	return []Listener{mListener, listener}
+func NewListeners(listener Listener) (Listeners, error) {
+	if err := interfaceKit.AssertNotNil(listener, "listener"); err != nil {
+		return nil, err
+	}
+
+	return []Listener{mListener, listener}, nil
 }
 
 type Listener interface {
