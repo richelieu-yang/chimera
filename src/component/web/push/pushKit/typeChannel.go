@@ -27,7 +27,7 @@ type (
 		Data   interface{}
 		Closed bool
 
-		Listener Listener
+		Listeners Listeners
 	}
 )
 

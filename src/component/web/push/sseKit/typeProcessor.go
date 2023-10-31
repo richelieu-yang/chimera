@@ -8,6 +8,7 @@ import (
 )
 
 type SseProcessor struct {
+	msgType   messageType
 	listeners pushKit.Listeners
 }
 
@@ -39,14 +40,14 @@ func (p *SseProcessor) Handle(w http.ResponseWriter, r *http.Request) {
 func (p *SseProcessor) newChannel(w http.ResponseWriter, r *http.Request) pushKit.Channel {
 	return &SseChannel{
 		BaseChannel: &pushKit.BaseChannel{
-			Id:       "",
-			Bsid:     "",
-			User:     "",
-			Group:    "",
-			RWMutex:  mutexKit.RWMutex{},
-			Data:     nil,
-			Closed:   false,
-			Listener: nil,
+			Id:        "",
+			Bsid:      "",
+			User:      "",
+			Group:     "",
+			RWMutex:   mutexKit.RWMutex{},
+			Data:      nil,
+			Closed:    false,
+			Listeners: p.listeners,
 		},
 		w: w,
 		r: r,

@@ -10,12 +10,12 @@ import (
 type WsChannel struct {
 	*pushKit.BaseChannel
 
-	conn               *websocket.Conn
-	defaultMessageType messageType
+	conn    *websocket.Conn
+	msgType messageType
 }
 
 func (channel *WsChannel) Push(data []byte) error {
-	return channel.PushMessage(channel.defaultMessageType, data)
+	return channel.PushMessage(channel.msgType, data)
 }
 
 // PushMessage 推送消息给客户端.
@@ -52,7 +52,7 @@ func (channel *WsChannel) PushMessage(messageType messageType, data []byte) (err
 		// 推送消息失败，基本上就是连接断开了
 		if channel.SetClosed() {
 			info := fmt.Sprintf("Fail to push because of error(%s)", err.Error())
-			channel.Listener.OnClose(channel, info)
+			channel.Listeners.OnClose(channel, info)
 		}
 	}
 
@@ -63,7 +63,7 @@ func (channel *WsChannel) PushMessage(messageType messageType, data []byte) (err
 func (channel *WsChannel) Close() (err error) {
 	if channel.SetClosed() {
 		info := "Closed by backend"
-		channel.Listener.OnClose(channel, info)
+		channel.Listeners.OnClose(channel, info)
 
 		err = channel.conn.Close()
 	}

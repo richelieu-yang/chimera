@@ -19,9 +19,9 @@ type WsProcessor struct {
 
 	idGenerator func() (string, error)
 
-	listener pushKit.Listener
+	listeners pushKit.Listeners
 
-	defaultMessageType messageType
+	msgType messageType
 }
 
 func (p *WsProcessor) HandleWithGin(ctx *gin.Context) {
@@ -34,7 +34,7 @@ func (p *WsProcessor) Handle(w http.ResponseWriter, r *http.Request) {
 	// 先判断是不是websocket请求
 	if !IsWebSocketUpgrade(r) {
 		failureInfo := "Not a websocket upgrade request"
-		p.listener.OnFailure(w, r, failureInfo)
+		p.listeners.OnFailure(w, r, failureInfo)
 		return
 	}
 
@@ -42,7 +42,7 @@ func (p *WsProcessor) Handle(w http.ResponseWriter, r *http.Request) {
 	conn, err := p.upgrader.Upgrade(w, r, w.Header())
 	if err != nil {
 		failureInfo := fmt.Sprintf("Fail to upgrade because of error(%s)", err.Error())
-		p.listener.OnFailure(w, r, failureInfo)
+		p.listeners.OnFailure(w, r, failureInfo)
 		return
 	}
 	defer conn.Close()
@@ -50,16 +50,16 @@ func (p *WsProcessor) Handle(w http.ResponseWriter, r *http.Request) {
 	channel, err := p.newChannel(conn)
 	if err != nil {
 		err = errorKit.Wrap(err, "Fail to new channel")
-		p.listener.OnFailure(w, r, err.Error())
+		p.listeners.OnFailure(w, r, err.Error())
 		return
 	}
 
-	p.listener.OnHandshake(w, r, channel)
+	p.listeners.OnHandshake(w, r, channel)
 
 	conn.SetCloseHandler(func(code int, text string) error {
 		if channel.SetClosed() {
 			info := fmt.Sprintf("code: %d, text: %s", code, text)
-			p.listener.OnClose(channel, info)
+			p.listeners.OnClose(channel, info)
 		}
 
 		// 默认的close handler
@@ -76,15 +76,15 @@ func (p *WsProcessor) Handle(w http.ResponseWriter, r *http.Request) {
 				var closeErr *websocket.CloseError
 				if errors.As(err, &closeErr) {
 					info := fmt.Sprintf("code: %d, text: %s", closeErr.Code, closeErr.Text)
-					p.listener.OnClose(channel, info)
+					p.listeners.OnClose(channel, info)
 				} else {
 					info := fmt.Sprintf("Fail to read message because of error(%s)", err.Error())
-					p.listener.OnClose(channel, info)
+					p.listeners.OnClose(channel, info)
 				}
 			}
 			break
 		}
-		p.listener.OnMessage(channel, messageType, data)
+		p.listeners.OnMessage(channel, messageType, data)
 	}
 }
 
@@ -99,16 +99,16 @@ func (p *WsProcessor) newChannel(conn *websocket.Conn) (pushKit.Channel, error) 
 
 	return &WsChannel{
 		BaseChannel: &pushKit.BaseChannel{
-			Id:       id,
-			Bsid:     "",
-			User:     "",
-			Group:    "",
-			RWMutex:  mutexKit.RWMutex{},
-			Data:     nil,
-			Closed:   false,
-			Listener: p.listener,
+			Id:        id,
+			Bsid:      "",
+			User:      "",
+			Group:     "",
+			RWMutex:   mutexKit.RWMutex{},
+			Data:      nil,
+			Closed:    false,
+			Listeners: p.listeners,
 		},
-		conn:               conn,
-		defaultMessageType: p.defaultMessageType,
+		conn:    conn,
+		msgType: p.msgType,
 	}, nil
 }

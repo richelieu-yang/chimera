@@ -8,8 +8,9 @@ import (
 type SseChannel struct {
 	*pushKit.BaseChannel
 
-	w http.ResponseWriter
-	r *http.Request
+	w       http.ResponseWriter
+	r       *http.Request
+	msgType messageType
 }
 
 func (channel *SseChannel) Push(data []byte) error {
