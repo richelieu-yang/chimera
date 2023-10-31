@@ -3,6 +3,7 @@ var source;
 window.onload = function () {
     var urlInput = document.getElementById("urlInput"),
         connectBtn = document.getElementById("connectBtn"),
+        disconnectBtn = document.getElementById("disconnectBtn"),
         console = document.getElementById("console");
 
     // var sseUrl = window.location.href;
@@ -68,6 +69,14 @@ window.onload = function () {
         };
 
         println("url: [" + url + "]")
+    };
+
+    disconnectBtn.onclick = function () {
+        if (!source) {
+            return
+        }
+        source.close();
+        source = null;
     };
 
     function println(text) {

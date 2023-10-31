@@ -8,7 +8,6 @@ import (
 	"github.com/sirupsen/logrus"
 	"net/http"
 	"testing"
-	"time"
 )
 
 type listener struct {
@@ -26,10 +25,10 @@ func (l *listener) OnHandshake(w http.ResponseWriter, r *http.Request, channel p
 		logrus.Error(err)
 	}
 
-	go func() {
-		time.Sleep(time.Second * 3)
-		_ = channel.Close()
-	}()
+	//go func() {
+	//	time.Sleep(time.Second * 3)
+	//	_ = channel.Close()
+	//}()
 }
 
 func (l *listener) OnMessage(channel pushKit.Channel, messageType int, data []byte) {
