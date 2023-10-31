@@ -1,6 +1,6 @@
 package sliceKit
 
-// Split 分割 []T
+// Split 分割 []E
 func Split[T any](buf []T, limit int) [][]T {
 	var chunk []T
 	chunks := make([][]T, 0, len(buf)/limit+1)
