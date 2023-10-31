@@ -3,13 +3,16 @@ package sseKit
 import (
 	"github.com/gin-gonic/gin"
 	"github.com/richelieu-yang/chimera/v2/src/component/web/push/pushKit"
+	"github.com/richelieu-yang/chimera/v2/src/core/errorKit"
+	"github.com/richelieu-yang/chimera/v2/src/core/strKit"
 	"github.com/richelieu-yang/chimera/v2/src/mutexKit"
 	"net/http"
 )
 
 type SseProcessor struct {
-	msgType   messageType
-	listeners pushKit.Listeners
+	idGenerator func() (string, error)
+	listeners   pushKit.Listeners
+	msgType     messageType
 }
 
 func (p *SseProcessor) HandleWithGin(ctx *gin.Context) {
@@ -17,15 +20,20 @@ func (p *SseProcessor) HandleWithGin(ctx *gin.Context) {
 }
 
 func (p *SseProcessor) Handle(w http.ResponseWriter, r *http.Request) {
-	if errText := IsSseSupported(w, r); errText != "" {
-		p.listeners.OnFailure(w, r, errText)
+	if err := IsSseSupported(w, r); err != nil {
+		p.listeners.OnFailure(w, r, err.Error())
 		return
 	}
 
 	// 设置 response header
 	SetHeaders(w)
 
-	channel := p.newChannel(w, r)
+	channel, err := p.newChannel(w, r)
+	if err != nil {
+		err = errorKit.Wrap(err, "Fail to new channel")
+		p.listeners.OnFailure(w, r, err.Error())
+		return
+	}
 	p.listeners.OnHandshake(w, r, channel)
 
 	select {
@@ -37,10 +45,18 @@ func (p *SseProcessor) Handle(w http.ResponseWriter, r *http.Request) {
 	}
 }
 
-func (p *SseProcessor) newChannel(w http.ResponseWriter, r *http.Request) pushKit.Channel {
-	return &SseChannel{
+func (p *SseProcessor) newChannel(w http.ResponseWriter, r *http.Request) (pushKit.Channel, error) {
+	id, err := p.idGenerator()
+	if err != nil {
+		return nil, errorKit.Wrap(err, "Fail to generate id")
+	}
+	if err := strKit.AssertNotBlank(id, "id"); err != nil {
+		return nil, err
+	}
+
+	channel := &SseChannel{
 		BaseChannel: &pushKit.BaseChannel{
-			Id:        "",
+			Id:        id,
 			Bsid:      "",
 			User:      "",
 			Group:     "",
@@ -52,4 +68,5 @@ func (p *SseProcessor) newChannel(w http.ResponseWriter, r *http.Request) pushKi
 		w: w,
 		r: r,
 	}
+	return channel, nil
 }

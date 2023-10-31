@@ -18,10 +18,8 @@ type WsProcessor struct {
 	upgrader *websocket.Upgrader
 
 	idGenerator func() (string, error)
-
-	listeners pushKit.Listeners
-
-	msgType messageType
+	listeners   pushKit.Listeners
+	msgType     messageType
 }
 
 func (p *WsProcessor) HandleWithGin(ctx *gin.Context) {
@@ -97,7 +95,7 @@ func (p *WsProcessor) newChannel(conn *websocket.Conn) (pushKit.Channel, error) 
 		return nil, err
 	}
 
-	return &WsChannel{
+	channel := &WsChannel{
 		BaseChannel: &pushKit.BaseChannel{
 			Id:        id,
 			Bsid:      "",
@@ -110,5 +108,6 @@ func (p *WsProcessor) newChannel(conn *websocket.Conn) (pushKit.Channel, error) 
 		},
 		conn:    conn,
 		msgType: p.msgType,
-	}, nil
+	}
+	return channel, nil
 }

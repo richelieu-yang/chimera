@@ -1,6 +1,7 @@
 package sseKit
 
 import (
+	"github.com/richelieu-yang/chimera/v2/src/core/errorKit"
 	"net/http"
 )
 
@@ -8,18 +9,16 @@ import (
 /*
 @return 为"": 支持SSE
 */
-func IsSseSupported(w http.ResponseWriter, r *http.Request) (errText string) {
+func IsSseSupported(w http.ResponseWriter, r *http.Request) error {
 	if _, ok := w.(http.Flusher); !ok {
 		// 不支持: 流信息（streaming）
-		errText = "http.Flusher(Streaming) isn't supported"
-		return
+		return errorKit.New("http.Flusher(Streaming) isn't supported")
 	}
 	if _, ok := w.(http.CloseNotifier); !ok {
 		// 不支持: 监听关闭
-		errText = "http.CloseNotifier isn't supported!"
-		return
+		return errorKit.New("http.CloseNotifier isn't supported!")
 	}
-	return
+	return nil
 }
 
 // SetHeaders 设置response header.
