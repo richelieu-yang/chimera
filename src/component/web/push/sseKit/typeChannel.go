@@ -14,6 +14,7 @@ type SseChannel struct {
 	w       http.ResponseWriter
 	r       *http.Request
 	msgType messageType
+	closeCh chan struct{}
 }
 
 func (channel *SseChannel) Push(data []byte) error {
@@ -21,8 +22,10 @@ func (channel *SseChannel) Push(data []byte) error {
 }
 
 // PushMessage 推送消息给客户端.
-func (channel *SseChannel) PushMessage(msgType messageType, data []byte) error {
-	//TODO implement me
+func (channel *SseChannel) PushMessage(msgType messageType, data []byte) (err error) {
+	if channel.Closed {
+		return pushKit.ChannelClosedError
+	}
 
 	var str string
 	switch msgType {
@@ -40,42 +43,26 @@ func (channel *SseChannel) PushMessage(msgType messageType, data []byte) error {
 		Data: str,
 	}
 
-	return event.Push(channel.w)
-
-	//if channel.Closed {
-	//	return pushKit.ChannelClosedError
-	//}
-	//
-	//// 写锁
-	//channel.RWMutex.LockFunc(func() {
-	//	if channel.Closed {
-	//		err = pushKit.ChannelClosedError
-	//		return
-	//	}
-	//
-	//	_, err := fmt.Fprintf(channel.w, "%s", msg)
-	//	if err != nil {
-	//		logrus.WithError(err).Error("fail to send initial message")
-	//		return
-	//	}
-	//	channel.w.(http.Flusher).Flush()
-	//
-	//})
-
-	panic("TODO")
-
-	return nil
+	if channel.Closed {
+		return pushKit.ChannelClosedError
+	}
+	/* 写锁 */
+	channel.RWMutex.LockFunc(func() {
+		if channel.Closed {
+			err = pushKit.ChannelClosedError
+			return
+		}
+		err = event.Push(channel.w)
+	})
+	return err
 }
 
 // Close 后端主动关闭通道.
-func (channel *SseChannel) Close() (err error) {
-	//_ = channel.SetClosed()
-
+func (channel *SseChannel) Close() error {
 	if channel.SetClosed() {
 		closeInfo := "Closed by backend"
 		channel.Listeners.OnClose(channel, closeInfo)
-
-		err = channel.conn.Close()
+		channel.closeCh <- struct{}{}
 	}
-	return
+	return nil
 }

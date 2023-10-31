@@ -88,7 +88,7 @@ func (p *WsProcessor) Process(w http.ResponseWriter, r *http.Request) {
 	}
 }
 
-func (p *WsProcessor) newChannel(conn *websocket.Conn) (pushKit.Channel, error) {
+func (p *WsProcessor) newChannel(conn *websocket.Conn) (*WsChannel, error) {
 	id, err := p.idGenerator()
 	if err != nil {
 		return nil, errorKit.Wrap(err, "Fail to generate id")

@@ -44,10 +44,13 @@ func (p *SseProcessor) Process(w http.ResponseWriter, r *http.Request) {
 	case <-w.(http.CloseNotifier).CloseNotify():
 		// SSE客户端关闭后，会走此处
 		p.listeners.OnClose(channel, "Connection closed")
+	case <-channel.closeCh:
+		// 后端主动断开连接
+		p.listeners.OnClose(channel, "Connection closed by backend")
 	}
 }
 
-func (p *SseProcessor) newChannel(w http.ResponseWriter, r *http.Request) (pushKit.Channel, error) {
+func (p *SseProcessor) newChannel(w http.ResponseWriter, r *http.Request) (*SseChannel, error) {
 	id, err := p.idGenerator()
 	if err != nil {
 		return nil, errorKit.Wrap(err, "Fail to generate id")
@@ -67,8 +70,10 @@ func (p *SseProcessor) newChannel(w http.ResponseWriter, r *http.Request) (pushK
 			Closed:    false,
 			Listeners: p.listeners,
 		},
-		w: w,
-		r: r,
+		w:       w,
+		r:       r,
+		msgType: p.msgType,
+		closeCh: make(chan struct{}, 1),
 	}
 	return channel, nil
 }
