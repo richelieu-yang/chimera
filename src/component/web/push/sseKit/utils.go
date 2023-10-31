@@ -14,10 +14,10 @@ func IsSseSupported(w http.ResponseWriter, r *http.Request) error {
 		// 不支持: 流信息（streaming）
 		return errorKit.New("http.Flusher(Streaming) isn't supported")
 	}
-	if _, ok := w.(http.CloseNotifier); !ok {
-		// 不支持: 监听关闭
-		return errorKit.New("http.CloseNotifier isn't supported!")
-	}
+	//if _, ok := w.(http.CloseNotifier); !ok {
+	//	// 不支持: 监听关闭
+	//	return errorKit.New("http.CloseNotifier isn't supported!")
+	//}
 	return nil
 }
 

@@ -38,12 +38,16 @@ func (p *SseProcessor) Process(w http.ResponseWriter, r *http.Request) {
 	}
 	p.listeners.OnHandshake(w, r, channel)
 
+	/*
+		!!!: gin.Context.Done() 和 r.Context().Done() 不同
+		(1) case为 w.(http.CloseNotifier).CloseNotify() 和 gin.Context.Done()，前端断开会走到 w.(http.CloseNotifier).CloseNotify()
+		(2) case为 w.(http.CloseNotifier).CloseNotify() 和 r.Context().Done()，前端断开会走到 r.Context().Done()
+	*/
 	select {
 	case <-r.Context().Done():
 		p.listeners.OnClose(channel, "Context done")
-	case <-w.(http.CloseNotifier).CloseNotify():
-		// SSE客户端关闭后，会走此处
-		p.listeners.OnClose(channel, "Connection closed")
+	//case <-w.(http.CloseNotifier).CloseNotify():
+	//	p.listeners.OnClose(channel, "Connection closed")
 	case <-channel.closeCh:
 		// 后端主动断开连接
 		p.listeners.OnClose(channel, "Connection closed by backend")
