@@ -13,12 +13,20 @@ window.onload = function () {
     // }
     // urlInput.value = sseUrl;
 
+    var url = localStorage["url"]
+    if (!url) {
+        url = "";
+    }
+    urlInput.value = url;
+
     connectBtn.onclick = function () {
         var url = urlInput.value;
         if (!url) {
             alert("请输入url!!!");
             return;
         }
+
+        localStorage["url"] = url;
 
         if (source != null) {
             source.close()
