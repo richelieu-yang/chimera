@@ -6,7 +6,7 @@ import (
 )
 
 type SseChannel struct {
-	pushKit.BaseChannel
+	*pushKit.BaseChannel
 
 	w http.ResponseWriter
 	r *http.Request
