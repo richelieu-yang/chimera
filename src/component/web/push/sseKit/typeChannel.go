@@ -12,6 +12,11 @@ type SseChannel struct {
 	r *http.Request
 }
 
+func (channel *SseChannel) Push(data []byte) error {
+	//TODO implement me
+	panic("implement me")
+}
+
 // PushMessage 推送消息给客户端.
 func (channel *SseChannel) PushMessage(t messageType, data []byte) (err error) {
 	//if channel.Closed {
