@@ -58,11 +58,11 @@ func (p *SseProcessor) newChannel(w http.ResponseWriter, r *http.Request) (pushK
 
 	channel := &SseChannel{
 		BaseChannel: &pushKit.BaseChannel{
+			RWMutex:   mutexKit.RWMutex{},
 			Id:        id,
 			Bsid:      "",
 			User:      "",
 			Group:     "",
-			RWMutex:   mutexKit.RWMutex{},
 			Data:      nil,
 			Closed:    false,
 			Listeners: p.listeners,
