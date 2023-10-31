@@ -24,11 +24,11 @@ type WsProcessor struct {
 	msgType     messageType
 }
 
-func (p *WsProcessor) HandleWithGin(ctx *gin.Context) {
-	p.Handle(ctx.Writer, ctx.Request)
+func (p *WsProcessor) ProcessWithGin(ctx *gin.Context) {
+	p.Process(ctx.Writer, ctx.Request)
 }
 
-func (p *WsProcessor) Handle(w http.ResponseWriter, r *http.Request) {
+func (p *WsProcessor) Process(w http.ResponseWriter, r *http.Request) {
 	PolyfillWebSocketRequest(r)
 
 	// 先判断是不是websocket请求

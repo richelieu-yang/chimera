@@ -53,7 +53,7 @@ func TestNewProcessor(t *testing.T) {
 
 	engine := gin.Default()
 	engine.GET("/ws", func(ctx *gin.Context) {
-		processor.Handle(ctx.Writer, ctx.Request)
+		processor.Process(ctx.Writer, ctx.Request)
 	})
 	if err := engine.Run(":80"); err != nil {
 		panic(err)

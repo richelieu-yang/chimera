@@ -17,11 +17,11 @@ type SseProcessor struct {
 	msgType     messageType
 }
 
-func (p *SseProcessor) HandleWithGin(ctx *gin.Context) {
-	p.Handle(ctx.Writer, ctx.Request)
+func (p *SseProcessor) ProcessWithGin(ctx *gin.Context) {
+	p.Process(ctx.Writer, ctx.Request)
 }
 
-func (p *SseProcessor) Handle(w http.ResponseWriter, r *http.Request) {
+func (p *SseProcessor) Process(w http.ResponseWriter, r *http.Request) {
 	if err := IsSseSupported(w, r); err != nil {
 		p.listeners.OnFailure(w, r, err.Error())
 		return

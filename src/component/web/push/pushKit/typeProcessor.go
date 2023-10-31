@@ -7,8 +7,8 @@ import (
 
 type (
 	Processor interface {
-		HandleWithGin(ctx *gin.Context)
+		ProcessWithGin(ctx *gin.Context)
 
-		Handle(w http.ResponseWriter, r *http.Request)
+		Process(w http.ResponseWriter, r *http.Request)
 	}
 )
