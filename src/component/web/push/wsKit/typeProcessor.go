@@ -14,6 +14,8 @@ import (
 )
 
 type WsProcessor struct {
+	pushKit.Processor
+
 	// upgrader 是并发安全的
 	upgrader *websocket.Upgrader
 

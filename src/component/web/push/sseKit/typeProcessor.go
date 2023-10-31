@@ -10,6 +10,8 @@ import (
 )
 
 type SseProcessor struct {
+	pushKit.Processor
+
 	idGenerator func() (string, error)
 	listeners   pushKit.Listeners
 	msgType     messageType
