@@ -17,16 +17,15 @@ type (
 	}
 
 	BaseChannel struct {
+		RWMutex mutexKit.RWMutex
+
 		Id    string
 		Bsid  string
 		User  string
 		Group string
+		Data  interface{}
 
-		RWMutex mutexKit.RWMutex
-
-		Data   interface{}
-		Closed bool
-
+		Closed    bool
 		Listeners Listeners
 	}
 )
