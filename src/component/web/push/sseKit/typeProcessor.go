@@ -39,7 +39,7 @@ func (p *SseProcessor) Process(w http.ResponseWriter, r *http.Request) {
 	p.listeners.OnHandshake(w, r, channel)
 
 	/*
-		!!!: gin.Context.Done() 和 r.Context().Done() 不同
+		!!!: gin.Context.Done() 和 r.Context().Done() 不同，因为 gin.Context.Done() 返回nil（普通Gin Server情况下）.
 		(1) case为 w.(http.CloseNotifier).CloseNotify() 和 gin.Context.Done()，前端断开会走到 w.(http.CloseNotifier).CloseNotify()
 		(2) case为 w.(http.CloseNotifier).CloseNotify() 和 r.Context().Done()，前端断开会走到 r.Context().Done()
 	*/
