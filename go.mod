@@ -6,7 +6,6 @@ require (
 	fyne.io/fyne/v2 v2.4.1
 	github.com/apache/pulsar-client-go v0.11.0
 	github.com/apache/rocketmq-clients/golang/v5 v5.0.1-rc.5
-	github.com/apcera/termtables v0.0.0-20170405184538-bcbc5dc54055
 	github.com/bytedance/sonic v1.10.2
 	github.com/dablelv/cyan v0.0.51
 	github.com/davidbyttow/govips/v2 v2.13.0
@@ -55,6 +54,7 @@ require (
 	github.com/robfig/cron/v3 v3.0.1
 	github.com/rs/xid v1.5.0
 	github.com/samber/lo v1.38.1
+	github.com/scylladb/termtables v1.0.0
 	github.com/shirou/gopsutil/v3 v3.23.9
 	github.com/shopspring/decimal v1.3.1
 	github.com/sirupsen/logrus v1.9.3
@@ -92,6 +92,7 @@ require (
 	github.com/DataDog/zstd v1.5.0 // indirect
 	github.com/aliyun/alibaba-cloud-sdk-go v1.61.1704 // indirect
 	github.com/andybalholm/brotli v1.0.5 // indirect
+	github.com/apcera/termtables v0.0.0-20170405184538-bcbc5dc54055 // indirect
 	github.com/ardielle/ardielle-go v1.5.2 // indirect
 	github.com/beorn7/perks v1.0.1 // indirect
 	github.com/bits-and-blooms/bitset v1.4.0 // indirect

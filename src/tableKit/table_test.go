@@ -11,7 +11,7 @@ func TestCreateTable(t *testing.T) {
 	table.AddRow("San Zhang", 18)
 	table.AddRow("Si Li", 30)
 
-	fmt.Println("默认格式:")
+	fmt.Println("默认格式（普通的文本表格）:")
 	fmt.Println(table.Render())
 
 	fmt.Println("HTML格式:")
