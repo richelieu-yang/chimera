@@ -2,9 +2,13 @@ package pushKit
 
 import "net/http"
 
-type (
-	Listeners []Listener
+var mListener = &managerListener{}
 
+func NewListeners(listener Listener) Listeners {
+	return []Listener{mListener, listener}
+}
+
+type (
 	Listener interface {
 		OnFailure(w http.ResponseWriter, r *http.Request, failureInfo string)
 
@@ -18,6 +22,8 @@ type (
 
 		OnClose(channel Channel, closeInfo string)
 	}
+
+	Listeners []Listener
 )
 
 func (listeners Listeners) OnFailure(w http.ResponseWriter, r *http.Request, failureInfo string) {
@@ -42,4 +48,23 @@ func (listeners Listeners) OnClose(channel Channel, closeInfo string) {
 	for _, listener := range listeners {
 		listener.OnClose(channel, closeInfo)
 	}
+}
+
+type managerListener struct {
+	Listener
+}
+
+func (listener managerListener) OnFailure(w http.ResponseWriter, r *http.Request, failureInfo string) {
+
+}
+
+func (listener managerListener) OnHandshake(w http.ResponseWriter, r *http.Request, channel Channel) {
+}
+
+func (listener managerListener) OnMessage(channel Channel, messageType int, data []byte) {
+	// TODO: 加入管理（manager.go）
+}
+
+func (listener managerListener) OnClose(channel Channel, closeInfo string) {
+	// TODO: 移除管理（manager.go）
 }
