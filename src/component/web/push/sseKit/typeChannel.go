@@ -60,8 +60,6 @@ func (channel *SseChannel) PushMessage(msgType messageType, data []byte) (err er
 // Close 后端主动关闭通道.
 func (channel *SseChannel) Close() error {
 	if channel.SetClosed() {
-		closeInfo := "Closed by backend"
-		channel.Listeners.OnClose(channel, closeInfo)
 		channel.closeCh <- struct{}{}
 	}
 	return nil
