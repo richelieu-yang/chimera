@@ -30,3 +30,19 @@ var (
 	*/
 	groupMap = mapKit.NewMapWithLock[string, *setKit.SetWithLock[Channel]]()
 )
+
+func GetUserSet(user string) *setKit.SetWithLock[Channel] {
+	var userSet *setKit.SetWithLock[Channel]
+	userMap.RWLock.LockFunc(func() {
+		userSet = userMap.Map[user]
+	})
+	return userSet
+}
+
+func GetGroupSet(group string) *setKit.SetWithLock[Channel] {
+	var groupSet *setKit.SetWithLock[Channel]
+	groupMap.RWLock.LockFunc(func() {
+		groupSet = userMap.Map[group]
+	})
+	return groupSet
+}
