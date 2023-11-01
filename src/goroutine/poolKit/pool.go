@@ -11,7 +11,8 @@ PS:
 (2) 默认情况下（即不传options）:
 	(a) (Nonblocking: false) 阻塞模式
 	(b) (MaxBlockingTasks: 0) 阻塞模式下，最多因为调用Pool.Submit()而阻塞的goroutine数量 不设限制.
-(3) 可以通过 ants.WithLogger() 指定日志输出（默认输出到控制台）.
+(3) 可以通过 ants.WithLogger() 指定日志输出（默认输出到控制台）;
+(4) 可以通过 ants.WithPanicHandler() 处理goroutine发生的panic，否则通过Logger输出.
 
 @param size (1) 如果<=0，生成的池是无限制的;
 			(2) 即cap;
@@ -26,7 +27,8 @@ PS:
 (2) 默认情况下（即不传options）:
 	(a) (Nonblocking: false) 阻塞模式
 	(b) (MaxBlockingTasks: 0) 阻塞模式下，最多因为调用Pool.Submit()而阻塞的goroutine数量 不设限制.
-(3) 可以通过 ants.WithLogger() 指定日志输出（默认输出到控制台）.
+(3) 可以通过 ants.WithLogger() 指定日志输出（默认输出到控制台）;
+(4) 可以通过 ants.WithPanicHandler() 处理goroutine发生的panic，否则通过Logger输出.
 
 @param size (1) 如果<=0，生成的池是无限制的;
 			(2) 即cap;
