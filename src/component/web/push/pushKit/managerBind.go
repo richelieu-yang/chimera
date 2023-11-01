@@ -7,16 +7,9 @@ import (
 )
 
 func Bind(channel Channel, group, user, bsid string) {
-	if strKit.IsNotEmpty(group) {
-
-	}
-	if strKit.IsNotEmpty(user) {
-
-	}
-	if strKit.IsNotEmpty(bsid) {
-
-	}
-
+	BindGroup(channel, group)
+	BindUser(channel, user)
+	BindId(channel, bsid)
 }
 
 func BindId(channel Channel, id string) {
@@ -53,6 +46,7 @@ func BindUser(channel Channel, user string) {
 	}
 
 	var userSet *setKit.SetWithLock[Channel]
+	// 写锁
 	userMap.RWLock.LockFunc(func() {
 		userSet = userMap.Map[user]
 		if userSet == nil {
@@ -61,8 +55,9 @@ func BindUser(channel Channel, user string) {
 		}
 	})
 
+	// 写锁
 	userSet.RWLock.LockFunc(func() {
-		userSet.Set.Add(channel)
+		_ = userSet.Set.Add(channel)
 	})
 }
 
@@ -70,4 +65,19 @@ func BindGroup(channel Channel, group string) {
 	if strKit.IsEmpty(group) {
 		return
 	}
+
+	// 写锁
+	var groupSet *setKit.SetWithLock[Channel]
+	groupMap.RWLock.LockFunc(func() {
+		groupSet = userMap.Map[group]
+		if groupSet == nil {
+			groupSet = setKit.NewSetWithLock[Channel]()
+			groupMap.Map[group] = groupSet
+		}
+	})
+
+	// 写锁
+	groupSet.RWLock.LockFunc(func() {
+		_ = groupSet.Set.Add(channel)
+	})
 }
