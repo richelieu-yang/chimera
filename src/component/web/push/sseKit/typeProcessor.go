@@ -31,7 +31,8 @@ func (p *SseProcessor) Process(w http.ResponseWriter, r *http.Request) {
 	// 设置 response header
 	SetHeaders(w)
 
-	channel, err := p.newChannel(w, r)
+	closeCh := make(chan string, 1)
+	channel, err := p.newChannel(w, r, closeCh)
 	if err != nil {
 		err = errorKit.Wrap(err, "Fail to new channel")
 		p.listeners.OnFailure(w, r, err.Error())
@@ -49,13 +50,13 @@ func (p *SseProcessor) Process(w http.ResponseWriter, r *http.Request) {
 		p.listeners.OnClose(channel, "Context done")
 	//case <-w.(http.CloseNotifier).CloseNotify():
 	//	p.listeners.OnClose(channel, "Connection closed")
-	case reason := <-channel.closeCh:
+	case reason := <-closeCh:
 		// 后端主动断开连接
 		p.listeners.OnClose(channel, fmt.Sprintf("Connection closed by backend with reason(%s)", reason))
 	}
 }
 
-func (p *SseProcessor) newChannel(w http.ResponseWriter, r *http.Request) (*SseChannel, error) {
+func (p *SseProcessor) newChannel(w http.ResponseWriter, r *http.Request, closeCh chan string) (pushKit.Channel, error) {
 	id, err := p.idGenerator()
 	if err != nil {
 		return nil, errorKit.Wrap(err, "Fail to generate id")
@@ -78,7 +79,7 @@ func (p *SseProcessor) newChannel(w http.ResponseWriter, r *http.Request) (*SseC
 		w:       w,
 		r:       r,
 		msgType: p.msgType,
-		closeCh: make(chan string, 1),
+		closeCh: closeCh,
 	}
 	return channel, nil
 }
