@@ -12,11 +12,11 @@ var (
 	*/
 	allMap = mapKit.NewMapWithLock[string, Channel]()
 
-	// groupMap
+	// bsidMap
 	/*
-		key: group（一对多）
+		key: bsid（一对一）
 	*/
-	groupMap = mapKit.NewMapWithLock[string, setKit.SetWithLock[Channel]]()
+	bsidMap = mapKit.NewMapWithLock[string, Channel]()
 
 	// userMap
 	/*
@@ -24,9 +24,9 @@ var (
 	*/
 	userMap = mapKit.NewMapWithLock[string, setKit.SetWithLock[Channel]]()
 
-	// bsidMap
+	// groupMap
 	/*
-		key: bsid（一对一）
+		key: group（一对多）
 	*/
-	bsidMap = mapKit.NewMapWithLock[string, Channel]()
+	groupMap = mapKit.NewMapWithLock[string, setKit.SetWithLock[Channel]]()
 )
