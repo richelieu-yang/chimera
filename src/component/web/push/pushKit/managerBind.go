@@ -35,9 +35,9 @@ func BindBsid(channel Channel, bsid string) {
 
 	// 写锁
 	bsidMap.RWLock.LockFunc(func() {
-		if old, ok := bsidMap.Map[bsid]; ok {
-			_ = old.Close()
-		}
+		//if old, ok := bsidMap.Map[bsid]; ok {
+		//	_ = old.Close()
+		//}
 
 		bsidMap.Map[bsid] = channel
 	})
