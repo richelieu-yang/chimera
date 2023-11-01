@@ -6,7 +6,14 @@ import (
 
 // NewSet
 /*
-@param threadSafe	是否并发安全？
+@param threadSafe 是否并发安全？
+
+e.g.
+	set := setKit.NewSet[interface{}](false)
+	// Add成功
+	fmt.Println(set.Add(1)) // true
+	// Add失败
+	fmt.Println(set.Add(1)) // false
 */
 func NewSet[T comparable](threadSafe bool, args ...T) mapset.Set[T] {
 	if threadSafe {

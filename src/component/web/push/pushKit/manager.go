@@ -22,11 +22,11 @@ var (
 	/*
 		key: user（一对多）
 	*/
-	userMap = mapKit.NewMapWithLock[string, setKit.SetWithLock[Channel]]()
+	userMap = mapKit.NewMapWithLock[string, *setKit.SetWithLock[Channel]]()
 
 	// groupMap
 	/*
 		key: group（一对多）
 	*/
-	groupMap = mapKit.NewMapWithLock[string, setKit.SetWithLock[Channel]]()
+	groupMap = mapKit.NewMapWithLock[string, *setKit.SetWithLock[Channel]]()
 )

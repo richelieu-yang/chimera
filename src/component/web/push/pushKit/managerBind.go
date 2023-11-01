@@ -2,6 +2,7 @@ package pushKit
 
 import (
 	"fmt"
+	"github.com/richelieu-yang/chimera/v2/src/core/setKit"
 	"github.com/richelieu-yang/chimera/v2/src/core/strKit"
 )
 
@@ -18,17 +19,18 @@ func Bind(channel Channel, group, user, bsid string) {
 
 }
 
-func BindGroup(channel Channel, group string) {
-	if strKit.IsEmpty(group) {
-		return
-	}
-}
-
-func BindUser(channel Channel, user string) {
-	if strKit.IsEmpty(user) {
+func BindId(channel Channel, id string) {
+	if strKit.IsEmpty(id) {
 		return
 	}
 
+	// 写锁
+	allMap.RWLock.LockFunc(func() {
+		if old, ok := bsidMap.Map[id]; ok {
+			_ = old.Close(fmt.Sprintf("id(%s) is replaced by new channel", id))
+		}
+		allMap.Map[id] = channel
+	})
 }
 
 func BindBsid(channel Channel, bsid string) {
@@ -45,16 +47,27 @@ func BindBsid(channel Channel, bsid string) {
 	})
 }
 
-func BindId(channel Channel, id string) {
-	if strKit.IsEmpty(id) {
+func BindUser(channel Channel, user string) {
+	if strKit.IsEmpty(user) {
 		return
 	}
 
-	// 写锁
-	allMap.RWLock.LockFunc(func() {
-		if old, ok := bsidMap.Map[id]; ok {
-			_ = old.Close(fmt.Sprintf("id(%s) is replaced by new channel", id))
+	var userSet *setKit.SetWithLock[Channel]
+	userMap.RWLock.LockFunc(func() {
+		userSet = userMap.Map[user]
+		if userSet == nil {
+			userSet = setKit.NewSetWithLock[Channel]()
+			userMap.Map[user] = userSet
 		}
-		allMap.Map[id] = channel
 	})
+
+	userSet.RWLock.LockFunc(func() {
+		userSet.Set.Add(channel)
+	})
+}
+
+func BindGroup(channel Channel, group string) {
+	if strKit.IsEmpty(group) {
+		return
+	}
 }
