@@ -7,7 +7,10 @@ import (
 type (
 	Channel interface {
 		// Close 后端主动关闭通道.
-		Close() error
+		/*
+			@param reason 关闭的原因
+		*/
+		Close(reason string) error
 
 		Push(data []byte) error
 
