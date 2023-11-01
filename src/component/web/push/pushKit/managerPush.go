@@ -1,1 +1,5 @@
 package pushKit
+
+func PushToAll() {
+
+}

@@ -17,6 +17,10 @@ type (
 		IsClosed() (rst bool)
 
 		SetClosed() (flag bool)
+
+		BindGroup(group string)
+		BindUser(user string)
+		BindBsid(bsid string)
 	}
 
 	BaseChannel struct {
@@ -32,6 +36,14 @@ type (
 		Listeners Listeners
 	}
 )
+
+func (channel *BaseChannel) Close(reason string) error {
+	panic("implement me")
+}
+
+func (channel *BaseChannel) Push(data []byte) error {
+	panic("implement me")
+}
 
 func (channel *BaseChannel) IsClosed() (rst bool) {
 	// 读锁
@@ -62,4 +74,16 @@ func (channel *BaseChannel) SetClosed() (flag bool) {
 		flag = true
 	})
 	return
+}
+
+func (channel *BaseChannel) BindGroup(group string) {
+	BindGroup(channel, group)
+}
+
+func (channel *BaseChannel) BindUser(user string) {
+	BindUser(channel, user)
+}
+
+func (channel *BaseChannel) BindBsid(bsid string) {
+	BindBsid(channel, bsid)
 }
