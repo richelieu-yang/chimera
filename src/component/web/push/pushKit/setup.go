@@ -20,7 +20,7 @@ func Setup(p *ants.Pool) error {
 	if capacity > 0 {
 		tag := "gte=2000"
 		if err := validateKit.Var(capacity, tag); err != nil {
-			return errorKit.Wrap(err, "Capacity(%d) of pool is invalid(%s) when it's greater than zero", capacity, tag)
+			return errorKit.Wrap(err, "Capacity(%d) of pool is invalid(tag: %s) when it's greater than zero", capacity, tag)
 		}
 	}
 
