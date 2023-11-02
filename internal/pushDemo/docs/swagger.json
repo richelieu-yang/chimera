@@ -1,0 +1,43 @@
+{
+    "swagger": "2.0",
+    "info": {
+        "contact": {}
+    },
+    "paths": {
+        "/push_to_all": {
+            "post": {
+                "description": "推送消息给所有连接（exceptBsids对应的链接例外）.",
+                "consumes": [
+                    "application/x-www-form-urlencoded"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "summary": "推送消息给所有连接.",
+                "parameters": [
+                    {
+                        "description": "推送消息的内容.",
+                        "name": "text",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "description": "例外连接的bsid.",
+                        "name": "exceptBsids",
+                        "in": "body",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "type": "string"
+                            }
+                        }
+                    }
+                ],
+                "responses": {}
+            }
+        }
+    }
+}

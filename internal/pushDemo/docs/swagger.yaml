@@ -1,0 +1,27 @@
+info:
+  contact: {}
+paths:
+  /push_to_all:
+    post:
+      consumes:
+      - application/x-www-form-urlencoded
+      description: 推送消息给所有连接（exceptBsids对应的链接例外）.
+      parameters:
+      - description: 推送消息的内容.
+        in: body
+        name: text
+        required: true
+        schema:
+          type: string
+      - description: 例外连接的bsid.
+        in: body
+        name: exceptBsids
+        schema:
+          items:
+            type: string
+          type: array
+      produces:
+      - application/json
+      responses: {}
+      summary: 推送消息给所有连接.
+swagger: "2.0"

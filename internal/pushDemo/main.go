@@ -2,6 +2,7 @@ package main
 
 import (
 	"github.com/gin-gonic/gin"
+	_ "github.com/richelieu-yang/chimera/v2/internal/pushDemo/docs"
 	"github.com/richelieu-yang/chimera/v2/internal/pushDemo/handler"
 	"github.com/richelieu-yang/chimera/v2/internal/pushDemo/types"
 	"github.com/richelieu-yang/chimera/v2/src/component/web/ginKit"
@@ -11,6 +12,9 @@ import (
 	"github.com/richelieu-yang/chimera/v2/src/json/jsonRespKit"
 	"github.com/richelieu-yang/chimera/v2/src/log/logrusKit"
 	"github.com/sirupsen/logrus"
+
+	"github.com/swaggo/files"
+	"github.com/swaggo/gin-swagger"
 )
 
 type resp struct {
@@ -40,6 +44,8 @@ func main() {
 
 	// push
 	{
+		engine.GET("/swagger/*any", ginSwagger.WrapHandler(swaggerFiles.Handler))
+
 		engine.POST("/push_to_all", ginKit.WrapToHandlerFunc(handler.PushToAll))
 	}
 
