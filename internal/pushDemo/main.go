@@ -1,17 +1,17 @@
-package _demo
+package main
 
 import (
 	"github.com/gin-gonic/gin"
+	"github.com/richelieu-yang/chimera/v2/internal/pushDemo/types"
 	"github.com/richelieu-yang/chimera/v2/src/component/web/ginKit"
 	"github.com/richelieu-yang/chimera/v2/src/component/web/push/pushKit"
 	"github.com/richelieu-yang/chimera/v2/src/component/web/push/sseKit"
 	"github.com/richelieu-yang/chimera/v2/src/goroutine/poolKit"
 	"github.com/richelieu-yang/chimera/v2/src/log/logrusKit"
 	"github.com/sirupsen/logrus"
-	"testing"
 )
 
-func TestDemo(t *testing.T) {
+func main() {
 	logrusKit.MustSetUp(nil)
 
 	pool, err := poolKit.NewPool(2000)
@@ -25,7 +25,7 @@ func TestDemo(t *testing.T) {
 
 	// SSE
 	{
-		processor, err := sseKit.NewProcessor(nil, &demoListener{}, sseKit.MessageTypeRaw)
+		processor, err := sseKit.NewProcessor(nil, &types.DemoListener{}, sseKit.MessageTypeRaw)
 		if err != nil {
 			panic(err)
 		}
