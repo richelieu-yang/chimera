@@ -3,10 +3,19 @@ package pushKit
 import (
 	"github.com/panjf2000/ants/v2"
 	"github.com/richelieu-yang/chimera/v2/src/core/errorKit"
+	"github.com/richelieu-yang/chimera/v2/src/log/logrusKit"
 	"github.com/richelieu-yang/chimera/v2/src/validateKit"
+	"github.com/sirupsen/logrus"
 )
 
 var pool *ants.Pool
+
+func MustSetUp(p *ants.Pool) {
+	if err := Setup(p); err != nil {
+		logrusKit.DisableQuote(nil)
+		logrus.Fatalf("%+v", err)
+	}
+}
 
 // Setup
 /*
