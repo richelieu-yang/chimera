@@ -11,17 +11,16 @@ type (
 			@param reason 关闭的原因
 		*/
 		Close(reason string) error
+		IsClosed() (rst bool)
+		SetClosed() (flag bool)
 
 		Push(data []byte) error
 
-		IsClosed() (rst bool)
-
-		SetClosed() (flag bool)
+		GetId() string
 
 		BindGroup(group string)
 		BindUser(user string)
 		BindBsid(bsid string)
-
 		Unbind()
 	}
 
@@ -95,4 +94,8 @@ func (channel *BaseChannel) Unbind() {
 	UnbindBsid(channel, channel.Bsid)
 	UnbindUser(channel, channel.User)
 	UnbindGroup(channel, channel.Group)
+}
+
+func (channel *BaseChannel) GetId() string {
+	return channel.Id
 }
