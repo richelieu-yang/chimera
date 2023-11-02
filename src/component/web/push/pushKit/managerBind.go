@@ -6,12 +6,6 @@ import (
 	"github.com/richelieu-yang/chimera/v2/src/core/strKit"
 )
 
-//func Bind(channel Channel, group, user, bsid string) {
-//	BindGroup(channel, group)
-//	BindUser(channel, user)
-//	BindId(channel, bsid)
-//}
-
 func BindId(channel Channel, id string) {
 	if strKit.IsEmpty(id) {
 		return

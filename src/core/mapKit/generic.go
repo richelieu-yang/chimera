@@ -34,6 +34,7 @@ func ContainKeys[K comparable, V any](m map[K]V, keys ...K) bool {
 // Remove
 /*
 PS:
+(0) 内置函数delete(m map[Type]Type1, key Type): 如果 m == nil 或 m中不存在key，delete()不做任何操作;
 (1) 可能会修改传参m（移除条目的话），因为它是map类型；
 (2) 命名参考了 java.util.Map .
 
