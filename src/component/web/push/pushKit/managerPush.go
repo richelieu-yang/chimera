@@ -28,31 +28,16 @@ func PushToAll(data []byte) (err error) {
 	return nil
 }
 
-func PushToGroup(data []byte, group string) error {
+func PushToBsid(data []byte, bsid string) error {
 	if err := isAvailable(); err != nil {
 		return err
 	}
 
-	groupSet := GetGroupSet(group)
-	if groupSet == nil {
-		return errorKit.New("No set for group(%s)", group)
+	channel := GetChannelByBsid(bsid)
+	if channel == nil {
+		return errorKit.New("No channel for bsid(bsid)", bsid)
 	}
-
-	// 写锁
-	groupSet.RWLock.LockFunc(func() {
-		var wg sync.WaitGroup
-		groupSet.Set.Each(func(channel Channel) bool {
-			c := channel
-			wg.Add(1)
-			_ = pool.Submit(func() {
-				defer wg.Done()
-				_ = c.Push(data)
-			})
-			// 不中断循环
-			return false
-		})
-	})
-	return nil
+	return channel.Push(data)
 }
 
 func PushToUser(data []byte, user string) error {
@@ -82,14 +67,29 @@ func PushToUser(data []byte, user string) error {
 	return nil
 }
 
-func PushToBsid(data []byte, bsid string) error {
+func PushToGroup(data []byte, group string) error {
 	if err := isAvailable(); err != nil {
 		return err
 	}
 
-	channel := GetChannelByBsid(bsid)
-	if channel == nil {
-		return errorKit.New("No channel for bsid(bsid)", bsid)
+	groupSet := GetGroupSet(group)
+	if groupSet == nil {
+		return errorKit.New("No set for group(%s)", group)
 	}
-	return channel.Push(data)
+
+	// 写锁
+	groupSet.RWLock.LockFunc(func() {
+		var wg sync.WaitGroup
+		groupSet.Set.Each(func(channel Channel) bool {
+			c := channel
+			wg.Add(1)
+			_ = pool.Submit(func() {
+				defer wg.Done()
+				_ = c.Push(data)
+			})
+			// 不中断循环
+			return false
+		})
+	})
+	return nil
 }
