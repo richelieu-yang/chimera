@@ -5,14 +5,18 @@ import (
 	"net/http"
 )
 
-var mListener = &managerListener{}
+var inner = &innerListener{}
 
+// NewListeners
+/*
+PS: 本方法仅供本项目使用，严禁外部调用.
+*/
 func NewListeners(listener Listener) (Listeners, error) {
 	if err := interfaceKit.AssertNotNil(listener, "listener"); err != nil {
 		return nil, err
 	}
 
-	return []Listener{mListener, listener}, nil
+	return []Listener{inner, listener}, nil
 }
 
 type Listener interface {
@@ -55,21 +59,21 @@ func (listeners Listeners) OnClose(channel Channel, closeInfo string) {
 	}
 }
 
-type managerListener struct {
+type innerListener struct {
 	Listener
 }
 
-func (listener managerListener) OnFailure(w http.ResponseWriter, r *http.Request, failureInfo string) {
+func (listener innerListener) OnFailure(w http.ResponseWriter, r *http.Request, failureInfo string) {
 
 }
 
-func (listener managerListener) OnHandshake(w http.ResponseWriter, r *http.Request, channel Channel) {
+func (listener innerListener) OnHandshake(w http.ResponseWriter, r *http.Request, channel Channel) {
 }
 
-func (listener managerListener) OnMessage(channel Channel, messageType int, data []byte) {
+func (listener innerListener) OnMessage(channel Channel, messageType int, data []byte) {
 	// TODO: 加入管理（manager.go）
 }
 
-func (listener managerListener) OnClose(channel Channel, closeInfo string) {
+func (listener innerListener) OnClose(channel Channel, closeInfo string) {
 	// TODO: 移除管理（manager.go）
 }
