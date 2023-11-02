@@ -21,6 +21,8 @@ type (
 		BindGroup(group string)
 		BindUser(user string)
 		BindBsid(bsid string)
+
+		Unbind()
 	}
 
 	BaseChannel struct {
@@ -86,4 +88,11 @@ func (channel *BaseChannel) BindUser(user string) {
 
 func (channel *BaseChannel) BindBsid(bsid string) {
 	BindBsid(channel, bsid)
+}
+
+func (channel *BaseChannel) Unbind() {
+	UnBindId(channel, channel.Id)
+	UnbindBsid(channel, channel.Bsid)
+	UnbindUser(channel, channel.User)
+	UnbindGroup(channel, channel.Group)
 }
