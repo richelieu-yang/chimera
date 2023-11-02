@@ -27,24 +27,21 @@ const docTemplate = `{
                 "summary": "推送消息给所有连接.",
                 "parameters": [
                     {
+                        "type": "string",
                         "description": "推送消息的内容.",
                         "name": "text",
-                        "in": "body",
-                        "required": true,
-                        "schema": {
-                            "type": "string"
-                        }
+                        "in": "formData",
+                        "required": true
                     },
                     {
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        },
+                        "collectionFormat": "csv",
                         "description": "例外连接的bsid.",
                         "name": "exceptBsids",
-                        "in": "body",
-                        "schema": {
-                            "type": "array",
-                            "items": {
-                                "type": "string"
-                            }
-                        }
+                        "in": "formData"
                     }
                 ],
                 "responses": {}

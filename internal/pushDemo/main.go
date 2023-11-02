@@ -47,6 +47,9 @@ func main() {
 		engine.GET("/swagger/*any", ginSwagger.WrapHandler(swaggerFiles.Handler))
 
 		engine.POST("/push_to_all", ginKit.WrapToHandlerFunc(handler.PushToAll))
+		engine.POST("/push_to_bsid", ginKit.WrapToHandlerFunc(handler.PushToBsid))
+		engine.POST("/push_to_user", ginKit.WrapToHandlerFunc(handler.PushToUser))
+		engine.POST("/push_to_group", ginKit.WrapToHandlerFunc(handler.PushToGroup))
 	}
 
 	// SSE

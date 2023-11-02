@@ -13,10 +13,23 @@ import (
 // @Description 推送消息给所有连接（exceptBsids对应的链接例外）.
 // @Router /push_to_all [post]
 // @Accept application/x-www-form-urlencoded
-// @Param text 			body	string		true	"推送消息的内容."
-// @Param exceptBsids	body	[]string 	false	"例外连接的bsid."
+// @Param text 			formData	string		true	"推送消息的内容."
+// @Param exceptBsids	formData	[]string 	false	"例外连接的bsid."
 // @Produce json
 func PushToAll(ctx *gin.Context) (*ginKit.ResponsePackage, error) {
+	//if err := httpKit.MakeRequestBodySeekable(ctx.Request); err != nil {
+	//	return nil, err
+	//}
+	//data, err := ioutil.ReadAll(ctx.Request.Body)
+	//if err != nil {
+	//	return nil, err
+	//}
+	//str := string(data)
+	//fmt.Println(str)
+	//if err := httpKit.ResetRequestBody(ctx.Request); err != nil {
+	//	return nil, err
+	//}
+
 	type Params struct {
 		Text        string   `form:"text" binding:"required"`
 		ExceptBsids []string `form:"exceptBsids,optional"`
@@ -29,8 +42,7 @@ func PushToAll(ctx *gin.Context) (*ginKit.ResponsePackage, error) {
 		}, nil
 	}
 
-	err := pushKit.PushToAll([]byte(params.Text), params.ExceptBsids)
-	if err != nil {
+	if err := pushKit.PushToAll([]byte(params.Text), params.ExceptBsids); err != nil {
 		return nil, err
 	}
 	return &ginKit.ResponsePackage{
