@@ -27,3 +27,10 @@ func Setup(p *ants.Pool) error {
 	pool = p
 	return nil
 }
+
+func isAvailable() error {
+	if pool == nil {
+		return NotSetupError
+	}
+	return nil
+}
