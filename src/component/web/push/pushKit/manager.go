@@ -31,7 +31,7 @@ var (
 	groupMap = mapKit.NewMapWithLock[string, *setKit.SetWithLock[Channel]]()
 )
 
-// GetChannelByBsid
+// GetChannelByBsid （读锁）
 /*
 @return 可能为nil
 */
@@ -43,7 +43,7 @@ func GetChannelByBsid(bsid string) (channel Channel) {
 	return
 }
 
-// GetUserSet
+// GetUserSet （读锁）
 /*
 @return 可能为nil
 */
@@ -56,7 +56,7 @@ func GetUserSet(user string) *setKit.SetWithLock[Channel] {
 	return userSet
 }
 
-// GetGroupSet
+// GetGroupSet （读锁）
 /*
 @return 可能为nil
 */

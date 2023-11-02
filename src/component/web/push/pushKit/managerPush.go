@@ -2,7 +2,6 @@ package pushKit
 
 import (
 	"github.com/richelieu-yang/chimera/v2/src/core/errorKit"
-	"github.com/richelieu-yang/chimera/v2/src/core/setKit"
 	"sync"
 )
 
@@ -34,10 +33,7 @@ func PushToGroup(data []byte, group string) error {
 		return err
 	}
 
-	var groupSet *setKit.SetWithLock[Channel]
-	groupMap.RWLock.LockFunc(func() {
-		groupSet = userMap.Map[group]
-	})
+	groupSet := GetGroupSet(group)
 	if groupSet == nil {
 		return errorKit.New("No set for group(%s)", group)
 	}
@@ -64,10 +60,7 @@ func PushToUser(data []byte, user string) error {
 		return err
 	}
 
-	var userSet *setKit.SetWithLock[Channel]
-	userMap.RWLock.LockFunc(func() {
-		userSet = userMap.Map[user]
-	})
+	userSet := GetUserSet(user)
 	if userSet == nil {
 		return errorKit.New("No set for user(%s)", user)
 	}
