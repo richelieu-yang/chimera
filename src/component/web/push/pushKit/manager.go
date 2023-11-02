@@ -31,17 +31,39 @@ var (
 	groupMap = mapKit.NewMapWithLock[string, *setKit.SetWithLock[Channel]]()
 )
 
+// GetChannelByBsid
+/*
+@return 可能为nil
+*/
+func GetChannelByBsid(bsid string) (channel Channel) {
+	// 读锁
+	bsidMap.RWLock.RLockFunc(func() {
+		channel = bsidMap.Map[bsid]
+	})
+	return
+}
+
+// GetUserSet
+/*
+@return 可能为nil
+*/
 func GetUserSet(user string) *setKit.SetWithLock[Channel] {
 	var userSet *setKit.SetWithLock[Channel]
-	userMap.RWLock.LockFunc(func() {
+	// 读锁
+	userMap.RWLock.RLockFunc(func() {
 		userSet = userMap.Map[user]
 	})
 	return userSet
 }
 
+// GetGroupSet
+/*
+@return 可能为nil
+*/
 func GetGroupSet(group string) *setKit.SetWithLock[Channel] {
 	var groupSet *setKit.SetWithLock[Channel]
-	groupMap.RWLock.LockFunc(func() {
+	// 读锁
+	groupMap.RWLock.RLockFunc(func() {
 		groupSet = userMap.Map[group]
 	})
 	return groupSet

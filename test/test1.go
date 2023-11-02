@@ -1,23 +1,17 @@
 package main
 
 import (
-	"github.com/panjf2000/ants/v2"
-	"github.com/sirupsen/logrus"
+	"fmt"
+	"time"
 )
 
 func main() {
-	pool, err := ants.NewPool(100)
-	if err != nil {
-		panic(err)
-	}
+	s := []string{"0", "1", "2"}
 
-	err = pool.Submit(func() {
-		panic(666)
-	})
-	if err != nil {
-		panic(err)
+	for _, ele := range s {
+		go func() {
+			fmt.Println(ele)
+		}()
 	}
-
-	logrus.Info("---")
-	select {}
+	time.Sleep(time.Second)
 }
