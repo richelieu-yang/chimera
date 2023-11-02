@@ -6,11 +6,11 @@ import (
 )
 
 var (
-	// allMap
+	// idMap 即allMap
 	/*
 		key: id（一对一）
 	*/
-	allMap = mapKit.NewMapWithLock[string, Channel]()
+	idMap = mapKit.NewMapWithLock[string, Channel]()
 
 	// bsidMap
 	/*

@@ -11,10 +11,10 @@ func PushToAll(data []byte) (err error) {
 	}
 
 	// 写锁
-	allMap.RWLock.LockFunc(func() {
+	idMap.RWLock.LockFunc(func() {
 		var wg sync.WaitGroup
 
-		for _, channel := range allMap.Map {
+		for _, channel := range idMap.Map {
 			c := channel
 			wg.Add(1)
 			_ = pool.Submit(func() {

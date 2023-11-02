@@ -12,11 +12,11 @@ func BindId(channel Channel, id string) {
 	}
 
 	// 写锁
-	allMap.RWLock.LockFunc(func() {
+	idMap.RWLock.LockFunc(func() {
 		if old, ok := bsidMap.Map[id]; ok {
 			_ = old.Close(fmt.Sprintf("id(%s) is replaced by new channel", id))
 		}
-		allMap.Map[id] = channel
+		idMap.Map[id] = channel
 	})
 }
 
