@@ -2,10 +2,11 @@ package pushKit
 
 import (
 	"github.com/richelieu-yang/chimera/v2/src/core/errorKit"
+	"github.com/richelieu-yang/chimera/v2/src/core/sliceKit"
 	"sync"
 )
 
-func PushToAll(data []byte) (err error) {
+func PushToAll(data []byte, exceptBsids []string) (err error) {
 	if err = isAvailable(); err != nil {
 		return err
 	}
@@ -15,6 +16,10 @@ func PushToAll(data []byte) (err error) {
 		var wg sync.WaitGroup
 
 		for _, channel := range idMap.Map {
+			if sliceKit.Contains(exceptBsids, channel.GetBsid()) {
+				continue
+			}
+
 			c := channel
 			wg.Add(1)
 			_ = pool.Submit(func() {
@@ -40,7 +45,7 @@ func PushToBsid(data []byte, bsid string) error {
 	return channel.Push(data)
 }
 
-func PushToUser(data []byte, user string) error {
+func PushToUser(data []byte, user string, exceptBsids []string) error {
 	if err := isAvailable(); err != nil {
 		return err
 	}
@@ -54,20 +59,23 @@ func PushToUser(data []byte, user string) error {
 	userSet.RWLock.LockFunc(func() {
 		var wg sync.WaitGroup
 		userSet.Set.Each(func(channel Channel) bool {
+			if sliceKit.Contains(exceptBsids, channel.GetBsid()) {
+				return false // 不中断循环
+			}
+
 			c := channel
 			wg.Add(1)
 			_ = pool.Submit(func() {
 				defer wg.Done()
 				_ = c.Push(data)
 			})
-			// 不中断循环
-			return false
+			return false // 不中断循环
 		})
 	})
 	return nil
 }
 
-func PushToGroup(data []byte, group string) error {
+func PushToGroup(data []byte, group string, exceptBsids []string) error {
 	if err := isAvailable(); err != nil {
 		return err
 	}
@@ -81,14 +89,17 @@ func PushToGroup(data []byte, group string) error {
 	groupSet.RWLock.LockFunc(func() {
 		var wg sync.WaitGroup
 		groupSet.Set.Each(func(channel Channel) bool {
+			if sliceKit.Contains(exceptBsids, channel.GetBsid()) {
+				return false // 不中断循环
+			}
+
 			c := channel
 			wg.Add(1)
 			_ = pool.Submit(func() {
 				defer wg.Done()
 				_ = c.Push(data)
 			})
-			// 不中断循环
-			return false
+			return false // 不中断循环
 		})
 	})
 	return nil

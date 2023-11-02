@@ -2,7 +2,6 @@ package sseKit
 
 import (
 	"github.com/richelieu-yang/chimera/v2/src/component/web/push/pushKit"
-	"github.com/richelieu-yang/chimera/v2/src/core/errorKit"
 	"github.com/richelieu-yang/chimera/v2/src/idKit"
 )
 
@@ -20,13 +19,6 @@ func NewProcessor(idGenerator func() (string, error), listener pushKit.Listener,
 	listeners, err := pushKit.NewListeners(listener)
 	if err != nil {
 		return nil, err
-	}
-	switch msgType {
-	case MessageTypeRaw:
-	case MessageTypeEncode:
-	case MessageTypeBase64:
-	default:
-		return nil, errorKit.New("invalid message type(%d)", msgType)
 	}
 
 	processor := &SseProcessor{

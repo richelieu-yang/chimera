@@ -17,6 +17,10 @@ type (
 		Push(data []byte) error
 
 		GetId() string
+		GetBsid() string
+		GetUser() string
+		GetGroup() string
+		GetData() interface{}
 
 		BindGroup(group string)
 		BindUser(user string)
@@ -98,4 +102,20 @@ func (channel *BaseChannel) Unbind() {
 
 func (channel *BaseChannel) GetId() string {
 	return channel.Id
+}
+
+func (channel *BaseChannel) GetBsid() string {
+	return channel.Bsid
+}
+
+func (channel *BaseChannel) GetUser() string {
+	return channel.User
+}
+
+func (channel *BaseChannel) GetGroup() string {
+	return channel.Group
+}
+
+func (channel *BaseChannel) GetData() interface{} {
+	return channel.Data
 }
