@@ -74,9 +74,3 @@ func (channel *SseChannel) BindUser(user string) {
 func (channel *SseChannel) BindBsid(bsid string) {
 	pushKit.BindUser(channel, bsid)
 }
-
-func (channel *SseChannel) Unbind() {
-	pushKit.UnbindGroup(channel)
-	pushKit.UnbindUser(channel)
-	pushKit.UnbindBsid(channel)
-}

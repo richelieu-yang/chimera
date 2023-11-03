@@ -24,5 +24,4 @@ type Channel interface {
 	BindGroup(group string)
 	BindUser(user string)
 	BindBsid(bsid string)
-	Unbind()
 }

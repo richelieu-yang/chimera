@@ -23,5 +23,7 @@ func (listener InnerListener) OnMessage(channel Channel, messageType int, data [
 func (listener InnerListener) OnClose(channel Channel, closeInfo string) {
 	// 移除管理
 	pushKit.UnBindId(channel)
-	channel.Unbind()
+	pushKit.UnbindBsid(channel)
+	pushKit.UnbindUser(channel)
+	pushKit.UnbindGroup(channel)
 }
