@@ -24,10 +24,6 @@ func (channel *SseChannel) Push(data []byte) error {
 
 // PushMessage 推送消息给客户端.
 func (channel *SseChannel) PushMessage(msgType MessageType, data []byte) (err error) {
-	if channel.Closed {
-		return pushKit.ChannelClosedError
-	}
-
 	var str string
 	switch msgType {
 	case MessageTypeEncode:
@@ -64,4 +60,22 @@ func (channel *SseChannel) Close(reason string) error {
 		channel.closeCh <- reason
 	}
 	return nil
+}
+
+func (channel *SseChannel) BindGroup(group string) {
+	pushKit.BindGroup(channel, group)
+}
+
+func (channel *SseChannel) BindUser(user string) {
+	pushKit.BindUser(channel, user)
+}
+
+func (channel *SseChannel) BindBsid(bsid string) {
+	pushKit.BindUser(channel, bsid)
+}
+
+func (channel *SseChannel) Unbind() {
+	pushKit.UnbindGroup(channel)
+	pushKit.UnbindUser(channel)
+	pushKit.UnbindBsid(channel)
 }

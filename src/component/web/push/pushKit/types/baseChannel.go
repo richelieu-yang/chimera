@@ -9,6 +9,7 @@ import (
 !!!:
 (1) 此类型实现了部分 Channel 接口，
 (2) 此类型的子类应当实现 Channel 接口（主要是: Push()、Close()、bind、unbind），不能覆盖父类的方法.
+	(由于unbind可能涉及Close()，因此只能在子类中实现)
 */
 type BaseChannel struct {
 	RWMutex mutexKit.RWMutex
