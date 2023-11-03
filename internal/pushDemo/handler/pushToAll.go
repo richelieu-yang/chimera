@@ -11,17 +11,19 @@ import (
 // PushToAll
 // @Summary 推送消息给所有连接.
 // @Description 推送消息给所有连接（exceptBsids对应的链接例外）.
-// @Router /push_to_all [post]
-// @Accept application/x-www-form-urlencoded
+// @Accept x-www-form-urlencoded
+// @Produce json
 // @Param text 			formData	string		true	"推送消息的内容."
 // @Param exceptBsids	formData	[]string 	false	"例外连接的bsid."
-// @Produce json
+// @Success 200 {object} types.JsonResponse
+// @Router /push_to_all [post]
 func PushToAll(ctx *gin.Context) (*ginKit.ResponsePackage, error) {
-	type Params struct {
+	type pushToAllParams struct {
 		Text        string   `form:"text" binding:"required"`
 		ExceptBsids []string `form:"exceptBsids"`
 	}
-	params := &Params{}
+
+	params := &pushToAllParams{}
 	if err := ctx.ShouldBind(params); err != nil {
 		return &ginKit.ResponsePackage{
 			StatusCode: http.StatusBadRequest,

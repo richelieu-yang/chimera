@@ -17,12 +17,6 @@ import (
 	"github.com/swaggo/gin-swagger"
 )
 
-type resp struct {
-	Code    string      `json:"code"`
-	Message string      `json:"message"`
-	Data    interface{} `json:"data,omitempty"`
-}
-
 // @title Title
 // @version 1.0
 // @description Description.
@@ -30,7 +24,7 @@ type resp struct {
 func main() {
 	logrusKit.MustSetUp(nil)
 	jsonRespKit.MustSetUp(func(code, msg string, data interface{}) interface{} {
-		return &resp{
+		return &types.JsonResponse{
 			Code:    code,
 			Message: msg,
 			Data:    data,

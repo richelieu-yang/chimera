@@ -1,7 +1,10 @@
 {
     "swagger": "2.0",
     "info": {
-        "contact": {}
+        "description": "Description.",
+        "title": "Title",
+        "contact": {},
+        "version": "1.0"
     },
     "paths": {
         "/push_to_all": {
@@ -33,7 +36,30 @@
                         "in": "formData"
                     }
                 ],
-                "responses": {}
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/types.JsonResponse"
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "definitions": {
+        "types.JsonResponse": {
+            "type": "object",
+            "properties": {
+                "code": {
+                    "type": "string",
+                    "example": "0"
+                },
+                "data": {},
+                "message": {
+                    "type": "string",
+                    "example": "No error"
+                }
             }
         }
     }

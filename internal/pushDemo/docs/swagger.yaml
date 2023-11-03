@@ -1,5 +1,19 @@
+definitions:
+  types.JsonResponse:
+    properties:
+      code:
+        example: "0"
+        type: string
+      data: {}
+      message:
+        example: No error
+        type: string
+    type: object
 info:
   contact: {}
+  description: Description.
+  title: Title
+  version: "1.0"
 paths:
   /push_to_all:
     post:
@@ -21,6 +35,10 @@ paths:
         type: array
       produces:
       - application/json
-      responses: {}
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/types.JsonResponse'
       summary: 推送消息给所有连接.
 swagger: "2.0"
