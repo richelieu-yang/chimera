@@ -1,9 +1,10 @@
-package sseKit
+package types
 
 import (
 	"fmt"
 	"github.com/gin-gonic/gin"
-	"github.com/richelieu-yang/chimera/v2/src/component/web/push/pushKit/types"
+	pushTypes "github.com/richelieu-yang/chimera/v2/src/component/web/push/pushKit/types"
+	"github.com/richelieu-yang/chimera/v2/src/component/web/push/sseKit"
 	"github.com/richelieu-yang/chimera/v2/src/core/errorKit"
 	"github.com/richelieu-yang/chimera/v2/src/core/strKit"
 	"github.com/richelieu-yang/chimera/v2/src/mutexKit"
@@ -11,11 +12,11 @@ import (
 )
 
 type SseProcessor struct {
-	types.Processor
+	pushTypes.Processor
 
 	idGenerator func() (string, error)
-	listeners   types.Listeners
-	msgType     messageType
+	listeners   pushTypes.Listeners
+	msgType     MessageType
 }
 
 func (p *SseProcessor) ProcessWithGin(ctx *gin.Context) {
@@ -23,13 +24,13 @@ func (p *SseProcessor) ProcessWithGin(ctx *gin.Context) {
 }
 
 func (p *SseProcessor) Process(w http.ResponseWriter, r *http.Request) {
-	if err := IsSseSupported(w, r); err != nil {
+	if err := sseKit.IsSseSupported(w, r); err != nil {
 		p.listeners.OnFailure(w, r, err.Error())
 		return
 	}
 
 	// 设置 response header
-	SetHeaders(w)
+	sseKit.SetHeaders(w)
 
 	closeCh := make(chan string, 1)
 	channel, err := p.newChannel(w, r, closeCh)
@@ -56,7 +57,7 @@ func (p *SseProcessor) Process(w http.ResponseWriter, r *http.Request) {
 	}
 }
 
-func (p *SseProcessor) newChannel(w http.ResponseWriter, r *http.Request, closeCh chan string) (types.Channel, error) {
+func (p *SseProcessor) newChannel(w http.ResponseWriter, r *http.Request, closeCh chan string) (pushTypes.Channel, error) {
 	id, err := p.idGenerator()
 	if err != nil {
 		return nil, errorKit.Wrap(err, "Fail to generate id")
@@ -66,7 +67,7 @@ func (p *SseProcessor) newChannel(w http.ResponseWriter, r *http.Request, closeC
 	}
 
 	channel := &SseChannel{
-		BaseChannel: &types.BaseChannel{
+		BaseChannel: &pushTypes.BaseChannel{
 			RWMutex:   mutexKit.RWMutex{},
 			Id:        id,
 			Bsid:      "",

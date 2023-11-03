@@ -13,9 +13,13 @@ type Channel interface {
 
 	GetId() string
 	GetBsid() string
+	ClearBsid()
 	GetUser() string
+	ClearUser()
 	GetGroup() string
+	ClearGroup()
 	GetData() interface{}
+	ClearData()
 
 	BindGroup(group string)
 	BindUser(user string)

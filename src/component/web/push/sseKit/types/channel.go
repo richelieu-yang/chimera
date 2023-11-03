@@ -1,4 +1,4 @@
-package sseKit
+package types
 
 import (
 	"encoding/base64"
@@ -14,7 +14,7 @@ type SseChannel struct {
 
 	w       http.ResponseWriter
 	r       *http.Request
-	msgType messageType
+	msgType MessageType
 	closeCh chan string
 }
 
@@ -23,7 +23,7 @@ func (channel *SseChannel) Push(data []byte) error {
 }
 
 // PushMessage 推送消息给客户端.
-func (channel *SseChannel) PushMessage(msgType messageType, data []byte) (err error) {
+func (channel *SseChannel) PushMessage(msgType MessageType, data []byte) (err error) {
 	if channel.Closed {
 		return pushKit.ChannelClosedError
 	}

@@ -1,4 +1,4 @@
-package sseKit
+package types
 
 import (
 	"fmt"

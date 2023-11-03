@@ -1,15 +1,14 @@
 package types
 
 import (
-	"github.com/richelieu-yang/chimera/v2/src/component/web/push/pushKit"
 	"github.com/richelieu-yang/chimera/v2/src/mutexKit"
 )
 
 // BaseChannel
 /*
-!!!: 此类型的子类应当:
-	(1) 实现 Channel 接口（主要是bind、unbind方法），
-	(2) 覆盖 Push、Close() 方法.
+!!!:
+(1) 此类型实现了部分 Channel 接口，
+(2) 此类型的子类应当实现 Channel 接口（主要是: Push()、Close()、bind、unbind），不能覆盖父类的方法.
 */
 type BaseChannel struct {
 	RWMutex mutexKit.RWMutex
@@ -22,14 +21,6 @@ type BaseChannel struct {
 
 	Closed    bool
 	Listeners Listeners
-}
-
-func (channel *BaseChannel) Push(data []byte) error {
-	panic("implement me")
-}
-
-func (channel *BaseChannel) Close(reason string) error {
-	panic("implement me")
 }
 
 func (channel *BaseChannel) IsClosed() (rst bool) {
@@ -63,25 +54,6 @@ func (channel *BaseChannel) SetClosed() (flag bool) {
 	return
 }
 
-func (channel *BaseChannel) BindGroup(group string) {
-	pushKit.BindGroup(channel, group)
-}
-
-func (channel *BaseChannel) BindUser(user string) {
-	pushKit.BindUser(channel, user)
-}
-
-func (channel *BaseChannel) BindBsid(bsid string) {
-	pushKit.BindBsid(channel, bsid)
-}
-
-func (channel *BaseChannel) Unbind() {
-	pushKit.UnBindId(channel, channel.Id)
-	pushKit.UnbindBsid(channel, channel.Bsid)
-	pushKit.UnbindUser(channel, channel.User)
-	pushKit.UnbindGroup(channel, channel.Group)
-}
-
 func (channel *BaseChannel) GetId() string {
 	return channel.Id
 }
@@ -90,14 +62,30 @@ func (channel *BaseChannel) GetBsid() string {
 	return channel.Bsid
 }
 
+func (channel *BaseChannel) ClearBsid() {
+	channel.Bsid = ""
+}
+
 func (channel *BaseChannel) GetUser() string {
 	return channel.User
+}
+
+func (channel *BaseChannel) ClearUser() {
+	channel.User = ""
 }
 
 func (channel *BaseChannel) GetGroup() string {
 	return channel.Group
 }
 
+func (channel *BaseChannel) ClearGroup() {
+	channel.Group = ""
+}
+
 func (channel *BaseChannel) GetData() interface{} {
 	return channel.Data
+}
+
+func (channel *BaseChannel) ClearData() {
+	channel.Data = nil
 }
