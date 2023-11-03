@@ -68,15 +68,15 @@ func (channel *BaseChannel) GetBsid() (bsid string) {
 	return
 }
 
-func (channel *BaseChannel) ClearBsid() {
-	if channel.Bsid == "" {
-		return
-	}
-
+func (channel *BaseChannel) SetBsid(bsid string) {
 	/* 写锁 */
 	channel.RWMutex.LockFunc(func() {
-		channel.Bsid = ""
+		channel.Bsid = bsid
 	})
+}
+
+func (channel *BaseChannel) ClearBsid() {
+	channel.SetBsid("")
 }
 
 func (channel *BaseChannel) GetUser() (user string) {
@@ -87,15 +87,15 @@ func (channel *BaseChannel) GetUser() (user string) {
 	return
 }
 
-func (channel *BaseChannel) ClearUser() {
-	if channel.User == "" {
-		return
-	}
-
+func (channel *BaseChannel) SetUser(user string) {
 	/* 写锁 */
 	channel.RWMutex.LockFunc(func() {
-		channel.User = ""
+		channel.User = user
 	})
+}
+
+func (channel *BaseChannel) ClearUser() {
+	channel.SetUser("")
 }
 
 func (channel *BaseChannel) GetGroup() (group string) {
@@ -107,10 +107,6 @@ func (channel *BaseChannel) GetGroup() (group string) {
 }
 
 func (channel *BaseChannel) ClearGroup() {
-	if channel.Group == "" {
-		return
-	}
-
 	/* 写锁 */
 	channel.RWMutex.LockFunc(func() {
 		channel.Group = ""
@@ -126,10 +122,6 @@ func (channel *BaseChannel) GetData() (data interface{}) {
 }
 
 func (channel *BaseChannel) ClearData() {
-	if channel.Data == nil {
-		return
-	}
-
 	/* 写锁 */
 	channel.RWMutex.LockFunc(func() {
 		channel.Data = nil
