@@ -25,7 +25,7 @@ type BaseChannel struct {
 }
 
 func (channel *BaseChannel) IsClosed() (rst bool) {
-	// 读锁
+	/* 读锁 */
 	channel.RWMutex.RLockFunc(func() {
 		rst = channel.Closed
 	})
@@ -44,7 +44,7 @@ func (channel *BaseChannel) SetClosed() (flag bool) {
 		return
 	}
 
-	// 写锁
+	/* 写锁 */
 	channel.RWMutex.LockFunc(func() {
 		if channel.Closed {
 			return
@@ -61,7 +61,7 @@ func (channel *BaseChannel) GetId() (id string) {
 }
 
 func (channel *BaseChannel) GetBsid() (bsid string) {
-	// 读锁
+	/* 读锁 */
 	channel.RWMutex.RLockFunc(func() {
 		bsid = channel.Bsid
 	})
@@ -73,14 +73,14 @@ func (channel *BaseChannel) ClearBsid() {
 		return
 	}
 
-	// 写锁
+	/* 写锁 */
 	channel.RWMutex.LockFunc(func() {
 		channel.Bsid = ""
 	})
 }
 
 func (channel *BaseChannel) GetUser() (user string) {
-	// 读锁
+	/* 读锁 */
 	channel.RWMutex.RLockFunc(func() {
 		user = channel.User
 	})
@@ -92,14 +92,14 @@ func (channel *BaseChannel) ClearUser() {
 		return
 	}
 
-	// 写锁
+	/* 写锁 */
 	channel.RWMutex.LockFunc(func() {
 		channel.User = ""
 	})
 }
 
 func (channel *BaseChannel) GetGroup() (group string) {
-	// 读锁
+	/* 读锁 */
 	channel.RWMutex.RLockFunc(func() {
 		group = channel.Group
 	})
@@ -111,14 +111,14 @@ func (channel *BaseChannel) ClearGroup() {
 		return
 	}
 
-	// 写锁
+	/* 写锁 */
 	channel.RWMutex.LockFunc(func() {
 		channel.Group = ""
 	})
 }
 
 func (channel *BaseChannel) GetData() (data interface{}) {
-	// 读锁
+	/* 读锁 */
 	channel.RWMutex.RLockFunc(func() {
 		data = channel.Data
 	})
@@ -130,7 +130,7 @@ func (channel *BaseChannel) ClearData() {
 		return
 	}
 
-	// 写锁
+	/* 写锁 */
 	channel.RWMutex.LockFunc(func() {
 		channel.Data = nil
 	})

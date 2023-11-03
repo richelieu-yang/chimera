@@ -38,7 +38,7 @@ func (channel *WsChannel) PushMessage(messageType messageType, data []byte) (err
 	// 是否推送失败？
 	failFlag := false
 
-	// 写锁
+	/* 写锁 */
 	channel.RWMutex.LockFunc(func() {
 		if channel.Closed {
 			err = pushKit.ChannelClosedError

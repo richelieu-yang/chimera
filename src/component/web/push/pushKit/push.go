@@ -12,7 +12,7 @@ func PushToAll(data []byte, exceptBsids []string) (err error) {
 		return err
 	}
 
-	// 写锁
+	/* 写锁 */
 	idMap.RWLock.LockFunc(func() {
 		var wg sync.WaitGroup
 
@@ -56,7 +56,7 @@ func PushToUser(data []byte, user string, exceptBsids []string) error {
 		return errorKit.New("No set for user(%s)", user)
 	}
 
-	// 写锁
+	/* 写锁 */
 	userSet.RWLock.LockFunc(func() {
 		var wg sync.WaitGroup
 		userSet.Set.Each(func(channel types.Channel) bool {
@@ -86,7 +86,7 @@ func PushToGroup(data []byte, group string, exceptBsids []string) error {
 		return errorKit.New("No set for group(%s)", group)
 	}
 
-	// 写锁
+	/* 写锁 */
 	groupSet.RWLock.LockFunc(func() {
 		var wg sync.WaitGroup
 		groupSet.Set.Each(func(channel types.Channel) bool {

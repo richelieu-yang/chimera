@@ -8,7 +8,7 @@ import (
 func UnBindId(channel types.Channel) {
 	id := channel.GetId()
 
-	// 写锁
+	/* 写锁 */
 	idMap.RWLock.LockFunc(func() {
 		delete(idMap.Map, id)
 	})
@@ -20,7 +20,9 @@ func UnbindBsid(channel types.Channel) {
 		return
 	}
 
-	// 写锁
+	defer channel.ClearBsid()
+
+	/* 写锁 */
 	bsidMap.RWLock.LockFunc(func() {
 		delete(bsidMap.Map, bsid)
 	})
@@ -32,12 +34,14 @@ func UnbindUser(channel types.Channel) {
 		return
 	}
 
+	defer channel.ClearUser()
+
 	userSet := GetUserSet(user)
 	if userSet == nil {
 		return
 	}
 
-	// 写锁
+	/* 写锁 */
 	userSet.RWLock.LockFunc(func() {
 		userSet.Set.Remove(channel)
 	})
@@ -49,12 +53,14 @@ func UnbindGroup(channel types.Channel) {
 		return
 	}
 
+	defer channel.ClearGroup()
+
 	groupSet := GetGroupSet(group)
 	if groupSet == nil {
 		return
 	}
 
-	// 写锁
+	/* 写锁 */
 	groupSet.RWLock.LockFunc(func() {
 		groupSet.Set.Remove(channel)
 	})

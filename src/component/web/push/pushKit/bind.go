@@ -12,7 +12,7 @@ func BindId(channel types.Channel, id string) {
 		return
 	}
 
-	// 写锁
+	/* 写锁 */
 	idMap.RWLock.LockFunc(func() {
 		if old, ok := bsidMap.Map[id]; ok {
 			_ = old.Close(fmt.Sprintf("id(%s) is replaced by new channel", id))
@@ -26,7 +26,7 @@ func BindBsid(channel types.Channel, bsid string) {
 		return
 	}
 
-	// 写锁
+	/* 写锁 */
 	bsidMap.RWLock.LockFunc(func() {
 		if old, ok := bsidMap.Map[bsid]; ok {
 			_ = old.Close(fmt.Sprintf("bsid(%s) is replaced by new channel", bsid))
@@ -41,7 +41,7 @@ func BindUser(channel types.Channel, user string) {
 	}
 
 	var userSet *setKit.SetWithLock[types.Channel]
-	// 写锁
+	/* 写锁 */
 	userMap.RWLock.LockFunc(func() {
 		userSet = userMap.Map[user]
 		if userSet == nil {
@@ -50,7 +50,7 @@ func BindUser(channel types.Channel, user string) {
 		}
 	})
 
-	// 写锁
+	/* 写锁 */
 	userSet.RWLock.LockFunc(func() {
 		_ = userSet.Set.Add(channel)
 	})
@@ -61,7 +61,7 @@ func BindGroup(channel types.Channel, group string) {
 		return
 	}
 
-	// 写锁
+	/* 写锁 */
 	var groupSet *setKit.SetWithLock[types.Channel]
 	groupMap.RWLock.LockFunc(func() {
 		groupSet = userMap.Map[group]
@@ -71,7 +71,7 @@ func BindGroup(channel types.Channel, group string) {
 		}
 	})
 
-	// 写锁
+	/* 写锁 */
 	groupSet.RWLock.LockFunc(func() {
 		_ = groupSet.Set.Add(channel)
 	})
