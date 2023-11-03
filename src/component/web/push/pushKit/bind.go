@@ -8,7 +8,7 @@ import (
 )
 
 func BindId(channel types.Channel, id string) {
-	if strKit.IsEmpty(id) {
+	if strKit.IsEmpty(id) || channel.GetId() == id {
 		return
 	}
 
@@ -22,7 +22,7 @@ func BindId(channel types.Channel, id string) {
 }
 
 func BindBsid(channel types.Channel, bsid string) {
-	if strKit.IsEmpty(bsid) {
+	if strKit.IsEmpty(bsid) || channel.GetBsid() == bsid {
 		return
 	}
 
@@ -36,7 +36,7 @@ func BindBsid(channel types.Channel, bsid string) {
 }
 
 func BindUser(channel types.Channel, user string) {
-	if strKit.IsEmpty(user) {
+	if strKit.IsEmpty(user) || channel.GetUser() == user {
 		return
 	}
 
@@ -57,7 +57,7 @@ func BindUser(channel types.Channel, user string) {
 }
 
 func BindGroup(channel types.Channel, group string) {
-	if strKit.IsEmpty(group) {
+	if strKit.IsEmpty(group) || channel.GetGroup() == group {
 		return
 	}
 
