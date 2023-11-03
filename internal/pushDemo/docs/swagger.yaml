@@ -6,7 +6,7 @@ definitions:
         type: string
       data: {}
       message:
-        example: No error
+        example: no error
         type: string
     type: object
 info:
@@ -40,4 +40,87 @@ paths:
           schema:
             $ref: '#/definitions/types.JsonResponse'
       summary: 推送消息给所有连接（exceptBsids对应的连接例外）.
+  /push_to_bsid:
+    post:
+      consumes:
+      - application/x-www-form-urlencoded
+      parameters:
+      - description: 推送消息的内容.
+        in: formData
+        name: text
+        required: true
+        type: string
+      - description: 推送的目标连接.
+        in: formData
+        name: bsid
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/types.JsonResponse'
+      summary: 推送消息给指定连接.
+  /push_to_group:
+    post:
+      consumes:
+      - application/x-www-form-urlencoded
+      parameters:
+      - description: 推送消息的内容.
+        in: formData
+        name: text
+        required: true
+        type: string
+      - description: 推送消息的内容.
+        in: formData
+        name: group
+        required: true
+        type: string
+      - collectionFormat: multi
+        description: 例外连接的bsid.
+        in: formData
+        items:
+          type: string
+        name: exceptBsids
+        type: array
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/types.JsonResponse'
+      summary: 推送消息给group相关的所有连接（exceptBsids对应的连接例外）.
+  /push_to_user:
+    post:
+      consumes:
+      - application/x-www-form-urlencoded
+      parameters:
+      - description: 推送消息的内容.
+        in: formData
+        name: text
+        required: true
+        type: string
+      - description: 推送消息的内容.
+        in: formData
+        name: user
+        required: true
+        type: string
+      - collectionFormat: multi
+        description: 例外连接的bsid.
+        in: formData
+        items:
+          type: string
+        name: exceptBsids
+        type: array
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/types.JsonResponse'
+      summary: 推送消息给user相关的所有连接（exceptBsids对应的连接例外）.
 swagger: "2.0"

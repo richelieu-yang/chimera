@@ -2,6 +2,7 @@ package types
 
 import (
 	"fmt"
+	"github.com/richelieu-yang/chimera/v2/src/component/web/httpKit"
 	"github.com/richelieu-yang/chimera/v2/src/component/web/push/pushKit"
 	"github.com/sirupsen/logrus"
 	"net/http"
@@ -22,6 +23,13 @@ func (l *DemoListener) OnHandshake(w http.ResponseWriter, r *http.Request, chann
 	if err := channel.Push([]byte(text)); err != nil {
 		logrus.Error(err)
 	}
+
+	bsid := httpKit.ObtainGetParam(r, "bsid")
+	user := httpKit.ObtainGetParam(r, "user")
+	group := httpKit.ObtainGetParam(r, "group")
+	channel.BindBsid(bsid)
+	channel.BindUser(user)
+	channel.BindGroup(group)
 
 	//go func() {
 	//	time.Sleep(time.Second * 3)

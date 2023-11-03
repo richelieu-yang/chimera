@@ -44,6 +44,131 @@
                     }
                 }
             }
+        },
+        "/push_to_bsid": {
+            "post": {
+                "consumes": [
+                    "application/x-www-form-urlencoded"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "summary": "推送消息给指定连接.",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "推送消息的内容.",
+                        "name": "text",
+                        "in": "formData",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "推送的目标连接.",
+                        "name": "bsid",
+                        "in": "formData",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/types.JsonResponse"
+                        }
+                    }
+                }
+            }
+        },
+        "/push_to_group": {
+            "post": {
+                "consumes": [
+                    "application/x-www-form-urlencoded"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "summary": "推送消息给group相关的所有连接（exceptBsids对应的连接例外）.",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "推送消息的内容.",
+                        "name": "text",
+                        "in": "formData",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "推送消息的内容.",
+                        "name": "group",
+                        "in": "formData",
+                        "required": true
+                    },
+                    {
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        },
+                        "collectionFormat": "multi",
+                        "description": "例外连接的bsid.",
+                        "name": "exceptBsids",
+                        "in": "formData"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/types.JsonResponse"
+                        }
+                    }
+                }
+            }
+        },
+        "/push_to_user": {
+            "post": {
+                "consumes": [
+                    "application/x-www-form-urlencoded"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "summary": "推送消息给user相关的所有连接（exceptBsids对应的连接例外）.",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "推送消息的内容.",
+                        "name": "text",
+                        "in": "formData",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "推送消息的内容.",
+                        "name": "user",
+                        "in": "formData",
+                        "required": true
+                    },
+                    {
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        },
+                        "collectionFormat": "multi",
+                        "description": "例外连接的bsid.",
+                        "name": "exceptBsids",
+                        "in": "formData"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/types.JsonResponse"
+                        }
+                    }
+                }
+            }
         }
     },
     "definitions": {
@@ -57,7 +182,7 @@
                 "data": {},
                 "message": {
                     "type": "string",
-                    "example": "No error"
+                    "example": "no error"
                 }
             }
         }
