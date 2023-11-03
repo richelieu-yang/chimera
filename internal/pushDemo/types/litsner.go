@@ -44,6 +44,6 @@ func (l *DemoListener) OnMessage(channel pushKit.Channel, messageType int, data 
 	}).Info("OnMessage")
 }
 
-func (l *DemoListener) OnClose(channel pushKit.Channel, closeInfo string, bsid, user, group string, data interface{}) {
+func (l *DemoListener) OnClose(channel pushKit.Channel, closeInfo string, bsid, user, group string) {
 	logrus.WithField("closeInfo", closeInfo).Info("OnClose")
 }
