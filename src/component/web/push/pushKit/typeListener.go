@@ -15,7 +15,7 @@ type Listener interface {
 	*/
 	OnMessage(channel Channel, messageType int, data []byte)
 
-	OnClose(channel Channel, closeInfo string)
+	OnClose(channel Channel, closeInfo string, bsid, user, group string)
 }
 
 type Listeners []Listener
@@ -39,7 +39,12 @@ func (listeners Listeners) OnMessage(channel Channel, messageType int, data []by
 }
 
 func (listeners Listeners) OnClose(channel Channel, closeInfo string) {
+	// !!!: 此处先把取出来，以防 inner listener 解绑时去掉了相关信息（bsid, user, group），不会去掉id、data，导致轮到 另一个listener 时取不到数据
+	bsid := channel.GetBsid()
+	user := channel.GetUser()
+	group := channel.GetGroup()
+
 	for _, listener := range listeners {
-		listener.OnClose(channel, closeInfo)
+		listener.OnClose(channel, closeInfo, bsid, user, group)
 	}
 }
