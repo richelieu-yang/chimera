@@ -1,9 +1,15 @@
 package pushKit
 
-import "github.com/richelieu-yang/chimera/v2/src/component/web/push/pushKit/types"
+import (
+	"github.com/richelieu-yang/chimera/v2/src/component/web/push/pushKit/types"
+	"github.com/richelieu-yang/chimera/v2/src/core/strKit"
+)
 
 func UnBindId(channel types.Channel) {
 	id := channel.GetId()
+	if strKit.IsEmpty(id) {
+		return
+	}
 
 	// 写锁
 	idMap.RWLock.LockFunc(func() {
@@ -13,6 +19,9 @@ func UnBindId(channel types.Channel) {
 
 func UnbindBsid(channel types.Channel) {
 	bsid := channel.GetBsid()
+	if strKit.IsEmpty(id) {
+		return
+	}
 
 	// 写锁
 	bsidMap.RWLock.LockFunc(func() {
@@ -22,6 +31,9 @@ func UnbindBsid(channel types.Channel) {
 
 func UnbindUser(channel types.Channel) {
 	user := channel.GetUser()
+	if strKit.IsEmpty(id) {
+		return
+	}
 
 	userSet := GetUserSet(user)
 	if userSet == nil {
@@ -36,6 +48,9 @@ func UnbindUser(channel types.Channel) {
 
 func UnbindGroup(channel types.Channel) {
 	group := channel.GetGroup()
+	if strKit.IsEmpty(id) {
+		return
+	}
 
 	groupSet := GetGroupSet(group)
 	if groupSet == nil {
