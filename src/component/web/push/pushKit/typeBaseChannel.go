@@ -14,13 +14,13 @@ import (
 type BaseChannel struct {
 	RWMutex mutexKit.RWMutex
 
-	// IP 可能是error string（获取失败的情况下）
-	IP    string
-	Id    string
-	Bsid  string
-	User  string
-	Group string
-	Data  interface{}
+	// ClientIP 可能是error string（获取失败的情况下）
+	ClientIP string
+	Id       string
+	Bsid     string
+	User     string
+	Group    string
+	Data     interface{}
 
 	Closed    bool
 	Listeners Listeners
@@ -57,8 +57,8 @@ func (channel *BaseChannel) SetClosed() (flag bool) {
 	return
 }
 
-func (channel *BaseChannel) GetIP() string {
-	return channel.IP
+func (channel *BaseChannel) GetClientIP() string {
+	return channel.ClientIP
 }
 
 func (channel *BaseChannel) GetId() (id string) {
