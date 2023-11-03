@@ -5,6 +5,12 @@ import (
 	"github.com/richelieu-yang/chimera/v2/src/mutexKit"
 )
 
+// BaseChannel
+/*
+!!!: 此类型的子类应当:
+	(1) 实现 Channel 接口（主要是bind、unbind方法），
+	(2) 覆盖 Push、Close() 方法.
+*/
 type BaseChannel struct {
 	RWMutex mutexKit.RWMutex
 
@@ -18,11 +24,11 @@ type BaseChannel struct {
 	Listeners Listeners
 }
 
-func (channel *BaseChannel) Close(reason string) error {
+func (channel *BaseChannel) Push(data []byte) error {
 	panic("implement me")
 }
 
-func (channel *BaseChannel) Push(data []byte) error {
+func (channel *BaseChannel) Close(reason string) error {
 	panic("implement me")
 }
 
