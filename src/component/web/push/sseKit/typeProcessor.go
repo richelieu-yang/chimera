@@ -3,7 +3,6 @@ package sseKit
 import (
 	"fmt"
 	"github.com/gin-gonic/gin"
-	"github.com/richelieu-yang/chimera/v2/src/component/web/push/pushKit"
 	"github.com/richelieu-yang/chimera/v2/src/component/web/push/pushKit/types"
 	"github.com/richelieu-yang/chimera/v2/src/core/errorKit"
 	"github.com/richelieu-yang/chimera/v2/src/core/strKit"
@@ -12,7 +11,7 @@ import (
 )
 
 type SseProcessor struct {
-	pushKit.Processor
+	types.Processor
 
 	idGenerator func() (string, error)
 	listeners   types.Listeners

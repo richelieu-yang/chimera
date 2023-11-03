@@ -5,7 +5,6 @@ import (
 	"fmt"
 	"github.com/gin-gonic/gin"
 	"github.com/gorilla/websocket"
-	"github.com/richelieu-yang/chimera/v2/src/component/web/push/pushKit"
 	"github.com/richelieu-yang/chimera/v2/src/component/web/push/pushKit/types"
 	"github.com/richelieu-yang/chimera/v2/src/core/errorKit"
 	"github.com/richelieu-yang/chimera/v2/src/core/strKit"
@@ -15,7 +14,7 @@ import (
 )
 
 type WsProcessor struct {
-	pushKit.Processor
+	types.Processor
 
 	// upgrader 是并发安全的
 	upgrader *websocket.Upgrader
