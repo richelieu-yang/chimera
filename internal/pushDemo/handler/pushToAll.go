@@ -21,7 +21,7 @@ func PushToAll(ctx *gin.Context) (*ginKit.ResponsePackage, error) {
 	type pushToAllParams struct {
 		Text string `form:"text" binding:"required"`
 
-		ExceptBsids []string `form:"exceptBsids" binding:""`
+		ExceptBsids []string `form:"exceptBsids" binding:"unique,dive,required"`
 	}
 
 	params := &pushToAllParams{}

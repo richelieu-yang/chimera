@@ -13,7 +13,7 @@ func PushToGroup(ctx *gin.Context) (*ginKit.ResponsePackage, error) {
 		Text string `form:"text" binding:"required"`
 
 		Group       string   `form:"group" binding:"required"`
-		ExceptBsids []string `form:"exceptBsids"`
+		ExceptBsids []string `form:"exceptBsids" binding:"unique,dive,required"`
 	}
 
 	params := &Params{}
