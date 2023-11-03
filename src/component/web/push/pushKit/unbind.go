@@ -7,9 +7,6 @@ import (
 
 func UnBindId(channel types.Channel) {
 	id := channel.GetId()
-	if strKit.IsEmpty(id) {
-		return
-	}
 
 	// 写锁
 	idMap.RWLock.LockFunc(func() {
@@ -19,7 +16,7 @@ func UnBindId(channel types.Channel) {
 
 func UnbindBsid(channel types.Channel) {
 	bsid := channel.GetBsid()
-	if strKit.IsEmpty(id) {
+	if strKit.IsEmpty(bsid) {
 		return
 	}
 
@@ -31,7 +28,7 @@ func UnbindBsid(channel types.Channel) {
 
 func UnbindUser(channel types.Channel) {
 	user := channel.GetUser()
-	if strKit.IsEmpty(id) {
+	if strKit.IsEmpty(user) {
 		return
 	}
 
@@ -48,7 +45,7 @@ func UnbindUser(channel types.Channel) {
 
 func UnbindGroup(channel types.Channel) {
 	group := channel.GetGroup()
-	if strKit.IsEmpty(id) {
+	if strKit.IsEmpty(group) {
 		return
 	}
 

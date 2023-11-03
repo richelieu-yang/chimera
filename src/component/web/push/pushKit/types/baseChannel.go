@@ -55,38 +55,83 @@ func (channel *BaseChannel) SetClosed() (flag bool) {
 	return
 }
 
-func (channel *BaseChannel) GetId() string {
+func (channel *BaseChannel) GetId() (id string) {
+	// 无需加解锁，因为: id是不变的
 	return channel.Id
 }
 
-func (channel *BaseChannel) GetBsid() string {
-	return channel.Bsid
+func (channel *BaseChannel) GetBsid() (bsid string) {
+	// 读锁
+	channel.RWMutex.RLockFunc(func() {
+		bsid = channel.Bsid
+	})
+	return
 }
 
 func (channel *BaseChannel) ClearBsid() {
-	channel.Bsid = ""
+	if channel.Bsid == "" {
+		return
+	}
+
+	// 写锁
+	channel.RWMutex.LockFunc(func() {
+		channel.Bsid = ""
+	})
 }
 
-func (channel *BaseChannel) GetUser() string {
-	return channel.User
+func (channel *BaseChannel) GetUser() (user string) {
+	// 读锁
+	channel.RWMutex.RLockFunc(func() {
+		user = channel.User
+	})
+	return
 }
 
 func (channel *BaseChannel) ClearUser() {
-	channel.User = ""
+	if channel.User == "" {
+		return
+	}
+
+	// 写锁
+	channel.RWMutex.LockFunc(func() {
+		channel.User = ""
+	})
 }
 
-func (channel *BaseChannel) GetGroup() string {
-	return channel.Group
+func (channel *BaseChannel) GetGroup() (group string) {
+	// 读锁
+	channel.RWMutex.RLockFunc(func() {
+		group = channel.Group
+	})
+	return
 }
 
 func (channel *BaseChannel) ClearGroup() {
-	channel.Group = ""
+	if channel.Group == "" {
+		return
+	}
+
+	// 写锁
+	channel.RWMutex.LockFunc(func() {
+		channel.Group = ""
+	})
 }
 
-func (channel *BaseChannel) GetData() interface{} {
-	return channel.Data
+func (channel *BaseChannel) GetData() (data interface{}) {
+	// 读锁
+	channel.RWMutex.RLockFunc(func() {
+		data = channel.Data
+	})
+	return
 }
 
 func (channel *BaseChannel) ClearData() {
-	channel.Data = nil
+	if channel.Data == nil {
+		return
+	}
+
+	// 写锁
+	channel.RWMutex.LockFunc(func() {
+		channel.Data = nil
+	})
 }

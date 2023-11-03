@@ -43,7 +43,7 @@ func (channel *SseChannel) PushMessage(msgType MessageType, data []byte) (err er
 	if channel.Closed {
 		return pushKit.ChannelClosedError
 	}
-	/* 写锁 */
+	// 写锁
 	channel.RWMutex.LockFunc(func() {
 		if channel.Closed {
 			err = pushKit.ChannelClosedError
