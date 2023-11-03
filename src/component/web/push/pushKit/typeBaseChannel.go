@@ -106,11 +106,15 @@ func (channel *BaseChannel) GetGroup() (group string) {
 	return
 }
 
-func (channel *BaseChannel) ClearGroup() {
+func (channel *BaseChannel) SetGroup(group string) {
 	/* 写锁 */
 	channel.RWMutex.LockFunc(func() {
-		channel.Group = ""
+		channel.Group = group
 	})
+}
+
+func (channel *BaseChannel) ClearGroup() {
+	channel.SetGroup("")
 }
 
 func (channel *BaseChannel) GetData() (data interface{}) {
@@ -121,9 +125,13 @@ func (channel *BaseChannel) GetData() (data interface{}) {
 	return
 }
 
-func (channel *BaseChannel) ClearData() {
+func (channel *BaseChannel) SetData(data interface{}) {
 	/* 写锁 */
 	channel.RWMutex.LockFunc(func() {
-		channel.Data = nil
+		channel.Data = data
 	})
+}
+
+func (channel *BaseChannel) ClearData() {
+	channel.SetData(nil)
 }
