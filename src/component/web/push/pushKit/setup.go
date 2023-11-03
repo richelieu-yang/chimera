@@ -19,7 +19,7 @@ func MustSetUp(p *ants.Pool) {
 
 // Setup
 /*
-@param p
+@param p 需要自行决定: cap大小、是否自定义输出...
 */
 func Setup(p *ants.Pool) error {
 	if p.IsClosed() {
