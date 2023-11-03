@@ -17,22 +17,9 @@ import (
 // @Param exceptBsids	formData	[]string 	false	"例外连接的bsid."
 // @Produce json
 func PushToAll(ctx *gin.Context) (*ginKit.ResponsePackage, error) {
-	//if err := httpKit.MakeRequestBodySeekable(ctx.Request); err != nil {
-	//	return nil, err
-	//}
-	//data, err := ioutil.ReadAll(ctx.Request.Body)
-	//if err != nil {
-	//	return nil, err
-	//}
-	//str := string(data)
-	//fmt.Println(str)
-	//if err := httpKit.ResetRequestBody(ctx.Request); err != nil {
-	//	return nil, err
-	//}
-
 	type Params struct {
 		Text        string   `form:"text" binding:"required"`
-		ExceptBsids []string `form:"exceptBsids,optional"`
+		ExceptBsids []string `form:"exceptBsids"`
 	}
 	params := &Params{}
 	if err := ctx.ShouldBind(params); err != nil {

@@ -12,7 +12,7 @@ paths:
         name: text
         required: true
         type: string
-      - collectionFormat: csv
+      - collectionFormat: multi
         description: 例外连接的bsid.
         in: formData
         items:

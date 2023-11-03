@@ -25,7 +25,7 @@ require (
 	github.com/gin-gonic/gin v1.9.1
 	github.com/go-kratos/kratos/v2 v2.7.1
 	github.com/go-playground/validator/v10 v10.15.5
-	github.com/go-redsync/redsync/v4 v4.10.0
+	github.com/go-redsync/redsync/v4 v4.11.0
 	github.com/gogf/gf/v2 v2.5.6
 	github.com/golang-jwt/jwt/v5 v5.0.0
 	github.com/google/go-cmp v0.6.0

@@ -38,7 +38,7 @@ const docTemplate = `{
                         "items": {
                             "type": "string"
                         },
-                        "collectionFormat": "csv",
+                        "collectionFormat": "multi",
                         "description": "例外连接的bsid.",
                         "name": "exceptBsids",
                         "in": "formData"

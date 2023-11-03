@@ -23,6 +23,10 @@ type resp struct {
 	Data    interface{} `json:"data,omitempty"`
 }
 
+// @title Title
+// @version 1.0
+// @description Description.
+// @query.collection.format multi
 func main() {
 	logrusKit.MustSetUp(nil)
 	jsonRespKit.MustSetUp(func(code, msg string, data interface{}) interface{} {
