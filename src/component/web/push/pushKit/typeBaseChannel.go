@@ -14,6 +14,8 @@ import (
 type BaseChannel struct {
 	RWMutex mutexKit.RWMutex
 
+	// IP 可能是error string（获取失败的情况下）
+	IP    string
 	Id    string
 	Bsid  string
 	User  string
@@ -53,6 +55,10 @@ func (channel *BaseChannel) SetClosed() (flag bool) {
 		flag = true
 	})
 	return
+}
+
+func (channel *BaseChannel) GetIP() string {
+	return channel.IP
 }
 
 func (channel *BaseChannel) GetId() (id string) {
