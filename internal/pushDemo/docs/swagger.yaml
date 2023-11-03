@@ -40,6 +40,8 @@ paths:
           schema:
             $ref: '#/definitions/types.JsonResponse'
       summary: 推送消息给所有连接（exceptBsids对应的连接例外）.
+      tags:
+      - push
   /push_to_bsid:
     post:
       consumes:
@@ -63,6 +65,8 @@ paths:
           schema:
             $ref: '#/definitions/types.JsonResponse'
       summary: 推送消息给指定连接.
+      tags:
+      - push
   /push_to_group:
     post:
       consumes:
@@ -93,6 +97,8 @@ paths:
           schema:
             $ref: '#/definitions/types.JsonResponse'
       summary: 推送消息给group相关的所有连接（exceptBsids对应的连接例外）.
+      tags:
+      - push
   /push_to_user:
     post:
       consumes:
@@ -123,4 +129,6 @@ paths:
           schema:
             $ref: '#/definitions/types.JsonResponse'
       summary: 推送消息给user相关的所有连接（exceptBsids对应的连接例外）.
+      tags:
+      - push
 swagger: "2.0"

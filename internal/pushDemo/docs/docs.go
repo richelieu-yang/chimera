@@ -23,6 +23,9 @@ const docTemplate = `{
                 "produces": [
                     "application/json"
                 ],
+                "tags": [
+                    "push"
+                ],
                 "summary": "推送消息给所有连接（exceptBsids对应的连接例外）.",
                 "parameters": [
                     {
@@ -61,6 +64,9 @@ const docTemplate = `{
                 "produces": [
                     "application/json"
                 ],
+                "tags": [
+                    "push"
+                ],
                 "summary": "推送消息给指定连接.",
                 "parameters": [
                     {
@@ -95,6 +101,9 @@ const docTemplate = `{
                 ],
                 "produces": [
                     "application/json"
+                ],
+                "tags": [
+                    "push"
                 ],
                 "summary": "推送消息给group相关的所有连接（exceptBsids对应的连接例外）.",
                 "parameters": [
@@ -140,6 +149,9 @@ const docTemplate = `{
                 ],
                 "produces": [
                     "application/json"
+                ],
+                "tags": [
+                    "push"
                 ],
                 "summary": "推送消息给user相关的所有连接（exceptBsids对应的连接例外）.",
                 "parameters": [

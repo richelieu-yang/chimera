@@ -10,7 +10,7 @@ import (
 
 // PushToBsid
 // @Summary 推送消息给指定连接.
-// @Tag push
+// @Tags push
 // @Accept x-www-form-urlencoded
 // @Produce json
 // @Param text	formData	string	true	"推送消息的内容."
