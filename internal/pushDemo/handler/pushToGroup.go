@@ -8,6 +8,15 @@ import (
 	"net/http"
 )
 
+// PushToGroup
+// @Summary 推送消息给group相关的所有连接（exceptBsids对应的连接例外）.
+// @Accept x-www-form-urlencoded
+// @Produce json
+// @Param text 			formData	string		true	"推送消息的内容."
+// @Param group			formData	string		true	"推送消息的内容."
+// @Param exceptBsids	formData	[]string 	false	"例外连接的bsid."
+// @Success 200 {object} types.JsonResponse
+// @Router /push_to_group [post]
 func PushToGroup(ctx *gin.Context) (*ginKit.ResponsePackage, error) {
 	type Params struct {
 		Text string `form:"text" binding:"required"`
@@ -28,6 +37,6 @@ func PushToGroup(ctx *gin.Context) (*ginKit.ResponsePackage, error) {
 		return nil, err
 	}
 	return &ginKit.ResponsePackage{
-		Object: jsonRespKit.PackFully("0", "ok", nil),
+		Object: jsonRespKit.PackFully("0", "no error", nil),
 	}, nil
 }

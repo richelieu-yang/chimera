@@ -35,6 +35,6 @@ func PushToAll(ctx *gin.Context) (*ginKit.ResponsePackage, error) {
 		return nil, err
 	}
 	return &ginKit.ResponsePackage{
-		Object: jsonRespKit.PackFully("0", "ok", nil),
+		Object: jsonRespKit.PackFully("0", "no error", nil),
 	}, nil
 }

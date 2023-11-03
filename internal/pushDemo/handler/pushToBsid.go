@@ -8,6 +8,14 @@ import (
 	"net/http"
 )
 
+// PushToBsid
+// @Summary 推送消息给指定连接.
+// @Accept x-www-form-urlencoded
+// @Produce json
+// @Param text	formData	string	true	"推送消息的内容."
+// @Param bsid	formData	string 	true	"推送的目标连接."
+// @Success 200 {object} types.JsonResponse
+// @Router /push_to_bsid [post]
 func PushToBsid(ctx *gin.Context) (*ginKit.ResponsePackage, error) {
 	type pushToBsidParams struct {
 		Text string `form:"text" binding:"required"`
@@ -27,6 +35,6 @@ func PushToBsid(ctx *gin.Context) (*ginKit.ResponsePackage, error) {
 		return nil, err
 	}
 	return &ginKit.ResponsePackage{
-		Object: jsonRespKit.PackFully("0", "ok", nil),
+		Object: jsonRespKit.PackFully("0", "no error", nil),
 	}, nil
 }
