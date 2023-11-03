@@ -1,4 +1,4 @@
-package types
+package pushKit
 
 import (
 	"github.com/richelieu-yang/chimera/v2/src/mutexKit"

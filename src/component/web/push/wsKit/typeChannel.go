@@ -4,12 +4,11 @@ import (
 	"fmt"
 	"github.com/gorilla/websocket"
 	"github.com/richelieu-yang/chimera/v2/src/component/web/push/pushKit"
-	"github.com/richelieu-yang/chimera/v2/src/component/web/push/pushKit/types"
 	"github.com/richelieu-yang/chimera/v2/src/core/errorKit"
 )
 
 type WsChannel struct {
-	*types.BaseChannel
+	*pushKit.BaseChannel
 
 	conn    *websocket.Conn
 	msgType messageType

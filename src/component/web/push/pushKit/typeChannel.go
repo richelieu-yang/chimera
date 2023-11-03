@@ -1,4 +1,4 @@
-package types
+package pushKit
 
 type Channel interface {
 	// Close 后端主动关闭通道.

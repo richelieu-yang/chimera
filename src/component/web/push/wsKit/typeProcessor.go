@@ -5,7 +5,7 @@ import (
 	"fmt"
 	"github.com/gin-gonic/gin"
 	"github.com/gorilla/websocket"
-	"github.com/richelieu-yang/chimera/v2/src/component/web/push/pushKit/types"
+	"github.com/richelieu-yang/chimera/v2/src/component/web/push/pushKit"
 	"github.com/richelieu-yang/chimera/v2/src/core/errorKit"
 	"github.com/richelieu-yang/chimera/v2/src/core/strKit"
 	"github.com/richelieu-yang/chimera/v2/src/mutexKit"
@@ -14,13 +14,13 @@ import (
 )
 
 type WsProcessor struct {
-	types.Processor
+	pushKit.Processor
 
 	// upgrader 是并发安全的
 	upgrader *websocket.Upgrader
 
 	idGenerator func() (string, error)
-	listeners   types.Listeners
+	listeners   pushKit.Listeners
 	msgType     messageType
 }
 
@@ -98,7 +98,7 @@ func (p *WsProcessor) newChannel(conn *websocket.Conn) (*WsChannel, error) {
 	}
 
 	channel := &WsChannel{
-		BaseChannel: &types.BaseChannel{
+		BaseChannel: &pushKit.BaseChannel{
 			Id:        id,
 			Bsid:      "",
 			User:      "",

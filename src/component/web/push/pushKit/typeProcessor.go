@@ -1,4 +1,4 @@
-package types
+package pushKit
 
 import (
 	"github.com/gin-gonic/gin"

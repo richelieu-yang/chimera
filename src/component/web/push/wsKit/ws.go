@@ -2,7 +2,7 @@ package wsKit
 
 import (
 	"github.com/gorilla/websocket"
-	"github.com/richelieu-yang/chimera/v2/src/component/web/push/pushKit/types"
+	"github.com/richelieu-yang/chimera/v2/src/component/web/push/pushKit"
 	"github.com/richelieu-yang/chimera/v2/src/core/errorKit"
 	"github.com/richelieu-yang/chimera/v2/src/core/interfaceKit"
 	"github.com/richelieu-yang/chimera/v2/src/idKit"
@@ -30,7 +30,7 @@ func DefaultUpgrader() *websocket.Upgrader {
 @param idGenerator		可以为nil（使用xid）
 @param listener			不能为nil
 */
-func NewProcessor(upgrader *websocket.Upgrader, idGenerator func() (string, error), listener types.Listener, messageType messageType) (*WsProcessor, error) {
+func NewProcessor(upgrader *websocket.Upgrader, idGenerator func() (string, error), listener pushKit.Listener, messageType messageType) (*WsProcessor, error) {
 	if upgrader == nil {
 		upgrader = DefaultUpgrader()
 	}

@@ -1,11 +1,10 @@
 package pushKit
 
 import (
-	"github.com/richelieu-yang/chimera/v2/src/component/web/push/pushKit/types"
 	"github.com/richelieu-yang/chimera/v2/src/core/strKit"
 )
 
-func UnBindId(channel types.Channel) {
+func UnBindId(channel Channel) {
 	id := channel.GetId()
 
 	/* 写锁 */
@@ -14,7 +13,7 @@ func UnBindId(channel types.Channel) {
 	})
 }
 
-func UnbindBsid(channel types.Channel) {
+func UnbindBsid(channel Channel) {
 	bsid := channel.GetBsid()
 	if strKit.IsEmpty(bsid) {
 		return
@@ -28,7 +27,7 @@ func UnbindBsid(channel types.Channel) {
 	})
 }
 
-func UnbindUser(channel types.Channel) {
+func UnbindUser(channel Channel) {
 	user := channel.GetUser()
 	if strKit.IsEmpty(user) {
 		return
@@ -47,7 +46,7 @@ func UnbindUser(channel types.Channel) {
 	})
 }
 
-func UnbindGroup(channel types.Channel) {
+func UnbindGroup(channel Channel) {
 	group := channel.GetGroup()
 	if strKit.IsEmpty(group) {
 		return

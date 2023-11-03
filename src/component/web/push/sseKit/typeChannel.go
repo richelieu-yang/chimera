@@ -1,20 +1,19 @@
-package types
+package sseKit
 
 import (
 	"encoding/base64"
 	"github.com/richelieu-yang/chimera/v2/src/component/web/push/pushKit"
-	pushTypes "github.com/richelieu-yang/chimera/v2/src/component/web/push/pushKit/types"
 	"github.com/richelieu-yang/chimera/v2/src/crypto/base64Kit"
 	"github.com/richelieu-yang/chimera/v2/src/urlKit"
 	"net/http"
 )
 
 type SseChannel struct {
-	*pushTypes.BaseChannel
+	*pushKit.BaseChannel
 
 	w       http.ResponseWriter
 	r       *http.Request
-	msgType MessageType
+	msgType messageType
 	closeCh chan string
 }
 
@@ -24,7 +23,7 @@ func (channel *SseChannel) Push(data []byte) error {
 }
 
 // PushMessage （写锁）推送消息给客户端.
-func (channel *SseChannel) PushMessage(msgType MessageType, data []byte) (err error) {
+func (channel *SseChannel) PushMessage(msgType messageType, data []byte) (err error) {
 	var str string
 	switch msgType {
 	case MessageTypeEncode:

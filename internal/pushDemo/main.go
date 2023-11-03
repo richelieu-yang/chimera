@@ -8,7 +8,6 @@ import (
 	"github.com/richelieu-yang/chimera/v2/src/component/web/ginKit"
 	"github.com/richelieu-yang/chimera/v2/src/component/web/push/pushKit"
 	"github.com/richelieu-yang/chimera/v2/src/component/web/push/sseKit"
-	types2 "github.com/richelieu-yang/chimera/v2/src/component/web/push/sseKit/types"
 	"github.com/richelieu-yang/chimera/v2/src/goroutine/poolKit"
 	"github.com/richelieu-yang/chimera/v2/src/json/jsonRespKit"
 	"github.com/richelieu-yang/chimera/v2/src/log/logrusKit"
@@ -53,7 +52,7 @@ func main() {
 
 	// SSE
 	{
-		processor, err := sseKit.NewProcessor(nil, &types.DemoListener{}, types2.MessageTypeRaw)
+		processor, err := sseKit.NewProcessor(nil, &types.DemoListener{}, sseKit.MessageTypeRaw)
 		if err != nil {
 			panic(err)
 		}

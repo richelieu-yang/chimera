@@ -1,7 +1,6 @@
 package pushKit
 
 import (
-	"github.com/richelieu-yang/chimera/v2/src/component/web/push/pushKit/types"
 	"github.com/richelieu-yang/chimera/v2/src/core/errorKit"
 	"github.com/richelieu-yang/chimera/v2/src/core/sliceKit"
 	"sync"
@@ -59,7 +58,7 @@ func PushToUser(data []byte, user string, exceptBsids []string) error {
 	/* 写锁 */
 	userSet.RWLock.LockFunc(func() {
 		var wg sync.WaitGroup
-		userSet.Set.Each(func(channel types.Channel) bool {
+		userSet.Set.Each(func(channel Channel) bool {
 			if sliceKit.Contains(exceptBsids, channel.GetBsid()) {
 				return false // 不中断循环
 			}
@@ -89,7 +88,7 @@ func PushToGroup(data []byte, group string, exceptBsids []string) error {
 	/* 写锁 */
 	groupSet.RWLock.LockFunc(func() {
 		var wg sync.WaitGroup
-		groupSet.Set.Each(func(channel types.Channel) bool {
+		groupSet.Set.Each(func(channel Channel) bool {
 			if sliceKit.Contains(exceptBsids, channel.GetBsid()) {
 				return false // 不中断循环
 			}

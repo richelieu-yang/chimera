@@ -1,14 +1,22 @@
-package types
+package sseKit
 
-type MessageType uint8
+type messageType struct {
+	Text string
+}
 
-const (
+var (
 	// MessageTypeRaw 对于data，不做任何处理
-	MessageTypeRaw MessageType = iota + 1
+	MessageTypeRaw = messageType{
+		"raw",
+	}
 
 	// MessageTypeEncode 对于data，编码一下（前端需对应处理）
-	MessageTypeEncode
+	MessageTypeEncode = messageType{
+		"encode",
+	}
 
 	// MessageTypeBase64 对于data，base64编码一下（前端需对应处理）
-	MessageTypeBase64
+	MessageTypeBase64 = messageType{
+		"base64",
+	}
 )
