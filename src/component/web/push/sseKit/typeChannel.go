@@ -71,5 +71,5 @@ func (channel *SseChannel) BindUser(user string) {
 }
 
 func (channel *SseChannel) BindBsid(bsid string) {
-	pushKit.BindUser(channel, bsid)
+	pushKit.BindBsid(channel, bsid)
 }
