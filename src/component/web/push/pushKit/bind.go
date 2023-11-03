@@ -8,7 +8,7 @@ import (
 )
 
 func BindId(channel types.Channel, id string) {
-	if strKit.IsEmpty(id) || channel.GetId() == id {
+	if strKit.IsEmpty(id) {
 		return
 	}
 
@@ -22,9 +22,12 @@ func BindId(channel types.Channel, id string) {
 }
 
 func BindBsid(channel types.Channel, bsid string) {
+	// 防止: 传参有误 || 重复绑定
 	if strKit.IsEmpty(bsid) || channel.GetBsid() == bsid {
 		return
 	}
+	// 先解绑 bsid（有的话）
+	UnbindBsid(channel)
 
 	/* 写锁 */
 	bsidMap.RWLock.LockFunc(func() {
@@ -36,9 +39,12 @@ func BindBsid(channel types.Channel, bsid string) {
 }
 
 func BindUser(channel types.Channel, user string) {
+	// 防止: 传参有误 || 重复绑定
 	if strKit.IsEmpty(user) || channel.GetUser() == user {
 		return
 	}
+	// 先解绑 user（有的话）
+	UnbindUser(channel)
 
 	var userSet *setKit.SetWithLock[types.Channel]
 	/* 写锁 */
@@ -57,9 +63,12 @@ func BindUser(channel types.Channel, user string) {
 }
 
 func BindGroup(channel types.Channel, group string) {
+	// 防止: 传参有误 || 重复绑定
 	if strKit.IsEmpty(group) || channel.GetGroup() == group {
 		return
 	}
+	// 先解绑 group（有的话）
+	UnbindGroup(channel)
 
 	/* 写锁 */
 	var groupSet *setKit.SetWithLock[types.Channel]
