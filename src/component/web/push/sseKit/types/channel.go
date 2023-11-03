@@ -18,11 +18,12 @@ type SseChannel struct {
 	closeCh chan string
 }
 
+// Push （写锁）推送消息给客户端.
 func (channel *SseChannel) Push(data []byte) error {
 	return channel.PushMessage(channel.msgType, data)
 }
 
-// PushMessage 推送消息给客户端.
+// PushMessage （写锁）推送消息给客户端.
 func (channel *SseChannel) PushMessage(msgType MessageType, data []byte) (err error) {
 	var str string
 	switch msgType {
@@ -54,7 +55,7 @@ func (channel *SseChannel) PushMessage(msgType MessageType, data []byte) (err er
 	return err
 }
 
-// Close 后端主动关闭通道.
+// Close （写锁）后端主动关闭通道.
 func (channel *SseChannel) Close(reason string) error {
 	if channel.SetClosed() {
 		channel.closeCh <- reason
