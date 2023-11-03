@@ -1,11 +1,9 @@
-package pushKit
+package types
 
 import (
 	"github.com/richelieu-yang/chimera/v2/src/core/interfaceKit"
 	"net/http"
 )
-
-var inner = &innerListener{}
 
 // NewListeners
 /*
@@ -19,21 +17,23 @@ func NewListeners(listener Listener) (Listeners, error) {
 	return []Listener{inner, listener}, nil
 }
 
-type Listener interface {
-	OnFailure(w http.ResponseWriter, r *http.Request, failureInfo string)
+type (
+	Listener interface {
+		OnFailure(w http.ResponseWriter, r *http.Request, failureInfo string)
 
-	OnHandshake(w http.ResponseWriter, r *http.Request, channel Channel)
+		OnHandshake(w http.ResponseWriter, r *http.Request, channel Channel)
 
-	// OnMessage 收到 客户端 发来的消息.
-	/*
-		PS: 仅适用于WebSocket连接，因为SSE连接是单工的.
-	*/
-	OnMessage(channel Channel, messageType int, data []byte)
+		// OnMessage 收到 客户端 发来的消息.
+		/*
+			PS: 仅适用于WebSocket连接，因为SSE连接是单工的.
+		*/
+		OnMessage(channel Channel, messageType int, data []byte)
 
-	OnClose(channel Channel, closeInfo string)
-}
+		OnClose(channel Channel, closeInfo string)
+	}
 
-type Listeners []Listener
+	Listeners []Listener
+)
 
 func (listeners Listeners) OnFailure(w http.ResponseWriter, r *http.Request, failureInfo string) {
 	for _, listener := range listeners {
@@ -57,24 +57,4 @@ func (listeners Listeners) OnClose(channel Channel, closeInfo string) {
 	for _, listener := range listeners {
 		listener.OnClose(channel, closeInfo)
 	}
-}
-
-type innerListener struct {
-	Listener
-}
-
-func (listener innerListener) OnFailure(w http.ResponseWriter, r *http.Request, failureInfo string) {
-}
-
-func (listener innerListener) OnHandshake(w http.ResponseWriter, r *http.Request, channel Channel) {
-	// 加入管理
-	BindId(channel, channel.GetId())
-}
-
-func (listener innerListener) OnMessage(channel Channel, messageType int, data []byte) {
-}
-
-func (listener innerListener) OnClose(channel Channel, closeInfo string) {
-	// 移除管理
-	channel.Unbind()
 }

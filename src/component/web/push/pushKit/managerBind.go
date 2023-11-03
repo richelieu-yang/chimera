@@ -2,11 +2,12 @@ package pushKit
 
 import (
 	"fmt"
+	"github.com/richelieu-yang/chimera/v2/src/component/web/push/pushKit/types"
 	"github.com/richelieu-yang/chimera/v2/src/core/setKit"
 	"github.com/richelieu-yang/chimera/v2/src/core/strKit"
 )
 
-func BindId(channel Channel, id string) {
+func BindId(channel types.Channel, id string) {
 	if strKit.IsEmpty(id) {
 		return
 	}
@@ -20,7 +21,7 @@ func BindId(channel Channel, id string) {
 	})
 }
 
-func BindBsid(channel Channel, bsid string) {
+func BindBsid(channel types.Channel, bsid string) {
 	if strKit.IsEmpty(bsid) {
 		return
 	}
@@ -34,17 +35,17 @@ func BindBsid(channel Channel, bsid string) {
 	})
 }
 
-func BindUser(channel Channel, user string) {
+func BindUser(channel types.Channel, user string) {
 	if strKit.IsEmpty(user) {
 		return
 	}
 
-	var userSet *setKit.SetWithLock[Channel]
+	var userSet *setKit.SetWithLock[types.Channel]
 	// 写锁
 	userMap.RWLock.LockFunc(func() {
 		userSet = userMap.Map[user]
 		if userSet == nil {
-			userSet = setKit.NewSetWithLock[Channel]()
+			userSet = setKit.NewSetWithLock[types.Channel]()
 			userMap.Map[user] = userSet
 		}
 	})
@@ -55,17 +56,17 @@ func BindUser(channel Channel, user string) {
 	})
 }
 
-func BindGroup(channel Channel, group string) {
+func BindGroup(channel types.Channel, group string) {
 	if strKit.IsEmpty(group) {
 		return
 	}
 
 	// 写锁
-	var groupSet *setKit.SetWithLock[Channel]
+	var groupSet *setKit.SetWithLock[types.Channel]
 	groupMap.RWLock.LockFunc(func() {
 		groupSet = userMap.Map[group]
 		if groupSet == nil {
-			groupSet = setKit.NewSetWithLock[Channel]()
+			groupSet = setKit.NewSetWithLock[types.Channel]()
 			groupMap.Map[group] = groupSet
 		}
 	})

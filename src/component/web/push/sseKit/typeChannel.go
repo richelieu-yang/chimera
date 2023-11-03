@@ -3,13 +3,14 @@ package sseKit
 import (
 	"encoding/base64"
 	"github.com/richelieu-yang/chimera/v2/src/component/web/push/pushKit"
+	"github.com/richelieu-yang/chimera/v2/src/component/web/push/pushKit/types"
 	"github.com/richelieu-yang/chimera/v2/src/crypto/base64Kit"
 	"github.com/richelieu-yang/chimera/v2/src/urlKit"
 	"net/http"
 )
 
 type SseChannel struct {
-	*pushKit.BaseChannel
+	*types.BaseChannel
 
 	w       http.ResponseWriter
 	r       *http.Request

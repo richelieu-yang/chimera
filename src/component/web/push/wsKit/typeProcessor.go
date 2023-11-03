@@ -6,6 +6,7 @@ import (
 	"github.com/gin-gonic/gin"
 	"github.com/gorilla/websocket"
 	"github.com/richelieu-yang/chimera/v2/src/component/web/push/pushKit"
+	"github.com/richelieu-yang/chimera/v2/src/component/web/push/pushKit/types"
 	"github.com/richelieu-yang/chimera/v2/src/core/errorKit"
 	"github.com/richelieu-yang/chimera/v2/src/core/strKit"
 	"github.com/richelieu-yang/chimera/v2/src/mutexKit"
@@ -20,7 +21,7 @@ type WsProcessor struct {
 	upgrader *websocket.Upgrader
 
 	idGenerator func() (string, error)
-	listeners   pushKit.Listeners
+	listeners   types.Listeners
 	msgType     messageType
 }
 
@@ -98,7 +99,7 @@ func (p *WsProcessor) newChannel(conn *websocket.Conn) (*WsChannel, error) {
 	}
 
 	channel := &WsChannel{
-		BaseChannel: &pushKit.BaseChannel{
+		BaseChannel: &types.BaseChannel{
 			Id:        id,
 			Bsid:      "",
 			User:      "",

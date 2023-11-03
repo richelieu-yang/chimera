@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"github.com/gin-gonic/gin"
 	"github.com/richelieu-yang/chimera/v2/src/component/web/push/pushKit"
+	"github.com/richelieu-yang/chimera/v2/src/component/web/push/pushKit/types"
 	"github.com/richelieu-yang/chimera/v2/src/core/errorKit"
 	"github.com/richelieu-yang/chimera/v2/src/core/strKit"
 	"github.com/richelieu-yang/chimera/v2/src/mutexKit"
@@ -14,7 +15,7 @@ type SseProcessor struct {
 	pushKit.Processor
 
 	idGenerator func() (string, error)
-	listeners   pushKit.Listeners
+	listeners   types.Listeners
 	msgType     messageType
 }
 
@@ -56,7 +57,7 @@ func (p *SseProcessor) Process(w http.ResponseWriter, r *http.Request) {
 	}
 }
 
-func (p *SseProcessor) newChannel(w http.ResponseWriter, r *http.Request, closeCh chan string) (pushKit.Channel, error) {
+func (p *SseProcessor) newChannel(w http.ResponseWriter, r *http.Request, closeCh chan string) (types.Channel, error) {
 	id, err := p.idGenerator()
 	if err != nil {
 		return nil, errorKit.Wrap(err, "Fail to generate id")
@@ -66,7 +67,7 @@ func (p *SseProcessor) newChannel(w http.ResponseWriter, r *http.Request, closeC
 	}
 
 	channel := &SseChannel{
-		BaseChannel: &pushKit.BaseChannel{
+		BaseChannel: &types.BaseChannel{
 			RWMutex:   mutexKit.RWMutex{},
 			Id:        id,
 			Bsid:      "",
