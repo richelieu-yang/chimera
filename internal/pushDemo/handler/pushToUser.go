@@ -13,8 +13,9 @@ func PushToUser(ctx *gin.Context) (*ginKit.ResponsePackage, error) {
 		Text string `form:"text" binding:"required"`
 
 		User        string   `form:"user" binding:"required"`
-		ExceptBsids []string `form:"exceptBsids,optional"`
+		ExceptBsids []string `form:"exceptBsids"`
 	}
+
 	params := &Params{}
 	if err := ctx.ShouldBind(params); err != nil {
 		return &ginKit.ResponsePackage{

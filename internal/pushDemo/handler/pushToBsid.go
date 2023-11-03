@@ -9,12 +9,13 @@ import (
 )
 
 func PushToBsid(ctx *gin.Context) (*ginKit.ResponsePackage, error) {
-	type Params struct {
+	type pushToBsidParams struct {
 		Text string `form:"text" binding:"required"`
 
 		Bsid string `form:"bsid" binding:"required"`
 	}
-	params := &Params{}
+
+	params := &pushToBsidParams{}
 	if err := ctx.ShouldBind(params); err != nil {
 		return &ginKit.ResponsePackage{
 			StatusCode: http.StatusBadRequest,

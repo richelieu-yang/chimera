@@ -19,8 +19,9 @@ import (
 // @Router /push_to_all [post]
 func PushToAll(ctx *gin.Context) (*ginKit.ResponsePackage, error) {
 	type pushToAllParams struct {
-		Text        string   `form:"text" binding:"required"`
-		ExceptBsids []string `form:"exceptBsids"`
+		Text string `form:"text" binding:"required"`
+
+		ExceptBsids []string `form:"exceptBsids" binding:""`
 	}
 
 	params := &pushToAllParams{}
