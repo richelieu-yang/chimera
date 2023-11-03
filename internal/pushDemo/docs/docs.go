@@ -17,14 +17,13 @@ const docTemplate = `{
     "paths": {
         "/push_to_all": {
             "post": {
-                "description": "推送消息给所有连接（exceptBsids对应的链接例外）.",
                 "consumes": [
                     "application/x-www-form-urlencoded"
                 ],
                 "produces": [
                     "application/json"
                 ],
-                "summary": "推送消息给所有连接.",
+                "summary": "推送消息给所有连接（exceptBsids对应的连接例外）.",
                 "parameters": [
                     {
                         "type": "string",

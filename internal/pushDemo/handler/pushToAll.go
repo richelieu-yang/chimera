@@ -9,8 +9,7 @@ import (
 )
 
 // PushToAll
-// @Summary 推送消息给所有连接.
-// @Description 推送消息给所有连接（exceptBsids对应的链接例外）.
+// @Summary 推送消息给所有连接（exceptBsids对应的连接例外）.
 // @Accept x-www-form-urlencoded
 // @Produce json
 // @Param text 			formData	string		true	"推送消息的内容."

@@ -19,7 +19,6 @@ paths:
     post:
       consumes:
       - application/x-www-form-urlencoded
-      description: 推送消息给所有连接（exceptBsids对应的链接例外）.
       parameters:
       - description: 推送消息的内容.
         in: formData
@@ -40,5 +39,5 @@ paths:
           description: OK
           schema:
             $ref: '#/definitions/types.JsonResponse'
-      summary: 推送消息给所有连接.
+      summary: 推送消息给所有连接（exceptBsids对应的连接例外）.
 swagger: "2.0"
