@@ -17,16 +17,22 @@ func (l *DemoListener) OnFailure(w http.ResponseWriter, r *http.Request, failure
 }
 
 func (l *DemoListener) OnHandshake(w http.ResponseWriter, r *http.Request, channel pushKit.Channel) {
-	logrus.Info("OnHandshake")
+	bsid := httpKit.ObtainGetParam(r, "bsid")
+	user := httpKit.ObtainGetParam(r, "user")
+	group := httpKit.ObtainGetParam(r, "group")
+
+	logrus.WithFields(logrus.Fields{
+		"clientIP": channel.GetClientIP(),
+		"bsid":     bsid,
+		"user":     user,
+		"group":    group,
+	}).Info("OnHandshake")
 
 	text := fmt.Sprintf("Hello, your id is [%s].", channel.GetId())
 	if err := channel.Push([]byte(text)); err != nil {
 		logrus.Error(err)
 	}
 
-	bsid := httpKit.ObtainGetParam(r, "bsid")
-	user := httpKit.ObtainGetParam(r, "user")
-	group := httpKit.ObtainGetParam(r, "group")
 	channel.BindBsid(bsid)
 	channel.BindUser(user)
 	channel.BindGroup(group)
@@ -46,9 +52,10 @@ func (l *DemoListener) OnMessage(channel pushKit.Channel, messageType int, data 
 
 func (l *DemoListener) OnClose(channel pushKit.Channel, closeInfo string, bsid, user, group string) {
 	logrus.WithFields(logrus.Fields{
-		"closeInfo": closeInfo,
+		"clientIP":  channel.GetClientIP(),
 		"bsid":      bsid,
 		"user":      user,
 		"group":     group,
+		"closeInfo": closeInfo,
 	}).Info("OnClose")
 }
