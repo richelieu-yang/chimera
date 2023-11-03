@@ -3,6 +3,7 @@ package sseKit
 import (
 	"fmt"
 	"github.com/gin-gonic/gin"
+	"github.com/richelieu-yang/chimera/v2/src/component/web/httpKit"
 	"github.com/richelieu-yang/chimera/v2/src/component/web/push/pushKit"
 	"github.com/richelieu-yang/chimera/v2/src/core/errorKit"
 	"github.com/richelieu-yang/chimera/v2/src/core/strKit"
@@ -65,9 +66,15 @@ func (p *SseProcessor) newChannel(w http.ResponseWriter, r *http.Request, closeC
 		return nil, err
 	}
 
+	ip, err := httpKit.GetClientIP(r)
+	if err != nil {
+		ip = err.Error()
+	}
+
 	channel := &SseChannel{
 		BaseChannel: &pushKit.BaseChannel{
 			RWMutex:   mutexKit.RWMutex{},
+			IP:        ip,
 			Id:        id,
 			Bsid:      "",
 			User:      "",
