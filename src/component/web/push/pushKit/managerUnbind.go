@@ -36,16 +36,12 @@ func UnbindUser(channel Channel) {
 	if strKit.IsEmpty(user) {
 		return
 	}
-
 	defer channel.ClearUser()
 
 	userSet := GetUserSet(user)
 	if userSet == nil {
 		return
 	}
-
-	// 是否要移除掉 userMap 中指定
-	removeFlag := false
 
 	/* 写锁 */
 	userSet.LockFunc(func() {
@@ -62,7 +58,6 @@ func UnbindGroup(channel Channel) {
 	if strKit.IsEmpty(group) {
 		return
 	}
-
 	defer channel.ClearGroup()
 
 	groupSet := GetGroupSet(group)
