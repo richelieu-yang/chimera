@@ -4,7 +4,7 @@ go 1.21
 
 require (
 	fyne.io/fyne/v2 v2.4.1
-	github.com/apache/pulsar-client-go v0.11.0
+	github.com/apache/pulsar-client-go v0.11.1
 	github.com/apache/rocketmq-clients/golang/v5 v5.0.1-rc.5
 	github.com/bytedance/sonic v1.10.2
 	github.com/dablelv/cyan v0.0.51
@@ -24,23 +24,23 @@ require (
 	github.com/gin-contrib/sse v0.1.0
 	github.com/gin-gonic/gin v1.9.1
 	github.com/go-kratos/kratos/v2 v2.7.1
-	github.com/go-playground/validator/v10 v10.15.5
+	github.com/go-playground/validator/v10 v10.16.0
 	github.com/go-redsync/redsync/v4 v4.11.0
 	github.com/gogf/gf/v2 v2.5.6
-	github.com/golang-jwt/jwt/v5 v5.0.0
+	github.com/golang-jwt/jwt/v5 v5.1.0
 	github.com/google/go-cmp v0.6.0
 	github.com/google/uuid v1.4.0
 	github.com/google/wire v0.5.0
-	github.com/gorilla/securecookie v1.1.1
-	github.com/gorilla/sessions v1.2.1
-	github.com/gorilla/websocket v1.5.0
+	github.com/gorilla/securecookie v1.1.2
+	github.com/gorilla/sessions v1.2.2
+	github.com/gorilla/websocket v1.5.1
 	github.com/h2non/bimg v1.1.9
 	github.com/imroc/req/v3 v3.42.1
 	github.com/jinzhu/copier v0.4.0
 	github.com/jordan-wright/email v4.0.1-0.20210109023952-943e75fe5223+incompatible
 	github.com/json-iterator/go v1.1.12
 	github.com/klauspost/compress v1.17.2
-	github.com/klauspost/cpuid/v2 v2.2.5
+	github.com/klauspost/cpuid/v2 v2.2.6
 	github.com/lionsoul2014/ip2region/binding/golang v0.0.0-20231013030745-3066d243cd04
 	github.com/matoous/go-nanoid/v2 v2.0.0
 	github.com/mitchellh/go-homedir v1.1.0
@@ -76,8 +76,8 @@ require (
 	go.opentelemetry.io/otel/trace v1.19.0
 	go.uber.org/automaxprocs v1.5.3
 	go.uber.org/zap v1.26.0
-	golang.org/x/exp v0.0.0-20231006140011-7918f672742d
-	golang.org/x/image v0.13.0
+	golang.org/x/exp v0.0.0-20231108232855-2478ac86f678
+	golang.org/x/image v0.14.0
 	google.golang.org/grpc v1.59.0
 	google.golang.org/protobuf v1.31.0
 	gopkg.in/yaml.v3 v3.0.1
@@ -216,17 +216,17 @@ require (
 	go.uber.org/atomic v1.10.0 // indirect
 	go.uber.org/multierr v1.10.0 // indirect
 	golang.org/x/arch v0.3.0 // indirect
-	golang.org/x/crypto v0.14.0 // indirect
+	golang.org/x/crypto v0.15.0 // indirect
 	golang.org/x/mobile v0.0.0-20230531173138-3c911d8e3eda // indirect
-	golang.org/x/mod v0.13.0 // indirect
-	golang.org/x/net v0.17.0 // indirect
+	golang.org/x/mod v0.14.0 // indirect
+	golang.org/x/net v0.18.0 // indirect
 	golang.org/x/oauth2 v0.12.0 // indirect
-	golang.org/x/sync v0.4.0 // indirect
-	golang.org/x/sys v0.13.0 // indirect
-	golang.org/x/term v0.13.0 // indirect
-	golang.org/x/text v0.13.0 // indirect
+	golang.org/x/sync v0.5.0 // indirect
+	golang.org/x/sys v0.14.0 // indirect
+	golang.org/x/term v0.14.0 // indirect
+	golang.org/x/text v0.14.0 // indirect
 	golang.org/x/time v0.3.0 // indirect
-	golang.org/x/tools v0.14.0 // indirect
+	golang.org/x/tools v0.15.0 // indirect
 	google.golang.org/api v0.143.0 // indirect
 	google.golang.org/appengine v1.6.8 // indirect
 	google.golang.org/genproto v0.0.0-20231016165738-49dd2c1f3d0b // indirect
