@@ -11,10 +11,9 @@ func PushToAll(data []byte, exceptBsids []string) (err error) {
 		return err
 	}
 
-	/* 读锁 */
+	/* map读锁 */
 	idMap.RLockFunc(func() {
 		var wg sync.WaitGroup
-
 		for _, channel := range idMap.Map {
 			c := channel
 
@@ -33,74 +32,89 @@ func PushToAll(data []byte, exceptBsids []string) (err error) {
 	return nil
 }
 
-func PushToBsid(data []byte, bsid string) error {
-	if err := isAvailable(); err != nil {
-		return err
+func PushToBsid(data []byte, bsid string) (err error) {
+	if err = isAvailable(); err != nil {
+		return
 	}
 
-	channel := GetChannelByBsid(bsid)
-	if channel == nil {
-		return errorKit.New("No channel for bsid(bsid)", bsid)
-	}
-	return channel.Push(data)
+	/* map读锁 */
+	bsidMap.RLockFunc(func() {
+		channel := GetChannelByBsid(bsid)
+		if channel == nil {
+			err = errorKit.New("No channel for bsid(%s)", bsid)
+			return
+		}
+		err = channel.Push(data)
+	})
+	return
 }
 
-func PushToUser(data []byte, user string, exceptBsids []string) error {
-	if err := isAvailable(); err != nil {
-		return err
+func PushToUser(data []byte, user string, exceptBsids []string) (err error) {
+	if err = isAvailable(); err != nil {
+		return
 	}
 
-	userSet := GetUserSet(user)
-	if userSet == nil {
-		return errorKit.New("No set for user(%s)", user)
-	}
+	/* map读锁 */
+	userMap.RLockFunc(func() {
+		userSet := userMap.Map[user]
+		if userSet == nil {
+			err = errorKit.New("No channels for user(%s)", user)
+			return
+		}
 
-	/* 写锁 */
-	userSet.LockFunc(func() {
-		var wg sync.WaitGroup
-		userSet.Set.Each(func(channel Channel) bool {
-			if sliceKit.Contains(exceptBsids, channel.GetBsid()) {
+		/* set读锁 */
+		userSet.RLockFunc(func() {
+			var wg sync.WaitGroup
+			userSet.Set.Each(func(channel Channel) bool {
+				c := channel
+
+				if sliceKit.Contains(exceptBsids, c.GetBsid()) {
+					return false // 不中断循环
+				}
+				wg.Add(1)
+				_ = pool.Submit(func() {
+					defer wg.Done()
+					_ = c.Push(data)
+				})
 				return false // 不中断循环
-			}
-
-			c := channel
-			wg.Add(1)
-			_ = pool.Submit(func() {
-				defer wg.Done()
-				_ = c.Push(data)
 			})
-			return false // 不中断循环
+			wg.Wait()
 		})
 	})
-	return nil
+	return
 }
 
-func PushToGroup(data []byte, group string, exceptBsids []string) error {
-	if err := isAvailable(); err != nil {
-		return err
+func PushToGroup(data []byte, group string, exceptBsids []string) (err error) {
+	if err = isAvailable(); err != nil {
+		return
 	}
 
-	groupSet := GetGroupSet(group)
-	if groupSet == nil {
-		return errorKit.New("No set for group(%s)", group)
-	}
+	/* map读锁 */
+	groupMap.RLockFunc(func() {
+		groupSet := userMap.Map[group]
+		if groupSet == nil {
+			err = errorKit.New("No channels for group(%s)", group)
+			return
+		}
 
-	/* 写锁 */
-	groupSet.LockFunc(func() {
-		var wg sync.WaitGroup
-		groupSet.Set.Each(func(channel Channel) bool {
-			if sliceKit.Contains(exceptBsids, channel.GetBsid()) {
+		/* set读锁 */
+		groupSet.RLockFunc(func() {
+			var wg sync.WaitGroup
+			groupSet.Set.Each(func(channel Channel) bool {
+				c := channel
+
+				if sliceKit.Contains(exceptBsids, c.GetBsid()) {
+					return false // 不中断循环
+				}
+				wg.Add(1)
+				_ = pool.Submit(func() {
+					defer wg.Done()
+					_ = c.Push(data)
+				})
 				return false // 不中断循环
-			}
-
-			c := channel
-			wg.Add(1)
-			_ = pool.Submit(func() {
-				defer wg.Done()
-				_ = c.Push(data)
 			})
-			return false // 不中断循环
+			wg.Wait()
 		})
 	})
-	return nil
+	return
 }
