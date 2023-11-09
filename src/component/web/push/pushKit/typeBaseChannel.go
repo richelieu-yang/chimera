@@ -12,7 +12,7 @@ import (
 	(由于unbind可能涉及Close()，因此只能在子类中实现)
 */
 type BaseChannel struct {
-	RWMutex mutexKit.RWMutex
+	mutexKit.RWMutex
 
 	// ClientIP 可能是error string（获取失败的情况下）
 	ClientIP string
