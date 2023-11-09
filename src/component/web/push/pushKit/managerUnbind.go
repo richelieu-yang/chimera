@@ -36,7 +36,9 @@ func UnbindBsid(channel Channel) {
 
 // UnbindUser
 /*
-PS: 解绑成功后，如果set为空，应该移除掉.
+PS:
+(1) 仅是解绑，不会关闭channel;
+(2) 解绑成功后，如果set为空，应该移除掉.
 */
 func UnbindUser(channel Channel) {
 	user := channel.GetUser()
@@ -67,7 +69,9 @@ func UnbindUser(channel Channel) {
 
 // UnbindGroup
 /*
-PS: 解绑成功后，如果set为空，应该移除掉.
+PS:
+(1) 仅是解绑，不会关闭channel;
+(2) 解绑成功后，如果set为空，应该移除掉.
 */
 func UnbindGroup(channel Channel) {
 	group := channel.GetGroup()
