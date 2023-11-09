@@ -44,6 +44,9 @@ func UnbindUser(channel Channel) {
 		return
 	}
 
+	// 是否要移除掉 userMap 中指定
+	removeFlag := false
+
 	/* 写锁 */
 	userSet.LockFunc(func() {
 		userSet.Set.Remove(channel)
