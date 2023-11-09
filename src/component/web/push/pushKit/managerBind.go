@@ -31,9 +31,11 @@ func BindBsid(channel Channel, bsid string) {
 
 	/* 写锁 */
 	bsidMap.LockFunc(func() {
-		if old, ok := bsidMap.Map[bsid]; ok {
+		old := bsidMap.Map[bsid]
+		if old != nil {
 			_ = old.Close(fmt.Sprintf("bsid(%s) is replaced by new channel", bsid))
 		}
+
 		bsidMap.Map[bsid] = channel
 		// 更新 channel 的信息
 		channel.SetBsid(bsid)
