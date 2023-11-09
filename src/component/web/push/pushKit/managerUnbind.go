@@ -45,14 +45,23 @@ func UnbindUser(channel Channel) {
 	}
 	defer channel.ClearUser()
 
-	userSet := GetUserSet(user)
-	if userSet == nil {
-		return
-	}
-
-	/* 写锁 */
-	userSet.LockFunc(func() {
-		userSet.Set.Remove(channel)
+	/* map写锁 */
+	userMap.LockFunc(func() {
+		userSet, ok := userMap.Map[user]
+		if !ok {
+			return
+		}
+		if userSet == nil {
+			delete(userMap.Map, user)
+			return
+		}
+		/* set写锁 */
+		userSet.LockFunc(func() {
+			userSet.Set.Remove(channel)
+			if userSet.Set.Cardinality() == 0 {
+				delete(userMap.Map, user)
+			}
+		})
 	})
 }
 
