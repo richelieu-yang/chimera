@@ -43,7 +43,7 @@ func GetChannelByBsid(bsid string) (channel Channel) {
 	return
 }
 
-// GetUserSet （读锁）
+// GetUserSet （读锁）获取 userSet.
 /*
 @return 可能为nil
 */
@@ -57,7 +57,7 @@ func GetUserSet(user string) *setKit.SetWithLock[Channel] {
 	return userSet
 }
 
-// GetGroupSet （读锁）
+// GetGroupSet （读锁）获取 groupSet.
 /*
 @return 可能为nil
 */
