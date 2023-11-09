@@ -8,7 +8,7 @@ import (
 
 type (
 	SetWithLock[T comparable] struct {
-		RWLock mutexKit.RWMutex
+		mutexKit.RWMutex
 
 		// Set 并发不安全的
 		Set mapset.Set[T]
@@ -17,7 +17,6 @@ type (
 
 func NewSetWithLock[T comparable]() *SetWithLock[T] {
 	return &SetWithLock[T]{
-		RWLock: mutexKit.RWMutex{},
-		Set:    NewSet[T](false),
+		Set: NewSet[T](false),
 	}
 }

@@ -6,7 +6,7 @@ import (
 
 type (
 	SliceWithLock[E any] struct {
-		RWLock mutexKit.RWMutex
+		mutexKit.RWMutex
 
 		// Slice 并发不安全的
 		Slice []E
@@ -15,7 +15,6 @@ type (
 
 func NewSliceWithLock[E any]() *SliceWithLock[E] {
 	return &SliceWithLock[E]{
-		RWLock: mutexKit.RWMutex{},
-		Slice:  make([]E, 0, 8),
+		Slice: make([]E, 0, 8),
 	}
 }

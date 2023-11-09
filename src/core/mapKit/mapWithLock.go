@@ -6,7 +6,7 @@ import (
 
 type (
 	MapWithLock[K comparable, V any] struct {
-		RWLock mutexKit.RWMutex
+		mutexKit.RWMutex
 
 		// Map 并发不安全的
 		Map map[K]V
@@ -15,7 +15,6 @@ type (
 
 func NewMapWithLock[K comparable, V any]() *MapWithLock[K, V] {
 	return &MapWithLock[K, V]{
-		RWLock: mutexKit.RWMutex{},
-		Map:    make(map[K]V),
+		Map: make(map[K]V),
 	}
 }
