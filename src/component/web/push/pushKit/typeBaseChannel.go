@@ -28,7 +28,7 @@ type BaseChannel struct {
 
 func (channel *BaseChannel) IsClosed() (rst bool) {
 	/* 读锁 */
-	channel.RWMutex.RLockFunc(func() {
+	channel.RLockFunc(func() {
 		rst = channel.Closed
 	})
 	return
@@ -47,7 +47,7 @@ func (channel *BaseChannel) SetClosed() (flag bool) {
 	}
 
 	/* 写锁 */
-	channel.RWMutex.LockFunc(func() {
+	channel.LockFunc(func() {
 		if channel.Closed {
 			return
 		}
@@ -68,7 +68,7 @@ func (channel *BaseChannel) GetId() (id string) {
 
 func (channel *BaseChannel) GetBsid() (bsid string) {
 	/* 读锁 */
-	channel.RWMutex.RLockFunc(func() {
+	channel.RLockFunc(func() {
 		bsid = channel.Bsid
 	})
 	return
@@ -76,7 +76,7 @@ func (channel *BaseChannel) GetBsid() (bsid string) {
 
 func (channel *BaseChannel) SetBsid(bsid string) {
 	/* 写锁 */
-	channel.RWMutex.LockFunc(func() {
+	channel.LockFunc(func() {
 		channel.Bsid = bsid
 	})
 }
@@ -87,7 +87,7 @@ func (channel *BaseChannel) ClearBsid() {
 
 func (channel *BaseChannel) GetUser() (user string) {
 	/* 读锁 */
-	channel.RWMutex.RLockFunc(func() {
+	channel.RLockFunc(func() {
 		user = channel.User
 	})
 	return
@@ -95,7 +95,7 @@ func (channel *BaseChannel) GetUser() (user string) {
 
 func (channel *BaseChannel) SetUser(user string) {
 	/* 写锁 */
-	channel.RWMutex.LockFunc(func() {
+	channel.LockFunc(func() {
 		channel.User = user
 	})
 }
@@ -106,7 +106,7 @@ func (channel *BaseChannel) ClearUser() {
 
 func (channel *BaseChannel) GetGroup() (group string) {
 	/* 读锁 */
-	channel.RWMutex.RLockFunc(func() {
+	channel.RLockFunc(func() {
 		group = channel.Group
 	})
 	return
@@ -114,7 +114,7 @@ func (channel *BaseChannel) GetGroup() (group string) {
 
 func (channel *BaseChannel) SetGroup(group string) {
 	/* 写锁 */
-	channel.RWMutex.LockFunc(func() {
+	channel.LockFunc(func() {
 		channel.Group = group
 	})
 }
@@ -125,7 +125,7 @@ func (channel *BaseChannel) ClearGroup() {
 
 func (channel *BaseChannel) GetData() (data interface{}) {
 	/* 读锁 */
-	channel.RWMutex.RLockFunc(func() {
+	channel.RLockFunc(func() {
 		data = channel.Data
 	})
 	return
@@ -133,7 +133,7 @@ func (channel *BaseChannel) GetData() (data interface{}) {
 
 func (channel *BaseChannel) SetData(data interface{}) {
 	/* 写锁 */
-	channel.RWMutex.LockFunc(func() {
+	channel.LockFunc(func() {
 		channel.Data = data
 	})
 }

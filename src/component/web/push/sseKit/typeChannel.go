@@ -9,7 +9,7 @@ import (
 )
 
 type SseChannel struct {
-	*pushKit.BaseChannel
+	pushKit.BaseChannel
 
 	w       http.ResponseWriter
 	r       *http.Request
@@ -44,7 +44,7 @@ func (channel *SseChannel) PushMessage(msgType messageType, data []byte) (err er
 		return pushKit.ChannelClosedError
 	}
 	/* 写锁 */
-	channel.RWMutex.LockFunc(func() {
+	channel.LockFunc(func() {
 		if channel.Closed {
 			err = pushKit.ChannelClosedError
 			return

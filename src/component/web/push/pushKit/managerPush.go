@@ -11,16 +11,16 @@ func PushToAll(data []byte, exceptBsids []string) (err error) {
 		return err
 	}
 
-	/* 写锁 */
-	idMap.LockFunc(func() {
+	/* 读锁 */
+	idMap.RLockFunc(func() {
 		var wg sync.WaitGroup
 
 		for _, channel := range idMap.Map {
-			if sliceKit.Contains(exceptBsids, channel.GetBsid()) {
+			c := channel
+
+			if sliceKit.Contains(exceptBsids, c.GetBsid()) {
 				continue
 			}
-
-			c := channel
 			wg.Add(1)
 			_ = pool.Submit(func() {
 				defer wg.Done()
