@@ -1,5 +1,5 @@
 ## 操作的耗时
-* 耗时较长: push
+* 耗时较长: push（虽然采用了goroutine池）
 * 耗时较短: bind、unbind
 
 ## 读写锁
