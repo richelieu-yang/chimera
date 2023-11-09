@@ -31,6 +31,7 @@ func BindBsid(channel Channel, bsid string) {
 
 	/* 写锁 */
 	bsidMap.LockFunc(func() {
+		// 处理特殊情况: 已经有别的 channel 绑定了此 bsid
 		old := bsidMap.Map[bsid]
 		if old != nil {
 			_ = old.Close(fmt.Sprintf("bsid(%s) is replaced by new channel", bsid))
@@ -50,21 +51,20 @@ func BindUser(channel Channel, user string) {
 	// 先解绑 user（有的话）
 	UnbindUser(channel)
 
-	var userSet *setKit.SetWithLock[Channel]
-	/* 写锁 */
+	/* map写锁 */
 	userMap.LockFunc(func() {
-		userSet = userMap.Map[user]
+		userSet := userMap.Map[user]
 		if userSet == nil {
 			userSet = setKit.NewSetWithLock[Channel]()
 			userMap.Map[user] = userSet
 		}
-	})
 
-	/* 写锁 */
-	userSet.LockFunc(func() {
-		_ = userSet.Set.Add(channel)
-		// 更新 channel 的信息
-		channel.SetUser(user)
+		/* set写锁 */
+		userSet.LockFunc(func() {
+			_ = userSet.Set.Add(channel)
+			// 更新 channel 的信息
+			channel.SetUser(user)
+		})
 	})
 }
 
@@ -76,20 +76,19 @@ func BindGroup(channel Channel, group string) {
 	// 先解绑 group（有的话）
 	UnbindGroup(channel)
 
-	/* 写锁 */
-	var groupSet *setKit.SetWithLock[Channel]
+	/* map写锁 */
 	groupMap.LockFunc(func() {
-		groupSet = userMap.Map[group]
+		groupSet := userMap.Map[group]
 		if groupSet == nil {
 			groupSet = setKit.NewSetWithLock[Channel]()
 			groupMap.Map[group] = groupSet
 		}
-	})
 
-	/* 写锁 */
-	groupSet.LockFunc(func() {
-		_ = groupSet.Set.Add(channel)
-		// 更新 channel 的信息
-		channel.SetGroup(group)
+		/* set写锁 */
+		groupSet.LockFunc(func() {
+			_ = groupSet.Set.Add(channel)
+			// 更新 channel 的信息
+			channel.SetGroup(group)
+		})
 	})
 }

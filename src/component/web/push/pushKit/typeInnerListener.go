@@ -21,7 +21,7 @@ func (listener InnerListener) OnMessage(channel Channel, messageType int, data [
 
 func (listener InnerListener) OnClose(channel Channel, closeInfo string, bsid, user, group string) {
 	// 移除管理
-	UnBindId(channel)
+	UnbindId(channel)
 	UnbindBsid(channel)
 	UnbindUser(channel)
 	UnbindGroup(channel)

@@ -4,7 +4,11 @@ import (
 	"github.com/richelieu-yang/chimera/v2/src/core/strKit"
 )
 
-func UnBindId(channel Channel) {
+// UnbindId
+/*
+PS: 仅是解绑，不会关闭channel.
+*/
+func UnbindId(channel Channel) {
 	id := channel.GetId()
 
 	/* 写锁 */
@@ -13,12 +17,15 @@ func UnBindId(channel Channel) {
 	})
 }
 
+// UnbindBsid
+/*
+PS: 仅是解绑，不会关闭channel.
+*/
 func UnbindBsid(channel Channel) {
 	bsid := channel.GetBsid()
 	if strKit.IsEmpty(bsid) {
 		return
 	}
-
 	defer channel.ClearBsid()
 
 	/* 写锁 */
