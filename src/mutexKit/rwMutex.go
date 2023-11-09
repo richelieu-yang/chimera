@@ -2,14 +2,12 @@ package mutexKit
 
 import "sync"
 
-type (
-	RWMutex struct {
-		sync.RWMutex
-	}
-)
-
-func NewRWMutex() *RWMutex {
-	return &RWMutex{}
+// RWMutex 读写锁.
+/*
+PS: 结构体中使用此锁，可以考虑"匿名字段".
+*/
+type RWMutex struct {
+	sync.RWMutex
 }
 
 // LockFunc 写锁
@@ -54,4 +52,9 @@ func (m *RWMutex) TryRLockFunc(f func()) (result bool) {
 		f()
 	}
 	return
+}
+
+// NewRWMutex Deprecated: 直接用 &RWMutex{} 吧.
+func NewRWMutex() *RWMutex {
+	return &RWMutex{}
 }

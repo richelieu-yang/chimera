@@ -4,14 +4,12 @@ import (
 	"sync"
 )
 
-type (
-	Mutex struct {
-		sync.Mutex
-	}
-)
-
-func NewMutex() *Mutex {
-	return &Mutex{}
+// Mutex 互斥锁.
+/*
+PS: 结构体中使用此锁，可以考虑"匿名字段".
+*/
+type Mutex struct {
+	sync.Mutex
 }
 
 func (m *Mutex) LockFunc(f func()) {
@@ -29,4 +27,9 @@ func (m *Mutex) TryLockFunc(f func()) (result bool) {
 		f()
 	}
 	return
+}
+
+// NewMutex Deprecated: 直接用 &Mutex{} 吧.
+func NewMutex() *Mutex {
+	return &Mutex{}
 }
