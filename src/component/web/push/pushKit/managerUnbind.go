@@ -80,13 +80,22 @@ func UnbindGroup(channel Channel) {
 	}
 	defer channel.ClearGroup()
 
-	groupSet := GetGroupSet(group)
-	if groupSet == nil {
-		return
-	}
-
-	/* 写锁 */
-	groupSet.LockFunc(func() {
-		groupSet.Set.Remove(channel)
+	/* map写锁 */
+	groupMap.LockFunc(func() {
+		groupSet, ok := groupMap.Map[group]
+		if !ok {
+			return
+		}
+		if groupSet == nil {
+			delete(groupMap.Map, group)
+			return
+		}
+		/* set写锁 */
+		groupSet.LockFunc(func() {
+			groupSet.Set.Remove(channel)
+			if groupSet.Set.Cardinality() == 0 {
+				delete(groupMap.Map, group)
+			}
+		})
 	})
 }
