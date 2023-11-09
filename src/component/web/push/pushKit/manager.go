@@ -37,7 +37,7 @@ var (
 */
 func GetChannelByBsid(bsid string) (channel Channel) {
 	/* 读锁 */
-	bsidMap.RWLock.RLockFunc(func() {
+	bsidMap.RLockFunc(func() {
 		channel = bsidMap.Map[bsid]
 	})
 	return
@@ -50,7 +50,7 @@ func GetChannelByBsid(bsid string) (channel Channel) {
 func GetUserSet(user string) *setKit.SetWithLock[Channel] {
 	var userSet *setKit.SetWithLock[Channel]
 	/* 读锁 */
-	userMap.RWLock.RLockFunc(func() {
+	userMap.RLockFunc(func() {
 		userSet = userMap.Map[user]
 	})
 	return userSet
@@ -63,7 +63,7 @@ func GetUserSet(user string) *setKit.SetWithLock[Channel] {
 func GetGroupSet(group string) *setKit.SetWithLock[Channel] {
 	var groupSet *setKit.SetWithLock[Channel]
 	/* 读锁 */
-	groupMap.RWLock.RLockFunc(func() {
+	groupMap.RLockFunc(func() {
 		groupSet = userMap.Map[group]
 	})
 	return groupSet

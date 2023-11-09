@@ -12,7 +12,7 @@ func PushToAll(data []byte, exceptBsids []string) (err error) {
 	}
 
 	/* 写锁 */
-	idMap.RWLock.LockFunc(func() {
+	idMap.LockFunc(func() {
 		var wg sync.WaitGroup
 
 		for _, channel := range idMap.Map {
@@ -56,7 +56,7 @@ func PushToUser(data []byte, user string, exceptBsids []string) error {
 	}
 
 	/* 写锁 */
-	userSet.RWLock.LockFunc(func() {
+	userSet.LockFunc(func() {
 		var wg sync.WaitGroup
 		userSet.Set.Each(func(channel Channel) bool {
 			if sliceKit.Contains(exceptBsids, channel.GetBsid()) {
@@ -86,7 +86,7 @@ func PushToGroup(data []byte, group string, exceptBsids []string) error {
 	}
 
 	/* 写锁 */
-	groupSet.RWLock.LockFunc(func() {
+	groupSet.LockFunc(func() {
 		var wg sync.WaitGroup
 		groupSet.Set.Each(func(channel Channel) bool {
 			if sliceKit.Contains(exceptBsids, channel.GetBsid()) {
