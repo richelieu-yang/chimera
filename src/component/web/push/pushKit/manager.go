@@ -31,7 +31,7 @@ var (
 	groupMap = mapKit.NewMapWithLock[string, *setKit.SetWithLock[Channel]]()
 )
 
-// GetChannelByBsid （读锁）
+// GetChannelByBsid （读锁）根据 bsid 获取Channel.
 /*
 @return 可能为nil
 */
