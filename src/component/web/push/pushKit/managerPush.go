@@ -39,7 +39,7 @@ func PushToBsid(data []byte, bsid string) (err error) {
 
 	/* map读锁 */
 	bsidMap.RLockFunc(func() {
-		channel := GetChannelByBsid(bsid)
+		channel := bsidMap.Map[bsid]
 		if channel == nil {
 			err = errorKit.New("No channel for bsid(%s)", bsid)
 			return
