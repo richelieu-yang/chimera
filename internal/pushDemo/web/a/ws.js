@@ -74,9 +74,11 @@ function connect(url) {
     };
     channel.onerror = function (e) {
         println("onerror");
+        console.error(e);
     };
-    channel.onclose = function () {
-        println("onclose");
+    channel.onclose = function (e) {
+        println("onclose: code(" + e.code + "), reason(" + e.reason + "), wasClean(" + e.wasClean + ")");
+        console.error(e);
     };
 }
 
