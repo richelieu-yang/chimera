@@ -51,6 +51,11 @@ func main() {
 		engine.POST("/push_to_group", ginKit.WrapToHandlerFunc(handler.PushToGroup))
 	}
 
+	// close
+	{
+		engine.POST("/close_by_id", ginKit.WrapToHandlerFunc(handler.CloseById))
+	}
+
 	// WebSocket
 	{
 		processor, err := wsKit.NewProcessor(nil, nil, &types.DemoListener{}, wsKit.MessageTypeText)

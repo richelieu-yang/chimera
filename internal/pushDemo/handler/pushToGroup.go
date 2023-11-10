@@ -19,14 +19,14 @@ import (
 // @Success 200 {object} types.JsonResponse
 // @Router /push_to_group [post]
 func PushToGroup(ctx *gin.Context) (*ginKit.ResponsePackage, error) {
-	type Params struct {
+	type pushToGroupParams struct {
 		Text string `form:"text" binding:"required"`
 
 		Group       string   `form:"group" binding:"required"`
 		ExceptBsids []string `form:"exceptBsids" binding:"unique,dive,required"`
 	}
 
-	params := &Params{}
+	params := &pushToGroupParams{}
 	if err := ctx.ShouldBind(params); err != nil {
 		return &ginKit.ResponsePackage{
 			StatusCode: http.StatusBadRequest,
