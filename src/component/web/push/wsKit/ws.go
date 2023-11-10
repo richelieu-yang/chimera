@@ -3,7 +3,6 @@ package wsKit
 import (
 	"github.com/gorilla/websocket"
 	"github.com/richelieu-yang/chimera/v2/src/component/web/push/pushKit"
-	"github.com/richelieu-yang/chimera/v2/src/idKit"
 	"net/http"
 	"time"
 )
@@ -33,9 +32,7 @@ func NewProcessor(upgrader *websocket.Upgrader, idGenerator func() (string, erro
 		upgrader = DefaultUpgrader()
 	}
 	if idGenerator == nil {
-		idGenerator = func() (string, error) {
-			return idKit.NewXid(), nil
-		}
+		idGenerator = pushKit.DefaultIdGenerator()
 	}
 	listeners, err := pushKit.NewListeners(listener)
 	if err != nil {

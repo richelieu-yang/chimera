@@ -2,7 +2,6 @@ package sseKit
 
 import (
 	"github.com/richelieu-yang/chimera/v2/src/component/web/push/pushKit"
-	"github.com/richelieu-yang/chimera/v2/src/idKit"
 )
 
 // NewProcessor
@@ -12,9 +11,7 @@ import (
 */
 func NewProcessor(idGenerator func() (string, error), listener pushKit.Listener, msgType messageType) (pushKit.Processor, error) {
 	if idGenerator == nil {
-		idGenerator = func() (string, error) {
-			return idKit.NewXid(), nil
-		}
+		idGenerator = pushKit.DefaultIdGenerator()
 	}
 	listeners, err := pushKit.NewListeners(listener)
 	if err != nil {
