@@ -1,7 +1,7 @@
 package sseKit
 
 type messageType struct {
-	Text string
+	value string
 }
 
 var (

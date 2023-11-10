@@ -2,9 +2,15 @@ package wsKit
 
 import "github.com/gorilla/websocket"
 
-type messageType uint
+type messageType struct {
+	value uint
+}
 
-const (
-	MessageTypeText   messageType = websocket.TextMessage
-	MessageTypeBinary messageType = websocket.BinaryMessage
+var (
+	MessageTypeText = messageType{
+		value: websocket.TextMessage,
+	}
+	MessageTypeBinary = messageType{
+		value: websocket.BinaryMessage,
+	}
 )
