@@ -10,13 +10,13 @@ import (
 
 // CloseById
 // @Summary 关闭指定连接（根据id）.
-// @Tags push
+// @Tags close
 // @Accept x-www-form-urlencoded
 // @Produce json
 // @Param id 		formData	string	true	"要关闭哪个连接？"
 // @Param reason	formData	string 	false	"关闭的原因."
 // @Success 200 {object} types.JsonResponse
-// @Router /push_to_all [post]
+// @Router /close_by_id [post]
 func CloseById(ctx *gin.Context) (*ginKit.ResponsePackage, error) {
 	type closeByIdParams struct {
 		Id     string `form:"id" binding:"required"`

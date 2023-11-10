@@ -15,6 +15,43 @@ const docTemplate = `{
     "host": "{{.Host}}",
     "basePath": "{{.BasePath}}",
     "paths": {
+        "/close_by_id": {
+            "post": {
+                "consumes": [
+                    "application/x-www-form-urlencoded"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "close"
+                ],
+                "summary": "关闭指定连接（根据id）.",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "要关闭哪个连接？",
+                        "name": "id",
+                        "in": "formData",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "关闭的原因.",
+                        "name": "reason",
+                        "in": "formData"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/types.JsonResponse"
+                        }
+                    }
+                }
+            }
+        },
         "/push_to_all": {
             "post": {
                 "consumes": [

@@ -15,6 +15,30 @@ info:
   title: Title
   version: "1.0"
 paths:
+  /close_by_id:
+    post:
+      consumes:
+      - application/x-www-form-urlencoded
+      parameters:
+      - description: 要关闭哪个连接？
+        in: formData
+        name: id
+        required: true
+        type: string
+      - description: 关闭的原因.
+        in: formData
+        name: reason
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/types.JsonResponse'
+      summary: 关闭指定连接（根据id）.
+      tags:
+      - close
   /push_to_all:
     post:
       consumes:
