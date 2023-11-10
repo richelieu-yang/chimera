@@ -24,8 +24,8 @@ func DefaultUpgrader() *websocket.Upgrader {
 
 // NewProcessor
 /*
-@param upgrader			可以为nil
-@param idGenerator		可以为nil（使用xid）
+@param upgrader			可以为nil（将使用默认的）
+@param idGenerator		可以为nil（将使用xid）
 @param listener			不能为nil
 */
 func NewProcessor(upgrader *websocket.Upgrader, idGenerator func() (string, error), listener pushKit.Listener, messageType messageType) (*WsProcessor, error) {
