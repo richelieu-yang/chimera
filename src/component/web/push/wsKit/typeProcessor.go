@@ -46,6 +46,7 @@ func (processor *WsProcessor) Process(w http.ResponseWriter, r *http.Request) {
 		processor.listeners.OnFailure(w, r, failureInfo)
 		return
 	}
+	// PS: 对于 Conn.Close() ，可以多次调用，不会panic，但从第二次关闭开始，返回非nil的error（可以直接忽略）.
 	defer conn.Close()
 
 	channel, err := processor.newChannel(r, conn)

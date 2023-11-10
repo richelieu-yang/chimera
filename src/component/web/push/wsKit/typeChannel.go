@@ -62,8 +62,6 @@ func (channel *WsChannel) PushMessage(messageType messageType, data []byte) (err
 // Close 后端主动关闭通道.
 func (channel *WsChannel) Close(reason string) (err error) {
 	if channel.SetClosed() {
-		// TODO:
-
 		closeInfo := fmt.Sprintf("Closed by backend with reason(%s)", reason)
 		channel.Listeners.OnClose(channel, closeInfo)
 
