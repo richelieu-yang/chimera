@@ -8,6 +8,7 @@ import (
 	"github.com/richelieu-yang/chimera/v2/src/component/web/ginKit"
 	"github.com/richelieu-yang/chimera/v2/src/component/web/push/pushKit"
 	"github.com/richelieu-yang/chimera/v2/src/component/web/push/sseKit"
+	"github.com/richelieu-yang/chimera/v2/src/component/web/push/wsKit"
 	"github.com/richelieu-yang/chimera/v2/src/goroutine/poolKit"
 	"github.com/richelieu-yang/chimera/v2/src/json/jsonRespKit"
 	"github.com/richelieu-yang/chimera/v2/src/log/logrusKit"
@@ -50,16 +51,25 @@ func main() {
 		engine.POST("/push_to_group", ginKit.WrapToHandlerFunc(handler.PushToGroup))
 	}
 
+	// WebSocket
+	{
+		processor, err := wsKit.NewProcessor(nil, nil, &types.DemoListener{}, wsKit.MessageTypeText)
+		if err != nil {
+			logrus.Fatal(err)
+		}
+		engine.GET("/ws", processor.ProcessWithGin)
+	}
+
 	// SSE
 	{
 		processor, err := sseKit.NewProcessor(nil, &types.DemoListener{}, sseKit.MessageTypeRaw)
 		if err != nil {
-			panic(err)
+			logrus.Fatal(err)
 		}
 		engine.GET("/sse", processor.ProcessWithGin)
 	}
 
 	if err := engine.Run(":80"); err != nil {
-		panic(err)
+		logrus.Fatal(err)
 	}
 }
