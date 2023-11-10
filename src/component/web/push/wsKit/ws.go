@@ -3,8 +3,6 @@ package wsKit
 import (
 	"github.com/gorilla/websocket"
 	"github.com/richelieu-yang/chimera/v2/src/component/web/push/pushKit"
-	"github.com/richelieu-yang/chimera/v2/src/core/errorKit"
-	"github.com/richelieu-yang/chimera/v2/src/core/interfaceKit"
 	"github.com/richelieu-yang/chimera/v2/src/idKit"
 	"net/http"
 	"time"
@@ -39,20 +37,15 @@ func NewProcessor(upgrader *websocket.Upgrader, idGenerator func() (string, erro
 			return idKit.NewXid(), nil
 		}
 	}
-	if err := interfaceKit.AssertNotNil(listener, "listener"); err != nil {
+	listeners, err := pushKit.NewListeners(listener)
+	if err != nil {
 		return nil, err
-	}
-	switch messageType {
-	case MessageTypeText:
-	case MessageTypeBinary:
-	default:
-		return nil, errorKit.New("invalid message type(%d)", messageType)
 	}
 
 	return &WsProcessor{
 		upgrader:    upgrader,
 		idGenerator: idGenerator,
-		listener:    listener,
+		listeners:   listeners,
 		msgType:     messageType,
 	}, nil
 }

@@ -8,14 +8,14 @@ import (
 )
 
 type WsChannel struct {
-	*pushKit.BaseChannel
+	pushKit.BaseChannel
 
-	conn    *websocket.Conn
-	msgType messageType
+	conn        *websocket.Conn
+	messageType messageType
 }
 
 func (channel *WsChannel) Push(data []byte) error {
-	return channel.PushMessage(channel.msgType, data)
+	return channel.PushMessage(channel.messageType, data)
 }
 
 // PushMessage 推送消息给客户端.
@@ -44,7 +44,7 @@ func (channel *WsChannel) PushMessage(messageType messageType, data []byte) (err
 			return
 		}
 
-		err = channel.conn.WriteMessage(int(messageType), data)
+		err = channel.conn.WriteMessage(messageType.value, data)
 		failFlag = err != nil
 	})
 
@@ -60,12 +60,26 @@ func (channel *WsChannel) PushMessage(messageType messageType, data []byte) (err
 }
 
 // Close 后端主动关闭通道.
-func (channel *WsChannel) Close() (err error) {
+func (channel *WsChannel) Close(reason string) (err error) {
 	if channel.SetClosed() {
-		info := "Closed by backend"
-		channel.Listeners.OnClose(channel, info)
+		// TODO:
+
+		closeInfo := fmt.Sprintf("Closed by backend with reason(%s)", reason)
+		channel.Listeners.OnClose(channel, closeInfo)
 
 		err = channel.conn.Close()
 	}
 	return
+}
+
+func (channel *WsChannel) BindGroup(group string) {
+	pushKit.BindGroup(channel, group)
+}
+
+func (channel *WsChannel) BindUser(user string) {
+	pushKit.BindUser(channel, user)
+}
+
+func (channel *WsChannel) BindBsid(bsid string) {
+	pushKit.BindBsid(channel, bsid)
 }

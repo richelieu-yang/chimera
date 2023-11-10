@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"github.com/gin-gonic/gin"
 	"github.com/gorilla/websocket"
+	"github.com/richelieu-yang/chimera/v2/src/component/web/httpKit"
 	"github.com/richelieu-yang/chimera/v2/src/component/web/push/pushKit"
 	"github.com/richelieu-yang/chimera/v2/src/core/errorKit"
 	"github.com/richelieu-yang/chimera/v2/src/core/strKit"
@@ -24,42 +25,42 @@ type WsProcessor struct {
 	msgType     messageType
 }
 
-func (p *WsProcessor) ProcessWithGin(ctx *gin.Context) {
-	p.Process(ctx.Writer, ctx.Request)
+func (processor *WsProcessor) ProcessWithGin(ctx *gin.Context) {
+	processor.Process(ctx.Writer, ctx.Request)
 }
 
-func (p *WsProcessor) Process(w http.ResponseWriter, r *http.Request) {
+func (processor *WsProcessor) Process(w http.ResponseWriter, r *http.Request) {
 	PolyfillWebSocketRequest(r)
 
 	// 先判断是不是websocket请求
 	if !IsWebSocketUpgrade(r) {
 		failureInfo := "Not a websocket upgrade request"
-		p.listeners.OnFailure(w, r, failureInfo)
+		processor.listeners.OnFailure(w, r, failureInfo)
 		return
 	}
 
 	// Upgrade（升级为WebSocket协议）
-	conn, err := p.upgrader.Upgrade(w, r, w.Header())
+	conn, err := processor.upgrader.Upgrade(w, r, w.Header())
 	if err != nil {
 		failureInfo := fmt.Sprintf("Fail to upgrade because of error(%s)", err.Error())
-		p.listeners.OnFailure(w, r, failureInfo)
+		processor.listeners.OnFailure(w, r, failureInfo)
 		return
 	}
 	defer conn.Close()
 
-	channel, err := p.newChannel(conn)
+	channel, err := processor.newChannel(r, conn)
 	if err != nil {
 		err = errorKit.Wrap(err, "Fail to new channel")
-		p.listeners.OnFailure(w, r, err.Error())
+		processor.listeners.OnFailure(w, r, err.Error())
 		return
 	}
 
-	p.listeners.OnHandshake(w, r, channel)
+	processor.listeners.OnHandshake(w, r, channel)
 
 	conn.SetCloseHandler(func(code int, text string) error {
 		if channel.SetClosed() {
 			info := fmt.Sprintf("code: %d, text: %s", code, text)
-			p.listeners.OnClose(channel, info)
+			processor.listeners.OnClose(channel, info)
 		}
 
 		// 默认的close handler
@@ -76,20 +77,20 @@ func (p *WsProcessor) Process(w http.ResponseWriter, r *http.Request) {
 				var closeErr *websocket.CloseError
 				if errors.As(err, &closeErr) {
 					info := fmt.Sprintf("code: %d, text: %s", closeErr.Code, closeErr.Text)
-					p.listeners.OnClose(channel, info)
+					processor.listeners.OnClose(channel, info)
 				} else {
 					info := fmt.Sprintf("Fail to read message because of error(%s)", err.Error())
-					p.listeners.OnClose(channel, info)
+					processor.listeners.OnClose(channel, info)
 				}
 			}
 			break
 		}
-		p.listeners.OnMessage(channel, messageType, data)
+		processor.listeners.OnMessage(channel, messageType, data)
 	}
 }
 
-func (p *WsProcessor) newChannel(conn *websocket.Conn) (*WsChannel, error) {
-	id, err := p.idGenerator()
+func (processor *WsProcessor) newChannel(r *http.Request, conn *websocket.Conn) (pushKit.Channel, error) {
+	id, err := processor.idGenerator()
 	if err != nil {
 		return nil, errorKit.Wrap(err, "Fail to generate id")
 	}
@@ -97,19 +98,25 @@ func (p *WsProcessor) newChannel(conn *websocket.Conn) (*WsChannel, error) {
 		return nil, err
 	}
 
+	ip, err := httpKit.GetClientIP(r)
+	if err != nil {
+		ip = err.Error()
+	}
+
 	channel := &WsChannel{
-		BaseChannel: &pushKit.BaseChannel{
+		BaseChannel: pushKit.BaseChannel{
+			RWMutex:   mutexKit.RWMutex{},
+			ClientIP:  ip,
 			Id:        id,
 			Bsid:      "",
 			User:      "",
 			Group:     "",
-			RWMutex:   mutexKit.RWMutex{},
 			Data:      nil,
 			Closed:    false,
-			Listeners: p.listeners,
+			Listeners: processor.listeners,
 		},
-		conn:    conn,
-		msgType: p.msgType,
+		conn:        conn,
+		messageType: processor.msgType,
 	}
 	return channel, nil
 }
