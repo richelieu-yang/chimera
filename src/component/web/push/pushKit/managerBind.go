@@ -78,7 +78,7 @@ func BindGroup(channel Channel, group string) {
 
 	/* map写锁 */
 	groupMap.LockFunc(func() {
-		groupSet := userMap.Map[group]
+		groupSet := groupMap.Map[group]
 		if groupSet == nil {
 			groupSet = setKit.NewSetWithLock[Channel]()
 			groupMap.Map[group] = groupSet
