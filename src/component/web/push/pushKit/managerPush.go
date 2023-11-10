@@ -15,11 +15,12 @@ func PushToAll(data []byte, exceptBsids []string) (err error) {
 	idMap.RLockFunc(func() {
 		var wg sync.WaitGroup
 		for _, channel := range idMap.Map {
-			c := channel
-
-			if sliceKit.Contains(exceptBsids, c.GetBsid()) {
+			if sliceKit.Contains(exceptBsids, channel.GetBsid()) {
 				continue
 			}
+
+			// for range + goroutine，必须使用 "同名变量覆盖v:=v"
+			c := channel
 			wg.Add(1)
 			_ = pool.Submit(func() {
 				defer wg.Done()
@@ -66,15 +67,15 @@ func PushToUser(data []byte, user string, exceptBsids []string) (err error) {
 		userSet.RLockFunc(func() {
 			var wg sync.WaitGroup
 			userSet.Set.Each(func(channel Channel) bool {
-				c := channel
-
-				if sliceKit.Contains(exceptBsids, c.GetBsid()) {
+				if sliceKit.Contains(exceptBsids, channel.GetBsid()) {
 					return false // 不中断循环
 				}
+
+				// 由于使用 Set.Each() 进行遍历，此处无需使用 "同名变量覆盖v:=v"
 				wg.Add(1)
 				_ = pool.Submit(func() {
 					defer wg.Done()
-					_ = c.Push(data)
+					_ = channel.Push(data)
 				})
 				return false // 不中断循环
 			})
@@ -101,15 +102,15 @@ func PushToGroup(data []byte, group string, exceptBsids []string) (err error) {
 		groupSet.RLockFunc(func() {
 			var wg sync.WaitGroup
 			groupSet.Set.Each(func(channel Channel) bool {
-				c := channel
-
-				if sliceKit.Contains(exceptBsids, c.GetBsid()) {
+				if sliceKit.Contains(exceptBsids, channel.GetBsid()) {
 					return false // 不中断循环
 				}
+
+				// 由于使用 Set.Each() 进行遍历，此处无需使用 "同名变量覆盖v:=v"
 				wg.Add(1)
 				_ = pool.Submit(func() {
 					defer wg.Done()
-					_ = c.Push(data)
+					_ = channel.Push(data)
 				})
 				return false // 不中断循环
 			})
