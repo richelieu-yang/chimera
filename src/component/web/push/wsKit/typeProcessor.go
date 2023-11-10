@@ -51,8 +51,8 @@ func (processor *WsProcessor) Process(w http.ResponseWriter, r *http.Request) {
 
 	channel, err := processor.newChannel(r, conn)
 	if err != nil {
-		err = errorKit.Wrap(err, "Fail to new channel")
-		processor.listeners.OnFailure(w, r, err.Error())
+		failureInfo := fmt.Sprintf("Fail to new channel because of error(%s)", err.Error())
+		processor.listeners.OnFailure(w, r, failureInfo)
 		return
 	}
 
