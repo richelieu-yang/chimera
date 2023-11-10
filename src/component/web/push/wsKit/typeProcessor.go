@@ -108,6 +108,7 @@ func (processor *WsProcessor) newChannel(r *http.Request, conn *websocket.Conn) 
 		BaseChannel: pushKit.BaseChannel{
 			RWMutex:   mutexKit.RWMutex{},
 			ClientIP:  ip,
+			Type:      "WebSocket",
 			Id:        id,
 			Bsid:      "",
 			User:      "",

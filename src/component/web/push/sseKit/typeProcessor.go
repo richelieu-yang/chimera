@@ -75,6 +75,7 @@ func (p *SseProcessor) newChannel(w http.ResponseWriter, r *http.Request, closeC
 		BaseChannel: pushKit.BaseChannel{
 			RWMutex:   mutexKit.RWMutex{},
 			ClientIP:  ip,
+			Type:      "SSE",
 			Id:        id,
 			Bsid:      "",
 			User:      "",
