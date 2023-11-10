@@ -1,20 +1,15 @@
-var ws = null;
+var localStorageKey = "wsUrl";
+var channel = null;
 var urlInput = document.getElementById("urlInput"),
     connectBtn = document.getElementById("connectBtn"),
     disconnectBtn = document.getElementById("disconnectBtn"),
     clearBtn = document.getElementById("clearBtn"),
-    console = document.getElementById("console");
+    output = document.getElementById("output");
 
-var url = localStorage["url"];
-url = url.trim();
-if (!url) {
-    url = "";
-}
+var url = getFromLocalStorage()
 urlInput.value = url;
 
 connectBtn.onclick = function () {
-    println("[建立连接]")
-
     var url = urlInput.value;
     url = url.trim();
     if (!url) {
@@ -25,72 +20,88 @@ connectBtn.onclick = function () {
         alert("Invalid url!!!");
         return;
     }
-    localStorage["url"] = url;
 
-    if (ws != null) {
-        ws.close();
-        ws = null;
-    }
+    println("[建立连接]")
 
-    // if (source != null) {
-    //     source.close()
-    // }
-    // source = new EventSource(url);
-    //
-    // source.onopen = function (event) {
-    //     println("onopen")
-    // };
-    //
-    // source.onmessage = function (e) {
-    //     var origin = e.origin,
-    //         id = e.lastEventId,
-    //         event = e.type,
-    //         data = e.data;
-    //
-    //     println("onmessage: origin(" + origin + "), id(" + id + "), event(" + event + "), data(" + data + ")")
-    // };
-    //
-    // // 自定义事件
-    // source.addEventListener('test', function (e) {
-    //     var origin = e.origin,
-    //         id = e.lastEventId,
-    //         event = e.type,
-    //         data = e.data;
-    //
-    //     println("ontest: origin(" + origin + "), id(" + id + "), event(" + event + "), data(" + data + ")")
-    // }, false);
-    //
-    // source.onmessage = function (e) {
-    //     var origin = e.origin,
-    //         id = e.lastEventId,
-    //         event = e.type,
-    //         data = e.data;
-    //
-    //     println("onmessage: origin(" + origin + "), id(" + id + "), event(" + event + "), data(" + data + ")")
-    // };
-    //
-    // // 如果发生通信错误（比如连接中断），就会触发error事件
-    // source.onerror = function (event) {
-    //     println("onerror")
-    // };
-
+    connect(url);
+    setToLocalStorage(url);
     println("url: [" + url + "]")
 };
 
 disconnectBtn.onclick = function () {
     println("[断开连接]")
 
-    // if (!source) {
-    //     return
-    // }
-    // source.close();
-    // source = null;
+    disconnect();
 };
 
 clearBtn.onclick = function () {
-    console.value = "";
+    output.value = "";
 };
 
+/**
+ * PS: EventSource 没有onclose事件.
+ */
+function connect(url) {
+    disconnect();
+
+    channel = new WebSocket(url);
+    channel.onopen = function () {
+        println("onopen");
+    };
+    channel.onmessage = function (e) {
+        var data = e.data;
+
+        if (data instanceof ArrayBuffer) {
+            let blob = new Blob([data]), reader = new FileReader();
+
+            reader.readAsText(blob, "UTF-8");
+            reader.onload = () => {
+                var text = reader.result;
+                println("on binary message: " + text);
+            };
+        } else if (data instanceof Blob) {
+            var reader = new FileReader();
+
+            reader.readAsText(data, "UTF-8");
+            reader.onload = () => {
+                var text = reader.result;
+                println("on binary message: " + text);
+            };
+        } else if (typeof data === "string") {
+            var text = e.data;
+            println("on text message: " + text);
+        }
+    };
+    channel.onerror = function (e) {
+        println("onerror");
+    };
+    channel.onclose = function () {
+        println("onclose");
+    };
+}
+
+function disconnect() {
+    if (channel == null) {
+        return;
+    }
+
+    channel.close();
+    channel = null;
+}
+
 function println(text) {
-    console.value += text + "\n";
+    output.value += text + "\n";
+    console.info(text);
+}
+
+function getFromLocalStorage() {
+    var url = localStorage[localStorageKey];
+    if (!url) {
+        url = "";
+    }
+    return url.trim();
+}
+
+function setToLocalStorage(url) {
+    localStorage[localStorageKey] = url.trim();
 }

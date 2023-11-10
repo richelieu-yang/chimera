@@ -1,5 +1,5 @@
 var localStorageKey = "sseUrl";
-var channel;
+var channel = null;
 var urlInput = document.getElementById("urlInput"),
     connectBtn = document.getElementById("connectBtn"),
     disconnectBtn = document.getElementById("disconnectBtn"),
@@ -10,10 +10,6 @@ var url = getFromLocalStorage()
 urlInput.value = url;
 
 connectBtn.onclick = function () {
-    println("[建立连接]")
-
-    disconnect();
-
     var url = urlInput.value;
     url = url.trim();
     if (!url) {
@@ -24,6 +20,8 @@ connectBtn.onclick = function () {
         alert("Invalid url!!!");
         return;
     }
+
+    println("[建立连接]")
 
     connect(url);
     setToLocalStorage(url);
