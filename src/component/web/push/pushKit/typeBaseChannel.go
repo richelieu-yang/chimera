@@ -64,6 +64,10 @@ func (channel *BaseChannel) GetClientIP() string {
 	return channel.ClientIP
 }
 
+func (channel *BaseChannel) GetType() string {
+	return channel.Type
+}
+
 func (channel *BaseChannel) GetId() (id string) {
 	// 无需加解锁，因为: id是不变的
 	return channel.Id

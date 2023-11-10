@@ -12,6 +12,8 @@ type Channel interface {
 	Push(data []byte) error
 
 	GetClientIP() string
+	GetType() string
+
 	GetId() string
 	GetBsid() string
 	SetBsid(string)
