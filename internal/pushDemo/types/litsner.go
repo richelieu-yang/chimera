@@ -23,9 +23,11 @@ func (l *DemoListener) OnHandshake(w http.ResponseWriter, r *http.Request, chann
 
 	logrus.WithFields(logrus.Fields{
 		"clientIP": channel.GetClientIP(),
-		"bsid":     bsid,
-		"user":     user,
-		"group":    group,
+		"type":     channel.GetType(),
+		"id":       channel.GetId(),
+		"bsid":     channel.GetBsid(),
+		"user":     channel.GetUser(),
+		"group":    channel.GetGroup(),
 	}).Info("OnHandshake")
 
 	text := fmt.Sprintf("Hello, your id is [%s].", channel.GetId())
