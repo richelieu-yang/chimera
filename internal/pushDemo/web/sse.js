@@ -13,7 +13,8 @@ var urlInput = document.getElementById("urlInput"),
 // }
 // urlInput.value = sseUrl;
 
-var url = localStorage["url"]
+var url = localStorage["url"];
+url = url.trim();
 if (!url) {
     url = "";
 }
@@ -23,21 +24,26 @@ connectBtn.onclick = function () {
     println("[建立连接]")
 
     var url = urlInput.value;
+    url = url.trim();
     if (!url) {
-        alert("请输入url!!!");
+        alert("Please enter url!!!");
         return;
     }
-
+    if (!url.startsWith("http://") && !url.startsWith("https://")) {
+        alert("Invalid url!!!");
+        return;
+    }
     localStorage["url"] = url;
 
     if (source != null) {
         source.close()
     }
-
     source = new EventSource(url);
+
     source.onopen = function (event) {
         println("onopen")
     };
+
     source.onmessage = function (e) {
         var origin = e.origin,
             id = e.lastEventId,
@@ -46,6 +52,7 @@ connectBtn.onclick = function () {
 
         println("onmessage: origin(" + origin + "), id(" + id + "), event(" + event + "), data(" + data + ")")
     };
+
     // 自定义事件
     source.addEventListener('test', function (e) {
         var origin = e.origin,
@@ -55,6 +62,7 @@ connectBtn.onclick = function () {
 
         println("ontest: origin(" + origin + "), id(" + id + "), event(" + event + "), data(" + data + ")")
     }, false);
+
     source.onmessage = function (e) {
         var origin = e.origin,
             id = e.lastEventId,
