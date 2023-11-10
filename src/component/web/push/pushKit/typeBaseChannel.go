@@ -16,11 +16,12 @@ type BaseChannel struct {
 
 	// ClientIP 可能是error string（获取失败的情况下）
 	ClientIP string
-	Id       string
-	Bsid     string
-	User     string
-	Group    string
-	Data     interface{}
+
+	Id    string
+	Bsid  string
+	User  string
+	Group string
+	Data  interface{}
 
 	Closed    bool
 	Listeners Listeners
