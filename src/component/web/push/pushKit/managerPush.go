@@ -92,7 +92,7 @@ func PushToGroup(data []byte, group string, exceptBsids []string) (err error) {
 
 	/* map读锁 */
 	groupMap.RLockFunc(func() {
-		groupSet := userMap.Map[group]
+		groupSet := groupMap.Map[group]
 		if groupSet == nil {
 			err = errorKit.New("No channels for group(%s)", group)
 			return
