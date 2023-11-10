@@ -45,6 +45,12 @@ func (l *DemoListener) OnHandshake(w http.ResponseWriter, r *http.Request, chann
 
 func (l *DemoListener) OnMessage(channel pushKit.Channel, messageType int, data []byte) {
 	logrus.WithFields(logrus.Fields{
+		"clientIP": channel.GetClientIP(),
+		"id":       channel.GetId(),
+		"bsid":     channel.GetBsid(),
+		"user":     channel.GetUser(),
+		"group":    channel.GetGroup(),
+
 		"messageType": messageType,
 		"text":        string(data),
 	}).Info("OnMessage")
@@ -52,10 +58,12 @@ func (l *DemoListener) OnMessage(channel pushKit.Channel, messageType int, data 
 
 func (l *DemoListener) OnClose(channel pushKit.Channel, closeInfo string, bsid, user, group string) {
 	logrus.WithFields(logrus.Fields{
-		"clientIP":  channel.GetClientIP(),
-		"bsid":      bsid,
-		"user":      user,
-		"group":     group,
+		"clientIP": channel.GetClientIP(),
+		"id":       channel.GetId(),
+		"bsid":     bsid,
+		"user":     user,
+		"group":    group,
+
 		"closeInfo": closeInfo,
 	}).Info("OnClose")
 }
