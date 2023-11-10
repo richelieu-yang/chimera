@@ -72,7 +72,7 @@ func (p *SseProcessor) newChannel(w http.ResponseWriter, r *http.Request, closeC
 	}
 
 	channel := &SseChannel{
-		BaseChannel: &pushKit.BaseChannel{
+		BaseChannel: pushKit.BaseChannel{
 			RWMutex:   mutexKit.RWMutex{},
 			ClientIP:  ip,
 			Id:        id,
