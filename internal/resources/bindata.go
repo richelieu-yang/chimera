@@ -244,7 +244,7 @@ func _resourcesHtml404MinHtml() (*asset, error) {
 		return nil, err
 	}
 
-	info := bindataFileInfo{name: "_resources/html/404.min.html", size: 6800, mode: os.FileMode(420), modTime: time.Unix(1699857852, 0)}
+	info := bindataFileInfo{name: "_resources/html/404.min.html", size: 6800, mode: os.FileMode(420), modTime: time.Unix(1699864854, 0)}
 	a := &asset{bytes: bytes, info: info}
 	return a, nil
 }
