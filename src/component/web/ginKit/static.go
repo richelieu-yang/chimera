@@ -39,8 +39,9 @@ func StaticFile(group IGroup, relativePath, filePath string) error {
 
 // StaticDir 静态资源（目录）
 /*
-@param relativePath	路由
-@param root			相对路径（对于项目的根目录(working directory)，而非main()所在的目录（虽然他们常常是同一个）） || 绝对路径
+@param relativePath		路由
+@param root				相对路径（对于项目的根目录(working directory)，而非main()所在的目录（虽然他们常常是同一个）） || 绝对路径
+@param listDirectory 	是否列出目录下的文件，true: 当目录下不存 index.html 文件时，会列出该目录下的所有文件（正式环境不推荐，因为不安全）
 */
 func StaticDir(group IGroup, relativePath, root string, listDirectory bool) error {
 	if err := fileKit.AssertExistAndIsDir(root); err != nil {
