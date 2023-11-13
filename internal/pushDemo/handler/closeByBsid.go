@@ -18,12 +18,12 @@ import (
 // @Success 200 {object} types.JsonResponse
 // @Router /close_by_bsid [post]
 func CloseByBsid(ctx *gin.Context) (*ginKit.ResponsePackage, error) {
-	type closeByIdParams struct {
+	type closeByBsidParams struct {
 		Bsid   string `form:"bsid" binding:"required"`
 		Reason string `form:"reason"`
 	}
 
-	params := &closeByIdParams{}
+	params := &closeByBsidParams{}
 	if err := ctx.ShouldBind(params); err != nil {
 		return &ginKit.ResponsePackage{
 			StatusCode: http.StatusBadRequest,
