@@ -52,9 +52,9 @@ func (p *SseProcessor) Process(w http.ResponseWriter, r *http.Request) {
 		p.listeners.OnClose(channel, "Context done")
 	//case <-w.(http.CloseNotifier).CloseNotify():
 	//	p.listeners.OnClose(channel, "Connection closed")
-	case reason := <-closeCh:
+	case reason := <-channel.GetCloseCh():
 		// 后端主动断开连接
-		closeInfo := fmt.Sprintf("Connection is closed by backend with reason(%s)", reason)
+		closeInfo := fmt.Sprintf("SSE connection is closed by backend with reason(%s)", reason)
 		p.listeners.OnClose(channel, closeInfo)
 	}
 }

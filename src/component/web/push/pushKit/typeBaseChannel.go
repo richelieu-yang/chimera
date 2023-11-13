@@ -150,3 +150,7 @@ func (channel *BaseChannel) SetData(data interface{}) {
 func (channel *BaseChannel) ClearData() {
 	channel.SetData(nil)
 }
+
+func (channel *BaseChannel) GetCloseCh() chan string {
+	return channel.CloseCh
+}

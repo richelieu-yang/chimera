@@ -25,44 +25,44 @@ type WsProcessor struct {
 	msgType     messageType
 }
 
-func (processor *WsProcessor) ProcessWithGin(ctx *gin.Context) {
-	processor.Process(ctx.Writer, ctx.Request)
+func (p *WsProcessor) ProcessWithGin(ctx *gin.Context) {
+	p.Process(ctx.Writer, ctx.Request)
 }
 
-func (processor *WsProcessor) Process(w http.ResponseWriter, r *http.Request) {
+func (p *WsProcessor) Process(w http.ResponseWriter, r *http.Request) {
 	PolyfillWebSocketRequest(r)
 
 	// 先判断是不是websocket请求
 	if !IsWebSocketUpgrade(r) {
 		failureInfo := "Not a websocket upgrade request"
-		processor.listeners.OnFailure(w, r, failureInfo)
+		p.listeners.OnFailure(w, r, failureInfo)
 		return
 	}
 
 	// Upgrade（升级为WebSocket协议）
-	conn, err := processor.upgrader.Upgrade(w, r, w.Header())
+	conn, err := p.upgrader.Upgrade(w, r, w.Header())
 	if err != nil {
 		failureInfo := fmt.Sprintf("Fail to upgrade because of error(%s)", err.Error())
-		processor.listeners.OnFailure(w, r, failureInfo)
+		p.listeners.OnFailure(w, r, failureInfo)
 		return
 	}
 	// PS: 对于 Conn.Close() ，可以多次调用，不会panic，但从第二次关闭开始，返回非nil的error（可以直接忽略）.
 	defer conn.Close()
 
 	closeCh := make(chan string, 1)
-	channel, err := processor.newChannel(r, conn, closeCh)
+	channel, err := p.newChannel(r, conn, closeCh)
 	if err != nil {
 		failureInfo := fmt.Sprintf("Fail to new channel because of error(%s)", err.Error())
-		processor.listeners.OnFailure(w, r, failureInfo)
+		p.listeners.OnFailure(w, r, failureInfo)
 		return
 	}
 
-	processor.listeners.OnHandshake(w, r, channel)
+	p.listeners.OnHandshake(w, r, channel)
 
 	conn.SetCloseHandler(func(code int, text string) error {
 		if channel.SetClosed() {
 			info := fmt.Sprintf("code: %d, text: %s", code, text)
-			processor.listeners.OnClose(channel, info)
+			p.listeners.OnClose(channel, info)
 		}
 
 		// 默认的close handler
@@ -71,28 +71,38 @@ func (processor *WsProcessor) Process(w http.ResponseWriter, r *http.Request) {
 		return nil
 	})
 
-	/* 接收WebSocket客户端发来的消息 */
-	for {
-		messageType, data, err := conn.ReadMessage()
-		if err != nil {
-			if channel.SetClosed() {
-				var closeErr *websocket.CloseError
-				if errors.As(err, &closeErr) {
-					info := fmt.Sprintf("code: %d, text: %s", closeErr.Code, closeErr.Text)
-					processor.listeners.OnClose(channel, info)
-				} else {
-					info := fmt.Sprintf("Fail to read message because of error(%s)", err.Error())
-					processor.listeners.OnClose(channel, info)
+	go func() {
+		/* 接收WebSocket客户端发来的消息 */
+		for {
+			messageType, data, err := conn.ReadMessage()
+			if err != nil {
+				if channel.SetClosed() {
+					var closeErr *websocket.CloseError
+					if errors.As(err, &closeErr) {
+						info := fmt.Sprintf("code: %d, text: %s", closeErr.Code, closeErr.Text)
+						p.listeners.OnClose(channel, info)
+					} else {
+						info := fmt.Sprintf("Fail to read message because of error(%s)", err.Error())
+						p.listeners.OnClose(channel, info)
+					}
 				}
+				break
 			}
-			break
+			p.listeners.OnMessage(channel, messageType, data)
 		}
-		processor.listeners.OnMessage(channel, messageType, data)
+	}()
+
+	select {
+	case <-r.Context().Done():
+		p.listeners.OnClose(channel, "Context done")
+	case reason := <-channel.GetCloseCh():
+		closeInfo := fmt.Sprintf("WebSocket connection is closed by backend with reason(%s)", reason)
+		p.listeners.OnClose(channel, closeInfo)
 	}
 }
 
-func (processor *WsProcessor) newChannel(r *http.Request, conn *websocket.Conn, closeCh chan string) (pushKit.Channel, error) {
-	id, err := processor.idGenerator()
+func (p *WsProcessor) newChannel(r *http.Request, conn *websocket.Conn, closeCh chan string) (pushKit.Channel, error) {
+	id, err := p.idGenerator()
 	if err != nil {
 		return nil, errorKit.Wrap(err, "Fail to generate id")
 	}
@@ -117,10 +127,10 @@ func (processor *WsProcessor) newChannel(r *http.Request, conn *websocket.Conn, 
 			Group:     "",
 			Data:      nil,
 			Closed:    false,
-			Listeners: processor.listeners,
+			Listeners: p.listeners,
 		},
 		conn:        conn,
-		messageType: processor.msgType,
+		messageType: p.msgType,
 	}
 	return channel, nil
 }
