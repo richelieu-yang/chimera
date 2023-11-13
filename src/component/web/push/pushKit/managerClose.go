@@ -5,7 +5,7 @@ import (
 )
 
 func CloseAll(reason string) {
-	reason = strKit.EmptyToDefault(reason, "no reason")
+	reason = polyfillCloseReason(reason)
 
 	/* 读锁 */
 	idMap.RLockFunc(func() {
@@ -21,7 +21,7 @@ func CloseAll(reason string) {
 PS: 解绑（unbind）后续由 inner handler 处理.
 */
 func CloseById(id string, reason string) (err error) {
-	reason = strKit.EmptyToDefault(reason, "no reason")
+	reason = polyfillCloseReason(reason)
 
 	/* 读锁 */
 	idMap.RLockFunc(func() {
@@ -39,7 +39,7 @@ func CloseById(id string, reason string) (err error) {
 PS: 解绑（unbind）后续由 inner handler 处理.
 */
 func CloseByBsid(bsid string, reason string) (err error) {
-	reason = strKit.EmptyToDefault(reason, "no reason")
+	reason = polyfillCloseReason(reason)
 
 	/* 读锁 */
 	bsidMap.RLockFunc(func() {
@@ -58,7 +58,7 @@ func CloseByBsid(bsid string, reason string) (err error) {
 PS: 解绑（unbind）后续由 inner handler 处理.
 */
 func CloseByUser(user string, reason string) {
-	reason = strKit.EmptyToDefault(reason, "no reason")
+	reason = polyfillCloseReason(reason)
 
 	/* 读锁 */
 	userMap.RLockFunc(func() {
@@ -79,7 +79,7 @@ func CloseByUser(user string, reason string) {
 PS: 解绑（unbind）后续由 inner handler 处理.
 */
 func CloseByGroup(group string, reason string) {
-	reason = strKit.EmptyToDefault(reason, "no reason")
+	reason = polyfillCloseReason(reason)
 
 	/* 读锁 */
 	groupMap.RLockFunc(func() {
@@ -93,4 +93,8 @@ func CloseByGroup(group string, reason string) {
 			})
 		})
 	})
+}
+
+func polyfillCloseReason(reason string) string {
+	return strKit.EmptyToDefault(reason, "no reason")
 }
