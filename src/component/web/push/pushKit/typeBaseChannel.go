@@ -41,7 +41,7 @@ func (channel *BaseChannel) IsClosed() (rst bool) {
 
 // SetClosed
 /*
-PS: 如果返回值为true，应当触发 listener.onClose().
+PS: 返回值如果为true，应当调用 Listeners.OnClose().
 
 @return true: 	设置成功
 		false:	设置失败（因为已经被设置关闭）

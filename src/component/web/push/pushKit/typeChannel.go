@@ -7,6 +7,10 @@ type Channel interface {
 	*/
 	Close(reason string) error
 	IsClosed() (rst bool)
+	// SetClosed
+	/*
+		PS: 返回值如果为true，应当调用 Listeners.OnClose().
+	*/
 	SetClosed() (flag bool)
 
 	Push(data []byte) error
