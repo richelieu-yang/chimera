@@ -15,6 +15,110 @@ const docTemplate = `{
     "host": "{{.Host}}",
     "basePath": "{{.BasePath}}",
     "paths": {
+        "/close_all": {
+            "post": {
+                "consumes": [
+                    "application/x-www-form-urlencoded"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "close"
+                ],
+                "summary": "关闭所有连接.",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "关闭的原因.",
+                        "name": "reason",
+                        "in": "formData"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/types.JsonResponse"
+                        }
+                    }
+                }
+            }
+        },
+        "/close_by_bsid": {
+            "post": {
+                "consumes": [
+                    "application/x-www-form-urlencoded"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "close"
+                ],
+                "summary": "关闭指定连接（根据bsid）.",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "要关闭哪个连接？",
+                        "name": "bsid",
+                        "in": "formData",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "关闭的原因.",
+                        "name": "reason",
+                        "in": "formData"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/types.JsonResponse"
+                        }
+                    }
+                }
+            }
+        },
+        "/close_by_group": {
+            "post": {
+                "consumes": [
+                    "application/x-www-form-urlencoded"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "close"
+                ],
+                "summary": "关闭指定连接（根据group）.",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "要关闭哪些连接？",
+                        "name": "group",
+                        "in": "formData",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "关闭的原因.",
+                        "name": "reason",
+                        "in": "formData"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/types.JsonResponse"
+                        }
+                    }
+                }
+            }
+        },
         "/close_by_id": {
             "post": {
                 "consumes": [
@@ -32,6 +136,43 @@ const docTemplate = `{
                         "type": "string",
                         "description": "要关闭哪个连接？",
                         "name": "id",
+                        "in": "formData",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "关闭的原因.",
+                        "name": "reason",
+                        "in": "formData"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/types.JsonResponse"
+                        }
+                    }
+                }
+            }
+        },
+        "/close_by_user": {
+            "post": {
+                "consumes": [
+                    "application/x-www-form-urlencoded"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "close"
+                ],
+                "summary": "关闭指定连接（根据user）.",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "要关闭哪些连接？",
+                        "name": "user",
                         "in": "formData",
                         "required": true
                     },

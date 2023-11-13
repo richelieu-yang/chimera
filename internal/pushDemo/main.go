@@ -54,6 +54,10 @@ func main() {
 	// close
 	{
 		engine.POST("/close_by_id", ginKit.WrapToHandlerFunc(handler.CloseById))
+		engine.POST("/close_by_bsid", ginKit.WrapToHandlerFunc(handler.CloseByBsid))
+		engine.POST("/close_all", ginKit.WrapToHandlerFunc(handler.CloseAll))
+		engine.POST("/close_by_user", ginKit.WrapToHandlerFunc(handler.CloseByUser))
+		engine.POST("/close_by_group", ginKit.WrapToHandlerFunc(handler.CloseByGroup))
 	}
 
 	// WebSocket
