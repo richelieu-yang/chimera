@@ -4,6 +4,7 @@ package ginKit
 
 import (
 	"github.com/gin-gonic/gin"
+	"github.com/richelieu-yang/chimera/v2/src/core/fileKit"
 )
 
 // LoadHTMLFiles 加载（多个）html文件
@@ -24,19 +25,29 @@ func LoadHTMLGlob(engine IEngine, pattern string) {
 
 // StaticFile 静态资源（单个文件）
 /*
-Deprecated: 直接调用 IGroup 的方法.
+@param relativePath 路由
+@param filePath 相对路径（对于项目的根目录(working directory)，而非main()所在的目录（虽然他们常常是同一个）） || 绝对路径
 */
-func StaticFile(group IGroup, relativePath, filePath string) {
+func StaticFile(group IGroup, relativePath, filePath string) error {
+	if err := fileKit.AssertExistAndIsFile(filePath); err != nil {
+		return err
+	}
+
 	group.StaticFile(relativePath, filePath)
+	return nil
 }
 
 // StaticDir 静态资源（目录）
 /*
-Deprecated: 直接调用 IGroup 的方法.
-
 @param relativePath	路由
-@param dirPath		静态资源所在的目录（相对路径 || 绝对路径）
+@param root 相对路径（对于项目的根目录(working directory)，而非main()所在的目录（虽然他们常常是同一个）） || 绝对路径
 */
-func StaticDir(group IGroup, relativePath, dirPath string, listDirectory bool) {
-	group.StaticFS(relativePath, gin.Dir(dirPath, listDirectory))
+func StaticDir(group IGroup, relativePath, root string, listDirectory bool) error {
+	if err := fileKit.AssertExistAndIsDir(root); err != nil {
+		return err
+	}
+
+	fs := gin.Dir(root, listDirectory)
+	group.StaticFS(relativePath, fs)
+	return nil
 }

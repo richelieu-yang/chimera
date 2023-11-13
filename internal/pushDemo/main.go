@@ -1,6 +1,7 @@
 package main
 
 import (
+	"fmt"
 	"github.com/gin-gonic/gin"
 	_ "github.com/richelieu-yang/chimera/v2/internal/pushDemo/docs"
 	"github.com/richelieu-yang/chimera/v2/internal/pushDemo/handler"
@@ -9,6 +10,7 @@ import (
 	"github.com/richelieu-yang/chimera/v2/src/component/web/push/pushKit"
 	"github.com/richelieu-yang/chimera/v2/src/component/web/push/sseKit"
 	"github.com/richelieu-yang/chimera/v2/src/component/web/push/wsKit"
+	"github.com/richelieu-yang/chimera/v2/src/core/pathKit"
 	"github.com/richelieu-yang/chimera/v2/src/goroutine/poolKit"
 	"github.com/richelieu-yang/chimera/v2/src/json/jsonRespKit"
 	"github.com/richelieu-yang/chimera/v2/src/log/logrusKit"
@@ -77,6 +79,16 @@ func main() {
 		}
 		engine.GET("/sse", processor.ProcessWithGin)
 	}
+
+	// html
+	{
+		// 传参路径root 是相对于项目的根目录(working directory)，而非main()所在的目录（虽然他们常常是同一个）
+		// "./internal/pushDemo/web" <=> "internal/pushDemo/web"
+		root := "internal/pushDemo/web"
+		engine.StaticFS("/s", gin.Dir(root, true))
+	}
+
+	fmt.Println(pathKit.GetWorkingDir())
 
 	if err := engine.Run(":80"); err != nil {
 		logrus.Fatal(err)
