@@ -32,8 +32,7 @@ func (p *SseProcessor) Process(w http.ResponseWriter, r *http.Request) {
 	// 设置 response header
 	SetHeaders(w)
 
-	closeCh := make(chan string, 1)
-	channel, err := p.newChannel(w, r, closeCh)
+	channel, err := p.newChannel(w, r, make(chan string, 1))
 	if err != nil {
 		err = errorKit.Wrap(err, "Fail to new channel")
 		p.listeners.OnFailure(w, r, err.Error())
@@ -47,14 +46,16 @@ func (p *SseProcessor) Process(w http.ResponseWriter, r *http.Request) {
 		(2) case为 w.(http.CloseNotifier).CloseNotify() 和 r.Context().Done()，前端断开会走到 r.Context().Done()
 	*/
 	select {
-	case <-r.Context().Done():
-		// 前端主动断开连接
-		p.listeners.OnClose(channel, "Context done")
 	//case <-w.(http.CloseNotifier).CloseNotify():
 	//	p.listeners.OnClose(channel, "Connection closed")
+	case <-r.Context().Done():
+		// 前端主动断开连接
+		if channel.SetClosed() {
+			p.listeners.OnClose(channel, "Context done")
+		}
 	case reason := <-channel.GetCloseCh():
 		// 后端主动断开连接
-		closeInfo := fmt.Sprintf("SSE connection is closed by backend with reason(%s)", reason)
+		closeInfo := fmt.Sprintf("Connection is closed by backend with reason(%s)", reason)
 		p.listeners.OnClose(channel, closeInfo)
 	}
 }

@@ -49,8 +49,7 @@ func (p *WsProcessor) Process(w http.ResponseWriter, r *http.Request) {
 	// PS: 对于 Conn.Close() ，可以多次调用，不会panic，但从第二次关闭开始，返回非nil的error（可以直接忽略）.
 	defer conn.Close()
 
-	closeCh := make(chan string, 1)
-	channel, err := p.newChannel(r, conn, closeCh)
+	channel, err := p.newChannel(r, conn, make(chan string, 1))
 	if err != nil {
 		failureInfo := fmt.Sprintf("Fail to new channel because of error(%s)", err.Error())
 		p.listeners.OnFailure(w, r, failureInfo)
@@ -94,9 +93,11 @@ func (p *WsProcessor) Process(w http.ResponseWriter, r *http.Request) {
 
 	select {
 	case <-r.Context().Done():
-		p.listeners.OnClose(channel, "Context done")
+		if channel.SetClosed() {
+			p.listeners.OnClose(channel, "Context done")
+		}
 	case reason := <-channel.GetCloseCh():
-		closeInfo := fmt.Sprintf("WebSocket connection is closed by backend with reason(%s)", reason)
+		closeInfo := fmt.Sprintf("Connection is closed by backend with reason(%s)", reason)
 		p.listeners.OnClose(channel, closeInfo)
 	}
 }
