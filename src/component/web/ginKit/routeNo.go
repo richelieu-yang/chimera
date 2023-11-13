@@ -60,7 +60,7 @@ func DefaultNoRoute(engine IEngine) error {
 	engine.NoRoute(func(ctx *gin.Context) {
 		ctx.Data(http.StatusNotFound, "text/html; charset=utf-8", noRouteData)
 
-		// 此处不使用 ctx.FileFromFS ，原因: 这样的话响应状态码就会是200
+		//// 此处不使用 ctx.FileFromFS ，原因: 这样的话，响应状态码就会是200
 		//fs := resources.AssetFile()
 		//ctx.FileFromFS("_resources/html/404.min.html", fs)
 	})
