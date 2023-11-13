@@ -72,9 +72,7 @@ func setUp(config *Config, recoveryMiddleware gin.HandlerFunc, businessLogic fun
 	}
 
 	// favicon
-	if err := AttachDefaultFavicon(engine); err != nil {
-		return err
-	}
+	DefaultFavicon(engine)
 
 	// 404
 	if err := DefaultNoRoute(engine); err != nil {

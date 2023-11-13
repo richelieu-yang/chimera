@@ -8,6 +8,7 @@ import (
 func main() {
 	engine := gin.Default()
 
+	ginKit.DefaultFavicon(engine)
 	if err := ginKit.DefaultNoRoute(engine); err != nil {
 		panic(err)
 	}
