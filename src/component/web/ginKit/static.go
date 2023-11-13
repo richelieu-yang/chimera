@@ -25,8 +25,8 @@ func LoadHTMLGlob(engine IEngine, pattern string) {
 
 // StaticFile 静态资源（单个文件）
 /*
-@param relativePath 路由
-@param filePath 相对路径（对于项目的根目录(working directory)，而非main()所在的目录（虽然他们常常是同一个）） || 绝对路径
+@param relativePath	路由
+@param filePath 	相对路径（对于项目的根目录(working directory)，而非main()所在的目录（虽然他们常常是同一个）） || 绝对路径
 */
 func StaticFile(group IGroup, relativePath, filePath string) error {
 	if err := fileKit.AssertExistAndIsFile(filePath); err != nil {
@@ -40,7 +40,7 @@ func StaticFile(group IGroup, relativePath, filePath string) error {
 // StaticDir 静态资源（目录）
 /*
 @param relativePath	路由
-@param root 相对路径（对于项目的根目录(working directory)，而非main()所在的目录（虽然他们常常是同一个）） || 绝对路径
+@param root			相对路径（对于项目的根目录(working directory)，而非main()所在的目录（虽然他们常常是同一个）） || 绝对路径
 */
 func StaticDir(group IGroup, relativePath, root string, listDirectory bool) error {
 	if err := fileKit.AssertExistAndIsDir(root); err != nil {
