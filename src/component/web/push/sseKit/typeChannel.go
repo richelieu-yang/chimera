@@ -56,7 +56,7 @@ func (channel *SseChannel) PushMessage(msgType messageType, data []byte) (err er
 
 // Close （写锁）后端主动关闭通道.
 func (channel *SseChannel) Close(reason string) error {
-	closeInfo := fmt.Sprintf("Channel is closed by backend with reason(%s)", reason)
+	closeInfo := fmt.Sprintf("Closed by backend with reason(%s)", reason)
 	if channel.SetClosed() {
 		channel.CloseCh <- closeInfo
 	}

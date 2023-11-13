@@ -1,7 +1,6 @@
 package main
 
 import (
-	"fmt"
 	"github.com/gin-gonic/gin"
 	_ "github.com/richelieu-yang/chimera/v2/internal/pushDemo/docs"
 	"github.com/richelieu-yang/chimera/v2/internal/pushDemo/handler"
@@ -10,7 +9,6 @@ import (
 	"github.com/richelieu-yang/chimera/v2/src/component/web/push/pushKit"
 	"github.com/richelieu-yang/chimera/v2/src/component/web/push/sseKit"
 	"github.com/richelieu-yang/chimera/v2/src/component/web/push/wsKit"
-	"github.com/richelieu-yang/chimera/v2/src/core/pathKit"
 	"github.com/richelieu-yang/chimera/v2/src/goroutine/poolKit"
 	"github.com/richelieu-yang/chimera/v2/src/json/jsonRespKit"
 	"github.com/richelieu-yang/chimera/v2/src/log/logrusKit"
@@ -88,8 +86,10 @@ func main() {
 		engine.StaticFS("/s", gin.Dir(root, true))
 	}
 
-	fmt.Println(pathKit.GetWorkingDir())
-
+	ginKit.DefaultFavicon(engine)
+	if err := ginKit.DefaultNoRoute(engine); err != nil {
+		logrus.Fatal(err)
+	}
 	if err := engine.Run(":80"); err != nil {
 		logrus.Fatal(err)
 	}
