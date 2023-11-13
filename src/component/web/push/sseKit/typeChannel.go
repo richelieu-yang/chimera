@@ -14,7 +14,6 @@ type SseChannel struct {
 	w       http.ResponseWriter
 	r       *http.Request
 	msgType messageType
-	closeCh chan string
 }
 
 // Push （写锁）推送消息给客户端.
@@ -57,7 +56,7 @@ func (channel *SseChannel) PushMessage(msgType messageType, data []byte) (err er
 // Close （写锁）后端主动关闭通道.
 func (channel *SseChannel) Close(reason string) error {
 	if channel.SetClosed() {
-		channel.closeCh <- reason
+		channel.CloseCh <- reason
 	}
 	return nil
 }

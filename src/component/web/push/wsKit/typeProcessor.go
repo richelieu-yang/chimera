@@ -49,7 +49,8 @@ func (processor *WsProcessor) Process(w http.ResponseWriter, r *http.Request) {
 	// PS: 对于 Conn.Close() ，可以多次调用，不会panic，但从第二次关闭开始，返回非nil的error（可以直接忽略）.
 	defer conn.Close()
 
-	channel, err := processor.newChannel(r, conn)
+	closeCh := make(chan string, 1)
+	channel, err := processor.newChannel(r, conn, closeCh)
 	if err != nil {
 		failureInfo := fmt.Sprintf("Fail to new channel because of error(%s)", err.Error())
 		processor.listeners.OnFailure(w, r, failureInfo)
@@ -90,7 +91,7 @@ func (processor *WsProcessor) Process(w http.ResponseWriter, r *http.Request) {
 	}
 }
 
-func (processor *WsProcessor) newChannel(r *http.Request, conn *websocket.Conn) (pushKit.Channel, error) {
+func (processor *WsProcessor) newChannel(r *http.Request, conn *websocket.Conn, closeCh chan string) (pushKit.Channel, error) {
 	id, err := processor.idGenerator()
 	if err != nil {
 		return nil, errorKit.Wrap(err, "Fail to generate id")
@@ -107,6 +108,7 @@ func (processor *WsProcessor) newChannel(r *http.Request, conn *websocket.Conn) 
 	channel := &WsChannel{
 		BaseChannel: pushKit.BaseChannel{
 			RWMutex:   mutexKit.RWMutex{},
+			CloseCh:   closeCh,
 			ClientIP:  ip,
 			Type:      "WebSocket",
 			Id:        id,

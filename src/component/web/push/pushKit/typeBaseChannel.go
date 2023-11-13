@@ -14,6 +14,8 @@ import (
 type BaseChannel struct {
 	mutexKit.RWMutex
 
+	CloseCh chan string
+
 	// ClientIP 可能是error string（获取失败的情况下）.
 	ClientIP string
 	// Type Channel 的类型.
