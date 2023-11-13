@@ -83,6 +83,7 @@ func (p *WsProcessor) Process(w http.ResponseWriter, r *http.Request) {
 					} else {
 						closeInfo = fmt.Sprintf("Fail to read message because of error(%s)", err.Error())
 					}
+
 					channel.GetCloseCh() <- closeInfo
 				}
 				break
