@@ -9,7 +9,7 @@ type Channel interface {
 	IsClosed() (rst bool)
 	// SetClosed
 	/*
-		PS: 返回值如果为true，应当调用 Listeners.OnClose().
+		PS: 返回值如果为true，应当 调用Listeners.OnClose() || 向closeCh发送数据.
 	*/
 	SetClosed() (flag bool)
 

@@ -60,8 +60,8 @@ func (p *WsProcessor) Process(w http.ResponseWriter, r *http.Request) {
 
 	conn.SetCloseHandler(func(code int, text string) error {
 		if channel.SetClosed() {
-			reason := fmt.Sprintf("code: %d, text: %s", code, text)
-			channel.GetCloseCh() <- reason
+			closeInfo := fmt.Sprintf("code: %d, text: %s", code, text)
+			channel.GetCloseCh() <- closeInfo
 		}
 
 		// 默认的close handler
@@ -76,14 +76,14 @@ func (p *WsProcessor) Process(w http.ResponseWriter, r *http.Request) {
 			messageType, data, err := conn.ReadMessage()
 			if err != nil {
 				if channel.SetClosed() {
-					var reason string
+					var closeInfo string
 					var closeErr *websocket.CloseError
 					if errors.As(err, &closeErr) {
-						reason = fmt.Sprintf("code: %d, text: %s", closeErr.Code, closeErr.Text)
+						closeInfo = fmt.Sprintf("code: %d, text: %s", closeErr.Code, closeErr.Text)
 					} else {
-						reason = fmt.Sprintf("Fail to read message because of error(%s)", err.Error())
+						closeInfo = fmt.Sprintf("Fail to read message because of error(%s)", err.Error())
 					}
-					channel.GetCloseCh() <- reason
+					channel.GetCloseCh() <- closeInfo
 				}
 				break
 			}
