@@ -31,6 +31,7 @@ type BaseChannel struct {
 	Listeners Listeners
 }
 
+// IsClosed （读锁）
 func (channel *BaseChannel) IsClosed() (rst bool) {
 	/* 读锁 */
 	channel.RLockFunc(func() {
@@ -39,7 +40,7 @@ func (channel *BaseChannel) IsClosed() (rst bool) {
 	return
 }
 
-// SetClosed
+// SetClosed （写锁）
 /*
 PS: 返回值如果为true，应当调用 Listeners.OnClose().
 
