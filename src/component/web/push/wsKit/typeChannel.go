@@ -50,9 +50,9 @@ func (channel *WsChannel) PushMessage(messageType messageType, data []byte) (err
 
 	if failFlag {
 		// 推送消息失败，基本上就是连接断开了
+		closeInfo := fmt.Sprintf("Fail to push because of error(%s)", err.Error())
 		if channel.SetClosed() {
-			reason := fmt.Sprintf("Fail to push because of error(%s)", err.Error())
-			channel.CloseCh <- reason
+			channel.CloseCh <- closeInfo
 		}
 	}
 
@@ -61,10 +61,9 @@ func (channel *WsChannel) PushMessage(messageType messageType, data []byte) (err
 
 // Close 后端主动关闭通道.
 func (channel *WsChannel) Close(reason string) (err error) {
+	closeInfo := fmt.Sprintf("Channel is closed by backend with reason(%s)", reason)
 	if channel.SetClosed() {
-		closeInfo := fmt.Sprintf("Channel is closed by backend with reason(%s)", reason)
 		channel.CloseCh <- closeInfo
-
 		err = channel.conn.Close()
 	}
 	return

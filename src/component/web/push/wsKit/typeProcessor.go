@@ -59,8 +59,8 @@ func (p *WsProcessor) Process(w http.ResponseWriter, r *http.Request) {
 	p.listeners.OnHandshake(w, r, channel)
 
 	conn.SetCloseHandler(func(code int, text string) error {
+		closeInfo := fmt.Sprintf("code: %d, text: %s", code, text)
 		if channel.SetClosed() {
-			closeInfo := fmt.Sprintf("code: %d, text: %s", code, text)
 			channel.GetCloseCh() <- closeInfo
 		}
 
@@ -75,15 +75,15 @@ func (p *WsProcessor) Process(w http.ResponseWriter, r *http.Request) {
 		for {
 			messageType, data, err := conn.ReadMessage()
 			if err != nil {
-				if channel.SetClosed() {
-					var closeInfo string
-					var closeErr *websocket.CloseError
-					if errors.As(err, &closeErr) {
-						closeInfo = fmt.Sprintf("code: %d, text: %s", closeErr.Code, closeErr.Text)
-					} else {
-						closeInfo = fmt.Sprintf("Fail to read message because of error(%s)", err.Error())
-					}
+				var closeInfo string
+				var closeErr *websocket.CloseError
+				if errors.As(err, &closeErr) {
+					closeInfo = fmt.Sprintf("code: %d, text: %s", closeErr.Code, closeErr.Text)
+				} else {
+					closeInfo = fmt.Sprintf("Fail to read message because of error(%s)", err.Error())
+				}
 
+				if channel.SetClosed() {
 					channel.GetCloseCh() <- closeInfo
 				}
 				break
