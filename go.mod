@@ -46,7 +46,7 @@ require (
 	github.com/mitchellh/go-homedir v1.1.0
 	github.com/mitchellh/mapstructure v1.5.0
 	github.com/modern-go/reflect2 v1.0.2
-	github.com/nacos-group/nacos-sdk-go/v2 v2.2.3
+	github.com/nacos-group/nacos-sdk-go/v2 v2.2.4
 	github.com/natefinch/lumberjack/v3 v3.0.0-alpha
 	github.com/oklog/ulid/v2 v2.1.0
 	github.com/panjf2000/ants/v2 v2.8.2
@@ -69,14 +69,14 @@ require (
 	github.com/zeromicro/go-zero v1.6.0
 	github.com/zeromicro/zero-contrib/logx/logrusx v0.0.0-20231030135404-af9ae855016f
 	go.etcd.io/etcd/client/v3 v3.5.10
-	go.opentelemetry.io/otel v1.19.0
+	go.opentelemetry.io/otel v1.20.0
 	go.opentelemetry.io/otel/exporters/jaeger v1.17.0
-	go.opentelemetry.io/otel/metric v1.19.0
-	go.opentelemetry.io/otel/sdk v1.19.0
-	go.opentelemetry.io/otel/trace v1.19.0
+	go.opentelemetry.io/otel/metric v1.20.0
+	go.opentelemetry.io/otel/sdk v1.20.0
+	go.opentelemetry.io/otel/trace v1.20.0
 	go.uber.org/automaxprocs v1.5.3
 	go.uber.org/zap v1.26.0
-	golang.org/x/exp v0.0.0-20231108232855-2478ac86f678
+	golang.org/x/exp v0.0.0-20231110203233-9a3e6036ecaa
 	golang.org/x/image v0.14.0
 	google.golang.org/grpc v1.59.0
 	google.golang.org/protobuf v1.31.0
@@ -94,7 +94,12 @@ require (
 	github.com/AthenZ/athenz v1.10.39 // indirect
 	github.com/DataDog/zstd v1.5.0 // indirect
 	github.com/KyleBanks/depth v1.2.1 // indirect
-	github.com/aliyun/alibaba-cloud-sdk-go v1.61.1704 // indirect
+	github.com/alibabacloud-go/debug v0.0.0-20190504072949-9472017b5c68 // indirect
+	github.com/alibabacloud-go/tea v1.1.17 // indirect
+	github.com/alibabacloud-go/tea-utils v1.4.4 // indirect
+	github.com/aliyun/alibaba-cloud-sdk-go v1.61.1800 // indirect
+	github.com/aliyun/alibabacloud-dkms-gcs-go-sdk v0.2.2 // indirect
+	github.com/aliyun/alibabacloud-dkms-transfer-go-sdk v0.1.7 // indirect
 	github.com/andybalholm/brotli v1.0.5 // indirect
 	github.com/apcera/termtables v0.0.0-20170405184538-bcbc5dc54055 // indirect
 	github.com/ardielle/ardielle-go v1.5.2 // indirect
@@ -123,7 +128,7 @@ require (
 	github.com/gaukas/godicttls v0.0.4 // indirect
 	github.com/go-gl/gl v0.0.0-20211210172815-726fda9656d6 // indirect
 	github.com/go-gl/glfw/v3.3/glfw v0.0.0-20221017161538-93cebf72946b // indirect
-	github.com/go-logr/logr v1.2.4 // indirect
+	github.com/go-logr/logr v1.3.0 // indirect
 	github.com/go-logr/stdr v1.2.2 // indirect
 	github.com/go-ole/go-ole v1.2.6 // indirect
 	github.com/go-openapi/jsonpointer v0.19.6 // indirect
