@@ -60,8 +60,8 @@ func (p *WsProcessor) Process(w http.ResponseWriter, r *http.Request) {
 
 	conn.SetCloseHandler(func(code int, text string) error {
 		if channel.SetClosed() {
-			info := fmt.Sprintf("code: %d, text: %s", code, text)
-			p.listeners.OnClose(channel, info)
+			reason := fmt.Sprintf("code: %d, text: %s", code, text)
+			channel.GetCloseCh() <- reason
 		}
 
 		// 默认的close handler
@@ -76,14 +76,14 @@ func (p *WsProcessor) Process(w http.ResponseWriter, r *http.Request) {
 			messageType, data, err := conn.ReadMessage()
 			if err != nil {
 				if channel.SetClosed() {
+					var reason string
 					var closeErr *websocket.CloseError
 					if errors.As(err, &closeErr) {
-						info := fmt.Sprintf("code: %d, text: %s", closeErr.Code, closeErr.Text)
-						p.listeners.OnClose(channel, info)
+						reason = fmt.Sprintf("code: %d, text: %s", closeErr.Code, closeErr.Text)
 					} else {
-						info := fmt.Sprintf("Fail to read message because of error(%s)", err.Error())
-						p.listeners.OnClose(channel, info)
+						reason = fmt.Sprintf("Fail to read message because of error(%s)", err.Error())
 					}
+					channel.GetCloseCh() <- reason
 				}
 				break
 			}
@@ -97,8 +97,7 @@ func (p *WsProcessor) Process(w http.ResponseWriter, r *http.Request) {
 			p.listeners.OnClose(channel, "Context done")
 		}
 	case reason := <-channel.GetCloseCh():
-		closeInfo := fmt.Sprintf("Connection is closed by backend with reason(%s)", reason)
-		p.listeners.OnClose(channel, closeInfo)
+		p.listeners.OnClose(channel, reason)
 	}
 }
 

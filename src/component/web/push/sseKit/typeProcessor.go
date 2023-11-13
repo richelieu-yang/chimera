@@ -1,7 +1,6 @@
 package sseKit
 
 import (
-	"fmt"
 	"github.com/gin-gonic/gin"
 	"github.com/richelieu-yang/chimera/v2/src/component/web/httpKit"
 	"github.com/richelieu-yang/chimera/v2/src/component/web/push/pushKit"
@@ -55,8 +54,7 @@ func (p *SseProcessor) Process(w http.ResponseWriter, r *http.Request) {
 		}
 	case reason := <-channel.GetCloseCh():
 		// 后端主动断开连接
-		closeInfo := fmt.Sprintf("Connection is closed by backend with reason(%s)", reason)
-		p.listeners.OnClose(channel, closeInfo)
+		p.listeners.OnClose(channel, reason)
 	}
 }
 

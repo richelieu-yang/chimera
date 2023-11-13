@@ -59,7 +59,7 @@ func (l *DemoListener) OnMessage(channel pushKit.Channel, messageType int, data 
 	}).Info("OnMessage")
 }
 
-func (l *DemoListener) OnClose(channel pushKit.Channel, closeInfo string, bsid, user, group string) {
+func (l *DemoListener) OnClose(channel pushKit.Channel, reason string, bsid, user, group string) {
 	logrus.WithFields(logrus.Fields{
 		"clientIP": channel.GetClientIP(),
 		"type":     channel.GetType(),
@@ -68,6 +68,6 @@ func (l *DemoListener) OnClose(channel pushKit.Channel, closeInfo string, bsid, 
 		"user":     channel.GetUser(),
 		"group":    channel.GetGroup(),
 
-		"closeInfo": closeInfo,
+		"reason": reason,
 	}).Info("OnClose")
 }
