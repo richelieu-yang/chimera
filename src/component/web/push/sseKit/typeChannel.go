@@ -2,6 +2,7 @@ package sseKit
 
 import (
 	"encoding/base64"
+	"fmt"
 	"github.com/richelieu-yang/chimera/v2/src/component/web/push/pushKit"
 	"github.com/richelieu-yang/chimera/v2/src/crypto/base64Kit"
 	"github.com/richelieu-yang/chimera/v2/src/urlKit"
@@ -55,8 +56,9 @@ func (channel *SseChannel) PushMessage(msgType messageType, data []byte) (err er
 
 // Close （写锁）后端主动关闭通道.
 func (channel *SseChannel) Close(reason string) error {
+	closeInfo := fmt.Sprintf("Channel is closed by backend with reason(%s)", reason)
 	if channel.SetClosed() {
-		channel.CloseCh <- reason
+		channel.CloseCh <- closeInfo
 	}
 	return nil
 }

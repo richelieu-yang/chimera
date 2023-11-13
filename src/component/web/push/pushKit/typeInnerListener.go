@@ -19,7 +19,7 @@ func (listener InnerListener) OnHandshake(w http.ResponseWriter, r *http.Request
 func (listener InnerListener) OnMessage(channel Channel, messageType int, data []byte) {
 }
 
-func (listener InnerListener) OnClose(channel Channel, reason string, bsid, user, group string) {
+func (listener InnerListener) OnClose(channel Channel, closeInfo string, bsid, user, group string) {
 	// 移除管理
 	UnbindId(channel)
 	UnbindBsid(channel)
