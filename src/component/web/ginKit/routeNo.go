@@ -3,42 +3,66 @@ package ginKit
 import (
 	"github.com/gin-gonic/gin"
 	"github.com/richelieu-yang/chimera/v2/internal/resources"
-	"github.com/richelieu-yang/chimera/v2/src/component/web/httpKit"
-	"github.com/richelieu-yang/chimera/v2/src/core/fileKit"
-	"github.com/richelieu-yang/chimera/v2/src/core/pathKit"
+	"github.com/richelieu-yang/chimera/v2/src/core/ioKit"
+	"github.com/sirupsen/logrus"
 	"net/http"
+	"sync"
 )
+
+var noRouteData []byte
+var noRouteErr error
+var noRouteOnce sync.Once
+
+func init() {
+	var err error
+
+	fs := resources.AssetFile()
+	f, err := fs.Open("_resources/html/404.min.html")
+	if err != nil {
+		logrus.Fatal(err)
+	}
+	defer f.Close()
+
+	noRouteData, err = ioKit.ReadFromReader(f)
+	if err != nil {
+		logrus.Fatal(err)
+	}
+}
 
 // NoRoute 404
 func NoRoute(engine IEngine, handlers ...gin.HandlerFunc) {
 	engine.NoRoute(handlers...)
 }
 
-// AttachDefaultNoRoute 使用自带的404页面.
-/*
-PS: 会在临时目录下生成文件，注意不要删掉他们!!!
-*/
-func AttachDefaultNoRoute(engine IEngine) error {
-	/* 将内置的404页面解压到 临时目录 中 */
-	relativePath := "_resources/html/404.html"
-	tempDir, err := pathKit.GetTempDir()
-	if err != nil {
-		return err
-	}
-	err = resources.RestoreAsset(tempDir, relativePath)
-	if err != nil {
-		return err
-	}
+// DefaultNoRoute 使用自带的404页面.
+func DefaultNoRoute(engine IEngine) error {
+	noRouteOnce.Do(func() {
+		path := "_resources/html/404.min.html"
 
-	/* 加载解压出的html页面 */
-	htmlPath := pathKit.Join(tempDir, relativePath)
-	engine.LoadHTMLFiles(htmlPath)
+		fs := resources.AssetFile()
+		f, err := fs.Open(path)
+		if err != nil {
+			noRouteErr = err
+			return
+		}
+		defer f.Close()
 
-	NoRoute(engine, func(ctx *gin.Context) {
-		ctx.HTML(http.StatusNotFound, fileKit.GetFileName(htmlPath), gin.H{
-			"route": httpKit.GetRoute(ctx.Request),
-		})
+		noRouteData, err = ioKit.ReadFromReader(f)
+		if err != nil {
+			noRouteErr = err
+			return
+		}
 	})
 
+	if noRouteErr != nil {
+		return noRouteErr
+	}
+	engine.NoRoute(func(ctx *gin.Context) {
+		ctx.Data(http.StatusNotFound, "text/html; charset=utf-8", noRouteData)
+
+		// 此处不使用 ctx.FileFromFS ，原因: 这样的话响应状态码就会是200
+		//fs := resources.AssetFile()
+		//ctx.FileFromFS("_resources/html/404.min.html", fs)
+	})
 	return nil
 }

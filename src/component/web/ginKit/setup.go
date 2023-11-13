@@ -77,7 +77,7 @@ func setUp(config *Config, recoveryMiddleware gin.HandlerFunc, businessLogic fun
 	}
 
 	// 404
-	if err := AttachDefaultNoRoute(engine); err != nil {
+	if err := DefaultNoRoute(engine); err != nil {
 		return err
 	}
 
