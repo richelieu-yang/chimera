@@ -4,6 +4,18 @@ import (
 	"github.com/richelieu-yang/chimera/v2/src/core/strKit"
 )
 
+func CloseAll(reason string) {
+	reason = strKit.EmptyToDefault(reason, "no reason")
+
+	/* 读锁 */
+	idMap.RLockFunc(func() {
+		for _, channel := range idMap.Map {
+			_ = channel.Close(reason)
+		}
+	})
+	return
+}
+
 // CloseById
 /*
 PS: 解绑（unbind）后续由 inner handler 处理.
@@ -11,8 +23,8 @@ PS: 解绑（unbind）后续由 inner handler 处理.
 func CloseById(id string, reason string) (err error) {
 	reason = strKit.EmptyToDefault(reason, "no reason")
 
-	/* 写锁 */
-	idMap.LockFunc(func() {
+	/* 读锁 */
+	idMap.RLockFunc(func() {
 		channel := idMap.Map[id]
 		if channel == nil {
 			return
@@ -29,8 +41,8 @@ PS: 解绑（unbind）后续由 inner handler 处理.
 func CloseByBsid(bsid string, reason string) (err error) {
 	reason = strKit.EmptyToDefault(reason, "no reason")
 
-	/* 写锁 */
-	bsidMap.LockFunc(func() {
+	/* 读锁 */
+	bsidMap.RLockFunc(func() {
 		channel := bsidMap.Map[bsid]
 		if channel == nil {
 			return
@@ -48,13 +60,34 @@ PS: 解绑（unbind）后续由 inner handler 处理.
 func CloseByUser(user string, reason string) {
 	reason = strKit.EmptyToDefault(reason, "no reason")
 
-	/* 写锁 */
-	userMap.LockFunc(func() {
+	/* 读锁 */
+	userMap.RLockFunc(func() {
 		userSet := userMap.Map[user]
 
-		/* 写锁 */
-		userSet.LockFunc(func() {
+		/* 读锁 */
+		userSet.RLockFunc(func() {
 			userSet.Set.Each(func(channel Channel) bool {
+				_ = channel.Close(reason)
+				return false
+			})
+		})
+	})
+}
+
+// CloseByGroup
+/*
+PS: 解绑（unbind）后续由 inner handler 处理.
+*/
+func CloseByGroup(group string, reason string) {
+	reason = strKit.EmptyToDefault(reason, "no reason")
+
+	/* 读锁 */
+	groupMap.RLockFunc(func() {
+		groupSet := groupMap.Map[group]
+
+		/* 读锁 */
+		groupSet.RLockFunc(func() {
+			groupSet.Set.Each(func(channel Channel) bool {
 				_ = channel.Close(reason)
 				return false
 			})
