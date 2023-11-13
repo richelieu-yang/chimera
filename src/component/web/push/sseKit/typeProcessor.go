@@ -48,12 +48,10 @@ func (p *SseProcessor) Process(w http.ResponseWriter, r *http.Request) {
 	//case <-w.(http.CloseNotifier).CloseNotify():
 	//	p.listeners.OnClose(channel, "Connection closed")
 	case <-r.Context().Done():
-		// 前端主动断开连接
 		if channel.SetClosed() {
 			p.listeners.OnClose(channel, "Context done")
 		}
 	case closeInfo := <-channel.GetCloseCh():
-		// 后端主动断开连接
 		p.listeners.OnClose(channel, closeInfo)
 	}
 }

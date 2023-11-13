@@ -96,8 +96,8 @@ func (p *WsProcessor) Process(w http.ResponseWriter, r *http.Request) {
 		if channel.SetClosed() {
 			p.listeners.OnClose(channel, "Context done")
 		}
-	case reason := <-channel.GetCloseCh():
-		p.listeners.OnClose(channel, reason)
+	case closeInfo := <-channel.GetCloseCh():
+		p.listeners.OnClose(channel, closeInfo)
 	}
 }
 
