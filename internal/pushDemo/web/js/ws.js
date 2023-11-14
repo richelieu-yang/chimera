@@ -1,19 +1,16 @@
-var localStorageKey = "wsUrl";
+var prefix = "ws_";
+
 var channel = null;
-var urlInput = document.getElementById("urlInput"),
-    connectBtn = document.getElementById("connectBtn"),
+var connectBtn = document.getElementById("connectBtn"),
     disconnectBtn = document.getElementById("disconnectBtn"),
     clearBtn = document.getElementById("clearBtn"),
     output = document.getElementById("output");
 
-var url = getFromLocalStorage()
-urlInput.value = url;
-
 connectBtn.onclick = function () {
-    var url = urlInput.value;
-    url = url.trim();
-    if (!url) {
-        alert("Please enter url!!!");
+    var {url, err} = getFinalUrl();
+
+    if (err) {
+        alert(err);
         return;
     }
     if (!url.startsWith("ws://") && !url.startsWith("wss://")) {
@@ -21,15 +18,14 @@ connectBtn.onclick = function () {
         return;
     }
 
-    println("[建立连接]")
+    println("[建立连接]");
 
     connect(url);
-    setToLocalStorage(url);
-    println("url: [" + url + "]")
+    println("url: [" + url + "]");
 };
 
 disconnectBtn.onclick = function () {
-    println("[断开连接]")
+    println("[断开连接]");
 
     disconnect();
 };
@@ -94,16 +90,4 @@ function disconnect() {
 function println(text) {
     output.value += text + "\n";
     console.info(text);
-}
-
-function getFromLocalStorage() {
-    var url = localStorage[localStorageKey];
-    if (!url) {
-        url = "";
-    }
-    return url.trim();
-}
-
-function setToLocalStorage(url) {
-    localStorage[localStorageKey] = url.trim();
 }
