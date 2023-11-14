@@ -6,10 +6,10 @@ var urlInput = document.getElementById("url"),
 init();
 
 function init() {
-    var url = sessionStorage[prefix + "url"] || "",
-        group = sessionStorage[prefix + "group"] || "",
-        user = sessionStorage[prefix + "user"] || "",
-        bsid = sessionStorage[prefix + "bsid"] || "";
+    var url = localStorage[prefix + "url"] || "",
+        group = localStorage[prefix + "group"] || "",
+        user = localStorage[prefix + "user"] || "",
+        bsid = localStorage[prefix + "bsid"] || "";
 
     urlInput.value = url;
     groupInput.value = group;
@@ -18,10 +18,10 @@ function init() {
 }
 
 function setToLocalStorage(url, group, user, bsid) {
-    sessionStorage[prefix + "url"] = url;
-    sessionStorage[prefix + "group"] = group;
-    sessionStorage[prefix + "user"] = user;
-    sessionStorage[prefix + "bsid"] = bsid;
+    localStorage[prefix + "url"] = url;
+    localStorage[prefix + "group"] = group;
+    localStorage[prefix + "user"] = user;
+    localStorage[prefix + "bsid"] = bsid;
 }
 
 function getFinalUrl() {
@@ -35,11 +35,10 @@ function getFinalUrl() {
 
     if (!url) {
         err = "Please enter url!!!";
-        return {rst, err};
-    }
-    var index = url.indexOf("?");
-    if (index !== -1) {
-        url = url.substring(0, index);
+        return {
+            url: rst,
+            err: err,
+        };
     }
 
     var queryString;
@@ -49,8 +48,23 @@ function getFinalUrl() {
         queryString = `?group=${encodeURIComponent(group)}&user=${encodeURIComponent(user)}&bsid=${encodeURIComponent(bsid)}`
     }
 
+    if (queryString) {
+        var index = url.indexOf("?");
+        if (index !== -1) {
+            url = url.substring(0, index);
+        }
+        urlInput.value = url;
+
+        rst = url + queryString;
+    } else {
+        rst = url;
+    }
+
     setToLocalStorage(url, group, user, bsid);
 
     rst = url + queryString
-    return {rst, err};
+    return {
+        url: rst,
+        err: err,
+    };
 }
