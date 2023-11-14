@@ -5,17 +5,36 @@
     <title>test SSE</title>
 </head>
 <body>
-<label>
-    url:
-    <input id="urlInput" type="text" style="width:600px">
+<div>
+    <label>
+        url: <input id="url" type="text" style="width:400px">
+    </label>
+    <br>
+    <label>
+        group: <input id="group" type="text" style="width:400px">
+    </label>
+    <br>
+    <label>
+        user: <input id="user" type="text" style="width:400px">
+    </label>
+    <br>
+    <label>
+        bsid: <input id="bsid" type="text" style="width:400px">
+    </label>
+    <br>
+    <br>
     <button id="connectBtn">Connect</button>
     <button id="disconnectBtn">Disconnect</button>
     <button id="clearBtn">Clear</button>
-</label>
-<br>
+</div>
 <br>
 
-<label for="output"></label><textarea id="output" cols="100" rows="30"></textarea>
+<div>
+    输出: <br>
+    <label for="output"></label><textarea id="output" cols="100" rows="30"></textarea>
+</div>
+
 <script src="js/sse.js"></script>
+<script src="js/common.js"></script>
 </body>
 </html>
