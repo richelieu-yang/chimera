@@ -70,3 +70,12 @@ function connect(url) {
         console.error(e);
     };
 }
+
+function disconnect() {
+    if (channel == null) {
+        return;
+    }
+
+    channel.close();
+    channel = null;
+}
