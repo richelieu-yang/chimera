@@ -68,3 +68,14 @@ function getFinalUrl() {
         err: err,
     };
 }
+
+var output = document.getElementById("output");
+
+function println(text) {
+    output.value += text + "\n";
+    console.info(text);
+}
+
+function clearOutput() {
+    output.value = "";
+}

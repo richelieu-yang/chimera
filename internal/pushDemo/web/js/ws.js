@@ -3,12 +3,10 @@ var prefix = "ws_";
 var channel = null;
 var connectBtn = document.getElementById("connectBtn"),
     disconnectBtn = document.getElementById("disconnectBtn"),
-    clearBtn = document.getElementById("clearBtn"),
-    output = document.getElementById("output");
+    clearBtn = document.getElementById("clearBtn");
 
 connectBtn.onclick = function () {
     var {url, err} = getFinalUrl();
-
     if (err) {
         alert(err);
         return;
@@ -30,9 +28,7 @@ disconnectBtn.onclick = function () {
     disconnect();
 };
 
-clearBtn.onclick = function () {
-    output.value = "";
-};
+clearBtn.onclick = clearOutput;
 
 /**
  * PS: EventSource 没有onclose事件.
@@ -76,18 +72,4 @@ function connect(url) {
         println("onclose: code(" + e.code + "), reason(" + e.reason + "), wasClean(" + e.wasClean + ")");
         console.error(e);
     };
-}
-
-function disconnect() {
-    if (channel == null) {
-        return;
-    }
-
-    channel.close();
-    channel = null;
-}
-
-function println(text) {
-    output.value += text + "\n";
-    console.info(text);
 }
