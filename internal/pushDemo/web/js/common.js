@@ -69,7 +69,10 @@ function getFinalUrl() {
     };
 }
 
-var output = document.getElementById("output");
+var output = document.getElementById("output"),
+    clearBtn = document.getElementById("clearBtn");
+
+clearBtn.onclick = clearOutput;
 
 function println(text) {
     output.value += text + "\n";

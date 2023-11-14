@@ -2,8 +2,7 @@ var prefix = "sse_";
 
 var channel = null;
 var connectBtn = document.getElementById("connectBtn"),
-    disconnectBtn = document.getElementById("disconnectBtn"),
-    clearBtn = document.getElementById("clearBtn");
+    disconnectBtn = document.getElementById("disconnectBtn");
 
 connectBtn.onclick = function () {
     var {url, err} = getFinalUrl();
@@ -27,8 +26,6 @@ disconnectBtn.onclick = function () {
 
     disconnect();
 };
-
-clearBtn.onclick = clearOutput;
 
 /**
  * PS: EventSource 没有onclose事件.
