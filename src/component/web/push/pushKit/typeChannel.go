@@ -37,4 +37,6 @@ type Channel interface {
 	BindBsid(bsid string)
 
 	GetCloseCh() chan string
+
+	Equals(c Channel) bool
 }

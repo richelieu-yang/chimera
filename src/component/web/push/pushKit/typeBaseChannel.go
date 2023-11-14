@@ -155,3 +155,11 @@ func (channel *BaseChannel) ClearData() {
 func (channel *BaseChannel) GetCloseCh() chan string {
 	return channel.CloseCh
 }
+
+// Equals 根据 id 判断是否相等.
+func (channel *BaseChannel) Equals(c Channel) bool {
+	if c == nil {
+		return false
+	}
+	return channel.GetId() == c.GetId()
+}

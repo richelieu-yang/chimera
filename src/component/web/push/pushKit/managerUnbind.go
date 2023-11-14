@@ -13,7 +13,10 @@ func UnbindId(channel Channel) {
 
 	/* 写锁 */
 	idMap.LockFunc(func() {
-		delete(idMap.Map, id)
+		target := idMap.Map[id]
+		if channel.Equals(target) {
+			delete(idMap.Map, id)
+		}
 	})
 }
 
@@ -30,7 +33,10 @@ func UnbindBsid(channel Channel) {
 
 	/* 写锁 */
 	bsidMap.LockFunc(func() {
-		delete(bsidMap.Map, bsid)
+		target := bsidMap.Map[bsid]
+		if channel.Equals(target) {
+			delete(bsidMap.Map, bsid)
+		}
 	})
 }
 
