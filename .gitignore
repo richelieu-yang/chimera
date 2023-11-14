@@ -18,7 +18,7 @@
 .idea
 /src/test.go
 *.log
-*.gz
+*.gzØgo
 
 # for macOS
 .DS_Store
@@ -27,5 +27,3 @@
 
 /test*
 /_*.pem
-
-/push-test*
