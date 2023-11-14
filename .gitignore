@@ -27,3 +27,5 @@
 
 /test*
 /_*.pem
+
+/push-test*
