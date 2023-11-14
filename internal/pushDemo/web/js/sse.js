@@ -19,7 +19,7 @@ connectBtn.onclick = function () {
     println("[建立连接]");
 
     connect(url);
-    println("url: [" + url + "]")
+    println(`url: [${url}].`);
 };
 
 disconnectBtn.onclick = function () {
