@@ -83,7 +83,9 @@ func main() {
 		// 传参路径root 是相对于项目的根目录(working directory)，而非main()所在的目录（虽然他们常常是同一个）
 		// "./internal/pushDemo/web" <=> "internal/pushDemo/web"
 		root := "internal/pushDemo/web"
-		engine.StaticFS("/s", gin.Dir(root, true))
+		if err := ginKit.StaticDir(engine, "/s", root, false); err != nil {
+			logrus.Fatal(err)
+		}
 	}
 
 	ginKit.DefaultFavicon(engine)
