@@ -62,7 +62,7 @@ func main() {
 
 	// WebSocket
 	{
-		processor, err := wsKit.NewProcessor(nil, nil, &types.DemoListener{}, wsKit.MessageTypeText)
+		processor, err := wsKit.NewProcessor(nil, nil, &types.Listener{}, wsKit.MessageTypeText)
 		if err != nil {
 			logrus.Fatal(err)
 		}
@@ -71,7 +71,7 @@ func main() {
 
 	// SSE
 	{
-		processor, err := sseKit.NewProcessor(nil, &types.DemoListener{}, sseKit.MessageTypeRaw)
+		processor, err := sseKit.NewProcessor(nil, &types.Listener{}, sseKit.MessageTypeRaw)
 		if err != nil {
 			logrus.Fatal(err)
 		}

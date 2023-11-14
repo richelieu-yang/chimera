@@ -8,15 +8,15 @@ import (
 	"net/http"
 )
 
-type DemoListener struct {
+type Listener struct {
 	pushKit.Listener
 }
 
-func (l *DemoListener) OnFailure(w http.ResponseWriter, r *http.Request, failureInfo string) {
+func (l *Listener) OnFailure(w http.ResponseWriter, r *http.Request, failureInfo string) {
 	logrus.WithField("failureInfo", failureInfo).Error("OnFailure")
 }
 
-func (l *DemoListener) OnHandshake(w http.ResponseWriter, r *http.Request, channel pushKit.Channel) {
+func (l *Listener) OnHandshake(w http.ResponseWriter, r *http.Request, channel pushKit.Channel) {
 	bsid := httpKit.ObtainGetParam(r, "bsid")
 	user := httpKit.ObtainGetParam(r, "user")
 	group := httpKit.ObtainGetParam(r, "group")
@@ -45,7 +45,7 @@ func (l *DemoListener) OnHandshake(w http.ResponseWriter, r *http.Request, chann
 	//}()
 }
 
-func (l *DemoListener) OnMessage(channel pushKit.Channel, messageType int, data []byte) {
+func (l *Listener) OnMessage(channel pushKit.Channel, messageType int, data []byte) {
 	logrus.WithFields(logrus.Fields{
 		"clientIP": channel.GetClientIP(),
 		"type":     channel.GetType(),
@@ -59,7 +59,7 @@ func (l *DemoListener) OnMessage(channel pushKit.Channel, messageType int, data 
 	}).Info("OnMessage")
 }
 
-func (l *DemoListener) OnClose(channel pushKit.Channel, closeInfo string, bsid, user, group string) {
+func (l *Listener) OnClose(channel pushKit.Channel, closeInfo string, bsid, user, group string) {
 	logrus.WithFields(logrus.Fields{
 		"clientIP": channel.GetClientIP(),
 		"type":     channel.GetType(),
