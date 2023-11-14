@@ -13,6 +13,7 @@ func UnbindId(channel Channel) {
 
 	/* 写锁 */
 	idMap.LockFunc(func() {
+		// Richelieu: 此处额外判断一下，因为 inner listener 触发事件（此处主要是OnClose）是异步的.
 		target := idMap.Map[id]
 		if channel.Equals(target) {
 			delete(idMap.Map, id)
@@ -33,6 +34,7 @@ func UnbindBsid(channel Channel) {
 
 	/* 写锁 */
 	bsidMap.LockFunc(func() {
+		// Richelieu: 此处额外判断一下，因为 inner listener 触发事件（此处主要是OnClose）是异步的.
 		target := bsidMap.Map[bsid]
 		if channel.Equals(target) {
 			delete(bsidMap.Map, bsid)
