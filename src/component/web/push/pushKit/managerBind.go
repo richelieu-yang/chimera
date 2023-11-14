@@ -35,6 +35,7 @@ func BindBsid(channel Channel, bsid string) {
 		old := bsidMap.Map[bsid]
 		if old != nil {
 			_ = old.Close(fmt.Sprintf("bsid(%s) is replaced by new channel", bsid))
+			delete(bsidMap.Map, bsid)
 		}
 
 		bsidMap.Map[bsid] = channel

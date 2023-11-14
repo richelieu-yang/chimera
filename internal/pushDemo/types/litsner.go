@@ -21,15 +21,6 @@ func (l *DemoListener) OnHandshake(w http.ResponseWriter, r *http.Request, chann
 	user := httpKit.ObtainGetParam(r, "user")
 	group := httpKit.ObtainGetParam(r, "group")
 
-	logrus.WithFields(logrus.Fields{
-		"clientIP": channel.GetClientIP(),
-		"type":     channel.GetType(),
-		"id":       channel.GetId(),
-		"bsid":     channel.GetBsid(),
-		"user":     channel.GetUser(),
-		"group":    channel.GetGroup(),
-	}).Info("OnHandshake")
-
 	text := fmt.Sprintf("Hello, your id is [%s].", channel.GetId())
 	if err := channel.Push([]byte(text)); err != nil {
 		logrus.Error(err)
@@ -38,6 +29,15 @@ func (l *DemoListener) OnHandshake(w http.ResponseWriter, r *http.Request, chann
 	channel.BindBsid(bsid)
 	channel.BindUser(user)
 	channel.BindGroup(group)
+
+	logrus.WithFields(logrus.Fields{
+		"clientIP": channel.GetClientIP(),
+		"type":     channel.GetType(),
+		"id":       channel.GetId(),
+		"bsid":     channel.GetBsid(),
+		"user":     channel.GetUser(),
+		"group":    channel.GetGroup(),
+	}).Info("OnHandshake")
 
 	//go func() {
 	//	time.Sleep(time.Second * 3)
