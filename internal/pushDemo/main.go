@@ -9,6 +9,7 @@ import (
 	"github.com/richelieu-yang/chimera/v2/src/component/web/push/pushKit"
 	"github.com/richelieu-yang/chimera/v2/src/component/web/push/sseKit"
 	"github.com/richelieu-yang/chimera/v2/src/component/web/push/wsKit"
+	"github.com/richelieu-yang/chimera/v2/src/cronKit"
 	"github.com/richelieu-yang/chimera/v2/src/goroutine/poolKit"
 	"github.com/richelieu-yang/chimera/v2/src/json/jsonRespKit"
 	"github.com/richelieu-yang/chimera/v2/src/log/logrusKit"
@@ -24,6 +25,7 @@ import (
 // @query.collection.format multi
 func main() {
 	logrusKit.MustSetUp(nil)
+	logrusKit.DisableQuote(nil)
 	jsonRespKit.MustSetUp(func(code, msg string, data interface{}) interface{} {
 		return &types.JsonResponse{
 			Code:    code,
@@ -92,6 +94,19 @@ func main() {
 	if err := ginKit.DefaultNoRoute(engine); err != nil {
 		logrus.Fatal(err)
 	}
+
+	// 每隔10s输出 statistics
+	go func() {
+		c := cronKit.NewCron()
+		_, err := c.AddFunc("@every 10s", func() {
+			logrus.Info("statistics:\n", pushKit.GetStatistics())
+		})
+		if err != nil {
+			logrus.Fatal(err)
+		}
+		c.Run()
+	}()
+
 	if err := engine.Run(":80"); err != nil {
 		logrus.Fatal(err)
 	}
