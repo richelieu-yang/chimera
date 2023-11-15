@@ -1,4 +1,4 @@
-package baiduOcrKit
+package ocrKit
 
 import (
 	"github.com/sirupsen/logrus"
