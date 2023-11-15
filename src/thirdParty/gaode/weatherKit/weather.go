@@ -38,7 +38,7 @@ func GetLive(city string) (*Live, error) {
 		return nil, err
 	}
 	if len(resp.Lives) == 0 {
-		return nil, errorKit.New("length of Lives is zero")
+		return nil, errorKit.New("len(resp.Lives) == 0")
 	}
 	return resp.Lives[0], nil
 }
@@ -48,6 +48,10 @@ func GetTodayCast(city string) (*Cast, error) {
 	forecast, err := GetForecast(city)
 	if err != nil {
 		return nil, err
+	}
+
+	if len(forecast.Casts) == 0 {
+		return nil, errorKit.New("len(forecast.Casts) == 0")
 	}
 
 	return forecast.Casts[0], nil
@@ -80,7 +84,7 @@ func GetForecast(city string) (*Forecast, error) {
 		return nil, err
 	}
 	if len(resp.Forecasts) == 0 {
-		return nil, errorKit.New("length of Forecasts is zero")
+		return nil, errorKit.New("len(resp.Forecasts) == 0")
 	}
 	return resp.Forecasts[0], nil
 }
