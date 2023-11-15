@@ -15,8 +15,20 @@ type (
 	}
 )
 
+func (set *SetWithLock[E]) Size() (size int) {
+	if set == nil {
+		return
+	}
+
+	/* 读锁 */
+	set.RLockFunc(func() {
+		size = set.Set.Cardinality()
+	})
+	return
+}
+
 func NewSetWithLock[T comparable]() *SetWithLock[T] {
 	return &SetWithLock[T]{
-		Set: NewSet[T](false),
+		Set: NewSet[T](false), // 并发不安全的
 	}
 }

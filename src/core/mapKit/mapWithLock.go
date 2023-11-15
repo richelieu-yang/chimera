@@ -13,6 +13,18 @@ type (
 	}
 )
 
+func (m *MapWithLock[K, V]) Size() (size int) {
+	if m == nil {
+		return
+	}
+
+	/* 读锁 */
+	m.RLockFunc(func() {
+		size = len(m.Map)
+	})
+	return
+}
+
 func NewMapWithLock[K comparable, V any]() *MapWithLock[K, V] {
 	return &MapWithLock[K, V]{
 		Map: make(map[K]V),
