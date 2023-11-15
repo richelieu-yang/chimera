@@ -16,12 +16,12 @@ type (
 	Live struct {
 		// Province 省份名
 		Province string `json:"province"`
-
-		// City 城市名
+		// City 城市（区域）名
 		City string `json:"city"`
-
-		// Adcode 区域编码
+		// Adcode 城市（区域）编码
 		Adcode string `json:"adcode"`
+		// ReportTime 数据发布的时间
+		ReportTime string `json:"reporttime"`
 
 		// Weather 天气现象（汉字描述）
 		Weather string `json:"weather"`
@@ -34,12 +34,23 @@ type (
 
 		// Humidity 空气湿度
 		Humidity string `json:"humidity"`
-
-		// ReportTime 数据发布的时间
-		ReportTime string `json:"reporttime"`
 	}
 
 	Forecast struct {
+		// Province 省份名
+		Province string `json:"province"`
+		// City 城市（区域）名
+		City string `json:"city"`
+		// Adcode 城市（区域）编码
+		Adcode string `json:"adcode"`
+		// ReportTime 数据发布的时间
+		ReportTime string `json:"reporttime"`
+
+		// Casts 预报数据list结构，元素cast,按顺序为当天、第二天、第三天的预报数据
+		Casts []*Cast `json:"casts"`
+	}
+
+	Cast struct {
 		// Date 日期
 		Date string `json:"date"`
 

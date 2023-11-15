@@ -9,11 +9,15 @@ import (
 func main() {
 	gaodeKit.MustSetUp("b15c36bf1df4c272e92f3f1875a127f1")
 
-	live, err := weatherKit.GetLiveWeather("320205")
+	live, err := weatherKit.GetLive("320205")
 	if err != nil {
 		panic(err)
 	}
 	fmt.Println(live)
 
-	//fmt.Println(reqKit.Get("https://req.cool/zh/docs/prologue/quickstart/", nil))
+	forecast, err := weatherKit.GetTodayCast("320205")
+	if err != nil {
+		panic(err)
+	}
+	fmt.Println(forecast)
 }

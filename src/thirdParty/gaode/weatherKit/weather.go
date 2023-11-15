@@ -11,11 +11,11 @@ const (
 	Url = "https://restapi.amap.com/v3/weather/weatherInfo"
 )
 
-// GetLiveWeather 获取"实况"天气.
+// GetLive 获取"实况"天气.
 /*
 @param city 城市编码
 */
-func GetLiveWeather(city string) (*Live, error) {
+func GetLive(city string) (*Live, error) {
 	apiKey, err := gaodeKit.GetApiKey()
 	if err != nil {
 		return nil, err
@@ -38,15 +38,49 @@ func GetLiveWeather(city string) (*Live, error) {
 		return nil, err
 	}
 	if len(resp.Lives) == 0 {
-		return nil, errorKit.New("length of lives is zero")
+		return nil, errorKit.New("length of Lives is zero")
 	}
 	return resp.Lives[0], nil
 }
 
-//// GetForecastWeather 获取"预报"天气.
-///*
-//@param city 城市编码
-//*/
-//func GetForecastWeather(city string) ([]*Forecast, error) {
-//
-//}
+// GetTodayCast 获取今天的"预报"天气.
+func GetTodayCast(city string) (*Cast, error) {
+	forecast, err := GetForecast(city)
+	if err != nil {
+		return nil, err
+	}
+
+	return forecast.Casts[0], nil
+}
+
+// GetForecast 获取"预报"天气.
+/*
+@param city 城市编码
+*/
+func GetForecast(city string) (*Forecast, error) {
+	apiKey, err := gaodeKit.GetApiKey()
+	if err != nil {
+		return nil, err
+	}
+
+	_, data, err := reqKit.Get(Url, map[string][]string{
+		"key":        {apiKey},
+		"city":       {city},
+		"extensions": {"all"},
+	})
+	if err != nil {
+		return nil, err
+	}
+
+	resp := &GaodeResponse{}
+	if err := jsonKit.Unmarshal(data, resp); err != nil {
+		return nil, err
+	}
+	if err := resp.Check(); err != nil {
+		return nil, err
+	}
+	if len(resp.Forecasts) == 0 {
+		return nil, errorKit.New("length of Forecasts is zero")
+	}
+	return resp.Forecasts[0], nil
+}
