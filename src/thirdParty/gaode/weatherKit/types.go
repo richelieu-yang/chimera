@@ -1,5 +1,7 @@
 package weatherKit
 
+import "github.com/richelieu-yang/chimera/v2/src/core/errorKit"
+
 type (
 	GaodeResponse struct {
 		// Status 值为0或1，1：成功；0：失败
@@ -57,3 +59,10 @@ type (
 		NightTemp string `json:"nighttemp"`
 	}
 )
+
+func (resp *GaodeResponse) Check() error {
+	if resp.Status != "1" {
+		return errorKit.New("Fail to get weather, status: %s, infocode: %s, info: %s", resp.Status, resp.InfoCode, resp.Info)
+	}
+	return nil
+}
