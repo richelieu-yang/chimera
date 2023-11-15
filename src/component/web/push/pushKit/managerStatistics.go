@@ -2,26 +2,27 @@ package pushKit
 
 import "github.com/richelieu-yang/chimera/v2/src/tableKit"
 
+// GetStatistics
+/*
+e.g.
++----------+-------------------+
+| Type     | Count of channels |
++----------+-------------------+
+| idMap    | 0                 |
+| bsidMap  | 0                 |
+| userMap  | 0                 |
+| groupMap | 0                 |
++----------+-------------------+
+*/
 func GetStatistics() string {
 	table := tableKit.CreateTable()
+
 	table.AddHeaders("Type", "Count of channels")
 
-	table.AddRow("idMap", idMap.Size())
-	table.AddRow("bsidMap", bsidMap.Size())
-	userMap.RLockFunc(func() {
-		var count int
-		userMap.RLockFunc(func() {
-			for _, userSet := range userMap.Map {
-				userSet
-			}
-		})
-		table.AddRow("userMap", count)
-	})
-	groupMap.RLockFunc(func() {
-		var count int
-
-		table.AddRow("groupMap", count)
-	})
+	table.AddRow("idMap", GetCountOfIdMap())
+	table.AddRow("bsidMap", GetCountOfBsidMap())
+	table.AddRow("userMap", GetCountOfUserMap())
+	table.AddRow("groupMap", GetCountOfGroupMap())
 
 	return table.Render()
 }

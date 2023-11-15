@@ -6,8 +6,5 @@ import (
 )
 
 func main() {
-	var c pushKit.Channel = nil
-
-	c1, ok := c.(pushKit.Channel)
-	fmt.Println(c1, ok)
+	fmt.Println(pushKit.GetStatistics())
 }
