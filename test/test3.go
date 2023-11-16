@@ -3,7 +3,6 @@ package main
 import (
 	"fmt"
 	"github.com/richelieu-yang/chimera/v2/src/core/timeKit"
-	"github.com/richelieu-yang/chimera/v2/src/tableKit"
 	"github.com/richelieu-yang/chimera/v2/src/thirdParty/gaode/gaodeKit"
 	"github.com/richelieu-yang/chimera/v2/src/thirdParty/gaode/weatherKit"
 	"github.com/sirupsen/logrus"
@@ -12,7 +11,7 @@ import (
 func main() {
 	gaodeKit.MustSetUp("b15c36bf1df4c272e92f3f1875a127f1")
 
-	table := tableKit.CreateTable1()
+	table := prettyKit.CreateTable1()
 	table.AddHeaders("地区", "当前天气", "白天天气", "夜晚天气")
 
 	cities := []string{"320200", "320206", "320211", "320213", "310000"}

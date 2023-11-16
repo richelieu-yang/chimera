@@ -1,7 +1,5 @@
 package pushKit
 
-import "github.com/richelieu-yang/chimera/v2/src/tableKit"
-
 // GetStatistics
 /*
 e.g.
@@ -15,7 +13,7 @@ e.g.
 +----------+-------------------+
 */
 func GetStatistics() string {
-	table := tableKit.CreateTable1()
+	table := prettyKit.CreateTable1()
 
 	table.AddHeaders("Type", "Count of channels")
 
