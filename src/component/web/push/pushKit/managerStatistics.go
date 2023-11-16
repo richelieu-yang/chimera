@@ -15,7 +15,7 @@ e.g.
 +----------+-------------------+
 */
 func GetStatistics() string {
-	table := tableKit.CreateTable()
+	table := tableKit.CreateTable1()
 
 	table.AddHeaders("Type", "Count of channels")
 
