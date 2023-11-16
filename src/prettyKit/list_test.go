@@ -7,29 +7,7 @@ import (
 )
 
 /*
-* Game Of Thrones
-  - Winter
-  - Is
-  - Coming
-  - This
-  - Is
-  - Known
-
-* The Dark Tower
-  - The Gunslinger
-
-------
-╭─ Game Of Thrones
-│  ├─ Winter
-│  ├─ Is
-│  ╰─ Coming
-│     ├─ This
-│     ├─ Is
-│     ╰─ Known
-╰─ The Dark Tower
-
-	╰─ The Gunslinger
-*/
+ */
 func TestNewListWriter(t *testing.T) {
 	l := list.NewWriter()
 	l.AppendItem("Game Of Thrones")
@@ -48,4 +26,27 @@ func TestNewListWriter(t *testing.T) {
 
 	l.SetStyle(list.StyleConnectedRounded)
 	fmt.Println(l.Render())
+
+	/*
+		output:
+			* Game Of Thrones
+			  * Winter
+			  * Is
+			  * Coming
+			    * This
+			    * Is
+			    * Known
+			* The Dark Tower
+			  * The Gunslinger
+			------
+			╭─ Game Of Thrones
+			│  ├─ Winter
+			│  ├─ Is
+			│  ╰─ Coming
+			│     ├─ This
+			│     ├─ Is
+			│     ╰─ Known
+			╰─ The Dark Tower
+			   ╰─ The Gunslinger
+	*/
 }
