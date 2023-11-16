@@ -1,11 +1,36 @@
-package main
+package prettyKit
 
 import (
 	"fmt"
 	"github.com/jedib0t/go-pretty/v6/list"
+	"testing"
 )
 
-func main() {
+/*
+* Game Of Thrones
+  - Winter
+  - Is
+  - Coming
+  - This
+  - Is
+  - Known
+
+* The Dark Tower
+  - The Gunslinger
+
+------
+╭─ Game Of Thrones
+│  ├─ Winter
+│  ├─ Is
+│  ╰─ Coming
+│     ├─ This
+│     ├─ Is
+│     ╰─ Known
+╰─ The Dark Tower
+
+	╰─ The Gunslinger
+*/
+func TestNewListWriter(t *testing.T) {
 	l := list.NewWriter()
 	l.AppendItem("Game Of Thrones")
 	l.Indent()
