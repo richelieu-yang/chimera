@@ -67,7 +67,9 @@ func main() {
 		send(wife)
 	}()
 
-	bot.Block()
+	if err := bot.Block(); err != nil {
+		logrus.Fatal(err)
+	}
 }
 
 // 发送问候
@@ -75,12 +77,12 @@ func send(f *openwechat.Friend) {
 	cron := cronKit.NewCron()
 
 	_, err := cron.AddFunc("0 30 6 * * *", func() {
-		text := "宝贝，早安！"
+		text := "宝贝，早安！该起床了。"
 		_, err := f.SendText(text)
 		if err != nil {
 			logrus.WithError(err).WithField("text", text).Error("Fail to greet.")
 		} else {
-			logrus.WithField("text", text).Error("Manager to greet.")
+			logrus.Info("Manager to greet.")
 		}
 	})
 	if err != nil {
@@ -93,7 +95,7 @@ func send(f *openwechat.Friend) {
 		if err != nil {
 			logrus.WithError(err).WithField("text", text).Error("Fail to greet.")
 		} else {
-			logrus.WithField("text", text).Error("Manager to greet.")
+			logrus.Info("Manager to greet.")
 		}
 	})
 	if err != nil {
@@ -106,7 +108,7 @@ func send(f *openwechat.Friend) {
 		if err != nil {
 			logrus.WithError(err).WithField("text", text).Error("Fail to greet.")
 		} else {
-			logrus.WithField("text", text).Error("Manager to greet.")
+			logrus.Info("Manager to greet.")
 		}
 	})
 	if err != nil {
