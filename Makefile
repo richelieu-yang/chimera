@@ -1,5 +1,5 @@
-app=push-test
-path=/Users/richelieu/GolandProjects/chimera/internal/pushDemo/main.go
+app=test3
+path=test/test3.go
 cgo=0
 
 prepare:
