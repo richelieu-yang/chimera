@@ -2,8 +2,8 @@ package weatherKit
 
 import (
 	"fmt"
+	"github.com/jedib0t/go-pretty/v6/table"
 	"github.com/richelieu-yang/chimera/v2/src/core/timeKit"
-	"github.com/richelieu-yang/chimera/v2/src/tableKit"
 	"github.com/richelieu-yang/chimera/v2/src/thirdParty/gaode/gaodeKit"
 	"github.com/sirupsen/logrus"
 	"testing"
@@ -41,11 +41,11 @@ func TestWeather(t *testing.T) {
 | 上海市 | 14(多云) | 17(多云) | 11(小雨) |
 +--------+----------+----------+----------+
 */
-func TestWeather1(t *testing.T) {
+func TestWeather1(testing *testing.T) {
 	gaodeKit.MustSetUp("b15c36bf1df4c272e92f3f1875a127f1")
 
-	table := tableKit.CreateTable()
-	table.AddHeaders("地区", "当前天气", "白天天气", "夜晚天气")
+	t := table.NewWriter()
+	t.AppendHeader(table.Row{"地区", "当前天气", "白天天气", "夜晚天气"})
 
 	cities := []string{"320200", "320206", "320211", "320213", "310000"}
 	for _, city := range cities {
@@ -60,12 +60,12 @@ func TestWeather1(t *testing.T) {
 			continue
 		}
 
-		table.AddRow(live.City, fmt.Sprintf("%s(%s)",
+		t.AppendRow(table.Row{live.City, fmt.Sprintf("%s(%s)",
 			live.Temperature, live.Weather),
 			fmt.Sprintf("%s(%s)", todayCast.DayTemp, todayCast.DayWeather),
-			fmt.Sprintf("%s(%s)", todayCast.NightTemp, todayCast.NightWeather))
+			fmt.Sprintf("%s(%s)", todayCast.NightTemp, todayCast.NightWeather)})
 	}
 
 	fmt.Println(timeKit.FormatCurrent(timeKit.FormatEntire))
-	fmt.Println(table.Render())
+	fmt.Println(t.Render())
 }

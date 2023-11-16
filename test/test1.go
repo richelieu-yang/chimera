@@ -2,16 +2,13 @@ package main
 
 import (
 	"fmt"
-	"time"
+	"github.com/jedib0t/go-pretty/v6/table"
 )
 
 func main() {
-	s := []string{"0", "1", "2"}
+	t := table.Table{}
+	t.AppendHeader(table.Row{"#", "First Name", "Last Name", "Salary"})
+	t.AppendRows([]table.Row{{"1", "Arya", "Stark", "3000"}})
+	fmt.Println(t.Render())
 
-	for _, ele := range s {
-		go func() {
-			fmt.Println(ele)
-		}()
-	}
-	time.Sleep(time.Second)
 }
