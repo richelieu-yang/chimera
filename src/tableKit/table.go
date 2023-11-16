@@ -7,7 +7,7 @@ import (
 
 // NewTableWriter
 /*
-缺陷: 最好不要出现中文，显示会有点错乱.
+PS: 最好不要出现中文，显示会有点错乱.
 */
 var NewTableWriter func() table.Writer = table.NewWriter
 
