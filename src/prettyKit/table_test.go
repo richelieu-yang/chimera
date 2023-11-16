@@ -2,8 +2,26 @@ package prettyKit
 
 import (
 	"fmt"
+	"github.com/jedib0t/go-pretty/v6/table"
 	"testing"
 )
+
+/*
+output:
++---+------------+-----------+--------+
+| # | FIRST NAME | LAST NAME | SALARY |
++---+------------+-----------+--------+
+| 1 | Arya       | Stark     | 3000   |
+| 2 | Jon        | Snow      | 2000   |
++---+------------+-----------+--------+
+*/
+func TestNewTableWriter(t *testing.T) {
+	writer := NewTableWriter()
+	writer.AppendHeader(table.Row{"#", "First Name", "Last Name", "Salary"})
+	writer.AppendRows([]table.Row{{"1", "Arya", "Stark", "3000"}})
+	writer.AppendRows([]table.Row{{"2", "Jon", "Snow", "2000"}})
+	fmt.Println(writer.Render())
+}
 
 func TestCreateTable(t *testing.T) {
 	table := CreateTable()
