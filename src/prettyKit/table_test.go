@@ -23,30 +23,30 @@ func TestNewTableWriter(t *testing.T) {
 	fmt.Println(writer.Render())
 }
 
-func TestCreateTable(t *testing.T) {
-	table := CreateTable()
-	table.AddHeaders("User", "Age")
-	table.AddRow("San Zhang", 18)
-	table.AddRow("Si Li", 30)
-
-	fmt.Println("默认格式（普通的文本表格）:")
-	fmt.Println(table.Render())
-
-	fmt.Println("HTML格式:")
-	table.SetModeHTML()
-	fmt.Println(table.Render())
-
-	fmt.Println("Markdown格式:")
-	table.SetModeMarkdown()
-	fmt.Println(table.Render())
-}
-
-// 可以只调用 Table.AddRow()
-func TestCreateTable1(t *testing.T) {
-	table := CreateTable()
-	//table.AddHeaders("User", "Age")
-	table.AddRow("San Zhang", 18)
-	table.AddRow("Si Li", 30)
-
-	fmt.Println(table.Render())
-}
+//func TestCreateTable(t *testing.T) {
+//	table := CreateTable()
+//	table.AddHeaders("User", "Age")
+//	table.AddRow("San Zhang", 18)
+//	table.AddRow("Si Li", 30)
+//
+//	fmt.Println("默认格式（普通的文本表格）:")
+//	fmt.Println(table.Render())
+//
+//	fmt.Println("HTML格式:")
+//	table.SetModeHTML()
+//	fmt.Println(table.Render())
+//
+//	fmt.Println("Markdown格式:")
+//	table.SetModeMarkdown()
+//	fmt.Println(table.Render())
+//}
+//
+//// 可以只调用 Table.AddRow()
+//func TestCreateTable1(t *testing.T) {
+//	table := CreateTable()
+//	//table.AddHeaders("User", "Age")
+//	table.AddRow("San Zhang", 18)
+//	table.AddRow("Si Li", 30)
+//
+//	fmt.Println(table.Render())
+//}

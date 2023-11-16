@@ -662,8 +662,6 @@ github.com/apache/pulsar-client-go v0.11.1/go.mod h1:FoijqJwgjroSKptIWp1vvK1CXs8
 github.com/apache/rocketmq-clients/golang/v5 v5.0.1-rc.5 h1:dSQxPWmu2PQ/kj8PqQzYsjLHC1RslV4emxTmnspWrT0=
 github.com/apache/rocketmq-clients/golang/v5 v5.0.1-rc.5/go.mod h1:7/YwUJ8EDlOciZNLJlUMKSDjfP8rWiaLs7yYIBq7YQY=
 github.com/apache/thrift v0.16.0/go.mod h1:PHK3hniurgQaNMZYaCLEqXKsYK8upmhPbmdP2FXSqgU=
-github.com/apcera/termtables v0.0.0-20170405184538-bcbc5dc54055 h1:IkPAzP+QjchKXXFX6LCcpDKa89b/e/0gPCUbQGWtUUY=
-github.com/apcera/termtables v0.0.0-20170405184538-bcbc5dc54055/go.mod h1:8mHYHlOef9UC51cK1/WRvE/iQVM8O8QlYFa8eh8r5I8=
 github.com/ardielle/ardielle-go v1.5.2 h1:TilHTpHIQJ27R1Tl/iITBzMwiUGSlVfiVhwDNGM3Zj4=
 github.com/ardielle/ardielle-go v1.5.2/go.mod h1:I4hy1n795cUhaVt/ojz83SNVCYIGsAFAONtv2Dr7HUI=
 github.com/ardielle/ardielle-tools v1.5.4/go.mod h1:oZN+JRMnqGiIhrzkRN9l26Cej9dEx4jeNG6A+AdkShk=
@@ -1458,8 +1456,6 @@ github.com/sagikazarmark/slog-shim v0.1.0 h1:diDBnUNK9N/354PgrxMywXnAwEr1QZcOr6g
 github.com/sagikazarmark/slog-shim v0.1.0/go.mod h1:SrcSrq8aKtyuqEI1uvTDTK1arOWRIczQRv+GVI1AkeQ=
 github.com/samber/lo v1.38.1 h1:j2XEAqXKb09Am4ebOg31SpvzUTTs6EN3VfgeLUhPdXM=
 github.com/samber/lo v1.38.1/go.mod h1:+m/ZKRl6ClXCE2Lgf3MsQlWfh4bn1bz6CXEOxnEXnEA=
-github.com/scylladb/termtables v1.0.0 h1:uUnesUY4V1VPCotpOQLb1LjTXVvzwy7Ramx8K8+w+8U=
-github.com/scylladb/termtables v1.0.0/go.mod h1:C1a7PQSMz9NShzorzCiG2fk9+xuCgLkPeCvMHYR2OWg=
 github.com/sean-/seed v0.0.0-20170313163322-e2103e2c3529/go.mod h1:DxrIzT+xaE7yg65j358z/aeFdxmN0P9QXhEzd20vsDc=
 github.com/shirou/gopsutil/v3 v3.23.10 h1:/N42opWlYzegYaVkWejXWJpbzKv2JDy3mrgGzKsh9hM=
 github.com/shirou/gopsutil/v3 v3.23.10/go.mod h1:JIE26kpucQi+innVlAUnIEOSBhBUkirr5b44yr55+WE=
