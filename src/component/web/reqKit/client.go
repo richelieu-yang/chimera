@@ -23,7 +23,7 @@ func NewClient() *req.Client {
 	client := req.C()
 
 	// timeout（默认的2min太长了）
-	client.SetTimeout(time.Second * 15)
+	client.SetTimeout(time.Second * 20)
 
 	// 自动探测字符集并解码到 utf-8（默认就是启用）
 	client.EnableAutoDecode()

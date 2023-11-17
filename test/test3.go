@@ -5,13 +5,21 @@ import (
 	"fmt"
 	"github.com/eatmoreapple/openwechat"
 	"github.com/richelieu-yang/chimera/v2/src/cronKit"
+	"github.com/richelieu-yang/chimera/v2/src/thirdParty/gaodeKit"
 	"github.com/sirupsen/logrus"
 	"net/http"
 )
 
-func main() {
-	bot := openwechat.DefaultBot(openwechat.Desktop) // 桌面模式
+var client *gaodeKit.Client
 
+func main() {
+	var err error
+	client, err = gaodeKit.NewClient("b15c36bf1df4c272e92f3f1875a127f1")
+	if err != nil {
+		logrus.Fatal(err)
+	}
+
+	bot := openwechat.DefaultBot(openwechat.Desktop) // 桌面模式
 	httpClient := bot.Caller.Client.HTTPClient()
 	httpClient.Transport = &http.Transport{
 		TLSClientConfig: &tls.Config{
@@ -102,5 +110,6 @@ func greet(f *openwechat.Friend, text string) func() {
 		} else {
 			logrus.Info("Manager to greet.")
 		}
+
 	}
 }
