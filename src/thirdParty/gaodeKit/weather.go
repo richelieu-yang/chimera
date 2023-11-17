@@ -28,7 +28,7 @@ func (client *Client) GetLive(city string) (*Live, error) {
 	if err := jsonKit.Unmarshal(data, resp); err != nil {
 		return nil, err
 	}
-	if err := resp.Check(); err != nil {
+	if err := resp.IsSuccess(); err != nil {
 		return nil, err
 	}
 	if len(resp.Lives) == 0 {
@@ -69,7 +69,7 @@ func (client *Client) GetForecast(city string) (*Forecast, error) {
 	if err := jsonKit.Unmarshal(data, resp); err != nil {
 		return nil, err
 	}
-	if err := resp.Check(); err != nil {
+	if err := resp.IsSuccess(); err != nil {
 		return nil, err
 	}
 	if len(resp.Forecasts) == 0 {
