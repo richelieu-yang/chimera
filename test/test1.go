@@ -1,22 +1,11 @@
 package main
 
 import (
-	"encoding/base64"
 	"fmt"
-	"github.com/richelieu-yang/chimera/v2/src/crypto/base64Kit"
-	"github.com/richelieu-yang/chimera/v2/src/json/jsonKit"
+	"github.com/richelieu-yang/chimera/v2/src/ip/ipRegionKit"
 )
 
 func main() {
-	m := map[string]interface{}{
-		"code":    0,
-		"message": "success",
-	}
-	jsonData, err := jsonKit.Marshal(m)
-	if err != nil {
-		panic(err)
-	}
-
-	base64Str := base64Kit.EncodeToString(jsonData, base64Kit.WithEncoding(base64.StdEncoding))
-	fmt.Println(base64Str) // eyJjb2RlIjowLCJtZXNzYWdlIjoic3VjY2VzcyJ9
+	ipRegionKit.MustSetUp("_chimera-lib/ip2region.xdb")
+	fmt.Println(ipRegionKit.GetRegion("1.0.16.0"))
 }

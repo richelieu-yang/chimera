@@ -1,7 +1,6 @@
 package ipRegionKit
 
 import (
-	"fmt"
 	"github.com/richelieu-yang/chimera/v2/src/consts"
 	"github.com/richelieu-yang/chimera/v2/src/core/pathKit"
 	"github.com/sirupsen/logrus"
@@ -20,5 +19,5 @@ func TestGetRegion(t *testing.T) {
 
 	//ip := "10.0.9.141"
 	ip := "218.90.174.146"
-	fmt.Println(GetRegion(ip))
+	logrus.Info(GetRegion(ip))
 }
