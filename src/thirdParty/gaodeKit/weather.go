@@ -7,7 +7,7 @@ import (
 )
 
 const (
-	url = "https://restapi.amap.com/v3/weather/weatherInfo"
+	weatherUrl = "https://restapi.amap.com/v3/weather/weatherInfo"
 )
 
 // GetLive 获取"实况"天气.
@@ -15,7 +15,7 @@ const (
 @param city 城市编码
 */
 func (client *Client) GetLive(city string) (*Live, error) {
-	_, data, err := reqKit.Get(url, map[string][]string{
+	_, data, err := reqKit.Get(weatherUrl, map[string][]string{
 		"key":        {client.key},
 		"city":       {city},
 		"extensions": {"base"},
@@ -56,7 +56,7 @@ func (client *Client) GetTodayCast(city string) (*Cast, error) {
 @param city 城市编码
 */
 func (client *Client) GetForecast(city string) (*Forecast, error) {
-	_, data, err := reqKit.Get(url, map[string][]string{
+	_, data, err := reqKit.Get(weatherUrl, map[string][]string{
 		"key":        {client.key},
 		"city":       {city},
 		"extensions": {"all"},
