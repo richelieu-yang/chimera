@@ -7,10 +7,10 @@ func TestMarshalToFile(t *testing.T) {
 		"a": 1,
 		"b": []string{"0", "1", "2"},
 	}
-	if err := MarshalToFile(m, "_test.json"); err != nil {
+	if err := MarshalToFile(m, "_test.json", 0666); err != nil {
 		panic(err)
 	}
-	if err := MarshalToFileWithAPI(GetStdApi(), m, "_test1.json"); err != nil {
+	if err := MarshalToFileWithAPI(GetStdApi(), m, "_test1.json", 0666); err != nil {
 		panic(err)
 	}
 }
