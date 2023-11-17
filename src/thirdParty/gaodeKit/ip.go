@@ -40,6 +40,8 @@ func (client *Client) GetIpInfo(ip string) (*IpInfo, error) {
 		}, nil
 	}
 
+	// 外网ip的响应json例子: {"status":"1","info":"OK","infocode":"10000","province":[],"city":[],"adcode":[],"rectangle":[]}
+
 	/* (2) 正常处理 */
 	resp := &IpResponse{}
 	if err := jsonKit.Unmarshal(jsonData, resp); err != nil {

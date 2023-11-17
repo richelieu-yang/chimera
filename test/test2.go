@@ -1,24 +1,38 @@
 package main
 
-import "fmt"
-
-type Person struct {
-	Name string
-	Age  int
-}
+import (
+	"fmt"
+	"github.com/richelieu-yang/chimera/v2/src/json/jsonKit"
+	"github.com/tidwall/gjson"
+)
 
 func main() {
-	p1 := &Person{"Alice", 18}
-	p2 := &Person{"Bob", 20}
-	p3 := &Person{"Alice", 18}
-
-	// 比较结构体实例指针的内存地址
-	if p1 == p2 {
-		fmt.Println("p1 equals to p2")
+	{
+		json := `{"status":"1","info":"OK","infocode":"10000","province":[],"city":[],"adcode":[],"rectangle":[]}`
+		f := jsonKit.GetField([]byte(json), "province")
+		fmt.Println(f)
+		fmt.Println(f.Type)
+		fmt.Println("IsString", f.Type == gjson.String)
+		fmt.Println("IsArray", f.IsArray())
 	}
-
-	// 比较结构体实例指针是否指向同一个实例
-	if p1 == p3 {
-		fmt.Println("p1 equals to p3")
+	fmt.Println("------")
+	{
+		json := `{"status":"1","info":"OK","infocode":"10000","province":"局域网","city":[],"adcode":[],"rectangle":[]}`
+		f := jsonKit.GetField([]byte(json), "province")
+		fmt.Println(f)
+		fmt.Println(f.Type)
+		fmt.Println("IsString", f.Type == gjson.String)
+		fmt.Println("IsArray", f.IsArray())
 	}
+	/*
+		[]
+		JSON
+		IsString false
+		IsArray true
+		------
+		局域网
+		String
+		IsString true
+		IsArray false
+	*/
 }

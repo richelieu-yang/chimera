@@ -12,8 +12,24 @@ func TestClient_GetIp(t *testing.T) {
 		panic(err)
 	}
 
+	//{
+	//	ip := "10.0.9.141"
+	//	ipInfo, err := client.GetIpInfo(ip)
+	//	if err != nil {
+	//		panic(err)
+	//	}
+	//	fmt.Println(jsonKit.MarshalIndentToString(ipInfo, "", "    "))
+	//}
+	//{
+	//	ip := "218.90.174.146"
+	//	ipInfo, err := client.GetIpInfo(ip)
+	//	if err != nil {
+	//		panic(err)
+	//	}
+	//	fmt.Println(jsonKit.MarshalIndentToString(ipInfo, "", "    "))
+	//}
 	{
-		ip := "10.0.9.141"
+		ip := "1.0.16.0"
 		ipInfo, err := client.GetIpInfo(ip)
 		if err != nil {
 			panic(err)
@@ -21,14 +37,6 @@ func TestClient_GetIp(t *testing.T) {
 		fmt.Println(jsonKit.MarshalIndentToString(ipInfo, "", "    "))
 	}
 
-	{
-		ip := "218.90.174.146"
-		ipInfo, err := client.GetIpInfo(ip)
-		if err != nil {
-			panic(err)
-		}
-		fmt.Println(jsonKit.MarshalIndentToString(ipInfo, "", "    "))
-	}
 	/*
 		{
 		    "province": "局域网",
