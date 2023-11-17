@@ -11,11 +11,6 @@ func TestGetStringField(t *testing.T) {
 	fmt.Println(GetStringField([]byte(jsonStr), "name.last")) // Prichard
 }
 
-func TestGetStringFieldFromJson(t *testing.T) {
-	jsonStr := `{"name":{"first":"Janet","last":"Prichard"},"age":47}`
-	fmt.Println(GetStringFieldFromString(jsonStr, "name.last")) // Prichard
-}
-
 func TestGetField(t *testing.T) {
 	{
 		json := `{"status":"1","info":"OK","infocode":"10000","province":[],"city":[],"adcode":[],"rectangle":[]}`
