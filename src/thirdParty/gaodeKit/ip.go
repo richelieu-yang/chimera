@@ -1,6 +1,11 @@
 package gaodeKit
 
-import "github.com/richelieu-yang/chimera/v2/src/ip/ipKit"
+import (
+	"github.com/richelieu-yang/chimera/v2/src/component/web/reqKit"
+	"github.com/richelieu-yang/chimera/v2/src/core/errorKit"
+	"github.com/richelieu-yang/chimera/v2/src/ip/ipKit"
+	"github.com/richelieu-yang/chimera/v2/src/json/jsonKit"
+)
 
 const (
 	ipUrl = "https://restapi.amap.com/v3/ip"
@@ -15,4 +20,20 @@ func (client *Client) GetIp(ip string) (*IpInfo, error) {
 		return nil, err
 	}
 
+	_, jsonData, err := reqKit.Get(ipUrl, map[string][]string{
+		"key": {client.key},
+		"ip":  {ip},
+	})
+	if err != nil {
+		return nil, err
+	}
+
+	resp := &IpResponse{}
+	if err := jsonKit.Unmarshal(jsonData, resp); err != nil {
+		return nil, errorKit.Wrap(err, "Fail to unmarshal")
+	}
+	if err := resp.IsSuccess(); err != nil {
+		return nil, err
+	}
+	return &resp.IpInfo, nil
 }

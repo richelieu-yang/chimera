@@ -26,7 +26,7 @@ func (client *Client) GetLive(city string) (*Live, error) {
 
 	resp := &WeatherResponse{}
 	if err := jsonKit.Unmarshal(data, resp); err != nil {
-		return nil, err
+		return nil, errorKit.Wrap(err, "Fail to unmarshal")
 	}
 	if err := resp.IsSuccess(); err != nil {
 		return nil, err
@@ -67,7 +67,7 @@ func (client *Client) GetForecast(city string) (*Forecast, error) {
 
 	resp := &WeatherResponse{}
 	if err := jsonKit.Unmarshal(data, resp); err != nil {
-		return nil, err
+		return nil, errorKit.Wrap(err, "Fail to unmarshal")
 	}
 	if err := resp.IsSuccess(); err != nil {
 		return nil, err
