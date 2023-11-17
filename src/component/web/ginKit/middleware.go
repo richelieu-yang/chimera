@@ -3,10 +3,35 @@ package ginKit
 import (
 	"github.com/gin-contrib/gzip"
 	"github.com/gin-gonic/gin"
+	"github.com/richelieu-yang/chimera/v2/src/core/errorKit"
 	"github.com/richelieu-yang/chimera/v2/src/core/sliceKit"
 	"github.com/richelieu-yang/chimera/v2/src/core/strKit"
 	"net/http"
 )
+
+// UseMiddlewares
+/*
+@param middlewares 其中的元素不能为nil!!!
+*/
+func UseMiddlewares(engine *gin.Engine, middlewares ...gin.HandlerFunc) (err error) {
+	if len(middlewares) == 0 {
+		return
+	}
+
+	sliceKit.Each(middlewares, func(middleware gin.HandlerFunc, index int) bool {
+		if middleware == nil {
+			err = errorKit.New("middlewares[%d] == nil", index)
+			return true
+		}
+		return false
+	})
+	if err != nil {
+		return
+	}
+
+	engine.Use(middlewares...)
+	return
+}
 
 // attachMiddlewares 绑定一些常用的中间件.
 func attachMiddlewares(engine *gin.Engine, config MiddlewareConfig, recoveryMiddleware gin.HandlerFunc) error {

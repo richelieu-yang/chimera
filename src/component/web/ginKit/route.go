@@ -12,7 +12,8 @@ import (
 /*
 适用场景: 1个路由，n个Method.
 
-@param methods nil => 接收所有类型method的请求.	e.g. http.MethodGet、http.MethodPost
+@param methods 	nil => 接收所有类型method的请求.	e.g. http.MethodGet、http.MethodPost
+@param handlers 其中的元素不能为nil!!!
 */
 func RegisterHandlers(group IGroup, route string, methods []string, handlers ...gin.HandlerFunc) (err error) {
 	if len(handlers) == 0 {
@@ -42,8 +43,10 @@ func RegisterHandlers(group IGroup, route string, methods []string, handlers ...
 	return
 }
 
-// RegisterHandlersRoutes 将多个相同的处理器，注册到多个路由.
+// RegisterHandlersRoutes 将相同的多个处理器，注册到多个路由.
 func RegisterHandlersRoutes(group IGroup, routes []string, methods []string, handlers ...gin.HandlerFunc) (err error) {
+	routes = sliceKit.Uniq(routes)
+
 	for _, route := range routes {
 		err = RegisterHandlers(group, route, methods, handlers...)
 		if err != nil {

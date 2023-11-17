@@ -2,7 +2,7 @@ package sliceKit
 
 import "github.com/samber/lo"
 
-// Uniq 去重
+// Uniq 去重.
 /*
 PS: 不会修改传参s.
 
