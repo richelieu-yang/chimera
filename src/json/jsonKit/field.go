@@ -5,6 +5,12 @@ import "github.com/tidwall/gjson"
 // GetField
 /*
 @param path 如果是嵌套的内部字段，可以通过'.'组合
+
+字段类型判断:
+	Result.Type
+	Result.IsBool()
+	Result.IsArray()
+	Result.IsObject()
 */
 var GetField func(jsonData []byte, path string) gjson.Result = gjson.GetBytes
 
