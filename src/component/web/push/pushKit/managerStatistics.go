@@ -1,26 +1,30 @@
 package pushKit
 
+import (
+	"github.com/jedib0t/go-pretty/v6/table"
+	"github.com/richelieu-yang/chimera/v2/src/prettyKit"
+)
+
 // GetStatistics
 /*
 e.g.
 +----------+-------------------+
-| Type     | Count of channels |
+| TYPE     | COUNT OF CHANNELS |
 +----------+-------------------+
-| idMap    | 0                 |
-| bsidMap  | 0                 |
-| userMap  | 0                 |
-| groupMap | 0                 |
+| idMap    |                 0 |
+| bsidMap  |                 0 |
+| userMap  |                 0 |
+| groupMap |                 0 |
 +----------+-------------------+
 */
 func GetStatistics() string {
-	table := prettyKit.CreateTable1()
+	writer := prettyKit.NewTableWriter()
 
-	table.AddHeaders("Type", "Count of channels")
+	writer.AppendHeader(table.Row{"Type", "Count of channels"})
+	writer.AppendRow(table.Row{"idMap", GetCountOfIdMap()})
+	writer.AppendRow(table.Row{"bsidMap", GetCountOfBsidMap()})
+	writer.AppendRow(table.Row{"userMap", GetCountOfUserMap()})
+	writer.AppendRow(table.Row{"groupMap", GetCountOfGroupMap()})
 
-	table.AddRow("idMap", GetCountOfIdMap())
-	table.AddRow("bsidMap", GetCountOfBsidMap())
-	table.AddRow("userMap", GetCountOfUserMap())
-	table.AddRow("groupMap", GetCountOfGroupMap())
-
-	return table.Render()
+	return writer.Render()
 }
