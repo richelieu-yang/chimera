@@ -29,7 +29,7 @@ func (client *Client) GetIpInfo(ip string) (*IpInfo, error) {
 	}
 
 	/* (1) 特殊处理: ip为内网地址 */
-	// ip为内网地址情况下的响应json: {"status":"1","info":"OK","infocode":"10000","province":"局域网","city":[],"adcode":[],"rectangle":[]}
+	// ip为内网地址情况下的响应json例子: {"status":"1","info":"OK","infocode":"10000","province":"局域网","city":[],"adcode":[],"rectangle":[]}
 	field := jsonKit.GetStringField(jsonData, "province")
 	if field == "局域网" {
 		return &IpInfo{
