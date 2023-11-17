@@ -1,10 +1,9 @@
-package weatherKit
+package gaodeKit
 
 import (
 	"fmt"
 	"github.com/jedib0t/go-pretty/v6/table"
 	"github.com/richelieu-yang/chimera/v2/src/core/timeKit"
-	"github.com/richelieu-yang/chimera/v2/src/thirdParty/gaode/gaodeKit"
 	"github.com/sirupsen/logrus"
 	"testing"
 )
@@ -14,15 +13,18 @@ import (
 &{2023-11-15 3 多云 小雨 17 9}
 */
 func TestWeather(t *testing.T) {
-	gaodeKit.MustSetUp("b15c36bf1df4c272e92f3f1875a127f1")
+	client, err := NewClient("b15c36bf1df4c272e92f3f1875a127f1")
+	if err != nil {
+		panic(err)
+	}
 
-	live, err := GetLive("320205")
+	live, err := client.GetLive("320205")
 	if err != nil {
 		panic(err)
 	}
 	fmt.Println(live)
 
-	todayCast, err := GetTodayCast("320205")
+	todayCast, err := client.GetTodayCast("320205")
 	if err != nil {
 		panic(err)
 	}
@@ -42,19 +44,22 @@ func TestWeather(t *testing.T) {
 +--------+----------+----------+----------+
 */
 func TestWeather1(testing *testing.T) {
-	gaodeKit.MustSetUp("b15c36bf1df4c272e92f3f1875a127f1")
+	client, err := NewClient("b15c36bf1df4c272e92f3f1875a127f1")
+	if err != nil {
+		panic(err)
+	}
 
 	t := table.NewWriter()
 	t.AppendHeader(table.Row{"地区", "当前天气", "白天天气", "夜晚天气"})
 
 	cities := []string{"320200", "320206", "320211", "320213", "310000"}
 	for _, city := range cities {
-		live, err := GetLive(city)
+		live, err := client.GetLive(city)
 		if err != nil {
 			logrus.WithError(err).WithField("city", city).Error("Fail to get live")
 			continue
 		}
-		todayCast, err := GetTodayCast(city)
+		todayCast, err := client.GetTodayCast(city)
 		if err != nil {
 			logrus.WithError(err).WithField("city", city).Error("Fail to get today cast")
 			continue

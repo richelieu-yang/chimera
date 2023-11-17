@@ -1,10 +1,9 @@
-package weatherKit
+package gaodeKit
 
 import (
 	"github.com/richelieu-yang/chimera/v2/src/component/web/reqKit"
 	"github.com/richelieu-yang/chimera/v2/src/core/errorKit"
 	"github.com/richelieu-yang/chimera/v2/src/json/jsonKit"
-	"github.com/richelieu-yang/chimera/v2/src/thirdParty/gaode/gaodeKit"
 )
 
 const (
@@ -15,14 +14,9 @@ const (
 /*
 @param city 城市编码
 */
-func GetLive(city string) (*Live, error) {
-	apiKey, err := gaodeKit.GetApiKey()
-	if err != nil {
-		return nil, err
-	}
-
+func (client *Client) GetLive(city string) (*Live, error) {
 	_, data, err := reqKit.Get(url, map[string][]string{
-		"key":        {apiKey},
+		"key":        {client.key},
 		"city":       {city},
 		"extensions": {"base"},
 	})
@@ -44,8 +38,8 @@ func GetLive(city string) (*Live, error) {
 }
 
 // GetTodayCast 获取今天的"预报"天气.
-func GetTodayCast(city string) (*Cast, error) {
-	forecast, err := GetForecast(city)
+func (client *Client) GetTodayCast(city string) (*Cast, error) {
+	forecast, err := client.GetForecast(city)
 	if err != nil {
 		return nil, err
 	}
@@ -61,14 +55,9 @@ func GetTodayCast(city string) (*Cast, error) {
 /*
 @param city 城市编码
 */
-func GetForecast(city string) (*Forecast, error) {
-	apiKey, err := gaodeKit.GetApiKey()
-	if err != nil {
-		return nil, err
-	}
-
+func (client *Client) GetForecast(city string) (*Forecast, error) {
 	_, data, err := reqKit.Get(url, map[string][]string{
-		"key":        {apiKey},
+		"key":        {client.key},
 		"city":       {city},
 		"extensions": {"all"},
 	})

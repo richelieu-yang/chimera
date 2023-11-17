@@ -1,4 +1,4 @@
-package weatherKit
+package gaodeKit
 
 import "github.com/richelieu-yang/chimera/v2/src/core/errorKit"
 
