@@ -5,6 +5,7 @@ import (
 	"github.com/richelieu-yang/chimera/v2/src/core/errorKit"
 	"github.com/richelieu-yang/chimera/v2/src/ip/ipKit"
 	"github.com/richelieu-yang/chimera/v2/src/json/jsonKit"
+	"github.com/tidwall/gjson"
 )
 
 const (
@@ -28,21 +29,35 @@ func (client *Client) GetIpInfo(ip string) (*IpInfo, error) {
 		return nil, err
 	}
 
-	/* (1) 特殊处理: ip为内网地址 */
-	// ip为内网地址情况下的响应json例子: {"status":"1","info":"OK","infocode":"10000","province":"局域网","city":[],"adcode":[],"rectangle":[]}
-	field := jsonKit.GetStringField(jsonData, "province")
-	if field == "局域网" {
-		return &IpInfo{
-			Province:  field,
-			City:      "",
-			Adcode:    "",
-			Rectangle: "",
-		}, nil
+	/*
+		局域网ip响应:	{"status":"1","info":"OK","infocode":"10000","province":"局域网","city":[],"adcode":[],"rectangle":[]}
+		外网ip响应: 	{"status":"1","info":"OK","infocode":"10000","province":[],"city":[],"adcode":[],"rectangle":[]}
+	*/
+	field := jsonKit.GetField(jsonData, "province")
+	if field.Type == gjson.String {
+		if field.String() == "局域网" {
+			return &IpInfo{
+				Province:  "局域网",
+				City:      "",
+				Adcode:    "",
+				Rectangle: "",
+			}, nil
+		} else {
+			// continue
+		}
+	} else {
+		if field.IsArray() && field.Raw == "[]" {
+			return &IpInfo{
+				Province:  "外网",
+				City:      "",
+				Adcode:    "",
+				Rectangle: "",
+			}, nil
+		}
+		return nil, errorKit.New("invalid response(%s)", string(jsonData))
 	}
 
-	// 外网ip的响应json例子: {"status":"1","info":"OK","infocode":"10000","province":[],"city":[],"adcode":[],"rectangle":[]}
-
-	/* (2) 正常处理 */
+	/* 国内ip */
 	resp := &IpResponse{}
 	if err := jsonKit.Unmarshal(jsonData, resp); err != nil {
 		return nil, errorKit.Wrap(err, "Fail to unmarshal")

@@ -12,22 +12,25 @@ func TestClient_GetIp(t *testing.T) {
 		panic(err)
 	}
 
-	//{
-	//	ip := "10.0.9.141"
-	//	ipInfo, err := client.GetIpInfo(ip)
-	//	if err != nil {
-	//		panic(err)
-	//	}
-	//	fmt.Println(jsonKit.MarshalIndentToString(ipInfo, "", "    "))
-	//}
-	//{
-	//	ip := "218.90.174.146"
-	//	ipInfo, err := client.GetIpInfo(ip)
-	//	if err != nil {
-	//		panic(err)
-	//	}
-	//	fmt.Println(jsonKit.MarshalIndentToString(ipInfo, "", "    "))
-	//}
+	/* 局域网ip */
+	{
+		ip := "10.0.9.141"
+		ipInfo, err := client.GetIpInfo(ip)
+		if err != nil {
+			panic(err)
+		}
+		fmt.Println(jsonKit.MarshalIndentToString(ipInfo, "", "    "))
+	}
+	/* 国内ip */
+	{
+		ip := "218.90.174.146"
+		ipInfo, err := client.GetIpInfo(ip)
+		if err != nil {
+			panic(err)
+		}
+		fmt.Println(jsonKit.MarshalIndentToString(ipInfo, "", "    "))
+	}
+	/* 日本ip */
 	{
 		ip := "1.0.16.0"
 		ipInfo, err := client.GetIpInfo(ip)
@@ -36,7 +39,6 @@ func TestClient_GetIp(t *testing.T) {
 		}
 		fmt.Println(jsonKit.MarshalIndentToString(ipInfo, "", "    "))
 	}
-
 	/*
 		{
 		    "province": "局域网",
@@ -49,6 +51,12 @@ func TestClient_GetIp(t *testing.T) {
 		    "city": "无锡市",
 		    "adcode": "320200",
 		    "rectangle": "120.1788533,31.4648817;120.4605818,31.68307651"
+		} <nil>
+		{
+		    "province": "外网",
+		    "city": "",
+		    "adcode": "",
+		    "rectangle": ""
 		} <nil>
 	*/
 }
