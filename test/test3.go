@@ -76,44 +76,31 @@ func main() {
 func send(f *openwechat.Friend) {
 	cron := cronKit.NewCron()
 
-	_, err := cron.AddFunc("0 30 6 * * *", func() {
-		text := "宝贝，早安！该起床了。"
-		_, err := f.SendText(text)
-		if err != nil {
-			logrus.WithError(err).WithField("text", text).Error("Fail to greet.")
-		} else {
-			logrus.Info("Manager to greet.")
-		}
-	})
+	_, err := cron.AddFunc("0 30 6 * * *", greet(f, "宝贝，早安！该起床了。"))
 	if err != nil {
 		logrus.Fatal(err)
 	}
 
-	_, err = cron.AddFunc("0 30 11 * * *", func() {
-		text := "宝贝，午安！"
-		_, err := f.SendText(text)
-		if err != nil {
-			logrus.WithError(err).WithField("text", text).Error("Fail to greet.")
-		} else {
-			logrus.Info("Manager to greet.")
-		}
-	})
+	_, err = cron.AddFunc("0 30 11 * * *", greet(f, "宝贝，午安！"))
 	if err != nil {
 		logrus.Fatal(err)
 	}
 
-	_, err = cron.AddFunc("0 30 21 * * *", func() {
-		text := "宝贝，晚安！"
-		_, err := f.SendText(text)
-		if err != nil {
-			logrus.WithError(err).WithField("text", text).Error("Fail to greet.")
-		} else {
-			logrus.Info("Manager to greet.")
-		}
-	})
+	_, err = cron.AddFunc("0 30 21 * * *", greet(f, "宝贝，晚安！该困告了。"))
 	if err != nil {
 		logrus.Fatal(err)
 	}
 
 	cron.Start()
+}
+
+func greet(f *openwechat.Friend, text string) func() {
+	return func() {
+		_, err := f.SendText(text)
+		if err != nil {
+			logrus.WithError(err).WithField("text", text).Error("Fail to greet.")
+		} else {
+			logrus.Info("Manager to greet.")
+		}
+	}
 }
