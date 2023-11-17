@@ -1,26 +1,22 @@
 package main
 
 import (
+	"encoding/base64"
 	"fmt"
-	"github.com/jedib0t/go-pretty/v6/list"
+	"github.com/richelieu-yang/chimera/v2/src/crypto/base64Kit"
+	"github.com/richelieu-yang/chimera/v2/src/json/jsonKit"
 )
 
 func main() {
-	l := list.NewWriter()
-	l.AppendItem("Game Of Thrones")
-	l.Indent()
-	l.AppendItems([]interface{}{"Winter", "Is", "Coming"})
-	l.Indent()
-	l.AppendItems([]interface{}{"This", "Is", "Known"})
-	l.UnIndent()
-	l.UnIndent()
-	l.AppendItem("The Dark Tower")
-	l.Indent()
-	l.AppendItem("The Gunslinger")
+	m := map[string]interface{}{
+		"code":    0,
+		"message": "success",
+	}
+	jsonData, err := jsonKit.Marshal(m)
+	if err != nil {
+		panic(err)
+	}
 
-	fmt.Println(l.Render())
-	fmt.Println("------")
-
-	l.SetStyle(list.StyleConnectedRounded)
-	fmt.Println(l.Render())
+	base64Str := base64Kit.EncodeToString(jsonData, base64Kit.WithEncoding(base64.StdEncoding))
+	fmt.Println(base64Str) // eyJjb2RlIjowLCJtZXNzYWdlIjoic3VjY2VzcyJ9
 }
