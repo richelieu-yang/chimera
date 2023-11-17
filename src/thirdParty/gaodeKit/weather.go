@@ -24,7 +24,7 @@ func (client *Client) GetLive(city string) (*Live, error) {
 		return nil, err
 	}
 
-	resp := &GaodeResponse{}
+	resp := &WeatherResponse{}
 	if err := jsonKit.Unmarshal(data, resp); err != nil {
 		return nil, err
 	}
@@ -65,7 +65,7 @@ func (client *Client) GetForecast(city string) (*Forecast, error) {
 		return nil, err
 	}
 
-	resp := &GaodeResponse{}
+	resp := &WeatherResponse{}
 	if err := jsonKit.Unmarshal(data, resp); err != nil {
 		return nil, err
 	}

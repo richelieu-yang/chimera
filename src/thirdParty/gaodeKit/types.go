@@ -3,11 +3,15 @@ package gaodeKit
 import "github.com/richelieu-yang/chimera/v2/src/core/errorKit"
 
 type (
-	GaodeResponse struct {
+	BaseResponse struct {
 		// Status 值为0或1，1：成功；0：失败
 		Status   string `json:"status"`
 		InfoCode string `json:"infocode"`
 		Info     string `json:"info"`
+	}
+
+	WeatherResponse struct {
+		BaseResponse
 
 		Lives     []*Live     `json:"lives"`
 		Forecasts []*Forecast `json:"forecasts"`
@@ -71,7 +75,7 @@ type (
 	}
 )
 
-func (resp *GaodeResponse) Check() error {
+func (resp *WeatherResponse) Check() error {
 	if resp.Status != "1" {
 		return errorKit.New("Fail to get weather, status: %s, infocode: %s, info: %s", resp.Status, resp.InfoCode, resp.Info)
 	}
