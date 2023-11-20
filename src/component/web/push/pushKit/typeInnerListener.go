@@ -5,11 +5,6 @@ import (
 	"net/http"
 )
 
-var (
-	pingData = []byte("ping")
-	pongData = []byte("pong")
-)
-
 type innerListener struct {
 	Listener
 }
@@ -24,8 +19,8 @@ func (listener *innerListener) OnHandshake(w http.ResponseWriter, r *http.Reques
 
 func (listener *innerListener) OnMessage(channel Channel, messageType int, data []byte) {
 	// 仅针对WebSocket连接
-	if bytesKit.Equals(data, pingData) {
-		if err := channel.Push(pongData); err != nil {
+	if bytesKit.Equals(data, PingData) {
+		if err := channel.Push(PongData); err != nil {
 			logger.WithError(err).Error("Fail to pong")
 			return
 		}

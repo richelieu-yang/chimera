@@ -4,8 +4,10 @@ import (
 	"encoding/base64"
 	"fmt"
 	"github.com/richelieu-yang/chimera/v2/src/component/web/push/pushKit"
+	"github.com/richelieu-yang/chimera/v2/src/cronKit"
 	"github.com/richelieu-yang/chimera/v2/src/crypto/base64Kit"
 	"github.com/richelieu-yang/chimera/v2/src/urlKit"
+	"github.com/robfig/cron/v3"
 	"net/http"
 )
 
@@ -15,10 +17,28 @@ type SseChannel struct {
 	w       http.ResponseWriter
 	r       *http.Request
 	msgType messageType
+	c       *cron.Cron
 }
 
-func (channel *SseChannel) Initialize() error {
-	return nil
+func (channel *SseChannel) Initialize() (err error) {
+	defer func() {
+		if err != nil {
+			channel.c = nil
+		}
+	}()
+
+	channel.c = cronKit.NewCron()
+	_, err = channel.c.AddFunc("@every 15s", func() {
+		if err := channel.Push(pushKit.PongData); err != nil {
+			pushKit.GetDefaultLogger().WithError(err).Error("Fail to pong")
+			return
+		}
+	})
+	if err != nil {
+		return
+	}
+	channel.c.Start()
+	return
 }
 
 // Push （写锁）推送消息给客户端.

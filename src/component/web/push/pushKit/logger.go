@@ -7,11 +7,15 @@ import (
 
 var logger *logrus.Logger = logrus.StandardLogger()
 
-func SetDefaultLogger(logger *logrus.Logger) error {
-	if err := interfaceKit.AssertNotNil(logger, "logger"); err != nil {
+func SetDefaultLogger(logrusLogger *logrus.Logger) error {
+	if err := interfaceKit.AssertNotNil(logrusLogger, "logrusLogger"); err != nil {
 		return err
 	}
 
-	logger = logger
+	logger = logrusLogger
 	return nil
+}
+
+func GetDefaultLogger() *logrus.Logger {
+	return logger
 }
