@@ -74,3 +74,31 @@ func TestWeather1(testing *testing.T) {
 	fmt.Println(timeKit.FormatCurrent(timeKit.FormatEntire))
 	fmt.Println(t.Render())
 }
+
+/*
+e.g.
+您好，现在是[2023-11-20 09:36:32]，目前气温：15°C(晴)，白天气温：21°C(晴)，夜晚气温：7°C(晴).
+*/
+func TestWeather2(testing *testing.T) {
+	client, err := NewClient("b15c36bf1df4c272e92f3f1875a127f1")
+	if err != nil {
+		panic(err)
+	}
+
+	city := "320200"
+	live, err := client.GetLive(city)
+	if err != nil {
+		panic(err)
+	}
+	cast, err := client.GetTodayCast(city)
+	if err != nil {
+		panic(err)
+	}
+
+	text := fmt.Sprintf("您好，现在是[%s]，目前气温：%s，白天气温：%s，夜晚气温：%s.",
+		live.ReportTime,
+		fmt.Sprintf("%s°C(%s)", live.Temperature, live.Weather),
+		fmt.Sprintf("%s°C(%s)", cast.DayTemp, cast.DayWeather),
+		fmt.Sprintf("%s°C(%s)", cast.NightTemp, cast.NightWeather))
+	fmt.Println(text)
+}
