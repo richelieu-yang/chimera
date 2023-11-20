@@ -19,10 +19,10 @@ type innerListener struct {
 	c       *cron.Cron
 }
 
-func (listener innerListener) OnFailure(w http.ResponseWriter, r *http.Request, failureInfo string) {
+func (listener *innerListener) OnFailure(w http.ResponseWriter, r *http.Request, failureInfo string) {
 }
 
-func (listener innerListener) OnHandshake(w http.ResponseWriter, r *http.Request, channel Channel) {
+func (listener *innerListener) OnHandshake(w http.ResponseWriter, r *http.Request, channel Channel) {
 	// 加入管理
 	BindId(channel, channel.GetId())
 
@@ -51,7 +51,7 @@ func (listener innerListener) OnHandshake(w http.ResponseWriter, r *http.Request
 	}
 }
 
-func (listener innerListener) OnMessage(channel Channel, messageType int, data []byte) {
+func (listener *innerListener) OnMessage(channel Channel, messageType int, data []byte) {
 	// 仅针对WebSocket连接
 	if bytesKit.Equals(data, pingData) {
 		if err := channel.Push(pongData); err != nil {
@@ -61,7 +61,7 @@ func (listener innerListener) OnMessage(channel Channel, messageType int, data [
 	}
 }
 
-func (listener innerListener) OnClose(channel Channel, closeInfo string, bsid, user, group string) {
+func (listener *innerListener) OnClose(channel Channel, closeInfo string, bsid, user, group string) {
 	// 仅针对SSE连接
 	if listener.sseFlag {
 		c := listener.c
