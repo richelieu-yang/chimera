@@ -1,25 +1,38 @@
 package pushKit
 
 import (
+	"github.com/richelieu-yang/chimera/v2/src/core/bytesKit"
 	"net/http"
 )
 
-type InnerListener struct {
+var (
+	pingData = []byte("ping")
+	pongData = []byte("pong")
+)
+
+type innerListener struct {
 	Listener
 }
 
-func (listener InnerListener) OnFailure(w http.ResponseWriter, r *http.Request, failureInfo string) {
+func (listener innerListener) OnFailure(w http.ResponseWriter, r *http.Request, failureInfo string) {
 }
 
-func (listener InnerListener) OnHandshake(w http.ResponseWriter, r *http.Request, channel Channel) {
+func (listener innerListener) OnHandshake(w http.ResponseWriter, r *http.Request, channel Channel) {
 	// 加入管理
 	BindId(channel, channel.GetId())
 }
 
-func (listener InnerListener) OnMessage(channel Channel, messageType int, data []byte) {
+func (listener innerListener) OnMessage(channel Channel, messageType int, data []byte) {
+	// 仅针对WebSocket连接
+	if bytesKit.Equals(data, pingData) {
+		if err := channel.Push(pongData); err != nil {
+			logger.WithError(err).Error("Fail to pong")
+			return
+		}
+	}
 }
 
-func (listener InnerListener) OnClose(channel Channel, closeInfo string, bsid, user, group string) {
+func (listener innerListener) OnClose(channel Channel, closeInfo string, bsid, user, group string) {
 	// 移除管理
 	UnbindId(channel)
 	UnbindBsid(channel)

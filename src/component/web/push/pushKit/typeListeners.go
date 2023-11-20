@@ -4,7 +4,7 @@ import (
 	"github.com/richelieu-yang/chimera/v2/src/core/interfaceKit"
 )
 
-var inner Listener = &InnerListener{}
+var inner Listener = &innerListener{}
 
 // NewListeners
 /*
