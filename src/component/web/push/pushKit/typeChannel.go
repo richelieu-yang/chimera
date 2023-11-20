@@ -13,6 +13,9 @@ type Channel interface {
 	*/
 	SetClosed() (flag bool)
 
+	// Initialize 初始化Channel.
+	Initialize() error
+
 	Push(data []byte) error
 
 	GetClientIP() string

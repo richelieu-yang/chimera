@@ -17,6 +17,10 @@ type SseChannel struct {
 	msgType messageType
 }
 
+func (channel *SseChannel) Initialize() error {
+	return nil
+}
+
 // Push （写锁）推送消息给客户端.
 func (channel *SseChannel) Push(data []byte) error {
 	return channel.PushMessage(channel.msgType, data)

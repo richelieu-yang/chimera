@@ -14,6 +14,10 @@ type WsChannel struct {
 	messageType messageType
 }
 
+func (channel *WsChannel) Initialize() error {
+	return nil
+}
+
 func (channel *WsChannel) Push(data []byte) error {
 	return channel.PushMessage(channel.messageType, data)
 }
