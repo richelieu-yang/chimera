@@ -2,9 +2,7 @@ package reqKit
 
 import (
 	"github.com/imroc/req/v3"
-	"github.com/richelieu-yang/chimera/v2/src/core/errorKit"
 	"github.com/richelieu-yang/chimera/v2/src/json/jsonKit"
-	"github.com/richelieu-yang/chimera/v2/src/urlKit"
 	"time"
 )
 
@@ -13,35 +11,6 @@ type Client struct {
 
 	// maxRetryTimes 最大重试次数
 	maxRetryTimes int
-}
-
-func (c *Client) Get(url string, queryParams map[string][]string) (code int, data []byte, err error) {
-	url, err = urlKit.PolyfillUrl(url, queryParams)
-	if err != nil {
-		return
-	}
-
-	var resp *req.Response
-	for i := 0; i < c.maxRetryTimes; i++ {
-		resp = c.Client.Get(url).Do()
-		err = resp.Err
-		if err != nil {
-			break
-		}
-	}
-	if err != nil {
-		return 0, nil, err
-	}
-
-	// 不需要手动关闭
-	//defer resp.Body.Close()
-
-	code = resp.StatusCode
-	data = resp.Bytes()
-	if !resp.IsSuccessState() {
-		err = errorKit.New("not success state(%d)", code)
-	}
-	return
 }
 
 var defaultClient = NewClient(3)

@@ -1,7 +1,6 @@
 package timeKit
 
 import (
-	"github.com/imroc/req/v3"
 	"github.com/richelieu-yang/chimera/v2/src/component/web/reqKit"
 	"github.com/richelieu-yang/chimera/v2/src/core/errorKit"
 	"github.com/richelieu-yang/chimera/v2/src/core/strKit"
@@ -37,7 +36,7 @@ func GetNetworkTime() (time.Time, string, error) {
 	var ch = make(chan *bean, len(networkTimeSources))
 
 	// 共用一个client
-	client := reqKit.NewClient()
+	client := reqKit.NewClient(3)
 	client.SetTimeout(timeout)
 
 	// 起多个goroutine同时获取网络时间，只要有一个成功获取到，此方法就返回值
@@ -61,7 +60,9 @@ func GetNetworkTime() (time.Time, string, error) {
 	}
 }
 
-func getNetworkTimeBySource(client *req.Client, url string) (time.Time, error) {
+func getNetworkTimeBySource(client *reqKit.Client, url string) (time.Time, error) {
+	client.Get(url)
+
 	resp := client.Get(url).Do()
 	if resp.Err != nil {
 		return time.Time{}, resp.Err
