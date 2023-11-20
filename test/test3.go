@@ -23,10 +23,6 @@ func init() {
 	logrusKit.DisableQuote(nil)
 
 	var err error
-	client, err = gaodeKit.NewClient("b15c36bf1df4c272e92f3f1875a127f1")
-	if err != nil {
-		logrus.Fatal(err)
-	}
 
 	path := fmt.Sprintf("%s.log", timeKit.FormatCurrent(timeKit.FormatFileName))
 	file, err := fileKit.Create(path)
@@ -35,13 +31,18 @@ func init() {
 	}
 	out := ioKit.MultiWriter(file, os.Stdout)
 	logger = logrusKit.NewLogger(logrusKit.WithDisableQuote(true), logrusKit.WithOutput(out))
+
+	client, err = gaodeKit.NewClient("b15c36bf1df4c272e92f3f1875a127f1")
+	if err != nil {
+		logrus.Fatal(err)
+	}
 }
 
 func main() {
 	var err error
 	client, err = gaodeKit.NewClient("b15c36bf1df4c272e92f3f1875a127f1")
 	if err != nil {
-		logrus.Fatal(err)
+		logger.Fatal(err)
 	}
 
 	bot := openwechat.DefaultBot(openwechat.Desktop) // 桌面模式
@@ -68,34 +69,37 @@ func main() {
 
 	// 登陆
 	if err := bot.Login(); err != nil {
-		logrus.Fatal(err)
+		logger.Fatal(err)
 	}
 
 	// 获取登陆的用户
 	self, err := bot.GetCurrentUser()
 	if err != nil {
-		logrus.Fatal(err)
+		logger.Fatal(err)
 	}
 
 	// 获取所有的好友
 	friends, err := self.Friends()
 	if err != nil {
-		logrus.Fatal(err)
+		logger.Fatal(err)
 	}
 	fmt.Println(friends)
 
-	results := friends.SearchByRemarkName(1, "狗蛋妈")
+	nickName := "软心姑娘sss"
+	results := friends.SearchByNickName(1, nickName)
+	//results := friends.SearchByRemarkName(1, "狗蛋妈")
 	if results.Count() == 0 {
-		logrus.Fatal("Fail to get friend")
+		logger.WithField("nickName", nickName).Fatal("Fail to get friend.")
 	}
 	wife := results.First()
+	logger.WithField("nickName", nickName).Info("Manager to get friend.")
 
 	go func() {
 		start(wife)
 	}()
 
 	if err := bot.Block(); err != nil {
-		logrus.Fatal(err)
+		logger.Fatal(err)
 	}
 }
 
@@ -105,22 +109,22 @@ func start(f *openwechat.Friend) {
 
 	_, err := cron.AddFunc("0 30 6 * * *", task(f, "宝贝，早安！该起床了。"))
 	if err != nil {
-		logrus.Fatal(err)
+		logger.Fatal(err)
 	}
 
 	_, err = cron.AddFunc("0 30 11 * * *", task(f, "宝贝，午安！"))
 	if err != nil {
-		logrus.Fatal(err)
+		logger.Fatal(err)
 	}
 
 	_, err = cron.AddFunc("0 30 17 * * *", task(f, "宝贝，我下班喽。"))
 	if err != nil {
-		logrus.Fatal(err)
+		logger.Fatal(err)
 	}
 
 	_, err = cron.AddFunc("0 30 21 * * *", task(f, "宝贝，晚安！该困告了。"))
 	if err != nil {
-		logrus.Fatal(err)
+		logger.Fatal(err)
 	}
 
 	cron.Start()
