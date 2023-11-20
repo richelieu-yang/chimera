@@ -42,8 +42,8 @@ func (p *WsProcessor) Process(w http.ResponseWriter, r *http.Request) {
 	// Upgrade（升级为WebSocket协议）
 	conn, err := p.upgrader.Upgrade(w, r, w.Header())
 	if err != nil {
-		failureInfo := fmt.Sprintf("Fail to upgrade because of error(%s)", err.Error())
-		p.listeners.OnFailure(w, r, failureInfo)
+		err = errorKit.Wrap(err, "Fail to upgrade")
+		p.listeners.OnFailure(w, r, err.Error())
 		return
 	}
 	// PS: 对于 Conn.Close() ，可以多次调用，不会panic，但从第二次关闭开始，返回非nil的error（可以直接忽略）.
@@ -51,8 +51,13 @@ func (p *WsProcessor) Process(w http.ResponseWriter, r *http.Request) {
 
 	channel, err := p.newChannel(r, conn, make(chan string, 1))
 	if err != nil {
-		failureInfo := fmt.Sprintf("Fail to new channel because of error(%s)", err.Error())
-		p.listeners.OnFailure(w, r, failureInfo)
+		err = errorKit.Wrap(err, "Fail to new channel")
+		p.listeners.OnFailure(w, r, err.Error())
+		return
+	}
+	if err := channel.Initialize(); err != nil {
+		err = errorKit.Wrap(err, "Fail to initialize channel")
+		p.listeners.OnFailure(w, r, err.Error())
 		return
 	}
 

@@ -37,6 +37,12 @@ func (p *SseProcessor) Process(w http.ResponseWriter, r *http.Request) {
 		p.listeners.OnFailure(w, r, err.Error())
 		return
 	}
+	if err := channel.Initialize(); err != nil {
+		err = errorKit.Wrap(err, "Fail to initialize channel")
+		p.listeners.OnFailure(w, r, err.Error())
+		return
+	}
+
 	p.listeners.OnHandshake(w, r, channel)
 
 	/*
