@@ -26,10 +26,18 @@ func (listener innerListener) OnHandshake(w http.ResponseWriter, r *http.Request
 	// 加入管理
 	BindId(channel, channel.GetId())
 
+	// 仅针对SSE连接
 	if listener.sseFlag {
+		var err error
+		defer func() {
+			if err != nil {
+				listener.c = nil
+			}
+		}()
+
 		listener.c = cronKit.NewCron()
 
-		_, err := listener.c.AddFunc("@every 15s", func() {
+		_, err = listener.c.AddFunc("@every 15s", func() {
 			if err := channel.Push(pongData); err != nil {
 				logger.WithError(err).Error("Fail to pong")
 				return
