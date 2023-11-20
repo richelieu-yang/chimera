@@ -36,7 +36,6 @@ func (listener innerListener) OnHandshake(w http.ResponseWriter, r *http.Request
 		}()
 
 		listener.c = cronKit.NewCron()
-
 		_, err = listener.c.AddFunc("@every 15s", func() {
 			if err := channel.Push(pongData); err != nil {
 				logger.WithError(err).Error("Fail to pong")
@@ -44,10 +43,9 @@ func (listener innerListener) OnHandshake(w http.ResponseWriter, r *http.Request
 			}
 		})
 		if err != nil {
-			logger.WithError(err).Error("Fail to AddFunc()")
+			logger.WithError(err).WithField("channelId", channel.GetId()).Error("Fail to AddFunc()")
 			return
 		}
-
 		// 不会阻塞地启动
 		listener.c.Start()
 	}
