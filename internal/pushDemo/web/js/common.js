@@ -75,10 +75,17 @@ var output = document.getElementById("output"),
 clearBtn.onclick = clearOutput;
 
 function println(text) {
-    output.value += text + "\n";
-    console.info(text);
+    var str = getTimeString() + " " + text
+
+    output.value += str + "\n";
+    console.info(str);
 }
 
 function clearOutput() {
     output.value = "";
+}
+
+function getTimeString(){
+    let d = new Date();
+    return `${d.getFullYear()}-${d.getMonth()+1}-${d.getDate()} ${d.getHours()}:${d.getMinutes()}:${d.getSeconds()}.${d.getMilliseconds()}`
 }
