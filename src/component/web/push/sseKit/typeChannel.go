@@ -41,6 +41,11 @@ func (channel *SseChannel) Initialize() (err error) {
 	return
 }
 
+func (channel *SseChannel) Dispose() {
+	cronKit.StopCron(channel.c)
+	channel.c = nil
+}
+
 // Push （写锁）推送消息给客户端.
 func (channel *SseChannel) Push(data []byte) error {
 	return channel.PushMessage(channel.msgType, data)

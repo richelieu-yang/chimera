@@ -16,6 +16,9 @@ type Channel interface {
 	// Initialize 初始化Channel.
 	Initialize() error
 
+	// Dispose 释放Channel所持有的资源.
+	Dispose()
+
 	Push(data []byte) error
 
 	GetClientIP() string
