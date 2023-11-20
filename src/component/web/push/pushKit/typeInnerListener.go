@@ -62,6 +62,11 @@ func (listener innerListener) OnMessage(channel Channel, messageType int, data [
 }
 
 func (listener innerListener) OnClose(channel Channel, closeInfo string, bsid, user, group string) {
+	// 仅针对SSE连接
+	if listener.sseFlag {
+
+	}
+
 	// 移除管理
 	UnbindId(channel)
 	UnbindBsid(channel)
