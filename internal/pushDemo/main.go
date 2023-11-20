@@ -38,7 +38,7 @@ func main() {
 	if err != nil {
 		logrus.Fatal(err)
 	}
-	pushKit.MustSetUp(pool)
+	pushKit.MustSetUp(pool, nil)
 
 	engine := gin.Default()
 	engine.Use(ginKit.NewCorsMiddleware(nil))
