@@ -67,11 +67,6 @@ func getNetworkTimeBySource(client *reqKit.Client, url string) (time.Time, error
 		return time.Time{}, err
 	}
 
-	//resp := client.Get(url).Do()
-	//if resp.Err != nil {
-	//	return time.Time{}, resp.Err
-	//}
-
 	// e.g."Fri, 18 Aug 2023 07:15:26 GMT"
 	dateStr := resp.Header.Get("Date")
 	if err := strKit.AssertNotEmpty(dateStr, "dateStr"); err != nil {
