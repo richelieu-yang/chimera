@@ -34,7 +34,7 @@ func NewProcessor(upgrader *websocket.Upgrader, idGenerator func() (string, erro
 	if idGenerator == nil {
 		idGenerator = pushKit.DefaultIdGenerator()
 	}
-	listeners, err := pushKit.NewListeners(listener)
+	listeners, err := pushKit.NewListeners(listener, false)
 	if err != nil {
 		return nil, err
 	}

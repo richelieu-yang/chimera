@@ -2,6 +2,7 @@ package pushKit
 
 import (
 	"github.com/richelieu-yang/chimera/v2/src/core/bytesKit"
+	"github.com/robfig/cron/v3"
 	"net/http"
 )
 
@@ -12,6 +13,9 @@ var (
 
 type innerListener struct {
 	Listener
+
+	sseFlag bool
+	c       *cron.Cron
 }
 
 func (listener innerListener) OnFailure(w http.ResponseWriter, r *http.Request, failureInfo string) {
@@ -20,6 +24,10 @@ func (listener innerListener) OnFailure(w http.ResponseWriter, r *http.Request, 
 func (listener innerListener) OnHandshake(w http.ResponseWriter, r *http.Request, channel Channel) {
 	// 加入管理
 	BindId(channel, channel.GetId())
+
+	if listener.sseFlag {
+
+	}
 }
 
 func (listener innerListener) OnMessage(channel Channel, messageType int, data []byte) {

@@ -13,7 +13,7 @@ func NewProcessor(idGenerator func() (string, error), listener pushKit.Listener,
 	if idGenerator == nil {
 		idGenerator = pushKit.DefaultIdGenerator()
 	}
-	listeners, err := pushKit.NewListeners(listener)
+	listeners, err := pushKit.NewListeners(listener, true)
 	if err != nil {
 		return nil, err
 	}
