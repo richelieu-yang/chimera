@@ -5,13 +5,13 @@ import (
 	"github.com/sirupsen/logrus"
 )
 
-var defLogger *logrus.Logger = logrus.StandardLogger()
+var logger *logrus.Logger = logrus.StandardLogger()
 
 func SetDefaultLogger(logger *logrus.Logger) error {
 	if err := interfaceKit.AssertNotNil(logger, "logger"); err != nil {
 		return err
 	}
 
-	defLogger = logger
+	logger = logger
 	return nil
 }

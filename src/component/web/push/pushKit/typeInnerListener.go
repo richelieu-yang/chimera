@@ -31,12 +31,12 @@ func (listener innerListener) OnHandshake(w http.ResponseWriter, r *http.Request
 
 		_, err := listener.c.AddFunc("@every 15s", func() {
 			if err := channel.Push(pongData); err != nil {
-				defLogger.WithError(err).Error("Fail to pong")
+				logger.WithError(err).Error("Fail to pong")
 				return
 			}
 		})
 		if err != nil {
-			defLogger.WithError(err).Error("Fail to AddFunc()")
+			logger.WithError(err).Error("Fail to AddFunc()")
 			return
 		}
 
@@ -49,7 +49,7 @@ func (listener innerListener) OnMessage(channel Channel, messageType int, data [
 	// 仅针对WebSocket连接
 	if bytesKit.Equals(data, pingData) {
 		if err := channel.Push(pongData); err != nil {
-			defLogger.WithError(err).Error("Fail to pong")
+			logger.WithError(err).Error("Fail to pong")
 			return
 		}
 	}

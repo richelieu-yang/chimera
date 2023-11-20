@@ -10,8 +10,8 @@ import (
 
 var pool *ants.Pool
 
-func MustSetUp(p *ants.Pool, logger *logrus.Logger) {
-	if err := Setup(p, logger); err != nil {
+func MustSetUp(antPool *ants.Pool, logrusLogger *logrus.Logger) {
+	if err := Setup(antPool, logrusLogger); err != nil {
 		logrusKit.DisableQuote(nil)
 		logrus.Fatalf("%+v", err)
 	}
@@ -19,26 +19,26 @@ func MustSetUp(p *ants.Pool, logger *logrus.Logger) {
 
 // Setup
 /*
-@param p 		需要自行决定: cap大小、是否自定义输出...
+@param antPool	需要自行决定: cap大小、是否自定义输出...
 @param logger 	可以为nil
 */
-func Setup(p *ants.Pool, logger *logrus.Logger) error {
+func Setup(antPool *ants.Pool, logrusLogger *logrus.Logger) error {
 	/* pool */
-	if p.IsClosed() {
+	if antPool.IsClosed() {
 		return errorKit.New("pool has already been closed")
 	}
-	capacity := p.Cap()
+	capacity := antPool.Cap()
 	if capacity > 0 {
 		tag := "gte=2000"
 		if err := validateKit.Var(capacity, tag); err != nil {
 			return errorKit.Wrap(err, "Capacity(%d) of pool is invalid(tag: %s) when it's greater than zero", capacity, tag)
 		}
 	}
-	pool = p
+	pool = antPool
 
 	/* logger */
-	if logger != nil {
-		if err := SetDefaultLogger(logger); err != nil {
+	if logrusLogger != nil {
+		if err := SetDefaultLogger(logrusLogger); err != nil {
 			return err
 		}
 	}
