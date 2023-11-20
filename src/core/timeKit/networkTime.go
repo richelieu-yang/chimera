@@ -38,6 +38,7 @@ func GetNetworkTime() (time.Time, string, error) {
 	// 共用一个client
 	client := reqKit.NewClient(3)
 	client.SetTimeout(timeout)
+	client.SetTLSHandshakeTimeout(timeout)
 
 	// 起多个goroutine同时获取网络时间，只要有一个成功获取到，此方法就返回值
 	for _, source := range networkTimeSources {
@@ -61,12 +62,15 @@ func GetNetworkTime() (time.Time, string, error) {
 }
 
 func getNetworkTimeBySource(client *reqKit.Client, url string) (time.Time, error) {
-	client.Get(url)
-
-	resp := client.Get(url).Do()
-	if resp.Err != nil {
-		return time.Time{}, resp.Err
+	resp, err := client.SimpleGet(url, nil)
+	if err != nil {
+		return time.Time{}, err
 	}
+
+	//resp := client.Get(url).Do()
+	//if resp.Err != nil {
+	//	return time.Time{}, resp.Err
+	//}
 
 	// e.g."Fri, 18 Aug 2023 07:15:26 GMT"
 	dateStr := resp.Header.Get("Date")
