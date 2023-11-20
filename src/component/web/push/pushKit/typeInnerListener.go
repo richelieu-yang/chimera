@@ -64,7 +64,11 @@ func (listener innerListener) OnMessage(channel Channel, messageType int, data [
 func (listener innerListener) OnClose(channel Channel, closeInfo string, bsid, user, group string) {
 	// 仅针对SSE连接
 	if listener.sseFlag {
-
+		c := listener.c
+		if c != nil {
+			listener.c = nil
+			cronKit.StopCron(c)
+		}
 	}
 
 	// 移除管理
