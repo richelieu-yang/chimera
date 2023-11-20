@@ -99,7 +99,7 @@ func main() {
 	go func() {
 		c := cronKit.NewCron()
 		_, err := c.AddFunc("@every 10s", func() {
-			logrus.Info("statistics:\n", pushKit.GetStatistics())
+			logrus.Infof("statistics:\n%s\n", pushKit.GetStatistics())
 		})
 		if err != nil {
 			logrus.Fatal(err)
