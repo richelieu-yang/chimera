@@ -7,7 +7,7 @@ require (
 	github.com/apache/pulsar-client-go v0.11.1
 	github.com/apache/rocketmq-clients/golang/v5 v5.0.1-rc.5
 	github.com/bytedance/sonic v1.10.2
-	github.com/dablelv/cyan v0.0.51
+	github.com/dablelv/cyan v0.0.52
 	github.com/davidbyttow/govips/v2 v2.13.0
 	github.com/deckarep/golang-set/v2 v2.3.1
 	github.com/duke-git/lancet/v2 v2.2.7
@@ -70,11 +70,11 @@ require (
 	github.com/zeromicro/go-zero v1.6.0
 	github.com/zeromicro/zero-contrib/logx/logrusx v0.0.0-20231030135404-af9ae855016f
 	go.etcd.io/etcd/client/v3 v3.5.10
-	go.opentelemetry.io/otel v1.20.0
+	go.opentelemetry.io/otel v1.21.0
 	go.opentelemetry.io/otel/exporters/jaeger v1.17.0
-	go.opentelemetry.io/otel/metric v1.20.0
-	go.opentelemetry.io/otel/sdk v1.20.0
-	go.opentelemetry.io/otel/trace v1.20.0
+	go.opentelemetry.io/otel/metric v1.21.0
+	go.opentelemetry.io/otel/sdk v1.21.0
+	go.opentelemetry.io/otel/trace v1.21.0
 	go.uber.org/automaxprocs v1.5.3
 	go.uber.org/zap v1.26.0
 	golang.org/x/exp v0.0.0-20231110203233-9a3e6036ecaa
