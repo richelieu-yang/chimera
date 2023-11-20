@@ -77,7 +77,7 @@ func TestWeather1(testing *testing.T) {
 
 /*
 e.g.
-您好，现在是[2023-11-20 09:36:32]，目前气温：15°C(晴)，白天气温：21°C(晴)，夜晚气温：7°C(晴).
+您好，现在是[2023-11-20 09:36:32]，[无锡市]目前气温：15°C(晴)，白天气温：21°C(晴)，夜晚气温：7°C(晴).
 */
 func TestWeather2(testing *testing.T) {
 	client, err := NewClient("b15c36bf1df4c272e92f3f1875a127f1")
@@ -95,8 +95,10 @@ func TestWeather2(testing *testing.T) {
 		panic(err)
 	}
 
-	text := fmt.Sprintf("您好，现在是[%s]，目前气温：%s，白天气温：%s，夜晚气温：%s.",
+	text := fmt.Sprintf("您好，现在是[%s]，[%s %s]目前气温：%s，白天气温：%s，夜晚气温：%s.",
 		live.ReportTime,
+		live.Province,
+		live.City,
 		fmt.Sprintf("%s°C(%s)", live.Temperature, live.Weather),
 		fmt.Sprintf("%s°C(%s)", cast.DayTemp, cast.DayWeather),
 		fmt.Sprintf("%s°C(%s)", cast.NightTemp, cast.NightWeather))
