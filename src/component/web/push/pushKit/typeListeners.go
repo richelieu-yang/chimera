@@ -13,8 +13,6 @@ func NewListeners(listener Listener, sseFlag bool) (Listeners, error) {
 		return nil, err
 	}
 
-	inner := &innerListener{
-		sseFlag: sseFlag,
-	}
+	inner := &innerListener{}
 	return []Listener{inner, listener}, nil
 }
