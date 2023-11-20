@@ -78,8 +78,8 @@ func NewCronWithJob(spec string, job cron.Job) (*cron.Cron, cron.EntryID, error)
 // StopCron
 /*
 @param c 	(1) 可以为nil;
-			(2) 可以是未启动(Start || Run)的*cron.Cron实例;
-			(3) 可以是已经停止(Stop)的*cron.Cron实例.
+			(2) 可以是 未启动(Start || Run) 的*cron.Cron实例;
+			(3) 可以是 已经停止(Stop) 的*cron.Cron实例.
 
 !!!:
 (1) 调用此函数可能会 阻塞 调用的goroutine.
