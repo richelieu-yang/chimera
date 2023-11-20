@@ -85,7 +85,8 @@ function clearOutput() {
     output.value = "";
 }
 
-function getTimeString(){
+function getTimeString() {
     let d = new Date();
-    return `${d.getFullYear()}-${d.getMonth()+1}-${d.getDate()} ${d.getHours()}:${d.getMinutes()}:${d.getSeconds()}.${d.getMilliseconds()}`
+    return `${d.getFullYear()}-${d.getMonth() + 1}-${d.getDate()} ${d.getHours()}:${d.getMinutes()}:${d.getSeconds()}.${d.getMilliseconds()}`
 }
+
