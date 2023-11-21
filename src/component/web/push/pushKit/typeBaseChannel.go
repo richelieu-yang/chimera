@@ -2,6 +2,7 @@ package pushKit
 
 import (
 	"github.com/richelieu-yang/chimera/v2/src/mutexKit"
+	"time"
 )
 
 // BaseChannel
@@ -29,6 +30,8 @@ type BaseChannel struct {
 
 	Closed    bool
 	Listeners Listeners
+
+	PongInterval time.Duration
 }
 
 // IsClosed （读锁）
