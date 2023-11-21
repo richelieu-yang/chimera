@@ -43,7 +43,12 @@ func TestMustSetUp(t *testing.T) {
 			//ctx.String(http.StatusOK, "hello")
 
 			fmt.Println(ctx.Request.Header["Content-Type"])
-			ctx.String(500, "hello")
+
+			//fmt.Println(ioKit.ReadStringFromReader(ctx.Request.Body))
+
+			fmt.Println(ObtainParam(ctx, "name"))
+
+			ctx.String(200, "hello")
 		})
 		return nil
 	})

@@ -9,6 +9,9 @@ import (
 /*
 参考:
 基础POST请求 https://req.cool/zh/docs/prologue/quickstart/#%e5%9f%ba%e7%a1%80-post-%e8%af%b7%e6%b1%82
+
+PS:
+(1) Content-Type为"application/json; charset=utf-8".
 */
 func (c *Client) SimplePost(url string, queryParams map[string][]string, body interface{}) (*req.Response, error) {
 	url, err := urlKit.PolyfillUrl(url, queryParams)
