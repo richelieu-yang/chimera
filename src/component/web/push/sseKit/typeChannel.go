@@ -30,6 +30,7 @@ func (channel *SseChannel) Initialize() error {
 	return nil
 }
 
+// Dispose 仅是释放资源，不会关闭通道（应当先关闭通道，再释放资源）.
 func (channel *SseChannel) Dispose() {
 	channel.interval.Stop()
 	channel.interval = nil
