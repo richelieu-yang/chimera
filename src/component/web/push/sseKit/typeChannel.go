@@ -4,46 +4,35 @@ import (
 	"encoding/base64"
 	"fmt"
 	"github.com/richelieu-yang/chimera/v2/src/component/web/push/pushKit"
-	"github.com/richelieu-yang/chimera/v2/src/cronKit"
+	"github.com/richelieu-yang/chimera/v2/src/core/timeKit"
 	"github.com/richelieu-yang/chimera/v2/src/crypto/base64Kit"
 	"github.com/richelieu-yang/chimera/v2/src/urlKit"
-	"github.com/robfig/cron/v3"
 	"net/http"
+	"time"
 )
 
 type SseChannel struct {
 	pushKit.BaseChannel
 
-	w       http.ResponseWriter
-	r       *http.Request
-	msgType messageType
-	c       *cron.Cron
+	w        http.ResponseWriter
+	r        *http.Request
+	msgType  messageType
+	interval *timeKit.Interval
 }
 
-func (channel *SseChannel) Initialize() (err error) {
-	defer func() {
-		if err != nil {
-			channel.c = nil
-		}
-	}()
-
-	channel.c = cronKit.NewCron()
-	_, err = channel.c.AddFunc("@every 15s", func() {
+func (channel *SseChannel) Initialize() error {
+	channel.interval = timeKit.NewInterval(func(t time.Time) {
 		if err := channel.Push(pushKit.PongData); err != nil {
 			pushKit.GetDefaultLogger().WithError(err).Error("Fail to pong")
 			return
 		}
-	})
-	if err != nil {
-		return
-	}
-	channel.c.Start()
-	return
+	}, channel.PongInterval)
+	return nil
 }
 
 func (channel *SseChannel) Dispose() {
-	cronKit.StopCron(channel.c)
-	channel.c = nil
+	channel.interval.Stop()
+	channel.interval = nil
 }
 
 // Push （写锁）推送消息给客户端.
