@@ -1,6 +1,7 @@
 package ginKit
 
 import (
+	"fmt"
 	"github.com/gin-gonic/gin"
 	"github.com/richelieu-yang/chimera/v2/src/config/viperKit"
 	"github.com/richelieu-yang/chimera/v2/src/consts"
@@ -40,6 +41,8 @@ func TestMustSetUp(t *testing.T) {
 			//time.Sleep(time.Second * 3)
 
 			//ctx.String(http.StatusOK, "hello")
+
+			fmt.Println(ctx.Request.Header["Content-Type"])
 			ctx.String(500, "hello")
 		})
 		return nil

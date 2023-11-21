@@ -6,7 +6,7 @@ import (
 )
 
 func main() {
-	status, data, err := reqKit.Post("https://127.0.0.1/test", nil, nil)
+	status, data, err := reqKit.Post("https://127.0.0.1/test", nil, map[string]string{"name": "richelieu"})
 	fmt.Println(status)
 	fmt.Println(string(data))
 	fmt.Println(err)
