@@ -1,6 +1,7 @@
 package timeKit
 
 import (
+	"github.com/sirupsen/logrus"
 	"time"
 )
 
@@ -16,8 +17,13 @@ func SetInterval(fun func(t time.Time), duration time.Duration) *time.Ticker {
 
 	ticker := time.NewTicker(duration)
 	go func() {
+		defer func() {
+			logrus.Info("ccc")
+		}()
+
 		for tt := range ticker.C {
 			fun(tt)
+			logrus.Info("*")
 		}
 	}()
 	return ticker
