@@ -14,6 +14,7 @@ import (
 	"github.com/richelieu-yang/chimera/v2/src/json/jsonRespKit"
 	"github.com/richelieu-yang/chimera/v2/src/log/logrusKit"
 	"github.com/sirupsen/logrus"
+	"time"
 
 	"github.com/swaggo/files"
 	"github.com/swaggo/gin-swagger"
@@ -38,7 +39,7 @@ func main() {
 	if err != nil {
 		logrus.Fatal(err)
 	}
-	pushKit.MustSetUp(pool, nil)
+	pushKit.MustSetUp(pool, nil, time.Second*5)
 
 	engine := gin.Default()
 	engine.Use(ginKit.NewCorsMiddleware(nil))
