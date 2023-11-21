@@ -2,6 +2,7 @@ package reqKit
 
 import (
 	"github.com/imroc/req/v3"
+	"github.com/richelieu-yang/chimera/v2/src/core/errorKit"
 	"github.com/richelieu-yang/chimera/v2/src/json/jsonKit"
 	"time"
 )
@@ -18,7 +19,7 @@ var defaultClient = NewClient(3)
 // GetDefaultClient
 /*
 重用Client https://req.cool/zh/docs/tutorial/best-practices/#%e9%87%8d%e7%94%a8-client
-	不要每次发请求都创建 Client，造成不必要的开销，通常可以复用同一 Client 发所有请求.
+	不要每次发请求都创建 Client，造成不必要的开销，通常可以复用 同一Client 发所有请求.
 
 !!!:
 (1) 不修改返回值的话，可以调用此方法；否则调用 NewClient;
@@ -28,6 +29,11 @@ func GetDefaultClient() *Client {
 	return defaultClient
 }
 
+// NewClient
+/*
+参考:
+使用req封装SDK https://req.cool/zh/docs/prologue/quickstart/#%e4%bd%bf%e7%94%a8-req-%e5%b0%81%e8%a3%85-sdk
+*/
 func NewClient(maxRetryTimes int) *Client {
 	if maxRetryTimes <= 0 {
 		maxRetryTimes = 3
@@ -36,8 +42,7 @@ func NewClient(maxRetryTimes int) *Client {
 	client := req.C()
 
 	// timeout（默认的2min太长了）
-	client.SetTimeout(time.Second * 30)
-	client.SetTLSHandshakeTimeout(time.Second * 30)
+	client.SetTimeout(time.Second * 20)
 
 	// 自动探测字符集并解码到 utf-8（默认就是启用）
 	client.EnableAutoDecode()
@@ -47,7 +52,21 @@ func NewClient(maxRetryTimes int) *Client {
 
 	// 自定义 Marshal 和 Unmarshal
 	api := jsonKit.GetDefaultApi()
-	client.SetJsonMarshal(api.Marshal).SetJsonUnmarshal(api.Unmarshal)
+	client.SetJsonMarshal(api.Marshal).
+		SetJsonUnmarshal(api.Unmarshal)
+
+	client.EnableDumpEachRequest().
+		OnAfterResponse(func(client *req.Client, resp *req.Response) error {
+			if resp.Err != nil { // There is an underlying error, e.g. network error or unmarshal error.
+				return nil
+			}
+			if !resp.IsSuccessState() {
+				// Neither a success response nor a error response, record details to help troubleshooting
+				resp.Err = errorKit.New("bad status: %s\nraw content:\n%s", resp.Status, resp.Dump())
+				return nil
+			}
+			return nil
+		})
 
 	return &Client{
 		Client:        client,

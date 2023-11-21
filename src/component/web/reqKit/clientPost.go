@@ -1,6 +1,7 @@
 package reqKit
 
 import (
+	"fmt"
 	"github.com/imroc/req/v3"
 	"github.com/richelieu-yang/chimera/v2/src/core/errorKit"
 	"github.com/richelieu-yang/chimera/v2/src/urlKit"
@@ -17,7 +18,9 @@ func (c *Client) SimplePost(url string, queryParams map[string][]string, body in
 		return nil, err
 	}
 
-	return c.Client.R().SetBody(body).Post(url)
+	request := c.Client.R().SetBody(body)
+	fmt.Println(request.Headers["Content-Type"])
+	return request.Post(url)
 }
 
 func (c *Client) SimplePostWithJson(url string, queryParams map[string][]string, jsonBytes []byte) (*req.Response, error) {
