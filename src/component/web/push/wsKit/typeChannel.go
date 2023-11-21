@@ -5,6 +5,8 @@ import (
 	"github.com/gorilla/websocket"
 	"github.com/richelieu-yang/chimera/v2/src/component/web/push/pushKit"
 	"github.com/richelieu-yang/chimera/v2/src/core/errorKit"
+	"github.com/richelieu-yang/chimera/v2/src/cronKit"
+	"github.com/robfig/cron/v3"
 )
 
 type WsChannel struct {
@@ -12,14 +14,33 @@ type WsChannel struct {
 
 	conn        *websocket.Conn
 	messageType messageType
+	c           *cron.Cron
 }
 
-func (channel *WsChannel) Initialize() error {
-	return nil
+func (channel *WsChannel) Initialize() (err error) {
+	defer func() {
+		if err != nil {
+			channel.c = nil
+		}
+	}()
+
+	channel.c = cronKit.NewCron()
+	_, err = channel.c.AddFunc("@every 15s", func() {
+		if err := channel.Push(pushKit.PongData); err != nil {
+			pushKit.GetDefaultLogger().WithError(err).Error("Fail to pong")
+			return
+		}
+	})
+	if err != nil {
+		return
+	}
+	channel.c.Start()
+	return
 }
 
 func (channel *WsChannel) Dispose() {
-
+	cronKit.StopCron(channel.c)
+	channel.c = nil
 }
 
 func (channel *WsChannel) Push(data []byte) error {

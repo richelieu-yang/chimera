@@ -8,7 +8,9 @@ import (
 
 // SimpleGet
 /*
-!!!: 第2个返回值==nil的情况下，不需要手动关闭第1个返回值.
+!!!:
+(1) 第2个返回值==nil的情况下，不需要手动关闭第1个返回值;
+(2) 最大重试次数，参考了 eatmoreapple/openwechat 中的 client.go.
 */
 func (c *Client) SimpleGet(url string, queryParams map[string][]string) (resp *req.Response, err error) {
 	url, err = urlKit.PolyfillUrl(url, queryParams)
