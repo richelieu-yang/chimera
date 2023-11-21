@@ -48,7 +48,8 @@ func (i *Interval) Stop() {
 
 // NewInterval
 /*
-@param task		不能为nil
+@param task		(1) 不能为nil
+				(2) 传参t为执行任务时的 time.Time
 @param duration 必须>0
 */
 func NewInterval(task func(t time.Time), duration time.Duration) *Interval {
