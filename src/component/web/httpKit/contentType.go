@@ -10,7 +10,8 @@ const (
 	// XmlContentType XML数据格式
 	XmlContentType = "text/xml; charset=utf-8"
 
-	a = "application/x-www-form-urlencoded; charset=utf-8"
+	// FormUrlencodedContentType 适用于 POST 请求.
+	FormUrlencodedContentType = "application/x-www-form-urlencoded; charset=utf-8"
 
 	// OctetStreamContentType 二进制流数据（如常见的文件下载）
 	/*
