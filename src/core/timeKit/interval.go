@@ -73,10 +73,9 @@ func NewInterval(task func(t time.Time), duration time.Duration) *Interval {
 			case t := <-i.ticker.C:
 				/* 读锁 */
 				i.RLockFunc(func() {
-					if i.stopped {
-						return
+					if !i.stopped {
+						task(t)
 					}
-					task(t)
 				})
 			case <-i.closeCh:
 				return
