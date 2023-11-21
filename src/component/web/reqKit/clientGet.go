@@ -19,8 +19,7 @@ func (c *Client) SimpleGet(url string, queryParams map[string][]string) (resp *r
 	}
 
 	for i := 0; i < c.maxRetryTimes; i++ {
-		resp = c.Client.Get(url).Do()
-		err = resp.Err
+		resp, err = c.Client.R().Get(url)
 		if err != nil {
 			break
 		}
@@ -28,7 +27,7 @@ func (c *Client) SimpleGet(url string, queryParams map[string][]string) (resp *r
 	return resp, err
 }
 
-func (c *Client) Get(url string, queryParams map[string][]string) (code int, data []byte, err error) {
+func (c *Client) Get(url string, queryParams map[string][]string) (statusCode int, data []byte, err error) {
 	var resp *req.Response
 	resp, err = c.SimpleGet(url, queryParams)
 	if err != nil {
@@ -37,10 +36,10 @@ func (c *Client) Get(url string, queryParams map[string][]string) (code int, dat
 	// 不需要手动关闭 resp
 	//defer resp.Body.Close()
 
-	code = resp.StatusCode
+	statusCode = resp.StatusCode
 	data = resp.Bytes()
 	if !resp.IsSuccessState() {
-		err = errorKit.New("not success state(%d)", code)
+		err = errorKit.New("bad response status code: %d", statusCode)
 	}
 	return
 }
