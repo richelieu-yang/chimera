@@ -85,9 +85,10 @@ func NewInterval(task func(t time.Time), duration time.Duration) *Interval {
 	return i
 }
 
+// SetInterval 效果类似于JavaScript中的同名函数.
 var SetInterval func(task func(t time.Time), duration time.Duration) *Interval = NewInterval
 
-// ClearInterval
+// ClearInterval 效果类似于JavaScript中的同名函数.
 /*
 @param i 可以为nil
 */
