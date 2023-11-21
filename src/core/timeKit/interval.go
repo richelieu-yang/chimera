@@ -27,7 +27,7 @@ type Interval struct {
 // Stop
 /*
 PS:
-(1) 可以多次调用，不会panic，但这样没意义，第一次调用才有意义;
+(1) 可以多次调用，不会panic，但这样没意义（只有第一次调用才有意义）;
 (2) 如果有任务正在执行，会等它先执行完.
 */
 func (i *Interval) Stop() {
