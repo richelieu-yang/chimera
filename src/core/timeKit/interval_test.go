@@ -15,9 +15,9 @@ func TestSetInterval(t *testing.T) {
 	time.Sleep(time.Second * 10)
 	logrus.Info("sleep ends")
 
-	i.Stop()
-	i.Stop()
-	i.Stop()
+	ClearInterval(i)
+	ClearInterval(i)
+	ClearInterval(i)
 
 	logrus.Info("sleep starts")
 	time.Sleep(time.Second * 10)
