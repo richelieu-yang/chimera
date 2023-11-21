@@ -1,37 +1,88 @@
 package timeKit
 
 import (
-	"github.com/sirupsen/logrus"
+	"github.com/richelieu-yang/chimera/v2/src/mutexKit"
 	"time"
 )
 
-// SetInterval
-/*
-参考：
-golang定时器函数 每隔几分钟执行一个函数	https://www.cnblogs.com/niuben/p/14368715.html
-*/
-func SetInterval(fun func(t time.Time), duration time.Duration) *time.Ticker {
-	if fun == nil {
-		return nil
-	}
+type Interval struct {
+	mutexKit.RWMutex
 
-	ticker := time.NewTicker(duration)
-	go func() {
-		defer func() {
-			logrus.Info("ccc")
-		}()
+	stopped bool
 
-		for tt := range ticker.C {
-			fun(tt)
-			logrus.Info("*")
-		}
-	}()
-	return ticker
+	ticker *time.Ticker
+
+	// closeCh 关闭通道.
+	closeCh chan struct{}
 }
 
-func ClearInterval(ticker *time.Ticker) {
-	if ticker == nil {
+// Stop
+/*
+PS:
+(1) 可以多次调用，不会panic，但这样没意义，调用一次就够了;
+(2) 如果有任务正在执行，会等它先执行完.
+*/
+func (i *Interval) Stop() {
+	if i == nil || i.stopped {
 		return
 	}
-	ticker.Stop()
+
+	/* 写锁 */
+	i.LockFunc(func() {
+		if i.stopped {
+			return
+		}
+		i.stopped = true
+		i.ticker.Stop()
+		i.closeCh <- struct{}{}
+	})
+}
+
+// NewInterval
+/*
+@param task		不能为nil
+@param duration 必须>0
+*/
+func NewInterval(task func(t time.Time), duration time.Duration) *Interval {
+	i := &Interval{
+		RWMutex: mutexKit.RWMutex{},
+		stopped: false,
+		ticker:  time.NewTicker(duration),
+		closeCh: make(chan struct{}),
+	}
+
+	go func(i *Interval) {
+		//// test
+		//defer func() {
+		//	logrus.Info("goroutine ends")
+		//}()
+
+		defer i.ticker.Stop()
+
+		for {
+			select {
+			case t := <-i.ticker.C:
+				/* 读锁 */
+				i.RLockFunc(func() {
+					if i.stopped {
+						return
+					}
+					task(t)
+				})
+			case <-i.closeCh:
+				return
+			}
+		}
+	}(i)
+	return i
+}
+
+var SetInterval func(task func(t time.Time), duration time.Duration) *Interval = NewInterval
+
+// ClearInterval
+/*
+@param i 可以为nil
+*/
+func ClearInterval(i *Interval) {
+	i.Stop()
 }
