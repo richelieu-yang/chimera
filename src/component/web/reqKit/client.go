@@ -1,8 +1,8 @@
 package reqKit
 
 import (
+	"fmt"
 	"github.com/imroc/req/v3"
-	"github.com/richelieu-yang/chimera/v2/src/core/errorKit"
 	"github.com/richelieu-yang/chimera/v2/src/json/jsonKit"
 	"time"
 )
@@ -62,7 +62,7 @@ func NewClient(maxRetryTimes int) *Client {
 			}
 			if !resp.IsSuccessState() {
 				// Neither a success response nor a error response, record details to help troubleshooting
-				resp.Err = errorKit.New("bad status: %s\nraw content:\n%s", resp.Status, resp.Dump())
+				resp.Err = fmt.Errorf("bad status: %s\nraw content:\n%s", resp.Status, resp.Dump())
 				return nil
 			}
 			return nil

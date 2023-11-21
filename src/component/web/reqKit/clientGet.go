@@ -2,7 +2,6 @@ package reqKit
 
 import (
 	"github.com/imroc/req/v3"
-	"github.com/richelieu-yang/chimera/v2/src/core/errorKit"
 	"github.com/richelieu-yang/chimera/v2/src/urlKit"
 )
 
@@ -38,8 +37,5 @@ func (c *Client) Get(url string, queryParams map[string][]string) (status int, d
 
 	status = resp.StatusCode
 	data = resp.Bytes()
-	if !resp.IsSuccessState() {
-		err = errorKit.New("bad response status: %d", status)
-	}
 	return
 }

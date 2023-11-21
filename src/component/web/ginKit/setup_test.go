@@ -6,7 +6,6 @@ import (
 	"github.com/richelieu-yang/chimera/v2/src/consts"
 	"github.com/richelieu-yang/chimera/v2/src/core/pathKit"
 	"github.com/sirupsen/logrus"
-	"net/http"
 	"testing"
 )
 
@@ -40,7 +39,8 @@ func TestMustSetUp(t *testing.T) {
 			//
 			//time.Sleep(time.Second * 3)
 
-			ctx.String(http.StatusOK, "hello")
+			//ctx.String(http.StatusOK, "hello")
+			ctx.String(500, "hello")
 		})
 		return nil
 	})

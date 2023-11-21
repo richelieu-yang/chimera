@@ -6,5 +6,8 @@ import (
 )
 
 func main() {
-	fmt.Println(reqKit.Post("https://www.moulem.com/", nil, nil))
+	status, data, err := reqKit.Post("https://127.0.0.1/test", nil, nil)
+	fmt.Println(status)
+	fmt.Println(string(data))
+	fmt.Println(err)
 }

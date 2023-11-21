@@ -1,9 +1,7 @@
 package reqKit
 
 import (
-	"fmt"
 	"github.com/imroc/req/v3"
-	"github.com/richelieu-yang/chimera/v2/src/core/errorKit"
 	"github.com/richelieu-yang/chimera/v2/src/urlKit"
 )
 
@@ -18,9 +16,7 @@ func (c *Client) SimplePost(url string, queryParams map[string][]string, body in
 		return nil, err
 	}
 
-	request := c.Client.R().SetBody(body)
-	fmt.Println(request.Headers["Content-Type"])
-	return request.Post(url)
+	return c.Client.R().SetBody(body).Post(url)
 }
 
 func (c *Client) SimplePostWithJson(url string, queryParams map[string][]string, jsonBytes []byte) (*req.Response, error) {
@@ -52,8 +48,5 @@ func (c *Client) Post(url string, queryParams map[string][]string, body interfac
 
 	status = resp.StatusCode
 	data = resp.Bytes()
-	if !resp.IsSuccessState() {
-		err = errorKit.New("bad response status: %d", status)
-	}
 	return
 }
