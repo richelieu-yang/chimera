@@ -6,12 +6,13 @@ import (
 	"github.com/richelieu-yang/chimera/v2/src/log/logrusKit"
 	"github.com/richelieu-yang/chimera/v2/src/validateKit"
 	"github.com/sirupsen/logrus"
+	"time"
 )
 
 var pool *ants.Pool
 
-func MustSetUp(antPool *ants.Pool, logrusLogger *logrus.Logger) {
-	if err := Setup(antPool, logrusLogger); err != nil {
+func MustSetUp(antPool *ants.Pool, logrusLogger *logrus.Logger, pongInterval time.Duration) {
+	if err := Setup(antPool, logrusLogger, pongInterval); err != nil {
 		logrusKit.DisableQuote(nil)
 		logrus.Fatalf("%+v", err)
 	}
@@ -22,7 +23,7 @@ func MustSetUp(antPool *ants.Pool, logrusLogger *logrus.Logger) {
 @param antPool	需要自行决定: cap大小、是否自定义输出...
 @param logger 	可以为nil
 */
-func Setup(antPool *ants.Pool, logrusLogger *logrus.Logger) error {
+func Setup(antPool *ants.Pool, logrusLogger *logrus.Logger, pongInterval time.Duration) error {
 	/* pool */
 	if antPool.IsClosed() {
 		return errorKit.New("pool has already been closed")
@@ -41,6 +42,11 @@ func Setup(antPool *ants.Pool, logrusLogger *logrus.Logger) error {
 		if err := SetDefaultLogger(logrusLogger); err != nil {
 			return err
 		}
+	}
+
+	/* pongInterval */
+	if err := setPongInterval(pongInterval); err != nil {
+		return err
 	}
 
 	return nil
