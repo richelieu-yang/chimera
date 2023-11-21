@@ -27,7 +27,7 @@ func (c *Client) SimpleGet(url string, queryParams map[string][]string) (resp *r
 	return resp, err
 }
 
-func (c *Client) Get(url string, queryParams map[string][]string) (statusCode int, data []byte, err error) {
+func (c *Client) Get(url string, queryParams map[string][]string) (status int, data []byte, err error) {
 	var resp *req.Response
 	resp, err = c.SimpleGet(url, queryParams)
 	if err != nil {
@@ -36,10 +36,10 @@ func (c *Client) Get(url string, queryParams map[string][]string) (statusCode in
 	// 不需要手动关闭 resp
 	//defer resp.Body.Close()
 
-	statusCode = resp.StatusCode
+	status = resp.StatusCode
 	data = resp.Bytes()
 	if !resp.IsSuccessState() {
-		err = errorKit.New("bad response status code: %d", statusCode)
+		err = errorKit.New("bad response status: %d", status)
 	}
 	return
 }

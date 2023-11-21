@@ -2,6 +2,7 @@ package reqKit
 
 import (
 	"github.com/imroc/req/v3"
+	"github.com/richelieu-yang/chimera/v2/src/core/errorKit"
 	"github.com/richelieu-yang/chimera/v2/src/urlKit"
 )
 
@@ -35,4 +36,21 @@ func (c *Client) SimplePostWithString(url string, queryParams map[string][]strin
 	}
 
 	return c.Client.R().SetBodyString(str).Post(url)
+}
+
+func (c *Client) Post(url string, queryParams map[string][]string, body interface{}) (status int, data []byte, err error) {
+	var resp *req.Response
+	resp, err = c.SimplePost(url, queryParams, body)
+	if err != nil {
+		return
+	}
+	// 不需要手动关闭 resp
+	//defer resp.Body.Close()
+
+	status = resp.StatusCode
+	data = resp.Bytes()
+	if !resp.IsSuccessState() {
+		err = errorKit.New("bad response status: %d", status)
+	}
+	return
 }
