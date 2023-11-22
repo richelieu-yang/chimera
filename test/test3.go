@@ -1,21 +1,22 @@
 package main
 
-import (
-	"github.com/richelieu-yang/chimera/v2/src/cronKit"
-	"github.com/richelieu-yang/chimera/v2/src/log/logrusKit"
-	"github.com/sirupsen/logrus"
-)
+//func main() {
+//	text := "Convert this to Morse"
+//
+//	h := morse.NewHacker()
+//	morseCode, err := h.Encode(strings.NewReader(text))
+//	if err != nil {
+//		panic(err)
+//	}
+//	fmt.Println(string(morseCode))
+//
+//	data, err := h.Decode(strings.NewReader(string(morseCode)))
+//	if err != nil {
+//		panic(err)
+//	}
+//	fmt.Println(string(data))
+//}
 
 func main() {
-	logrusKit.MustSetUp(nil)
-
-	c := cronKit.NewCron()
-	_, err := c.AddFunc("0 0/2 * * * ?", func() {
-		logrus.Info("-")
-	})
-	if err != nil {
-		panic(err)
-	}
-	logrus.Info("-")
-	c.Run()
+	unicode.Dec
 }
