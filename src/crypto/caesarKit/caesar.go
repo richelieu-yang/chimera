@@ -28,7 +28,8 @@ func Decrypt(cipherText string, shift int) (plainText string) {
 /*
 PS:
 (1) base64采用了 base64.RawURLEncoding;
-(2) plainText 可以有中文.
+(2) 传参 plainText 可以有中文;
+(3) 返回值可以放到 url 中（但不推荐）.
 */
 func EncryptWithBase64(plainText string, shift int) (cipherText string) {
 	// base64 编码
