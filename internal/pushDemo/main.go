@@ -9,6 +9,7 @@ import (
 	"github.com/richelieu-yang/chimera/v2/src/component/web/push/pushKit"
 	"github.com/richelieu-yang/chimera/v2/src/component/web/push/sseKit"
 	"github.com/richelieu-yang/chimera/v2/src/component/web/push/wsKit"
+	"github.com/richelieu-yang/chimera/v2/src/core/cpuKit"
 	"github.com/richelieu-yang/chimera/v2/src/cronKit"
 	"github.com/richelieu-yang/chimera/v2/src/goroutine/poolKit"
 	"github.com/richelieu-yang/chimera/v2/src/json/jsonRespKit"
@@ -20,13 +21,17 @@ import (
 	"github.com/swaggo/gin-swagger"
 )
 
+func init() {
+	cpuKit.SetUp()
+	logrusKit.MustSetUp(nil)
+	logrusKit.DisableQuote(nil)
+}
+
 // @title Title
 // @version 1.0
 // @description Description.
 // @query.collection.format multi
 func main() {
-	logrusKit.MustSetUp(nil)
-	logrusKit.DisableQuote(nil)
 	jsonRespKit.MustSetUp(func(code, msg string, data interface{}) interface{} {
 		return &types.JsonResponse{
 			Code:    code,
