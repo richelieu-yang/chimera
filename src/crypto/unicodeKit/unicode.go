@@ -7,6 +7,9 @@ import (
 
 // Encode
 /*
+在线Unicode转换
+	https://c.runoob.com/front-end/3602/
+
 @param str 支持中文
 
 e.g.
