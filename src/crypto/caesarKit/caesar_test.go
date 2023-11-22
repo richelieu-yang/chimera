@@ -7,7 +7,7 @@ import (
 
 func TestEncrypt(t *testing.T) {
 	plainText := "测试 abcDEF"
-	var shift int = 8
+	var shift = 8
 
 	cipherText := Encrypt(plainText, shift)
 	decryptedText := Decrypt(cipherText, shift)
@@ -40,8 +40,7 @@ func TestEncryptAll(t *testing.T) {
 
 func TestEncryptWithRawURLBase64(t *testing.T) {
 	plainText := "测试 ~！@#￥%……&*（）——+·1234567890-=【】、「」|；‘。、，：“《》？abcDEF"
-	//plainText := "111000"
-	var shift int = 16
+	var shift = 16
 
 	cipherText := EncryptWithBase64(plainText, shift)
 	decryptedText, err := DecryptWithBase64(cipherText, shift)
