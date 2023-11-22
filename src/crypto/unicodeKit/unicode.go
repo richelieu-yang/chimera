@@ -1,20 +1,20 @@
 package unicodeKit
 
 import (
-	"bytes"
 	"strconv"
+	"strings"
 )
 
-var (
-	Decode func(s string) (string, error) = strconv.Unquote
-)
-
+// Encode
+/*
+@param str 支持中文
+*/
 func Encode(str string) string {
-	buf := new(bytes.Buffer)
+	textQuoted := strconv.QuoteToASCII(str)
+	// 去掉首尾的双引号
+	return textQuoted[1 : len(textQuoted)-1]
+}
 
-	s := []rune(str)
-	for _, r := range s {
-		buf.WriteString(strconv.QuoteRuneToASCII(r))
-	}
-	return buf.String()
+func Decode(str string) (rst string, err error) {
+	return strconv.Unquote(strings.Replace(strconv.Quote(str), `\\u`, `\u`, -1))
 }
