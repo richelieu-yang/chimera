@@ -5,6 +5,10 @@ import (
 	"github.com/richelieu-yang/chimera/v2/src/core/ioKit"
 )
 
+// Encode
+/*
+@param plainData 支持中文
+*/
 func Encode(plainData []byte) (cryptoData []byte, err error) {
 	reader := ioKit.NewReader(plainData)
 	hacker := morse.NewHacker()
