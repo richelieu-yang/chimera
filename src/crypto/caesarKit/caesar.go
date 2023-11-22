@@ -1,6 +1,9 @@
 package caesarKit
 
-import "github.com/richelieu-yang/chimera/v2/src/crypto/base64Kit"
+import (
+	"encoding/base64"
+	"github.com/richelieu-yang/chimera/v2/src/crypto/base64Kit"
+)
 
 // Encrypt 凯撒密码加密.
 /*
@@ -23,7 +26,7 @@ func Decrypt(cipherText string, shift int) (plainText string) {
 
 func EncryptWithBase64(plainText string, shift int) (cipherText string) {
 	// base64 编码
-	base64Str := base64Kit.EncodeStringToString(plainText)
+	base64Str := base64Kit.EncodeStringToString(plainText, base64Kit.WithEncoding(base64.RawURLEncoding))
 	// 凯撒密码 加密
 	cipherText = Encrypt(base64Str, shift)
 	return
@@ -33,6 +36,6 @@ func DecryptWithBase64(cipherText string, shift int) (plainText string, err erro
 	// 凯撒密码 解密
 	base64Str := Decrypt(cipherText, shift)
 	// base64 解码
-	plainText, err = base64Kit.DecodeStringToString(base64Str)
+	plainText, err = base64Kit.DecodeStringToString(base64Str, base64Kit.WithEncoding(base64.RawURLEncoding))
 	return
 }
