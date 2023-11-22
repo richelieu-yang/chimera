@@ -1,70 +1,22 @@
 package caesarKit
 
-import (
-	"bytes"
-	"encoding/base64"
-	"github.com/richelieu-yang/chimera/v2/src/crypto/base64Kit"
-)
-
 // Encrypt 凯撒密码加密.
 /*
-PS: 仅加密大小写的英文字母.
+PS:
+(1) 仅加密大小写的英文字母;
+(2) 可以搭配 base64 使用.
 
 @param shift 推荐值: (1) [0, 25]
 					(2) 不推荐使用 26*n(n >= 0)，因为这样加密了个寂寞
 */
-func Encrypt(plainText string, shift uint8) string {
-	shift = polyfillShift(shift)
-
-	buffer := bytes.NewBuffer(nil)
-	for _, char := range plainText {
-		if char >= 'a' && char <= 'z' {
-			char = (char-'a'+rune(shift))%26 + 'a'
-		} else if char >= 'A' && char <= 'Z' {
-			char = (char-'A'+rune(shift))%26 + 'A'
-		}
-		buffer.WriteRune(char)
-	}
-	return buffer.String()
+func Encrypt(plainText string, shift int) (cipherText string) {
+	cipher := NewCaesarCipher(shift)
+	cipherText = cipher.Encrypt(plainText)
+	return
 }
 
-func Decrypt(cipherText string, shift uint8) string {
-	shift = polyfillShift(shift)
-
-	return Encrypt(cipherText, 26-shift)
-}
-
-func polyfillShift(shift uint8) uint8 {
-	// 确保偏移量在0-25之间
-	return shift % 26
-}
-
-// EncryptWithRawURLBase64
-/*
-PS: 本函数对 Encrypt 就行了封装，好处: 对所有字符进行加密.
-
-流程:
-(1) base64编码(base64.RawURLEncoding)
-(2) 凯撒密码加密
-*/
-func EncryptWithRawURLBase64(str string, shift uint8) string {
-	plainText := base64Kit.EncodeStringToString(str, base64Kit.WithEncoding(base64.RawURLEncoding))
-
-	return Encrypt(plainText, shift)
-}
-
-// DecryptWithRawURLBase64
-/*
-流程:
-(1) 凯撒密码解密
-(2) base64解码(base64.RawURLEncoding)
-*/
-func DecryptWithRawURLBase64(str string, shift uint8) (string, error) {
-	cipherText := Decrypt(str, shift)
-
-	decryptedText, err := base64Kit.DecodeStringToString(cipherText, base64Kit.WithEncoding(base64.RawURLEncoding))
-	if err != nil {
-		return "", err
-	}
-	return decryptedText, nil
+func Decrypt(cipherText string, shift int) (plainText string) {
+	cipher := NewCaesarCipher(shift)
+	plainText = cipher.Decrypt(cipherText)
+	return
 }
