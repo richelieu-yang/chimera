@@ -7,6 +7,8 @@ import (
 
 // Encode
 /*
+Deprecated:
+
 @param plainData 支持中文
 */
 func Encode(plainData []byte) (cryptoData []byte, err error) {
@@ -15,6 +17,10 @@ func Encode(plainData []byte) (cryptoData []byte, err error) {
 	return hacker.Encode(reader)
 }
 
+// Decode
+/*
+Deprecated:
+*/
 func Decode(cryptoData []byte) (plainData []byte, err error) {
 	reader := ioKit.NewReader(cryptoData)
 	hacker := morse.NewHacker()
