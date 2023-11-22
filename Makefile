@@ -3,6 +3,7 @@ path=test/test3.go
 cgo=0
 
 prepare:
+	@go mod tidy
 	@go-bindata -fs -o=internal/resources/bindata.go -pkg=resources _resources/...
 
 all: prepare windows-amd64 darwin-arm64 linux-amd64 linux-amd64-noavx linux-arm64 linux-loong64 linux-mips64 linux-mips64le
