@@ -8,6 +8,9 @@ import (
 // Encode
 /*
 @param str 支持中文
+
+e.g.
+("测试") => "\u6d4b\u8bd5"
 */
 func Encode(str string) string {
 	textQuoted := strconv.QuoteToASCII(str)
