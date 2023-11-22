@@ -24,6 +24,12 @@ func Decrypt(cipherText string, shift int) (plainText string) {
 	return
 }
 
+// EncryptWithBase64 凯撒密码加密 + base64 编码.
+/*
+PS:
+(1) base64采用了 base64.RawURLEncoding;
+(2) plainText 可以有中文.
+*/
 func EncryptWithBase64(plainText string, shift int) (cipherText string) {
 	// base64 编码
 	base64Str := base64Kit.EncodeStringToString(plainText, base64Kit.WithEncoding(base64.RawURLEncoding))
