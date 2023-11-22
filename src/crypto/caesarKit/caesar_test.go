@@ -11,13 +11,11 @@ func TestEncrypt(t *testing.T) {
 
 	cipherText := Encrypt(plainText, shift)
 	decryptedText := Decrypt(cipherText, shift)
-	fmt.Println("cipherText:", cipherText)
-	fmt.Println("decryptedText:", decryptedText)
+	fmt.Println("cipherText:\n", cipherText)
+	fmt.Println("decryptedText:\n", decryptedText)
 
 	if plainText != decryptedText {
 		panic("not equal")
-	} else {
-		fmt.Println("equal")
 	}
 }
 
