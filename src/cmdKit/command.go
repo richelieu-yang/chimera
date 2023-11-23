@@ -14,7 +14,7 @@ PS:
 (2) Cmd.Run(): 		会阻塞.
 
 @param ctx	(1) 如果命令在ctx超时之前没有完成，CommandContext将会杀死该进程;
-			(2) !!!: 存在部分杀不死的情况，比如yozo的logon.exe，ctx超时了进程还是卡死在那.
+			(2) !!!: 存在部分杀不死的情况，比如yozo的logon.exe，ctx超时了进程还是卡死在那（通过go代码执行会卡死在那，且无法通过ctx结束；但直接在command里面执行就没问题）.
 @param args 可以为nil
 */
 func NewCommand(ctx context.Context, name string, args []string, options ...CmdOption) *exec.Cmd {

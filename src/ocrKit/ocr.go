@@ -1,6 +1,7 @@
 package ocrKit
 
 import (
+	"context"
 	"github.com/richelieu-yang/chimera/v2/src/cmdKit"
 	"github.com/richelieu-yang/chimera/v2/src/core/errorKit"
 	"github.com/richelieu-yang/chimera/v2/src/core/fileKit"
@@ -61,7 +62,7 @@ func GetText(imgPath string, languages ...string) (string, error) {
 		lang = sliceKit.Join(languages, "+")
 	}
 
-	result, err := cmdKit.ExecuteToString("tesseract", imgPath, pathKit.Join(tempDir, uuid), "-l", lang)
+	result, err := cmdKit.ExecuteToString(context.TODO(), "tesseract", imgPath, pathKit.Join(tempDir, uuid), "-l", lang)
 	if err != nil {
 		return "", err
 	}

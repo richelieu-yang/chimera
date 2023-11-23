@@ -1,6 +1,7 @@
 package timeKit
 
 import (
+	"context"
 	"fmt"
 	"github.com/richelieu-yang/chimera/v2/src/cmdKit"
 	"github.com/richelieu-yang/chimera/v2/src/core/strKit"
@@ -18,7 +19,7 @@ PS:
 
 @param password root用户的密码
 */
-func SetMachineTime(t time.Time, rootPassword string) error {
+func SetMachineTime(ctx context.Context, t time.Time, rootPassword string) error {
 	// 将时间转换为（date命令认可的）字符串
 	format := "010215042006.05"
 	timeStr := Format(t, TimeFormat(format))
@@ -30,16 +31,16 @@ func SetMachineTime(t time.Time, rootPassword string) error {
 		script = fmt.Sprintf(`echo "%s" | sudo -S date %s`, rootPassword, timeStr)
 	}
 
-	_, err := cmdKit.ExecuteToString("sh", "-c", script)
+	_, err := cmdKit.ExecuteToString(ctx, "sh", "-c", script)
 	return err
 }
 
 // CorrectMachineTime （根据网络时间）纠正系统时间
-func CorrectMachineTime(rootPassword string) (t time.Time, err error) {
+func CorrectMachineTime(ctx context.Context, rootPassword string) (t time.Time, err error) {
 	t, _, err = GetNetworkTime()
 	if err != nil {
 		return
 	}
-	err = SetMachineTime(t, rootPassword)
+	err = SetMachineTime(ctx, t, rootPassword)
 	return
 }
