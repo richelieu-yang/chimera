@@ -6,6 +6,14 @@ import (
 	"testing"
 )
 
+func TestLookPath(t *testing.T) {
+	path, err := LookPath("java")
+	if err != nil {
+		panic(err)
+	}
+	fmt.Println(path) // /usr/bin/java
+}
+
 func TestNewCommand(t *testing.T) {
 	cmd := NewCommand(context.TODO(), "echo", nil)
 	data, err := cmd.CombinedOutput()
@@ -16,7 +24,7 @@ func TestNewCommand(t *testing.T) {
 }
 
 func TestExecute(t *testing.T) {
-	data, err := Execute("java", "-version")
+	data, err := Execute(context.TODO(), "java", "-version")
 	if err != nil {
 		panic(err)
 	}
