@@ -7,6 +7,8 @@ go 调用可执行程序并传参(windows 系统exe程序示例)
     https://blog.csdn.net/vily_lei/article/details/129985497
 
 ### demo（缺陷: lib/main.exe的输出丢了）
+PS: 如果想要lib/main.exe的输出，可以考虑使用命令: start /B lib/main.exe > output.txt，将输出重定向到文件中，然后再读取文件内容.
+
 ```golang
 package main
 
