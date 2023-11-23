@@ -15,7 +15,7 @@ func TestLookPath(t *testing.T) {
 	fmt.Println(path) // /usr/bin/java
 }
 
-// 命令超时被取消
+// 命令因超时被取消
 func TestNewCommand(t *testing.T) {
 	ctx, cancel := context.WithTimeout(context.Background(), 2*time.Second)
 	defer cancel()
