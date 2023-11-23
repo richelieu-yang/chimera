@@ -1,23 +1,17 @@
 package main
 
 import (
-	"github.com/richelieu-yang/chimera/v2/src/cmdKit"
-	"golang.org/x/sys/execabs"
+	"context"
+	"fmt"
 	"os/exec"
+	"time"
 )
 
 func main() {
-	execabs.Command()
-	exec.LookPath()
+	ctx, cancel := context.WithTimeout(context.Background(), 2*time.Second)
+	defer cancel()
 
-	_ = cmdKit.NewCommand("java", []string{"-version"})
-
-	//path := "lib/main.exe"
-	//cmd := exec.Command("cmd.exe", "/c", "start", path)
-	//
-	//data, err := cmd.CombinedOutput()
-	//if err != nil {
-	//	panic(err)
-	//}
-	//fmt.Print(string(data))
+	if err := exec.CommandContext(ctx, "sleep", "5").Run(); err != nil {
+		fmt.Println("got error:", err) // got error: signal: killed
+	}
 }

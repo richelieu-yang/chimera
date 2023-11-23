@@ -4,6 +4,7 @@ import (
 	"context"
 	"fmt"
 	"testing"
+	"time"
 )
 
 func TestLookPath(t *testing.T) {
@@ -14,7 +15,17 @@ func TestLookPath(t *testing.T) {
 	fmt.Println(path) // /usr/bin/java
 }
 
+// 命令超时被取消
 func TestNewCommand(t *testing.T) {
+	ctx, cancel := context.WithTimeout(context.Background(), 2*time.Second)
+	defer cancel()
+
+	if err := NewCommand(ctx, "sleep", []string{"5"}).Run(); err != nil {
+		fmt.Println("got error:", err) // got error: signal: killed
+	}
+}
+
+func TestNewCommand1(t *testing.T) {
 	cmd := NewCommand(context.TODO(), "echo", nil)
 	data, err := cmd.CombinedOutput()
 	if err != nil {
