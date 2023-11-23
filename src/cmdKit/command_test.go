@@ -1,12 +1,13 @@
 package cmdKit
 
 import (
+	"context"
 	"fmt"
 	"testing"
 )
 
 func TestNewCommand(t *testing.T) {
-	cmd := NewCommand("echo", nil)
+	cmd := NewCommand(context.TODO(), "echo", nil)
 	data, err := cmd.CombinedOutput()
 	if err != nil {
 		panic(err)
