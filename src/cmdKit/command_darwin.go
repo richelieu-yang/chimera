@@ -1,26 +1,13 @@
 package cmdKit
 
 import (
+	"context"
 	"os/exec"
 	"syscall"
 )
 
-//// NewCommand
-///*
-//@param deathSig Mac环境不支持
-//*/
-//func NewCommand(setpgid bool, deathSig syscall.Signal, name string, args ...string) *exec.Cmd {
-//	cmd := exec.Command(name, args...)
-//
-//	cmd.SysProcAttr = &syscall.SysProcAttr{
-//		Setpgid: setpgid,
-//		//Pdeathsig: deathSig,
-//	}
-//	return cmd
-//}
-
-func (opts CmdOptions) NewCommand(name string, args ...string) *exec.Cmd {
-	cmd := exec.Command(name, args...)
+func (opts CmdOptions) NewCommand(ctx context.Context, name string, args ...string) *exec.Cmd {
+	cmd := exec.CommandContext(ctx, name, args...)
 
 	cmd.SysProcAttr = &syscall.SysProcAttr{
 		Setpgid: opts.Setpgid,

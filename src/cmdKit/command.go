@@ -1,16 +1,19 @@
 package cmdKit
 
 import (
+	"context"
 	"os/exec"
 )
+
+var LookPath func(file string) (string, error) = exec.LookPath
 
 // NewCommand
 /*
 @param args 可以为nil
 */
-func NewCommand(name string, args []string, options ...CmdOption) *exec.Cmd {
+func NewCommand(ctx context.Context, name string, args []string, options ...CmdOption) *exec.Cmd {
 	opts := loadOptions(options...)
-	return opts.NewCommand(name, args...)
+	return opts.NewCommand(ctx, name, args...)
 }
 
 // Execute 执行命令（会阻塞直到命令结束）
