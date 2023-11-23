@@ -3,6 +3,7 @@
 package osKit
 
 import (
+	"context"
 	"github.com/richelieu-yang/chimera/v2/src/cmdKit"
 	"github.com/richelieu-yang/chimera/v2/src/core/errorKit"
 	"github.com/richelieu-yang/chimera/v2/src/core/intKit"
@@ -15,7 +16,7 @@ import (
 命令: sh -c "ulimit -a"
 */
 func GetUlimitInfo() (string, error) {
-	str, err := cmdKit.ExecuteToString("sh", "-c", "ulimit -a")
+	str, err := cmdKit.ExecuteToString(context.TODO(), "sh", "-c", "ulimit -a")
 	if err != nil {
 		return "", err
 	}
@@ -31,7 +32,7 @@ PS:
 (2) 为何使用 sh -c "ulimit -n" 而非 ulimit -n? https://www.thinbug.com/q/17483723
 */
 func GetMaxOpenFiles() (int, error) {
-	str, err := cmdKit.ExecuteToString("sh", "-c", "ulimit -n")
+	str, err := cmdKit.ExecuteToString(context.TODO(), "sh", "-c", "ulimit -n")
 	if err != nil {
 		return 0, err
 	}
@@ -68,7 +69,7 @@ PS:
 (2) ulimit -u命令也可以用来限制单个用户可以创建的线程数，因为: 在Linux中，线程本质上只是具有共享地址空间的进程。
 */
 func GetMaxProcessThreadCountByUser() (int, error) {
-	str, err := cmdKit.ExecuteToString("sh", "-c", "ulimit -u")
+	str, err := cmdKit.ExecuteToString(context.TODO(), "sh", "-c", "ulimit -u")
 	if err != nil {
 		return 0, err
 	}
@@ -84,7 +85,7 @@ func GetMaxProcessThreadCountByUser() (int, error) {
 
 // GetCoreFileSize 获取: core文件的最大值，单位为区块.
 func GetCoreFileSize() (string, error) {
-	str, err := cmdKit.ExecuteToString("sh", "-c", "ulimit -c")
+	str, err := cmdKit.ExecuteToString(context.TODO(), "sh", "-c", "ulimit -c")
 	if err != nil {
 		return "", err
 	}

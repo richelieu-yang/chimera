@@ -1,6 +1,7 @@
 package processKit
 
 import (
+	"context"
 	"github.com/richelieu-yang/chimera/v2/src/cmdKit"
 	"github.com/richelieu-yang/chimera/v2/src/core/errorKit"
 	"github.com/richelieu-yang/chimera/v2/src/core/strKit"
@@ -9,7 +10,7 @@ import (
 
 // GetProcessCount 获取: (瞬时的值)系统中所有进程的数量.
 func GetProcessCount() (int, error) {
-	str, err := cmdKit.ExecuteToString("sh", "-c", "ps auxw | wc -l")
+	str, err := cmdKit.ExecuteToString(context.TODO(), "sh", "-c", "ps auxw | wc -l")
 	if err != nil {
 		return 0, err
 	}
