@@ -9,6 +9,10 @@ var LookPath func(file string) (string, error) = exec.LookPath
 
 // NewCommand
 /*
+PS:
+(1) Cmd.Start():	不会阻塞;
+(2) Cmd.Run(): 		会阻塞.
+
 @param ctx	(1) 如果命令在ctx超时之前没有完成，CommandContext将会杀死该进程;
 			(2) !!!: 存在部分杀不死的情况，比如yozo的logon.exe，ctx超时了进程还是卡死在那.
 @param args 可以为nil
