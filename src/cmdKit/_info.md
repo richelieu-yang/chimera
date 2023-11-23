@@ -6,7 +6,7 @@ golang 调用cmd执行EXE
 go 调用可执行程序并传参(windows 系统exe程序示例)
     https://blog.csdn.net/vily_lei/article/details/129985497
 
-`code`
+### demo（缺陷: lib/main.exe的输出丢了）
 ```golang
 package main
 
