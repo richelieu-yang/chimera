@@ -4,6 +4,10 @@ import (
 	"os/exec"
 )
 
+// NewCommand
+/*
+@param args 可以为nil
+*/
 func NewCommand(name string, args []string, options ...CmdOption) *exec.Cmd {
 	opts := loadOptions(options...)
 	return opts.NewCommand(name, args...)
