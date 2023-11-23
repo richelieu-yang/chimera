@@ -4,6 +4,11 @@ import (
 	"os/exec"
 )
 
+func NewCommand(name string, args []string, options ...CmdOption) *exec.Cmd {
+	opts := loadOptions(options...)
+	return opts.NewCommand(name, args...)
+}
+
 // Execute 执行命令（会阻塞直到命令结束）
 /*
 !!!:
