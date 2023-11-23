@@ -1,17 +1,16 @@
 package main
 
-import (
-	"fmt"
-	"os/exec"
-)
+import "github.com/richelieu-yang/chimera/v2/src/cmdKit"
 
 func main() {
-	path := "lib/main.exe"
-	cmd := exec.Command("cmd.exe", "/c", "start", path)
+	_ = cmdKit.NewCommand("java", []string{"-version"})
 
-	data, err := cmd.CombinedOutput()
-	if err != nil {
-		panic(err)
-	}
-	fmt.Print(string(data))
+	//path := "lib/main.exe"
+	//cmd := exec.Command("cmd.exe", "/c", "start", path)
+	//
+	//data, err := cmd.CombinedOutput()
+	//if err != nil {
+	//	panic(err)
+	//}
+	//fmt.Print(string(data))
 }
