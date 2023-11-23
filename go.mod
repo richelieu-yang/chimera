@@ -3,7 +3,7 @@ module github.com/richelieu-yang/chimera/v2
 go 1.21
 
 require (
-	fyne.io/fyne/v2 v2.4.1
+	fyne.io/fyne/v2 v2.4.2
 	github.com/alwindoss/morse v1.0.1
 	github.com/apache/pulsar-client-go v0.11.1
 	github.com/apache/rocketmq-clients/golang/v5 v5.0.1-rc.5
@@ -27,7 +27,7 @@ require (
 	github.com/go-kratos/kratos/v2 v2.7.1
 	github.com/go-playground/validator/v10 v10.16.0
 	github.com/go-redsync/redsync/v4 v4.11.0
-	github.com/gogf/gf/v2 v2.5.6
+	github.com/gogf/gf/v2 v2.5.7
 	github.com/golang-jwt/jwt/v5 v5.1.0
 	github.com/google/go-cmp v0.6.0
 	github.com/google/uuid v1.4.0
@@ -89,7 +89,7 @@ require (
 
 require (
 	contrib.go.opencensus.io/exporter/ocagent v0.6.0 // indirect
-	fyne.io/systray v1.10.1-0.20230722100817-88df1e0ffa9a // indirect
+	fyne.io/systray v1.10.1-0.20231115130155-104f5ef7839e // indirect
 	github.com/99designs/go-keychain v0.0.0-20191008050251-8e49817e8af4 // indirect
 	github.com/99designs/keyring v1.2.1 // indirect
 	github.com/AthenZ/athenz v1.10.39 // indirect
