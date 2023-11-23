@@ -33,12 +33,20 @@ func loadOptions(options ...CmdOption) *CmdOptions {
 	return opts
 }
 
+// WithSetpgid
+/*
+适用环境: Linux、macOS
+*/
 func WithSetpgid(setpgid bool) CmdOption {
 	return func(opts *CmdOptions) {
 		opts.Setpgid = setpgid
 	}
 }
 
+// WithPdeathsig
+/*
+适用环境: Linux
+*/
 func WithPdeathsig(pdeathsig syscall.Signal) CmdOption {
 	return func(opts *CmdOptions) {
 		opts.Pdeathsig = pdeathsig
