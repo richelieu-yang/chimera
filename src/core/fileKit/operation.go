@@ -20,11 +20,14 @@ var (
 	// Rename 重命名
 	Rename func(src string, dst string) (err error) = gfile.Move
 
-	// Remove 删除文件（或目录）
+	// Remove 删除文件（或目录）.
 	/*
 		PS: 如果是目录且内部有文件或目录，也会一并删除.
 	*/
 	Remove func(path string) (err error) = gfile.Remove
+
+	// Delete 删除文件（或目录）.
+	Delete func(path string) (err error) = Remove
 
 	// Truncate 截断
 	/*

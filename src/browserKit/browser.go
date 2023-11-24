@@ -6,7 +6,10 @@ import (
 )
 
 var (
-	// OpenURL Open a new browser window pointing to url.
+	// OpenURL 让默认浏览器打开网址.
+	/*
+		Open a new browser window pointing to url.
+	*/
 	OpenURL func(url string) error = browser.OpenURL
 
 	// OpenFile Open new browser window for the file path.

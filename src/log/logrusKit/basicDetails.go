@@ -47,7 +47,7 @@ func PrintBasicDetails(logger *logrus.Logger) {
 
 	/* path */
 	logger.Infof("[CHIMERA, PATH] working directory: [%s].", pathKit.GetWorkingDir())
-	logger.Infof("[CHIMERA, PATH] temporary directory: [%s].", pathKit.GetOsTempDir())
+	logger.Infof("[CHIMERA, PATH] temporary directory: [%s].", pathKit.GetTempDir())
 	logger.Infof("[CHIMERA, PATH] SelfDir: [%s].", pathKit.SelfDir())
 	logger.Infof("[CHIMERA, PATH] MainPkgPath: [%s].", pathKit.MainPkgPath())
 

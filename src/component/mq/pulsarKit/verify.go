@@ -44,7 +44,7 @@ func verify(config *VerifyConfig) (err error) {
 	ulid := idKit.NewULID()
 
 	// 对应客户端日志s生成在 临时目录 下
-	tmpDirPath, err := pathKit.GetTempDir()
+	tmpDirPath, err := pathKit.GetExclusiveTempDir()
 	if err != nil {
 		return err
 	}

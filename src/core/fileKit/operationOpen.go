@@ -26,6 +26,8 @@ var (
 /*
 TODO: perm 权限可自定义，看后续 gfile 后不会完善.
 
+@param filePath 会尝试为其创建父目录
+
 PS:
 (1) 读写权限（0644）；
 (2) path不存在，会创建；
