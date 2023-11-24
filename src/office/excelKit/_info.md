@@ -23,5 +23,5 @@ Excelize 是 Go 语言编写的用于操作 Office Excel 文档基础库，基�
 获取工作表已用区域 - func (f *File) GetSheetDimension(sheet string) (string, error)
 
 ## 开档可能返回的error
-excelize.ErrWorkbookFileFormat: 格式不支持，比如.xls文件.
+excelize.ErrWorkbookFileFormat: 格式不支持，.
 

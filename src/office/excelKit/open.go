@@ -8,7 +8,7 @@ import (
 
 // OpenFile 打开本地文件.
 /*
-PS: 可能会返回 excelize.ErrWorkbookFileFormat，原因: 文件格式不支持.
+PS: 可能会返回 excelize.ErrWorkbookFileFormat，原因: 文件格式不支持（比如.xls文件）.
 */
 func OpenFile(path string, opts ...excelize.Options) (*excelize.File, error) {
 	if err := fileKit.AssertExistAndIsFile(path); err != nil {
@@ -19,7 +19,7 @@ func OpenFile(path string, opts ...excelize.Options) (*excelize.File, error) {
 
 // OpenReader 打开数据流.
 /*
-PS: 可能会返回 excelize.ErrWorkbookFileFormat，原因: 文件格式不支持.
+PS: 可能会返回 excelize.ErrWorkbookFileFormat，原因: 文件格式不支持（比如.xls文件）.
 
 @params r 数据流（包括: 远程文件）
 */
