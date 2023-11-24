@@ -1,7 +1,6 @@
 package cronKit
 
 import (
-	"github.com/richelieu-yang/chimera/v2/src/core/errorKit"
 	"github.com/richelieu-yang/chimera/v2/src/core/interfaceKit"
 	"github.com/richelieu-yang/chimera/v2/src/core/strKit"
 	"github.com/robfig/cron/v3"
@@ -35,6 +34,7 @@ e.g.
 "15,30 * * * * ?"		每分钟的第15s、第30s，执行一次
 
 e.g.1
+"0 0 0/3 * * ?"			从 0小时 开始，每 3小时 执行一次
 "@every 10s"			从启动（调用Run() || Start()）开始，每 10s	执行一次
 "@every 1m"				从启动（调用Run() || Start()）开始，每 1min	执行一次
 "@hourly"				从启动（调用Run() || Start()）开始，每 1h 	执行一次
@@ -66,11 +66,11 @@ func NewCronWithTask(spec string, task func()) (*cron.Cron, cron.EntryID, error)
 }
 
 func NewCronWithJob(spec string, job cron.Job) (*cron.Cron, cron.EntryID, error) {
-	if strKit.IsBlank(spec) {
-		return nil, 0, errorKit.New("spec is blank")
+	if err := strKit.AssertNotBlank(spec, "spec"); err != nil {
+		return nil, 0, err
 	}
-	if job == nil {
-		return nil, 0, errorKit.New("job == nil")
+	if err := interfaceKit.AssertNotNil(job, "job"); err != nil {
+		return nil, 0, err
 	}
 
 	c := NewCron()
