@@ -86,6 +86,7 @@ func TestWeather2(testing *testing.T) {
 	}
 
 	city := "320200"
+
 	live, err := client.GetLive(city)
 	if err != nil {
 		panic(err)
@@ -105,5 +106,6 @@ func TestWeather2(testing *testing.T) {
 		live.ReportTime,
 		fmt.Sprintf("%s°C %s", cast.DayTemp, cast.DayWeather),
 		fmt.Sprintf("%s°C %s", cast.NightTemp, cast.NightWeather))
+
 	fmt.Println(text)
 }
