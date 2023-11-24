@@ -52,6 +52,7 @@ require (
 	github.com/natefinch/lumberjack/v3 v3.0.0-alpha
 	github.com/oklog/ulid/v2 v2.1.0
 	github.com/panjf2000/ants/v2 v2.9.0
+	github.com/pkg/browser v0.0.0-20210911075715-681adbf594b8
 	github.com/redis/go-redis/v9 v9.3.0
 	github.com/robfig/cron/v3 v3.0.1
 	github.com/rs/xid v1.5.0
