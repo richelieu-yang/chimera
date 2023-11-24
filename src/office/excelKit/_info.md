@@ -14,3 +14,7 @@ github(16k Star):
 * 增加 图片
 * ...
 
+## 方法
+获取工作表已用区域 - func (f *File) GetSheetDimension(sheet string) (string, error)
+
+
