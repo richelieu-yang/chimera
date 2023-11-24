@@ -16,12 +16,13 @@ func TestOpenURL(t *testing.T) {
 	}
 }
 
-func TestOpenFile(t *testing.T) {
+// 打开文件.
+func TestOpenFileOrDirectory(t *testing.T) {
 	temp, err := pathKit.GetExclusiveTempDir()
 	if err != nil {
 		panic(err)
 	}
-	path := pathKit.Join(temp, fmt.Sprintf("%s.txt", idKit.NewXid()))
+	path := pathKit.Join(temp, fmt.Sprintf("%s.wps", idKit.NewXid()))
 
 	f, err := fileKit.Create(path)
 	if err != nil {
@@ -38,11 +39,19 @@ aas
 	}
 	_ = f.Close()
 
-	if err := OpenFile(path); err != nil {
+	if err := OpenFileOrDirectory(path); err != nil {
 		panic(err)
 	}
 
 	// Richelieu: 过一会再删，防止打开后内容为空
 	time.Sleep(time.Second * 3)
 	_ = fileKit.Delete(path)
+}
+
+// 打开目录.
+func TestOpenFileOrDirectory1(t *testing.T) {
+	dir := "/Users/richelieu/Downloads"
+	if err := OpenFileOrDirectory(dir); err != nil {
+		panic(err)
+	}
 }
