@@ -26,7 +26,7 @@ func init() {
 }
 
 var (
-	IsWin func() bool = os.IsWin
+	IsWindows func() bool = os.IsWin
 
 	IsLinux func() bool = os.IsLinux
 

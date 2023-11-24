@@ -18,7 +18,7 @@ func TestGenerateKeyFiles(t *testing.T) {
 
 	priPath := "_pri.pem"
 	pubPath := "_pub.pem"
-	if err := GenerateKeyFiles(bits, format, password, priPath, pubPath); err != nil {
+	if err := GenerateKeyFiles(bits, format, password, priPath, pubPath, 0644); err != nil {
 		panic(err)
 	}
 }
