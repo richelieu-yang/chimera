@@ -1,18 +1,14 @@
 package main
 
-import "github.com/pkg/browser"
+import (
+	"fmt"
+	"github.com/richelieu-yang/chimera/v2/src/office/excelKit"
+)
 
 func main() {
-	browser.Stderr
-
-	if err := browser.OpenURL("https://www.baidu.com"); err != nil {
-		panic(err)
+	f, err := excelKit.OpenFile("/Users/richelieu/Desktop/test.xls")
+	if err != nil {
+		panic(err) // unsupported workbook file format
 	}
-
-	//ctx, cancel := context.WithTimeout(context.Background(), 2*time.Second)
-	//defer cancel()
-	//
-	//if err := exec.CommandContext(ctx, "sleep", "5").Run(); err != nil {
-	//	fmt.Println("got error:", err) // got error: signal: killed
-	//}
+	fmt.Println(f)
 }
