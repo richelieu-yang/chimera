@@ -1,6 +1,8 @@
 ## 参考
 github(16k Star): 
     https://github.com/qax-os/excelize
+官网快速开始: 
+    https://xuri.me/excelize/zh-hans/base/installation.html
 
 ## 功能
 * 创建 Sheet
