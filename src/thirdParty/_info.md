@@ -18,5 +18,9 @@ WEB API文档
 #### 阿里云
 https://cn.aliyun.com/
 
+#### 腾讯云（有Golang SDK）
+基础语音合成
+    https://cloud.tencent.com/document/product/1073/37995
+
 
 
