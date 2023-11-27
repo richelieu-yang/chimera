@@ -1,7 +1,10 @@
 version: '3'
 
 tasks:
-  default:
+  build:
     cmds:
-      - echo 'Hello World from Task!'
-    silent: true
+      - go build -ldflags="-X main.Version={{.GIT_COMMIT}}" main.go
+    vars:
+      # 每次任务执行时, GIT_COMMIT 都会调用 shell 命令来生成这个变量
+      GIT_COMMIT:
+        sh: git log -n 1 --format=%h

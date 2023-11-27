@@ -2,6 +2,11 @@ app=test3
 path=test/test3.go
 cgo=0
 
+# 制作者
+builder=$(shell whoami)
+# 制作日期
+build_date=$(shell date '+%FT%T %A %Z')
+
 prepare:
 	@go mod tidy
 	@go-bindata -fs -o=internal/resources/bindata.go -pkg=resources _resources/...
