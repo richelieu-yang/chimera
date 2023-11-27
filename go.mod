@@ -19,7 +19,7 @@ require (
 	github.com/fatih/structs v1.1.0
 	github.com/fsnotify/fsnotify v1.7.0
 	github.com/gabriel-vasile/mimetype v1.4.3
-	github.com/gin-contrib/cors v1.4.0
+	github.com/gin-contrib/cors v1.5.0
 	github.com/gin-contrib/gzip v0.0.6
 	github.com/gin-contrib/pprof v1.4.0
 	github.com/gin-contrib/sse v0.1.0
@@ -221,7 +221,7 @@ require (
 	go.opencensus.io v0.24.0 // indirect
 	go.uber.org/atomic v1.10.0 // indirect
 	go.uber.org/multierr v1.10.0 // indirect
-	golang.org/x/arch v0.3.0 // indirect
+	golang.org/x/arch v0.5.0 // indirect
 	golang.org/x/crypto v0.15.0 // indirect
 	golang.org/x/mobile v0.0.0-20230531173138-3c911d8e3eda // indirect
 	golang.org/x/mod v0.14.0 // indirect
