@@ -12,3 +12,12 @@ tasks:
       - echo {{.A}}
       - A=1
       - echo {{.A}}
+  default:
+    vars:
+        x: 111
+    cmds:
+      - export x=222
+      - x=222
+      - echo $x
+      - x=333
+      - echo {{.x}}
