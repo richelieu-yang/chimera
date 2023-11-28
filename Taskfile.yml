@@ -1,10 +1,14 @@
 version: '3'
 
 tasks:
-  build:
+  build-windows:
+    platforms: [windows]
     cmds:
-      - go build -ldflags="-X main.Version={{.GIT_COMMIT}}" main.go
+      - echo 'Running command on Windows'
+  a:
     vars:
-      # 每次任务执行时, GIT_COMMIT 都会调用 shell 命令来生成这个变量
-      GIT_COMMIT:
-        sh: git log -n 1 --format=%h
+      A: 0
+    cmds:
+      - echo {{.A}}
+      - A=1
+      - echo {{.A}}
