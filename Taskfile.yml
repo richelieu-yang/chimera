@@ -16,28 +16,69 @@ tasks:
   default:
     cmds:
       - task: prepare
-      - task: build-all
+#      - task: serial
+      - task: parallel
   prepare:
     cmds:
       - go mod tidy
-  build-all:
+  # 串行
+  serial:
+    cmds:
+      - task: windows-386
+      - task: windows-amd64
+      - task: darwin-arm64
+      - task: linux-amd64
+      - task: linux-amd64-noavx
+      - task: linux-arm64
+      - task: linux-mips64
+      - task: linux-mips64le
+      - task: linux-loong64
+  # 并行
+  parallel:
     deps:
+      - task: windows-386
+      - task: windows-amd64
+      - task: darwin-arm64
+      - task: linux-amd64
+      - task: linux-amd64-noavx
+      - task: linux-arm64
+      - task: linux-mips64
+      - task: linux-mips64le
+      - task: linux-loong64
+  windows-386:
+    cmds:
       - task: build
         vars: { OS: windows, ARCH: 386, CC: i686-w64-mingw32-gcc, CXX: i686-w64-mingw32-g++, TAGS: jsoniter, UPX: true }
+  windows-amd64:
+    cmds:
       - task: build
         vars: { OS: windows, ARCH: amd64, CC: x86_64-w64-mingw32-gcc, CXX: x86_64-w64-mingw32-g++, TAGS: jsoniter, UPX: true }
+  darwin-arm64:
+    cmds:
       - task: build
         vars: { OS: darwin, ARCH: arm64, TAGS: jsoniter, UPX: false }
+  linux-amd64:
+    cmds:
       - task: build
         vars: { OS: linux, ARCH: amd64, CC: x86_64-linux-musl-gcc, CXX: x86_64-linux-musl-g++, TAGS: sonic avx, UPX: true }
+  linux-amd64-noavx:
+    cmds:
       - task: build
         vars: { OS: linux, ARCH: amd64, CC: x86_64-linux-musl-gcc, CXX: x86_64-linux-musl-g++, TAGS: jsoniter, UPX: true }
+  linux-arm64:
+    cmds:
       - task: build
         vars: { OS: linux, ARCH: arm64, CC: x86_64-linux-musl-gcc, CXX: x86_64-linux-musl-g++, TAGS: jsoniter, UPX: true }
+  linux-mips64:
+    cmds:
       - task: build
         vars: { OS: linux, ARCH: mips64, CC: x86_64-linux-musl-gcc, CXX: x86_64-linux-musl-g++, TAGS: jsoniter, UPX: false }
+  linux-mips64le:
+    cmds:
       - task: build
         vars: { OS: linux, ARCH: mips64le, CC: x86_64-linux-musl-gcc, CXX: x86_64-linux-musl-g++, TAGS: jsoniter, UPX: false }
+  linux-loong64:
+    cmds:
       - task: build
         vars: { OS: linux, ARCH: loong64, CC: x86_64-linux-musl-gcc, CXX: x86_64-linux-musl-g++, TAGS: jsoniter, UPX: false }
   build:
