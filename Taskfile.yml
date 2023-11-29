@@ -1,23 +1,53 @@
 version: '3'
 
+vars:
+  APP: test1
+  PATH: test/test1.go
+  CGO_ENABLED: 0
+  VERSION: 0.0.1
+  BUILDER:
+    sh: whoami
+  BUILD_DATE:
+    sh: date '+%FT%T %A %Z'
+
 tasks:
-  build-windows:
-    platforms: [windows]
-    cmds:
-      - echo 'Running command on Windows'
-  a:
-    vars:
-      A: 0
-    cmds:
-      - echo {{.A}}
-      - A=1
-      - echo {{.A}}
   default:
-    vars:
-        x: 111
     cmds:
-      - export x=222
-      - x=222
-      - echo $x
-      - x=333
-      - echo {{.x}}
+      - task: prepare
+      - task: build-all
+  prepare:
+    cmds:
+      - go mod tidy
+  build-all:
+    deps:
+      - task: build
+        vars: { OS: windows, ARCH: amd64, TAGS: jsoniter, UPX: true }
+      - task: build
+        vars: { OS: darwin, ARCH: arm64, TAGS: jsoniter, UPX: false }
+      - task: build
+        vars: { OS: linux, ARCH: amd64, TAGS: sonic avx, UPX: true }
+      - task: build
+        vars: { OS: linux, ARCH: amd64, TAGS: jsoniter, UPX: true }
+      - task: build
+        vars: { OS: linux, ARCH: arm64, TAGS: jsoniter, UPX: true }
+      - task: build
+        vars: { OS: linux, ARCH: mips64, TAGS: jsoniter, UPX: false }
+      - task: build
+        vars: { OS: linux, ARCH: mips64le, TAGS: jsoniter, UPX: false }
+      - task: build
+        vars: { OS: linux, ARCH: loong64, TAGS: jsoniter, UPX: false }
+  build:
+    vars:
+      OS: '{{default "UNKNOWN" .OS}}'
+      ARCH: '{{default "UNKNOWN" .ARCH}}'
+      EXT: '{{if eq .OS "windows"}}.exe{{end}}'
+      TAGS: '{{default "" .TAGS}}'
+      UPX: '{{default "" .UPX}}'
+      NOAVX: '{{if and (eq .TAGS "sonic avx") (eq .ARCH "amd64")}}-noavx{{end}}'
+      NAME: '{{.APP}}-{{.OS}}-{{.ARCH}}{{.NOAVX}}{{.EXT}}'
+    cmds:
+      - echo {{.NAME}}
+      - rm -rf {{.NAME}}  # 文件可以不存在
+      - CGO_ENABLED={{.CGO_ENABLED}} GOOS={{.OS}} GOARCH={{.ARCH}} go build -ldflags "-X 'main.Version={{.VERSION}}' -X 'main.Builder={{.BUILDER}}' -X 'main.BuildDate={{.BUILD_DATE}}' -s -w" -tags="{{.TAGS}}" -o {{.NAME}} {{.PATH}}
+      - if [ {{.UPX}} == "true" ]; then upx -9 {{.NAME}}; fi
+
