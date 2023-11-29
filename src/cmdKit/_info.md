@@ -1,12 +1,16 @@
 ## Windows环境，执行.exe文件
-实际上是通过start命令.（start /b类似于linux的nohup，但目前重定向输出有问题，后续研究下）
-
-golang 调用cmd执行EXE
+golang 调用cmd执行EXE  
     http://www.manongjc.com/detail/22-yljaaewtenbdcop.html
-go 调用可执行程序并传参(windows 系统exe程序示例)
+go 调用可执行程序并传参(windows 系统exe程序示例)  
     https://blog.csdn.net/vily_lei/article/details/129985497
 
-### demo（缺陷: lib/main.exe的输出丢了）
+实际上是通过start命令.（start /b类似于linux的nohup，但目前重定向输出有问题，后续研究下）
+
+#### demo1
+exec.Command("cmd.exe", "/c", "start", "logon.exe")
+exec.Command("cmd.exe", "/c", "start", "/b", "logon.exe")
+
+#### demo2（缺陷: lib/main.exe的输出丢了）
 PS: 如果想要lib/main.exe的输出，可以考虑使用命令: start /b lib/main.exe > output.txt，将输出重定向到文件中，然后再读取文件内容.
 
 ```golang
