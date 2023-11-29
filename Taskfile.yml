@@ -3,6 +3,7 @@ version: '3'
 vars:
   APP: test1
   PATH: test/test1.go
+  # 0 || 1
   CGO_ENABLED: 0
   VERSION: 0.0.1
   BUILDER:
