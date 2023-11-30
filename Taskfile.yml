@@ -3,26 +3,28 @@ version: '3'
 # 全局变量
 vars:
   APP: test1
-  PATH: test/test1.go
+  SOURCE: test/test1.go
   # 0 || 1
   CGO_ENABLED: 0
   VERSION: 0.0.1
   BUILDER:
     sh: whoami
   BUILD_DATE:
+    sh: date '+%F'
+  BUILD_TIME:
     sh: date '+%FT%T %A %Z'
 
 tasks:
   default:
     cmds:
       - task: prepare
-#      - task: serial
-      - task: parallel
+      #      - task: build-serial
+      - task: build-parallel
   prepare:
     cmds:
       - go mod tidy
   # 串行
-  serial:
+  build-serial:
     cmds:
       - task: windows-386
       - task: windows-amd64
@@ -34,7 +36,7 @@ tasks:
       - task: linux-mips64le
       - task: linux-loong64
   # 并行
-  parallel:
+  build-parallel:
     deps:
       - task: windows-386
       - task: windows-amd64
@@ -92,8 +94,9 @@ tasks:
       UPX: '{{default "false" .UPX}}'
       NOAVX: '{{if and (eq .TAGS "sonic avx") (eq .ARCH "amd64")}}-noavx{{end}}'
       NAME: '{{.APP}}-{{.OS}}-{{.ARCH}}{{.NOAVX}}{{.EXT}}'
+      TARGET: '{{.NAME}}'
     cmds:
-      - echo {{.NAME}}
-      - rm -rf {{.NAME}}  # 文件可以不存在
-      - CGO_ENABLED={{.CGO_ENABLED}} CC={{.CC}} CXX={{.CXX}} GOOS={{.OS}} GOARCH={{.ARCH}} go build -ldflags "-X 'main.Version={{.VERSION}}' -X 'main.Builder={{.BUILDER}}' -X 'main.BuildDate={{.BUILD_DATE}}' -s -w" -tags="{{.TAGS}}" -o {{.NAME}} {{.PATH}}
-      - if [ {{.UPX}} == "true" ]; then upx -9 {{.NAME}}; fi
+      - echo {{.TARGET}}
+      - rm -rf {{.TARGET}}  # 文件可以不存在
+      - CGO_ENABLED={{.CGO_ENABLED}} CC={{.CC}} CXX={{.CXX}} GOOS={{.OS}} GOARCH={{.ARCH}} go build -ldflags "-X 'main.Version={{.VERSION}}' -X 'main.Builder={{.BUILDER}}' -X 'main.BuildTime={{.BUILD_TIME}}' -s -w" -tags="{{.TAGS}}" -o {{.TARGET}} {{.SOURCE}}
+      - if [ {{.UPX}} == "true" ]; then upx -9 {{.TARGET}}; fi
