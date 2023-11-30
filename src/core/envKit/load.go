@@ -6,7 +6,7 @@ import (
 )
 
 var (
-	// Load
+	// Load 从 文件 中读取配置，并存储到程序的环境变量中.
 	/*
 		PS:
 		(1) 默认情况下，加载的是项目根目录下的.env文件;
@@ -15,19 +15,19 @@ var (
 	*/
 	Load func(filenames ...string) (err error) = godotenv.Load
 
-	// Read
+	// Read 从 文件 中读取配置.
 	/*
 
 	 */
 	Read func(filenames ...string) (envMap map[string]string, err error) = godotenv.Read
 
-	// Unmarshal
+	// Unmarshal 从 string 中读取配置.
 	/*
 
 	 */
 	Unmarshal func(str string) (envMap map[string]string, err error) = godotenv.Unmarshal
 
-	// Parse
+	// Parse 从 io.Reader 中读取配置.
 	/*
 
 	 */
