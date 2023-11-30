@@ -20,10 +20,9 @@ github(4k Star):
 * i18n（国际化）
 
 #### Carbon 和 time.Time 互转
-// 将 time.Time 转换成 Carbon
+// (1) 将 time.Time 转换成 Carbon
 carbon.CreateFromStdTime(time.Now())
-
-// 将 Carbon 转换成 time.Time
+// (2) 将 Carbon 转换成 time.Time
 carbon.Now().ToStdTime()
 
 #### Carbon.ToDateTimeString()
