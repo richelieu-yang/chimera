@@ -2,8 +2,8 @@ package rocketmq5Kit
 
 import (
 	rmq_client "github.com/apache/rocketmq-clients/golang/v5"
+	"github.com/richelieu-yang/chimera/v2/src/core/envKit"
 	"github.com/richelieu-yang/chimera/v2/src/core/fileKit"
-	"github.com/richelieu-yang/chimera/v2/src/core/osKit"
 	"github.com/richelieu-yang/chimera/v2/src/core/pathKit"
 	"github.com/richelieu-yang/chimera/v2/src/core/strKit"
 	"os"
@@ -23,7 +23,7 @@ func initClientLog(path string) error {
 		dir := pathKit.ParentDir(path)
 		name := fileKit.GetFileName(path)
 
-		if err := osKit.SetEnvs(map[string]string{
+		if err := envKit.SetEnvs(map[string]string{
 			rmq_client.ENABLE_CONSOLE_APPENDER: "false",
 			rmq_client.CLIENT_LOG_ROOT:         dir,
 			rmq_client.CLIENT_LOG_FILENAME:     name,
