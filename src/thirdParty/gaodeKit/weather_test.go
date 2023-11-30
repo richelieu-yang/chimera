@@ -3,7 +3,7 @@ package gaodeKit
 import (
 	"fmt"
 	"github.com/jedib0t/go-pretty/v6/table"
-	"github.com/richelieu-yang/chimera/v2/src/core/timeKit"
+	"github.com/richelieu-yang/chimera/v2/src/time/timeKit"
 	"github.com/sirupsen/logrus"
 	"testing"
 )

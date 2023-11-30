@@ -5,7 +5,7 @@ import (
 	"github.com/gorilla/websocket"
 	"github.com/richelieu-yang/chimera/v2/src/component/web/push/pushKit"
 	"github.com/richelieu-yang/chimera/v2/src/core/errorKit"
-	"github.com/richelieu-yang/chimera/v2/src/core/timeKit"
+	"github.com/richelieu-yang/chimera/v2/src/time/timeKit"
 	"time"
 )
 
