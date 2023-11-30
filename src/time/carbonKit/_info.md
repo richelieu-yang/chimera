@@ -16,7 +16,7 @@ github(4k Star):
 * 星座
 * 季节
 * 农历（目前仅支持 公元1900年 至 2100年 的200年时间跨度）
-* !!!: JSON支持 https://github.com/golang-module/carbon/blob/master/README.cn.md#json-%E6%94%AF%E6%8C%81
+* !!!: JSON支持（存到数据库中...） https://github.com/golang-module/carbon/blob/master/README.cn.md#json-%E6%94%AF%E6%8C%81
 * i18n（国际化）
 
 #### Carbon 和 time.Time 互转
