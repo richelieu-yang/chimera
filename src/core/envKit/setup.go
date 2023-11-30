@@ -1,7 +1,6 @@
 package envKit
 
 import (
-	"github.com/joho/godotenv"
 	"github.com/richelieu-yang/chimera/v2/src/log/logrusKit"
 	"github.com/sirupsen/logrus"
 )
@@ -17,11 +16,12 @@ func MustSetUp(envFilePaths ...string) {
 // SetUp
 /*
 PS:
-(1) 默认情况下，加载的是项目根目录下的.env文件.
-(2) 如果多个文件中存在同一个键，那么先出现的优先，后出现的不生效.
+(1) 默认情况下，加载的是项目根目录下的.env文件;
+(2) 如果多个文件中存在同一个键，那么先出现的优先，后出现的不生效;
+(3) 会存储到程序的环境变量中.
 
 @params envFilePaths 可以为nil || []string{}，将采用默认值: []string{".env"}
 */
 func SetUp(envFilePaths ...string) error {
-	return godotenv.Load(envFilePaths...)
+	return Load(envFilePaths...)
 }
