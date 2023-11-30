@@ -40,6 +40,7 @@ require (
 	github.com/imroc/req/v3 v3.42.2
 	github.com/jedib0t/go-pretty/v6 v6.4.9
 	github.com/jinzhu/copier v0.4.0
+	github.com/joho/godotenv v1.5.1
 	github.com/jordan-wright/email v4.0.1-0.20210109023952-943e75fe5223+incompatible
 	github.com/json-iterator/go v1.1.12
 	github.com/klauspost/compress v1.17.3
