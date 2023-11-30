@@ -33,3 +33,15 @@ var (
 	 */
 	Parse func(r io.Reader) (map[string]string, error) = godotenv.Parse
 )
+
+func Load(filenames ...string) (err error) {
+	filenames = filenamesOrDefault(filenames)
+
+	for _, filename := range filenames {
+		err = loadFile(filename, false)
+		if err != nil {
+			return // return early on a spazout
+		}
+	}
+	return
+}
