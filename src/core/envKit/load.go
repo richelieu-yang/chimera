@@ -15,33 +15,24 @@ var (
 	*/
 	Load func(filenames ...string) (err error) = godotenv.Load
 
-	// Read 从 文件 中读取配置.
+	// Overload 类似于 Load，但是会覆盖 先前文件中已存在 的环境变量.
+	Overload func(filenames ...string) (err error) = godotenv.Overload
+
+	// ReadFromFile 从 文件 中读取配置.
 	/*
+		PS: "不会"存储到程序的环境变量中.
+	*/
+	ReadFromFile func(filenames ...string) (envMap map[string]string, err error) = godotenv.Read
 
-	 */
-	Read func(filenames ...string) (envMap map[string]string, err error) = godotenv.Read
-
-	// Unmarshal 从 string 中读取配置.
+	// ReadFromString 从 string 中读取配置.
 	/*
+		PS: "不会"存储到程序的环境变量中.
+	*/
+	ReadFromString func(str string) (envMap map[string]string, err error) = godotenv.Unmarshal
 
-	 */
-	Unmarshal func(str string) (envMap map[string]string, err error) = godotenv.Unmarshal
-
-	// Parse 从 io.Reader 中读取配置.
+	// ParReadFromReader 从 io.Reader 中读取配置.
 	/*
-
-	 */
-	Parse func(r io.Reader) (map[string]string, error) = godotenv.Parse
+		PS: "不会"存储到程序的环境变量中.
+	*/
+	ParReadFromReader func(r io.Reader) (map[string]string, error) = godotenv.Parse
 )
-
-func Load(filenames ...string) (err error) {
-	filenames = filenamesOrDefault(filenames)
-
-	for _, filename := range filenames {
-		err = loadFile(filename, false)
-		if err != nil {
-			return // return early on a spazout
-		}
-	}
-	return
-}
