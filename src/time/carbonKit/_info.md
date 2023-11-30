@@ -12,3 +12,6 @@ carbon.CreateFromStdTime(time.Now())
 
 // 将 Carbon 转换成 time.Time
 carbon.Now().ToStdTime()
+
+#### Carbon.ToDateTimeString()
+输出 "2006-01-02 15:04:05" 格式字符串.
