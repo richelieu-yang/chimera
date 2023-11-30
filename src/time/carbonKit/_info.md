@@ -5,3 +5,10 @@ github(4k Star):
     https://mp.weixin.qq.com/s/92O1SHs4tw1FMcDeQoSfkA
 
 这是一个轻量级的、易于使用的、语义智能的日期时间库，适用于Go开发者。
+
+#### Carbon 和 time.Time 互转
+// 将 time.Time 转换成 Carbon
+carbon.CreateFromStdTime(time.Now())
+
+// 将 Carbon 转换成 time.Time
+carbon.Now().ToStdTime()
