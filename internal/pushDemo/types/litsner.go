@@ -77,9 +77,9 @@ func (l *Listener) OnClose(channel pushKit.Channel, closeInfo string, bsid, user
 		"clientIP": channel.GetClientIP(),
 		"type":     channel.GetType(),
 		"id":       channel.GetId(),
-		"bsid":     channel.GetBsid(),
-		"user":     channel.GetUser(),
-		"group":    channel.GetGroup(),
+		"bsid":     bsid,
+		"user":     user,
+		"group":    group,
 
 		"closeInfo": closeInfo,
 	}).Info("OnClose")
