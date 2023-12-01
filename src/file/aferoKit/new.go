@@ -15,6 +15,7 @@ var (
 
 	NewHttpFs func(source afero.Fs) *afero.HttpFs = afero.NewHttpFs
 
+	// NewIOFS 返回一个实现了afero.Fs接口的IOFS对象（这个IOFS对象是对Go1.16的io/fs.FS文件系统抽象的包装）.
 	NewIOFS func(fs afero.Fs) afero.IOFS = afero.NewIOFS
 
 	NewRegexpFs func(source afero.Fs, re *regexp.Regexp) afero.Fs = afero.NewRegexpFs
