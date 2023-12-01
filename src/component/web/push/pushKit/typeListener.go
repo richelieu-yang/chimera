@@ -29,6 +29,9 @@ type Listener interface {
 	*/
 	OnMessage(channel Channel, messageType int, data []byte)
 
+	// BeforeClosedByBackend 由于后端主动关闭连接，而触发的关闭事件.
+	BeforeClosedByBackend(channel Channel, closeInfo string)
+
 	OnClose(channel Channel, closeInfo string, bsid, user, group string)
 }
 
@@ -49,6 +52,12 @@ func (listeners Listeners) OnHandshake(w http.ResponseWriter, r *http.Request, c
 func (listeners Listeners) OnMessage(channel Channel, messageType int, data []byte) {
 	for _, listener := range listeners {
 		listener.OnMessage(channel, messageType, data)
+	}
+}
+
+func (listeners Listeners) BeforeClosedByBackend(channel Channel, closeInfo string) {
+	for _, listener := range listeners {
+		listener.BeforeClosedByBackend(channel, closeInfo)
 	}
 }
 

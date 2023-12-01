@@ -27,6 +27,9 @@ func (listener *innerListener) OnMessage(channel Channel, messageType int, data 
 	}
 }
 
+func (listener *innerListener) BeforeClosedByBackend(channel Channel, closeInfo string) {
+}
+
 func (listener *innerListener) OnClose(channel Channel, closeInfo string, bsid, user, group string) {
 	channel.Dispose()
 
