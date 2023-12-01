@@ -70,6 +70,11 @@ func (l *Listener) BeforeClosedByBackend(channel pushKit.Channel, closeInfo stri
 
 		"closeInfo": closeInfo,
 	}).Info("BeforeClosedByBackend")
+
+	text := fmt.Sprintf("This channel is closed with closeInfo(%s).", closeInfo)
+	if err := channel.Push([]byte(text)); err != nil {
+		logrus.Error(err)
+	}
 }
 
 func (l *Listener) OnClose(channel pushKit.Channel, closeInfo string, bsid, user, group string) {
