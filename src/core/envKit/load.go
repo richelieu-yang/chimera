@@ -2,6 +2,7 @@ package envKit
 
 import (
 	"github.com/joho/godotenv"
+	"github.com/richelieu-yang/chimera/v2/src/core/fileKit"
 	"io"
 )
 
@@ -18,12 +19,6 @@ var (
 	// Overload 类似于 Load，但是会覆盖 先前文件中已存在 的环境变量.
 	Overload func(filenames ...string) (err error) = godotenv.Overload
 
-	// ReadFromFile 从 文件 中读取配置.
-	/*
-		PS: "不会"存储到程序的环境变量中.
-	*/
-	ReadFromFile func(filenames ...string) (envMap map[string]string, err error) = godotenv.Read
-
 	// ReadFromString 从 string 中读取配置.
 	/*
 		PS: "不会"存储到程序的环境变量中.
@@ -36,3 +31,17 @@ var (
 	*/
 	ParReadFromReader func(r io.Reader) (map[string]string, error) = godotenv.Parse
 )
+
+// ReadFromFile 从 文件 中读取配置.
+/*
+	PS: "不会"存储到程序的环境变量中.
+*/
+func ReadFromFile(paths ...string) (envMap map[string]string, err error) {
+	for _, path := range paths {
+		if err := fileKit.AssertExistAndIsFile(path); err != nil {
+			return nil, err
+		}
+	}
+
+	return godotenv.Read(paths...)
+}
