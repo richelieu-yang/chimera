@@ -84,6 +84,9 @@ func (channel *WsChannel) Close(reason string) (err error) {
 
 	channel.Listeners.BeforeClosedByBackend(channel, closeInfo)
 
+	// Richelieu: 这里延迟3毫秒，以免: BeforeClosedByBackend()里面会向前端发消息，前端先触发onclose，再触发onmessage
+	time.Sleep(time.Millisecond * 3)
+
 	if channel.SetClosed() {
 		channel.CloseCh <- closeInfo
 		err = channel.conn.Close()
