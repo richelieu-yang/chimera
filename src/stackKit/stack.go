@@ -5,18 +5,16 @@ import (
 	"github.com/richelieu-yang/chimera/v2/src/listKit"
 )
 
-type (
-	// Stack 堆栈（后进先出）
-	Stack[V any] interface {
-		// Push 放在最后面
-		Push(ele V)
+// Stack 堆栈（后进先出）
+type Stack[V any] interface {
+	// Push 放在最后面
+	Push(ele V)
 
-		// Pop 移除并返回最后面的元素
-		Pop() (V, bool)
+	// Pop 移除并返回最后面的元素
+	Pop() (V, bool)
 
-		Size() int
-	}
-)
+	Size() int
+}
 
 func NewStack[V any](safe ...bool) Stack[V] {
 	return &stackImpl[V]{
@@ -32,6 +30,7 @@ func NewStackFrom[V any](s []V, safe ...bool) Stack[V] {
 	var s1 []interface{} = sliceKit.ConvertElementType[V, interface{}](s, func(item V, index int) interface{} {
 		return item
 	})
+
 	return &stackImpl[V]{
 		list: listKit.NewDoubleLinkedListFrom(s1, safe...),
 	}
