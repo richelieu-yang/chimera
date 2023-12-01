@@ -59,6 +59,19 @@ func (l *Listener) OnMessage(channel pushKit.Channel, messageType int, data []by
 	}).Info("OnMessage")
 }
 
+func (l *Listener) BeforeClosedByBackend(channel pushKit.Channel, closeInfo string) {
+	logrus.WithFields(logrus.Fields{
+		"clientIP": channel.GetClientIP(),
+		"type":     channel.GetType(),
+		"id":       channel.GetId(),
+		"bsid":     channel.GetBsid(),
+		"user":     channel.GetUser(),
+		"group":    channel.GetGroup(),
+
+		"closeInfo": closeInfo,
+	}).Info("BeforeClosedByBackend")
+}
+
 func (l *Listener) OnClose(channel pushKit.Channel, closeInfo string, bsid, user, group string) {
 	logrus.WithFields(logrus.Fields{
 		"clientIP": channel.GetClientIP(),
