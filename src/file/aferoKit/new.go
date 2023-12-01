@@ -7,8 +7,10 @@ import (
 )
 
 var (
+	// NewOsFs 创建一个新的 "基于操作系统" 的文件系统实例.
 	NewOsFs func() afero.Fs = afero.NewOsFs
 
+	// NewMemMapFs 创建一个新的 "基于内存" 的文件系统实例.
 	NewMemMapFs func() afero.Fs = afero.NewMemMapFs
 
 	NewHttpFs func(source afero.Fs) *afero.HttpFs = afero.NewHttpFs
