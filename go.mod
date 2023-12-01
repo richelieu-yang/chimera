@@ -10,7 +10,7 @@ require (
 	github.com/bytedance/sonic v1.10.2
 	github.com/dablelv/cyan v0.0.52
 	github.com/davidbyttow/govips/v2 v2.13.0
-	github.com/deckarep/golang-set/v2 v2.4.0
+	github.com/deckarep/golang-set/v2 v2.5.0
 	github.com/duke-git/lancet/v2 v2.2.7
 	github.com/dustin/go-humanize v1.0.1
 	github.com/emersion/go-imap v1.2.1
@@ -29,7 +29,7 @@ require (
 	github.com/go-redsync/redsync/v4 v4.11.0
 	github.com/gogf/gf/v2 v2.5.7
 	github.com/golang-jwt/jwt/v5 v5.1.0
-	github.com/golang-module/carbon/v2 v2.2.13
+	github.com/golang-module/carbon/v2 v2.2.14
 	github.com/google/go-cmp v0.6.0
 	github.com/google/uuid v1.4.0
 	github.com/google/wire v0.5.0
