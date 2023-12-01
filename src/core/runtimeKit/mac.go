@@ -8,7 +8,9 @@ import (
 
 // GetMacAddresses
 /*
-参考：https://blog.csdn.net/chixielao6059/article/details/100860506
+参考：
+(1) https://blog.csdn.net/chixielao6059/article/details/100860506
+(2) github.com/apache/rocketmq-clients/golang/v5 中的 utils.go
 
 @return MAC地址：主机网卡的物理地址.
 */
