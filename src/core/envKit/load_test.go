@@ -16,4 +16,8 @@ func TestReadFromFile(t *testing.T) {
 		panic(err)
 	}
 	fmt.Println(json)
+	if err := SetEnvs(m); err != nil {
+		panic(err)
+	}
+	fmt.Println(GetEnv("c"))
 }
