@@ -1,17 +1,3 @@
-// Package charsetKit
-/*
-UTF-8 是golang的原生编码方式.
-
-参考：
-Go-文本编码的转换处理 使用golang.org/x/text库
-
-	https://blog.csdn.net/gaoluhua/article/details/109128154
-
-go语言中的UTF-8与GBK编码转换
-
-	https://wenku.baidu.com/view/d6a6e1c2561810a6f524ccbff121dd36a32dc480.html
-
-*/
 package charsetKit
 
 //import (
