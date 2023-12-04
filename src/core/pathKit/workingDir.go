@@ -4,8 +4,8 @@ import (
 	"github.com/gogf/gf/v2/os/gfile"
 	"github.com/richelieu-yang/chimera/v2/src/consts"
 	"github.com/richelieu-yang/chimera/v2/src/core/errorKit"
-	"github.com/richelieu-yang/chimera/v2/src/core/fileKit"
 	"github.com/richelieu-yang/chimera/v2/src/core/strKit"
+	"github.com/richelieu-yang/chimera/v2/src/file/fileKit"
 	"github.com/sirupsen/logrus"
 	"os"
 )

@@ -2,7 +2,7 @@ package imageKit
 
 //import (
 //	"github.com/disintegration/imaging"
-//	"github.com/richelieu-yang/chimera/v2/src/core/fileKit"
+//	"github.com/richelieu-yang/chimera/v2/src/file/fileKit"
 //)
 //
 //// ConvertImageType 图片格式转换（图片类型转换）

@@ -1,8 +1,7 @@
 package excelKit
 
 import (
-	"github.com/richelieu-yang/chimera/v2/src/core/fileKit"
-	"github.com/xuri/excelize/v2"
+	"github.com/richelieu-yang/chimera/v2/src/file/fileKit"
 	"io"
 )
 

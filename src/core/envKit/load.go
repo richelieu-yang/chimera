@@ -2,7 +2,7 @@ package envKit
 
 import (
 	"github.com/joho/godotenv"
-	"github.com/richelieu-yang/chimera/v2/src/core/fileKit"
+	"github.com/richelieu-yang/chimera/v2/src/file/fileKit"
 	"io"
 )
 

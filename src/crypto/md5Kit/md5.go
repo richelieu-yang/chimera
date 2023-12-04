@@ -2,7 +2,7 @@ package md5Kit
 
 import (
 	"github.com/gogf/gf/v2/crypto/gmd5"
-	"github.com/richelieu-yang/chimera/v2/src/core/fileKit"
+	"github.com/richelieu-yang/chimera/v2/src/file/fileKit"
 )
 
 // Encrypt

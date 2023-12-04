@@ -2,8 +2,8 @@ package browserKit
 
 import (
 	"fmt"
-	"github.com/richelieu-yang/chimera/v2/src/core/fileKit"
 	"github.com/richelieu-yang/chimera/v2/src/core/pathKit"
+	"github.com/richelieu-yang/chimera/v2/src/file/fileKit"
 	"github.com/richelieu-yang/chimera/v2/src/idKit"
 	"testing"
 	"time"
