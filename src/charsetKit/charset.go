@@ -1,6 +1,10 @@
 package charsetKit
 
-import "github.com/gogf/gf/v2/encoding/gcharset"
+import (
+	"github.com/gogf/gf/v2/encoding/gcharset"
+	"golang.org/x/net/html/charset"
+	"golang.org/x/text/encoding"
+)
 
 // Convert 转换字符串的编码（字符集的编码）
 /*
@@ -14,3 +18,5 @@ var IsSupported func(charset string) bool = gcharset.Supported
 var ToUTF8 func(srcCharset string, src string) (dst string, err error) = gcharset.ToUTF8
 
 var UTF8To func(dstCharset string, src string) (dst string, err error) = gcharset.UTF8To
+
+var DetermineEncoding func(content []byte, contentType string) (e encoding.Encoding, name string, certain bool) = charset.DetermineEncoding
