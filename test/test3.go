@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"github.com/richelieu-yang/chimera/v2/src/file/fileKit"
 	"github.com/saintfish/chardet"
+	"golang.org/x/text/encoding/simplifiedchinese"
 )
 
 func main() {
@@ -12,6 +13,8 @@ func main() {
 		panic(err)
 	}
 	//data := []byte("test测试")
+
+	simplifiedchinese.GBK
 
 	r, err := chardet.NewTextDetector().DetectBest(data)
 	if err != nil {
