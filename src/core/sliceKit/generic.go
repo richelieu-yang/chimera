@@ -131,7 +131,7 @@ PS:
 @param args 要么是: nil；要么是: 长度>=1的切片实例
 */
 func GetFirstItemWithDefault[T any](def T, args ...T) T {
-	if args != nil {
+	if len(args) > 0 {
 		return args[0]
 	}
 	return def

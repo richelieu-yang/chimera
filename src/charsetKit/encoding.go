@@ -2,9 +2,12 @@ package charsetKit
 
 import (
 	"github.com/richelieu-yang/chimera/v2/src/core/interfaceKit"
+	"github.com/richelieu-yang/chimera/v2/src/core/mathKit"
+	"github.com/richelieu-yang/chimera/v2/src/core/sliceKit"
 	"github.com/saintfish/chardet"
 	"golang.org/x/net/html/charset"
 	"golang.org/x/text/encoding"
+	"unicode/utf8"
 )
 
 //import (
@@ -66,4 +69,41 @@ func Detect(data []byte) (charset string, err error) {
 		return
 	}
 	return r.Charset, nil
+}
+
+var IsUTF8 func(data []byte) bool = utf8.Valid
+
+var IsUTF8String func(s string) bool = utf8.ValidString
+
+// IsGBK
+/*
+PS: 在Go语言中，你可以通过检查字节序列是否落在 GBK 编码范围内来判断文本编码是否为 GBK。
+
+@param args nil: 检查所有
+*/
+func IsGBK(data []byte, args ...int) bool {
+	limit := sliceKit.GetFirstItemWithDefault(-1, args...)
+	if limit <= 0 {
+		// 检查所有
+		limit = len(data)
+	} else {
+		// 检查部分
+		limit = mathKit.Min(limit, len(data))
+	}
+
+	i := 0
+	for i < limit {
+		if data[i] <= 0x7f {
+			// 编码0~127,只有一个字节的编码，兼容ASCII码
+			i++
+			continue
+		}
+		if data[i] >= 0x81 && data[i] <= 0xfe && data[i+1] >= 0x40 && data[i+1] <= 0xfe && data[i+1] != 0xf7 {
+			// 大于127的使用双字节编码，落在gbk编码范围内的字符
+			i += 2
+			continue
+		}
+		return false
+	}
+	return true
 }
