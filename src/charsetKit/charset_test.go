@@ -3,7 +3,6 @@ package charsetKit
 import (
 	"fmt"
 	"github.com/richelieu-yang/chimera/v2/src/file/fileKit"
-	"golang.org/x/text/encoding/simplifiedchinese"
 	"testing"
 )
 
@@ -36,13 +35,15 @@ func TestDetermineEncoding(t *testing.T) {
 		panic(err)
 	}
 	fmt.Println("gbkStr:", gbkStr)
-	e, name, certain := DetermineEncoding([]byte(gbkStr), "")
-	fmt.Println(e, name, certain)
-	fmt.Println(simplifiedchinese.GBK)
+	charset, err := Detect([]byte(gbkStr))
+	if err != nil {
+		panic(err)
+	}
+	fmt.Println(charset)
 
 	fmt.Println("------")
 
-	utf8Str, err := ToUTF8("gbk", gbkStr)
+	utf8Str, err := ToUTF8(charset, gbkStr)
 	if err != nil {
 		panic(err)
 	}
