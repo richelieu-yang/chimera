@@ -2,8 +2,6 @@ package charsetKit
 
 import (
 	"github.com/richelieu-yang/chimera/v2/src/core/interfaceKit"
-	"github.com/richelieu-yang/chimera/v2/src/core/mathKit"
-	"github.com/richelieu-yang/chimera/v2/src/core/sliceKit"
 	"github.com/saintfish/chardet"
 	"golang.org/x/net/html/charset"
 	"golang.org/x/text/encoding"
@@ -78,21 +76,14 @@ var IsUTF8String func(s string) bool = utf8.ValidString
 // IsGBK
 /*
 PS: 在Go语言中，你可以通过检查字节序列是否落在 GBK 编码范围内来判断文本编码是否为 GBK。
-
-@param args nil: 检查所有
 */
-func IsGBK(data []byte, args ...int) bool {
-	limit := sliceKit.GetFirstItemWithDefault(-1, args...)
-	if limit <= 0 {
-		// 检查所有
-		limit = len(data)
-	} else {
-		// 检查部分
-		limit = mathKit.Min(limit, len(data))
+func IsGBK(data []byte) bool {
+	if IsUTF8(data) {
+		return false
 	}
 
 	i := 0
-	for i < limit {
+	for i < len(data) {
 		if data[i] <= 0x7f {
 			// 编码0~127,只有一个字节的编码，兼容ASCII码
 			i++
