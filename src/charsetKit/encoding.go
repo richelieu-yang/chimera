@@ -48,13 +48,13 @@ import (
 
 // DetermineEncoding 编码推断.
 /*
-PS: 检测GBK文本有问题，推断出来的是 "windows-1252".
+Deprecated: 不一定准（检测GBK文本有问题，推断出来的是 "windows-1252"）.
 */
 var DetermineEncoding func(content []byte, contentType string) (e encoding.Encoding, name string, certain bool) = charset.DetermineEncoding
 
 // Detect 检测文本的编码.
 /*
-PS: 检测GBK文本有问题，推断出来的是 "ISO-8859-1".
+Deprecated: 不一定准（检测GBK文本有问题，推断出来的是 "ISO-8859-1"）.
 */
 func Detect(data []byte) (charset string, err error) {
 	if err = interfaceKit.AssertNotNil(data, "data"); err != nil {
