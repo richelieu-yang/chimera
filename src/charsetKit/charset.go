@@ -9,4 +9,5 @@ import (
 // IsSupported 是否支持 指定字符集 ？
 var IsSupported func(charset string) bool = gcharset.Supported
 
+// DetermineEncoding 编码推断
 var DetermineEncoding func(content []byte, contentType string) (e encoding.Encoding, name string, certain bool) = charset.DetermineEncoding
