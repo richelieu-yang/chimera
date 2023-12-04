@@ -2,6 +2,7 @@ package charsetKit
 
 import (
 	"fmt"
+	"github.com/richelieu-yang/chimera/v2/src/file/fileKit"
 	"testing"
 )
 
@@ -25,4 +26,23 @@ func TestConvert(t *testing.T) {
 	if tmp != text {
 		panic("not equal")
 	}
+}
+
+// 获取txt文本的编码
+func TestDetermineEncoding(t *testing.T) {
+	gbkStr, err := fileKit.ReadFileToString("_gbk.txt")
+	if err != nil {
+		panic(err)
+	}
+	fmt.Println("gbkStr:", gbkStr)
+	fmt.Println(DetermineEncoding([]byte(gbkStr), ""))
+
+	fmt.Println("------")
+
+	utf8Str, err := ToUTF8("gbk", gbkStr)
+	if err != nil {
+		panic(err)
+	}
+	fmt.Println("utf8Str:", utf8Str)
+	fmt.Println(DetermineEncoding([]byte(utf8Str), ""))
 }
