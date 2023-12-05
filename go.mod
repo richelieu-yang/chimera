@@ -37,6 +37,7 @@ require (
 	github.com/gorilla/sessions v1.2.2
 	github.com/gorilla/websocket v1.5.1
 	github.com/h2non/bimg v1.1.9
+	github.com/hibiken/asynq v0.24.1
 	github.com/imroc/req/v3 v3.42.2
 	github.com/jedib0t/go-pretty/v6 v6.4.9
 	github.com/jinzhu/copier v0.4.0

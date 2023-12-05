@@ -1,24 +1,16 @@
 package main
 
-import (
-	"fmt"
-	"github.com/richelieu-yang/chimera/v2/src/file/fileKit"
-	"github.com/saintfish/chardet"
-	"golang.org/x/text/encoding/simplifiedchinese"
-)
+import "github.com/hibiken/asynq"
 
 func main() {
-	data, err := fileKit.ReadFile("/Users/richelieu/GolandProjects/chimera/src/charsetKit/_gbk.txt")
-	if err != nil {
-		panic(err)
+	redisConnOpt := asynq.RedisClientOpt{
+		Addr: "localhost:6379",
+		// Omit if no password is required
+		Password: "mypassword",
+		// Use a dedicated db number for asynq.
+		// By default, Redis offers 16 databases (0..15)
+		DB: 0,
 	}
-	//data := []byte("test测试")
 
-	simplifiedchinese.GBK
-
-	r, err := chardet.NewTextDetector().DetectBest(data)
-	if err != nil {
-		panic(err)
-	}
-	fmt.Println(r.Charset, r.Language, r.Confidence)
+	client := asynq.NewClient(asynq.RedisClientOpt{Addr: "localhost:6379"})
 }
