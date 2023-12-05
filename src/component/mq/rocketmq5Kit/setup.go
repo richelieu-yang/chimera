@@ -8,6 +8,10 @@ import (
 	"github.com/sirupsen/logrus"
 )
 
+var (
+	NotSetupError = errorKit.New("Haven’t been set up correctly")
+)
+
 var config *Config
 
 func MustSetUp(config *Config) {

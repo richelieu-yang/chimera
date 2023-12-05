@@ -16,12 +16,11 @@ func TestSetUp(t *testing.T) {
 		panic(err)
 	}
 	logrus.Infof("wd: [%s].", wd)
-	path := "_chimera-lib/config.yaml"
 
 	type config struct {
 		Redis *Config `json:"redis"`
 	}
-
+	path := "_chimera-lib/config.yaml"
 	c := &config{}
 	if _, err := viperKit.UnmarshalFromFile(path, nil, c); err != nil {
 		panic(err)
