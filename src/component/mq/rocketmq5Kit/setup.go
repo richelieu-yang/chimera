@@ -26,7 +26,8 @@ func SetUp(c *Config) error {
 		return err
 	}
 
-	if err := initClientLog(c.ClientLogPath); err != nil {
+	// 客户端日志输出
+	if err := setClientLog(c.ClientLogPath); err != nil {
 		return err
 	}
 
