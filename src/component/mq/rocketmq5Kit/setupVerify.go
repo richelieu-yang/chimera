@@ -48,15 +48,14 @@ func verify(topic string) error {
 	logger.Infof("topic: [%s].", topic)
 
 	/* texts */
-	timeStr := timeKit.FormatCurrent(timeKit.FormatCommon)
-	ulid := idKit.NewULID()
+	timeStr := timeKit.FormatCurrent(timeKit.FormatEntire)
 	texts := []string{
-		fmt.Sprintf("%s_%s_%s", ulid, timeStr, "$0"),
-		fmt.Sprintf("%s_%s_%s", ulid, timeStr, "$1"),
-		fmt.Sprintf("%s_%s_%s", ulid, timeStr, "$2"),
-		fmt.Sprintf("%s_%s_%s", ulid, timeStr, "$3"),
-		fmt.Sprintf("%s_%s_%s", ulid, timeStr, "$4"),
-		fmt.Sprintf("%s_%s_%s", ulid, timeStr, "$5"),
+		fmt.Sprintf("%s_%s", timeStr, "$0"),
+		fmt.Sprintf("%s_%s", timeStr, "$1"),
+		fmt.Sprintf("%s_%s", timeStr, "$2"),
+		fmt.Sprintf("%s_%s", timeStr, "$3"),
+		fmt.Sprintf("%s_%s", timeStr, "$4"),
+		fmt.Sprintf("%s_%s", timeStr, "$5"),
 	}
 	json, err := jsonKit.MarshalIndentToString(texts, "", "    ")
 	if err != nil {
@@ -178,9 +177,10 @@ func verify(topic string) error {
 				err := consumer.Ack(context.TODO(), mv)
 				if err != nil {
 					logger.WithFields(logrus.Fields{
+						"tag":   GetTagString(mv.GetTag()),
 						"text":  text,
 						"error": err.Error(),
-					}).Error("[Consumer] Fail to ack.")
+					}).Error("[Consumer] Fail to ack message.")
 					continue
 				}
 
@@ -190,6 +190,7 @@ func verify(topic string) error {
 				logger.WithFields(logrus.Fields{
 					"valid": ok,
 					"left":  left,
+					"tag":   GetTagString(mv.GetTag()),
 					"text":  text,
 				}).Info("[CONSUMER] Receive and ack a message.")
 				if left == 0 {
