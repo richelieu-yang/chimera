@@ -3,12 +3,12 @@ package rocketmq5Kit
 import "time"
 
 const (
-	// AwaitDuration (Consumer)maximum waiting time for receive func
-	AwaitDuration = time.Second * 5
+	// DefaultAwaitDuration (Consumer)maximum waiting time for receive func
+	DefaultAwaitDuration = time.Second * 5
 
-	// MaxMessageNum (Consumer)maximum number of messages received at one time
-	MaxMessageNum int32 = 128
+	// DefaultMaxMessageNum (Consumer)maximum number of messages received at one time
+	DefaultMaxMessageNum int32 = 128
 
-	// InvisibleDuration (Consumer)should > 20s
-	InvisibleDuration = time.Second * 20
+	// DefaultInvisibleDuration (Consumer)should > 20s
+	DefaultInvisibleDuration = time.Second * 20
 )

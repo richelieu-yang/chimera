@@ -64,6 +64,10 @@ func verify(topic string) error {
 	}
 	logger.Infof("texts:\n%s\n.", json)
 
+	xid := idKit.NewXid()
+	tag := xid
+	consumerGroup := xid
+
 	/* (1) producer */
 	producer, err := NewProducer()
 	if err != nil {
@@ -72,10 +76,9 @@ func verify(topic string) error {
 	defer producer.GracefulStop()
 
 	/* (2) consumer */
-	//consumerGroup := idKit.NewULID()
-	consumerGroup := "ccc"
 	consumer, err := NewSimpleConsumer(consumerGroup, map[string]*rmq_client.FilterExpression{
-		topic: rmq_client.SUB_ALL,
+		//topic: rmq_client.SUB_ALL,
+		topic: rmq_client.NewFilterExpression(tag),
 	})
 	if err != nil {
 		return err
@@ -97,6 +100,7 @@ func verify(topic string) error {
 			msg := &rmq_client.Message{
 				Topic: topic,
 				Body:  []byte(text),
+				Tag:   &tag,
 			}
 			ctx, _ := context.WithTimeout(context.TODO(), sendTimeout)
 			_, err := producer.Send(ctx, msg)
@@ -129,7 +133,7 @@ func verify(topic string) error {
 			}
 			//time.Sleep(time.Millisecond * 100)
 
-			mvs, err := consumer.Receive(context.TODO(), MaxMessageNum, InvisibleDuration)
+			mvs, err := consumer.Receive(context.TODO(), DefaultMaxMessageNum, DefaultInvisibleDuration)
 			if err != nil {
 				/* gRPC errors */
 				if s, ok := status.FromError(err); ok {

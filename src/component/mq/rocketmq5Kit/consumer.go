@@ -38,7 +38,7 @@ func NewSimpleConsumer(consumerGroup string, subscriptionExpressions map[string]
 		ConsumerGroup: consumerGroup,
 		Credentials:   config.Credentials,
 	},
-		rmq_client.WithAwaitDuration(AwaitDuration),
+		rmq_client.WithAwaitDuration(DefaultAwaitDuration),
 		rmq_client.WithSubscriptionExpressions(subscriptionExpressions),
 	)
 	if err != nil {
