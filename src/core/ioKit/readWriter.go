@@ -4,18 +4,16 @@ import (
 	"bytes"
 )
 
-// NewReadWriter
-/*
-bytes.Buffer 结构体 实现了 io.ReadWriter 接口
-*/
-func NewReadWriter(s []byte) *bytes.Buffer {
-	return bytes.NewBuffer(s)
-}
+var (
+	// NewReadWriter bytes.Buffer 结构体 实现了 io.ReadWriter 接口
+	/*
+		@param s 可以为nil
+	*/
+	NewReadWriter func(s []byte) *bytes.Buffer = bytes.NewBuffer
 
-// NewReadWriterFromString
-/*
-bytes.Buffer 结构体 实现了 io.ReadWriter 接口
-*/
-func NewReadWriterFromString(str string) *bytes.Buffer {
-	return bytes.NewBufferString(str)
-}
+	// NewReadWriterFromString bytes.Buffer 结构体 实现了 io.ReadWriter 接口
+	/*
+		@param str 可以为""
+	*/
+	NewReadWriterFromString func(str string) *bytes.Buffer = bytes.NewBufferString
+)

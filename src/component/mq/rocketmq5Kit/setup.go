@@ -15,8 +15,8 @@ var (
 var config *Config
 var logPath string
 
-func MustSetUp(config *Config, verifyTopic, clientLogPath string) {
-	if err := SetUp(config, verifyTopic, clientLogPath); err != nil {
+func MustSetUp(config *Config, clientLogPath, verifyTopic string) {
+	if err := SetUp(config, clientLogPath, verifyTopic); err != nil {
 		logrusKit.DisableQuote(nil)
 		logrus.Fatalf("%+v", err)
 	}
@@ -27,13 +27,13 @@ func MustSetUp(config *Config, verifyTopic, clientLogPath string) {
 @param verifyTopic		可以为""（不进行验证）
 @param clientLogPath	可以为""（输出到控制台）
 */
-func SetUp(c *Config, verifyTopic, clientLogPath string) error {
+func SetUp(c *Config, clientLogPath, verifyTopic string) error {
 	if err := check(c); err != nil {
 		return err
 	}
 
 	// 客户端日志输出
-	if err := setClientLog(c.ClientLogPath); err != nil {
+	if err := setClientLog(clientLogPath); err != nil {
 		return err
 	}
 

@@ -1,16 +1,14 @@
 package main
 
-import "github.com/hibiken/asynq"
+import (
+	"fmt"
+	"github.com/richelieu-yang/chimera/v2/src/core/ioKit"
+)
 
 func main() {
-	redisConnOpt := asynq.RedisClientOpt{
-		Addr: "localhost:6379",
-		// Omit if no password is required
-		Password: "mypassword",
-		// Use a dedicated db number for asynq.
-		// By default, Redis offers 16 databases (0..15)
-		DB: 0,
-	}
-
-	client := asynq.NewClient(asynq.RedisClientOpt{Addr: "localhost:6379"})
+	rw := ioKit.NewReadWriter(nil)
+	//fmt.Println(rw.WriteString("0\n"))
+	//fmt.Println(rw.WriteString("1\n"))
+	str := rw.String()
+	fmt.Println(str)
 }
