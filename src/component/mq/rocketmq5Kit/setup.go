@@ -24,7 +24,7 @@ func MustSetUp(c *Config, clientLogPath string, verifyConfig *VerifyConfig) {
 // SetUp
 /*
 @param clientLogPath	可以为""（输出到控制台）
-@param verifyTopic		可以为""（不进行验证）
+@param verifyConfig		可以为nil（不进行验证）
 */
 func SetUp(c *Config, clientLogPath string, verifyConfig *VerifyConfig) (err error) {
 	defer func() {
