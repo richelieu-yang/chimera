@@ -60,6 +60,10 @@ func WithOutput(output io.Writer) LoggerOption {
 	}
 }
 
+// WithMsgPrefix
+/*
+@param msgPrefix 非空的话，会自动在后面加上个空格
+*/
 func WithMsgPrefix(msgPrefix string) LoggerOption {
 	return func(opts *loggerOptions) {
 		opts.msgPrefix = msgPrefix

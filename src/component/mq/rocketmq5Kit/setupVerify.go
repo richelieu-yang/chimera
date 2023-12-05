@@ -8,6 +8,7 @@ import (
 	"github.com/richelieu-yang/chimera/v2/src/core/errorKit"
 	"github.com/richelieu-yang/chimera/v2/src/core/sliceKit"
 	"github.com/richelieu-yang/chimera/v2/src/core/strKit"
+	"github.com/richelieu-yang/chimera/v2/src/file/fileKit"
 	"github.com/richelieu-yang/chimera/v2/src/idKit"
 	"github.com/richelieu-yang/chimera/v2/src/json/jsonKit"
 	"github.com/richelieu-yang/chimera/v2/src/log/logrusKit"
@@ -15,16 +16,15 @@ import (
 	"github.com/sirupsen/logrus"
 	"google.golang.org/grpc/codes"
 	"google.golang.org/grpc/status"
+	"io"
 	"os"
 	"time"
 )
 
-const (
-	sendTimeout = time.Millisecond * 500
-
-	// verifyTimeout 验证的最长timeout
-	verifyTimeout = time.Second * 6
-)
+type VerifyConfig struct {
+	Topic   string
+	LogPath string
+}
 
 // verify 测试RocketMQ5服务是否启动正常.
 /*
@@ -32,20 +32,39 @@ const (
 @param topic 	用于测试的topic（理论上，此topic仅用于测试，不能同时用于业务，因为测试发的消息无意义）
 @return 如果为nil，说明 RocketMQ5服务 正常启动
 */
-func verify(topic string) error {
-	if strKit.IsEmpty(topic) {
+func verify(config *VerifyConfig) error {
+	var (
+		sendTimeout = time.Millisecond * 500
+
+		// verifyTimeout 验证的最长timeout
+		verifyTimeout = time.Second * 6
+	)
+
+	if config == nil || strKit.IsEmpty(config.Topic) {
 		// 不进行验证
 		return nil
 	}
 
 	/* logger */
-	//readWriter := ioKit.NewReadWriter(nil)
-	readWriter := os.Stderr
-	logger := logrusKit.NewLogger(logrusKit.WithOutput(readWriter),
+	var output io.Writer
+	if strKit.IsEmpty(config.LogPath) {
+		output = os.Stderr
+	} else {
+		if err := fileKit.AssertExistAndIsFile(config.LogPath); err != nil {
+			return err
+		}
+		var err error
+		output, err = fileKit.CreateInAppendMode(config.LogPath)
+		if err != nil {
+			return err
+		}
+	}
+	logger := logrusKit.NewLogger(logrusKit.WithOutput(output),
 		logrusKit.WithLevel(logrus.DebugLevel),
 		logrusKit.WithDisableQuote(true),
+		logrusKit.WithMsgPrefix("[RocketMQ5]"),
 	)
-	logger.Infof("topic: [%s].", topic)
+	logger.Infof("topic: [%s].", config.Topic)
 
 	/* texts */
 	timeStr := timeKit.FormatCurrent(timeKit.FormatEntire)
