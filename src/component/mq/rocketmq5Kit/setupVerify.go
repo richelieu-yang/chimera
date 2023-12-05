@@ -63,23 +63,25 @@ func Verify(topic string) error {
 	}
 	logger.Infof("texts:\n%s\n.", json)
 
-	//mqLogConfig := &rocketmq5Kit.LogConfig{
-	//	ToConsole: false,
-	//	LogDir:    tempDir,
-	//	LogName:   logName,
-	//}
-	//mqConfig := &rmq_client.Config{
-	//	Endpoint: endpoint,
-	//}
-
 	/* consumer */
 	consumer, err := NewSimpleConsumer(idKit.NewULID(), map[string]*rmq_client.FilterExpression{
 		topic: rmq_client.SUB_ALL,
 	})
+	if err != nil {
+		return err
+	}
 	defer consumer.GracefulStop()
 
 	/* producer */
 	producer, err := NewProducer()
+	if err != nil {
+		return err
+	}
+	defer producer.GracefulStop()
+
+	go func() {
+
+	}()
 
 	//consumer, err := NewSimpleConsumer(mqLogConfig, mqConfig, fmt.Sprintf("%s-%s", topic, idKit.NewULID()), topic, "*")
 	//if err != nil {
@@ -90,14 +92,14 @@ func Verify(topic string) error {
 	//}
 	//defer consumer.GracefulStop()
 
-	producer, err := rocketmq5Kit.NewProducer(mqLogConfig, mqConfig)
-	if err != nil {
-		return errorKit.Wrap(err, "fail to new producer")
-	}
-	if err := producer.Start(); err != nil {
-		return errorKit.Wrap(err, "fail to start producer")
-	}
-	defer producer.GracefulStop()
+	//producer, err := rocketmq5Kit.NewProducer(mqLogConfig, mqConfig)
+	//if err != nil {
+	//	return errorKit.Wrap(err, "fail to new producer")
+	//}
+	//if err := producer.Start(); err != nil {
+	//	return errorKit.Wrap(err, "fail to start producer")
+	//}
+	//defer producer.GracefulStop()
 
 	// test
 	//logrus.Infof("logPath: [%s].", logPath)

@@ -13,6 +13,7 @@ import (
 PS:
 (1) In most case, you don't need to create many producers, singletion pattern is more recommended.
 (2) 需要先 set up!!!
+(3) 第一个返回值，非nil的情况下，不再需要时请调用 GracefulStop().
 
 @param clientLogPath 客户端日志（blank则输出到控制台）
 */

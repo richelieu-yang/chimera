@@ -13,6 +13,7 @@ import (
 PS:
 (1) In most case, you don't need to create many consumers, singletion pattern is more recommended.
 (2) 需要先 set up!!!
+(3) 第一个返回值，非nil的情况下，不再需要时请调用 GracefulStop().
 
 @param consumerGroup 			不能为""
 @param subscriptionExpressions	(1) key: 	topic，不能为 "*" || blank
