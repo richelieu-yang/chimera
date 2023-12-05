@@ -1,7 +1,21 @@
 package asynqKit
 
-import "github.com/hibiken/asynq"
+import (
+	"github.com/hibiken/asynq"
+	"github.com/richelieu-yang/chimera/v2/src/component/db/redis/redisKit"
+)
 
-func NewClient() {
-	return asynq.NewClient(asynq.RedisClientOpt{Addr: "localhost:6379"})
+type optImpl struct {
+}
+
+func (impl optImpl) MakeRedisClient() interface{} {
+	client, _ := redisKit.GetClient()
+	return client
+}
+
+func NewClient() (c *asynq.Client, err error) {
+	redisKit.MustGetClient()
+
+	opt := asynq.RedisClientOpt{Addr: "localhost:6379"}
+	return asynq.NewClient(opt), nil
 }
