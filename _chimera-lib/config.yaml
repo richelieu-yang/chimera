@@ -99,9 +99,9 @@ rocketmq5:
     accessKey:
     accessSecret:
     securityToken:
-  validatedTopic: test
-  # 客户端的日志输出（非业务；非目录）
-  clientLogPath:
+#  validatedTopic: test
+#  # 客户端的日志输出（非业务；非目录）
+#  clientLogPath:
 
 mysql:
   userName: root
