@@ -11,19 +11,20 @@ import (
 )
 
 func TestMustSetUp(t *testing.T) {
-	wd, err := pathKit.ReviseWorkingDirInTestMode(consts.ProjectName)
-	if err != nil {
-		panic(err)
+	{
+		wd, err := pathKit.ReviseWorkingDirInTestMode(consts.ProjectName)
+		if err != nil {
+			panic(err)
+		}
+		logrus.Infof("wd: [%s].", wd)
 	}
-	logrus.Infof("wd: [%s].", wd)
 
 	path := "_chimera-lib/config.yaml"
-
 	type config struct {
 		Gin *Config `json:"Gin"`
 	}
 	c := &config{}
-	_, err = viperKit.UnmarshalFromFile(path, nil, c)
+	_, err := viperKit.UnmarshalFromFile(path, nil, c)
 	if err != nil {
 		panic(err)
 	}

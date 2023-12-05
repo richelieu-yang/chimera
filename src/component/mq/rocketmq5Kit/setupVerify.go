@@ -23,7 +23,7 @@ const (
 	sendTimeout = time.Millisecond * 500
 
 	// verifyTimeout 验证的最长timeout
-	verifyTimeout = time.Second * 6
+	verifyTimeout = time.Second * 10
 )
 
 // verify 测试RocketMQ5服务是否启动正常.
@@ -72,7 +72,9 @@ func verify(topic string) error {
 	defer producer.GracefulStop()
 
 	/* (2) consumer */
-	consumer, err := NewSimpleConsumer(idKit.NewULID(), map[string]*rmq_client.FilterExpression{
+	//consumerGroup := idKit.NewULID()
+	consumerGroup := "ccc"
+	consumer, err := NewSimpleConsumer(consumerGroup, map[string]*rmq_client.FilterExpression{
 		topic: rmq_client.SUB_ALL,
 	})
 	if err != nil {

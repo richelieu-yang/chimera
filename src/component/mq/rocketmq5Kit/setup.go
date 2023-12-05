@@ -13,7 +13,6 @@ var (
 )
 
 var config *Config
-var logPath string
 
 func MustSetUp(config *Config, clientLogPath, verifyTopic string) {
 	if err := SetUp(config, clientLogPath, verifyTopic); err != nil {
@@ -27,23 +26,30 @@ func MustSetUp(config *Config, clientLogPath, verifyTopic string) {
 @param clientLogPath	可以为""（输出到控制台）
 @param verifyTopic		可以为""（不进行验证）
 */
-func SetUp(c *Config, clientLogPath, verifyTopic string) error {
-	if err := check(c); err != nil {
-		return err
+func SetUp(c *Config, clientLogPath, verifyTopic string) (err error) {
+	defer func() {
+		if err != nil {
+			config = nil
+		}
+	}()
+
+	if err = check(c); err != nil {
+		return
 	}
 
 	// 客户端日志输出
-	if err := setClientLog(clientLogPath); err != nil {
-		return err
-	}
-
-	// verify
-	if err := verify(verifyTopic); err != nil {
-		return err
+	if err = setClientLog(clientLogPath); err != nil {
+		return
 	}
 
 	config = c
-	return nil
+
+	// verify
+	if err = verify(verifyTopic); err != nil {
+		return
+	}
+
+	return
 }
 
 func check(c *Config) error {

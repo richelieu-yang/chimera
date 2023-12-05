@@ -2,24 +2,34 @@ package rocketmq5Kit
 
 import (
 	"fmt"
-	"github.com/richelieu-yang/chimera/v2/src/config/confKit"
+	"github.com/richelieu-yang/chimera/v2/src/config/viperKit"
 	"github.com/richelieu-yang/chimera/v2/src/consts"
 	"github.com/richelieu-yang/chimera/v2/src/core/pathKit"
+	"github.com/richelieu-yang/chimera/v2/src/json/jsonKit"
+	"github.com/sirupsen/logrus"
 	"testing"
 )
 
 func TestMustSetUp(t *testing.T) {
+	{
+		wd, err := pathKit.ReviseWorkingDirInTestMode(consts.ProjectName)
+		if err != nil {
+			panic(err)
+		}
+		logrus.Infof("wd: [%s].", wd)
+	}
+
+	path := "_chimera-lib/config.yaml"
 	type config struct {
-		RocketMQ5 *Config `json:"rocketmq5,optional"`
+		RocketMQ5 *Config `json:"rocketmq5"`
 	}
-
-	if wd, err := pathKit.ReviseWorkingDirInTestMode(consts.ProjectName); err != nil {
-		panic(err)
-	} else {
-		fmt.Printf("new working directory: [%s].\n", wd)
-	}
-
 	c := &config{}
-	confKit.MustLoad("_chimera-lib/config.yaml", c)
-	fmt.Println(c)
+	_, err := viperKit.UnmarshalFromFile(path, nil, c)
+	if err != nil {
+		panic(err)
+	}
+
+	fmt.Println(jsonKit.MarshalIndentToString(c, "", "    "))
+
+	MustSetUp(c.RocketMQ5, "_client.log", "test")
 }
