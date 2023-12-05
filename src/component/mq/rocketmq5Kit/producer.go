@@ -3,13 +3,16 @@ package rocketmq5Kit
 import (
 	"context"
 	rmq_client "github.com/apache/rocketmq-clients/golang/v5"
+	"github.com/richelieu-yang/chimera/v2/src/core/errorKit"
 	"github.com/richelieu-yang/chimera/v2/src/core/sliceKit"
 	"time"
 )
 
 // NewProducer
 /*
-PS: In most case, you don't need to create many producers, singletion pattern is more recommended.
+PS:
+(1) In most case, you don't need to create many producers, singletion pattern is more recommended.
+(2) 需要先 set up!!!
 
 @param clientLogPath 客户端日志（blank则输出到控制台）
 */
@@ -19,17 +22,15 @@ func NewProducer() (rmq_client.Producer, error) {
 	}
 
 	endpoint := sliceKit.Join(config.Endpoints, ";")
-
 	producer, err := rmq_client.NewProducer(&rmq_client.Config{
 		Endpoint:    endpoint,
 		Credentials: config.Credentials,
 	})
 	if err != nil {
-		return nil, err
+		return nil, errorKit.Wrap(err, "Fail to new producer")
 	}
-	// Start
 	if err := producer.Start(); err != nil {
-		return nil, err
+		return nil, errorKit.Wrap(err, "Fail to start producer")
 	}
 	return producer, nil
 }

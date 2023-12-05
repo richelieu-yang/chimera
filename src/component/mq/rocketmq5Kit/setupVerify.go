@@ -63,30 +63,33 @@ func Verify(topic string) error {
 	}
 	logger.Infof("texts:\n%s\n.", json)
 
-	mqLogConfig := &rocketmq5Kit.LogConfig{
-		ToConsole: false,
-		LogDir:    tempDir,
-		LogName:   logName,
-	}
-	mqConfig := &rmq_client.Config{
-		Endpoint: endpoint,
-	}
+	//mqLogConfig := &rocketmq5Kit.LogConfig{
+	//	ToConsole: false,
+	//	LogDir:    tempDir,
+	//	LogName:   logName,
+	//}
+	//mqConfig := &rmq_client.Config{
+	//	Endpoint: endpoint,
+	//}
 
+	/* consumer */
 	consumer, err := NewSimpleConsumer(idKit.NewULID(), map[string]*rmq_client.FilterExpression{
 		topic: rmq_client.SUB_ALL,
 	})
-
-	/* consumer */
-	consumer, err := NewSimpleConsumer(mqLogConfig, mqConfig, fmt.Sprintf("%s-%s", topic, idKit.NewULID()), topic, "*")
-	if err != nil {
-		return errorKit.Wrap(err, "fail to new consumer")
-	}
-	if err := consumer.Start(); err != nil {
-		return errorKit.Wrapf(err, "fail to start consumer with topic(%s)", topic)
-	}
 	defer consumer.GracefulStop()
 
 	/* producer */
+	producer, err := NewProducer()
+
+	//consumer, err := NewSimpleConsumer(mqLogConfig, mqConfig, fmt.Sprintf("%s-%s", topic, idKit.NewULID()), topic, "*")
+	//if err != nil {
+	//	return errorKit.Wrap(err, "fail to new consumer")
+	//}
+	//if err := consumer.Start(); err != nil {
+	//	return errorKit.Wrapf(err, "fail to start consumer with topic(%s)", topic)
+	//}
+	//defer consumer.GracefulStop()
+
 	producer, err := rocketmq5Kit.NewProducer(mqLogConfig, mqConfig)
 	if err != nil {
 		return errorKit.Wrap(err, "fail to new producer")

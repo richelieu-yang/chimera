@@ -2,6 +2,7 @@ package rocketmq5Kit
 
 import (
 	rmq_client "github.com/apache/rocketmq-clients/golang/v5"
+	"github.com/richelieu-yang/chimera/v2/src/core/errorKit"
 	"github.com/richelieu-yang/chimera/v2/src/core/mapKit"
 	"github.com/richelieu-yang/chimera/v2/src/core/sliceKit"
 	"github.com/richelieu-yang/chimera/v2/src/core/strKit"
@@ -40,11 +41,10 @@ func NewSimpleConsumer(consumerGroup string, subscriptionExpressions map[string]
 		rmq_client.WithSubscriptionExpressions(subscriptionExpressions),
 	)
 	if err != nil {
-		return nil, err
+		return nil, errorKit.Wrap(err, "Fail to new simple consumer")
 	}
-	// Start
 	if err := simpleConsumer.Start(); err != nil {
-		return nil, err
+		return nil, errorKit.Wrap(err, "Fail to start simple consumer")
 	}
 	return simpleConsumer, nil
 }
