@@ -6,13 +6,13 @@ import (
 	"github.com/richelieu-yang/chimera/v2/src/component/db/redis/redisKit"
 )
 
-type optImpl struct {
+type redisConnOptImpl struct {
 	asynq.RedisConnOpt
 
 	uc redis.UniversalClient
 }
 
-func (impl *optImpl) MakeRedisClient() interface{} {
+func (impl *redisConnOptImpl) MakeRedisClient() interface{} {
 	return impl.uc
 }
 
@@ -25,9 +25,8 @@ func NewAsynqClient() (*asynq.Client, error) {
 	if err != nil {
 		return nil, err
 	}
-	impl := &optImpl{
+	impl := &redisConnOptImpl{
 		uc: client.GetUniversalClient(),
 	}
-
 	return asynq.NewClient(impl), nil
 }
