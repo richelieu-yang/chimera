@@ -24,8 +24,8 @@ func MustSetUp(config *Config, clientLogPath, verifyTopic string) {
 
 // SetUp
 /*
-@param verifyTopic		可以为""（不进行验证）
 @param clientLogPath	可以为""（输出到控制台）
+@param verifyTopic		可以为""（不进行验证）
 */
 func SetUp(c *Config, clientLogPath, verifyTopic string) error {
 	if err := check(c); err != nil {

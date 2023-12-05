@@ -6,7 +6,7 @@ import (
 	rmq_client "github.com/apache/rocketmq-clients/golang/v5"
 	"github.com/apache/rocketmq-clients/golang/v5/protocol/v2"
 	"github.com/richelieu-yang/chimera/v2/src/core/errorKit"
-	"github.com/richelieu-yang/chimera/v2/src/core/pathKit"
+	"github.com/richelieu-yang/chimera/v2/src/core/ioKit"
 	"github.com/richelieu-yang/chimera/v2/src/core/sliceKit"
 	"github.com/richelieu-yang/chimera/v2/src/core/strKit"
 	"github.com/richelieu-yang/chimera/v2/src/idKit"
@@ -26,35 +26,24 @@ var (
 	verifyTimeout = time.Second * 6
 )
 
-// VerifyEndpoint 测试RocketMQ5服务是否启动正常.
+// Verify 测试RocketMQ5服务是否启动正常.
 /*
 @param endpoint 用于测试的RocketMQ5服务的endpoint
 @param topic 	用于测试的topic（理论上，此topic仅用于测试，不能同时用于业务，因为测试发的消息无意义）
 @return 如果为nil，说明 RocketMQ5服务 正常启动
 */
-func VerifyEndpoint(endpoint, topic string) error {
-	if strKit.IsEmpty(endpoint) {
-		return errorKit.New("param endpoint is empty")
-	}
+func Verify(topic string) error {
 	if strKit.IsEmpty(topic) {
-		return errorKit.New("param topic is empty")
+		// 不进行验证
+		return nil
 	}
 
 	/* logger */
-	tempDir, err := pathKit.GetUniqueTempDir()
-	if err != nil {
-		return err
-	}
-	logName := fmt.Sprintf("rocketmq5_%s_%s.log", topic, idKit.NewULID())
-	logPath := pathKit.Join(tempDir, logName)
-	logger, err := logrusKit.NewFileLogger(logPath, nil, logrus.DebugLevel, false)
-	if err != nil {
-		return err
-	}
-	defer func() {
-		_ = logrusKit.DisposeLogger(logger)
-	}()
-	logger.Infof("endpoint: [%s].", endpoint)
+	readWriter := ioKit.NewReadWriter(nil)
+	logger := logrusKit.NewLogger(logrusKit.WithOutput(readWriter),
+		logrusKit.WithLevel(logrus.DebugLevel),
+		logrusKit.WithDisableQuote(true),
+	)
 	logger.Infof("topic: [%s].", topic)
 
 	/* texts */
@@ -68,12 +57,11 @@ func VerifyEndpoint(endpoint, topic string) error {
 		fmt.Sprintf("%s_%s_%s", ulid, timeStr, "$4"),
 		fmt.Sprintf("%s_%s_%s", ulid, timeStr, "$5"),
 	}
-
-	json, err := jsonKit.MarshalToString(texts, jsonKit.WithIndent("    "))
+	json, err := jsonKit.MarshalIndentToString(texts, "", "    ")
 	if err != nil {
 		return err
 	}
-	logger.Infof("texts: %v.", json)
+	logger.Infof("texts:\n%s\n.", json)
 
 	mqLogConfig := &rocketmq5Kit.LogConfig{
 		ToConsole: false,
@@ -83,6 +71,10 @@ func VerifyEndpoint(endpoint, topic string) error {
 	mqConfig := &rmq_client.Config{
 		Endpoint: endpoint,
 	}
+
+	consumer, err := NewSimpleConsumer(idKit.NewULID(), map[string]*rmq_client.FilterExpression{
+		topic: rmq_client.SUB_ALL,
+	})
 
 	/* consumer */
 	consumer, err := NewSimpleConsumer(mqLogConfig, mqConfig, fmt.Sprintf("%s-%s", topic, idKit.NewULID()), topic, "*")

@@ -2,13 +2,16 @@ package rocketmq5Kit
 
 import (
 	rmq_client "github.com/apache/rocketmq-clients/golang/v5"
+	"github.com/richelieu-yang/chimera/v2/src/core/mapKit"
 	"github.com/richelieu-yang/chimera/v2/src/core/sliceKit"
 	"github.com/richelieu-yang/chimera/v2/src/core/strKit"
 )
 
 // NewSimpleConsumer
 /*
-PS: In most case, you don't need to create many consumers, singletion pattern is more recommended.
+PS:
+(1) In most case, you don't need to create many consumers, singletion pattern is more recommended.
+(2) 需要先 set up!!!
 
 @param consumerGroup 			不能为""
 @param subscriptionExpressions	(1) key: 	topic，不能为 "*" || blank
@@ -20,13 +23,13 @@ func NewSimpleConsumer(consumerGroup string, subscriptionExpressions map[string]
 		return nil, NotSetupError
 	}
 
-	endpoint := sliceKit.Join(config.Endpoints, ";")
 	if err := strKit.AssertNotEmpty(consumerGroup, "consumerGroup"); err != nil {
 		return nil, err
 	}
-	//if err := mapKit.AssertNotEmpty(subscriptionExpressions, "subscriptionExpressions"); err != nil {
-	//	return nil, err
-	//}
+	if err := mapKit.AssertNotEmpty(subscriptionExpressions, "subscriptionExpressions"); err != nil {
+		return nil, err
+	}
+	endpoint := sliceKit.Join(config.Endpoints, ";")
 
 	simpleConsumer, err := rmq_client.NewSimpleConsumer(&rmq_client.Config{
 		Endpoint:      endpoint,
