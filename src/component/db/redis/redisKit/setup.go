@@ -26,14 +26,6 @@ func SetUp(config *Config) (err error) {
 	return
 }
 
-// IsAccess
-/*
-@return true: 已经正确setup了
-*/
-func IsAccess() bool {
-	return client != nil
-}
-
 func MustGetClient() *Client {
 	client, err := GetClient()
 	if err != nil {
