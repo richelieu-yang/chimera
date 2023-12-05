@@ -13,15 +13,21 @@ var (
 )
 
 var config *Config
+var logPath string
 
-func MustSetUp(config *Config) {
-	if err := SetUp(config); err != nil {
+func MustSetUp(config *Config, verifyTopic, clientLogPath string) {
+	if err := SetUp(config, verifyTopic, clientLogPath); err != nil {
 		logrusKit.DisableQuote(nil)
 		logrus.Fatalf("%+v", err)
 	}
 }
 
-func SetUp(c *Config) error {
+// SetUp
+/*
+@param verifyTopic		可以为""（不进行验证）
+@param clientLogPath	可以为""（输出到控制台）
+*/
+func SetUp(c *Config, verifyTopic, clientLogPath string) error {
 	if err := check(c); err != nil {
 		return err
 	}
