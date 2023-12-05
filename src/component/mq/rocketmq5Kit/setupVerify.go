@@ -93,9 +93,6 @@ func verify(topic string) error {
 			logger.Info("[PRODUCER] Goroutine ends.")
 		}()
 
-		// 等一会，以确保: producer发消息时，consumer已经开始收消息了（以免丢失消息: 明明producer发了，但consumer却没收到）
-		time.Sleep(time.Second)
-
 		for _, text := range texts {
 			msg := &rmq_client.Message{
 				Topic: topic,
@@ -116,6 +113,7 @@ func verify(topic string) error {
 	}()
 
 	/* (4) consumer goroutine */
+	textsCopy := sliceKit.Copy(texts)
 	go func(texts []string) {
 		defer func() {
 			logger.Info("[CONSUMER] Goroutine ends.")
@@ -199,7 +197,7 @@ func verify(topic string) error {
 				}
 			}
 		}
-	}(sliceKit.Copy(texts))
+	}(textsCopy)
 
 	select {
 	case producerErr := <-producerCh:
