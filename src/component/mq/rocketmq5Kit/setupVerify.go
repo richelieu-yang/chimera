@@ -6,7 +6,6 @@ import (
 	rmq_client "github.com/apache/rocketmq-clients/golang/v5"
 	"github.com/apache/rocketmq-clients/golang/v5/protocol/v2"
 	"github.com/richelieu-yang/chimera/v2/src/core/errorKit"
-	"github.com/richelieu-yang/chimera/v2/src/core/ioKit"
 	"github.com/richelieu-yang/chimera/v2/src/core/sliceKit"
 	"github.com/richelieu-yang/chimera/v2/src/core/strKit"
 	"github.com/richelieu-yang/chimera/v2/src/idKit"
@@ -16,30 +15,32 @@ import (
 	"github.com/sirupsen/logrus"
 	"google.golang.org/grpc/codes"
 	"google.golang.org/grpc/status"
+	"os"
 	"time"
 )
 
-var (
-	// producerTimeout 单次推送消息的timeout
-	producerTimeout = time.Millisecond * 500
+const (
+	sendTimeout = time.Millisecond * 500
+
 	// verifyTimeout 验证的最长timeout
 	verifyTimeout = time.Second * 6
 )
 
-// Verify 测试RocketMQ5服务是否启动正常.
+// verify 测试RocketMQ5服务是否启动正常.
 /*
 @param endpoint 用于测试的RocketMQ5服务的endpoint
 @param topic 	用于测试的topic（理论上，此topic仅用于测试，不能同时用于业务，因为测试发的消息无意义）
 @return 如果为nil，说明 RocketMQ5服务 正常启动
 */
-func Verify(topic string) error {
+func verify(topic string) error {
 	if strKit.IsEmpty(topic) {
 		// 不进行验证
 		return nil
 	}
 
 	/* logger */
-	readWriter := ioKit.NewReadWriter(nil)
+	//readWriter := ioKit.NewReadWriter(nil)
+	readWriter := os.Stderr
 	logger := logrusKit.NewLogger(logrusKit.WithOutput(readWriter),
 		logrusKit.WithLevel(logrus.DebugLevel),
 		logrusKit.WithDisableQuote(true),
@@ -63,7 +64,14 @@ func Verify(topic string) error {
 	}
 	logger.Infof("texts:\n%s\n.", json)
 
-	/* consumer */
+	/* (1) producer */
+	producer, err := NewProducer()
+	if err != nil {
+		return err
+	}
+	defer producer.GracefulStop()
+
+	/* (2) consumer */
 	consumer, err := NewSimpleConsumer(idKit.NewULID(), map[string]*rmq_client.FilterExpression{
 		topic: rmq_client.SUB_ALL,
 	})
@@ -72,56 +80,51 @@ func Verify(topic string) error {
 	}
 	defer consumer.GracefulStop()
 
-	/* producer */
-	producer, err := NewProducer()
-	if err != nil {
-		return err
-	}
-	defer producer.GracefulStop()
-
-	go func() {
-
-	}()
-
-	//consumer, err := NewSimpleConsumer(mqLogConfig, mqConfig, fmt.Sprintf("%s-%s", topic, idKit.NewULID()), topic, "*")
-	//if err != nil {
-	//	return errorKit.Wrap(err, "fail to new consumer")
-	//}
-	//if err := consumer.Start(); err != nil {
-	//	return errorKit.Wrapf(err, "fail to start consumer with topic(%s)", topic)
-	//}
-	//defer consumer.GracefulStop()
-
-	//producer, err := rocketmq5Kit.NewProducer(mqLogConfig, mqConfig)
-	//if err != nil {
-	//	return errorKit.Wrap(err, "fail to new producer")
-	//}
-	//if err := producer.Start(); err != nil {
-	//	return errorKit.Wrap(err, "fail to start producer")
-	//}
-	//defer producer.GracefulStop()
-
-	// test
-	//logrus.Infof("logPath: [%s].", logPath)
-
-	producerCh := make(chan error, 1)
-	consumerCh := make(chan error, 1)
-	consumerCtx, cancel := context.WithCancel(context.TODO())
+	ctx, cancel := context.WithTimeout(context.TODO(), verifyTimeout)
 	defer cancel()
+	var producerCh chan error = make(chan error, 1)
+	var consumerCh chan error = make(chan error, 1)
 
-	/* consumer works */
+	/* (3) producer goroutine */
 	go func() {
 		defer func() {
-			logger.Info("[Consumer] Goroutine ends.")
+			logger.Info("[PRODUCER] Goroutine ends.")
 		}()
 
-		duplicate := sliceKit.Copy(texts)
+		// 等一会，以确保: producer发消息时，consumer已经开始收消息了（以免丢失消息: 明明producer发了，但consumer却没收到）
+		time.Sleep(time.Second)
+
+		for _, text := range texts {
+			msg := &rmq_client.Message{
+				Topic: topic,
+				Body:  []byte(text),
+			}
+			ctx, _ := context.WithTimeout(context.TODO(), sendTimeout)
+			_, err := producer.Send(ctx, msg)
+			if err != nil {
+				err = errorKit.Wrap(err, "Fail to send message(%s).", text)
+				producerCh <- err
+				return
+			}
+			logger.WithFields(logrus.Fields{
+				"text": text,
+			}).Info("[PRODUCER] Manager to send a message.")
+		}
+		logger.Info("[PRODUCER] Manager to send all messages.")
+	}()
+
+	/* (4) consumer goroutine */
+	go func(texts []string) {
+		defer func() {
+			logger.Info("[CONSUMER] Goroutine ends.")
+		}()
+
 		for {
 			time.Sleep(time.Millisecond * 100)
 
-			mvs, err := consumer.Receive(consumerCtx, rocketmq5Kit.MaxMessageNum, rocketmq5Kit.InvisibleDuration)
+			mvs, err := consumer.Receive(ctx, MaxMessageNum, InvisibleDuration)
 			if err != nil {
-				// 时间到
+				/* gRPC errors */
 				if s, ok := status.FromError(err); ok {
 					switch s.Code() {
 					case codes.Canceled:
@@ -138,6 +141,7 @@ func Verify(topic string) error {
 				}
 
 				if errRpcStatus, ok := rmq_client.AsErrRpcStatus(err); ok {
+					/* RocketMQ5 errors */
 					switch errRpcStatus.Code {
 					case int32(v2.Code_MESSAGE_NOT_FOUND):
 						// 没有新消息
@@ -148,6 +152,7 @@ func Verify(topic string) error {
 						}).Warn("[Consumer] Fail to receive.")
 					}
 				} else {
+					/* other errors */
 					logger.WithFields(logrus.Fields{
 						"error": err.Error(),
 					}).Warn("[Consumer] Fail to receive.")
@@ -169,8 +174,8 @@ func Verify(topic string) error {
 				}
 
 				var ok bool
-				duplicate, ok = sliceKit.Remove(duplicate, text)
-				left := len(duplicate)
+				texts, ok = sliceKit.Remove(texts, text)
+				left := len(texts)
 				logger.WithFields(logrus.Fields{
 					"valid": ok,
 					"left":  left,
@@ -185,48 +190,18 @@ func Verify(topic string) error {
 				}
 			}
 		}
-	}()
-
-	/* producer works */
-	go func() {
-		defer func() {
-			logger.Info("[Producer] Goroutine ends.")
-		}()
-
-		// 等一会，以确保: producer发消息时，consumer已经开始收消息了（以免丢失消息: 明明producer发了，但consumer却没收到）
-		time.Sleep(time.Second)
-
-		for _, text := range texts {
-			msg := &rmq_client.Message{
-				Topic: topic,
-				Body:  []byte(text),
-			}
-			ctx, _ := context.WithTimeout(context.TODO(), producerTimeout)
-			_, err := producer.Send(ctx, msg)
-			if err != nil {
-				err = errorKit.Wrapf(err, "[Producer] Fail to send message(%s).", text)
-				producerCh <- err
-				return
-			}
-			logger.WithFields(logrus.Fields{
-				"text": text,
-			}).Info("[Producer] Send a message successfully.")
-		}
-		logger.Info("[Producer] Send all messages successfully.")
-	}()
+	}(sliceKit.Copy(texts))
 
 	select {
-	case err = <-producerCh:
-	case err = <-consumerCh:
-		// 此处err可能为nil（说明验证通过）
-	case <-time.After(verifyTimeout):
-		err = errorKit.Newf("fail to pass validation within timeout(%v)", verifyTimeout)
+	case producerErr := <-producerCh:
+		return producerErr
+	case consumerCh := <-consumerCh:
+		if consumerCh != nil {
+			return consumerCh
+		}
+		// 通过验证
+		return nil
+	case <-ctx.Done():
+		return errorKit.New("Fail to pass verification within timeout(%s).", verifyTimeout)
 	}
-
-	if err != nil {
-		err = errorKit.Wrapf(err, "log path: [%s]", logPath)
-		logger.Errorf("%+v", err)
-		return err
-	}
-	return nil
 }

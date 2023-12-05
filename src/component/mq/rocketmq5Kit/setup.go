@@ -37,6 +37,11 @@ func SetUp(c *Config, clientLogPath, verifyTopic string) error {
 		return err
 	}
 
+	// verify
+	if err := verify(verifyTopic); err != nil {
+		return err
+	}
+
 	config = c
 	return nil
 }
