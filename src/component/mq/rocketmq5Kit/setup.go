@@ -14,8 +14,8 @@ var (
 
 var config *Config
 
-func MustSetUp(config *Config, clientLogPath, verifyTopic string) {
-	if err := SetUp(config, clientLogPath, verifyTopic); err != nil {
+func MustSetUp(c *Config, clientLogPath string, verifyConfig *VerifyConfig) {
+	if err := SetUp(c, clientLogPath, verifyConfig); err != nil {
 		logrusKit.DisableQuote(nil)
 		logrus.Fatalf("%+v", err)
 	}
@@ -26,7 +26,7 @@ func MustSetUp(config *Config, clientLogPath, verifyTopic string) {
 @param clientLogPath	可以为""（输出到控制台）
 @param verifyTopic		可以为""（不进行验证）
 */
-func SetUp(c *Config, clientLogPath, verifyTopic string) (err error) {
+func SetUp(c *Config, clientLogPath string, verifyConfig *VerifyConfig) (err error) {
 	defer func() {
 		if err != nil {
 			config = nil
@@ -45,7 +45,7 @@ func SetUp(c *Config, clientLogPath, verifyTopic string) (err error) {
 	config = c
 
 	// verify
-	if err = verify(verifyTopic); err != nil {
+	if err = verify(verifyConfig); err != nil {
 		return
 	}
 

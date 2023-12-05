@@ -31,7 +31,8 @@ func TestMustSetUp(t *testing.T) {
 
 	fmt.Println(jsonKit.MarshalIndentToString(c, "", "    "))
 
-	if err := SetUp(c.RocketMQ5, "_client.log", "test"); err != nil {
-		logrus.Error(err)
-	}
+	MustSetUp(c.RocketMQ5, "_client.log", &VerifyConfig{
+		Topic:   "test",
+		LogPath: "",
+	})
 }

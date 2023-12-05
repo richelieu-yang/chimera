@@ -62,7 +62,7 @@ func verify(config *VerifyConfig) error {
 	logger := logrusKit.NewLogger(logrusKit.WithOutput(output),
 		logrusKit.WithLevel(logrus.DebugLevel),
 		logrusKit.WithDisableQuote(true),
-		logrusKit.WithMsgPrefix("[RocketMQ5]"),
+		logrusKit.WithMsgPrefix("[RocketMQ5 VERIFY]"),
 	)
 	logger.Infof("topic: [%s].", config.Topic)
 
@@ -96,7 +96,7 @@ func verify(config *VerifyConfig) error {
 	/* (2) consumer */
 	consumer, err := NewSimpleConsumer(consumerGroup, map[string]*rmq_client.FilterExpression{
 		//topic: rmq_client.SUB_ALL,
-		topic: rmq_client.NewFilterExpression(tag),
+		config.Topic: rmq_client.NewFilterExpression(tag),
 	})
 	if err != nil {
 		return err
@@ -116,7 +116,7 @@ func verify(config *VerifyConfig) error {
 
 		for _, text := range texts {
 			msg := &rmq_client.Message{
-				Topic: topic,
+				Topic: config.Topic,
 				Body:  []byte(text),
 				Tag:   &tag,
 			}
