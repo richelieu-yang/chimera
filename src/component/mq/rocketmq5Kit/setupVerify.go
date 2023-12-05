@@ -23,7 +23,7 @@ const (
 	sendTimeout = time.Millisecond * 500
 
 	// verifyTimeout 验证的最长timeout
-	verifyTimeout = time.Second * 10
+	verifyTimeout = time.Second * 6
 )
 
 // verify 测试RocketMQ5服务是否启动正常.
@@ -122,9 +122,16 @@ func verify(topic string) error {
 		}()
 
 		for {
-			time.Sleep(time.Millisecond * 100)
+			select {
+			case <-ctx.Done():
+				consumerCh <- errorKit.New("Fail to receive all messages within timeout(%s).", verifyTimeout)
+				return
+			case <-time.After(time.Millisecond * 100):
+				// do nothing
+			}
+			//time.Sleep(time.Millisecond * 100)
 
-			mvs, err := consumer.Receive(ctx, MaxMessageNum, InvisibleDuration)
+			mvs, err := consumer.Receive(context.TODO(), MaxMessageNum, InvisibleDuration)
 			if err != nil {
 				/* gRPC errors */
 				if s, ok := status.FromError(err); ok {
