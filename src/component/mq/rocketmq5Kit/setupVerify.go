@@ -117,7 +117,7 @@ func verify(config *VerifyConfig) error {
 	/* (3) producer goroutine */
 	go func() {
 		defer func() {
-			logger.Info("[PRODUCER] Goroutine ends.")
+			logger.Info("Producer goroutine ends.")
 		}()
 
 		for _, text := range texts {
@@ -129,28 +129,28 @@ func verify(config *VerifyConfig) error {
 			ctx, _ := context.WithTimeout(context.TODO(), sendTimeout)
 			_, err := producer.Send(ctx, msg)
 			if err != nil {
-				err = errorKit.Wrap(err, "Fail to send message(%s).", text)
+				err = errorKit.Wrap(err, "Producer fails to send message(%s).", text)
 				producerCh <- err
 				return
 			}
 			logger.WithFields(logrus.Fields{
 				"text": text,
-			}).Info("[PRODUCER] Manager to send a message.")
+			}).Info("Producer managers to send a message.")
 		}
-		logger.Info("[PRODUCER] Manager to send all messages.")
+		logger.Info("Producer managers to send all messages.")
 	}()
 
 	/* (4) consumer goroutine */
 	textsCopy := sliceKit.Copy(texts)
 	go func(texts []string) {
 		defer func() {
-			logger.Info("[CONSUMER] Goroutine ends.")
+			logger.Info("Consumer goroutine ends.")
 		}()
 
 		for {
 			select {
 			case <-ctx.Done():
-				consumerCh <- errorKit.New("Fail to receive all messages within timeout(%s).", verifyTimeout)
+				consumerCh <- errorKit.New("Consumer fails to receive all messages within timeout(%s).", verifyTimeout)
 				return
 			case <-time.After(time.Millisecond * 100):
 				// do nothing
@@ -184,13 +184,13 @@ func verify(config *VerifyConfig) error {
 						logger.WithFields(logrus.Fields{
 							"code":  errRpcStatus.Code,
 							"error": err.Error(),
-						}).Warn("[Consumer] Fail to receive.")
+						}).Warn("Consumer fails to receive.")
 					}
 				} else {
 					/* other errors */
 					logger.WithFields(logrus.Fields{
 						"error": err.Error(),
-					}).Warn("[Consumer] Fail to receive.")
+					}).Warn("Consumer fails to receive.")
 				}
 				continue
 			}
@@ -205,7 +205,7 @@ func verify(config *VerifyConfig) error {
 						"tag":   GetTagString(mv.GetTag()),
 						"text":  text,
 						"error": err.Error(),
-					}).Error("[Consumer] Fail to ack message.")
+					}).Error("Consumer fails to ack message.")
 					continue
 				}
 
@@ -217,11 +217,10 @@ func verify(config *VerifyConfig) error {
 					"left":  left,
 					"tag":   GetTagString(mv.GetTag()),
 					"text":  text,
-				}).Info("[CONSUMER] Receive and ack a message.")
+				}).Info("Consumer managers to receive and ack a message.")
 				if left == 0 {
 					// 成功收到所有预期消息
-					logger.Info("[CONSUMER] Receive and ack all messages.")
-
+					logger.Info("Consumer managers to receive and ack all messages.")
 					consumerCh <- nil
 					return
 				}
