@@ -31,14 +31,15 @@ gin:
       # 是否配置cors？默认: false（此时下面的 origins配置 将无效）
       access: false
       # 支持的Origin(s)，即响应头中的Access-Control-Allow-Origin
-      # (1) 默认: 支持所有的Origin（即动态支持请求的Origin，并非"*"）
+      # (1) 默认（origins配置项全注释了）: 支持所有的Origin（即动态支持请求的Origin，并非"*"）
       # (2) 支持通配符"*"
-#      origins:
-#        - "https://*.github.com"
-#        - "https://api.*"
-#        - "http://*"
-#        - "*.golang.org"
-#        - "https://facebook.com"
+  #      origins:
+  #        - "https://*.github.com"
+  #        - "https://api.*"
+  #        - "http://*"
+  #        - "*.golang.org"
+  #        - "https://facebook.com"
+  #        - "http://192.168.9.141:8080"
   ssl:
     # https server使用的端口（默认0: 不使用https server）
     port: 443
@@ -93,8 +94,8 @@ etcd:
 rocketmq5:
   endpoints:
     - localhost:8081
-#    - 192.168.80.27:28888
-#    - 192.168.80.43:28888
+  #    - 192.168.80.27:28888
+  #    - 192.168.80.43:28888
   credentials:
     accessKey:
     accessSecret:
@@ -124,7 +125,7 @@ mysql:
 nacos:
   # 本服务默认的命名空间的id，配置 "" 和 "public" 效果一样（都是使用保留空间public）
   # !!!: 是 id 不是 name.
-#  namespaceId: e7015be0-3947-4050-a411-21705f15e051
+  #  namespaceId: e7015be0-3947-4050-a411-21705f15e051
   # Nacos服务器的地址
   addrs:
     - http://localhost:8848/nacos
