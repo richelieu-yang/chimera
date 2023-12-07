@@ -31,24 +31,8 @@ func TestMustSetUp(t *testing.T) {
 
 	MustSetUp(c.Gin, nil, func(engine *gin.Engine) error {
 		engine.Any("/test", func(ctx *gin.Context) {
-			//if err := httpKit.Proxy(ctx.Writer, ctx.Request, "http", "127.0.0.1:8080"); err != nil {
-			//	ctx.ToDsnString(http.StatusInternalServerError, err.Error())
-			//	return
-			//}
-
-			//ctx.Bind()
-			//ctx.ShouldBind()
-			//
-			//time.Sleep(time.Second * 3)
-
-			//ctx.String(http.StatusOK, "hello")
-
 			fmt.Println(ctx.Request.Header["Content-Type"])
-
-			//fmt.Println(ioKit.ReadStringFromReader(ctx.Request.Body))
-
 			fmt.Println(ObtainParam(ctx, "name"))
-
 			ctx.String(200, "hello")
 		})
 		return nil
