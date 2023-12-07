@@ -2,7 +2,7 @@ package ocrKit
 
 import (
 	"context"
-	"github.com/richelieu-yang/chimera/v2/src/cmdKit"
+	"github.com/richelieu-yang/chimera/v2/src/cmd/cmdKit"
 	"github.com/richelieu-yang/chimera/v2/src/core/errorKit"
 	"github.com/richelieu-yang/chimera/v2/src/core/pathKit"
 	"github.com/richelieu-yang/chimera/v2/src/core/sliceKit"
