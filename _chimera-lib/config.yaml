@@ -93,9 +93,9 @@ etcd:
 
 rocketmq5:
   endpoints:
-    - localhost:8081
-  #    - 192.168.80.27:28888
-  #    - 192.168.80.43:28888
+    #    - localhost:8081
+    - 192.168.80.51:28888
+    - 192.168.80.90:28888
   credentials:
     accessKey:
     accessSecret:
