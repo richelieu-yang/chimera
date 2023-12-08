@@ -8,14 +8,25 @@ import (
 	"github.com/richelieu-yang/chimera/v2/src/consts"
 	"github.com/richelieu-yang/chimera/v2/src/core/pathKit"
 	"github.com/richelieu-yang/chimera/v2/src/idKit"
+	"github.com/richelieu-yang/chimera/v2/src/log/logrusKit"
 	"github.com/sirupsen/logrus"
+	"time"
 )
 
+func init() {
+	logrusKit.MustSetUp(nil)
+}
+
 func main() {
+	var (
+		//topic = "test"
+		tag = "test"
+	)
+
 	{
 		wd, err := pathKit.ReviseWorkingDirInTestMode(consts.ProjectName)
 		if err != nil {
-			panic(err)
+			logrus.Fatal(err)
 		}
 		logrus.Infof("wd: [%s].", wd)
 	}
@@ -27,21 +38,33 @@ func main() {
 	c := &config{}
 	_, err := viperKit.UnmarshalFromFile(path, nil, c)
 	if err != nil {
-		panic(err)
+		logrus.Fatal(err)
 	}
-	rocketmq5Kit.MustSetUp(c.RocketMQ5, "_client.log", &rocketmq5Kit.VerifyConfig{
-		Topic:   "test",
-		LogPath: "",
-	})
+	rocketmq5Kit.MustSetUp(c.RocketMQ5, "_client.log", nil)
 
 	producer, err := rocketmq5Kit.NewProducer()
 	if err != nil {
-		panic(err)
+		logrus.Fatal(err)
 	}
 	ulid := idKit.NewULID()
-	i := 0
 	for i := 0; ; i++ {
-		text := fmt.Sprintf("%s_%d", ulid, i)
-		producer.Send(context.TODO())
+		time.Sleep(time.Second * 3)
+
+		msg := rocketmq5Kit.NewMessage("test", []byte(fmt.Sprintf("%s_%d", ulid, i)), &tag)
+		sendReceipts, err := producer.Send(context.TODO(), msg)
+		if err != nil {
+			logrus.WithError(err).Errorf("Fail to send message(text: %s).", string(msg.Body))
+			continue
+		}
+
+		logrus.Infof("length: [%d].", len(sendReceipts))
+		for _, sendReceipt := range sendReceipts {
+			logrus.WithFields(logrus.Fields{
+				"MessageID":     sendReceipt.MessageID,
+				"TransactionId": sendReceipt.TransactionId,
+				"Offset":        sendReceipt.Offset,
+			}).Infof("Manager to send message(text: %s).", string(msg.Body))
+		}
+		logrus.Info("------")
 	}
 }
