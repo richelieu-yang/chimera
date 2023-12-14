@@ -1,6 +1,7 @@
 package raftKit
 
 import (
+	"github.com/hashicorp/go-hclog"
 	"github.com/hashicorp/raft"
 	"io"
 	"net"
@@ -15,4 +16,8 @@ var (
 		(2) TCPTransport: 基于tcp，可以跨机器跨网络通信.
 	*/
 	NewTCPTransport func(bindAddr string, advertise net.Addr, maxPool int, timeout time.Duration, logOutput io.Writer) (*raft.NetworkTransport, error) = raft.NewTCPTransport
+
+	NewTCPTransportWithLogger func(bindAddr string, advertise net.Addr, maxPool int, timeout time.Duration, logger hclog.Logger) (*raft.NetworkTransport, error) = raft.NewTCPTransportWithLogger
+
+	NewTCPTransportWithConfig func(bindAddr string, advertise net.Addr, config *raft.NetworkTransportConfig) (*raft.NetworkTransport, error) = raft.NewTCPTransportWithConfig
 )
