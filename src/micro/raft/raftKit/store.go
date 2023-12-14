@@ -9,7 +9,7 @@ var (
 	// NewBoltStore
 	/*
 		PS:
-		(1) hashicorp提供了一个 raft-boltdb 来实现底层存储，它是一个嵌入式的数据库，能够持久化存储数据，我们直接用它来实现 LogStore 和 StableStore.
+		(1) hashicorp提供了一个 raft-boltdb 来实现底层存储，它是一个嵌入式的数据库，能够 持久化 存储数据，我们直接用它来实现 LogStore 和 StableStore.
 		(2) 实现了接口: raft.LogStore、raft.StableStore
 	*/
 	NewBoltStore func(path string) (*raftboltdb.BoltStore, error) = raftboltdb.NewBoltStore
