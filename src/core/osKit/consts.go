@@ -13,7 +13,7 @@ const (
 
 	// PathListSeparator 路径列表分隔符（string类型）
 	/*
-		e.g. Mac
+		e.g.
 		":"（Mac）
 		";"（Windows）
 	*/
