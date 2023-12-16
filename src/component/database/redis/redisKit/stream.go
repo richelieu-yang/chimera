@@ -61,6 +61,7 @@ PS:
 (1) 如果 stream 对应的key:	(a) 存在，do nothing;
 							(b) 不存在，将自动创建一个空的stream.
 (2) 如果 group 已经存在，将返回error(BUSYGROUP Consumer Group name already exists).
+(3) MKSTREAM是一个可选子命令，如果指定了它，那么在创建消费者组的时候，如果stream不存在，那么会自动创建一个空（长度为0）的stream.
 
 @param start 	(1) "0": 从头开始消费
 				(2) "$": 从末尾开始消费
