@@ -18,7 +18,7 @@
 .idea
 /src/test.go
 *.log
-*.gzØgo
+*.gz
 
 # for macOS
 .DS_Store
