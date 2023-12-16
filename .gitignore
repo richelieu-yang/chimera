@@ -26,5 +26,6 @@
 .DS_Store?
 
 /test*
+!/test/*.go
 /_*.pem
 /src/component/database/rocksdbKit/_testDir/
