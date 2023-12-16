@@ -27,6 +27,7 @@
 
 /out
 /test*
-!/test/*.go
+!/test/
+!/test.sh
 /_*.pem
 /src/component/database/rocksdbKit/_testDir/
