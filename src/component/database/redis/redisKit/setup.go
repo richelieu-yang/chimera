@@ -26,7 +26,11 @@ func SetUp(config *Config) (err error) {
 	return
 }
 
-func MustGetClient() *Client {
+// GetClientInsecurely
+/*
+PS: 可能会panic.
+*/
+func GetClientInsecurely() *Client {
 	client, err := GetClient()
 	if err != nil {
 		logrus.Panic(err)
