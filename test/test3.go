@@ -13,35 +13,12 @@ func init() {
 
 func main() {
 	dirPath := "test_dir"
-
-	dbOpts := grocksdb.NewDefaultOptions()
-	logrus.Infof("CreateIfMissing: %t", dbOpts.CreateIfMissing())
-	dbOpts.SetCreateIfMissing(true)
-
-	compressionType := dbOpts.GetCompression()
-	switch compressionType {
-	case grocksdb.NoCompression:
-		logrus.Info("NoCompression")
-	case grocksdb.SnappyCompression:
-		logrus.Info("SnappyCompression")
-	case grocksdb.ZLibCompression:
-		logrus.Info("ZLibCompression")
-	case grocksdb.Bz2Compression:
-		logrus.Info("Bz2Compression")
-	case grocksdb.LZ4Compression:
-		logrus.Info("LZ4Compression")
-	case grocksdb.LZ4HCCompression:
-		logrus.Info("LZ4HCCompression")
-	case grocksdb.XpressCompression:
-		logrus.Info("XpressCompression")
-	case grocksdb.ZSTDCompression:
-		logrus.Info("ZSTDCompression")
-	default:
-		logrus.Fatal("UnknownCompression")
-	}
-
 	keyStr := []byte("key")
 	valueStr := []byte(idKit.NewULID())
+
+	dbOpts := grocksdb.NewDefaultOptions()
+	dbOpts.SetCreateIfMissing(true)
+	dbOpts.SetCompression(grocksdb.SnappyCompression)
 
 	db, err := grocksdb.OpenDb(dbOpts, dirPath)
 	if err != nil {
