@@ -82,9 +82,10 @@ func _verify(logger *logrus.Logger, topic, consumerLogPath, producerLogPath, uli
 	ctx0, cancel := context.WithTimeout(context.TODO(), connectTimeout)
 	defer cancel()
 	consumer, err := NewConsumer(ctx0, pulsar.ConsumerOptions{
-		Topic:            topic,
-		SubscriptionName: fmt.Sprintf("verify_%s_%d", ulid, randomKit.Int(0, 10000000)),
-		Type:             pulsar.Exclusive,
+		Topic:                       topic,
+		SubscriptionName:            fmt.Sprintf("verify_%s_%d", ulid, randomKit.Int(0, 10000000)),
+		Type:                        pulsar.Exclusive,
+		SubscriptionInitialPosition: pulsar.SubscriptionPositionLatest,
 	}, consumerLogPath)
 	if err != nil {
 		return err

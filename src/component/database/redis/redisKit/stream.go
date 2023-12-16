@@ -83,7 +83,7 @@ func (client *Client) XReadStreams(ctx context.Context, streams ...string) ([]re
 	return cmd.Result()
 }
 
-// XReadGroup [消费者] 读取消费组中的消息.("xreadgroup", "group")
+// XReadGroup [消费者] 读取消费者组中的消息.("xreadgroup", "group")
 /*
 XReadGroupArgs结构体:
 	Group 		消费组名
