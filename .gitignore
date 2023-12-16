@@ -25,6 +25,7 @@
 **/.DS_Store
 .DS_Store?
 
+/out
 /test*
 !/test/*.go
 /_*.pem
