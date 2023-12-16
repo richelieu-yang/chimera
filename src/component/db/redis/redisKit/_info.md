@@ -27,7 +27,8 @@ Redis Cluster中使用Lua脚本
 此时虽然无法通过ch继续接收发布的数据，但 goroutine1 没有结束（还在从ch中读数据），直到 调用PubSub.Close() 才结束.
 
 ## Stream（Redis5.0新增）
-详见"Redis.wps".
+notes/database（数据库）/Redis/Redis.wps
+notes/Golang/database/golang - Redis.wps
 
 ## TODO: key的前缀prefix
 go-redis目前还不支持:

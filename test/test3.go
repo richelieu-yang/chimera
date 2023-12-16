@@ -1,9 +1,14 @@
 package main
 
 import (
-	"fmt"
 	"github.com/linxGnu/grocksdb"
+	"github.com/richelieu-yang/chimera/v2/src/log/logrusKit"
+	"github.com/sirupsen/logrus"
 )
+
+func init() {
+	logrusKit.MustSetUp(nil)
+}
 
 func main() {
 	dirPath := "test_dir"
@@ -12,23 +17,21 @@ func main() {
 	dbOpts.SetCreateIfMissing(true)
 	db, err := grocksdb.OpenDb(dbOpts, dirPath)
 	if err != nil {
-		fmt.Println("Error opening database: ", err)
-		return
+		logrus.Fatal(err)
 	}
 	defer db.Close()
 
 	writeOpts := grocksdb.NewDefaultWriteOptions()
-	readOpts := grocksdb.NewDefaultReadOptions()
 	err = db.Put(writeOpts, []byte("key"), []byte("value"))
 	if err != nil {
-		fmt.Println("Error writing to database: ", err)
-		return
+		logrus.Fatal(err)
 	}
+
+	readOpts := grocksdb.NewDefaultReadOptions()
 	value, err := db.Get(readOpts, []byte("key"))
 	if err != nil {
-		fmt.Println("Error reading from database: ", err)
-		return
+		logrus.Fatal(err)
 	}
 	defer value.Free()
-	fmt.Println("Read value from database: ", string(value.Data()))
+	logrus.Infof("Read value from database: [%s]", string(value.Data()))
 }
