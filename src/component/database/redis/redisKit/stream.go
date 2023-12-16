@@ -61,6 +61,9 @@ PS:
 (1) 如果 stream 对应的key:	(a) 存在，do nothing;
 							(b) 不存在，将自动创建一个空的stream.
 (2) 如果 group 已经存在，将返回error(BUSYGROUP Consumer Group name already exists).
+
+@param start 	(1) "0": 从头开始消费
+				(2) "$": 从末尾开始消费
 */
 func (client *Client) XGroupCreateMkStream(ctx context.Context, stream, consumerGroup, start string) error {
 	resp, err := client.universalClient.XGroupCreateMkStream(ctx, stream, consumerGroup, start).Result()

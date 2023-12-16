@@ -1,5 +1,9 @@
 (1) key、value、field都可以为"";
 
+## 参考
+notes/database（数据库）/Redis/Redis.wps
+notes/Golang/database/golang - Redis.wps
+
 ## redis/go-redis官方文档
 https://redis.uptrace.dev/zh/guide/
 #### 连接池
@@ -25,10 +29,6 @@ Redis Cluster中使用Lua脚本
 在 goroutine1 中通过 PubSub.Channel()返回的只读信道ch 接收发布的数据，
 过一段时间后，在 goroutine2 中调用 PubSub.Unsubscribe() 取消订阅，
 此时虽然无法通过ch继续接收发布的数据，但 goroutine1 没有结束（还在从ch中读数据），直到 调用PubSub.Close() 才结束.
-
-## Stream（Redis5.0新增）
-notes/database（数据库）/Redis/Redis.wps
-notes/Golang/database/golang - Redis.wps
 
 ## TODO: key的前缀prefix
 go-redis目前还不支持:
