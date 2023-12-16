@@ -3,7 +3,7 @@ package asynqKit
 import (
 	"github.com/hibiken/asynq"
 	"github.com/redis/go-redis/v9"
-	"github.com/richelieu-yang/chimera/v2/src/component/db/redis/redisKit"
+	"github.com/richelieu-yang/chimera/v2/src/component/database/redis/redisKit"
 )
 
 type redisConnOptImpl struct {
