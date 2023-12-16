@@ -17,11 +17,16 @@ func MustSetUp(config *Config) {
 }
 
 func SetUp(config *Config) (err error) {
+	defer func() {
+		if err != nil {
+			client = nil
+		}
+	}()
+
 	if err = validateKit.Struct(config); err != nil {
 		err = errorKit.Wrap(err, "Fail to verify")
 		return
 	}
-
 	client, err = NewClient(*config)
 	return
 }
