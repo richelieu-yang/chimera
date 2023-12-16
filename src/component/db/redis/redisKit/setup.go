@@ -29,7 +29,7 @@ func SetUp(config *Config) (err error) {
 func MustGetClient() *Client {
 	client, err := GetClient()
 	if err != nil {
-		logrus.Fatal(err)
+		logrus.Panic(err)
 	}
 	return client
 }
