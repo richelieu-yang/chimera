@@ -27,3 +27,4 @@
 
 /test*
 /_*.pem
+/src/component/database/rocksdbKit/_testDir/
