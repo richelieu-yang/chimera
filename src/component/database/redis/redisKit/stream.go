@@ -35,7 +35,7 @@ func (client *Client) XDel(ctx context.Context, stream string, ids ...string) (i
 	return cmd.Result()
 }
 
-// XGroupCreate [消费者] 创建消费者组.
+// XGroupCreate 创建消费者组.("xgroup", "create", stream, group, start)
 /*
 @Deprecated: Use XGroupCreateMkStream instead.
 
@@ -55,7 +55,7 @@ func (client *Client) XGroupCreate(ctx context.Context, stream, consumerGroup, s
 	return nil
 }
 
-// XGroupCreateMkStream [消费者] 创建消费者组.
+// XGroupCreateMkStream 创建消费者组.("xgroup", "create", stream, group, start, "mkstream")
 /*
 PS:
 (1) 如果 stream 对应的key:	(a) 存在，do nothing;
