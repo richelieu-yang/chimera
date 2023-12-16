@@ -35,7 +35,7 @@ func (client *Client) XDel(ctx context.Context, stream string, ids ...string) (i
 	return cmd.Result()
 }
 
-// XGroupCreate 创建消费者组.("xgroup", "create", stream, group, start)
+// XGroupCreate [消费者] 创建消费者组.("xgroup", "create", stream, group, start)
 /*
 @Deprecated: Use XGroupCreateMkStream instead.
 
@@ -55,7 +55,7 @@ func (client *Client) XGroupCreate(ctx context.Context, stream, consumerGroup, s
 	return nil
 }
 
-// XGroupCreateMkStream 创建消费者组.("xgroup", "create", stream, group, start, "mkstream")
+// XGroupCreateMkStream [消费者] 创建消费者组.("xgroup", "create", stream, group, start, "mkstream")
 /*
 PS:
 (1) 如果 stream 对应的key:	(a) 存在，do nothing;
@@ -83,7 +83,7 @@ func (client *Client) XReadStreams(ctx context.Context, streams ...string) ([]re
 	return cmd.Result()
 }
 
-// XReadGroup [消费者] 读取消费组中的消息.
+// XReadGroup [消费者] 读取消费组中的消息.("xreadgroup", "group")
 /*
 XReadGroupArgs结构体:
 	Group 		消费组名
