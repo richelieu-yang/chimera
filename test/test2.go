@@ -6,28 +6,30 @@ import (
 )
 
 type User struct {
-	Status string
-	Bean   *bean `validate:"required_if=Status active"`
-}
-
-type bean struct {
-	A int `validate:"gte=10"`
-	B bool
+	Enabled bool
+	Reason  string `validate:"excluded_if=Enabled true"`
 }
 
 func main() {
 	validate := validator.New()
 
-	user := &User{
-		Status: "active111",
-		Bean: &bean{
-			A: 1,
-			B: false,
-		},
-	}
-	err := validate.Struct(user)
+	err := validate.Struct(&User{
+		Enabled: true,
+		Reason:  "111",
+	})
 	if err != nil {
-		panic(err)
+		fmt.Println(err) // Key: 'User.Reason' Error:Field validation for 'Reason' failed on the 'excluded_if' tag
+	} else {
+		fmt.Println("ok")
 	}
-	fmt.Println("ok")
+
+	err = validate.Struct(&User{
+		Enabled: true,
+		Reason:  "",
+	})
+	if err != nil {
+		fmt.Println(err)
+	} else {
+		fmt.Println("ok") // ok
+	}
 }

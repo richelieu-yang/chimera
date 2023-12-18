@@ -52,7 +52,33 @@ type (
 	}
 )
 
-// Validate
+// Simpilify 简化配置.
+func (config *Config) Simpilify() {
+	if config == nil {
+		return
+	}
+
+	switch config.Mode {
+	case ModeSingle:
+		config.MasterSlave = nil
+		config.Sentinel = nil
+		config.Cluster = nil
+	case ModeSentinel:
+		config.Single = nil
+		config.MasterSlave = nil
+		config.Cluster = nil
+	case ModeCluster:
+		config.Single = nil
+		config.MasterSlave = nil
+		config.Sentinel = nil
+	case ModeMasterSlave:
+		fallthrough
+	default:
+		// do nothing
+	}
+}
+
+// Validate 验证配置.
 /*
 PS:
 (1) config可能为nil，此时将返回error;
