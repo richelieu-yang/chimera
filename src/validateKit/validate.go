@@ -18,6 +18,7 @@ PS:
 func New(tagNameArgs ...string) *validator.Validate {
 	v := validator.New(validator.WithRequiredStructEnabled())
 
+	// 修改tag name
 	tagName := sliceKit.GetFirstItemWithDefault("", tagNameArgs...)
 	if strKit.IsNotEmpty(tagName) {
 		v.SetTagName(tagName)
