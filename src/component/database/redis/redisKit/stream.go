@@ -13,8 +13,8 @@ import (
 // IsStreamSupported
 /*
 PS:
-(1) Redis从5开始才支持Stream;
-(2) Tendis2.6.0不支持Stream.
+(1) 低版本Redis（<5）不支持Stream;
+(2) Tendis 2.6.0不支持Stream.
 */
 func (client *Client) IsStreamSupported(ctx context.Context) error {
 	id := idKit.NewXid()
