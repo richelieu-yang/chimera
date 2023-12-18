@@ -63,7 +63,7 @@ redis:
   mode: single
   single:
     addr: 127.0.0.1:6379
-#    addr: 172.18.21.11:6380
+    #    addr: 172.18.21.11:6380
     db: 0
   sentinel:
     addrs:
@@ -73,7 +73,8 @@ redis:
     masterName: mymaster
     db: 0
   cluster:
-    # 可以是: 所有的 master 的地址，也可以是: 所有的 master + slave 的地址（推荐）.
+    # 可以是: 所有的 master 的地址，
+    # 也可以是: 所有的 master + slave 的地址（推荐）.
     addrs:
       - 192.168.1.25:6380
       - 192.168.1.25:6381
