@@ -62,8 +62,8 @@ redis:
   #   cluster:      cluster集群
   mode: single
   single:
-#    addr: 127.0.0.1:6379
-    addr: 172.18.21.11:6380
+    addr: 127.0.0.1:6379
+#    addr: 172.18.21.11:6380
     db: 0
   sentinel:
     addrs:
