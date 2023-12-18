@@ -6,6 +6,7 @@ import (
 	"github.com/richelieu-yang/chimera/v2/src/config/viperKit"
 	"github.com/richelieu-yang/chimera/v2/src/consts"
 	"github.com/richelieu-yang/chimera/v2/src/core/pathKit"
+	"github.com/richelieu-yang/chimera/v2/src/json/jsonKit"
 	"github.com/sirupsen/logrus"
 	"testing"
 )
@@ -26,6 +27,8 @@ func TestSetUp(t *testing.T) {
 		panic(err)
 	}
 
+	fmt.Println(jsonKit.MarshalIndentToString(c.Redis, "", "    "))
+
 	MustSetUp(c.Redis)
 	client, err := GetClient()
 	if err != nil {
@@ -35,8 +38,5 @@ func TestSetUp(t *testing.T) {
 
 	{
 		fmt.Println(client.IsStreamSupported(context.TODO()))
-
-		//fmt.Println(client.XDel(context.TODO(), "tickets", "1697005411917-0"))
-		//fmt.Println(client.XDel(context.TODO(), "tickets", "1697005411917-0"))
 	}
 }
