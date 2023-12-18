@@ -1,6 +1,7 @@
 package rocketmq5Kit
 
 import (
+	"github.com/apache/rocketmq-clients/golang/v5/credentials"
 	"github.com/richelieu-yang/chimera/v2/src/core/errorKit"
 	"github.com/richelieu-yang/chimera/v2/src/log/logrusKit"
 	"github.com/richelieu-yang/chimera/v2/src/validateKit"
@@ -34,6 +35,14 @@ func SetUp(c *Config, clientLogPath string, verifyConfig *VerifyConfig) (err err
 
 	if err = validateKit.Struct(c); err != nil {
 		return
+	}
+	// Richelieu: 防止客户端库源码内部panic
+	if c.Credentials == nil {
+		c.Credentials = &credentials.SessionCredentials{
+			AccessKey:     "",
+			AccessSecret:  "",
+			SecurityToken: "",
+		}
 	}
 
 	// 客户端日志输出

@@ -4,9 +4,7 @@ import "github.com/apache/rocketmq-clients/golang/v5/credentials"
 
 type (
 	Config struct {
-		Endpoints   []string                        `json:"endpoints" yaml:"endpoints"`
+		Endpoints   []string                        `json:"endpoints" yaml:"endpoints" validate:"required,unique,dive,hostname_port"`
 		Credentials *credentials.SessionCredentials `json:"credentials" yaml:"credentials"`
-		//ValidatedTopic string                          `json:"validatedTopic,optional" yaml:"validatedTopic"`
-		//ClientLogPath  string                          `json:"clientLogPath,optional" yaml:"clientLogPath"`
 	}
 )

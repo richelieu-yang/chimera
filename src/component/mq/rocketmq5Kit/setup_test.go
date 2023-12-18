@@ -26,7 +26,7 @@ func TestMustSetUp(t *testing.T) {
 	if err != nil {
 		panic(err)
 	}
-	//fmt.Println(jsonKit.MarshalIndentToString(c, "", "    "))
+
 	MustSetUp(c.RocketMQ5, "_client.log", &VerifyConfig{
 		Topic:   "test",
 		LogPath: "",
