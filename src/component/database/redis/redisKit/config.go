@@ -52,8 +52,8 @@ type (
 	}
 )
 
-// Simpilify 简化配置.
-func (config *Config) Simpilify() {
+// simplify 简化配置.
+func (config *Config) simplify() {
 	if config == nil {
 		return
 	}
@@ -85,7 +85,7 @@ PS:
 (2) 此方法体内不能调用 validateKit.Struct，以免发生递归死循环（但可以调用 validateKit.New）.
 */
 func (config *Config) Validate() error {
-	config.Simpilify()
+	config.simplify()
 
 	v := validateKit.New()
 	if err := v.Struct(config); err != nil {
@@ -114,34 +114,38 @@ func (config *Config) Validate() error {
 }
 
 func (config Config) Equal(config1 Config) bool {
-	if config.UserName != config1.UserName {
-		return false
-	}
-	if config.Password != config1.Password {
-		return false
-	}
+	config.simplify()
+	config1.simplify()
+	return compareKit.Equal(config, config1)
 
-	if config.Mode != config1.Mode {
-		return false
-	}
-	switch config.Mode {
-	case ModeSingle:
-		if !compareKit.Equal(config.Single, config1.Single) {
-			return false
-		}
-	case ModeMasterSlave:
-		if !compareKit.Equal(config.MasterSlave, config1.MasterSlave) {
-			return false
-		}
-	case ModeSentinel:
-		if !compareKit.Equal(config.Sentinel, config1.Sentinel) {
-			return false
-		}
-	case ModeCluster:
-		if !compareKit.Equal(config.Cluster, config1.Cluster) {
-			return false
-		}
-	}
-
-	return true
+	//if config.UserName != config1.UserName {
+	//	return false
+	//}
+	//if config.Password != config1.Password {
+	//	return false
+	//}
+	//
+	//if config.Mode != config1.Mode {
+	//	return false
+	//}
+	//switch config.Mode {
+	//case ModeSingle:
+	//	if !compareKit.Equal(config.Single, config1.Single) {
+	//		return false
+	//	}
+	//case ModeMasterSlave:
+	//	if !compareKit.Equal(config.MasterSlave, config1.MasterSlave) {
+	//		return false
+	//	}
+	//case ModeSentinel:
+	//	if !compareKit.Equal(config.Sentinel, config1.Sentinel) {
+	//		return false
+	//	}
+	//case ModeCluster:
+	//	if !compareKit.Equal(config.Cluster, config1.Cluster) {
+	//		return false
+	//	}
+	//}
+	//
+	//return true
 }
