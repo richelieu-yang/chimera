@@ -2,10 +2,34 @@ package redisKit
 
 import (
 	"context"
+	"fmt"
 	"github.com/redis/go-redis/v9"
+	"github.com/richelieu-yang/chimera/v2/src/consts"
 	"github.com/richelieu-yang/chimera/v2/src/core/errorKit"
 	"github.com/richelieu-yang/chimera/v2/src/core/strKit"
+	"github.com/richelieu-yang/chimera/v2/src/idKit"
 )
+
+// IsStreamSupported
+/*
+PS: Redis5开始才支持Stream.
+*/
+func (client *Client) IsStreamSupported(ctx context.Context) (bool, error) {
+	id := idKit.NewXid()
+	stream := fmt.Sprintf("%s:%s:%s:%s", consts.ProjectName, "test", "redis-stream", id)
+
+	cmd := client.universalClient.XAdd(ctx, &redis.XAddArgs{
+		Stream: stream,
+		Values: map[string]interface{}{
+			"data": "test",
+		},
+	})
+	_, err := cmd.Result()
+	if err != nil {
+		return false, err
+	}
+	return true, nil
+}
 
 // XAdd [生产者] 添加消息到末尾（如果指定的队列不存在，则创建一个队列）.
 /*
