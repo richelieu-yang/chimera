@@ -69,8 +69,8 @@ PS:
 							(b) 不存在，将返回error（ERR The XGROUP subcommand requires the key to exist. Note that for CREATE you may want to use the MKSTREAM option to create an empty stream automatically.）.
 (2) 如果 group 已经存在，将返回error(BUSYGROUP Consumer Group name already exists).
 */
-func (client *Client) XGroupCreate(ctx context.Context, stream, consumerGroup, start string) error {
-	resp, err := client.universalClient.XGroupCreate(ctx, stream, consumerGroup, start).Result()
+func (client *Client) XGroupCreate(ctx context.Context, stream, group, start string) error {
+	resp, err := client.universalClient.XGroupCreate(ctx, stream, group, start).Result()
 	if err != nil {
 		return err
 	}
@@ -88,11 +88,12 @@ PS:
 (2) 如果 group 已经存在，将返回error(BUSYGROUP Consumer Group name already exists).
 (3) MKSTREAM是一个可选子命令，如果指定了它，那么在创建消费者组的时候，如果stream不存在，那么会自动创建一个空（长度为0）的stream.
 
+@param group 	消费者组
 @param start 	(1) "0": 从头开始消费
 				(2) "$": 从末尾开始消费
 */
-func (client *Client) XGroupCreateMkStream(ctx context.Context, stream, consumerGroup, start string) error {
-	resp, err := client.universalClient.XGroupCreateMkStream(ctx, stream, consumerGroup, start).Result()
+func (client *Client) XGroupCreateMkStream(ctx context.Context, stream, group, start string) error {
+	resp, err := client.universalClient.XGroupCreateMkStream(ctx, stream, group, start).Result()
 	if err != nil {
 		return err
 	}
