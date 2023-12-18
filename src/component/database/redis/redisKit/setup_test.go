@@ -34,7 +34,9 @@ func TestSetUp(t *testing.T) {
 	client = client
 
 	{
-		fmt.Println(client.XDel(context.TODO(), "tickets", "1697005411917-0"))
-		fmt.Println(client.XDel(context.TODO(), "tickets", "1697005411917-0"))
+		fmt.Println(client.IsStreamSupported(context.TODO()))
+
+		//fmt.Println(client.XDel(context.TODO(), "tickets", "1697005411917-0"))
+		//fmt.Println(client.XDel(context.TODO(), "tickets", "1697005411917-0"))
 	}
 }
