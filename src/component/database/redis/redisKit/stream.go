@@ -18,6 +18,10 @@ func (client *Client) IsStreamSupported(ctx context.Context) (bool, error) {
 	id := idKit.NewXid()
 	stream := fmt.Sprintf("%s:%s:%s:%s", consts.ProjectName, "test", "redis-stream", id)
 
+	defer func() {
+		_, _ = client.Del(ctx, stream)
+	}()
+
 	cmd := client.universalClient.XAdd(ctx, &redis.XAddArgs{
 		Stream: stream,
 		Values: map[string]interface{}{
