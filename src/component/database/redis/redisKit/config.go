@@ -85,6 +85,8 @@ PS:
 (2) 此方法体内不能调用 validateKit.Struct，以免发生递归死循环（但可以调用 validateKit.New）.
 */
 func (config *Config) Validate() error {
+	config.Simpilify()
+
 	v := validateKit.New()
 	if err := v.Struct(config); err != nil {
 		return err
@@ -92,26 +94,14 @@ func (config *Config) Validate() error {
 
 	switch config.Mode {
 	case ModeSingle:
-		config.MasterSlave = nil
-		config.Sentinel = nil
-		config.Cluster = nil
-
 		if err := v.Struct(config.Single); err != nil {
 			return err
 		}
 	case ModeSentinel:
-		config.Single = nil
-		config.MasterSlave = nil
-		config.Cluster = nil
-
 		if err := v.Struct(config.Sentinel); err != nil {
 			return err
 		}
 	case ModeCluster:
-		config.Single = nil
-		config.MasterSlave = nil
-		config.Sentinel = nil
-
 		if err := v.Struct(config.Cluster); err != nil {
 			return err
 		}
@@ -120,7 +110,6 @@ func (config *Config) Validate() error {
 	default:
 		return errorKit.New("invalid mode(%s)", config.Mode)
 	}
-
 	return nil
 }
 
