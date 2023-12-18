@@ -38,4 +38,7 @@ go-redis目前还不支持:
 如果你需要在所有键前面添加一个公共的前缀，你可能需要自己实现这个功能。一种可能的方法是: 创建一个包装器函数，该函数接受一个键作为参数，然后返回一个带有前缀的键。
 
 ## Stream
-(1) Consumer
+#### Consumer从哪里开始消费？
+XGroupCreate()（或XGroupCreateMkStream()）的传参start.
+
+
