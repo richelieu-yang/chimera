@@ -5,10 +5,19 @@ import (
 	"testing"
 )
 
+// 比较两个切片实例的内容是否相等.
 func TestEqual(t *testing.T) {
-	s := []int{-1, 0, 1}
-	s1 := []int{0, 1, -1}
-	fmt.Println(Equal(s, s1)) // false
+	{
+		s := []int{-1, 0, 1}
+		s1 := []int{-1, 0, 1}
+		fmt.Println(Equal(s, s1)) // true
+	}
+
+	{
+		s := []int{-1, 0, 1}
+		s1 := []int{0, 1, -1}
+		fmt.Println(Equal(s, s1)) // false
+	}
 }
 
 func TestEqual0(t *testing.T) {
