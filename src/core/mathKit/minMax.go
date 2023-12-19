@@ -13,9 +13,9 @@ func MaxBy[T any](slice []T, comparator func(T, T) bool) T {
 	return mathutil.MaxBy(slice, comparator)
 }
 
-// Max
+// Max 获取最大值.
 /*
-Deprecated: Go1.21使用内置函数 max().
+PS: Go1.21即以上，建议使用内置函数 max().
 */
 func Max[T constraints.Ordered](p T, args ...T) (max T) {
 	max = p
@@ -25,20 +25,20 @@ func Max[T constraints.Ordered](p T, args ...T) (max T) {
 			max = ele
 		}
 	}
-	return max
+	return
 }
 
-// Min
+// Min 获取最小值.
 /*
-Deprecated: Go1.21使用内置函数 min().
+PS: Go1.21即以上，建议使用内置函数 min().
 */
 func Min[T constraints.Ordered](p T, args ...T) (min T) {
-	rst := p
+	min = p
 
 	for _, ele := range args {
-		if ele < rst {
-			rst = ele
+		if ele < min {
+			min = ele
 		}
 	}
-	return rst
+	return
 }
