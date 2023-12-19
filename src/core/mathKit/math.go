@@ -29,13 +29,13 @@ func Clamp[T constraints.Ordered](value T, min T, max T) T {
 	return lo.Clamp(value, min, max)
 }
 
-// Exponent 指数.
+// Exponent 乘方运算（x^n）.
 /*
 @return x^n
 
 e.g.
-	rst := mathKit.Exponent(2, 10)
-	fmt.Println(rst) // 1024
+	(2, 10)	=> 1024
+	(8, 2)	=> 64
 */
 var Exponent func(x, n int64) int64 = mathutil.Exponent
 

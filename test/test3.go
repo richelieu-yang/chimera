@@ -6,5 +6,5 @@ import (
 )
 
 func main() {
-	fmt.Println(mathKit.Max(-1, 100, 3))
+	fmt.Println(mathKit.Exponent(8, 2))
 }
