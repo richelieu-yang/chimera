@@ -34,7 +34,7 @@ func Abs[T constraints.Integer | constraints.Float](x T) T {
 	return mathutil.Abs(x)
 }
 
-// Exponent 乘方运算（x^n）.
+// Exponent 乘方运算（x^n，即x的n次幂）.
 /*
 @return x^n
 
