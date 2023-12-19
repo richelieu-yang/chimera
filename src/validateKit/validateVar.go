@@ -13,6 +13,7 @@ func VarCtx(ctx context.Context, field interface{}, tag string) error {
 	return v.VarCtx(ctx, field, tag)
 }
 
+// VarWithValue 验证变量，同时验证另一个变量.
 func VarWithValue(field interface{}, other interface{}, tag string) error {
 	v := New()
 	return v.VarWithValue(field, other, tag)
