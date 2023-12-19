@@ -20,18 +20,21 @@ func TestDeepCopy(t *testing.T) {
 		"tmp": b,
 	}
 
-	/* 浅拷贝 */
+	/* (1) 浅拷贝 */
 	//dest := &map[string]interface{}{}
 	//err := Copy(dest, src)
 	//if err != nil {
 	//	panic(err)
 	//}
 
-	/* 深拷贝 */
-	dest, err := DeepCopy(src)
-	if err != nil {
-		panic(err)
-	}
+	/* (2) 深拷贝 */
+	dest := DeepCopy(src)
+
+	///* (3) 深拷贝1 */
+	//dest, err := DeepCopy1(src)
+	//if err != nil {
+	//	panic(err)
+	//}
 
 	fmt.Println(src)
 	fmt.Println(dest)
@@ -48,9 +51,9 @@ func TestDeepCopy(t *testing.T) {
 func TestDeepCopy1(t *testing.T) {
 	var m map[string]interface{} = nil
 
-	m1, err := DeepCopy(m)
-	if err != nil {
-		panic(err)
-	}
+	m1 := DeepCopy(m)
+	//if err != nil {
+	//	panic(err)
+	//}
 	fmt.Println(m1 == nil) // true
 }

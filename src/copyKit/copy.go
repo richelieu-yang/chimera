@@ -48,7 +48,17 @@ func Copy(dest, src interface{}) error {
 	})
 }
 
-// DeepCopy 深拷贝（通过GoFrame中的 gutil）.
+// DeepCopy 深拷贝（通过lancet）.
+/*
+PS: 不支持未导出的字段.
+
+@param src	可以为nil（此时将返回nil）
+*/
+func DeepCopy[T any](src T) T {
+	return convertor.DeepClone(src)
+}
+
+// DeepCopy1 深拷贝（通过GoFrame中的 gutil）.
 /*
 PS:
 (1) 不支持未导出的字段 unable to copy unexported fields in a struct (lowercase field names)
@@ -58,7 +68,7 @@ PS:
 @param src	(1) 可以为nil（此时将返回: nil, nil）
 			(2) 必须是: 结构体实例的指针 || map实例 || slice实例
 */
-func DeepCopy[T any](src T) (dest T, err error) {
+func DeepCopy1[T any](src T) (dest T, err error) {
 	obj := gutil.Copy(src)
 	var ok bool
 	if dest, ok = obj.(T); ok {
@@ -66,9 +76,4 @@ func DeepCopy[T any](src T) (dest T, err error) {
 	}
 	err = errorKit.New("Fail to deep copy because types of src(%T) and dest(%T) are different.", src, dest)
 	return
-}
-
-// DeepCopy1 深拷贝（通过lancet）.
-func DeepCopy1[T any](src T) T {
-	return convertor.DeepClone(src)
 }
