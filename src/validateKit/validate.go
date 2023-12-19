@@ -44,22 +44,3 @@ func registerDefaultValidation(v *validator.Validate) error {
 
 	return nil
 }
-
-// Struct 验证结构体.
-/*
-@param s 如果为nil，将返回error(e.g. validator: (nil *main.User))
-*/
-func Struct(s interface{}) error {
-	if validatable, ok := s.(Validatable); ok {
-		return validatable.Validate()
-	}
-
-	v := New()
-	return v.Struct(s)
-}
-
-// Var 验证变量.
-func Var(field interface{}, tag string) error {
-	v := New()
-	return v.Var(field, tag)
-}
