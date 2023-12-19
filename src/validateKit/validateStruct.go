@@ -34,6 +34,9 @@ func StructExceptCtx(ctx context.Context, s interface{}, fields ...string) error
 }
 
 // StructPartial 验证结构体，只验证指定的字段.
+/*
+@param fields 支持嵌套
+*/
 func StructPartial(s interface{}, fields ...string) error {
 	v := New()
 	return v.StructPartial(s, fields...)
