@@ -37,6 +37,6 @@ func TestSetUp(t *testing.T) {
 	client = client
 
 	{
-		fmt.Println(client.IsStreamSupported(context.TODO()))
+		fmt.Println(client.Ping(context.TODO()))
 	}
 }

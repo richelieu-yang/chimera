@@ -23,6 +23,7 @@ func SetUp(config *Config) (err error) {
 		}
 	}()
 
+	// 先简化，再验证（以免通不过验证）
 	config.Simplify()
 	if err = validateKit.Struct(config); err != nil {
 		err = errorKit.Wrap(err, "Fail to verify")
