@@ -45,6 +45,9 @@ e.g.
 var Exponent func(x, n int64) int64 = mathutil.Exponent
 
 // Sin 正弦函数.
+/*
+Deprecated: 有bug（传参precision无效），不建议使用.
+*/
 var Sin func(radian float64, precision ...int) float64 = mathutil.Sin
 
 // Cos 余弦函数.
