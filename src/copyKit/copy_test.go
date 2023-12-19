@@ -20,6 +20,14 @@ func TestDeepCopy(t *testing.T) {
 		"tmp": b,
 	}
 
+	/* 浅拷贝 */
+	//dest := &map[string]interface{}{}
+	//err := Copy(dest, src)
+	//if err != nil {
+	//	panic(err)
+	//}
+
+	/* 深拷贝 */
 	dest, err := DeepCopy(src)
 	if err != nil {
 		panic(err)

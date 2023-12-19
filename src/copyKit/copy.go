@@ -50,7 +50,7 @@ func Copy(dest, src interface{}) error {
 // DeepCopy 深拷贝（通过GoFrame中的 gutil）.
 /*
 PS:
-(1) unable to copy unexported fields in a struct (lowercase field names)
+(1) 不支持未导出的字段 unable to copy unexported fields in a struct (lowercase field names)
 (2) 不使用 github.com/mohae/deepcopy: 	虽然效果一样，但不推荐使用（star少; 最后更新时间2017）
 (3) 不使用 github.com/jinzhu/copier: 	深拷贝有bug，详见"Golang.wps"
 
