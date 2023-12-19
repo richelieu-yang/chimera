@@ -6,6 +6,12 @@ import (
 )
 
 func TestEqual(t *testing.T) {
+	s := []int{-1, 0, 1}
+	s1 := []int{0, 1, -1}
+	fmt.Println(Equal(s, s1)) // false
+}
+
+func TestEqual0(t *testing.T) {
 	type bean struct {
 		Name   string
 		Lovers []string
