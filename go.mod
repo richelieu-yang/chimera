@@ -27,7 +27,7 @@ require (
 	github.com/go-kratos/kratos/v2 v2.7.2
 	github.com/go-playground/validator/v10 v10.16.0
 	github.com/go-redsync/redsync/v4 v4.11.0
-	github.com/gogf/gf/v2 v2.5.7
+	github.com/gogf/gf/v2 v2.6.0
 	github.com/golang-jwt/jwt/v5 v5.2.0
 	github.com/golang-module/carbon/v2 v2.2.14
 	github.com/google/go-cmp v0.6.0
@@ -72,7 +72,7 @@ require (
 	github.com/spf13/afero v1.11.0
 	github.com/spf13/cast v1.6.0
 	github.com/spf13/cobra v1.8.0
-	github.com/spf13/viper v1.18.1
+	github.com/spf13/viper v1.18.2
 	github.com/swaggo/files v1.0.1
 	github.com/swaggo/gin-swagger v1.6.0
 	github.com/swaggo/swag v1.16.2
@@ -92,7 +92,7 @@ require (
 	golang.org/x/image v0.14.0
 	golang.org/x/net v0.19.0
 	golang.org/x/text v0.14.0
-	google.golang.org/grpc v1.60.0
+	google.golang.org/grpc v1.60.1
 	google.golang.org/protobuf v1.31.1-0.20231027082548-f4a6c1f6e5c1
 	gopkg.in/yaml.v3 v3.0.1
 	gorm.io/driver/mysql v1.5.2
