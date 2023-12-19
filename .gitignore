@@ -30,4 +30,4 @@
 !/test/
 !/test.sh
 /_*.pem
-/src/component/database/rocksdbKit/_testDir/
+/src/component/database/local/rocksdbKit/_testDir/
