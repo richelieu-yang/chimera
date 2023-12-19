@@ -1,6 +1,7 @@
 package copyKit
 
 import (
+	"github.com/duke-git/lancet/v2/convertor"
 	"github.com/gogf/gf/v2/util/gutil"
 	"github.com/jinzhu/copier"
 	"github.com/richelieu-yang/chimera/v2/src/core/errorKit"
@@ -65,4 +66,9 @@ func DeepCopy[T any](src T) (dest T, err error) {
 	}
 	err = errorKit.New("Fail to deep copy because types of src(%T) and dest(%T) are different.", src, dest)
 	return
+}
+
+// DeepCopy1 深拷贝（通过lancet）.
+func DeepCopy1[T any](src T) T {
+	return convertor.DeepClone(src)
 }
