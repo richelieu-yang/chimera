@@ -29,6 +29,11 @@ func Clamp[T constraints.Ordered](value T, min T, max T) T {
 	return lo.Clamp(value, min, max)
 }
 
+// Abs 绝对值.
+func Abs[T constraints.Integer | constraints.Float](x T) T {
+	return mathutil.Abs(x)
+}
+
 // Exponent 乘方运算（x^n）.
 /*
 @return x^n
@@ -39,7 +44,8 @@ e.g.
 */
 var Exponent func(x, n int64) int64 = mathutil.Exponent
 
-// Abs 绝对值.
-func Abs[T constraints.Integer | constraints.Float](x T) T {
-	return mathutil.Abs(x)
-}
+// Sin 正弦函数.
+var Sin func(radian float64, precision ...int) float64 = mathutil.Sin
+
+// Cos 余弦函数.
+var Cos func(radian float64, precision ...int) float64 = mathutil.Cos

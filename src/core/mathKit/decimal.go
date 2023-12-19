@@ -21,6 +21,20 @@ func RoundToString(f float64, places int) string {
 	return mathutil.RoundToString(f, places)
 }
 
+// TruncRound 截断n位小数（不进行四舍五入）
+/*
+@param n 保留的小数位（可以 < 0，但有点奇怪!!!）
+
+e.g.
+(1234.124, 0)	=> 1234
+(1234.124, -1)	=> 1234
+(1234.124, -2)	=> 0
+
+(100.125, 2)	=> 100.12
+(100.125, 3)	=> 100.125
+*/
+var TruncRound func(x float64, n int) float64 = mathutil.TruncRound
+
 //// Round 保留小数位（四舍五入），类似于 math.Round()，但功能更强大
 ///*
 //PS:
@@ -63,20 +77,6 @@ func RoundToString(f float64, places int) string {
 //*/
 //var RoundToString func(x float64, n int) string = mathutil.RoundToString
 
-// TruncRound 截断n位小数（不进行四舍五入）
-/*
-@param n 保留的小数位（可以 < 0，但有点奇怪!!!）
-
-e.g.
-(1234.124, 0)	=> 1234
-(1234.124, -1)	=> 1234
-(1234.124, -2)	=> 0
-
-(100.125, 2)	=> 100.12
-(100.125, 3)	=> 100.125
-*/
-var TruncRound func(x float64, n int) float64 = mathutil.TruncRound
-
 // Ceil 向上取整，类似于 math.Ceil()，但功能更强大.
 /*
 PS:
@@ -86,8 +86,8 @@ e.g.
 (3.14, 1)	=> 3.2
 (-3.14, 1)	=> -3.1
 */
-func Ceil(f float64, places int32) float64 {
-	f, _ = decimal.NewFromFloat(f).RoundCeil(places).Float64()
+func Ceil(f float64, places int) float64 {
+	f, _ = decimal.NewFromFloat(f).RoundCeil(int32(places)).Float64()
 	return f
 }
 
@@ -100,7 +100,7 @@ e.g.
 (3.14, 1)	=> 3.1
 (-3.14, 1)	=> -3.2
 */
-func Floor(f float64, places int32) float64 {
-	f, _ = decimal.NewFromFloat(f).RoundFloor(places).Float64()
+func Floor(f float64, places int) float64 {
+	f, _ = decimal.NewFromFloat(f).RoundFloor(int32(places)).Float64()
 	return f
 }
