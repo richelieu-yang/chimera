@@ -52,8 +52,6 @@ func TestDeepCopy1(t *testing.T) {
 	var m map[string]interface{} = nil
 
 	m1 := DeepCopy(m)
-	//if err != nil {
-	//	panic(err)
-	//}
+	fmt.Println(m1)        // map[]
 	fmt.Println(m1 == nil) // true
 }
