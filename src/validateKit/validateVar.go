@@ -13,7 +13,12 @@ func VarCtx(ctx context.Context, field interface{}, tag string) error {
 	return v.VarCtx(ctx, field, tag)
 }
 
-// VarWithValue 验证变量，同时验证另一个变量.
+// VarWithValue 用于验证一个值是否满足另一个值的某种条件.
+/*
+@param field	要验证的值
+@param other	要与之比较的值
+@param tag		一个表示验证规则的字符串
+*/
 func VarWithValue(field interface{}, other interface{}, tag string) error {
 	v := New()
 	return v.VarWithValue(field, other, tag)
