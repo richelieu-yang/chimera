@@ -5,32 +5,34 @@ import (
 	"github.com/richelieu-yang/chimera/v2/src/validateKit"
 )
 
-type Bean struct {
-	Status string `validate:"eq=active"`
-	Age    int    `validate:"required_if=Status active"`
+type bean struct {
+	// A 可以为: "" || 长度为[2, 3]的字符串
+	A string `validate:"omitempty,min=2,max=3"`
 }
 
 func main() {
-	err := validateKit.Struct(&Bean{
-		Status: "active",
-		Age:    0,
-	})
-	if err != nil {
-		fmt.Println(err)
-	} else {
-		fmt.Println("ok")
-	}
-}
+	{
+		b := &bean{
+			A: "",
+		}
 
-func requiredIf(fl FieldLevel) bool {
-	params := parseOneOfParam2(fl.Param())
-	if len(params)%2 != 0 {
-		panic(fmt.Sprintf("Bad param number for required_if %s", fl.FieldName()))
-	}
-	for i := 0; i < len(params); i += 2 {
-		if !requireCheckFieldValue(fl, params[i], params[i+1], false) {
-			return true
+		err := validateKit.Struct(b)
+		if err != nil {
+			fmt.Println(err)
+		} else {
+			fmt.Println("ok") // ok
 		}
 	}
-	return hasValue(fl)
+	{
+		b := &bean{
+			A: "a",
+		}
+
+		err := validateKit.Struct(b)
+		if err != nil {
+			fmt.Println(err)
+		} else {
+			fmt.Println("ok") // Key: 'bean.A' Error:Field validation for 'A' failed on the 'min' tag
+		}
+	}
 }

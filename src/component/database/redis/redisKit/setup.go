@@ -23,10 +23,12 @@ func SetUp(config *Config) (err error) {
 		}
 	}()
 
+	config.Simplify()
 	if err = validateKit.Struct(config); err != nil {
 		err = errorKit.Wrap(err, "Fail to verify")
 		return
 	}
+
 	client, err = NewClient(*config)
 	return
 }

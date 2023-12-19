@@ -2,8 +2,6 @@ package redisKit
 
 import (
 	"github.com/richelieu-yang/chimera/v2/src/compareKit"
-	"github.com/richelieu-yang/chimera/v2/src/core/errorKit"
-	"github.com/richelieu-yang/chimera/v2/src/validateKit"
 )
 
 type (
@@ -14,10 +12,10 @@ type (
 
 		Mode Mode `json:"mode" yaml:"mode" validate:"oneof=single sentinel cluster"`
 
-		Single      *SingleConfig      `json:"single" yaml:"singleNode" validate:"-"`
-		MasterSlave *MasterSlaveConfig `json:"masterSlave" yaml:"masterSlave" validate:"-"`
-		Sentinel    *SentinelConfig    `json:"sentinel" yaml:"sentinel" validate:"-"`
-		Cluster     *ClusterConfig     `json:"cluster" yaml:"cluster" validate:"-"`
+		Single *SingleConfig `json:"single" yaml:"singleNode" validate:"required_if=Mode single"`
+		//MasterSlave *MasterSlaveConfig `json:"masterSlave" yaml:"masterSlave" validate:"required_if=Mode "`
+		Sentinel *SentinelConfig `json:"sentinel" yaml:"sentinel" validate:"required_if=Mode sentinel"`
+		Cluster  *ClusterConfig  `json:"cluster" yaml:"cluster" validate:"required_if=Mode cluster"`
 	}
 
 	SingleConfig struct {
@@ -28,8 +26,8 @@ type (
 		DB int `json:"db" yaml:"db" validate:"gte=0"`
 	}
 
-	MasterSlaveConfig struct {
-	}
+	//MasterSlaveConfig struct {
+	//}
 
 	SentinelConfig struct {
 		// MasterName The master name.
@@ -52,24 +50,21 @@ type (
 	}
 )
 
-// simplify 简化配置.
-func (config *Config) simplify() {
+// Simplify 简化配置.
+func (config *Config) Simplify() {
 	if config == nil {
 		return
 	}
 
 	switch config.Mode {
 	case ModeSingle:
-		config.MasterSlave = nil
 		config.Sentinel = nil
 		config.Cluster = nil
 	case ModeSentinel:
 		config.Single = nil
-		config.MasterSlave = nil
 		config.Cluster = nil
 	case ModeCluster:
 		config.Single = nil
-		config.MasterSlave = nil
 		config.Sentinel = nil
 	case ModeMasterSlave:
 		fallthrough
@@ -78,44 +73,9 @@ func (config *Config) simplify() {
 	}
 }
 
-// Validate 验证配置.
-/*
-PS:
-(1) config可能为nil，此时将返回error;
-(2) 此方法体内不能调用 validateKit.Struct，以免发生递归死循环（但可以调用 validateKit.New）.
-*/
-func (config *Config) Validate() error {
-	config.simplify()
-
-	v := validateKit.New()
-	if err := v.Struct(config); err != nil {
-		return err
-	}
-
-	switch config.Mode {
-	case ModeSingle:
-		if err := v.Struct(config.Single); err != nil {
-			return err
-		}
-	case ModeSentinel:
-		if err := v.Struct(config.Sentinel); err != nil {
-			return err
-		}
-	case ModeCluster:
-		if err := v.Struct(config.Cluster); err != nil {
-			return err
-		}
-	case ModeMasterSlave:
-		fallthrough
-	default:
-		return errorKit.New("invalid mode(%s)", config.Mode)
-	}
-	return nil
-}
-
 func (config Config) Equal(config1 Config) bool {
-	config.simplify()
-	config1.simplify()
+	config.Simplify()
+	config1.Simplify()
 	return compareKit.Equal(config, config1)
 
 	//if config.UserName != config1.UserName {
