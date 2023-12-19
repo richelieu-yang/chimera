@@ -3,36 +3,15 @@ package main
 import (
 	"fmt"
 	"github.com/richelieu-yang/chimera/v2/src/validateKit"
+	"time"
 )
 
-type bean struct {
-	// A 可以为: "" || 长度为[2, 3]的字符串
-	A string `validate:"omitempty,min=2,max=3"`
-}
-
 func main() {
-	{
-		b := &bean{
-			A: "",
-		}
+	fmt.Println(validateKit.VarWithValue(time.Hour, time.Hour-time.Minute, "ltcsfield"))
+	// Key: '' Error:Field validation for '' failed on the 'ltcsfield' tag
+	fmt.Println(validateKit.VarWithValue(time.Hour, time.Hour+time.Minute, "ltcsfield"))
+	// <nil>
 
-		err := validateKit.Struct(b)
-		if err != nil {
-			fmt.Println(err)
-		} else {
-			fmt.Println("ok") // ok
-		}
-	}
-	{
-		b := &bean{
-			A: "a",
-		}
-
-		err := validateKit.Struct(b)
-		if err != nil {
-			fmt.Println(err)
-		} else {
-			fmt.Println("ok") // Key: 'bean.A' Error:Field validation for 'A' failed on the 'min' tag
-		}
-	}
+	fmt.Println(validateKit.VarWithValue(time.Duration(0), -time.Minute, "omitempty,ltcsfield"))
+	// <nil>
 }
