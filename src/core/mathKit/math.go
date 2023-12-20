@@ -21,8 +21,32 @@ var (
 	// Factorial 计算阶乘
 	Factorial func(x uint) uint = mathutil.Factorial
 
+	// IsPrime 判断质数。
+	IsPrime func(n int) bool = mathutil.IsPrime
+
 	// Fibonacci 计算斐波那契数列的第n个数
 	Fibonacci func(first, second, n int) int = mathutil.Fibonacci
+
+	// PointDistance 计算两个坐标点的距离
+	PointDistance func(x1, y1, x2, y2 float64) float64 = mathutil.PointDistance
+
+	// AngleToRadian 将角度值转为弧度值
+	AngleToRadian func(angle float64) float64 = mathutil.AngleToRadian
+
+	// RadianToAngle 将弧度值转为角度值
+	RadianToAngle func(radian float64) float64 = mathutil.RadianToAngle
+
+	// Sin 正弦函数（计算弧度的正弦值）.
+	/*
+	   Deprecated: 有bug（传参precision无效），不建议使用.
+	*/
+	Sin func(radian float64, precision ...int) float64 = mathutil.Sin
+
+	// Cos 余弦函数（计算弧度的余弦值）.
+	Cos func(radian float64, precision ...int) float64 = mathutil.Cos
+
+	// Log 计算以base为底n的对数。
+	Log func(n, base float64) float64 = mathutil.Log
 )
 
 // Average 计算平均数（可能需要对结果调用RoundToFloat方法四舍五入）
@@ -49,6 +73,16 @@ func Percent(val, total float64, places int32) float64 {
 	return f
 }
 
+// GCD 计算最大公约数。
+func GCD[T constraints.Integer](integers ...T) T {
+	return mathutil.GCD(integers...)
+}
+
+// LCM 计算最小公倍数。
+func LCM[T constraints.Integer](integers ...T) T {
+	return mathutil.LCM(integers...)
+}
+
 // Clamp clamps number within the inclusive lower and upper bounds.
 /*
 case value < min: 	返回min
@@ -68,12 +102,3 @@ func Clamp[T constraints.Ordered](value T, min T, max T) T {
 func Abs[T constraints.Integer | constraints.Float](x T) T {
 	return mathutil.Abs(x)
 }
-
-// Sin 正弦函数.
-/*
-Deprecated: 有bug（传参precision无效），不建议使用.
-*/
-var Sin func(radian float64, precision ...int) float64 = mathutil.Sin
-
-// Cos 余弦函数.
-var Cos func(radian float64, precision ...int) float64 = mathutil.Cos

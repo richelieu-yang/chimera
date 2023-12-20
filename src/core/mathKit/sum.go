@@ -7,6 +7,8 @@ import (
 
 // Sum 求和.
 /*
+PS: 不使用lancet的mathutil，原因: 泛型更广.
+
 e.g.
 ([]int{0, 1, 2, 3}) => 6
 */
@@ -16,6 +18,8 @@ func Sum[T constraints.Float | constraints.Integer | constraints.Complex](s []T)
 
 // SumBy 求和.
 /*
+PS: 不使用lancet的mathutil，原因: 泛型更广.
+
 @param s 		可以为nil（此时返回0）
 @param iteratee	(1) 不能为nil（除非s == nil），否则会导致panic: runtime error: invalid memory address or nil pointer dereference
 				(2) 传参为T类型，返回值为R类型
