@@ -4,27 +4,27 @@ import (
 	"github.com/duke-git/lancet/v2/pointer"
 )
 
-// Of
+// Of 返回传入参数的指针值.
 func Of[T any](v T) *T {
 	return pointer.Of(v)
 }
 
-// Unwrap
+// Unwrap 返回传入指针指向的值.
 func Unwrap[T any](p *T) T {
 	return pointer.Unwrap(p)
 }
 
-// UnwarpOr
+// UnwarpOr 返回指针的值，如果指针为零值，则返回fallback.
 func UnwarpOr[T any](p *T, fallback T) T {
 	return pointer.UnwarpOr(p, fallback)
 }
 
-// UnwarpOrDefault
+// UnwarpOrDefault 返回指针的值，如果指针为零值，则返回相应零值.
 func UnwarpOrDefault[T any](p *T) T {
 	return pointer.UnwarpOrDefault(p)
 }
 
-// ExtractPointer
+// ExtractPointer 返回传入interface的底层值.
 func ExtractPointer(value any) any {
 	return pointer.ExtractPointer(value)
 }
