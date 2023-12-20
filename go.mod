@@ -26,6 +26,7 @@ require (
 	github.com/gin-gonic/gin v1.9.1
 	github.com/go-kratos/kratos/v2 v2.7.2
 	github.com/go-oauth2/oauth2/v4 v4.5.2
+	github.com/go-oauth2/redis/v4 v4.1.1
 	github.com/go-playground/validator/v10 v10.16.0
 	github.com/go-redsync/redsync/v4 v4.11.0
 	github.com/gogf/gf/v2 v2.6.0
@@ -154,6 +155,7 @@ require (
 	github.com/go-openapi/swag v0.22.4 // indirect
 	github.com/go-playground/locales v0.14.1 // indirect
 	github.com/go-playground/universal-translator v0.18.1 // indirect
+	github.com/go-redis/redis/v8 v8.11.5 // indirect
 	github.com/go-sql-driver/mysql v1.7.1 // indirect
 	github.com/go-task/slim-sprig v0.0.0-20230315185526-52ccab3ef572 // indirect
 	github.com/go-text/render v0.0.0-20230619120952-35bccb6164b8 // indirect
