@@ -2,20 +2,21 @@ package oauth2Kit
 
 import (
 	oredis "github.com/go-oauth2/redis/v4"
-	"github.com/redis/go-redis/v9"
-	"github.com/richelieu-yang/chimera/v2/src/core/errorKit"
-	"github.com/richelieu-yang/chimera/v2/src/reflectKit"
+	"github.com/go-redis/redis/v8"
 )
 
-//var (
-//	NewRedisStore func(opts *redis.Options, keyNamespace ...string) *oredis.TokenStore = oredis.NewRedisStore
-//)
+// NewRedisStore
+/*
+Deprecated: go-oauth2/redis 使用的是 go-redis/redis/v8，版本太低了.
+*/
+func NewRedisStore(client *redis.Client, keyNamespace ...string) *oredis.TokenStore {
+	return oredis.NewRedisStoreWithCli(client, keyNamespace...)
+}
 
-func NewRedisStore(client redis.UniversalClient) (*oredis.TokenStore, error) {
-	// Richelieu: 由于 go-oauth2/redis 使用的是 go-redis/redis/v8，版本太低了，所以此处使用反射修改未导出字段.
-	store := &oredis.TokenStore{}
-	if err := reflectKit.SetField(store, "cli", client); err != nil {
-		return nil, errorKit.Wrap(err, "Fail to set unexported field 'cli'")
-	}
-	return store, nil
+// NewRedisClusterStoreWithCli
+/*
+Deprecated: go-oauth2/redis 使用的是 go-redis/redis/v8，版本太低了.
+*/
+func NewRedisClusterStoreWithCli(client *redis.ClusterClient, keyNamespace ...string) *oredis.TokenStore {
+	return oredis.NewRedisClusterStoreWithCli(client, keyNamespace...)
 }
