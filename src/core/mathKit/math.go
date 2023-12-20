@@ -6,10 +6,25 @@ import (
 	"golang.org/x/exp/constraints"
 )
 
-// Average 计算平均数.
-/*
-PS: 可能需要对返回值进行四舍五入.
-*/
+var (
+	// Exponent 指数计算（x的n次方）
+	/*
+	   @return x^n
+
+	   e.g.
+	   	(2, 10)	=> 1024
+	   	(8, 2)	=> 64
+	*/
+	Exponent func(x, n int64) int64 = mathutil.Exponent
+
+	// Factorial 计算阶乘
+	Factorial func(x uint) uint = mathutil.Factorial
+
+	// Fibonacci 计算斐波那契数列的第n个数
+	Fibonacci func(first, second, n int) int = mathutil.Fibonacci
+)
+
+// Average 计算平均数（可能需要对结果调用RoundToFloat方法四舍五入）
 func Average[T constraints.Integer | constraints.Float](numbers ...T) T {
 	return mathutil.Average[T](numbers...)
 }
@@ -33,16 +48,6 @@ func Clamp[T constraints.Ordered](value T, min T, max T) T {
 func Abs[T constraints.Integer | constraints.Float](x T) T {
 	return mathutil.Abs(x)
 }
-
-// Exponent 乘方运算（x^n，即x的n次幂）.
-/*
-@return x^n
-
-e.g.
-	(2, 10)	=> 1024
-	(8, 2)	=> 64
-*/
-var Exponent func(x, n int64) int64 = mathutil.Exponent
 
 // Sin 正弦函数.
 /*
