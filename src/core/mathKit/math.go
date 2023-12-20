@@ -10,11 +10,13 @@ import (
 var (
 	// Exponent 指数计算（x的n次方）.
 	/*
-	   @return x^n
+		@param x 底数
+		@param n 指数
+		@return x^n
 
-	   e.g.
-	   	(2, 10)	=> 1024
-	   	(8, 2)	=> 64
+		e.g.
+		(2, 10)	=> 1024
+		(8, 2)	=> 64
 	*/
 	Exponent func(x, n int64) int64 = mathutil.Exponent
 
