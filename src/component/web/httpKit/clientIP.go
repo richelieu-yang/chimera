@@ -1,10 +1,16 @@
 package httpKit
 
 import (
+	"github.com/duke-git/lancet/v2/netutil"
 	"github.com/richelieu-yang/chimera/v2/src/core/errorKit"
 	"net"
 	"net/http"
 	"strings"
+)
+
+var (
+	// GetRequestPublicIp 获取http请求ip.
+	GetRequestPublicIp func(req *http.Request) string = netutil.GetRequestPublicIp
 )
 
 // GetClientIP
