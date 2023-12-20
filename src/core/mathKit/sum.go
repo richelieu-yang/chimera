@@ -18,7 +18,7 @@ func Sum[T constraints.Float | constraints.Integer | constraints.Complex](s []T)
 
 // SumBy 求和.
 /*
-PS: 不使用lancet的mathutil，原因: 泛型更广.
+PS: 不使用lancet的mathutil，原因: 泛型更广、没有SumBy.
 
 @param s 		可以为nil（此时返回0）
 @param iteratee	(1) 不能为nil（除非s == nil），否则会导致panic: runtime error: invalid memory address or nil pointer dereference
