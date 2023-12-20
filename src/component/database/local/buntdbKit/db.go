@@ -25,6 +25,9 @@ func Open(path string) (*buntdb.DB, error) {
 }
 
 // OpenInMemory 不会持久化到磁盘上.
+/*
+PS: 读写更快.
+*/
 func OpenInMemory() (*buntdb.DB, error) {
 	return buntdb.Open(MemoryPath)
 }
