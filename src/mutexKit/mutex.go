@@ -1,35 +1,23 @@
 package mutexKit
 
 import (
-	"sync"
+	"github.com/gogf/gf/v2/os/gmutex"
 )
 
-// Mutex 互斥锁.
-/*
-PS: 结构体中使用此锁，可以考虑"匿名字段".
-*/
-type Mutex struct {
-	sync.Mutex
-}
-
-func (m *Mutex) LockFunc(f func()) {
-	m.Lock()
-	defer m.Unlock()
-
-	f()
-}
-
-func (m *Mutex) TryLockFunc(f func()) (result bool) {
-	if m.TryLock() {
-		defer m.Unlock()
-
-		result = true
-		f()
+type (
+	// Mutex 互斥锁.
+	/*
+		PS: 也可以让 结构体 继承 Mutex.
+	*/
+	Mutex struct {
+		gmutex.Mutex
 	}
-	return
-}
 
-// NewMutex Deprecated: 直接用 &Mutex{} 吧.
-func NewMutex() *Mutex {
-	return &Mutex{}
-}
+	// RWMutex 读写锁.
+	/*
+		PS: 也可以让 结构体 继承 RWMutex.
+	*/
+	RWMutex struct {
+		gmutex.RWMutex
+	}
+)
