@@ -11,7 +11,8 @@ const (
 
 // Open
 /*
-@param 存储数据的文件路径（会自动创建父目录）
+@param 存储数据的文件路径	(1) 会自动创建父目录
+						(2) It will be created if it doesn't exist.
 */
 func Open(path string) (*buntdb.DB, error) {
 	if path == MemoryPath {
