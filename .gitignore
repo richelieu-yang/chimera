@@ -31,3 +31,4 @@
 !/test.sh
 /_*.pem
 /src/component/database/local/rocksdbKit/_testDir/
+**/_test.db
