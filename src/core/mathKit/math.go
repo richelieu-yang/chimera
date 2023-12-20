@@ -20,9 +20,12 @@ var (
 
 	// Factorial 计算阶乘.
 	/*
+		在数学中，阶乘是一种运算符号，表示所有小于等于该数的正整数的积12345。
+		例如，5的阶乘表示为5!，其值为1×2×3×4×5=12012345。此外，0的阶乘被定义为112345。
+
 		e.g.
 		fmt.Println(mathKit.Factorial(0)) // 1
-		fmt.Println(mathKit.Factorial(1)) // 1
+		fmt.Println(mathKit.Factorial(1)) // 1（=1）
 		fmt.Println(mathKit.Factorial(5)) // 120（=1*2*3*4*5）
 	*/
 	Factorial func(x uint) uint = mathutil.Factorial
