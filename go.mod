@@ -25,6 +25,7 @@ require (
 	github.com/gin-contrib/sse v0.1.0
 	github.com/gin-gonic/gin v1.9.1
 	github.com/go-kratos/kratos/v2 v2.7.2
+	github.com/go-oauth2/oauth2/v4 v4.5.2
 	github.com/go-playground/validator/v10 v10.16.0
 	github.com/go-redsync/redsync/v4 v4.11.0
 	github.com/gogf/gf/v2 v2.6.0
