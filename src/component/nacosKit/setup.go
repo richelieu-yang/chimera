@@ -117,10 +117,7 @@ func GetClientConfigCopy(options ...constant.ClientOption) (*constant.ClientConf
 	}
 
 	// 深拷贝
-	clientConfig1, err := copyKit.DeepCopy(clientConfig)
-	if err != nil {
-		return nil, errorKit.Wrap(err, "Fail to deep copy.")
-	}
+	clientConfig1 := copyKit.DeepCopy(clientConfig)
 
 	// 再次修改 *constant.ClientConfig
 	for _, option := range options {

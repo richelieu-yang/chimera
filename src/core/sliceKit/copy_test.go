@@ -26,10 +26,7 @@ func TestDeepCopy(t *testing.T) {
 		"Name": "张三",
 	}
 	s := []interface{}{666, m}
-	s1, err := DeepCopy(s)
-	if err != nil {
-		panic(err)
-	}
+	s1 := DeepCopy(s)
 
 	s[0] = 999
 	m["Name"] = "李四"

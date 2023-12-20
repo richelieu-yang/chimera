@@ -48,6 +48,6 @@ func Copy[T any](s []T) []T {
 }
 
 // DeepCopy 深拷贝
-func DeepCopy[T any](s []T) ([]T, error) {
+func DeepCopy[T any](s []T) []T {
 	return copyKit.DeepCopy(s)
 }

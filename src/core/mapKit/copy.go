@@ -15,6 +15,6 @@ func Copy[K comparable, V any](m map[K]V) map[K]V {
 	return dest
 }
 
-func DeepCopy[K comparable, V any](m map[K]V) (map[K]V, error) {
+func DeepCopy[K comparable, V any](m map[K]V) map[K]V {
 	return copyKit.DeepCopy(m)
 }

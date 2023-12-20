@@ -31,10 +31,7 @@ func TestDeepCopy(t *testing.T) {
 		"b":  2,
 	}
 
-	dolly, err := DeepCopy(m1)
-	if err != nil {
-		panic(err)
-	}
+	dolly := DeepCopy(m1)
 	m0["a"] = "a"
 	m1["b"] = "b"
 
