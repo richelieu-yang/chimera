@@ -13,7 +13,7 @@ var (
 	GetRequestPublicIp func(req *http.Request) string = netutil.GetRequestPublicIp
 )
 
-// GetClientIP
+// GetClientIP Deprecated: Use GetRequestPublicIp instead.
 /*
 !!!: 请注意，恶意用户可以创建伪造的 X-REAL-IP 和 X-FORWARDED-FOR 标头。因此，在处理这些头部信息时需要谨慎。如果可能，应该使用一种方法来验证IP地址的真实性。
 

@@ -1,66 +1,126 @@
 package ipKit
 
 import (
-	"github.com/richelieu-yang/chimera/v2/src/ip/ipKit/ipType"
+	"github.com/duke-git/lancet/v2/netutil"
 	"net"
 )
 
-// GetIpInfo 获取ip字符串的信息.
-/*
-@param str 字符串，IPv4 或 IPv6
-*/
-func GetIpInfo(str string) IpInfo {
-	kind := ipType.UNKNOWN
-	ip := net.ParseIP(str)
-	if ip != nil {
-		// ！！！：加入标签才能break 外面的循环
-		//OuterLoop:
-		//	for _, c := range str {
-		//		switch c {
-		//		case '.':
-		//			kind = ipType.IPv4
-		//			break OuterLoop
-		//		case ':':
-		//			kind = ipType.IPv6
-		//			break OuterLoop
-		//		default:
-		//			break
-		//		}
-		//	}
+var (
+	// GetInternalIp 获取内部ip.
+	/*
+		e.g.
+		fmt.Println(ipKit.GetInternalIp()) // 172.20.10.4
+	*/
+	GetInternalIp func() string = netutil.GetInternalIp
 
-		// If ip is not an IPv4 address, To4 returns nil.
-		if ip.To4() != nil {
-			kind = ipType.IPv4
-		} else {
-			kind = ipType.IPv6
+	// GetIps 获取ipv4地址列表.
+	/*
+		e.g.
+		fmt.Println(ipKit.GetIps()) // [172.20.10.4 198.18.0.1]
+	*/
+	GetIps func() []string = netutil.GetIps
+
+	// GetPublicIpInfo 获取公网ip信息.
+	/*
+		PS: 涉及发送http请求, 会有一定的耗时（得考虑内网环境）.
+
+		e.g.
+		info, err := ipKit.GetPublicIpInfo()
+		if err != nil {
+			panic(err)
 		}
-	}
+		fmt.Println(jsonKit.MarshalIndentToString(info, "", "    "))
 
-	return IpInfo{
-		Type: kind,
-		IP:   ip,
-	}
-}
+		# Output
+		{
+		    "status": "success",
+		    "country": "China",
+		    "countryCode": "CN",
+		    "region": "JS",
+		    "regionName": "Jiangsu",
+		    "city": "Suzhou",
+		    "lat": 31.3093,
+		    "lon": 120.602,
+		    "isp": "Chinanet",
+		    "org": "Chinanet JS",
+		    "as": "AS4134 CHINANET-BACKBONE",
+		    "query": "49.93.33.211"
+		} <nil>
+	*/
+	GetPublicIpInfo func() (*netutil.PublicIpInfo, error) = netutil.GetPublicIpInfo
 
-// IsIP 检查传参是否为ip（支持ipv4和ipv6）？
-/*
-参考：https://www.php.cn/be/go/441401.html
-*/
-func IsIP(str string) bool {
-	return net.ParseIP(str) != nil
-}
+	// IsPublicIP 判断ip是否是公共ip.
+	IsPublicIP func(IP net.IP) bool = netutil.IsPublicIP
 
-// IsIPv4
-/*
-"0.0.0.0" 	=> true
-"127.0.0.1"	=> true
-*/
-func IsIPv4(str string) bool {
-	ip := net.ParseIP(str)
-	return ip != nil && ip.To4() != nil
-}
+	// IsInternalIP 判断ip是否是局域网ip.
+	IsInternalIP func(IP net.IP) bool = netutil.IsInternalIP
+)
 
-func IsIPv6(str string) bool {
-	ip := net.ParseIP(str)
-	return ip != nil && ip.To4() == nil
-}
+//// GetLocalIPs
+///*
+//流程:
+//	使用 net.InterfaceAddrs() 来获取所有网卡的地址，然后遍历这些地址，找到 IPv4地址 且 不是回环地址 的IP地址
+//缺陷:
+//	这种方法无法直接获取到对外的IP地址，只能判断IPv4和非回环地址，多IP情况还需要额外进行判断。
+//*/
+//func GetLocalIPs() ([]string, error) {
+//	addrs, err := net.InterfaceAddrs()
+//	if err != nil {
+//		return nil, err
+//	}
+//
+//	var ips []string
+//	for _, address := range addrs {
+//		if ipNet, ok := address.(*net.IPNet); ok && !ipNet.IP.IsLoopback() {
+//			if ipNet.IP.To4() != nil {
+//				ips = append(ips, ipNet.IP.String())
+//			}
+//		}
+//	}
+//	if ips == nil {
+//		return nil, errorKit.New("fail to get local ips")
+//	}
+//	return ips, nil
+//}
+//
+//var outboundIp string
+//var outboundIpErr error
+//var outboundOnce sync.Once
+//
+//// GetOutboundIP 获取: 对外的ip地址
+///*
+//系统性能数据gopsutil库
+//	https://topgoer.com/%E5%85%B6%E4%BB%96/%E7%B3%BB%E7%BB%9F%E6%80%A7%E8%83%BD%E6%95%B0%E6%8D%AEgopsutil%E5%BA%93.html
+//通过 UDP 获取本机 IP
+//	http://t.zoukankan.com/fousor-p-14874576.html
+//
+//PS: 由于会申请一个UDP的端口，所以如果经常调用也会比较耗时的，这里如果需要可以将查询到的IP给缓存起来，性能可以获得很大提升.
+//
+//流程:
+//(1) 使用 net.Dial 连接到一个外部地址（例如“8.8.8.8:53”），
+//(2) 然后通过 conn.LocalAddr() 获取到本地IP地址.
+//
+//优点:
+//	这种方法可以直接获取到对外的IP地址.
+//	(a) 使用 UDP 的优点是不需要关注是否送达，只需要对应的 {ip}:{port} 结构正确，即可获取到IP地址；
+//	(b) 这里使用TCP 也是可以的，只是需要保证对应的 {ip}:{port} 连通性.
+//*/
+//func GetOutboundIP() (string, error) {
+//	outboundOnce.Do(func() {
+//		callback := func() (string, error) {
+//			addr := "8.8.8.8:80"
+//
+//			// 使用UDP（不需要保证addr的连通性）
+//			conn, err := net.Dial("udp", addr)
+//			if err != nil {
+//				return "", err
+//			}
+//			defer conn.Close()
+//			localAddr := conn.LocalAddr().(*net.UDPAddr)
+//			return localAddr.IP.String(), nil
+//		}
+//		outboundIp, outboundIpErr = callback()
+//	})
+//
+//	return outboundIp, outboundIpErr
+//}
