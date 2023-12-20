@@ -2,10 +2,11 @@ package main
 
 import (
 	"fmt"
-	"github.com/richelieu-yang/chimera/v2/src/core/sliceKit"
+	"github.com/richelieu-yang/chimera/v2/src/core/mathKit"
 )
 
 func main() {
-	fmt.Println(sliceKit.Range(-4, 4))            // [-4 -3 -2 -1]
-	fmt.Println(sliceKit.RangeWithStep(-4, 1, 2)) // [-4 -2 0]
+	fmt.Println(mathKit.Factorial(0)) // 1
+	fmt.Println(mathKit.Factorial(1)) // 1
+	fmt.Println(mathKit.Factorial(5)) // 120（=1*2*3*4*5）
 }

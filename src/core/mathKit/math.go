@@ -8,7 +8,7 @@ import (
 )
 
 var (
-	// Exponent 指数计算（x的n次方）
+	// Exponent 指数计算（x的n次方）.
 	/*
 	   @return x^n
 
@@ -18,22 +18,28 @@ var (
 	*/
 	Exponent func(x, n int64) int64 = mathutil.Exponent
 
-	// Factorial 计算阶乘
+	// Factorial 计算阶乘.
+	/*
+		e.g.
+		fmt.Println(mathKit.Factorial(0)) // 1
+		fmt.Println(mathKit.Factorial(1)) // 1
+		fmt.Println(mathKit.Factorial(5)) // 120（=1*2*3*4*5）
+	*/
 	Factorial func(x uint) uint = mathutil.Factorial
 
-	// IsPrime 判断质数。
+	// IsPrime 判断质数.
 	IsPrime func(n int) bool = mathutil.IsPrime
 
-	// Fibonacci 计算斐波那契数列的第n个数
+	// Fibonacci 计算斐波那契数列的第n个数.
 	Fibonacci func(first, second, n int) int = mathutil.Fibonacci
 
-	// PointDistance 计算两个坐标点的距离
+	// PointDistance 计算两个坐标点的距离.
 	PointDistance func(x1, y1, x2, y2 float64) float64 = mathutil.PointDistance
 
-	// AngleToRadian 将角度值转为弧度值
+	// AngleToRadian 将角度值转为弧度值.
 	AngleToRadian func(angle float64) float64 = mathutil.AngleToRadian
 
-	// RadianToAngle 将弧度值转为角度值
+	// RadianToAngle 将弧度值转为角度值.
 	RadianToAngle func(radian float64) float64 = mathutil.RadianToAngle
 
 	// Sin 正弦函数（计算弧度的正弦值）.
@@ -45,7 +51,7 @@ var (
 	// Cos 余弦函数（计算弧度的余弦值）.
 	Cos func(radian float64, precision ...int) float64 = mathutil.Cos
 
-	// Log 计算以base为底n的对数。
+	// Log 计算以base为底n的对数.
 	Log func(n, base float64) float64 = mathutil.Log
 )
 
