@@ -2,7 +2,7 @@ package main
 
 import (
 	"fmt"
-	"reflect"
+	"github.com/richelieu-yang/chimera/v2/src/reflectKit"
 )
 
 type Person struct {
@@ -12,10 +12,10 @@ type Person struct {
 
 func main() {
 	p := Person{"John", 30}
-	v := reflect.ValueOf(&p).Elem()
-	f := v.FieldByName("name")
-	if f.IsValid() && f.CanSet() {
-		f.SetString("Doe")
+	fmt.Println(p)
+
+	if err := reflectKit.SetField(&p, "name", "Tom"); err != nil {
+		panic(err)
 	}
 	fmt.Println(p)
 }

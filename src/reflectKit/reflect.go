@@ -1,7 +1,6 @@
 package reflectKit
 
 import (
-	"fmt"
 	"github.com/richelieu-yang/chimera/v2/src/core/errorKit"
 	"reflect"
 	"unsafe"
@@ -39,8 +38,10 @@ func GetNestedField(ptr interface{}, fieldNames ...string) (reflect.Value, error
 	return v, nil
 }
 
-// SetField
+// SetField 设置字段的值.
 /*
+PS: 支持设置 未导出字段 的值.
+
 @param fieldName 		字段名（属性名），private或public的都可以
 @param newFieldValue	字段的新值
 */
@@ -51,7 +52,7 @@ func SetField(ptr interface{}, fieldName string, newFieldValue interface{}) erro
 
 	v1 := reflect.ValueOf(newFieldValue)
 	if v.Kind() != v1.Kind() {
-		return fmt.Errorf("expected kind %v, got kind: %v", v.Kind(), v1.Kind())
+		return errorKit.New("expected kind %v, got kind: %v", v.Kind(), v1.Kind())
 	}
 	v.Set(v1)
 	return nil
