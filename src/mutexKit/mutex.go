@@ -21,3 +21,13 @@ type (
 		gmutex.RWMutex
 	}
 )
+
+// NewMutex 互斥锁.
+func NewMutex() *Mutex {
+	return &Mutex{}
+}
+
+// NewRWMutex 读写锁.
+func NewRWMutex() *RWMutex {
+	return &RWMutex{}
+}
