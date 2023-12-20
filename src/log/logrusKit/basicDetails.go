@@ -66,16 +66,10 @@ func PrintBasicDetails(logger *logrus.Logger) {
 	//}
 
 	/* ip */
-	if ips, err := ipKit.GetLocalIPs(); err != nil {
-		logger.WithError(err).Warn("[CHIMERA, IP] Fail to get local ips.")
-	} else {
-		logger.Infof("[CHIMERA, IP] local IPs: %s.", ips)
-	}
-	if ip, err := ipKit.GetOutboundIP(); err != nil {
-		logger.WithError(err).Warn("[CHIMERA, IP] Fail to get outbound ip.")
-	} else {
-		logger.Infof("[CHIMERA, IP] outbound IP: [%s].", ip)
-	}
+	InternalIp := ipKit.GetInternalIp()
+	logger.Infof("[CHIMERA, IP] internal ip: [%s].", InternalIp)
+	ips := ipKit.GetIps()
+	logger.Infof("[CHIMERA, IP] ips: [%s].", sliceKit.Join(ips, ", "))
 
 	/* host */
 	if hostInfo, err := runtimeKit.GetHostInfo(); err != nil {
