@@ -5,35 +5,34 @@ import (
 	"github.com/shopspring/decimal"
 )
 
-// Round
-/*
-e.g.
-	fmt.Println(Round(3.14, 1))  // 3.1
-	fmt.Println(Round(3.15, 1))  // 3.2
-	fmt.Println(Round(-3.14, 1)) // -3.1
-	fmt.Println(Round(-3.15, 1)) // -3.2
-*/
-func Round(f float64, places int) float64 {
-	return mathutil.RoundToFloat(f, places)
-}
+var (
+	// Round 四舍五入，保留n位小数
+	/*
+	   e.g.
+	   	fmt.Println(Round(3.14, 1))  // 3.1
+	   	fmt.Println(Round(3.15, 1))  // 3.2
+	   	fmt.Println(Round(-3.14, 1)) // -3.1
+	   	fmt.Println(Round(-3.15, 1)) // -3.2
+	*/
+	Round = mathutil.RoundToFloat
 
-func RoundToString(f float64, places int) string {
-	return mathutil.RoundToString(f, places)
-}
+	// RoundToString 四舍五入，保留n位小数，返回字符串
+	RoundToString = mathutil.RoundToString
 
-// TruncRound 截断n位小数（不进行四舍五入）
-/*
-@param n 保留的小数位（可以 < 0，但有点奇怪!!!）
+	// TruncRound 截断n位小数（不进行四舍五入）
+	/*
+	   @param n 保留的小数位（可以 < 0，但有点奇怪!!!）
 
-e.g.
-(1234.124, 0)	=> 1234
-(1234.124, -1)	=> 1234
-(1234.124, -2)	=> 0
+	   e.g.
+	   (1234.124, 0)	=> 1234
+	   (1234.124, -1)	=> 1234
+	   (1234.124, -2)	=> 0
 
-(100.125, 2)	=> 100.12
-(100.125, 3)	=> 100.125
-*/
-var TruncRound func(x float64, n int) float64 = mathutil.TruncRound
+	   (100.125, 2)	=> 100.12
+	   (100.125, 3)	=> 100.125
+	*/
+	TruncRound func(x float64, n int) float64 = mathutil.TruncRound
+)
 
 //// Round 保留小数位（四舍五入），类似于 math.Round()，但功能更强大
 ///*
