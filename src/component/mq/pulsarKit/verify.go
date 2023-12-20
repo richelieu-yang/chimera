@@ -4,8 +4,8 @@ import (
 	"context"
 	"fmt"
 	"github.com/apache/pulsar-client-go/pulsar"
+	"github.com/richelieu-yang/chimera/v2/src/core/conditionKit"
 	"github.com/richelieu-yang/chimera/v2/src/core/errorKit"
-	"github.com/richelieu-yang/chimera/v2/src/core/mathKit"
 	"github.com/richelieu-yang/chimera/v2/src/core/pathKit"
 	"github.com/richelieu-yang/chimera/v2/src/core/sliceKit"
 	"github.com/richelieu-yang/chimera/v2/src/core/strKit"
@@ -53,7 +53,7 @@ func verify(config *VerifyConfig) (err error) {
 	producerLogPath := pathKit.Join(tmpDirPath, fmt.Sprintf("pulsar_verify_producer_%s_%s.log", timeStr, ulid))
 
 	// 是否打印日志到控制台？
-	level := mathKit.Ternary(config.Print, logrus.DebugLevel, logrus.PanicLevel)
+	level := conditionKit.TernaryOperator(config.Print, logrus.DebugLevel, logrus.PanicLevel)
 	logger := logrusKit.NewLogger(logrusKit.WithLevel(level), logrusKit.WithMsgPrefix("[PULSAR, VERIFY]"))
 	logger.Infof("consumerLogPath: [%s].", consumerLogPath)
 	logger.Infof("producerLogPath: [%s].", producerLogPath)
