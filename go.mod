@@ -60,7 +60,7 @@ require (
 	github.com/oklog/ulid/v2 v2.1.0
 	github.com/panjf2000/ants/v2 v2.9.0
 	github.com/pkg/browser v0.0.0-20210911075715-681adbf594b8
-	github.com/redis/go-redis/v9 v9.3.0
+	github.com/redis/go-redis/v9 v9.3.1
 	github.com/robfig/cron/v3 v3.0.1
 	github.com/rs/xid v1.5.0
 	github.com/saintfish/chardet v0.0.0-20230101081208-5e3ef4b5456d
@@ -76,6 +76,7 @@ require (
 	github.com/swaggo/files v1.0.1
 	github.com/swaggo/gin-swagger v1.6.0
 	github.com/swaggo/swag v1.16.2
+	github.com/tidwall/buntdb v1.3.0
 	github.com/tidwall/gjson v1.17.0
 	github.com/xuri/excelize/v2 v2.8.0
 	github.com/zeromicro/go-zero v1.6.1
@@ -88,7 +89,7 @@ require (
 	go.opentelemetry.io/otel/trace v1.21.0
 	go.uber.org/automaxprocs v1.5.3
 	go.uber.org/zap v1.26.0
-	golang.org/x/exp v0.0.0-20231214170342-aacd6d4b4611
+	golang.org/x/exp v0.0.0-20231219180239-dc181d75b848
 	golang.org/x/image v0.14.0
 	golang.org/x/net v0.19.0
 	golang.org/x/text v0.14.0
@@ -224,7 +225,6 @@ require (
 	github.com/subosito/gotenv v1.6.0 // indirect
 	github.com/tevino/abool v1.2.0 // indirect
 	github.com/tidwall/btree v1.4.2 // indirect
-	github.com/tidwall/buntdb v1.3.0 // indirect
 	github.com/tidwall/grect v0.1.4 // indirect
 	github.com/tidwall/match v1.1.1 // indirect
 	github.com/tidwall/pretty v1.2.0 // indirect
