@@ -44,6 +44,9 @@ func Nand[T, U any](a T, b U) bool {
 }
 
 // TernaryOperator 三目运算符（三元运算符）
+/*
+!!!: 传参 ifValue 和 elseValue，如果涉及复杂运算（调用方法或函数...），还是老老实实使用 if else 吧.
+*/
 func TernaryOperator[T, U any](isTrue T, ifValue U, elseValue U) U {
 	return condition.TernaryOperator(isTrue, ifValue, elseValue)
 }
