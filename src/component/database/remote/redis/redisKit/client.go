@@ -6,6 +6,7 @@ import (
 	"github.com/redis/go-redis/v9"
 	"github.com/richelieu-yang/chimera/v2/src/core/errorKit"
 	"github.com/richelieu-yang/chimera/v2/src/core/strKit"
+	"github.com/richelieu-yang/chimera/v2/src/validateKit"
 	"time"
 )
 
@@ -49,7 +50,7 @@ func (client *Client) GetUniversalClient() redis.UniversalClient {
 	return client.universalClient
 }
 
-// NewClient 新建一个go-redis客户端（内置连接池，调用方无需额外考虑并发问题）
+// NewClient 新建一个go-redis客户端（内置连接池，调用方无需额外考虑并发问题）.
 /*
 !!!: 每一个命令都会重新取得一个连接，执行后立即回收，而且回收到资源池的顺序类似于堆. https://www.cnblogs.com/yangqi7/p/13289232.html
 
@@ -58,7 +59,14 @@ func (client *Client) GetUniversalClient() redis.UniversalClient {
 @return	(1) 两个返回值，必定有一个为nil，另一个非nil；
 		(2) Cluster模式下，第1个返回值的类型: *redis.ClusterClient.
 */
-func NewClient(config Config) (client *Client, err error) {
+func NewClient(config *Config) (client *Client, err error) {
+	/* 先简化，再验证（以免通不过验证） */
+	config.Simplify()
+	if err = validateKit.Struct(config); err != nil {
+		err = errorKit.Wrap(err, "Fail to verify")
+		return
+	}
+
 	var opts *redis.UniversalOptions
 	switch config.Mode {
 	case ModeSingle:
@@ -114,7 +122,7 @@ func NewClient(config Config) (client *Client, err error) {
 	return
 }
 
-func newBaseOptions(config Config) *redis.UniversalOptions {
+func newBaseOptions(config *Config) *redis.UniversalOptions {
 	return &redis.UniversalOptions{
 		Username: config.UserName,
 		Password: config.Password,
@@ -122,7 +130,7 @@ func newBaseOptions(config Config) *redis.UniversalOptions {
 }
 
 // newSingleOptions 单点模式
-func newSingleOptions(config Config) (*redis.UniversalOptions, error) {
+func newSingleOptions(config *Config) (*redis.UniversalOptions, error) {
 	c := config.Single
 
 	opts := newBaseOptions(config)
@@ -132,12 +140,12 @@ func newSingleOptions(config Config) (*redis.UniversalOptions, error) {
 }
 
 // newMasterSlaveOptions 主从模式
-func newMasterSlaveOptions(config Config) (*redis.UniversalOptions, error) {
+func newMasterSlaveOptions(config *Config) (*redis.UniversalOptions, error) {
 	return nil, errorKit.New("mode(%s) is unsupported now", config.Mode)
 }
 
 // newSentinelOptions 哨兵模式
-func newSentinelOptions(config Config) (*redis.UniversalOptions, error) {
+func newSentinelOptions(config *Config) (*redis.UniversalOptions, error) {
 	c := config.Sentinel
 
 	opts := newBaseOptions(config)
@@ -148,7 +156,7 @@ func newSentinelOptions(config Config) (*redis.UniversalOptions, error) {
 }
 
 // newClusterOptions cluster模式
-func newClusterOptions(config Config) (*redis.UniversalOptions, error) {
+func newClusterOptions(config *Config) (*redis.UniversalOptions, error) {
 	c := config.Cluster
 
 	opts := newBaseOptions(config)
