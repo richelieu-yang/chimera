@@ -10,7 +10,7 @@ func TestNewPool(t *testing.T) {
 	//size := 1
 	size := 3
 
-	pool, err := NewPool(size)
+	pool, err := NewAntPool(size)
 	if err != nil {
 		panic(err)
 	}
@@ -22,7 +22,9 @@ func TestNewPool(t *testing.T) {
 			logrus.Info(j)
 		})
 		if err != nil {
-			logrus.WithError(err).Error("fail to submit")
+			logrus.WithError(err).Error("Fail to submit.")
+		} else {
+			logrus.Info("Manager to submit.")
 		}
 	}
 	for {
@@ -36,7 +38,7 @@ func TestNewPool(t *testing.T) {
 }
 
 func TestNewPool1(t *testing.T) {
-	pool, err := NewPool(1)
+	pool, err := NewAntPool(1)
 	if err != nil {
 		logrus.WithError(err).Fatal("0")
 	}
@@ -48,5 +50,5 @@ func TestNewPool1(t *testing.T) {
 		logrus.WithError(err).Fatal("1")
 	}
 
-	time.Sleep(time.Second * 3)
+	time.Sleep(time.Second * 300)
 }
