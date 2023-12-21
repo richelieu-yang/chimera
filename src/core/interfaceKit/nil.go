@@ -29,10 +29,5 @@ func IsNil(obj interface{}) bool {
 	//return obj == nil
 
 	// golang中nil的判断 https://blog.csdn.net/weixin_44579563/article/details/129583860
-	//if obj == nil {
-	//	return true
-	//}
-	//return reflect.ValueOf(obj).IsNil()
-
 	return obj == nil || reflect.ValueOf(obj).IsNil()
 }
