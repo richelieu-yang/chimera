@@ -8,7 +8,7 @@ type (
 		/*
 			0（默认）: 不使用 http port
 		*/
-		Port     int  `json:"port" yaml:"port" validate:"port|eq=0"`
+		Port     int  `json:"port" yaml:"port" validate:"port|eq=0,necsfield=SSL.Port"`
 		Colorful bool `json:"colorful" yaml:"colorful"`
 		Pprof    bool `json:"pprof" yaml:"pprof"`
 

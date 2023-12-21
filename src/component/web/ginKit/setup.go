@@ -5,9 +5,9 @@ import (
 	"github.com/gin-gonic/gin"
 	"github.com/richelieu-yang/chimera/v2/src/consts"
 	"github.com/richelieu-yang/chimera/v2/src/core/errorKit"
-	"github.com/richelieu-yang/chimera/v2/src/core/interfaceKit"
 	"github.com/richelieu-yang/chimera/v2/src/log/logrusKit"
 	"github.com/richelieu-yang/chimera/v2/src/netKit"
+	"github.com/richelieu-yang/chimera/v2/src/validateKit"
 	"github.com/sirupsen/logrus"
 	"time"
 )
@@ -29,7 +29,7 @@ PS: 正常执行的情况下，此方法会阻塞调用的协程.
 @param businessLogic 		可以为nil；业务逻辑，可以在其中进行 路由绑定 等操作...
 */
 func setUp(config *Config, recoveryMiddleware gin.HandlerFunc, businessLogic func(engine *gin.Engine) error) error {
-	if err := interfaceKit.AssertNotNil(config, "config"); err != nil {
+	if err := validateKit.Struct(config); err != nil {
 		return err
 	}
 
