@@ -73,7 +73,7 @@ func getNetworkTimeBySource(client *reqKit.Client, url string) (time.Time, error
 		return time.Time{}, err
 	}
 
-	t, err := Parse(string(FormatNetwork), dateStr)
+	t, err := Parse(string(FormatRFC1123), dateStr)
 	if err != nil {
 		return time.Time{}, err
 	}
