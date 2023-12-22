@@ -28,6 +28,8 @@ func SetUp(config *Config) error {
 
 	logrus.SetFormatter(NewDefaultTextFormatter())
 	logrus.SetReportCaller(true)
+
+	// 默认日志级别: Debug
 	level, err := ParseLevel(config.Level)
 	if err != nil {
 		return err
