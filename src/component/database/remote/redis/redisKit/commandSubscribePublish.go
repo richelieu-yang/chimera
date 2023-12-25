@@ -38,7 +38,8 @@ e.g. 监听 db0 中key的超时
 	传参channels: "__keyevent@0__:expired"
 */
 func (client *Client) Subscribe(ctx context.Context, channels ...string) *redis.PubSub {
-	return client.universalClient.Subscribe(ctx, channels...)
+	cmd := client.universalClient
+	return cmd.Subscribe(ctx, channels...)
 }
 
 // PSubscribe 模式的订阅（对频道的模糊匹配，通过*）.
