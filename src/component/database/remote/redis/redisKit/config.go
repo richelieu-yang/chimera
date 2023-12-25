@@ -2,7 +2,12 @@ package redisKit
 
 type (
 	Config struct {
-		UserName  string `json:"userName" yaml:"userName"`
+		UserName string `json:"userName" yaml:"userName"`
+		// Password
+		/*
+		  如果Redis有密码，此处配置必须配置;
+		  如果Redis无密码，此处配置配不配置皆可（配置了也不会报错）.
+		*/
 		Password  string `json:"password" yaml:"password"`
 		KeyPrefix string `json:"keyPrefix" yaml:"keyPrefix"`
 
