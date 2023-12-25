@@ -1,6 +1,7 @@
 package compareKit
 
 import (
+	"github.com/duke-git/lancet/v2/compare"
 	"github.com/google/go-cmp/cmp"
 	"reflect"
 )
@@ -33,7 +34,10 @@ e.g.
 */
 var Equal func(x, y interface{}, opts ...cmp.Option) bool = cmp.Equal
 
-// Equal1 比较2个结构体实例指针的内容是否相等.
+// Equal1 通过duke-git/lancet.
+var Equal1 func(x, y any) bool = compare.Equal
+
+// Equal2 比较2个结构体实例指针的内容是否相等.
 /*
 e.g.
 	type person struct {
@@ -48,7 +52,7 @@ e.g.
 	fmt.Println(reflect.DeepEqual(p1, p2)) // false
 	fmt.Println(reflect.DeepEqual(p1, p3)) // true
 */
-var Equal1 func(x, y any) bool = reflect.DeepEqual
+var Equal2 func(x, y any) bool = reflect.DeepEqual
 
 // Diff 获取差异.
 /*

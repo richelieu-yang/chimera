@@ -37,8 +37,19 @@ func TestSetUp(t *testing.T) {
 	client = client
 
 	{
-		fmt.Println(client.Ping(context.TODO()))
+		//fmt.Println(client.Ping(context.TODO()))
 
-		client.Publish(context.TODO(), "")
+		rc := c.Redis
+		rc.Password = "wrong password"
+		jsonStr, err := jsonKit.MarshalToString(rc)
+		if err != nil {
+			panic(err)
+		}
+
+		count, err := client.Publish(context.TODO(), "WsRedis", jsonStr)
+		if err != nil {
+			panic(err)
+		}
+		fmt.Println(count)
 	}
 }
