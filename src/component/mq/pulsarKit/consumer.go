@@ -45,7 +45,8 @@ func NewConsumerOriginally(ctx context.Context, addresses []string, options puls
 		}
 		consumer, err = client.Subscribe(options)
 		if err != nil {
-			err = errorKit.Wrap(err, "client fails to subscribe")
+			err = errorKit.Wrap(err, "Client fails to subscribe with topic(%s), subscriptionName(%s) and type(%s)",
+				options.Topic, options.SubscriptionName, options.Type)
 			errCh <- err
 			return
 		}
