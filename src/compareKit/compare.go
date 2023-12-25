@@ -34,7 +34,7 @@ e.g.
 */
 var Equal func(x, y interface{}, opts ...cmp.Option) bool = cmp.Equal
 
-// Equal1 通过duke-git/lancet.
+// Equal1 通过 duke-git/lancet 实现.
 var Equal1 func(x, y any) bool = compare.Equal
 
 // Equal2 比较2个结构体实例指针的内容是否相等.
