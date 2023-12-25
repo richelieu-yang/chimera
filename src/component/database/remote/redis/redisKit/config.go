@@ -1,9 +1,5 @@
 package redisKit
 
-import (
-	"github.com/richelieu-yang/chimera/v2/src/compareKit"
-)
-
 type (
 	Config struct {
 		UserName  string `json:"userName" yaml:"userName"`
@@ -71,41 +67,4 @@ func (config *Config) Simplify() {
 	default:
 		// do nothing
 	}
-}
-
-func (config Config) Equal(config1 Config) bool {
-	config.Simplify()
-	config1.Simplify()
-	return compareKit.Equal(config, config1)
-
-	//if config.UserName != config1.UserName {
-	//	return false
-	//}
-	//if config.Password != config1.Password {
-	//	return false
-	//}
-	//
-	//if config.Mode != config1.Mode {
-	//	return false
-	//}
-	//switch config.Mode {
-	//case ModeSingle:
-	//	if !compareKit.Equal(config.Single, config1.Single) {
-	//		return false
-	//	}
-	//case ModeMasterSlave:
-	//	if !compareKit.Equal(config.MasterSlave, config1.MasterSlave) {
-	//		return false
-	//	}
-	//case ModeSentinel:
-	//	if !compareKit.Equal(config.Sentinel, config1.Sentinel) {
-	//		return false
-	//	}
-	//case ModeCluster:
-	//	if !compareKit.Equal(config.Cluster, config1.Cluster) {
-	//		return false
-	//	}
-	//}
-	//
-	//return true
 }
