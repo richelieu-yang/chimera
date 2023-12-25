@@ -3,7 +3,7 @@ module github.com/richelieu-yang/chimera/v2
 go 1.21
 
 require (
-	fyne.io/fyne/v2 v2.4.2
+	fyne.io/fyne/v2 v2.4.3
 	github.com/alwindoss/morse v1.0.1
 	github.com/apache/pulsar-client-go v0.11.1
 	github.com/apache/rocketmq-clients/golang/v5 v5.0.1-rc.5
