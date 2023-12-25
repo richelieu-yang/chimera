@@ -64,11 +64,11 @@ func (client *Client) XDel(ctx context.Context, stream string, ids ...string) (i
 	return cmd.Result()
 }
 
-// XGroupCreate [消费者] 创建消费者组.("xgroup", "create", stream, group, start)
+// XGroupCreate @Deprecated: Use XGroupCreateMkStream instead.
 /*
-@Deprecated: Use XGroupCreateMkStream instead.
+[消费者] 创建消费者组.("xgroup", "create", stream, group, start)
 
-!!!: 返回的err非nil的话，建议先进行 IsConsumerGroupNameAlreadyExistError 判断，返回true的话忽略该error.
+!!!: 返回的err非nil的话，建议先进行 IsConsumerGroupNameAlreadyExistError 判断，返回true的话忽略该err.
 
 PS:
 (1) 如果 stream 对应的key:	(a) 存在，do nothing;
