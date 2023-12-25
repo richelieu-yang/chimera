@@ -38,5 +38,7 @@ func TestSetUp(t *testing.T) {
 
 	{
 		fmt.Println(client.Ping(context.TODO()))
+
+		client.Publish(context.TODO(), "")
 	}
 }
