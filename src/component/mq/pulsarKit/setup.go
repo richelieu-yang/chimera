@@ -15,25 +15,25 @@ var config *Config
 /*
 @param verifyConfig		可以为nil（将不验证，但不推荐这么干）
 */
-func MustSetUp(config *Config, verifyConfig *VerifyConfig) {
-	if err := SetUp(config, verifyConfig); err != nil {
+func MustSetUp(pulsarConfig *Config, verifyConfig *VerifyConfig) {
+	if err := SetUp(pulsarConfig, verifyConfig); err != nil {
 		logrusKit.DisableQuote(nil)
 		logrus.Fatalf("%+v", err)
 	}
 }
 
-func SetUp(pc *Config, verifyConfig *VerifyConfig) (err error) {
+func SetUp(pulsarConfig *Config, verifyConfig *VerifyConfig) (err error) {
 	defer func() {
 		if err != nil {
 			config = nil
 		}
 	}()
 
-	if err = validateKit.Struct(pc); err != nil {
+	if err = validateKit.Struct(pulsarConfig); err != nil {
 		err = errorKit.Wrap(err, "Fail to verify")
 		return
 	}
-	config = pc
+	config = pulsarConfig
 
 	// verify
 	if err = verify(verifyConfig); err != nil {
