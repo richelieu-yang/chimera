@@ -9,6 +9,7 @@ import (
 // Equal 是否相等？
 /*
 !!!:
+(0) 可能导致卡死（可能是死循环）的情况: 结构体内部的结构体实现了"(T) Equal(T) bool" 或者 "(T) Equal(I) bool";
 (1) 如果传参结构体（或其内部的结构体）实现了 "(T) Equal(T) bool" 或者 "(T) Equal(I) bool"，
 	且方法的receiver必须为 "值类型"，这样的话，无论比较 结构体实例 还是 结构体实例指针 都可以.
 (2) 传参x、y都是 非nil的结构体实例指针，比较的是它们的内容是否相等.
@@ -56,6 +57,9 @@ var Equal2 func(x, y any) bool = reflect.DeepEqual
 
 // Diff 获取差异.
 /*
+!!!:
+(0) 可能导致卡死（可能是死循环）的情况: 结构体内部的结构体实现了"(T) Equal(T) bool" 或者 "(T) Equal(I) bool".
+
 @return 如果为""则说明两个传参一致.
 */
 var Diff func(x, y interface{}, opts ...cmp.Option) string = cmp.Diff
