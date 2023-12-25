@@ -54,6 +54,8 @@ redis:
   # e.g. A服务和B服务都有不同的前缀，A写入数据，B读取数据，可能会导致: B读取不到数据，因为B读取时会加上B的前缀.
   keyPrefix:
   userName:
+  # 如果Redis有密码，此处配置必须配置
+  # 如果Redis无密码，此处配置配不配置皆可（配置了也不会报错）
   password:
   # Redis集群模式
   #   single:       单点
