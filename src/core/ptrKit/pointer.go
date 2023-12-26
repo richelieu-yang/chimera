@@ -5,21 +5,43 @@ import (
 )
 
 // Of 返回传入参数的指针值.
+/*
+e.g.
+	var ptr *string = ptrKit.Of("123")
+	fmt.Println(ptr) // 0x14000110360
+*/
 func Of[T any](v T) *T {
 	return pointer.Of(v)
 }
 
 // Unwrap 返回传入指针指向的值.
+/*
+e.g.
+	var ptr *string = ptrKit.Of("123")
+	fmt.Println(ptr) // 0x140000103b0
+
+	fmt.Println(ptrKit.Unwrap(ptr)) // 123
+*/
 func Unwrap[T any](p *T) T {
 	return pointer.Unwrap(p)
 }
 
-// UnwarpOr 返回指针的值，如果指针为零值，则返回fallback.
+// UnwarpOr 返回指针的值（如果指针为零值，则返回fallback）.
+/*
+e.g.
+	var ptr *int = nil
+	fmt.Println(ptrKit.UnwarpOr(ptr, 123)) // 123
+*/
 func UnwarpOr[T any](p *T, fallback T) T {
 	return pointer.UnwarpOr(p, fallback)
 }
 
-// UnwarpOrDefault 返回指针的值，如果指针为零值，则返回相应零值.
+// UnwarpOrDefault 返回指针的值（如果指针为零值，则返回相应零值）.
+/*
+e.g.
+	var ptr *int = nil
+	fmt.Println(ptrKit.UnwarpOrDefault(ptr)) // 0
+*/
 func UnwarpOrDefault[T any](p *T) T {
 	return pointer.UnwarpOrDefault(p)
 }
