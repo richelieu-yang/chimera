@@ -16,11 +16,17 @@ func Of[T any](v T) *T {
 
 // Unwrap 返回指针的值.
 /*
+@param p 不能为nil（否则会panic）
+
 e.g.
 	var ptr *string = ptrKit.Of("123")
 	fmt.Println(ptr) // 0x140000103b0
 
 	fmt.Println(ptrKit.Unwrap(ptr)) // 123
+
+e.g.1
+	var ptr *string = nil
+	fmt.Println(ptrKit.Unwrap(ptr)) // panic: runtime error: invalid memory address or nil pointer dereference
 */
 func Unwrap[T any](p *T) T {
 	return pointer.Unwrap(p)
@@ -28,6 +34,8 @@ func Unwrap[T any](p *T) T {
 
 // UnwarpOr 返回指针的值（如果指针为零值，则返回fallback）.
 /*
+@param p 可以为nil（将返回 fallback）
+
 e.g.
 	var ptr *int = nil
 	fmt.Println(ptrKit.UnwarpOr(ptr, 123)) // 123
@@ -36,8 +44,10 @@ func UnwarpOr[T any](p *T, fallback T) T {
 	return pointer.UnwarpOr(p, fallback)
 }
 
-// UnwarpOrDefault 返回指针的值（如果指针为零值，则返回相应零值）.
+// UnwarpOrDefault 返回指针的值（如果指针为零值，则返回相应类型的零值）.
 /*
+@param p 可以为nil（将返回 相应类型的零值）
+
 e.g.
 	var ptr *int = nil
 	fmt.Println(ptrKit.UnwarpOrDefault(ptr)) // 0
