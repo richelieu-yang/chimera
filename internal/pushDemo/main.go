@@ -40,7 +40,7 @@ func main() {
 		}
 	})
 
-	pool, err := poolKit.NewPool(2000)
+	pool, err := poolKit.NewAntPool(2000)
 	if err != nil {
 		logrus.Fatal(err)
 	}
