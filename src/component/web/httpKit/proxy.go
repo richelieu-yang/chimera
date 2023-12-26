@@ -45,7 +45,10 @@ func WithErrorLogger(errorLogger *log.Logger) ProxyOption {
 
 // WithReqUrlPath
 /*
-@param reqUrlPath 不带query
+PS: 如果 当前路由 和 目标路由 一致，可以不配置此项；否则必须配置.
+
+@param reqUrlPath 	(1) 不带query;
+					(2) 可以使用 ptrKit.Of() 生成 *string 实例.
 */
 func WithReqUrlPath(reqUrlPath *string) ProxyOption {
 	return func(opts *proxyOptions) {
@@ -65,7 +68,7 @@ PS: 转发请求前如果想变更请求头(Request Header)，可以在调用此
 
 @param w		e.g.ctx.Writer
 @param r 		e.g.ctx.Request
-@param options 	可以为nil
+@param options 	可以不传
 */
 func Proxy(w http.ResponseWriter, r *http.Request, targetAddr string, options ...ProxyOption) error {
 	opts := loadOptions(options...)

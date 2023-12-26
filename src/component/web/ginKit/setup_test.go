@@ -1,18 +1,23 @@
 package ginKit
 
 import (
-	"fmt"
 	"github.com/gin-gonic/gin"
 	"github.com/richelieu-yang/chimera/v2/src/component/web/httpKit"
 	"github.com/richelieu-yang/chimera/v2/src/config/viperKit"
 	"github.com/richelieu-yang/chimera/v2/src/consts"
 	"github.com/richelieu-yang/chimera/v2/src/core/pathKit"
+	"github.com/richelieu-yang/chimera/v2/src/core/ptrKit"
+	"github.com/richelieu-yang/chimera/v2/src/core/strKit"
+	"github.com/richelieu-yang/chimera/v2/src/log/logrusKit"
 	"github.com/sirupsen/logrus"
+	"runtime/debug"
 	"testing"
 )
 
 func TestMustSetUp(t *testing.T) {
 	{
+		logrusKit.MustSetUp(nil)
+
 		wd, err := pathKit.ReviseWorkingDirInTestMode(consts.ProjectName)
 		if err != nil {
 			panic(err)
@@ -32,12 +37,24 @@ func TestMustSetUp(t *testing.T) {
 
 	MustSetUp(c.Gin, nil, func(engine *gin.Engine) error {
 		engine.Any("/test", func(ctx *gin.Context) {
+			defer func() {
+				if obj := recover(); obj != nil {
+					if err, ok := obj.(error); ok {
+						if strKit.ContainsIgnoreCase(err.Error(), "net/http: abort Handler") {
+							// 忽略
+							return
+						}
+					}
+					logrus.WithField("obj", obj).Error("panic")
+					debug.PrintStack()
+				}
+			}()
 
-			httpKit.Proxy(ctx.Writer, ctx.Request, "127.0.0.1:8888")
-
-			fmt.Println(ctx.Request.Header["Content-Type"])
-			fmt.Println(ObtainParam(ctx, "name"))
-			ctx.String(200, "hello")
+			if err := httpKit.Proxy(ctx.Writer, ctx.Request, "127.0.0.1:8888", httpKit.WithReqUrlPath(ptrKit.Of("/push/sse"))); err != nil {
+				logrus.Error(err)
+				return
+			}
+			logrus.Info("Manager to proxy.")
 		})
 		return nil
 	})

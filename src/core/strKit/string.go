@@ -54,6 +54,7 @@ var Contains func(s, substr string) bool = strings.Contains
 /*
 e.g.
 ("abc", "Abc") 	=> true
+("abcde", "BC")	=> true
 */
 func ContainsIgnoreCase(s, substr string) bool {
 	return strings.Contains(ToLower(s), ToLower(substr))
