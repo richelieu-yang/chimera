@@ -6,7 +6,9 @@ import (
 )
 
 var bakedInValidators = map[string]validator.Func{
-	"port": isPort,
+	"port":        isPort,
+	"file_if":     isFileIf,
+	"file_unless": isFileUnless,
 }
 
 func isPort(fl validator.FieldLevel) bool {
