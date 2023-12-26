@@ -23,6 +23,7 @@ func New(tagNameArgs ...string) *validator.Validate {
 		v.SetTagName(tagName)
 	}
 
+	// 注册内置的验证器（自定义的）
 	if err := registerBakedInValidation(v); err != nil {
 		panic(err)
 	}
