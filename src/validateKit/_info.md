@@ -8,5 +8,3 @@ Golang/Golang - 1.wps
 * 默认: "validate"; 
 * Gin: "binding"; 
 * 可以通过 Validate.SetTagName() 修改tag name.
-
-
