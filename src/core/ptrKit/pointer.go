@@ -14,7 +14,7 @@ func Of[T any](v T) *T {
 	return pointer.Of(v)
 }
 
-// Unwrap 返回传入指针指向的值.
+// Unwrap 返回指针的值.
 /*
 e.g.
 	var ptr *string = ptrKit.Of("123")
