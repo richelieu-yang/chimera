@@ -22,8 +22,8 @@ type (
 			0（默认）: 不使用 https port
 		*/
 		Port     int    `json:"port" yaml:"port" validate:"port|eq=0"`
-		CertFile string `json:"certFile" yaml:"certFile" validate:"required_unless=Port 0,file"`
-		KeyFile  string `json:"keyFile" yaml:"keyFile" validate:"required_unless=Port 0,file"`
+		CertFile string `json:"certFile" yaml:"certFile" validate:"file_unless=Port 0"`
+		KeyFile  string `json:"keyFile" yaml:"keyFile" validate:"file_unless=Port 0"`
 	}
 
 	MiddlewareConfig struct {
