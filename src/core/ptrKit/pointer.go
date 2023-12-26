@@ -6,9 +6,21 @@ import (
 
 // Of 返回传入参数的指针值.
 /*
+@param v 可以为nil
+
 e.g.
 	var ptr *string = ptrKit.Of("123")
 	fmt.Println(ptr) // 0x14000110360
+
+e.g.1 传参v可以为nil
+	var obj interface{} = nil
+	fmt.Println(ptrKit.Of(obj)) // 0x1400008e380
+
+	var b *bean = nil
+	fmt.Println(ptrKit.Of(b)) // 0x140000980c0
+
+	var obj1 interface{} = b
+	fmt.Println(ptrKit.Of(obj1)) // 0x1400008e390
 */
 func Of[T any](v T) *T {
 	return pointer.Of(v)
