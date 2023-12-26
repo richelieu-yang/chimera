@@ -24,5 +24,6 @@ func DecodeWithPath(src string) (image.Image, string, error) {
 		return nil, "", err
 	}
 	defer f.Close()
+
 	return Decode(f)
 }
