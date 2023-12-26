@@ -14,8 +14,12 @@ func isPort(fl validator.FieldLevel) bool {
 	return netKit.IsValidPort(field)
 }
 
-func registerBakedInValidation(v *validator.Validate, tag string, fn validator.Func) error {
-	//for _,
-
-	return v.RegisterValidation(tag, fn)
+func registerBakedInValidation(v *validator.Validate) (err error) {
+	for tag, fn := range bakedInValidators {
+		err = v.RegisterValidation(tag, fn)
+		if err != nil {
+			return
+		}
+	}
+	return
 }
