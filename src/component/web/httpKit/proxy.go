@@ -25,7 +25,9 @@ func loadOptions(options ...ProxyOption) *proxyOptions {
 	for _, option := range options {
 		option(opts)
 	}
+
 	opts.scheme = strKit.EmptyToDefault(opts.scheme, "http", true)
+
 	return opts
 }
 
@@ -61,8 +63,9 @@ func WithQueryParams(queryParams map[string][]string) ProxyOption {
 /*
 PS: 转发请求前如果想变更请求头(Request Header)，可以在调用此函数前设置请求头.
 
-@param w e.g.ctx.Writer
-@param r e.g.ctx.Request
+@param w		e.g.ctx.Writer
+@param r 		e.g.ctx.Request
+@param options 	可以为nil
 */
 func Proxy(w http.ResponseWriter, r *http.Request, targetAddr string, options ...ProxyOption) error {
 	opts := loadOptions(options...)

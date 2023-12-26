@@ -3,6 +3,7 @@ package ginKit
 import (
 	"fmt"
 	"github.com/gin-gonic/gin"
+	"github.com/richelieu-yang/chimera/v2/src/component/web/httpKit"
 	"github.com/richelieu-yang/chimera/v2/src/config/viperKit"
 	"github.com/richelieu-yang/chimera/v2/src/consts"
 	"github.com/richelieu-yang/chimera/v2/src/core/pathKit"
@@ -31,6 +32,9 @@ func TestMustSetUp(t *testing.T) {
 
 	MustSetUp(c.Gin, nil, func(engine *gin.Engine) error {
 		engine.Any("/test", func(ctx *gin.Context) {
+
+			httpKit.Proxy(ctx.Writer, ctx.Request, "127.0.0.1:8888")
+
 			fmt.Println(ctx.Request.Header["Content-Type"])
 			fmt.Println(ObtainParam(ctx, "name"))
 			ctx.String(200, "hello")
