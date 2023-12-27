@@ -54,7 +54,7 @@ func verify(config *VerifyConfig) (err error) {
 
 	// 是否打印日志到控制台？
 	level := conditionKit.TernaryOperator(config.Print, logrus.DebugLevel, logrus.PanicLevel)
-	logger := logrusKit.NewLogger(logrusKit.WithLevel(level), logrusKit.WithMsgPrefix("[PULSAR, VERIFY]"))
+	logger := logrusKit.NewLogger(logrusKit.WithLevel(level), logrusKit.WithMsgPrefix("[PULSAR, VERIFY] "))
 	logger.Infof("consumerLogPath: [%s].", consumerLogPath)
 	logger.Infof("producerLogPath: [%s].", producerLogPath)
 

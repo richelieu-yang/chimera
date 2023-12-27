@@ -68,7 +68,7 @@ func verify(config *VerifyConfig) error {
 	logger := logrusKit.NewLogger(logrusKit.WithOutput(output),
 		logrusKit.WithLevel(logrus.DebugLevel),
 		logrusKit.WithDisableQuote(true),
-		logrusKit.WithMsgPrefix("[RocketMQ5 VERIFY]"),
+		logrusKit.WithMsgPrefix("[RocketMQ5 VERIFY] "),
 	)
 	logger.Infof("topic: [%s].", config.Topic)
 
