@@ -7,8 +7,8 @@ import (
 )
 
 func TestNewLogger(t *testing.T) {
-	logger := NewLogger(WithMsgPrefix("[TEST]"))
-	logger.Info("hello world")
+	logger := NewLogger(WithMsgPrefix("[TEST] "))
+	logger.Info("Hello world.")
 }
 
 func TestNewLogger1(t *testing.T) {

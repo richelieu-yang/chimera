@@ -24,9 +24,6 @@ type (
 		output io.Writer
 
 		// msgPrefix 日志输出的msg属性的前缀（默认: ""）
-		/*
-			PS: 如果不为""的话，拼接时会在 msgPrefix 和 msg 间加个空格.
-		*/
 		msgPrefix string
 
 		// disableQuote 默认: false
@@ -60,10 +57,6 @@ func WithOutput(output io.Writer) LoggerOption {
 	}
 }
 
-// WithMsgPrefix
-/*
-@param msgPrefix 非空的话，会自动在后面加上个空格
-*/
 func WithMsgPrefix(msgPrefix string) LoggerOption {
 	return func(opts *loggerOptions) {
 		opts.msgPrefix = msgPrefix

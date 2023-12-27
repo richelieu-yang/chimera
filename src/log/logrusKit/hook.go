@@ -1,21 +1,24 @@
 package logrusKit
 
 import (
-	"fmt"
-	"github.com/richelieu-yang/chimera/v2/src/core/strKit"
 	"github.com/sirupsen/logrus"
 )
 
-type defaultPrefixHook struct {
-	logrus.Hook
+// 保护性检查
+var (
+	_ logrus.Hook = (*defaultPrefixHook)(nil)
+)
 
+type defaultPrefixHook struct {
 	prefix string
 }
 
 func (hook *defaultPrefixHook) Fire(entry *logrus.Entry) error {
-	if strKit.IsNotEmpty(hook.prefix) {
-		entry.Message = fmt.Sprintf("%s %s", hook.prefix, entry.Message)
-	}
+	//if strKit.IsNotEmpty(hook.prefix) {
+	//	entry.Message = fmt.Sprintf("%s %s", hook.prefix, entry.Message)
+	//}
+	entry.Message = hook.prefix + entry.Message
+
 	return nil
 }
 
