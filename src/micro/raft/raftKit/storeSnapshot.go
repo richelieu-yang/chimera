@@ -1,6 +1,7 @@
 package raftKit
 
 import (
+	"github.com/hashicorp/go-hclog"
 	"github.com/hashicorp/raft"
 	"io"
 )
@@ -21,7 +22,8 @@ var (
 		(1) FileSnapshotStore: 文件持久化存储
 		(2) 实现了接口: raft.SnapshotStore
 	*/
-	NewFileSnapshotStore func(base string, retain int, logOutput io.Writer) (*raft.FileSnapshotStore, error) = raft.NewFileSnapshotStore
+	NewFileSnapshotStore           func(base string, retain int, logOutput io.Writer) (*raft.FileSnapshotStore, error) = raft.NewFileSnapshotStore
+	NewFileSnapshotStoreWithLogger func(base string, retain int, logger hclog.Logger) (*raft.FileSnapshotStore, error) = raft.NewFileSnapshotStoreWithLogger
 
 	// NewInmemSnapshotStore
 	/*
