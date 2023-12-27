@@ -28,3 +28,6 @@ defer logrus.Fatal("Exit normally.")
 		logrus.Info(111)
 	})
 }
+
+## hook勾子
+可以参考"hook.go".
