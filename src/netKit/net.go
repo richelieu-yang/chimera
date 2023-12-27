@@ -17,4 +17,6 @@ var (
 		@param address 监听的地址，格式为 ip:port，如果不指定 port，将由系统自动分配一个端口
 	*/
 	Listen func(network, address string) (net.Listener, error) = net.Listen
+
+	ResolveTCPAddr func(network, address string) (*net.TCPAddr, error) = net.ResolveTCPAddr
 )
