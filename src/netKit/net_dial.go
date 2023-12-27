@@ -8,6 +8,8 @@ import (
 
 var (
 	DialTimeout func(network, address string, timeout time.Duration) (net.Conn, error) = net.DialTimeout
+
+	DialTCP func(network string, laddr, raddr *net.TCPAddr) (*net.TCPConn, error) = net.DialTCP
 )
 
 // CanDial

@@ -18,5 +18,11 @@ var (
 	*/
 	Listen func(network, address string) (net.Listener, error) = net.Listen
 
+	// ResolveTCPAddr 将一个地址解析成TCP地址形式.
+	/*
+		@param network 网络类型， (1) 必须是: "tcp" || "tcp4" || "tcp6"
+								(2) 如果是""，则默认为"tcp"
+		@param address 地址
+	*/
 	ResolveTCPAddr func(network, address string) (*net.TCPAddr, error) = net.ResolveTCPAddr
 )
