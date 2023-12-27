@@ -14,20 +14,22 @@ INFO
 
 ## exit handler（退出函数）
 e.g.
+```go
 package main
 
 import (
-"github.com/sirupsen/logrus"
+    "github.com/sirupsen/logrus"
 )
 
 func main() {
-// 程序正常退出不会触发 logrus.RegisterExitHandle() 注册的exit handlers，因此加上此defer语句.
-defer logrus.Fatal("Exit normally.")
+    // 程序正常退出不会触发 logrus.RegisterExitHandle() 注册的exit handlers，因此加上此defer语句.
+    defer logrus.Fatal("main() ends")
 
 	logrus.RegisterExitHandler(func() {
 		logrus.Info(111)
 	})
 }
+```
 
 ## hook勾子
 可以参考"hook.go".
