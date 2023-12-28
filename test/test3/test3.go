@@ -1,23 +1,10 @@
 package main
 
 import (
-	"github.com/hashicorp/go-hclog"
-	"time"
+	"fmt"
+	"github.com/richelieu-yang/chimera/v2/src/validateKit"
 )
 
 func main() {
-	logger := hclog.New(&hclog.LoggerOptions{
-		Name:   "test",
-		Level:  hclog.DefaultLevel,
-		Output: hclog.DefaultOutput,
-		TimeFn: time.Now,
-	})
-	logger.Info("123")
-
-	//hclog.Default().SetLevel(hclog.Debug)
-	//
-	//var logger hclog.Logger
-	//
-	//logger := &Logger{}
-
+	fmt.Println(validateKit.Var("127.0.0.255", "omitempty,hostname|ipv4"))
 }

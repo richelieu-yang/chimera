@@ -3,7 +3,7 @@ package ginKit
 type (
 	Config struct {
 		Mode     string `json:"mode" yaml:"mode" validate:"oneof=debug release test"`
-		HostName string `json:"hostName" yaml:"hostName"`
+		HostName string `json:"hostName" yaml:"hostName" validate:"omitempty,hostname|ipv4"`
 		// Port
 		/*
 			0（默认）: 不使用 http port
