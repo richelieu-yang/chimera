@@ -1,8 +1,8 @@
-## 第三方库h2non/bimg（推荐）
-「GoCN酷Go推荐」Go 语言高性能图像处理神器 h2non/bimg
-  https://mp.weixin.qq.com/s/kAFZohzJo2DiKkxjnVti6A
+## 第三方库h2non/bimg（最后更新时间: 2020/11）
 github(2.4k Star):
   https://github.com/h2non/bimg
+「GoCN酷Go推荐」Go 语言高性能图像处理神器 h2non/bimg
+  https://mp.weixin.qq.com/s/kAFZohzJo2DiKkxjnVti6A
 
 * bimg 是一个小型且高效的库，支持常见的图像操作，如裁剪、缩放、旋转、缩放或水印。
 * 它可以原生读取 JPEG、PNG、WEBP，如果 libvips@8.3+ 编译了适当的库绑定，还可以选择性地读取 TIFF、PDF、GIF 和 SVG 格式。
@@ -22,3 +22,6 @@ github(2.4k Star):
   格式转换以及压缩处理
   EXIF元数据（大小，Alpha通道，配置文件，方向...）修改
   修剪（libvips 8.6+）
+
+#### 怎么使用？
+![_img.png](_img.png)

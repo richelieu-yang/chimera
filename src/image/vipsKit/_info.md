@@ -1,7 +1,7 @@
 ## 第三方库 davidbyttow/govips（libvips推荐的库）
 GO语言高性能图片处理库govips
     https://www.bilibili.com/video/BV1L14y1i7iG/  
-github(982 Star):
+github(1.1k Star):
     https://github.com/davidbyttow/govips
 
 PS:
