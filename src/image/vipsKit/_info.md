@@ -1,8 +1,8 @@
 ## 第三方库 davidbyttow/govips（libvips推荐的库）
 GO语言高性能图片处理库govips
-https://www.bilibili.com/video/BV1L14y1i7iG/  
+    https://www.bilibili.com/video/BV1L14y1i7iG/  
 github(982 Star):
-https://github.com/davidbyttow/govips
+    https://github.com/davidbyttow/govips
 
 PS:
 * libvips v8.3+ is required for GIF, PDF and SVG support.
@@ -15,4 +15,3 @@ PS:
 
 #### Mac环境安装
 命令（安装 vips、pkg-config 和 gcc）: brew reinstall vips pkg-config gcc
-
