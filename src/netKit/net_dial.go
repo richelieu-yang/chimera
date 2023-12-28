@@ -6,6 +6,12 @@ import (
 )
 
 var (
+	// Dial Deprecated: Use DialTimeout instead.
+	/*
+		不推荐使用的原因: net.Dial如果连接的是未开放的端口,一个端口可能就是20s+.
+	*/
+	Dial func(network, address string) (net.Conn, error) = net.Dial
+
 	// DialTimeout 建立一个到TCP服务器的连接.
 	/*
 		PS:
