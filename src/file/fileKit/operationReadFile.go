@@ -17,6 +17,7 @@ var (
 PS:
 (1) ioutil.ReadFile() 比 ioutil.ReadAll() 性能好，特别是大文件；
 (2) 编码必须为"UTF-8"！！！
+(3) 此函数读取大文件也很快.
 
 @param path 文件的路径（不能是目录的路径）
 */
