@@ -6,6 +6,7 @@
   https://goframe.org/pages/viewpage.action?pageId=1114868
 * duke-git/lancet
   "github.com/duke-git/lancet/v2/cryptor"
+  https://www.golancet.cn/api/packages/cryptor.html
 * goencrypt（已经3年未更新了）:
   https://github.com/marspere/goencrypt
 * goEncrypt:
