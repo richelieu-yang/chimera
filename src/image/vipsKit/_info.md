@@ -8,10 +8,10 @@ PS:
 * libvips v8.3+ is required for GIF, PDF and SVG support.
 * libvips v8.9+ is required for AVIF support. libheif compiled with a AVIF en-/decoder also needs to be present.
 
-#### 要求!!!
+#### 环境要求!!!
 * libvips 8.10+
 * C compatible compiler such as gcc 4.6+ or clang 3.0+
 * Go 1.14+
 
-#### Mac环境安装
+#### macOS环境安装
 命令（安装 vips、pkg-config 和 gcc）: brew reinstall vips pkg-config gcc
