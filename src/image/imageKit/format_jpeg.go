@@ -10,7 +10,7 @@ import (
 	"os"
 )
 
-// ToJpeg 将图片格式转换为".jpg"(||".jpeg")
+// ToJpeg 将图片格式转换为".jpg"(||".jpeg").
 /*
 @param qualityArgs （默认: 100; 取值范围: [1, 100]）生成jpeg图片的质量
 */

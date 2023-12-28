@@ -1,4 +1,4 @@
-package imageKit
+package bimgKit
 
 import (
 	"github.com/h2non/bimg"

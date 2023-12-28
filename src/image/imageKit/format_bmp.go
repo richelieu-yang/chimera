@@ -2,12 +2,12 @@ package imageKit
 
 import (
 	"github.com/richelieu-yang/chimera/v2/src/file/fileKit"
-	"golang.org/x/image/webp"
-	"image/png"
+	"golang.org/x/image/bmp"
 	"os"
 )
 
-func ToWebp(src, dest string) error {
+// ToBmp 将图片格式转换为".bmp".
+func ToBmp(src, dest string) error {
 	if err := fileKit.AssertNotExistOrIsFile(dest); err != nil {
 		return err
 	}
@@ -19,7 +19,5 @@ func ToWebp(src, dest string) error {
 	}
 	defer destFile.Close()
 
-	webp.Encode
-
-	return png.Encode(destFile, srcImage)
+	return bmp.Encode(destFile, srcImage)
 }
