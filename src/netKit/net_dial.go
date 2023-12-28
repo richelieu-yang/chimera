@@ -19,8 +19,8 @@ var (
 
 	// DialTCP 建立一个到TCP服务器的连接.
 	/*
-		@param network 	网络类型（例如: "tcp"）
-		@param laddr	本地的TCP地址
+		@param network 	网络类型，可以是"tcp"、“tcp4”（仅IPv4）、“tcp6”（仅IPv6）
+		@param laddr	本地的TCP地址（通常设为nil，系统会自动选择一个本地地址和端口来建立连接）
 		@param raddr	远程的TCP地址
 
 		PS:
