@@ -3,7 +3,7 @@ package zipKit
 import "github.com/dablelv/cyan/zip"
 
 var (
-	// Zip 压缩文件（或目录）
+	// ZipByCyan 压缩文件（或目录）
 	/*
 	   PS:
 	   (1) 缺点: 第三方库dablelv/go-huge-util暂不支持带密码的压缩.
@@ -13,11 +13,11 @@ var (
 	   @param zipPath 	e.g."archive.zip"
 	   @param paths	多个文件（或目录）的路径
 	*/
-	Zip func(zipPath string, paths ...string) error = zip.Zip
+	ZipByCyan func(zipPath string, paths ...string) error = zip.Zip
 
-	// Unzip 解压
+	// UnzipByCyan 解压
 	/*
 	   @param zipPath e.g."archive.zip"
 	*/
-	Unzip func(zipPath, dstDir string) error = zip.Unzip
+	UnzipByCyan func(zipPath, dstDir string) error = zip.Unzip
 )
