@@ -6,12 +6,17 @@ var (
 	// RandFloat 生成随机float64数字，可以指定范围和精度.
 	/*
 		@param precision 精度（小数点后保留几位）
+		@return [min, max)
 	*/
 	RandFloat func(min, max float64, precision int) float64 = random.RandFloat
 
-	// RandFloats 生成随机float64数字切片，指定长度，范围和精度.
+	// RandFloatSlice 生成随机float64数字切片，指定长度，范围和精度.
 	/*
+		PS:
+		(1) 切片内的元素范围: [min, max);
+		(2) 切片内的元素不会重复.
+
 		@param precision 精度（小数点后保留几位）
 	*/
-	RandFloats func(n int, min, max float64, precision int) []float64 = random.RandFloats
+	RandFloatSlice func(n int, min, max float64, precision int) []float64 = random.RandFloats
 )
