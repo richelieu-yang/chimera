@@ -24,10 +24,10 @@ func GenerateKeyFiles(bits int, format KeyFormat, password, priPath, pubPath str
 		return err
 	}
 
-	if err := fileKit.WriteToFile(pri, priPath, perm); err != nil {
+	if err := fileKit.WriteToFile(priPath, pri, perm); err != nil {
 		return err
 	}
-	if err := fileKit.WriteToFile(pub, pubPath, perm); err != nil {
+	if err := fileKit.WriteToFile(pubPath, pub, perm); err != nil {
 		return err
 	}
 	return nil
