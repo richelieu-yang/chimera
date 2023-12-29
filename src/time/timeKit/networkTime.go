@@ -1,7 +1,7 @@
 package timeKit
 
 import (
-	"github.com/richelieu-yang/chimera/v2/src/component/web/reqKit"
+	"github.com/richelieu-yang/chimera/v2/src/component/web/request/reqKit"
 	"github.com/richelieu-yang/chimera/v2/src/core/errorKit"
 	"github.com/richelieu-yang/chimera/v2/src/core/strKit"
 	"time"

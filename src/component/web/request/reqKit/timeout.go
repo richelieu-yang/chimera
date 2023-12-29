@@ -1,7 +1,7 @@
 package reqKit
 
 import (
-	"github.com/richelieu-yang/chimera/v2/src/component/web/httpClientKit"
+	"github.com/richelieu-yang/chimera/v2/src/component/web/request/httpClientKit"
 )
 
 // IsTimeoutError 是否是请求超时错误?
