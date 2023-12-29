@@ -10,12 +10,12 @@ golang定时器函数 每隔几分钟执行一个函数
 GO语言提前取消定时器
 	https://blog.csdn.net/u012265809/article/details/114939168
 */
-func SetTimeout(fun func(), duration time.Duration) *time.Timer {
-	if fun == nil {
+func SetTimeout(f func(), duration time.Duration) *time.Timer {
+	if f == nil {
 		return nil
 	}
 
-	return time.AfterFunc(duration, fun)
+	return time.AfterFunc(duration, f)
 }
 
 func ClearTimeout(timer *time.Timer) {
