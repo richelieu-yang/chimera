@@ -1,7 +1,8 @@
 ## TODOs
-* GoFrame的gfile 
+* GoFrame的 gfile 
     https://goframe.org/pages/viewpage.action?pageId=1114225
-* duke-git/lancet的fileutil
+* duke-git/lancet的 fileutil
+    https://www.golancet.cn/api/packages/fileutil.html#Fileutil
 
 ## 涉及标准库：
     os
