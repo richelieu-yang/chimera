@@ -1,6 +1,9 @@
 package fileKit
 
-import "os"
+import (
+	"github.com/duke-git/lancet/v2/fileutil"
+	"os"
+)
 
 var (
 	// CreateSoftLink 创建软链接
@@ -20,4 +23,7 @@ var (
 	   @param dest	生成链接的位置
 	*/
 	CreateHardLink func(oldname, newname string) error = os.Link
+
+	// IsLink 判断文件是否是符号链接.
+	IsLink func(path string) bool = fileutil.IsLink
 )
