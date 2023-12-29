@@ -1,5 +1,9 @@
 package dataSizeKit
 
+import (
+	"github.com/shopspring/decimal"
+)
+
 const (
 	B   uint64 = 1
 	KiB uint64 = 1 << 10
@@ -11,3 +15,39 @@ const (
 	//ZB  uint64 = 1 << 70
 	//YB  uint64 = 1 << 80
 )
+
+// ByteToKiB
+/*
+	PS: IEC标准.
+
+	@param places 保留的小数位
+*/
+func ByteToKiB(bytes uint64, places int32) float64 {
+	return div(bytes, KiB, places)
+}
+
+// ByteToMiB
+/*
+	PS: IEC标准.
+
+	@param places 保留的小数位
+*/
+func ByteToMiB(bytes uint64, places int32) float64 {
+	return div(bytes, MiB, places)
+}
+
+// ByteToGiB
+/*
+	PS: IEC标准.
+
+	@param places 保留的小数位
+*/
+func ByteToGiB(bytes uint64, places int32) float64 {
+	return div(bytes, GiB, places)
+}
+
+func div(bytes, uint uint64, places int32) float64 {
+	d := decimal.NewFromInt(int64(bytes)).Div(decimal.NewFromInt(int64(uint))).Round(places)
+	f, _ := d.Float64()
+	return f
+}

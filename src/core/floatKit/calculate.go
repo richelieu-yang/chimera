@@ -66,7 +66,7 @@ func Div(x float64, y ...float64) float64 {
 
 // DivAndRound 除法（四舍五入），divides and rounds to a given precision
 /*
-@param places 小数位数
+@param places 保留的小数位
 
 e.g.
 (4, 1, 2) =>		0.5
