@@ -8,7 +8,7 @@ import (
 func printOsInfo() {
 	logrus.Infof("[CHIMERA, OS] os: [%s].", osKit.OS)
 	logrus.Infof("[CHIMERA, OS] arch: [%s].", osKit.ARCH)
-	logrus.Infof("[CHIMERA, OS] bits: [%d].", osKit.BITS)
+	logrus.Infof("[CHIMERA, OS] bits: [%d].", osKit.GetOsBits())
 
 	printUniqueOsInfo()
 }

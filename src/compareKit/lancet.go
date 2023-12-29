@@ -6,11 +6,11 @@ import (
 )
 
 var (
-	// Equal 检查两个值是否相等(检查类型和值).
-	Equal func(left, right any) bool = compare.Equal
+	// EqualWithTypeAndValue 检查两个值是否相等(检查类型和值).
+	EqualWithTypeAndValue func(left, right any) bool = compare.Equal
 
-	// EqualValue 检查两个值是否相等(只检查值).
-	EqualValue func(left, right any) bool = compare.EqualValue
+	// EqualWithValue 检查两个值是否相等(只检查值).
+	EqualWithValue func(left, right any) bool = compare.EqualValue
 
 	// LessThan 验证参数`left`的值是否小于参数`right`的值.
 	LessThan func(left, right any) bool = compare.LessThan

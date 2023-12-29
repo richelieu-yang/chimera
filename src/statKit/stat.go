@@ -93,9 +93,9 @@ func GetStats() *Stats {
 		pStats.GoroutineCount = runtime.NumGoroutine()
 
 		stats := memoryKit.GetProgramMemoryStats()
-		pStats.Alloc = dataSizeKit.ToReadableIECString(stats.Alloc)
-		pStats.TotalAlloc = dataSizeKit.ToReadableIECString(stats.TotalAlloc)
-		pStats.Sys = dataSizeKit.ToReadableIECString(stats.Sys)
+		pStats.Alloc = dataSizeKit.ToReadableIecString(float64(stats.Alloc))
+		pStats.TotalAlloc = dataSizeKit.ToReadableIecString(float64(stats.TotalAlloc))
+		pStats.Sys = dataSizeKit.ToReadableIecString(float64(stats.Sys))
 		pStats.NumGC = stats.NumGC
 		pStats.EnableGC = stats.EnableGC
 
@@ -157,11 +157,11 @@ func GetStats() *Stats {
 		if err != nil {
 			mStats.MemoryStatsError = err
 		} else {
-			mStats.Total = dataSizeKit.ToReadableIECString(stats.Total)
-			mStats.Available = dataSizeKit.ToReadableIECString(stats.Available)
-			mStats.Used = dataSizeKit.ToReadableIECString(stats.Used)
+			mStats.Total = dataSizeKit.ToReadableIecString(float64(stats.Total))
+			mStats.Available = dataSizeKit.ToReadableIecString(float64(stats.Available))
+			mStats.Used = dataSizeKit.ToReadableIecString(float64(stats.Used))
 			mStats.UsedPercent = mathKit.Round(stats.UsedPercent, 2)
-			mStats.Free = dataSizeKit.ToReadableIECString(stats.Free)
+			mStats.Free = dataSizeKit.ToReadableIecString(float64(stats.Free))
 		}
 
 		// ulimit -u

@@ -107,10 +107,10 @@ func PrintBasicDetails(logger *logrus.Logger) {
 		return
 	} else {
 		str := fmt.Sprintf("total: %s, available: %s, used: %s, free: %s, used percent: %.2f%%",
-			dataSizeKit.ToReadableIECString(stats.Total),
-			dataSizeKit.ToReadableIECString(stats.Available),
-			dataSizeKit.ToReadableIECString(stats.Used),
-			dataSizeKit.ToReadableIECString(stats.Free),
+			dataSizeKit.ToReadableIecString(float64(stats.Total)),
+			dataSizeKit.ToReadableIecString(float64(stats.Available)),
+			dataSizeKit.ToReadableIecString(float64(stats.Used)),
+			dataSizeKit.ToReadableIecString(float64(stats.Free)),
 			stats.UsedPercent,
 		)
 		logger.Infof("[CHIMERA, MEMORY] machine memory stats: [%s].", str)
@@ -122,9 +122,9 @@ func PrintBasicDetails(logger *logrus.Logger) {
 	} else {
 		str := fmt.Sprintf("path: %s, free: %s, used: %s, total: %s, used percent: %.2f%%",
 			stats.Path,
-			dataSizeKit.ToReadableIECString(stats.Free),
-			dataSizeKit.ToReadableIECString(stats.Used),
-			dataSizeKit.ToReadableIECString(stats.Total),
+			dataSizeKit.ToReadableIecString(float64(stats.Free)),
+			dataSizeKit.ToReadableIecString(float64(stats.Used)),
+			dataSizeKit.ToReadableIecString(float64(stats.Total)),
 			stats.UsedPercent,
 		)
 		logger.Infof("[CHIMERA, DISK] disk usage stats: [%s].", str)
@@ -141,7 +141,5 @@ func PrintBasicDetails(logger *logrus.Logger) {
 		logger.Infof("[CHIMERA, DOCKER] docker id list: %v.", dockerIds)
 	}
 
-	//logger.Infof("[CHIMERA] ===================================================================================")
-	//_, _ = out.Write([]byte("[CHIMERA] ============================================================================\n"))
 	_, _ = out.Write([]byte("===========================================================\n"))
 }

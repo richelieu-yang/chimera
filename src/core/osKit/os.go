@@ -1,34 +1,32 @@
 package osKit
 
 import (
-	"github.com/dablelv/cyan/os"
+	"github.com/duke-git/lancet/v2/system"
 	"runtime"
-	"strconv"
 )
 
 // OS 操作系统
-var OS string
+var OS string = runtime.GOOS
 
 // ARCH 处理器架构
-var ARCH string
-
-// BITS 操作系统的位数（32 || 64）
-/*
-参考: Go获取操作系统位数 https://blog.csdn.net/TCatTime/article/details/106815724
-*/
-var BITS int
-
-func init() {
-	OS = runtime.GOOS
-	ARCH = runtime.GOARCH
-
-	BITS = strconv.IntSize
-}
+var ARCH string = runtime.GOARCH
 
 var (
-	IsWindows func() bool = os.IsWin
+	// IsWindows 检查当前操作系统是否是windows
+	IsWindows func() bool = system.IsWindows
 
-	IsLinux func() bool = os.IsLinux
+	// IsLinux 检查当前操作系统是否是linux.
+	IsLinux func() bool = system.IsLinux
 
-	IsMac func() bool = os.IsMac
+	// IsMac 检查当前操作系统是否是macos.
+	IsMac func() bool = system.IsMac
 )
+
+// GetOsBits 获取当前操作系统位数，返回32或64.
+/*
+	@return 32 || 64
+*/
+func GetOsBits() int {
+	//return strconv.IntSize
+	return system.GetOsBits()
+}

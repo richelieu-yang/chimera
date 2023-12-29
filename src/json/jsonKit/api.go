@@ -62,7 +62,7 @@ qwdqwd
 	if err := api.Unmarshal(jsonData, &m1); err != nil {
 		logrus.WithError(err).Fatalf("[%s, JSON] Fail to unmarshal!!!", consts.UpperProjectName)
 	}
-	if compareKit.Equal(m, m1) {
+	if compareKit.EqualWithTypeAndValue(m, m1) {
 		diff := compareKit.Diff(m, m1)
 		logrus.WithField("diff", diff).Fatalf("[%s, JSON] m and m1 are different.", consts.UpperProjectName)
 	}

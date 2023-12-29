@@ -2,10 +2,8 @@ package interfaceKit
 
 import "reflect"
 
-// IsNil
+// IsNil Deprecated: 反射有性能问题，应尽可能避免使用此方法.
 /*
-Deprecated: 反射有性能问题，应尽可能避免使用此方法.
-
 e.g.
 	var src interface{} = nil
 	var src1 []string = nil
