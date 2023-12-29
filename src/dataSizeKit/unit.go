@@ -46,7 +46,15 @@ func ByteToGiB(bytes uint64, places int32) float64 {
 	return div(bytes, GiB, places)
 }
 
-func div(bytes, uint uint64, places int32) float64 {
+func div(bytes, uint uint64, placesArgs ...int32) float64 {
+	var places int32
+	if len(placesArgs) > 0 {
+		places = placesArgs[0]
+	} else {
+		// 默认保留 2 位小数
+		places = 2
+	}
+
 	d := decimal.NewFromInt(int64(bytes)).Div(decimal.NewFromInt(int64(uint))).Round(places)
 	f, _ := d.Float64()
 	return f
