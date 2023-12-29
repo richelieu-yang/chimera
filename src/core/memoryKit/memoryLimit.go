@@ -18,10 +18,10 @@ PS:
 */
 func SetSoftMemoryLimit(limit uint64) (int64, error) {
 	if limit < 512*dataSizeKit.MiB {
-		return 0, errorKit.New("limit(%s) is too small", dataSizeKit.ToReadableStringWithIEC(limit))
+		return 0, errorKit.New("limit(%s) is too small", dataSizeKit.ToReadableIECString(limit))
 	}
 	if limit > math.MaxInt64 {
-		return 0, errorKit.New("limit(%s) is too large", dataSizeKit.ToReadableStringWithIEC(limit))
+		return 0, errorKit.New("limit(%s) is too large", dataSizeKit.ToReadableIECString(limit))
 	}
 
 	return debug.SetMemoryLimit(int64(limit)), nil

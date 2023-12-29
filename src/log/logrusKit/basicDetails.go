@@ -107,10 +107,10 @@ func PrintBasicDetails(logger *logrus.Logger) {
 		return
 	} else {
 		str := fmt.Sprintf("total: %s, available: %s, used: %s, free: %s, used percent: %.2f%%",
-			dataSizeKit.ToReadableStringWithIEC(stats.Total),
-			dataSizeKit.ToReadableStringWithIEC(stats.Available),
-			dataSizeKit.ToReadableStringWithIEC(stats.Used),
-			dataSizeKit.ToReadableStringWithIEC(stats.Free),
+			dataSizeKit.ToReadableIECString(stats.Total),
+			dataSizeKit.ToReadableIECString(stats.Available),
+			dataSizeKit.ToReadableIECString(stats.Used),
+			dataSizeKit.ToReadableIECString(stats.Free),
 			stats.UsedPercent,
 		)
 		logger.Infof("[CHIMERA, MEMORY] machine memory stats: [%s].", str)
@@ -122,9 +122,9 @@ func PrintBasicDetails(logger *logrus.Logger) {
 	} else {
 		str := fmt.Sprintf("path: %s, free: %s, used: %s, total: %s, used percent: %.2f%%",
 			stats.Path,
-			dataSizeKit.ToReadableStringWithIEC(stats.Free),
-			dataSizeKit.ToReadableStringWithIEC(stats.Used),
-			dataSizeKit.ToReadableStringWithIEC(stats.Total),
+			dataSizeKit.ToReadableIECString(stats.Free),
+			dataSizeKit.ToReadableIECString(stats.Used),
+			dataSizeKit.ToReadableIECString(stats.Total),
 			stats.UsedPercent,
 		)
 		logger.Infof("[CHIMERA, DISK] disk usage stats: [%s].", str)

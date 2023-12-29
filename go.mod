@@ -13,7 +13,6 @@ require (
 	github.com/davidbyttow/govips/v2 v2.13.0
 	github.com/deckarep/golang-set/v2 v2.6.0
 	github.com/duke-git/lancet/v2 v2.2.8
-	github.com/dustin/go-humanize v1.0.1
 	github.com/emersion/go-imap v1.2.1
 	github.com/emersion/go-imap-id v0.0.0-20190926060100-f94a56b9ecde
 	github.com/emersion/go-message v0.17.0
@@ -126,6 +125,7 @@ require (
 	github.com/bits-and-blooms/bitset v1.4.0 // indirect
 	github.com/boltdb/bolt v1.3.1 // indirect
 	github.com/buger/jsonparser v1.1.1 // indirect
+	github.com/cenkalti/backoff/v4 v4.2.1 // indirect
 	github.com/census-instrumentation/opencensus-proto v0.4.1 // indirect
 	github.com/cespare/xxhash/v2 v2.2.0 // indirect
 	github.com/chenzhuoyu/base64x v0.0.0-20230717121745-296ad89f973d // indirect
@@ -201,6 +201,7 @@ require (
 	github.com/mtibben/percent v0.2.1 // indirect
 	github.com/natefinch/lumberjack v2.0.0+incompatible // indirect
 	github.com/onsi/ginkgo/v2 v2.12.0 // indirect
+	github.com/openzipkin/zipkin-go v0.4.2 // indirect
 	github.com/pelletier/go-toml/v2 v2.1.0 // indirect
 	github.com/pierrec/lz4 v2.0.5+incompatible // indirect
 	github.com/pkg/errors v0.9.1 // indirect
@@ -246,6 +247,12 @@ require (
 	go.etcd.io/etcd/api/v3 v3.5.11 // indirect
 	go.etcd.io/etcd/client/pkg/v3 v3.5.11 // indirect
 	go.opencensus.io v0.24.0 // indirect
+	go.opentelemetry.io/otel/exporters/otlp/otlptrace v1.19.0 // indirect
+	go.opentelemetry.io/otel/exporters/otlp/otlptrace/otlptracegrpc v1.19.0 // indirect
+	go.opentelemetry.io/otel/exporters/otlp/otlptrace/otlptracehttp v1.19.0 // indirect
+	go.opentelemetry.io/otel/exporters/stdout/stdouttrace v1.19.0 // indirect
+	go.opentelemetry.io/otel/exporters/zipkin v1.19.0 // indirect
+	go.opentelemetry.io/proto/otlp v1.0.0 // indirect
 	go.uber.org/atomic v1.10.0 // indirect
 	go.uber.org/multierr v1.10.0 // indirect
 	golang.org/x/arch v0.5.0 // indirect
