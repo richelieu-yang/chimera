@@ -1,7 +1,6 @@
 package compareKit
 
 import (
-	"github.com/duke-git/lancet/v2/compare"
 	"github.com/google/go-cmp/cmp"
 	"reflect"
 )
@@ -34,9 +33,6 @@ e.g.
 	fmt.Println(compareKit.Equal(p1, p3)) // true
 */
 var Equal func(x, y interface{}, opts ...cmp.Option) bool = cmp.Equal
-
-// Equal1 通过 duke-git/lancet 实现.
-var Equal1 func(x, y any) bool = compare.Equal
 
 // Equal2 通过 reflect标准库 实现，比较2个结构体实例指针的内容是否相等.
 /*
