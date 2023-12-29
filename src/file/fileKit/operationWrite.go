@@ -5,7 +5,7 @@ import (
 	"os"
 )
 
-// WriteToFile 将数据（字节流）写到文件中.
+// WriteToFile 将数据（[]byte, 字节流）写到文件中.
 /*
 @param filePath 目标文件的路径
 				(1) 不存在的话，会创建一个新的文件;
@@ -21,7 +21,8 @@ func WriteToFile(filePath string, data []byte, perm os.FileMode) error {
 
 // WriteStringToFile 将数据（字符串）写到文件中.
 /*
-@param filePath 目标文件的路径（不存在的话，会创建一个新的文件；存在且是个文件的话，根据传参append决定）
+@param filePath 目标文件的路径，	(1)不存在的话，会创建一个新的文件;
+							 	(2) 存在且是个文件的话，由 传参append 决定.
 */
 func WriteStringToFile(filePath string, content string, append bool) error {
 	if err := AssertNotExistOrIsFile(filePath); err != nil {
