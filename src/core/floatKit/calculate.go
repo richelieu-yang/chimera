@@ -84,6 +84,6 @@ func DivAndRound(places int32, x float64, y ...float64) float64 {
 	// 相较于 Div，多了这一行
 	tmp = tmp.Round(places)
 
-	value, _ := tmp.Float64()
-	return value
+	f, _ := tmp.Float64()
+	return f
 }
