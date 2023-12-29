@@ -20,30 +20,30 @@ const (
 /*
 	PS: IEC标准.
 
-	@param places 保留的小数位
+	@param placesArgs 保留的小数位，默认: 2
 */
-func ByteToKiB(bytes uint64, places int32) float64 {
-	return div(bytes, KiB, places)
+func ByteToKiB(bytes uint64, placesArgs ...int32) float64 {
+	return div(bytes, KiB, placesArgs...)
 }
 
 // ByteToMiB
 /*
 	PS: IEC标准.
 
-	@param places 保留的小数位
+	@param placesArgs 保留的小数位，默认: 2
 */
-func ByteToMiB(bytes uint64, places int32) float64 {
-	return div(bytes, MiB, places)
+func ByteToMiB(bytes uint64, placesArgs ...int32) float64 {
+	return div(bytes, MiB, placesArgs...)
 }
 
 // ByteToGiB
 /*
 	PS: IEC标准.
 
-	@param places 保留的小数位
+	@param placesArgs 保留的小数位，默认: 2
 */
-func ByteToGiB(bytes uint64, places int32) float64 {
-	return div(bytes, GiB, places)
+func ByteToGiB(bytes uint64, placesArgs ...int32) float64 {
+	return div(bytes, GiB, placesArgs...)
 }
 
 func div(bytes, uint uint64, placesArgs ...int32) float64 {
