@@ -3,12 +3,11 @@ package rateLimitKit
 import "golang.org/x/time/rate"
 
 var (
-	// NewLimiter
+	// NewLimiter 令牌桶算法.
 	/*
-		令牌桶算法.
+		PS: 初始状态下，令牌桶是满的.
 
-		@param r 每秒生成的令牌数，(1) 可以直接是 某个数值;
-								(2) 也可以是 rate.Every() 的返回值;
+		@param r 每秒生成的令牌数，(1) 可以直接是 某个数值; (2) 也可以是 rate.Every() 的返回值;
 		@param b 令牌桶的容量
 
 		e.g.
