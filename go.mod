@@ -81,6 +81,7 @@ require (
 	github.com/swaggo/swag v1.16.2
 	github.com/tidwall/buntdb v1.3.0
 	github.com/tidwall/gjson v1.17.0
+	github.com/unidoc/unioffice v1.29.1
 	github.com/xuri/excelize/v2 v2.8.0
 	github.com/zeromicro/go-zero v1.6.1
 	github.com/zeromicro/zero-contrib/logx/logrusx v0.0.0-20231030135404-af9ae855016f
