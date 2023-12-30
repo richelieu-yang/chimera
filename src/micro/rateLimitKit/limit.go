@@ -3,7 +3,7 @@ package rateLimitKit
 import "golang.org/x/time/rate"
 
 var (
-	// NewLimiter 令牌桶算法.
+	// NewLimiter 限流器，基于令牌桶算法（Token Bucket）.
 	/*
 		PS: 初始状态下，令牌桶是满的.
 
