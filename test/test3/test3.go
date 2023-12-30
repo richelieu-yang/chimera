@@ -6,27 +6,25 @@ import (
 	"time"
 )
 
-//func RateLimitMiddleware(rate int) gin.HandlerFunc {
-//	rl := ratelimit.New(rate) // 每秒rate个请求
-//
-//	return func(c *gin.Context) {
-//		_ = rl.Take()
-//		c.Next()
-//	}
-//}
-
 func main() {
-	//初始化 limiter 每秒生成1个令牌，令牌桶容量为20
-	limiter := rate.NewLimiter(rate.Every(time.Second), 1)
-	//模拟单位时间执行多次操作
-	for i := 0; i < 5; i++ {
+	// 初始化 limiter 每秒10个令牌，令牌桶容量为20
+	limiter := rate.NewLimiter(rate.Every(time.Millisecond*100), 20)
+
+	for i := 0; i < 25; i++ {
 		if limiter.Allow() {
-			fmt.Println("发送邮件")
+			fmt.Println(i, "success")
 		} else {
-			fmt.Println("请求多次，过滤")
+			fmt.Println(i, "busy")
 		}
 	}
-	if limiter.Allow() {
-		fmt.Println("发送邮件")
+	fmt.Println("---")
+
+	time.Sleep(time.Second)
+	for i := 0; i < 3; i++ {
+		if limiter.Allow() {
+			fmt.Println(i, "success")
+		} else {
+			fmt.Println(i, "busy")
+		}
 	}
 }
