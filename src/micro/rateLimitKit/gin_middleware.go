@@ -7,6 +7,9 @@ import (
 )
 
 // NewRateLimitMiddleware Gin的限流器，用于限流.
+/*
+PS: 传参说明详见 NewLimiter.
+*/
 func NewRateLimitMiddleware(limit rate.Limit, burst int) gin.HandlerFunc {
 	limiter := NewLimiter(limit, burst)
 
