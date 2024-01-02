@@ -1,6 +1,7 @@
 package ginKit
 
 import (
+	"fmt"
 	"github.com/gin-contrib/gzip"
 	"github.com/gin-gonic/gin"
 	"github.com/richelieu-yang/chimera/v2/src/core/errorKit"
@@ -36,7 +37,7 @@ func UseMiddlewares(engine *gin.Engine, middlewares ...gin.HandlerFunc) (err err
 }
 
 // attachMiddlewares 绑定一些常用的中间件.
-func attachMiddlewares(engine *gin.Engine, config MiddlewareConfig, recoveryMiddleware gin.HandlerFunc) error {
+func attachMiddlewares(engine *gin.Engine, config MiddlewareConfig, recoveryMiddleware gin.HandlerFunc, serviceInfo string) error {
 	// gzip
 	/*
 		PS:
@@ -56,7 +57,7 @@ func attachMiddlewares(engine *gin.Engine, config MiddlewareConfig, recoveryMidd
 	}
 	engine.Use(recoveryMiddleware)
 
-	// cors
+	// cors(optional)
 	{
 		cc := config.Cors
 		if cc.Access {
@@ -106,7 +107,11 @@ func attachMiddlewares(engine *gin.Engine, config MiddlewareConfig, recoveryMidd
 	/* rate limiter（限流器） */
 	rlConfig := config.RateLimiter
 	if rlConfig != nil {
-		middleware := rateLimitKit.NewGinMiddleware(rate.Limit(rlConfig.Limit), rlConfig.Burst)
+		var forbiddenText string
+		if strKit.IsNotEmpty(serviceInfo) {
+			forbiddenText = fmt.Sprintf("[%s] ", serviceInfo)
+		}
+		middleware := rateLimitKit.NewGinMiddleware(rate.Limit(rlConfig.Limit), rlConfig.Burst, forbiddenText)
 		engine.Use(middleware)
 	}
 

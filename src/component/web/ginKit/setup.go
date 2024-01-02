@@ -12,8 +12,8 @@ import (
 	"time"
 )
 
-func MustSetUp(config *Config, recoveryMiddleware gin.HandlerFunc, businessLogic func(engine *gin.Engine) error) {
-	err := SetUp(config, recoveryMiddleware, businessLogic)
+func MustSetUp(config *Config, recoveryMiddleware gin.HandlerFunc, businessLogic func(engine *gin.Engine) error, serviceInfo string) {
+	err := SetUp(config, recoveryMiddleware, businessLogic, serviceInfo)
 	if err != nil {
 		logrusKit.DisableQuote(nil)
 		logrus.Fatalf("%+v", err)
@@ -25,10 +25,12 @@ func MustSetUp(config *Config, recoveryMiddleware gin.HandlerFunc, businessLogic
 PS: 正常执行的情况下，此方法会阻塞调用的协程.
 
 @param config				可以为nil（将返回error）
-@param recoveryMiddleware 	可以为nil（将采用默认值 gin.Recovery()）
-@param businessLogic 		可以为nil；业务逻辑，可以在其中进行 路由绑定 等操作...
+@param recoveryMiddleware 	恢复中间件（可以为nil，将采用默认值: gin.Recovery()）
+@param businessLogic 		业务逻辑，可以在其中进行 路由绑定 等操作...（可以为nil但不推荐这么干）
+@param serviceInfo 			当前服务的信息（可以为""） e.g."Agent-127.0.0.1:12345"
+
 */
-func SetUp(config *Config, recoveryMiddleware gin.HandlerFunc, businessLogic func(engine *gin.Engine) error) error {
+func SetUp(config *Config, recoveryMiddleware gin.HandlerFunc, businessLogic func(engine *gin.Engine) error, serviceInfo string) error {
 	if err := validateKit.Struct(config); err != nil {
 		return err
 	}
@@ -59,7 +61,7 @@ func SetUp(config *Config, recoveryMiddleware gin.HandlerFunc, businessLogic fun
 		默认32MiB，并不涉及"限制上传文件的大小"，原因：上传的文件s按顺序存入内存中，累加大小不得超出 32Mb ，最后累加超出的文件就存入系统的临时文件中。非文件字段部分不计入累加。所以这种情况，文件上传是没有任何限制的。
 		参考: https://studygolang.com/articles/22643
 	*/
-	engine.MaxMultipartMemory = 32 << 20
+	engine.MaxMultipartMemory = 64 << 20
 
 	// pprof
 	if config.Pprof {
@@ -67,7 +69,7 @@ func SetUp(config *Config, recoveryMiddleware gin.HandlerFunc, businessLogic fun
 	}
 
 	// middleware
-	if err := attachMiddlewares(engine, config.Middleware, recoveryMiddleware); err != nil {
+	if err := attachMiddlewares(engine, config.Middleware, recoveryMiddleware, serviceInfo); err != nil {
 		return err
 	}
 
@@ -79,6 +81,7 @@ func SetUp(config *Config, recoveryMiddleware gin.HandlerFunc, businessLogic fun
 		return err
 	}
 
+	/* 业务逻辑 */
 	if businessLogic != nil {
 		if err := businessLogic(engine); err != nil {
 			return errorKit.Wrap(err, "Fail to execute businessLogic().")

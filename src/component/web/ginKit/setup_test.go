@@ -31,7 +31,7 @@ func TestMustSetUp(t *testing.T) {
 		panic(err)
 	}
 
-	MustSetUp(c.Gin, nil, func(engine *gin.Engine) error {
+	MustSetUp(c.Gin, "service info", nil, func(engine *gin.Engine) error {
 		engine.Any("/test", func(ctx *gin.Context) {
 			ctx.String(200, "ok")
 
