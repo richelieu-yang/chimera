@@ -101,6 +101,8 @@ func attachMiddlewares(engine *gin.Engine, config MiddlewareConfig, recoveryMidd
 		})
 	}
 
+	/* rate limiter */
+
 	// others
 	engine.Use(func(ctx *gin.Context) {
 		if strKit.IsNotEmpty(config.XFrameOptions) {
