@@ -14,5 +14,5 @@ var (
 		// 初始化 limiter 每秒10个令牌，令牌桶容量为20
 		limiter := rate.NewLimiter(rate.Every(time.Millisecond*100), 20)
 	*/
-	NewLimiter func(limit rate.Limit, burst int) *rate.Limiter = rate.NewLimiter
+	NewLimiter func(r rate.Limit, b int) *rate.Limiter = rate.NewLimiter
 )

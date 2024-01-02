@@ -17,11 +17,11 @@ PS: 传参说明详见 NewLimiter.
 @param burst 			令牌桶的容量
 @param forbiddenText 	被限流时，响应给前端的内容（状态码固定为 403）
 */
-func NewGinMiddleware(limit rate.Limit, burst int, forbiddenText string) gin.HandlerFunc {
-	limiter := NewLimiter(limit, burst)
+func NewGinMiddleware(r rate.Limit, b int, forbiddenText string) gin.HandlerFunc {
+	limiter := NewLimiter(r, b)
 
 	if strKit.IsEmpty(forbiddenText) {
-		forbiddenText = fmt.Sprintf("Exceed rate limit(%f, %d).", limit, burst)
+		forbiddenText = fmt.Sprintf("Exceed rate limiter(r: %f, b: %d).", r, b)
 	}
 
 	return func(ctx *gin.Context) {
