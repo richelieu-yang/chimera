@@ -44,7 +44,7 @@ type (
 
 	// RateLimiterConfig 限流器的配置（令牌桶算法）
 	RateLimiterConfig struct {
-		Limit int `json:"limit" yaml:"limit"`
-		Burst int `json:"burst" yaml:"burst"`
+		Limit int `json:"limit" yaml:"limit" validate:"gt=0"`
+		Burst int `json:"burst" yaml:"burst" validate:"gt=0,gtecsfield=Limit"`
 	}
 )
