@@ -2,8 +2,8 @@ version: '3'
 
 # 全局变量
 vars:
-  APP: test1
-  SOURCE: test/test1/test1.go
+  APP: test3
+  SOURCE: test/test3/test3.go
   # 0 || 1
   CGO_ENABLED: 0
   VERSION: 0.0.1

@@ -6,11 +6,14 @@ go 调用可执行程序并传参(windows 系统exe程序示例)
 
 实际上是通过start命令.（start /B类似于linux的nohup，但目前重定向输出有问题，后续研究下）
 
-#### demo1
+#### macOS demo
+cmdKit.ExecuteToString(context.TODO(), "sh", "-c", `cmd top -n 1 -b -p 12345 | grep 12345 | awk -F " " '{print $6}'`)
+
+#### Windows demo
 exec.Command("cmd.exe", "/c", "start", "logon.exe")
 exec.Command("cmd.exe", "/c", "start", "/B", "logon.exe")
 
-#### demo2（缺陷: lib/main.exe的输出丢了）
+#### Windows demo1（缺陷: lib/main.exe的输出丢了）
 PS: 如果想要lib/main.exe的输出，可以考虑使用命令: start /b lib/main.exe > output.txt，将输出重定向到文件中，然后再读取文件内容.
 
 ```golang
