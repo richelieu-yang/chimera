@@ -27,8 +27,8 @@ PS: 正常执行的情况下，此方法会阻塞调用的协程.
 @param config				可以为nil（将返回error）
 @param recoveryMiddleware 	恢复中间件（可以为nil，将采用默认值: gin.Recovery()）
 @param businessLogic 		业务逻辑，可以在其中进行 路由绑定 等操作...（可以为nil但不推荐这么干）
-@param serviceInfo 			当前服务的信息（可以为""） e.g."Agent-127.0.0.1:12345"
-
+@param serviceInfo 			当前服务的信息（可以为""） 	(1) e.g."Agent-127.0.0.1:12345"
+													(2) 涉及: 限流器
 */
 func SetUp(config *Config, recoveryMiddleware gin.HandlerFunc, businessLogic func(engine *gin.Engine) error, serviceInfo string) error {
 	if err := validateKit.Struct(config); err != nil {
