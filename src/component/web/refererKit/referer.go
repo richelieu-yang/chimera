@@ -49,10 +49,9 @@ func (builder *RefererVerifierBuilder) Build() (*RefererVerifier, error) {
 }
 
 type RefererVerifier struct {
-	/*
-		必定不为nil
-	*/
-	routeRegexp    *regexp.Regexp
+	// routeRegexp 必定不为nil
+	routeRegexp *regexp.Regexp
+
 	none           bool
 	blocked        bool
 	refererRegexps []*regexp.Regexp
