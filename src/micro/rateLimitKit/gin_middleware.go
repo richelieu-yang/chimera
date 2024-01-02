@@ -2,6 +2,7 @@ package rateLimitKit
 
 import (
 	"github.com/gin-gonic/gin"
+	"github.com/richelieu-yang/chimera/v2/src/core/strKit"
 	"golang.org/x/time/rate"
 	"net/http"
 )
@@ -9,13 +10,19 @@ import (
 // NewGinMiddleware Gin的限流器，用于限流.
 /*
 PS: 传参说明详见 NewLimiter.
+
+@param limit			每秒生成的令牌数，	(1) 可以直接是 某个数值;
+										(2) 也可以是 rate.Every() 的返回值;
+@param burst 			令牌桶的容量
+@param forbiddenText 	被限流时，响应给前端的内容（状态码固定为 403）
 */
-func NewGinMiddleware(limit rate.Limit, burst int) gin.HandlerFunc {
+func NewGinMiddleware(limit rate.Limit, burst int, forbiddenText string) gin.HandlerFunc {
 	limiter := NewLimiter(limit, burst)
+	forbiddenText = strKit.EmptyToDefault(forbiddenText, "Exceed rate limit.")
 
 	return func(ctx *gin.Context) {
 		if !limiter.Allow() {
-			ctx.String(http.StatusForbidden, "Exceed rate limit.")
+			ctx.String(http.StatusForbidden, forbiddenText)
 			ctx.Abort()
 			return
 		}
