@@ -6,6 +6,8 @@ import (
 	"github.com/richelieu-yang/chimera/v2/src/core/errorKit"
 	"github.com/richelieu-yang/chimera/v2/src/core/sliceKit"
 	"github.com/richelieu-yang/chimera/v2/src/core/strKit"
+	"github.com/richelieu-yang/chimera/v2/src/micro/rateLimitKit"
+	"golang.org/x/time/rate"
 	"net/http"
 )
 
@@ -101,7 +103,12 @@ func attachMiddlewares(engine *gin.Engine, config MiddlewareConfig, recoveryMidd
 		})
 	}
 
-	/* rate limiter */
+	/* rate limiter（限流器） */
+	rlConfig := config.RateLimiter
+	if rlConfig != nil {
+		middleware := rateLimitKit.NewGinMiddleware(rate.Limit(rlConfig.Limit), rlConfig.Burst)
+		engine.Use(middleware)
+	}
 
 	// others
 	engine.Use(func(ctx *gin.Context) {
