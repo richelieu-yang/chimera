@@ -37,6 +37,6 @@ type (
 	// CorsConfig cors（跨源资源共享）的配置
 	CorsConfig struct {
 		Access  bool     `json:"access" yaml:"access"`
-		Origins []string `json:"origins" yaml:"origins" validate:"dive,required"`
+		Origins []string `json:"origins" yaml:"origins" validate:"unique,dive,required"`
 	}
 )
