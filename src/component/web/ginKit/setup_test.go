@@ -55,5 +55,5 @@ func TestMustSetUp(t *testing.T) {
 			//logrus.Info("Manager to proxy.")
 		})
 		return nil
-	}, "service info")
+	}, "TEST")
 }

@@ -1,6 +1,7 @@
 package rateLimitKit
 
 import (
+	"fmt"
 	"github.com/gin-gonic/gin"
 	"github.com/richelieu-yang/chimera/v2/src/core/strKit"
 	"golang.org/x/time/rate"
@@ -18,7 +19,10 @@ PS: 传参说明详见 NewLimiter.
 */
 func NewGinMiddleware(limit rate.Limit, burst int, forbiddenText string) gin.HandlerFunc {
 	limiter := NewLimiter(limit, burst)
-	forbiddenText = strKit.EmptyToDefault(forbiddenText, "Exceed rate limit.")
+
+	if strKit.IsEmpty(forbiddenText) {
+		forbiddenText = fmt.Sprintf("Exceed rate limit(%f, %d).", limit, burst)
+	}
 
 	return func(ctx *gin.Context) {
 		if !limiter.Allow() {

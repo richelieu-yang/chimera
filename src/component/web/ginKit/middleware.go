@@ -109,7 +109,7 @@ func attachMiddlewares(engine *gin.Engine, config MiddlewareConfig, recoveryMidd
 	if rlConfig != nil {
 		var forbiddenText string
 		if strKit.IsNotEmpty(serviceInfo) {
-			forbiddenText = fmt.Sprintf("[%s] ", serviceInfo)
+			forbiddenText = fmt.Sprintf("[%s] Exceed rate limit(%d, %d).", serviceInfo, rlConfig.Limit, rlConfig.Burst)
 		}
 		middleware := rateLimitKit.NewGinMiddleware(rate.Limit(rlConfig.Limit), rlConfig.Burst, forbiddenText)
 		engine.Use(middleware)
