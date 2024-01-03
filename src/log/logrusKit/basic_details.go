@@ -102,19 +102,19 @@ func PrintBasicDetails(logger *logrus.Logger) {
 	//}
 
 	/* memory */
-	if stats, err := memoryKit.GetMachineMemoryStats(); err != nil {
+	stats, err := memoryKit.GetMachineMemoryStats()
+	if err != nil {
 		logger.WithError(err).Fatal("[CHIMERA, MEMORY] Fail to get machine memory stats.")
 		return
-	} else {
-		str := fmt.Sprintf("total: %s, available: %s, used: %s, free: %s, used percent: %.2f%%",
-			dataSizeKit.ToReadableIecString(float64(stats.Total)),
-			dataSizeKit.ToReadableIecString(float64(stats.Available)),
-			dataSizeKit.ToReadableIecString(float64(stats.Used)),
-			dataSizeKit.ToReadableIecString(float64(stats.Free)),
-			stats.UsedPercent,
-		)
-		logger.Infof("[CHIMERA, MEMORY] machine memory stats: [%s].", str)
 	}
+	str := fmt.Sprintf("total: %s, available: %s, used: %s, free: %s, used percent: %.2f%%",
+		dataSizeKit.ToReadableIecString(float64(stats.Total)),
+		dataSizeKit.ToReadableIecString(float64(stats.Available)),
+		dataSizeKit.ToReadableIecString(float64(stats.Used)),
+		dataSizeKit.ToReadableIecString(float64(stats.Free)),
+		stats.UsedPercent,
+	)
+	logger.Infof("[CHIMERA, MEMORY] machine memory stats: [%s].", str)
 
 	/* disk */
 	if stats, err := diskKit.GetDiskUsageStats(); err != nil {
