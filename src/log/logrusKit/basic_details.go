@@ -117,18 +117,20 @@ func PrintBasicDetails(logger *logrus.Logger) {
 	logger.Infof("[CHIMERA, MEMORY] machine memory stats: [%s].", str)
 
 	/* disk */
-	if stats, err := diskKit.GetDiskUsageStats(); err != nil {
-		logger.WithError(err).Warn("[CHIMERA, DISK] Fail to get disk usage stats.")
-	} else {
-		str := fmt.Sprintf("path: %s, free: %s, used: %s, total: %s, used percent: %.2f%%",
-			stats.Path,
-			dataSizeKit.ToReadableIecString(float64(stats.Free)),
-			dataSizeKit.ToReadableIecString(float64(stats.Used)),
-			dataSizeKit.ToReadableIecString(float64(stats.Total)),
-			stats.UsedPercent,
-		)
-		logger.Infof("[CHIMERA, DISK] disk usage stats: [%s].", str)
-	}
+	diskKit.PrintBasicDetails(logger)
+
+	//if stats, err := diskKit.GetDiskUsageStats(); err != nil {
+	//	logger.WithError(err).Warn("[CHIMERA, DISK] Fail to get disk usage stats.")
+	//} else {
+	//	str := fmt.Sprintf("path: %s, free: %s, used: %s, total: %s, used percent: %.2f%%",
+	//		stats.Path,
+	//		dataSizeKit.ToReadableIecString(float64(stats.Free)),
+	//		dataSizeKit.ToReadableIecString(float64(stats.Used)),
+	//		dataSizeKit.ToReadableIecString(float64(stats.Total)),
+	//		stats.UsedPercent,
+	//	)
+	//	logger.Infof("[CHIMERA, DISK] disk usage stats: [%s].", str)
+	//}
 
 	/* docker */
 	if dockerIds, err := dockerKit.GetDockerIdList(); err != nil {
