@@ -11,6 +11,11 @@ import (
 	"github.com/sirupsen/logrus"
 )
 
+func GetDiskUsageStats() (*DiskUsageStats, error) {
+	path := conditionKit.TernaryOperator(osKit.IsWindows, "C:", "/")
+	return GetDiskUsageStatsByPath(path)
+}
+
 // GetDiskUsageStatsByPath
 /*
 PS:
@@ -54,8 +59,7 @@ func PrintBasicDetails(logger *logrus.Logger) {
 		logger = logrus.StandardLogger()
 	}
 
-	path := conditionKit.TernaryOperator(osKit.IsWindows, "C:", "/")
-	stats, err := GetDiskUsageStatsByPath(path)
+	stats, err := GetDiskUsageStats()
 	if err != nil {
 		logger.WithError(err).Warn("[CHIMERA, DISK] Fail to get disk usage stats.")
 		return
