@@ -1,70 +1,84 @@
 package main
 
 import (
-	"context"
+	"bytes"
+	"crypto/aes"
+	"crypto/cipher"
+	"crypto/rand"
+	"encoding/base64"
 	"fmt"
-	"github.com/richelieu-yang/chimera/v2/src/component/mq/rocketmq5Kit"
-	"github.com/richelieu-yang/chimera/v2/src/config/viperKit"
-	"github.com/richelieu-yang/chimera/v2/src/consts"
-	"github.com/richelieu-yang/chimera/v2/src/core/pathKit"
-	"github.com/richelieu-yang/chimera/v2/src/idKit"
-	"github.com/richelieu-yang/chimera/v2/src/log/logrusKit"
-	"github.com/sirupsen/logrus"
-	"time"
+	"io"
 )
 
-func init() {
-	logrusKit.MustSetUp(nil)
+// pkcs7Padding adds padding to the plaintext according to the PKCS7 standard
+func pkcs7Padding(plaintext []byte, blockSize int) []byte {
+	padding := blockSize - len(plaintext)%blockSize
+	padtext := bytes.Repeat([]byte{byte(padding)}, padding)
+	return append(plaintext, padtext...)
+}
+
+// pkcs7UnPadding removes padding from the ciphertext according to the PKCS7 standard
+func pkcs7UnPadding(ciphertext []byte) []byte {
+	length := len(ciphertext)
+	unpadding := int(ciphertext[length-1])
+	return ciphertext[:(length - unpadding)]
+}
+
+// Encrypt encrypts the plaintext with the given key using AES/CBC/PKCS7
+func Encrypt(plaintext []byte, key []byte) ([]byte, error) {
+	block, err := aes.NewCipher(key)
+	if err != nil {
+		return nil, err
+	}
+	plaintext = pkcs7Padding(plaintext, block.BlockSize())
+	ciphertext := make([]byte, block.BlockSize()+len(plaintext))
+	iv := ciphertext[:block.BlockSize()]
+	if _, err := io.ReadFull(rand.Reader, iv); err != nil {
+		return nil, err
+	}
+	mode := cipher.NewCBCEncrypter(block, iv)
+	mode.CryptBlocks(ciphertext[block.BlockSize():], plaintext)
+	return ciphertext, nil
+}
+
+// Decrypt decrypts the ciphertext with the given key using AES/CBC/PKCS7
+func Decrypt(ciphertext []byte, key []byte) ([]byte, error) {
+	block, err := aes.NewCipher(key)
+	if err != nil {
+		return nil, err
+	}
+	if len(ciphertext) < block.BlockSize() {
+		return nil, fmt.Errorf("ciphertext too short")
+	}
+	iv := ciphertext[:block.BlockSize()]
+	ciphertext = ciphertext[block.BlockSize():]
+	if len(ciphertext)%block.BlockSize() != 0 {
+		return nil, fmt.Errorf("ciphertext is not a multiple of the block size")
+	}
+	mode := cipher.NewCBCDecrypter(block, iv)
+	mode.CryptBlocks(ciphertext, ciphertext)
+	ciphertext = pkcs7UnPadding(ciphertext)
+	return ciphertext, nil
 }
 
 func main() {
-	var (
-		//topic = "test"
-		tag = "test"
-	)
+	plaintext := []byte("%7B%22method%22%3A10021%7D")
 
-	{
-		wd, err := pathKit.ReviseWorkingDirInTestMode(consts.ProjectName)
-		if err != nil {
-			logrus.Fatal(err)
-		}
-		logrus.Infof("wd: [%s].", wd)
-	}
+	// 16 bytes key for AES-128
+	key := []byte("00000yozo_config")
 
-	path := "_chimera-lib/config.yaml"
-	type config struct {
-		RocketMQ5 *rocketmq5Kit.Config `json:"rocketmq5"`
-	}
-	c := &config{}
-	_, err := viperKit.UnmarshalFromFile(path, nil, c)
+	fmt.Printf("Plaintext: %s\n", plaintext)
+	ciphertext, err := Encrypt(plaintext, key)
 	if err != nil {
-		logrus.Fatal(err)
+		panic(err)
 	}
-	rocketmq5Kit.MustSetUp(c.RocketMQ5, "_client.log", nil)
+	fmt.Printf("Ciphertext (base64): %s\n", base64.StdEncoding.EncodeToString(ciphertext))
 
-	producer, err := rocketmq5Kit.NewProducer()
+	//ciphertext = []byte("5b2d3131362c202d3130372c202d32332c202d3130392c202d39352c202d34332c2031312c2031312c203132372c202d3132382c2035342c2036312c202d372c202d32342c202d312c202d3132312c2032342c2032382c2032372c202d31322c2036362c2035302c202d38352c20352c202d39302c202d35352c202d31302c2037332c202d3130302c202d36322c202d33312c202d3130355d")
+
+	decrypted, err := Decrypt(ciphertext, key)
 	if err != nil {
-		logrus.Fatal(err)
+		panic(err)
 	}
-	ulid := idKit.NewULID()
-	for i := 0; ; i++ {
-		time.Sleep(time.Second * 3)
-
-		msg := rocketmq5Kit.NewMessage("test", []byte(fmt.Sprintf("%s_%d", ulid, i)), &tag)
-		sendReceipts, err := producer.Send(context.TODO(), msg)
-		if err != nil {
-			logrus.WithError(err).Errorf("Fail to send message(text: %s).", string(msg.Body))
-			continue
-		}
-
-		logrus.Infof("length: [%d].", len(sendReceipts))
-		for _, sendReceipt := range sendReceipts {
-			logrus.WithFields(logrus.Fields{
-				"MessageID":     sendReceipt.MessageID,
-				"TransactionId": sendReceipt.TransactionId,
-				"Offset":        sendReceipt.Offset,
-			}).Infof("Manager to send message(text: %s).", string(msg.Body))
-		}
-		logrus.Info("------")
-	}
+	fmt.Printf("Decrypted: %s\n", decrypted)
 }
