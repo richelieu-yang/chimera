@@ -6,9 +6,9 @@ import (
 )
 
 func TestBase64(t *testing.T) {
-	text := "test测试~！@#￥%……&*（）——+-="
 	key := "0123456789abcdef"
 	iv := "0123456789abcdef"
+	text := "test测试~！@#￥%……&*（）——+-="
 
 	cipherText, err := EncryptToBase64([]byte(text), []byte(key), []byte(iv))
 	if err != nil {
@@ -28,9 +28,9 @@ func TestBase64(t *testing.T) {
 }
 
 func TestHex(t *testing.T) {
-	text := "test测试~！@#￥%……&*（）——+-="
 	key := "0123456789abcdef"
 	iv := "0123456789abcdef"
+	text := "test测试~！@#￥%……&*（）——+-="
 
 	cipherText, err := EncryptToHex([]byte(text), []byte(key), []byte(iv))
 	if err != nil {
