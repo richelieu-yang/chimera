@@ -16,3 +16,8 @@ func Encode(src []byte) []byte {
 func EncodeToString(src []byte) string {
 	return hex.EncodeToString(src)
 }
+
+// EncodeStringToString (拓展) string => hex string
+func EncodeStringToString(s string) string {
+	return EncodeToString([]byte(s))
+}

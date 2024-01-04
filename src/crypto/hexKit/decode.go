@@ -15,3 +15,9 @@ func Decode(src []byte) ([]byte, error) {
 func DecodeString(s string) ([]byte, error) {
 	return hex.DecodeString(s)
 }
+
+// DecodeStringToString hex string => string
+func DecodeStringToString(s string) (string, error) {
+	data, err := DecodeString(s)
+	return string(data), err
+}
