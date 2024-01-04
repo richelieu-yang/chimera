@@ -3,7 +3,6 @@
 package cpuKit
 
 import (
-	"github.com/richelieu-yang/chimera/v2/src/core/sliceKit"
 	"github.com/shirou/gopsutil/v3/cpu"
 	"github.com/shirou/gopsutil/v3/process"
 	"github.com/sirupsen/logrus"
@@ -11,16 +10,9 @@ import (
 	"time"
 )
 
-func PrintBasicDetails(logger *logrus.Logger) {
-	logger.Infof("[CHIMERA, CPU] in a virtual machine? [%t].", InVirtualMachine())
-	logger.Infof("[CHIMERA, CPU] vendor id: [%s].", GetVendorID())
-	logger.Infof("[CHIMERA, CPU] vendor string: [%s].", GetVendorString())
-	logger.Infof("[CHIMERA, CPU] brand name: [%s].", GetBrandName())
-	logger.Infof("[CHIMERA, CPU] CPU number: [%d].", GetCpuNumber())
-	logger.Infof("[CHIMERA, CPU] features: [%s].", sliceKit.Join(GetFeatureSet(), ","))
-	logger.Infof("[CHIMERA, CPU] frequency: [%d]hz.", GetFrequency())
+func printBasicDetails(logger *logrus.Logger) {
 	if cpuPercent, err := GetUsagePercent(); err != nil {
-		logger.WithError(err).Warn("[CHIMERA, CPU] fail to get cpu usage")
+		logger.WithError(err).Warn("[CHIMERA, CPU] Fail to get cpu usage")
 	} else {
 		logger.Infof("[CHIMERA, CPU] usage percent: [%.2f]%%.", cpuPercent)
 	}

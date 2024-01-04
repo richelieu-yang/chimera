@@ -6,6 +6,6 @@ import (
 	"github.com/sirupsen/logrus"
 )
 
-func PrintBasicDetails(logger *logrus.Logger) {
+func printBasicDetails(logger *logrus.Logger) {
 
 }
