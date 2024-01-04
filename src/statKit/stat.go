@@ -99,7 +99,7 @@ func GetStats() *Stats {
 		pStats.NumGC = stats.NumGC
 		pStats.EnableGC = stats.EnableGC
 
-		if usagePercent, err := cpuKit.GetUsagePercentByProcess(int32(pStats.PID)); err != nil {
+		if usagePercent, err := cpuKit.GetProcessUsagePercent(int32(pStats.PID)); err != nil {
 			pStats.CpuUsagePercentError = err
 		} else {
 			pStats.CpuUsagePercent = mathKit.Round(usagePercent, 2)

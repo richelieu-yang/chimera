@@ -11,6 +11,38 @@ type (
 	Base64Option func(opts *base64Options)
 )
 
+// Encode
+/*
+参考: base64.Encoding.EncodeToString()
+*/
+func (opts *base64Options) Encode(src []byte) []byte {
+	enc := opts.encoding
+
+	buf := make([]byte, enc.EncodedLen(len(src)))
+	enc.Encode(buf, src)
+	return buf
+}
+
+// Decode
+/*
+参考: base64.Encoding.DecodeString()
+*/
+func (opts *base64Options) Decode(src []byte) ([]byte, error) {
+	enc := opts.encoding
+
+	dbuf := make([]byte, enc.DecodedLen(len(src)))
+	n, err := enc.Decode(dbuf, src)
+	return dbuf[:n], err
+}
+
+func (opts *base64Options) EncodeToString(src []byte) string {
+	return opts.encoding.EncodeToString(src)
+}
+
+func (opts *base64Options) DecodeString(s string) ([]byte, error) {
+	return opts.encoding.DecodeString(s)
+}
+
 func loadOptions(options ...Base64Option) *base64Options {
 	opts := &base64Options{
 		encoding: nil,

@@ -7,7 +7,7 @@ import (
 
 var (
 	// CreateFromStdTime time.Time => carbon.Carbon
-	CreateFromStdTime func(tt time.Time) carbon.Carbon = carbon.CreateFromStdTime
+	CreateFromStdTime func(tt time.Time, timezone ...string) carbon.Carbon = carbon.CreateFromStdTime
 
 	// CreateFromDate 从给定的年、月、日创建 Carbon 实例
 	CreateFromDate      func(year, month, day int, timezone ...string) carbon.Carbon              = carbon.CreateFromDate
