@@ -63,7 +63,7 @@ func loadOptions(options ...Base64Option) *base64Options {
 	return opts
 }
 
-// WithEncoding
+// WithEncoding 默认: base64.StdEncoding.
 /*
 @param encoding base64.StdEncoding || base64.URLEncoding || base64.RawStdEncoding || base64.RawURLEncoding
 */
