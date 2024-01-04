@@ -32,7 +32,7 @@ require (
 	github.com/go-redsync/redsync/v4 v4.11.0
 	github.com/gogf/gf/v2 v2.6.1
 	github.com/golang-jwt/jwt/v5 v5.2.0
-	github.com/golang-module/carbon/v2 v2.3.2
+	github.com/golang-module/carbon/v2 v2.3.3
 	github.com/google/go-cmp v0.6.0
 	github.com/google/uuid v1.5.0
 	github.com/google/wire v0.5.0
@@ -93,7 +93,7 @@ require (
 	go.opentelemetry.io/otel/trace v1.21.0
 	go.uber.org/automaxprocs v1.5.3
 	go.uber.org/zap v1.26.0
-	golang.org/x/exp v0.0.0-20231226003508-02704c960a9b
+	golang.org/x/exp v0.0.0-20240103183307-be819d1f06fc
 	golang.org/x/image v0.14.0
 	golang.org/x/net v0.19.0
 	golang.org/x/text v0.14.0
