@@ -14,7 +14,12 @@ func EncodeToString(src []byte, options ...Base64Option) string {
 	return opts.EncodeToString(src)
 }
 
-// EncodeFile file => []byte
+// EncodeStringToString (拓展) string => base64 string
+func EncodeStringToString(s string, options ...Base64Option) string {
+	return EncodeToString([]byte(s), options...)
+}
+
+// EncodeFile （拓展）file => []byte
 func EncodeFile(path string, options ...Base64Option) ([]byte, error) {
 	data, err := fileKit.ReadFile(path)
 	if err != nil {
@@ -24,7 +29,7 @@ func EncodeFile(path string, options ...Base64Option) ([]byte, error) {
 	return Encode(data, options...), nil
 }
 
-// EncodeFileToString file => string
+// EncodeFileToString （拓展）file => string
 func EncodeFileToString(path string, options ...Base64Option) (string, error) {
 	data, err := fileKit.ReadFile(path)
 	if err != nil {

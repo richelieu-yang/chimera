@@ -10,6 +10,12 @@ func DecodeString(s string, options ...Base64Option) ([]byte, error) {
 	return opts.DecodeString(s)
 }
 
+// DecodeStringToString (拓展) base64 string => string
+func DecodeStringToString(s string, options ...Base64Option) (string, error) {
+	data, err := DecodeString(s, options...)
+	return string(data), err
+}
+
 //// Decode []byte => []byte
 ///*
 //参考: gbase64.Decode()
