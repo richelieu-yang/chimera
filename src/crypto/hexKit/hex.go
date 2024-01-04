@@ -2,7 +2,7 @@ package hexKit
 
 import "encoding/hex"
 
-// Encode
+// Encode []byte => []byte
 /*
 参考: hex.EncodeToString
 */
@@ -12,7 +12,12 @@ func Encode(src []byte) []byte {
 	return dst
 }
 
-// Decode
+// EncodeToString []byte => string
+func EncodeToString(src []byte) string {
+	return hex.EncodeToString(src)
+}
+
+// Decode []byte => []byte
 /*
 参考: hex.DecodeString.
 */
@@ -21,10 +26,7 @@ func Decode(src []byte) ([]byte, error) {
 	return src[:n], err
 }
 
-func EncodeToString(src []byte) string {
-	return hex.EncodeToString(src)
-}
-
+// DecodeString string => []byte
 func DecodeString(s string) ([]byte, error) {
 	return hex.DecodeString(s)
 }
