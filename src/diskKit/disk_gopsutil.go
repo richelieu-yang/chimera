@@ -1,4 +1,4 @@
-//go:build darwin || windows || (linux && 386) || (linux && amd64) || (linux && arm) || (linux && arm64)
+//go:build 386 || amd64 || arm || arm64
 
 package diskKit
 
