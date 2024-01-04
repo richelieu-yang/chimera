@@ -4,6 +4,8 @@ import (
 	"bytes"
 	"crypto/aes"
 	"crypto/cipher"
+	"encoding/base64"
+	"encoding/hex"
 )
 
 // AesCbcPkcs7Encrypt AES/CBC/PKCS7 加密.
@@ -24,6 +26,22 @@ func AesCbcPkcs7Encrypt(data []byte, key []byte, iv []byte) ([]byte, error) {
 	return crypted, nil
 }
 
+func AesCbcPkcs7EncryptToBase64(data []byte, key []byte, iv []byte) ([]byte, error) {
+	data, err := AesCbcPkcs7Encrypt(data, key, iv)
+	if err != nil {
+		return "", err
+	}
+	return base64.StdEncoding.Encode(data), nil
+}
+
+func AesCbcPkcs7EncryptToHex(data []byte, key []byte, iv []byte) ([]byte, error) {
+	data, err := AesCbcPkcs7Encrypt(data, key, iv)
+	if err != nil {
+		return "", err
+	}
+	return hex.Encode(data), nil
+}
+
 // AesCbcPkcs7Decrypt AES/CBC/PKCS7 解密.
 func AesCbcPkcs7Decrypt(data []byte, key []byte, iv []byte) ([]byte, error) {
 	block, err := aes.NewCipher(key)
@@ -37,6 +55,14 @@ func AesCbcPkcs7Decrypt(data []byte, key []byte, iv []byte) ([]byte, error) {
 	blockMode.CryptBlocks(origData, data)
 	origData = pkcs7UnPadding(origData)
 	return origData, nil
+}
+
+func AesCbcPkcs7DecryptFromBase64(data []byte, key []byte, iv []byte) ([]byte, error) {
+
+}
+
+func AesCbcPkcs7DecryptFromHex(data []byte, key []byte, iv []byte) ([]byte, error) {
+
 }
 
 // pkcs7Padding 填充
