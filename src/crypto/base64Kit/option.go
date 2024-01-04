@@ -54,6 +54,7 @@ func loadOptions(options ...Base64Option) *base64Options {
 	}
 
 	if opts.encoding == nil {
+		// 默认值
 		opts.encoding = base64.StdEncoding
 	}
 	if opts.padding != nil {
