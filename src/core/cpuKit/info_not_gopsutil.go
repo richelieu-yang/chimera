@@ -13,12 +13,6 @@ func printBasicDetails(logger *logrus.Logger) {
 }
 
 // GetUsagePercent CPU使用率
-/*
-PS: 耗时约1s.
-
-e.g.
-() => 12.701612903175233
-*/
 func GetUsagePercent() (float64, error) {
 	return 0, errorKit.New("Not supported on this platform")
 }
