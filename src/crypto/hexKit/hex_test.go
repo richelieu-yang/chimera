@@ -40,3 +40,21 @@ func TestEncodeToStringAndDecodeToString(t *testing.T) {
 	}
 	fmt.Println("equal")
 }
+
+func TestEncodeStringToStringAnd(t *testing.T) {
+	text := "test测试~!@#$%^&*()"
+
+	cipherText := EncodeStringToString(text)
+	fmt.Println("cipherText:", cipherText) // cipherText: 74657374e6b58be8af957e21402324255e262a2829
+
+	plainText, err := DecodeStringToString(cipherText)
+	if err != nil {
+		panic(err)
+	}
+	fmt.Println("plainText:", plainText) // plainText: test测试~!@#$%^&*()
+
+	if text != plainText {
+		panic("not equal")
+	}
+	fmt.Println("equal")
+}
