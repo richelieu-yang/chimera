@@ -68,6 +68,8 @@ func main() {
 ```
 
 #### Java demo
+项目路径: notes/_IdeaProjects/aes-demo
+
 ```Java
 import org.bouncycastle.jce.provider.BouncyCastleProvider;
 
@@ -149,6 +151,8 @@ public class Main
 ```
 
 #### JavaScript demo
+项目路径: notes/_IdeaProjects/aes-demo
+
 ```js
 /* 需要先导入 crypto-js.js */
 // 密钥和偏移量
