@@ -2,14 +2,13 @@ package main
 
 import (
 	"fmt"
-	"github.com/otiai10/gosseract/v2"
+	"github.com/richelieu-yang/chimera/v2/src/ocr/gosseractKit"
 )
 
 func main() {
-	client := gosseract.NewClient()
-	defer client.Close()
-	client.SetImage("path/to/image.png")
-	text, _ := client.Text()
+	text, err := gosseractKit.GertText("")
+	if err != nil {
+		panic(err)
+	}
 	fmt.Println(text)
-	// Hello, World!
 }
