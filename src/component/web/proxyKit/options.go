@@ -11,11 +11,15 @@ import (
 
 type (
 	proxyOptions struct {
-		scheme      string
-		errorLogger *log.Logger
+		// scheme "http"（默认） || "https"
+		scheme string
+
 		// reqUrlPath 请求路由
-		reqUrlPath  *string
+		reqUrlPath *string
+
 		queryParams map[string][]string
+
+		errorLogger *log.Logger
 	}
 
 	ProxyOption func(opts *proxyOptions)
