@@ -42,7 +42,7 @@ type (
 		Origins []string `json:"origins" yaml:"origins" validate:"unique,dive,required"`
 	}
 
-	// RateLimiterConfig 限流器的配置（令牌桶算法）
+	// RateLimiterConfig 限流器（令牌桶算法）的配置
 	RateLimiterConfig struct {
 		R int `json:"r" yaml:"r" validate:"gt=0"`
 		B int `json:"b" yaml:"b" validate:"gt=0,gtecsfield=R"`

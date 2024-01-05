@@ -2,6 +2,8 @@ package main
 
 import (
 	"flag"
+	"github.com/gin-gonic/gin"
+	"github.com/richelieu-yang/chimera/v2/src/component/web/ginKit"
 	"github.com/richelieu-yang/chimera/v2/src/core/strKit"
 	"github.com/richelieu-yang/chimera/v2/src/log/logrusKit"
 	"github.com/richelieu-yang/chimera/v2/src/netKit"
@@ -9,7 +11,7 @@ import (
 )
 
 var (
-	port   *uint
+	port   int
 	target *string
 )
 
@@ -19,7 +21,7 @@ func init() {
 		PrintBasic: true,
 	})
 
-	port = flag.Uint("port", 80, "port of service")
+	port = flag.Int("port", 80, "port of service")
 	target = flag.String("target", "", "target of proxy")
 }
 
@@ -29,11 +31,19 @@ func main() {
 	logrus.Infof("port: [%d].", *port)
 	logrus.Infof("target: [%s].", *target)
 
-	if err := netKit.AssertValidPort(int(*port)); err != nil {
+	if err := netKit.AssertValidPort(*port); err != nil {
 		panic(err)
 	}
 	if err := strKit.AssertNotEmpty(*target, "target"); err != nil {
 		panic(err)
 	}
+
+	config := &ginKit.Config{
+		Port: *port,
+	}
+	ginKit.MustSetUp(config, nil, func(engine *gin.Engine) error {
+
+		return nil
+	}, "TEST")
 
 }
