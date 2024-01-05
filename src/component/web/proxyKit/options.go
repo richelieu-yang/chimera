@@ -19,6 +19,7 @@ type (
 
 		queryParams map[string][]string
 
+		// errorLogger 错误日志（可以为nil，但不建议这么干，因为错误会输出到控制台（通过 log.Printf()），不利于错误定位）
 		errorLogger *log.Logger
 	}
 
