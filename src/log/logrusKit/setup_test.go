@@ -7,8 +7,9 @@ import (
 
 func TestMustSetUp(t *testing.T) {
 	MustSetUp(&Config{
-		Level:      "debug",
-		PrintBasic: true,
+		Level:       "debug",
+		EnableQuote: true,
+		PrintBasic:  true,
 	})
 
 	DisableQuote(nil)
