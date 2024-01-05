@@ -21,8 +21,9 @@ PS: 可以多次调用.
 func SetUp(config *Config) error {
 	if config == nil {
 		config = &Config{
-			Level:      "",
-			PrintBasic: false,
+			Level:        "debug",
+			PrintBasic:   false,
+			DisableQuote: false,
 		}
 	}
 
