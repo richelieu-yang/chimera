@@ -1,4 +1,4 @@
-package ocrKit
+package tesseractOcrKit
 
 import (
 	"context"
@@ -10,7 +10,7 @@ import (
 	"github.com/richelieu-yang/chimera/v2/src/idKit"
 )
 
-//// GetText1 通过 第三方依赖otiai10/gosseract 实现
+//// GetText1 通过 第三方依赖 otiai10/gosseract 实现
 //// Deprecated Mac(M1)环境没跑通
 ///*
 //!!!: 使用此函数，必须确保"CGO_ENABLED=1"，否则go run或go build会报错: undefined: gosseract.NewClient
@@ -36,7 +36,7 @@ import (
 // GetText 通过 命令行 实现
 /*
 PS:
-(1) 实际上依赖于tesseract；
+(1) 实际上依赖于 tesseract；
 (2) 初步测试，此方法是并发安全的；
 (3) 识别并不精确，有些图片可能识别不到文本（e.g.图片很小且就一两个字符）.
 */
