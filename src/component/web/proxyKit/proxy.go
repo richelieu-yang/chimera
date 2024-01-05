@@ -1,6 +1,7 @@
-package httpKit
+package proxyKit
 
 import (
+	"github.com/richelieu-yang/chimera/v2/src/component/web/httpKit"
 	"github.com/richelieu-yang/chimera/v2/src/core/strKit"
 	"github.com/richelieu-yang/chimera/v2/src/urlKit"
 	"log"
@@ -121,7 +122,7 @@ scheme="http" addr="127.0.0.1:80" reqUrlPath=ptrKit.ToPtr("/ws/connect")
 */
 func (opts *proxyOptions) proxy(w http.ResponseWriter, r *http.Request, addr string) error {
 	// reset Request.Body
-	if err := ResetRequestBody(r); err != nil {
+	if err := httpKit.ResetRequestBody(r); err != nil {
 		return err
 	}
 
