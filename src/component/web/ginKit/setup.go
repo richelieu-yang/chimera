@@ -5,6 +5,7 @@ import (
 	"github.com/gin-gonic/gin"
 	"github.com/richelieu-yang/chimera/v2/src/consts"
 	"github.com/richelieu-yang/chimera/v2/src/core/errorKit"
+	"github.com/richelieu-yang/chimera/v2/src/core/strKit"
 	"github.com/richelieu-yang/chimera/v2/src/log/logrusKit"
 	"github.com/richelieu-yang/chimera/v2/src/netKit"
 	"github.com/richelieu-yang/chimera/v2/src/validateKit"
@@ -35,8 +36,13 @@ func SetUp(config *Config, recoveryMiddleware gin.HandlerFunc, businessLogic fun
 		return err
 	}
 
-	// Gin的模式，默认debug模式，后续可以在 businessLogic 里面调整
-	gin.SetMode(config.Mode)
+	// Gin的模式，后续也可以在 businessLogic 里面调整
+	if strKit.IsEmpty(config.Mode) {
+		// 默认: debug模式
+		gin.SetMode(gin.DebugMode)
+	} else {
+		gin.SetMode(config.Mode)
+	}
 
 	/*
 		gin框架中如何让日志文字带颜色输出？

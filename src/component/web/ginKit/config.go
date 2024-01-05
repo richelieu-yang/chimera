@@ -2,7 +2,7 @@ package ginKit
 
 type (
 	Config struct {
-		Mode     string `json:"mode" yaml:"mode" validate:"oneof=debug release test"`
+		Mode     string `json:"mode" yaml:"mode" validate:"omitempty,oneof=debug release test"`
 		HostName string `json:"hostName" yaml:"hostName" validate:"omitempty,hostname|ipv4"`
 		// Port
 		/*
