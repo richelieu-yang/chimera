@@ -12,7 +12,7 @@ import (
 )
 
 func GetDiskUsageStats() (*DiskUsageStats, error) {
-	path := conditionKit.TernaryOperator(osKit.IsWindows, "C:", "/")
+	path := conditionKit.TernaryOperator(osKit.IsWindows(), "C:", "/")
 	return GetDiskUsageStatsByPath(path)
 }
 
