@@ -32,27 +32,12 @@ func TestMustSetUp(t *testing.T) {
 	}
 
 	MustSetUp(c.Gin, nil, func(engine *gin.Engine) error {
-		engine.Any("/test", func(ctx *gin.Context) {
-			ctx.String(200, "ok")
+		//engine.Any("/", func(ctx *gin.Context) {
+		//	ctx.String(200, "ok")
+		//})
 
-			//defer func() {
-			//	if obj := recover(); obj != nil {
-			//		if err, ok := obj.(error); ok {
-			//			if strKit.ContainsIgnoreCase(err.Error(), "net/http: abort Handler") {
-			//				// 忽略
-			//				return
-			//			}
-			//		}
-			//		logrus.WithField("obj", obj).Error("panic")
-			//		debug.PrintStack()
-			//	}
-			//}()
-			//
-			//if err := httpKit.Proxy(ctx.Writer, ctx.Request, "127.0.0.1:8888", httpKit.WithReqUrlPath(ptrKit.Of("/push/sse"))); err != nil {
-			//	logrus.Error(err)
-			//	return
-			//}
-			//logrus.Info("Manager to proxy.")
+		engine.NoRoute(func(ctx *gin.Context) {
+			ctx.String(404, "no route")
 		})
 		return nil
 	}, "TEST")
