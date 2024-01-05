@@ -16,7 +16,7 @@ func MustSetUp(config *Config) {
 /*
 PS: 可以多次调用.
 
-@param config 可以为nil（采用默认值）
+@param config 可以为nil（debug级别、禁用双引号、不输出基本信息）
 */
 func SetUp(config *Config) error {
 	if config == nil {
