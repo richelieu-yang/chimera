@@ -45,7 +45,7 @@ require (
 	github.com/hashicorp/raft-boltdb v0.0.0-20231211162105-6c830fa4535e
 	github.com/hibiken/asynq v0.24.1
 	github.com/imroc/req/v3 v3.42.2
-	github.com/jedib0t/go-pretty/v6 v6.4.9
+	github.com/jedib0t/go-pretty/v6 v6.5.0
 	github.com/jinzhu/copier v0.4.0
 	github.com/joho/godotenv v1.5.1
 	github.com/jordan-wright/email v4.0.1-0.20210109023952-943e75fe5223+incompatible
@@ -94,7 +94,7 @@ require (
 	go.uber.org/automaxprocs v1.5.3
 	go.uber.org/zap v1.26.0
 	golang.org/x/exp v0.0.0-20240103183307-be819d1f06fc
-	golang.org/x/image v0.14.0
+	golang.org/x/image v0.15.0
 	golang.org/x/net v0.19.0
 	golang.org/x/text v0.14.0
 	golang.org/x/time v0.5.0
