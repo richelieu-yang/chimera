@@ -53,25 +53,38 @@ func NewDefaultRaftNode(id, addr, dir string, fsm raft.FSM) (*raft.Raft, error) 
 		return nil, err
 	}
 
-	/* snapshotStore
-	(1) raft.NewFileSnapshotStore(opts.dataDir, 1, os.Stderr)
-	(2) raft.NewFileSnapshotStore(raftDir, 2, os.Stderr)
-	retain: Control how many snapshots are retained. Must be at least 1.
+	/* snapshotStore */
+	/*
+		@param retain: Control how many snapshots are retained. Must be at least 1.
+
+		e.g.
+			raft.NewFileSnapshotStore(opts.dataDir, 1, os.Stderr)
+		e.g.1
+			raft.NewFileSnapshotStore(raftDir, 2, os.Stderr)
 	*/
 	snapshotStore, err := raft.NewFileSnapshotStore(dir, 2, os.Stderr)
 	if err != nil {
 		return nil, err
 	}
 
-	/* transport
-	(1) raft.NewTCPTransport(raftAddr, addr, 2, 5*time.Second, os.Stderr)
-	(2) raft.NewTCPTransport(address.String(), address, 3, 10*time.Second, os.Stderr)
-	*/
+	/* transport */
 	tcpAddr, err := net.ResolveTCPAddr("tcp", addr)
 	if err != nil {
 		return nil, err
 	}
-	transport, err := raft.NewTCPTransport(addr, tcpAddr, 2, 5*time.Second, os.Stderr)
+	/*
+		@param maxPool		是一个整数，表示连接池的最大容量，用于复用TCP连接以减少开销。如果为0，则使用默认值2。
+		@param timeout		是一个time.Duration类型，表示连接超时的时间，用于控制网络延迟的影响。如果为0，则使用默认值10 * time.Second。
+		@param logOutput	是一个io.Writer接口，表示日志输出的目标，用于记录传输层的信息。如果为nil，则使用os.Stderr作为输出。
+
+		e.g.
+			raft.NewTCPTransport(raftAddr, addr, 2, 5*time.Second, os.Stderr)
+		e.g.1
+			raft.NewTCPTransport(address.String(), address, 3, 10*time.Second, os.Stderr)
+	*/
+	maxPool := 3
+	timeout := 10 * time.Second
+	transport, err := raft.NewTCPTransport(addr, tcpAddr, maxPool, timeout, os.Stderr)
 	if err != nil {
 		return nil, err
 	}
