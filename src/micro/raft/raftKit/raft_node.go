@@ -17,8 +17,10 @@ import (
 /*
 @param id 		raft节点的id（可以为""，此时将使用 addr 作为 id）
 @param addr 	raft节点的地址（不能为""）
+@param fsm 		不能为nil
+@param logger 	可以为nil（将使用默认的logger，debug级别 由于默认配置）
 */
-func NewDefaultRaftNode(id, addr, dir string, fsm raft.FSM) (*raft.Raft, error) {
+func NewDefaultRaftNode(id, addr, dir string, fsm raft.FSM, logger hclog.Logger) (*raft.Raft, error) {
 	if err := strKit.AssertNotEmpty(addr, "addr"); err != nil {
 		return nil, err
 	}
@@ -33,11 +35,7 @@ func NewDefaultRaftNode(id, addr, dir string, fsm raft.FSM) (*raft.Raft, error) 
 	// Richelieu: 此处不需要配置 config.NotifyCh，用不着
 	config := raft.DefaultConfig()
 	config.LocalID = raft.ServerID(id)
-	config.Logger = hclog.New(&hclog.LoggerOptions{
-		Name:   "raft",
-		Level:  hclog.DefaultLevel,
-		Output: hclog.DefaultOutput,
-	})
+	config.Logger = logger
 	config.SnapshotInterval = 20 * time.Second
 	config.SnapshotThreshold = 2
 
