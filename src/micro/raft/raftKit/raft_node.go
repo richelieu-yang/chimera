@@ -15,7 +15,7 @@ import (
 	"time"
 )
 
-// NewDefaultRaftNodeAndBootstrapCluster
+// NewRaftNodeAndBootstrapCluster
 /*
 @param id 		raft节点的id，	(1) 可以为""，此时将使用 addr 作为 id
 								(2) 建议为""
@@ -23,7 +23,7 @@ import (
 @param fsm 		不能为nil
 @param logger 	可以为nil（将使用默认的logger，debug级别 由于默认配置）
 */
-func NewDefaultRaftNodeAndBootstrapCluster(id, addr, dir string, fsm raft.FSM, logger hclog.Logger, nodeAddrs []string) (*raft.Raft, error) {
+func NewRaftNodeAndBootstrapCluster(id, addr, dir string, fsm raft.FSM, logger hclog.Logger, nodeAddrs []string) (*raft.Raft, error) {
 	if err := strKit.AssertNotEmpty(addr, "addr"); err != nil {
 		return nil, err
 	}
@@ -38,6 +38,7 @@ func NewDefaultRaftNodeAndBootstrapCluster(id, addr, dir string, fsm raft.FSM, l
 		return nil, errorKit.Wrap(err, "param nodeAddrs is invalid")
 	}
 
+	/* (0) config */
 	// Richelieu: 此处不需要配置 config.NotifyCh，用不着
 	config := raft.DefaultConfig()
 	config.LocalID = raft.ServerID(id)
@@ -45,19 +46,19 @@ func NewDefaultRaftNodeAndBootstrapCluster(id, addr, dir string, fsm raft.FSM, l
 	config.SnapshotInterval = 20 * time.Second
 	config.SnapshotThreshold = 2
 
-	/* logStore */
+	/* (1) logStore */
 	logStore, err := raftboltdb.NewBoltStore(filepath.Join(dir, "raft-log.db"))
 	if err != nil {
 		return nil, err
 	}
 
-	/* stableStore */
+	/* (2) stableStore */
 	stableStore, err := raftboltdb.NewBoltStore(filepath.Join(dir, "raft-stable.db"))
 	if err != nil {
 		return nil, err
 	}
 
-	/* snapshotStore */
+	/* (3) snapshotStore */
 	/*
 		@param retain: Control how many snapshots are retained. Must be at least 1.
 
@@ -71,7 +72,7 @@ func NewDefaultRaftNodeAndBootstrapCluster(id, addr, dir string, fsm raft.FSM, l
 		return nil, err
 	}
 
-	/* transport */
+	/* (4) transport */
 	tcpAddr, err := net.ResolveTCPAddr("tcp", addr)
 	if err != nil {
 		return nil, err
@@ -93,12 +94,13 @@ func NewDefaultRaftNodeAndBootstrapCluster(id, addr, dir string, fsm raft.FSM, l
 		return nil, err
 	}
 
+	/* (5) raft node */
 	node, err := raft.NewRaft(config, fsm, logStore, stableStore, snapshotStore, transport)
 	if err != nil {
 		return nil, err
 	}
 
-	/* Bootstrap */
+	/* (6) Bootstrap */
 	var configuration raft.Configuration
 	for _, addr := range nodeAddrs {
 		server := raft.Server{
