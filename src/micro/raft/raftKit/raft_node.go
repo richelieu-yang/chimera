@@ -4,23 +4,26 @@ import (
 	"github.com/hashicorp/go-hclog"
 	"github.com/hashicorp/raft"
 	raftboltdb "github.com/hashicorp/raft-boltdb"
+	"github.com/richelieu-yang/chimera/v2/src/core/errorKit"
 	"github.com/richelieu-yang/chimera/v2/src/core/interfaceKit"
 	"github.com/richelieu-yang/chimera/v2/src/core/strKit"
 	"github.com/richelieu-yang/chimera/v2/src/file/fileKit"
+	"github.com/richelieu-yang/chimera/v2/src/validateKit"
 	"net"
 	"os"
 	"path/filepath"
 	"time"
 )
 
-// NewDefaultRaftNode
+// NewDefaultRaftNodeAndBootstrapCluster
 /*
-@param id 		raft节点的id（可以为""，此时将使用 addr 作为 id）
+@param id 		raft节点的id，	(1) 可以为""，此时将使用 addr 作为 id
+								(2) 建议为""
 @param addr 	raft节点的地址（不能为""）
 @param fsm 		不能为nil
 @param logger 	可以为nil（将使用默认的logger，debug级别 由于默认配置）
 */
-func NewDefaultRaftNode(id, addr, dir string, fsm raft.FSM, logger hclog.Logger) (*raft.Raft, error) {
+func NewDefaultRaftNodeAndBootstrapCluster(id, addr, dir string, fsm raft.FSM, logger hclog.Logger, nodeAddrs []string) (*raft.Raft, error) {
 	if err := strKit.AssertNotEmpty(addr, "addr"); err != nil {
 		return nil, err
 	}
@@ -30,6 +33,9 @@ func NewDefaultRaftNode(id, addr, dir string, fsm raft.FSM, logger hclog.Logger)
 	}
 	if err := interfaceKit.AssertNotNil(fsm, "fsm"); err != nil {
 		return nil, err
+	}
+	if err := validateKit.Var(nodeAddrs, "unique,gte=3,dive,hostname_port"); err != nil {
+		return nil, errorKit.Wrap(err, "param nodeAddrs is invalid")
 	}
 
 	// Richelieu: 此处不需要配置 config.NotifyCh，用不着
@@ -87,5 +93,21 @@ func NewDefaultRaftNode(id, addr, dir string, fsm raft.FSM, logger hclog.Logger)
 		return nil, err
 	}
 
-	return raft.NewRaft(config, fsm, logStore, stableStore, snapshotStore, transport)
+	node, err := raft.NewRaft(config, fsm, logStore, stableStore, snapshotStore, transport)
+	if err != nil {
+		return nil, err
+	}
+
+	/* Bootstrap */
+	var configuration raft.Configuration
+	for _, addr := range nodeAddrs {
+		server := raft.Server{
+			ID:      raft.ServerID(addr),
+			Address: raft.ServerAddress(addr),
+		}
+		configuration.Servers = append(configuration.Servers, server)
+	}
+	node.BootstrapCluster(configuration)
+
+	return node, nil
 }
