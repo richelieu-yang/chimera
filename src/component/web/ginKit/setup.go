@@ -80,10 +80,10 @@ func SetUp(config *Config, recoveryMiddleware gin.HandlerFunc, businessLogic fun
 		return err
 	}
 
-	// favicon
+	/* favicon.ico */
 	DefaultFavicon(engine)
 
-	// 404
+	/* 404 */
 	if err := DefaultNoRoute(engine); err != nil {
 		return err
 	}

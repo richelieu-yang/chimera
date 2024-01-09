@@ -32,9 +32,12 @@ func TestMustSetUp(t *testing.T) {
 	}
 
 	MustSetUp(c.Gin, nil, func(engine *gin.Engine) error {
-		engine.Any("/", func(ctx *gin.Context) {
-			ctx.String(200, "[TARGET] ok")
+		engine.Any("a/*path", func(ctx *gin.Context) {
+			ctx.String(200, ctx.Param("path"))
 		})
+		//engine.Any("a/:path", func(ctx *gin.Context) {
+		//	ctx.String(200, ctx.Param("path"))
+		//})
 
 		engine.NoRoute(func(ctx *gin.Context) {
 			ctx.String(404, "[TARGET] no route")
