@@ -21,7 +21,7 @@ import (
 								(2) 建议为""
 @param addr 	raft节点的地址（不能为""）
 @param fsm 		不能为nil
-@param logger 	可以为nil（将使用默认的logger，debug级别 由于默认配置）
+@param logger 	节点的日志输出，可以为nil（将使用默认的logger，控制台 debug级别 由于默认配置）
 */
 func NewRaftNodeAndBootstrapCluster(id, addr, dir string, fsm raft.FSM, logger hclog.Logger, nodeAddrs []string) (*raft.Raft, error) {
 	if err := strKit.AssertNotEmpty(addr, "addr"); err != nil {
