@@ -16,7 +16,7 @@ gin:
   # PS: 只应该在性能测试的时候才在代码中引入pprof.
   pprof: false
   middleware:
-    # 是否开启gzip压缩（默认: false）
+    # 是否开启gzip压缩（默认: false）true: 客户端支持的话使用gzip压缩，否则不压缩
     gzip: false
     # 全局对request body的大小限制（整数; 单位: MB; 默认: 0; <=0: 不做限制; >0: 进行限制）
     # 不建议在此处配置，想限制上传文件大小可以在handler中进行处理

@@ -4,7 +4,9 @@ go 1.21
 
 require (
 	fyne.io/fyne/v2 v2.4.3
+	github.com/CAFxX/httpcompression v0.0.9
 	github.com/alwindoss/morse v1.0.1
+	github.com/andybalholm/brotli v1.0.6
 	github.com/apache/pulsar-client-go v0.11.1
 	github.com/apache/rocketmq-clients/golang/v5 v5.0.1-rc.5
 	github.com/bytedance/sonic v1.10.2
@@ -121,7 +123,6 @@ require (
 	github.com/aliyun/alibaba-cloud-sdk-go v1.61.1800 // indirect
 	github.com/aliyun/alibabacloud-dkms-gcs-go-sdk v0.2.2 // indirect
 	github.com/aliyun/alibabacloud-dkms-transfer-go-sdk v0.1.7 // indirect
-	github.com/andybalholm/brotli v1.0.6 // indirect
 	github.com/ardielle/ardielle-go v1.5.2 // indirect
 	github.com/armon/go-metrics v0.4.1 // indirect
 	github.com/beorn7/perks v1.0.1 // indirect
