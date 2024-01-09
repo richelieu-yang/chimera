@@ -20,7 +20,7 @@ func GetWorkingDir() string {
 	return path
 }
 
-// ChangeWorkingDir 设置 当前工作目录的绝对路径
+// ChangeWorkingDir 使用给定的路径，更改当前的工作路径.
 func ChangeWorkingDir(dir string) error {
 	if err := fileKit.AssertNotExistOrIsDir(dir); err != nil {
 		return err
