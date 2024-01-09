@@ -29,10 +29,10 @@ var (
 	// Delete 删除文件（或目录）.
 	Delete func(path string) (err error) = Remove
 
-	// Truncate 截断.
+	// Truncate 裁剪文件为指定大小.
 	/*
 		PS:
-		(1) If the file is a symbolic link, it changes the size of the link's target.
+		(1) 如果给定文件路径是软链，将会修改源文件;
 		(2) If there is an error, it will be of type *PathError.
 
 		@param size 如果为0，则清空文件内容
