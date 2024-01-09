@@ -8,9 +8,9 @@ type (
 		/*
 			0（默认）: 不使用 http port
 		*/
-		Port     int  `json:"port" yaml:"port" validate:"port|eq=0,necsfield=SSL.Port"`
-		Colorful bool `json:"colorful" yaml:"colorful"`
-		Pprof    bool `json:"pprof" yaml:"pprof"`
+		Port         int  `json:"port" yaml:"port" validate:"port|eq=0,necsfield=SSL.Port"`
+		DisableColor bool `json:"disableColor" yaml:"disableColor"`
+		Pprof        bool `json:"pprof" yaml:"pprof"`
 
 		SSL        SslConfig        `json:"ssl" yaml:"ssl"`
 		Middleware MiddlewareConfig `json:"middleware" yaml:"middleware"`

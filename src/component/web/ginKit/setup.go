@@ -49,12 +49,12 @@ func SetUp(config *Config, businessLogic func(engine *gin.Engine) error, options
 
 		PS: 如果 Gin.ForceConsoleColor() 和 Gin.DisableConsoleColor() 都不调用，那么默认是在终端中输出日志是带颜色的，输出到其他地方是不带颜色的.
 	*/
-	if config.Colorful {
-		// 强制日志带颜色输出（无论是在终端还是其他输出设备）
-		gin.ForceConsoleColor()
-	} else {
+	if config.DisableColor {
 		// 禁用日志带颜色输出
 		gin.DisableConsoleColor()
+	} else {
+		// 强制日志带颜色输出（无论是在终端还是其他输出设备）
+		gin.ForceConsoleColor()
 	}
 
 	// 通过logrus输出Gin的日志.
