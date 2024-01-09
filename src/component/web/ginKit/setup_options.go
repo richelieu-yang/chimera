@@ -32,5 +32,33 @@ func loadOptions(options ...GinOption) *ginOptions {
 		option(opts)
 	}
 
+	if opts.RecoveryMiddleware == nil {
+		opts.RecoveryMiddleware = gin.Recovery()
+	}
+
 	return opts
+}
+
+func WithServiceInfo(serviceInfo string) GinOption {
+	return func(opts *ginOptions) {
+		opts.ServiceInfo = serviceInfo
+	}
+}
+
+func WithRecoveryMiddleware(recoveryMiddleware gin.HandlerFunc) GinOption {
+	return func(opts *ginOptions) {
+		opts.RecoveryMiddleware = recoveryMiddleware
+	}
+}
+
+func WithDefaultNoRoute(defaultNoRoute bool) GinOption {
+	return func(opts *ginOptions) {
+		opts.DefaultNoRoute = defaultNoRoute
+	}
+}
+
+func WithDefaultFavicon(defaultFavicon bool) GinOption {
+	return func(opts *ginOptions) {
+		opts.DefaultFavicon = defaultFavicon
+	}
 }

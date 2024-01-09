@@ -13,8 +13,8 @@ import (
 	"time"
 )
 
-func MustSetUp(config *Config, recoveryMiddleware gin.HandlerFunc, businessLogic func(engine *gin.Engine) error, serviceInfo string) {
-	err := SetUp(config, recoveryMiddleware, businessLogic, serviceInfo)
+func MustSetUp(config *Config, businessLogic func(engine *gin.Engine) error, options ...GinOption) {
+	err := SetUp(config, businessLogic, options...)
 	if err != nil {
 		logrusKit.DisableQuote(nil)
 		logrus.Fatalf("%+v", err)
@@ -28,10 +28,12 @@ PS: 正常执行的情况下，此方法会阻塞调用的协程.
 @param config			不能为nil（否则将返回error）
 @param businessLogic 	业务逻辑，可以在其中进行 路由绑定 等操作...（可以为nil但不推荐这么干）
 */
-func SetUp(config *Config, recoveryMiddleware gin.HandlerFunc, businessLogic func(engine *gin.Engine) error, serviceInfo string) error {
+func SetUp(config *Config, businessLogic func(engine *gin.Engine) error, options ...GinOption) error {
 	if err := validateKit.Struct(config); err != nil {
 		return err
 	}
+
+	opts := loadOptions(options...)
 
 	// Gin的模式，后续也可以在 businessLogic 里面调整
 	if strKit.IsEmpty(config.Mode) {
@@ -73,16 +75,20 @@ func SetUp(config *Config, recoveryMiddleware gin.HandlerFunc, businessLogic fun
 	}
 
 	// middleware
-	if err := attachMiddlewares(engine, config.Middleware, recoveryMiddleware, serviceInfo); err != nil {
+	if err := attachMiddlewares(engine, config.Middleware, opts); err != nil {
 		return err
 	}
 
 	/* favicon.ico */
-	DefaultFavicon(engine)
+	if opts.DefaultFavicon {
+		DefaultFavicon(engine)
+	}
 
 	/* 404 */
-	if err := DefaultNoRoute(engine); err != nil {
-		return err
+	if opts.DefaultNoRoute {
+		if err := DefaultNoRoute(engine); err != nil {
+			return err
+		}
 	}
 
 	/* 业务逻辑 */

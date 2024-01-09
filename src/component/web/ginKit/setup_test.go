@@ -31,17 +31,16 @@ func TestMustSetUp(t *testing.T) {
 		panic(err)
 	}
 
-	MustSetUp(c.Gin, nil, func(engine *gin.Engine) error {
-		engine.Any("a/*path", func(ctx *gin.Context) {
+	MustSetUp(c.Gin, func(engine *gin.Engine) error {
+		engine.Any("*path", func(ctx *gin.Context) {
 			ctx.String(200, ctx.Param("path"))
 		})
 		//engine.Any("a/:path", func(ctx *gin.Context) {
 		//	ctx.String(200, ctx.Param("path"))
 		//})
-
-		engine.NoRoute(func(ctx *gin.Context) {
-			ctx.String(404, "[TARGET] no route")
-		})
+		//engine.NoRoute(func(ctx *gin.Context) {
+		//	ctx.String(404, "[TARGET] no route")
+		//})
 		return nil
-	}, "TEST")
+	}, WithServiceInfo("TEST"), WithDefaultFavicon(false))
 }

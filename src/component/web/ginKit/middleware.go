@@ -37,7 +37,7 @@ func UseMiddlewares(engine *gin.Engine, middlewares ...gin.HandlerFunc) (err err
 }
 
 // attachMiddlewares 绑定一些常用的中间件.
-func attachMiddlewares(engine *gin.Engine, config MiddlewareConfig, recoveryMiddleware gin.HandlerFunc, serviceInfo string) error {
+func attachMiddlewares(engine *gin.Engine, config MiddlewareConfig, opts *ginOptions) error {
 	// gzip
 	/*
 		PS:
@@ -48,14 +48,8 @@ func attachMiddlewares(engine *gin.Engine, config MiddlewareConfig, recoveryMidd
 		engine.Use(gzip.Gzip(gzip.BestSpeed))
 	}
 
-	// logger(necessary)
-	engine.Use(gin.Logger())
-
-	// recovery(necessary)
-	if recoveryMiddleware == nil {
-		recoveryMiddleware = gin.Recovery()
-	}
-	engine.Use(recoveryMiddleware)
+	// logger(necessary) && recovery(necessary)
+	engine.Use(gin.Logger(), opts.RecoveryMiddleware)
 
 	// cors(optional)
 	{
@@ -108,8 +102,8 @@ func attachMiddlewares(engine *gin.Engine, config MiddlewareConfig, recoveryMidd
 	rlConfig := config.RateLimiter
 	if rlConfig != nil {
 		var forbiddenText string
-		if strKit.IsNotEmpty(serviceInfo) {
-			forbiddenText = fmt.Sprintf("[%s] Exceed rate limit(r: %d, b: %d).", serviceInfo, rlConfig.R, rlConfig.B)
+		if strKit.IsNotEmpty(opts.ServiceInfo) {
+			forbiddenText = fmt.Sprintf("[%s] Exceed rate limit(r: %d, b: %d).", opts.ServiceInfo, rlConfig.R, rlConfig.B)
 		}
 		middleware := rateLimitKit.NewGinMiddleware(rate.Limit(rlConfig.R), rlConfig.B, forbiddenText)
 		engine.Use(middleware)
