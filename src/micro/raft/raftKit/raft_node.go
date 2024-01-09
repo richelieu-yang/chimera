@@ -17,17 +17,16 @@ import (
 
 // NewRaftNodeAndBootstrapCluster
 /*
-@param id 		raft节点的id，	(1) 可以为""，此时将使用 addr 作为 id
-								(2) 建议为""
+PS: 将 传参addr 作为id.
+
 @param addr 	raft节点的地址（不能为""）
 @param fsm 		不能为nil
 @param logger 	节点的日志输出，可以为nil（将使用默认的logger，控制台 debug级别 由于默认配置）
 */
-func NewRaftNodeAndBootstrapCluster(id, addr, dir string, fsm raft.FSM, logger hclog.Logger, nodeAddrs []string) (*raft.Raft, error) {
+func NewRaftNodeAndBootstrapCluster(addr, dir string, fsm raft.FSM, logger hclog.Logger, nodeAddrs []string) (*raft.Raft, error) {
 	if err := strKit.AssertNotEmpty(addr, "addr"); err != nil {
 		return nil, err
 	}
-	id = strKit.EmptyToDefault(id, addr)
 	if err := fileKit.AssertNotExistOrIsDir(dir); err != nil {
 		return nil, err
 	}
@@ -41,7 +40,7 @@ func NewRaftNodeAndBootstrapCluster(id, addr, dir string, fsm raft.FSM, logger h
 	/* (0) config */
 	// Richelieu: 此处不需要配置 config.NotifyCh，用不着
 	config := raft.DefaultConfig()
-	config.LocalID = raft.ServerID(id)
+	config.LocalID = raft.ServerID(addr)
 	config.Logger = logger
 	config.SnapshotInterval = 20 * time.Second
 	config.SnapshotThreshold = 2
