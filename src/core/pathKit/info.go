@@ -7,7 +7,22 @@ import (
 )
 
 var (
+	// RealPath 获取给定路径的绝对路径地址.
+	/*
+		PS: 对应的文件或目录不存在的话，返回"".
+
+		e.g.
+		fmt.Println(pathKit.RealPath(""))   // "/Users/richelieu/GolandProjects/chimera"
+		fmt.Println(pathKit.RealPath("."))  // "/Users/richelieu/GolandProjects/chimera"
+		fmt.Println(pathKit.RealPath("./")) // "/Users/richelieu/GolandProjects/chimera"
+	*/
+	RealPath func(path string) string = gfile.RealPath
+
 	// SelfDir returns absolute directory path of current running process(binary).
+	/*
+		e.g.
+		fmt.Println(pathKit.SelfDir()) // "/Users/richelieu/Library/Caches/JetBrains/GoLand2023.3/tmp/GoLand"
+	*/
 	SelfDir func() string = gfile.SelfDir
 
 	// MainPkgPath returns absolute file path of package main, which contains the entrance function main.
@@ -31,7 +46,7 @@ var (
 	*/
 	IsAbs func(path string) bool = filepath.IsAbs
 
-	// Abs 获取的绝对路径(传参path相对于当前路径(os.Getwd())).
+	// Abs 绝对路径(传参path相对于当前路径(os.Getwd())).
 	Abs func(path string) (string, error) = filepath.Abs
 
 	// VolumeName 返回分区名

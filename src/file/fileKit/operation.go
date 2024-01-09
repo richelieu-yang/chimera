@@ -8,16 +8,16 @@ import (
 )
 
 var (
-	// Chmod 修改权限
+	// Chmod 使用指定的权限，更改指定路径的文件权限.
 	Chmod func(path string, mode os.FileMode) (err error) = gfile.Chmod
 
-	// CutAndPaste 剪贴
+	// CutAndPaste 剪贴.
 	CutAndPaste func(src string, dst string) (err error) = gfile.Move
 
-	// Move 移动
+	// Move 移动.
 	Move func(src string, dst string) (err error) = gfile.Move
 
-	// Rename 重命名
+	// Rename 重命名.
 	Rename func(src string, dst string) (err error) = gfile.Move
 
 	// Remove 删除文件（或目录）.
@@ -29,7 +29,7 @@ var (
 	// Delete 删除文件（或目录）.
 	Delete func(path string) (err error) = Remove
 
-	// Truncate 截断
+	// Truncate 截断.
 	/*
 		PS:
 		(1) If the file is a symbolic link, it changes the size of the link's target.
