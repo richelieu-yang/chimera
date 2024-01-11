@@ -2,7 +2,6 @@ package jsonRespKit
 
 import (
 	"github.com/richelieu-yang/chimera/v2/src/core/interfaceKit"
-	"github.com/richelieu-yang/chimera/v2/src/json/jsonKit"
 	"github.com/richelieu-yang/chimera/v2/src/log/logrusKit"
 	"github.com/sirupsen/logrus"
 )
@@ -18,9 +17,6 @@ type (
 
 var (
 	provider RespProvider = nil
-
-	// api 用于序列化json
-	api jsonKit.API = nil
 )
 
 func MustSetUp(respProvider RespProvider, options ...Option) {
@@ -33,7 +29,6 @@ func MustSetUp(respProvider RespProvider, options ...Option) {
 func SetUp(respProvider RespProvider, options ...Option) (err error) {
 	defer func() {
 		if err != nil {
-			api = nil
 			provider = nil
 			msgMap = make(map[string]string)
 		}
@@ -47,15 +42,14 @@ func SetUp(respProvider RespProvider, options ...Option) (err error) {
 
 	opts := loadOptions(options...)
 	for _, path := range opts.filePathSlice {
-		if err := readFile(path); err != nil {
+		if err = readFile(path); err != nil {
 			return err
 		}
 	}
 	for _, fd := range opts.fileDataSlice {
-		if err := readFileData(fd); err != nil {
+		if err = readFileData(fd); err != nil {
 			return err
 		}
 	}
-	api = opts.api
 	return nil
 }

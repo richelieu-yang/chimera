@@ -8,6 +8,7 @@ PS: 需要先成功调用 MustSetUp || SetUp.
 */
 func Seal(code string, data interface{}, msgArgs ...interface{}) (string, error) {
 	bean := Pack(code, data, msgArgs...)
+
 	return jsonKit.MarshalToString(bean)
 }
 
@@ -17,5 +18,6 @@ PS: 需要先成功调用 MustSetUp || SetUp.
 */
 func SealFully(code, msg string, data interface{}, msgArgs ...interface{}) (string, error) {
 	bean := PackFully(code, msg, data, msgArgs...)
+
 	return jsonKit.MarshalToString(bean)
 }

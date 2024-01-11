@@ -1,29 +1,13 @@
 package jsonRespKit
 
-import (
-	"github.com/richelieu-yang/chimera/v2/src/json/jsonKit"
-)
-
 type (
 	options struct {
-		api jsonKit.API
-
 		filePathSlice []string
 		fileDataSlice []*FileData
 	}
 
 	Option func(opts *options)
 )
-
-// WithAPI
-/*
-@param api sonic.ConfigDefault（默认; 推荐） || jsoniter.ConfigDefault
-*/
-func WithAPI(api jsonKit.API) Option {
-	return func(opts *options) {
-		opts.api = api
-	}
-}
 
 func WithFilePathSlice(filePathSlice []string) Option {
 	return func(opts *options) {
@@ -38,14 +22,11 @@ func WithFileDataSlice(fileDataSlice []*FileData) Option {
 }
 
 func loadOptions(optionSlice ...Option) *options {
-	opts := &options{
-		api: nil,
-	}
+	opts := &options{}
+
 	for _, option := range optionSlice {
 		option(opts)
 	}
-	if opts.api == nil {
-		opts.api = jsonKit.GetDefaultApi()
-	}
+
 	return opts
 }
