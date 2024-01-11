@@ -41,6 +41,7 @@ func SetUp(respProvider RespProvider, options ...Option) (err error) {
 	provider = respProvider
 
 	opts := loadOptions(options...)
+
 	for _, path := range opts.filePathSlice {
 		if err = readFile(path); err != nil {
 			return err
