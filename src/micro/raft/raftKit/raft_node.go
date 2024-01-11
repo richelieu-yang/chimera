@@ -6,7 +6,6 @@ import (
 	raftboltdb "github.com/hashicorp/raft-boltdb"
 	"github.com/richelieu-yang/chimera/v2/src/core/errorKit"
 	"github.com/richelieu-yang/chimera/v2/src/core/interfaceKit"
-	"github.com/richelieu-yang/chimera/v2/src/core/strKit"
 	"github.com/richelieu-yang/chimera/v2/src/file/fileKit"
 	"github.com/richelieu-yang/chimera/v2/src/validateKit"
 	"net"
@@ -17,15 +16,15 @@ import (
 
 // NewRaftNodeAndBootstrapCluster
 /*
-PS: 将 传参addr 作为id.
+PS: 将 传参addr 作为id，所以传参中无id.
 
 @param addr 	raft节点的地址（不能为""）
 @param fsm 		不能为nil
 @param logger 	节点的日志输出，可以为nil（将使用默认的logger，控制台 debug级别 由于默认配置）
 */
 func NewRaftNodeAndBootstrapCluster(addr, dir string, fsm raft.FSM, logger hclog.Logger, nodeAddrs []string) (*raft.Raft, error) {
-	if err := strKit.AssertNotEmpty(addr, "addr"); err != nil {
-		return nil, err
+	if err := validateKit.Var(addr, "hostname_port"); err != nil {
+		return nil, errorKit.Wrap(err, "param addr is invalid")
 	}
 	if err := fileKit.AssertNotExistOrIsDir(dir); err != nil {
 		return nil, err
