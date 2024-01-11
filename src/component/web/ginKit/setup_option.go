@@ -9,7 +9,7 @@ type (
 			e.g."Agent-127.0.0.1:12345"
 
 			涉及: 	(a) 限流器
-					(b) RespondError、RespondPackage、RespondPackageOrError
+					(b) RespondError()、RespondPackage()、RespondPackageOrError()
 		*/
 		ServiceInfo string
 
