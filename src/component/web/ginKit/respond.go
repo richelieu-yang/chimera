@@ -121,6 +121,11 @@ func RespondError(ctx *gin.Context, statusCode int, err error) {
 	if statusCode <= 0 {
 		statusCode = http.StatusInternalServerError
 	}
+
+	if strKit.IsNotEmpty(serviceInfo) {
+		message = fmt.Sprintf("[%s] %s", serviceInfo, message)
+	}
+
 	ctx.String(statusCode, message)
 }
 
