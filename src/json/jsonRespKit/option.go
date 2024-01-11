@@ -2,7 +2,7 @@ package jsonRespKit
 
 type (
 	options struct {
-		filePathSlice []string
+		filePaths []string
 
 		fileDataSlice []*FileData
 	}
@@ -12,7 +12,7 @@ type (
 
 func loadOptions(optionSlice ...Option) *options {
 	opts := &options{
-		filePathSlice: nil,
+		filePaths:     nil,
 		fileDataSlice: nil,
 	}
 
@@ -23,10 +23,10 @@ func loadOptions(optionSlice ...Option) *options {
 	return opts
 }
 
-// WithFilePathSlice 存储code和msg对应关系的文件（路径）
-func WithFilePathSlice(filePathSlice []string) Option {
+// WithFilePaths 存储code和msg对应关系的文件（路径）
+func WithFilePaths(filePathSlice []string) Option {
 	return func(opts *options) {
-		opts.filePathSlice = filePathSlice
+		opts.filePaths = filePathSlice
 	}
 }
 

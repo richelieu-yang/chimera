@@ -7,8 +7,8 @@ import (
 )
 
 type FileData struct {
-	// FileType 文件的类型，e.g. "properties"、"yaml"、"ini"...
-	FileType string
+	// Type 文件的类型，e.g. "properties"、"yaml"、"ini"...
+	Type string
 
 	// Data 文件的内容
 	Data []byte
@@ -43,7 +43,7 @@ func readFileData(fd *FileData) error {
 	}
 
 	m := make(map[string]string)
-	if _, err := viperKit.Unmarshal(fd.Data, fd.FileType, nil, &m); err != nil {
+	if _, err := viperKit.Unmarshal(fd.Data, fd.Type, nil, &m); err != nil {
 		return err
 	}
 	msgMap = mapKit.Merge(msgMap, m)

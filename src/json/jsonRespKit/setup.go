@@ -29,7 +29,7 @@ func SetUp(respProvider RespProvider, options ...Option) (err error) {
 
 	opts := loadOptions(options...)
 
-	for _, path := range opts.filePathSlice {
+	for _, path := range opts.filePaths {
 		if err = readFile(path); err != nil {
 			return err
 		}
