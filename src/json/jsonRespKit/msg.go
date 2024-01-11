@@ -7,9 +7,11 @@ import (
 )
 
 type FileData struct {
-	Data []byte
 	// FileType 文件的类型，e.g. "properties"、"yaml"、"ini"...
 	FileType string
+
+	// Data 文件的内容
+	Data []byte
 }
 
 /*
