@@ -1,13 +1,13 @@
 package sessionKit
 
 import (
-	"bytes"
 	"context"
 	"crypto/rand"
 	"encoding/base32"
-	"encoding/gob"
 	"errors"
+	"github.com/richelieu-yang/chimera/v2/src/compress/zstdKit"
 	"github.com/richelieu-yang/chimera/v2/src/core/errorKit"
+	"github.com/richelieu-yang/chimera/v2/src/json/jsonKit"
 	"github.com/richelieu-yang/chimera/v2/src/randomKit"
 	"io"
 	"net/http"
@@ -243,18 +243,32 @@ type SessionSerializer interface {
 type GobSerializer struct{}
 
 func (gs GobSerializer) Serialize(s *sessions.Session) ([]byte, error) {
-	buf := new(bytes.Buffer)
-	enc := gob.NewEncoder(buf)
-	err := enc.Encode(s.Values)
-	if err == nil {
-		return buf.Bytes(), nil
+	// Richelieu: TongRDS有问题，不用gob
+	data, err := jsonKit.Marshal(s.Values)
+	if err != nil {
+		return nil, err
 	}
-	return nil, err
+	return zstdKit.Compress(data)
+
+	//buf := new(bytes.Buffer)
+	//enc := gob.NewEncoder(buf)
+	//err := enc.Encode(s.Values)
+	//if err == nil {
+	//	return buf.Bytes(), nil
+	//}
+	//return nil, err
 }
 
 func (gs GobSerializer) Deserialize(d []byte, s *sessions.Session) error {
-	dec := gob.NewDecoder(bytes.NewBuffer(d))
-	return dec.Decode(&s.Values)
+	// Richelieu: TongRDS有问题，不用gob
+	d, err := zstdKit.Decompress(d)
+	if err != nil {
+		return err
+	}
+	return jsonKit.Unmarshal(d, &s.Values)
+
+	//dec := gob.NewDecoder(bytes.NewBuffer(d))
+	//return dec.Decode(&s.Values)
 }
 
 // generateRandomKey returns a new random key
