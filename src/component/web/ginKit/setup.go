@@ -14,7 +14,7 @@ import (
 )
 
 // serviceInfo e.g."Agent-127.0.0.1:12345"
-var serviceInfo string = ""
+var serviceInfo = ""
 
 func MustSetUp(config *Config, businessLogic func(engine *gin.Engine) error, options ...GinOption) {
 	err := SetUp(config, businessLogic, options...)
