@@ -29,7 +29,7 @@ func MustSetUp(config *Config, businessLogic func(engine *gin.Engine) error, opt
 PS: 正常执行的情况下，此方法会阻塞调用的协程.
 
 @param config			不能为nil（否则将返回error）
-@param businessLogic 	业务逻辑，可以在其中进行 路由绑定 等操作...（可以为nil但不推荐这么干）
+@param businessLogic 	业务逻辑，可以在其中进行 路由绑定 等操作...（可以为nil，但不推荐这么干）
 */
 func SetUp(config *Config, businessLogic func(engine *gin.Engine) error, options ...GinOption) error {
 	if err := validateKit.Struct(config); err != nil {
