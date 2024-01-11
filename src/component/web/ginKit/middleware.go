@@ -100,10 +100,11 @@ func attachMiddlewares(engine *gin.Engine, config MiddlewareConfig, opts *ginOpt
 	/* rate limiter（限流器） */
 	rlConfig := config.RateLimiter
 	if rlConfig != nil {
-		var forbiddenText string
-		if strKit.IsNotEmpty(opts.ServiceInfo) {
-			forbiddenText = fmt.Sprintf("[%s] Exceed rate limit(r: %d, b: %d).", opts.ServiceInfo, rlConfig.R, rlConfig.B)
+		forbiddenText := fmt.Sprintf("Exceed rate limit(r: %d, b: %d).", rlConfig.R, rlConfig.B)
+		if strKit.IsNotEmpty(serviceInfo) {
+			forbiddenText = fmt.Sprintf("[%s] %s", serviceInfo, forbiddenText)
 		}
+
 		middleware := rateLimitKit.NewGinMiddleware(rate.Limit(rlConfig.R), rlConfig.B, forbiddenText)
 		engine.Use(middleware)
 	}

@@ -13,6 +13,9 @@ import (
 	"time"
 )
 
+// serviceInfo e.g."Agent-127.0.0.1:12345"
+var serviceInfo string = ""
+
 func MustSetUp(config *Config, businessLogic func(engine *gin.Engine) error, options ...GinOption) {
 	err := SetUp(config, businessLogic, options...)
 	if err != nil {
@@ -34,6 +37,7 @@ func SetUp(config *Config, businessLogic func(engine *gin.Engine) error, options
 	}
 
 	opts := loadOptions(options...)
+	serviceInfo = opts.ServiceInfo
 
 	// Gin的模式，后续也可以在 businessLogic 里面调整
 	if strKit.IsEmpty(config.Mode) {
