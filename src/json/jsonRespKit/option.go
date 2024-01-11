@@ -2,10 +2,8 @@ package jsonRespKit
 
 type (
 	options struct {
-		// filePathSlice
 		filePathSlice []string
 
-		// fileDataSlice
 		fileDataSlice []*FileData
 	}
 
