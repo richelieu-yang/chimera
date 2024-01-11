@@ -4,7 +4,7 @@ import "github.com/gin-gonic/gin"
 
 type (
 	ginOptions struct {
-		// ServiceInfo 当前服务的信息（可以为""）
+		// ServiceInfo 当前服务的信息（默认为""）
 		/*
 			e.g."Agent-127.0.0.1:12345"
 
