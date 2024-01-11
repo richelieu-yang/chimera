@@ -18,10 +18,6 @@ func Pack(code string, data interface{}, msgArgs ...interface{}) interface{} {
 PS: 需要先成功调用 MustSetUp || SetUp.
 */
 func PackFully(code, msg string, data interface{}, msgArgs ...interface{}) interface{} {
-	if provider == nil {
-		panic(NotSetupError)
-	}
-
 	if strKit.IsEmpty(msg) {
 		msg = msgMap[code]
 	}
