@@ -15,7 +15,7 @@ require (
 	github.com/duke-git/lancet/v2 v2.2.8
 	github.com/emersion/go-imap v1.2.1
 	github.com/emersion/go-imap-id v0.0.0-20190926060100-f94a56b9ecde
-	github.com/emersion/go-message v0.17.0
+	github.com/emersion/go-message v0.18.0
 	github.com/fatih/structs v1.1.0
 	github.com/fsnotify/fsnotify v1.7.0
 	github.com/gabriel-vasile/mimetype v1.4.3
@@ -94,7 +94,7 @@ require (
 	go.opentelemetry.io/otel/trace v1.21.0
 	go.uber.org/automaxprocs v1.5.3
 	go.uber.org/zap v1.26.0
-	golang.org/x/exp v0.0.0-20240103183307-be819d1f06fc
+	golang.org/x/exp v0.0.0-20240110193028-0dcbfd608b1e
 	golang.org/x/image v0.15.0
 	golang.org/x/net v0.20.0
 	golang.org/x/text v0.14.0
