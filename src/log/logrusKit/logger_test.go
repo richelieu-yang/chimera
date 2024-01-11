@@ -17,7 +17,7 @@ func TestNewLogger1(t *testing.T) {
 	logger.Info("to defaultOutput")
 
 	/* 输出到文件(rotatable) */
-	path := "test.log"
+	path := "_test.log"
 	writer, err := ioKit.NewLumberJackWriteCloser(path, int64(10*dataSizeKit.MiB))
 	if err != nil {
 		panic(err)
@@ -28,7 +28,7 @@ func TestNewLogger1(t *testing.T) {
 
 func TestNewFileLogger(t *testing.T) {
 	/* 输出到文件(not rotatable) */
-	logger, err := NewFileLogger("test1.log")
+	logger, err := NewFileLogger("_test1.log")
 	if err != nil {
 		panic(err)
 	}
