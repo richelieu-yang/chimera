@@ -1,4 +1,4 @@
-package compressKit
+package zlibKit
 
 import "github.com/gogf/gf/v2/encoding/gcompress"
 
