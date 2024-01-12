@@ -6,7 +6,7 @@ import (
 	"encoding/base32"
 	"errors"
 	"github.com/richelieu-yang/chimera/v2/src/core/errorKit"
-	"github.com/richelieu-yang/chimera/v2/src/crypto/hexKit"
+	"github.com/richelieu-yang/chimera/v2/src/crypto/base64Kit"
 	"github.com/richelieu-yang/chimera/v2/src/randomKit"
 	"github.com/richelieu-yang/chimera/v2/src/serialize/gobKit"
 	"io"
@@ -247,8 +247,8 @@ func (gs GobSerializer) Serialize(s *sessions.Session) ([]byte, error) {
 	if err != nil {
 		return nil, err
 	}
-	// hex编码（Richelieu: 额外hex编码是为了防国产TongRDS，set后get的值有问题）
-	return hexKit.Encode(data), nil
+	// base64编码（Richelieu: 额外hex编码是为了防国产TongRDS，set后get的值有问题）
+	return base64Kit.Encode(data), nil
 
 	//buf := new(bytes.Buffer)
 	//enc := gob.NewEncoder(buf)
@@ -261,8 +261,8 @@ func (gs GobSerializer) Serialize(s *sessions.Session) ([]byte, error) {
 }
 
 func (gs GobSerializer) Deserialize(d []byte, s *sessions.Session) error {
-	// hex解码
-	data, err := hexKit.Decode(d)
+	// base64解码
+	data, err := base64Kit.Decode(d)
 	if err != nil {
 		return err
 	}
