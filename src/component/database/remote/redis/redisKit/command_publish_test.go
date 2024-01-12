@@ -2,6 +2,10 @@ package redisKit
 
 import (
 	"context"
+	"testing"
+)
+
+import (
 	"github.com/richelieu-yang/chimera/v2/src/atomicKit"
 	"github.com/richelieu-yang/chimera/v2/src/config/confKit"
 	"github.com/richelieu-yang/chimera/v2/src/consts"
@@ -11,12 +15,11 @@ import (
 	"github.com/sirupsen/logrus"
 	"strconv"
 	"sync"
-	"testing"
 	"time"
 )
 
 // 测试: Redis客户端通用订阅与发布.
-func TestClient_SubscribeAndPublish(t *testing.T) {
+func TestClient_Publish(t *testing.T) {
 	logrusKit.MustSetUp(nil)
 
 	wd, err := pathKit.ReviseWorkingDirInTestMode(consts.ProjectName)
@@ -96,7 +99,7 @@ func TestClient_SubscribeAndPublish(t *testing.T) {
 /*
 !!!: 需要先配置Redis.
 */
-func TestClient_SubscribeAndPublish1(t *testing.T) {
+func TestClient_Publish1(t *testing.T) {
 	wd, err := pathKit.ReviseWorkingDirInTestMode(consts.ProjectName)
 	if err != nil {
 		logrus.Infof("wd: %s", wd)
