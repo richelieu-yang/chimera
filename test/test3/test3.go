@@ -2,10 +2,13 @@ package main
 
 import (
 	"fmt"
+	"github.com/richelieu-yang/chimera/v2/src/config/confKit"
 	"github.com/richelieu-yang/chimera/v2/src/serialize/json/jsonKit"
 )
 
 func main() {
+	confKit.LoadFromJsonText()
+
 	m := map[interface{}]interface{}{
 		"0": 3.1415926,
 	}
