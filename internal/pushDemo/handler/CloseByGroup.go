@@ -4,7 +4,7 @@ import (
 	"github.com/gin-gonic/gin"
 	"github.com/richelieu-yang/chimera/v2/src/component/web/ginKit"
 	"github.com/richelieu-yang/chimera/v2/src/component/web/push/pushKit"
-	"github.com/richelieu-yang/chimera/v2/src/json/jsonRespKit"
+	"github.com/richelieu-yang/chimera/v2/src/serialize/json/jsonRespKit"
 	"net/http"
 )
 
