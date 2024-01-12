@@ -3,7 +3,7 @@ package copyKit
 import (
 	"fmt"
 	jsoniter "github.com/json-iterator/go"
-	"github.com/richelieu-yang/chimera/v2/src/json/jsonKit"
+	"github.com/richelieu-yang/chimera/v2/src/serialize/json/jsonKit"
 	"testing"
 )
 

@@ -3,7 +3,7 @@ package carbonKit
 import (
 	"fmt"
 	"github.com/golang-module/carbon/v2"
-	"github.com/richelieu-yang/chimera/v2/src/json/jsonKit"
+	"github.com/richelieu-yang/chimera/v2/src/serialize/json/jsonKit"
 	"testing"
 )
 

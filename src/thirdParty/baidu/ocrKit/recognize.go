@@ -5,7 +5,7 @@ import (
 	httpClientKit2 "github.com/richelieu-yang/chimera/v2/src/component/web/request/httpClientKit"
 	"github.com/richelieu-yang/chimera/v2/src/core/errorKit"
 	"github.com/richelieu-yang/chimera/v2/src/crypto/base64Kit"
-	"github.com/richelieu-yang/chimera/v2/src/json/jsonKit"
+	"github.com/richelieu-yang/chimera/v2/src/serialize/json/jsonKit"
 	"github.com/richelieu-yang/chimera/v2/src/urlKit"
 )
 

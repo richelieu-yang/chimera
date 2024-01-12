@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"github.com/richelieu-yang/chimera/v2/src/core/strKit"
 	"github.com/richelieu-yang/chimera/v2/src/file/fileKit"
-	"github.com/richelieu-yang/chimera/v2/src/json/jsonKit"
+	"github.com/richelieu-yang/chimera/v2/src/serialize/json/jsonKit"
 	"net/http"
 	"net/url"
 	"path/filepath"

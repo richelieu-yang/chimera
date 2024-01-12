@@ -3,7 +3,7 @@ package reqKit
 import (
 	"fmt"
 	"github.com/imroc/req/v3"
-	"github.com/richelieu-yang/chimera/v2/src/json/jsonKit"
+	"github.com/richelieu-yang/chimera/v2/src/serialize/json/jsonKit"
 	"time"
 )
 

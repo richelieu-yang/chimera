@@ -5,7 +5,7 @@ import (
 	"github.com/richelieu-yang/chimera/v2/src/component/web/request/httpClientKit"
 	"github.com/richelieu-yang/chimera/v2/src/core/errorKit"
 	"github.com/richelieu-yang/chimera/v2/src/core/strKit"
-	"github.com/richelieu-yang/chimera/v2/src/json/jsonKit"
+	"github.com/richelieu-yang/chimera/v2/src/serialize/json/jsonKit"
 	"sync"
 	"time"
 )
