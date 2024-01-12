@@ -41,7 +41,7 @@ go-redis目前还不支持:
 #### Consumer从哪里开始消费？
 XGroupCreate()（或XGroupCreateMkStream()）的传参start.
 
-## TongRDS 的bug
+## !!!: TongRDS的bug
 将特殊的[]byte类型的数据（gob序列化的）存入redis，再取出来，结果和放进去的不一样.
 一种解决方案: base64编码一下再存入Redis，取出后先base64解码.
 
