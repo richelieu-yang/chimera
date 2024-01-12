@@ -52,7 +52,7 @@ require (
 	github.com/json-iterator/go v1.1.12
 	github.com/klauspost/compress v1.17.4
 	github.com/klauspost/cpuid/v2 v2.2.6
-	github.com/linxGnu/grocksdb v1.8.10
+	github.com/linxGnu/grocksdb v1.8.11
 	github.com/lionsoul2014/ip2region/binding/golang v0.0.0-20231013030745-3066d243cd04
 	github.com/matoous/go-nanoid/v2 v2.0.0
 	github.com/mitchellh/go-homedir v1.1.0
