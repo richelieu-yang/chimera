@@ -26,6 +26,9 @@ func Marshal(obj any) ([]byte, error) {
 }
 
 // Unmarshal 反序列化.
+/*
+PS: 反序列化为map实例，key类型可以是interface{}.
+*/
 func Unmarshal(data []byte, ptr interface{}) error {
 	buf := bytes.NewBuffer(data)
 	decoder := gob.NewDecoder(buf)
