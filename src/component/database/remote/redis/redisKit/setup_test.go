@@ -3,7 +3,6 @@ package redisKit
 import (
 	"context"
 	"fmt"
-	"github.com/richelieu-yang/chimera/v2/src/component/mq/pulsarKit"
 	"github.com/richelieu-yang/chimera/v2/src/config/viperKit"
 	"github.com/richelieu-yang/chimera/v2/src/consts"
 	"github.com/richelieu-yang/chimera/v2/src/core/pathKit"
@@ -40,20 +39,22 @@ func TestSetUp(t *testing.T) {
 	{
 		//fmt.Println(client.Ping(context.TODO()))
 
-		m := map[string]interface{}{}
-		m["use"] = "pulsar"
-		m["pulsar"] = &pulsarKit.Config{
-			Addrs: []string{"localhost:6650"},
-		}
+		fmt.Println(client.IsStreamSupported(context.Background()))
 
-		jsonStr, err := jsonKit.MarshalToString(m)
-		if err != nil {
-			panic(err)
-		}
-		count, err := client.Publish(context.TODO(), "WsMq", jsonStr)
-		if err != nil {
-			panic(err)
-		}
-		fmt.Println(count)
+		//m := map[string]interface{}{}
+		//m["use"] = "pulsar"
+		//m["pulsar"] = &pulsarKit.Config{
+		//	Addrs: []string{"localhost:6650"},
+		//}
+		//
+		//jsonStr, err := jsonKit.MarshalToString(m)
+		//if err != nil {
+		//	panic(err)
+		//}
+		//count, err := client.Publish(context.TODO(), "WsMq", jsonStr)
+		//if err != nil {
+		//	panic(err)
+		//}
+		//fmt.Println(count)
 	}
 }

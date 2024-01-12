@@ -14,7 +14,8 @@ import (
 /*
 PS:
 (1) 低版本Redis（<5）不支持Stream;
-(2) Tendis 2.6.0不支持Stream.
+(2) Tendis 2.6.0不支持Stream;
+(3) TongRDS（具体版本未知）支持Stream.
 */
 func (client *Client) IsStreamSupported(ctx context.Context) error {
 	id := idKit.NewXid()
