@@ -26,4 +26,8 @@ var (
 	GzipPathWriter func(filePath string, writer io.Writer, level ...int) error = gcompress.GzipPathWriter
 )
 
-var ()
+var (
+	UnGzip func(data []byte) ([]byte, error) = gcompress.UnGzip
+
+	UnGzipFile func(srcFilePath, dstFilePath string) error = gcompress.UnGzipFile
+)
