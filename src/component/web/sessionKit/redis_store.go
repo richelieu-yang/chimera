@@ -242,13 +242,6 @@ type SessionSerializer interface {
 type GobSerializer struct{}
 
 func (gs GobSerializer) Serialize(s *sessions.Session) ([]byte, error) {
-	//// Richelieu: TongRDS有问题，不用gob
-	//data, err := jsonKit.Marshal(s.Values)
-	//if err != nil {
-	//	return nil, err
-	//}
-	//return zstdKit.Compress(data)
-
 	// gob序列化
 	data, err := gobKit.Marshal(s.Values)
 	if err != nil {
@@ -268,13 +261,6 @@ func (gs GobSerializer) Serialize(s *sessions.Session) ([]byte, error) {
 }
 
 func (gs GobSerializer) Deserialize(d []byte, s *sessions.Session) error {
-	//// Richelieu: TongRDS有问题，不用gob
-	//d, err := zstdKit.Decompress(d)
-	//if err != nil {
-	//	return err
-	//}
-	//return jsonKit.Unmarshal(d, &s.Values)
-
 	// hex解码
 	data, err := hexKit.Decode(d)
 	if err != nil {
