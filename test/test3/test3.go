@@ -2,13 +2,23 @@ package main
 
 import (
 	"fmt"
-	"github.com/richelieu-yang/chimera/v2/src/serialize/gobKit"
+	"github.com/richelieu-yang/chimera/v2/src/serialize/json/jsonKit"
 )
 
 func main() {
-	var m map[interface{}]interface{} = nil
-	fmt.Println(gobKit.Marshal(m)) // [13 127 4 1 2 255 128 0 1 16 1 16 0 0 4 255 128 0 0] <nil>
+	m := map[interface{}]interface{}{
+		"0": 3.1415926,
+	}
 
-	var obj interface{} = nil
-	fmt.Println(gobKit.Marshal(obj)) // [] gob: cannot encode nil value
+	data, err := jsonKit.Marshal(m)
+	if err != nil {
+		panic(err)
+	}
+	fmt.Println(string(data))
+
+	m1 := map[interface{}]interface{}{}
+	if err := jsonKit.Unmarshal(data, &m1); err != nil {
+		panic(err) // panic: unsupported map key type: interface {}
+	}
+	fmt.Println(m1)
 }
