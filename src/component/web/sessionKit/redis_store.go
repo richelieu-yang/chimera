@@ -1,15 +1,14 @@
 package sessionKit
 
 import (
-	"bytes"
 	"context"
 	"crypto/rand"
 	"encoding/base32"
-	"encoding/gob"
 	"errors"
 	"github.com/richelieu-yang/chimera/v2/src/core/errorKit"
 	"github.com/richelieu-yang/chimera/v2/src/crypto/hexKit"
 	"github.com/richelieu-yang/chimera/v2/src/randomKit"
+	"github.com/richelieu-yang/chimera/v2/src/serialize/gobKit"
 	"io"
 	"net/http"
 	"strconv"
@@ -251,14 +250,22 @@ func (gs GobSerializer) Serialize(s *sessions.Session) ([]byte, error) {
 	//}
 	//return zstdKit.Compress(data)
 
-	buf := new(bytes.Buffer)
-	enc := gob.NewEncoder(buf)
-	err := enc.Encode(s.Values)
+	// gob序列化
+	data, err := gobKit.Marshal(s.Values)
 	if err != nil {
 		return nil, err
 	}
-	data := buf.Bytes()
+	// hex编码
 	return hexKit.Encode(data), nil
+
+	//buf := new(bytes.Buffer)
+	//enc := gob.NewEncoder(buf)
+	//err := enc.Encode(s.Values)
+	//if err != nil {
+	//	return nil, err
+	//}
+	//data := buf.Bytes()
+	//return hexKit.Encode(data), nil
 }
 
 func (gs GobSerializer) Deserialize(d []byte, s *sessions.Session) error {
@@ -269,12 +276,16 @@ func (gs GobSerializer) Deserialize(d []byte, s *sessions.Session) error {
 	//}
 	//return jsonKit.Unmarshal(d, &s.Values)
 
-	d, err := hexKit.Decode(d)
+	// hex解码
+	data, err := hexKit.Decode(d)
 	if err != nil {
 		return err
 	}
-	dec := gob.NewDecoder(bytes.NewBuffer(d))
-	return dec.Decode(&s.Values)
+	// gob反序列化
+	return gobKit.Unmarshal(data, &s.Values)
+
+	//dec := gob.NewDecoder(bytes.NewBuffer(d))
+	//return dec.Decode(&s.Values)
 }
 
 // generateRandomKey returns a new random key
