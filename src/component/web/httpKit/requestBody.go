@@ -18,7 +18,8 @@ Go语言: 如何让 request.Body 可以多次读取
 
 PS:
 (1) 一般与 proxy() 搭配使用;
-(2) 某个路由涉及代理（请求转发）的话，需要在handler里面 首先 调用此方法.
+(2) 某个路由涉及代理（请求转发）的话，需要在handler里面 首先 调用此方法;
+(3) 请求有内容的话，会全部读取一遍请求体内容.
 */
 func MakeRequestBodySeekable(req *http.Request) error {
 	// 特殊情况: req.Body == http.NoBody，http客户端发的是post请求，但是没有request body（即没post参数）
