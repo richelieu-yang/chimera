@@ -239,7 +239,6 @@ type SessionSerializer interface {
 	Deserialize(b []byte, s *sessions.Session) error
 }
 
-// Gob serializer
 type GobSerializer struct{}
 
 func (gs GobSerializer) Serialize(s *sessions.Session) ([]byte, error) {
@@ -255,7 +254,7 @@ func (gs GobSerializer) Serialize(s *sessions.Session) ([]byte, error) {
 	if err != nil {
 		return nil, err
 	}
-	// hex编码
+	// hex编码（Richelieu: 额外hex编码是为了防国产TongRDS，set后get的值有问题）
 	return hexKit.Encode(data), nil
 
 	//buf := new(bytes.Buffer)
