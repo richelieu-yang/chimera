@@ -14,6 +14,7 @@ func TestMarshalAndUnmarshal(t *testing.T) {
 	if err != nil {
 		panic(err)
 	}
+	fmt.Println(string(data))
 
 	var m1 map[interface{}]interface{}
 	if err := Unmarshal(data, &m1); err != nil {
