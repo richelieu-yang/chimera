@@ -27,10 +27,14 @@ func TestRedisStore(t *testing.T) {
 	cookieName := "session-id"
 	// Redis配置（单节点）
 	redisOptions := &redis.Options{
-		Addr: "127.0.0.1:6379",
-		DB:   0,
+		Addr:     "43.143.150.175:6379",
+		DB:       0,
+		Password: "123456",
 	}
 	client := redis.NewClient(redisOptions)
+	if err := client.Ping(context.Background()).Err(); err != nil {
+		panic(err)
+	}
 
 	/* ------------------------------- store starts ------------------------------- */
 	// Redis中的key的前缀（value为 string 类型）
@@ -66,7 +70,7 @@ func TestRedisStore(t *testing.T) {
 
 		/* (2) 保存session数据，本质上是将内存中的数据持久化到存储介质中（序列化并写到Redis中；会重置key的TTL） */
 		if err := session.Save(ctx.Request, ctx.Writer); err != nil {
-			ctx.String(http.StatusOK, err.Error())
+			ctx.String(http.StatusInternalServerError, err.Error())
 			return
 		}
 
