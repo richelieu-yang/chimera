@@ -1,9 +1,11 @@
 ## 前端解码 
 #### atob()解码（后端通过base64.StdEncoding 生成的base64字符串）
-PS: 
-js有一个内置的函数atob()，可以将Base64编码的字符串解码为ASCII编码的字符串。但是，如果Base64编码的数据包含非ASCII字符，比如中文，那么atob()函数就不能正确地解码。
+PS: js有一个内置的函数atob()，可以将Base64编码的字符串解码为ASCII编码的字符串。但是，如果Base64编码的数据包含非ASCII字符，比如中文，那么atob()函数就不能正确地解码。
 
 总结：前端解码不推荐使用atob()，网上有别的解码方法. 
+
+e.g. atob()无法准确解码（原文中包含中文）
+"eyJkYXRhIjoic+WViuWViuWVii5kb2N4IiwiY29kZSI6NH0="
 
 ## GoFrame的 gbase64
 Deprecated: 它只使用 base64.StdEncoding，太局限了.
