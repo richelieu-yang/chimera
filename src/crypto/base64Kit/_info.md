@@ -1,37 +1,15 @@
-## base64.StdEncoding 生成的base64字符串，前端可以用 atob() 解码
+## 前端解码 
+#### atob()解码（后端通过base64.StdEncoding 生成的base64字符串）
+PS: 
+js有一个内置的函数atob()，可以将Base64编码的字符串解码为ASCII编码的字符串。但是，如果Base64编码的数据包含非ASCII字符，比如中文，那么atob()函数就不能正确地解码。
 
-code:
-```go
-package main
-
-import (
-	"encoding/base64"
-	"fmt"
-	"github.com/richelieu-yang/chimera/v2/src/crypto/base64Kit"
-	"github.com/richelieu-yang/chimera/v2/src/json/jsonKit"
-)
-
-func main() {
-	m := map[string]interface{}{
-		"code":    0,
-		"message": "success",
-	}
-	jsonData, err := jsonKit.Marshal(m)
-	if err != nil {
-		panic(err)
-	}
-
-	base64Str := base64Kit.EncodeToString(jsonData, base64Kit.WithEncoding(base64.StdEncoding))
-	fmt.Println(base64Str) // eyJjb2RlIjowLCJtZXNzYWdlIjoic3VjY2VzcyJ9
-}
-```
+总结：前端解码不推荐使用atob()，网上有别的解码方法. 
 
 ## GoFrame的 gbase64
 Deprecated: 它只使用 base64.StdEncoding，太局限了.
 
 BASE64编解码-gbase64
     https://goframe.org/pages/viewpage.action?pageId=1114301
-
 
 ## base64.StdEncoding 和 base64.URLEncoding 的区别
 base64.StdEncoding和base64.URLEncoding的区别
@@ -60,4 +38,5 @@ e.g.
 	fmt.Println(base64.URLEncoding.EncodeToString(input))                               // AAA-AAA_AA==
 	fmt.Println(base64.StdEncoding.WithPadding(base64.NoPadding).EncodeToString(input)) // AAA+AAA/AA
 	fmt.Println(base64.URLEncoding.WithPadding(base64.NoPadding).EncodeToString(input)) // AAA-AAA_AA
+
 
