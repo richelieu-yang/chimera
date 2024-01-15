@@ -8,7 +8,6 @@ import (
 	"github.com/richelieu-yang/chimera/v2/src/core/strKit"
 	"github.com/richelieu-yang/chimera/v2/src/micro/rateLimitKit"
 	"golang.org/x/time/rate"
-	"net/http"
 )
 
 // UseMiddlewares
@@ -80,19 +79,11 @@ func attachMiddlewares(engine *gin.Engine, config MiddlewareConfig, opts *ginOpt
 	// bodyLimit
 	// TODO: 因为http.MaxBytesReader()，如果涉及"请求转发（代理）"，转发方不要全局配置此属性，否则会导致: 有时成功，有时代理失败（error），有时http客户端失败
 	if config.BodyLimit > 0 {
-		limit := config.BodyLimit << 20
-		engine.Use(func(ctx *gin.Context) {
-			// (1) Based on content length
-			if ctx.Request.ContentLength > limit {
-				ctx.AbortWithStatus(http.StatusRequestEntityTooLarge)
-				return
-			}
-
-			// (2) Based on content read
-			if ctx.Request.Body != nil && ctx.Request.Body != http.NoBody {
-				ctx.Request.Body = http.MaxBytesReader(ctx.Writer, ctx.Request.Body, limit)
-			}
-		})
+		middleware, err := NewSizeLimiterMiddleware(config.BodyLimit)
+		if err != nil {
+			return err
+		}
+		engine.Use(middleware)
 	}
 
 	/* rate limiter（限流器） */
