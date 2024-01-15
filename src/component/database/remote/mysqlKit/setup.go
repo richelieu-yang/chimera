@@ -8,15 +8,15 @@ import (
 	"gorm.io/driver/mysql"
 	"gorm.io/gorm"
 	"gorm.io/gorm/logger"
-	"io"
 	"log"
 	"os"
+	"time"
 )
 
 var db *gorm.DB
 
-func MustSetUp(config *Config, output io.Writer) {
-	if err := SetUp(config, output); err != nil {
+func MustSetUp(config *Config, logConfig *LogConfig) {
+	if err := SetUp(config, logConfig); err != nil {
 		logrusKit.DisableQuote(nil)
 		logrus.Fatalf("%+v", err)
 	}
@@ -26,9 +26,17 @@ func MustSetUp(config *Config, output io.Writer) {
 /*
 @param output 客户端的日志输出（nil: 输出到控制台）
 */
-func SetUp(config *Config, output io.Writer) error {
+func SetUp(config *Config, logConfig *LogConfig) error {
 	if err := interfaceKit.AssertNotNil(config, "config"); err != nil {
 		return err
+	}
+	if logConfig == nil {
+		logConfig = &LogConfig{
+			Output:        os.Stdout,
+			SlowThreshold: 200 * time.Millisecond,
+			LogLevel:      0,
+			Colorful:      true,
+		}
 	}
 
 	/* logger */

@@ -31,7 +31,7 @@ func SetUp(config *Config) error {
 	logrus.SetReportCaller(true)
 
 	/* Level */
-	level, err := ParseLevel(config.Level)
+	level, err := StringToLevel(config.Level)
 	if err != nil {
 		return err
 	}

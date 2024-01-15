@@ -16,11 +16,11 @@ import (
 //	}
 //}
 
-// ParseLevel string => logrus.Level
+// StringToLevel string => logrus.Level
 /*
 PS: 默认日志级别 Debug.
 */
-func ParseLevel(str string) (logrus.Level, error) {
+func StringToLevel(str string) (logrus.Level, error) {
 	if strKit.IsBlank(str) {
 		return logrus.DebugLevel, nil
 	}
