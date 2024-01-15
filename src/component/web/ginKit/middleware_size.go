@@ -11,23 +11,25 @@ import (
 	@param limit 单位: MiB
 */
 func NewSizeLimiterMiddleware(limit int64) gin.HandlerFunc {
+	// bodyLimit 单位: B
+	bodyLimit := limit << 20
+
 	return func(ctx *gin.Context) {
-		req := ctx.Request
 
 		// (1) do nothing
-		if req.Body == nil || req.Body == http.NoBody {
+		if ctx.Request.Body == nil || ctx.Request.Body == http.NoBody {
 			ctx.Next()
 			return
 		}
 
 		// (2) Based on content length
-		if req.ContentLength > limit {
+		if ctx.Request.ContentLength > limit {
 			ctx.AbortWithStatus(http.StatusRequestEntityTooLarge)
 			return
 		}
 
 		// (3) Based on content read
-		ctx.Request.Body = http.MaxBytesReader(ctx.Writer, ctx.Request.Body, limit)
+		ctx.Request.Body = http.MaxBytesReader(ctx.Writer, ctx.Request.Body, bodyLimit)
 		ctx.Next()
 	}
 }
