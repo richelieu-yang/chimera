@@ -82,7 +82,11 @@ func attachMiddlewares(engine *gin.Engine, config MiddlewareConfig, opts *ginOpt
 	if config.BodyLimit > 0 {
 		limit := config.BodyLimit << 20
 		engine.Use(func(ctx *gin.Context) {
-			// 参考了echo中的 middleware.BodyLimit()
+			/*
+				Richelieu:
+				(1) 参考了echo中的 middleware.BodyLimit()
+				(2) gin-contrib/size: https://github.com/gin-contrib/size
+			*/
 
 			// (1) Based on content length
 			if ctx.Request.ContentLength > limit {
@@ -91,8 +95,8 @@ func attachMiddlewares(engine *gin.Engine, config MiddlewareConfig, opts *ginOpt
 			}
 
 			// (2) Based on content read
-			if ctx.Request.Body != nil {
-				ctx.Request.Body = http.MaxBytesReader(ctx.Writer, ctx.Request.Body, limit+128)
+			if ctx.Request.Body != nil && ctx.Request.Body != http.NoBody {
+				ctx.Request.Body = http.MaxBytesReader(ctx.Writer, ctx.Request.Body, limit)
 			}
 		})
 	}
