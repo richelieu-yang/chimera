@@ -27,12 +27,12 @@ require (
 	github.com/go-kratos/kratos/v2 v2.7.2
 	github.com/go-oauth2/oauth2/v4 v4.5.2
 	github.com/go-oauth2/redis/v4 v4.1.1
-	github.com/go-playground/validator/v10 v10.16.0
+	github.com/go-playground/validator/v10 v10.17.0
 	github.com/go-redis/redis/v8 v8.11.5
 	github.com/go-redsync/redsync/v4 v4.11.0
 	github.com/gogf/gf/v2 v2.6.1
 	github.com/golang-jwt/jwt/v5 v5.2.0
-	github.com/golang-module/carbon/v2 v2.3.4
+	github.com/golang-module/carbon/v2 v2.3.5
 	github.com/google/go-cmp v0.6.0
 	github.com/google/uuid v1.5.0
 	github.com/google/wire v0.5.0
@@ -45,7 +45,7 @@ require (
 	github.com/hashicorp/raft-boltdb v0.0.0-20231211162105-6c830fa4535e
 	github.com/hibiken/asynq v0.24.1
 	github.com/imroc/req/v3 v3.42.3
-	github.com/jedib0t/go-pretty/v6 v6.5.2
+	github.com/jedib0t/go-pretty/v6 v6.5.3
 	github.com/jinzhu/copier v0.4.0
 	github.com/joho/godotenv v1.5.1
 	github.com/jordan-wright/email v4.0.1-0.20210109023952-943e75fe5223+incompatible
@@ -91,7 +91,7 @@ require (
 	go.opentelemetry.io/otel/trace v1.21.0
 	go.uber.org/automaxprocs v1.5.3
 	go.uber.org/zap v1.26.0
-	golang.org/x/exp v0.0.0-20240110193028-0dcbfd608b1e
+	golang.org/x/exp v0.0.0-20240112132812-db7319d0e0e3
 	golang.org/x/image v0.15.0
 	golang.org/x/net v0.20.0
 	golang.org/x/text v0.14.0
@@ -245,10 +245,10 @@ require (
 	golang.org/x/mobile v0.0.0-20230531173138-3c911d8e3eda // indirect
 	golang.org/x/mod v0.14.0 // indirect
 	golang.org/x/oauth2 v0.15.0 // indirect
-	golang.org/x/sync v0.5.0 // indirect
+	golang.org/x/sync v0.6.0 // indirect
 	golang.org/x/sys v0.16.0 // indirect
 	golang.org/x/term v0.16.0 // indirect
-	golang.org/x/tools v0.16.1 // indirect
+	golang.org/x/tools v0.17.0 // indirect
 	google.golang.org/api v0.153.0 // indirect
 	google.golang.org/appengine v1.6.8 // indirect
 	google.golang.org/genproto v0.0.0-20231106174013-bbf56f31fb17 // indirect
