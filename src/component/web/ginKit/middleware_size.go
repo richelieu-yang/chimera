@@ -17,9 +17,9 @@ func NewSizeLimiterMiddleware(limit int64) (gin.HandlerFunc, error) {
 	if err := validateKit.Var(limit, "gt=0"); err != nil {
 		return nil, errorKit.Wrap(err, "invalid limit(%d)", limit)
 	}
+
 	// bodyLimit 单位: B
 	bodyLimit := limit << 20
-
 	return func(ctx *gin.Context) {
 		// (1) do nothing
 		if ctx.Request.Body == nil || ctx.Request.Body == http.NoBody {
