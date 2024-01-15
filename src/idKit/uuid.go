@@ -18,12 +18,6 @@ e.g.
 */
 func NewUUID() string {
 	return uuid.New().String()
-
-	//id, err := uuid.NewRandom()
-	//if err != nil {
-	//	return "", err
-	//}
-	//return id.ToDsnString(), nil
 }
 
 // NewSimpleUUID UUIDv4，去掉了其中所有"-"

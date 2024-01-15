@@ -48,7 +48,7 @@ func SetUp(config *Config, output io.Writer) error {
 		Colorful: false,
 	})
 
-	tmpDB, err := gorm.Open(mysql.Open(config.ToDsnString()), &gorm.Config{
+	tmpDB, err := gorm.Open(mysql.Open(config.GetDsnString()), &gorm.Config{
 		Logger: clientLogger,
 	})
 	if err != nil {

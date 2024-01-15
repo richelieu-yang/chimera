@@ -64,7 +64,7 @@ func TestSetUp(t *testing.T) {
 	//			}).Error("[PRODUCER] fail to send message")
 	//		} else {
 	//			logrus.WithFields(logrus.Fields{
-	//				"id":   id.ToDsnString(),
+	//				"id":   id.String(),
 	//				"text": text,
 	//			}).Info("[PRODUCER] succeed to send message")
 	//		}
@@ -78,7 +78,7 @@ func TestSetUp(t *testing.T) {
 	//		return
 	//	}
 	//	logrus.WithFields(logrus.Fields{
-	//		"id":   msg.ID().ToDsnString(),
+	//		"id":   msg.ID().String(),
 	//		"text": string(msg.Payload()),
 	//	}).Info("[CONSUMER] receive a message")
 	//})
@@ -94,7 +94,7 @@ func TestSetUp(t *testing.T) {
 	//	}
 	//	if err := consumer.Ack(msg); err != nil {
 	//		logrus.WithFields(logrus.Fields{
-	//			"id":   msg.ID().ToDsnString(),
+	//			"id":   msg.ID().String(),
 	//			"text": string(msg.Payload()),
 	//		}).Error("[CONSUMER] fail to ack")
 	//		continue

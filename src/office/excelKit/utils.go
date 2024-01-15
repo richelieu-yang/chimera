@@ -82,17 +82,6 @@ e.g.
 (16368) => "XEO", nil
 */
 func ConvertColToString(col int) (string, error) {
-	/* ts */
-	//convertToString(col: number): string {
-	//	var rst = "";
-	//
-	//	while (col >= 0) {
-	//	rst = ToDsnString.fromCharCode(65 + col % 26) + rst;
-	//	col = (col / 26 | 0) - 1;
-	//}
-	//	return rst;
-	//}
-
 	if col < 0 || col > MaxCol {
 		return "", errorKit.New("col(%d) is invalid", col)
 	}

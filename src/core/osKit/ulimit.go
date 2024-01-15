@@ -54,10 +54,10 @@ func GetMaxOpenFiles() (int, error) {
 	//	return 0, err
 	//}
 	//// strKit.TrimSpace()是为了：去掉最后面的"\n"
-	//str := strKit.TrimSpace(out.ToDsnString())
+	//str := strKit.TrimSpace(out.String())
 	//value, err := strconv.Atoi(str)
 	//if err != nil {
-	//	return 0, errorKit.New("result(%s) of command(%s) isn't a number", str, cmd.ToDsnString())
+	//	return 0, errorKit.New("result(%s) of command(%s) isn't a number", str, cmd.String())
 	//}
 	//return value, nil
 }

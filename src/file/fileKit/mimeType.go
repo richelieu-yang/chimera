@@ -23,10 +23,6 @@ var DetectContentType func(data []byte) string = http.DetectContentType
 PS:
 (1) mimetype库: 基于magic数的用于媒体类型和文件扩展名检测的快速的 Go 库，支持 170+ 格式.
 (2) 读取前 3072 个字节.
-
-e.g.
-	mime := mimeTypeKit.Detect(nil)
-	fmt.Println(mime.ToDsnString()) // "text/plain"
 */
 var Detect func(in []byte) *mimetype.MIME = mimetype.Detect
 
@@ -44,9 +40,9 @@ TODO: https://github.com/gabriel-vasile/mimetype
 
 e.g.
 	mime, _ := mimeTypeKit.DetectFile("/Users/richelieu/Desktop/未命名.wps")
-	fmt.Println(mime.ToDsnString()) // application/x-ole-storage
+	fmt.Println(mime.String()) // application/x-ole-storage
 
 	mime, _ = mimeTypeKit.DetectFile("/Users/richelieu/Desktop/download.pdf")
-	fmt.Println(mime.ToDsnString()) // application/pdf
+	fmt.Println(mime.String()) // application/pdf
 */
 var DetectFile func(path string) (*mimetype.MIME, error) = mimetype.DetectFile
