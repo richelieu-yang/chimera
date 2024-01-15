@@ -82,11 +82,6 @@ func attachMiddlewares(engine *gin.Engine, config MiddlewareConfig, opts *ginOpt
 	if config.BodyLimit > 0 {
 		limit := config.BodyLimit << 20
 		engine.Use(func(ctx *gin.Context) {
-			/*
-				Richelieu:
-
-			*/
-
 			// (1) Based on content length
 			if ctx.Request.ContentLength > limit {
 				ctx.AbortWithStatus(http.StatusRequestEntityTooLarge)
