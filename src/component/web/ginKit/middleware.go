@@ -84,8 +84,7 @@ func attachMiddlewares(engine *gin.Engine, config MiddlewareConfig, opts *ginOpt
 		engine.Use(func(ctx *gin.Context) {
 			/*
 				Richelieu:
-				(1) 参考了echo中的 middleware.BodyLimit()
-				(2) gin-contrib/size: https://github.com/gin-contrib/size
+
 			*/
 
 			// (1) Based on content length

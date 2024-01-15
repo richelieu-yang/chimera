@@ -22,6 +22,7 @@ require (
 	github.com/gin-contrib/cors v1.5.0
 	github.com/gin-contrib/gzip v0.0.6
 	github.com/gin-contrib/pprof v1.4.0
+	github.com/gin-contrib/size v0.0.0-20231230013409-e0f46cc9c1db
 	github.com/gin-contrib/sse v0.1.0
 	github.com/gin-gonic/gin v1.9.1
 	github.com/go-kratos/kratos/v2 v2.7.2
