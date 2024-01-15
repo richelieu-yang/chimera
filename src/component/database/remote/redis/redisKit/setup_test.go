@@ -26,7 +26,6 @@ func TestSetUp(t *testing.T) {
 	if _, err := viperKit.UnmarshalFromFile(path, nil, c); err != nil {
 		panic(err)
 	}
-
 	fmt.Println(jsonKit.MarshalIndentToString(c.Redis, "", "    "))
 
 	MustSetUp(c.Redis)
