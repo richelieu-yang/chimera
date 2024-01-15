@@ -58,7 +58,7 @@ func loadOptions(options ...Base64Option) *base64Options {
 		opts.encoding = base64.StdEncoding
 	}
 	if opts.padding != nil {
-		// Encoding.WithPadding 返回的是一个新的 *Encoding 实例
+		// Encoding.WithPadding 返回的是一个新的 *Encoding 实例（并不会修改原先的）
 		opts.encoding = opts.encoding.WithPadding(*opts.padding)
 	}
 	return opts
