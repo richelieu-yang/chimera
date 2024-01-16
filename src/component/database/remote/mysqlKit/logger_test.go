@@ -1,16 +1,16 @@
-package main
+package mysqlKit
 
 import (
 	"context"
 	"gorm.io/gorm/logger"
 	"log"
 	"os"
+	"testing"
 	"time"
 )
 
-func main() {
-	//writer := log.New(os.Stdout, "\r\n", log.Ldate|log.Ltime|log.Lmicroseconds)
-	writer := log.New(os.Stdout, "", log.LstdFlags|log.Lmicroseconds)
+func TestNewLogger(t *testing.T) {
+	writer := log.New(os.Stdout, "\r\n", log.Ldate|log.Ltime|log.Lmicroseconds)
 
 	// 参考: logger.Default
 	l := logger.New(writer, logger.Config{
