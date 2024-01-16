@@ -3,6 +3,7 @@ package gobKit
 import (
 	"bytes"
 	"encoding/gob"
+	"io"
 )
 
 // Marshal 序列化.
@@ -34,5 +35,10 @@ func Unmarshal(data []byte, ptr interface{}) error {
 	buf := bytes.NewBuffer(data)
 
 	decoder := gob.NewDecoder(buf)
+	return decoder.Decode(ptr)
+}
+
+func UnmarshalFromReader(reader io.Reader, ptr interface{}) error {
+	decoder := gob.NewDecoder(reader)
 	return decoder.Decode(ptr)
 }
