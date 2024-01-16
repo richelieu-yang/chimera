@@ -6,6 +6,10 @@ import (
 )
 
 var (
+	// ExitSignals 会将程序退出的所有能捕捉的信号
+	/*
+		参考: go-zero中的"core/proc/signals.go".
+	*/
 	ExitSignals = []os.Signal{syscall.SIGTERM}
 
 	//// ExitSignals 会将程序退出的所有能捕捉的信号

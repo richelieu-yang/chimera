@@ -8,7 +8,7 @@ import (
 
 // MonitorExitSignals 监听退出信号（拦截关闭信号）.
 /*
-可以参考 go-zero 中的 "proc/signals.go".
+可以参考 go-zero 中的 "core/proc/signals.go".
 
 @param callback 可以为nil
 
