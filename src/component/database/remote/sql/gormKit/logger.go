@@ -1,4 +1,4 @@
-package mysqlKit
+package gormKit
 
 import "gorm.io/gorm/logger"
 

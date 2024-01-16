@@ -1,4 +1,4 @@
-package mysqlKit
+package gormKit
 
 import (
 	"database/sql"
