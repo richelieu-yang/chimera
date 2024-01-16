@@ -16,7 +16,7 @@ PS:
 */
 func MonitorExitSignal(callback func(sig os.Signal)) {
 	ch := make(chan os.Signal, 1)
-	signal.Notify(ch, exitSignals...)
+	signal.Notify(ch, ExitSignals...)
 
 	go func() {
 		sig := <-ch
