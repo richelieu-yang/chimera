@@ -1,6 +1,7 @@
 package signalKit
 
 import (
+	"github.com/sirupsen/logrus"
 	"os"
 	"os/signal"
 )
@@ -8,6 +9,8 @@ import (
 // MonitorExitSignals 监听退出信号（拦截关闭信号）.
 /*
 可以参考 go-zero 中的 "proc/signals.go".
+
+@param callback 可以为nil
 
 PS:
 (1) 无法拦截部分信号（e.g. syscall.SIGSTOP、syscall.SIGKILL）;
@@ -21,7 +24,10 @@ func MonitorExitSignals(callback func(sig os.Signal)) {
 	go func() {
 		sig := <-ch
 
-		callback(sig)
-		//logrus.WithField("signal", sig.String()).Fatal("Service receives an exit signal.")
+		if callback != nil {
+			callback(sig)
+		}
+
+		logrus.WithField("signal", sig.String()).Fatal("Receive an exit signal.")
 	}()
 }
