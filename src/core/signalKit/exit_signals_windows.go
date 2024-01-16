@@ -6,7 +6,7 @@ import (
 )
 
 var (
-	exitSignals = []os.Signal{syscall.SIGTERM}
+	ExitSignals = []os.Signal{syscall.SIGTERM}
 
 	//// ExitSignals 会将程序退出的所有能捕捉的信号
 	///*
