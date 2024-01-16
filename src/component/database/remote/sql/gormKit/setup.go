@@ -30,6 +30,7 @@ func SetUp(config *Config, logConfig *LogConfig) error {
 	if err := interfaceKit.AssertNotNil(config, "config"); err != nil {
 		return err
 	}
+
 	if logConfig == nil {
 		logConfig = &LogConfig{
 			Output:        os.Stdout,
@@ -38,7 +39,6 @@ func SetUp(config *Config, logConfig *LogConfig) error {
 			Colorful:      true,
 		}
 	}
-
 	/* logger */
 	if output == nil {
 		output = os.Stdout
