@@ -15,9 +15,10 @@ e.g.
 	fmt.Println(gobKit.Marshal(obj)) // [] gob: cannot encode nil value
 */
 func Marshal(obj any) ([]byte, error) {
-	buf := new(bytes.Buffer)
-	encoder := gob.NewEncoder(buf)
+	//buf := new(bytes.Buffer)
+	buf := bytes.NewBuffer(nil)
 
+	encoder := gob.NewEncoder(buf)
 	err := encoder.Encode(obj)
 	if err != nil {
 		return nil, err
@@ -31,7 +32,7 @@ PS: 反序列化为map实例，key类型可以是interface{}.
 */
 func Unmarshal(data []byte, ptr interface{}) error {
 	buf := bytes.NewBuffer(data)
-	decoder := gob.NewDecoder(buf)
 
+	decoder := gob.NewDecoder(buf)
 	return decoder.Decode(ptr)
 }

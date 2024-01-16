@@ -8,7 +8,9 @@ import (
 func TestMarshalAndUnmarshal(t *testing.T) {
 	m := map[interface{}]interface{}{
 		"0": 3.1415926,
+		"1": true,
 	}
+	fmt.Println("m:", m)
 
 	data, err := Marshal(m)
 	if err != nil {
@@ -20,5 +22,5 @@ func TestMarshalAndUnmarshal(t *testing.T) {
 	if err := Unmarshal(data, &m1); err != nil {
 		panic(err)
 	}
-	fmt.Println(m1)
+	fmt.Println("m1:", m1)
 }
