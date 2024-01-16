@@ -11,9 +11,10 @@ type (
 	LogConfig struct {
 		Output io.Writer
 
-		SlowThreshold time.Duration
-		LogLevel      logger.LogLevel
-		Colorful      bool
+		SlowThreshold             time.Duration
+		LogLevel                  logger.LogLevel
+		Colorful                  bool
+		IgnoreRecordNotFoundError bool
 	}
 
 	Config struct {
