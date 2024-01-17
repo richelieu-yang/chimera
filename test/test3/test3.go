@@ -8,6 +8,6 @@ import (
 
 func main() {
 	s := []int{1}
-	fmt.Println(sliceKit.InterceptBefore(s, 0)) // []
-	fmt.Println(sliceKit.InterceptBefore(s, 1)) // [1]
+	fmt.Println(sliceKit.InterceptAfter(s, 0)) // [1]
+	fmt.Println(sliceKit.InterceptAfter(s, 1)) // []
 }
