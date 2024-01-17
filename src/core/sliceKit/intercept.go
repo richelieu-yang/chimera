@@ -68,8 +68,8 @@ func Intercept[T any](s []T, from, to int, maxArgs ...int) []T {
 @param s		可以为nil
 @param index	取值范围: [0, length]
 @return 		(1) [0, index)
-				(2) index == 0，
-				(3) index == length，
+				(2) index == 0，返回值为 []
+				(3) index == length，返回值为 s
 
 e.g.
 	s := []int{1}
