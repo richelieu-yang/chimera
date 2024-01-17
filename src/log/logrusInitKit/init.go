@@ -12,3 +12,7 @@ PS:
 func init() {
 	logrusKit.MustSetUp(nil)
 }
+
+func Initialize() {
+
+}

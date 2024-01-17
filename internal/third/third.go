@@ -1,4 +1,4 @@
-package internal
+package third
 
 import (
 	jose "github.com/dvsekhvalnov/jose2go"
