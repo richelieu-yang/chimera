@@ -20,22 +20,24 @@ func init() {
 	*/
 	_ = jose.A128CBC_HS256
 
-	// golang.org/x/arch
-	var _ x86asm.Arg
-	// golang.org/x/crypto
-	var _ *cast5.Cipher
-	// golang.org/x/mobile
-	var _ *bind.Generator
-	// golang.org/x/mod
-	var _ *modfile.Comment
-	// golang.org/x/oauth2
-	var _ jws.Signer
-	// golang.org/x/sync
-	var _ *errgroup.Group
-	// golang.org/x/sys
-	var _ *execabs.Error
-	// golang.org/x/term
-	var _ *term.Terminal
-	// golang.org/x/tools
-	var _ *blog.Doc
+	{
+		// golang.org/x/arch
+		var _ x86asm.Arg
+		// golang.org/x/crypto
+		var _ *cast5.Cipher
+		// golang.org/x/mobile
+		var _ *bind.Generator
+		// golang.org/x/mod
+		var _ *modfile.Comment
+		// golang.org/x/oauth2
+		var _ jws.Signer
+		// golang.org/x/sync
+		var _ *errgroup.Group
+		// golang.org/x/sys
+		var _ *execabs.Error
+		// golang.org/x/term
+		var _ *term.Terminal
+		// golang.org/x/tools
+		var _ *blog.Doc
+	}
 }
