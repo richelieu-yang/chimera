@@ -43,6 +43,7 @@ require (
 	github.com/gorilla/websocket v1.5.1
 	github.com/h2non/bimg v1.1.9
 	github.com/hashicorp/go-hclog v1.6.2
+	github.com/hashicorp/golang-lru/v2 v2.0.7
 	github.com/hashicorp/raft v1.6.0
 	github.com/hashicorp/raft-boltdb v0.0.0-20231211162105-6c830fa4535e
 	github.com/hibiken/asynq v0.24.1
