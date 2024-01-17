@@ -111,8 +111,8 @@ func verify(config *VerifyConfig) error {
 
 	ctx, cancel := context.WithTimeout(context.TODO(), verifyTimeout)
 	defer cancel()
-	var producerCh chan error = make(chan error, 1)
-	var consumerCh chan error = make(chan error, 1)
+	var producerCh = make(chan error, 1)
+	var consumerCh = make(chan error, 1)
 
 	/* (3) producer goroutine */
 	go func() {
