@@ -21,6 +21,13 @@ import (
 	"time"
 )
 
+const (
+	verifySendTimeout = time.Millisecond * 500
+
+	// verifyTimeout 验证的最长timeout
+	verifyTimeout = time.Second * 6
+)
+
 type VerifyConfig struct {
 	// Topic 用于测试的topic（理论上，此topic仅用于测试，不能同时用于业务，因为测试发的消息无意义）
 	/*
@@ -39,13 +46,6 @@ type VerifyConfig struct {
 @return 如果为nil，说明 RocketMQ5服务 正常启动
 */
 func verify(config *VerifyConfig) error {
-	var (
-		sendTimeout = time.Millisecond * 500
-
-		// verifyTimeout 验证的最长timeout
-		verifyTimeout = time.Second * 6
-	)
-
 	if config == nil || strKit.IsEmpty(config.Topic) {
 		// 不进行验证
 		return nil
@@ -70,7 +70,13 @@ func verify(config *VerifyConfig) error {
 		logrusKit.WithDisableQuote(true),
 		logrusKit.WithMsgPrefix("[RocketMQ5 VERIFY] "),
 	)
-	logger.Infof("topic: [%s].", config.Topic)
+
+	topic := config.Topic
+	tag := idKit.NewXid()
+	consumerGroup := tag
+	logger.Infof("topic: [%s]", topic)
+	logger.Infof("tag: [%s]", tag)
+	logger.Infof("consumer group: [%s]", consumerGroup)
 
 	/* texts */
 	timeStr := timeKit.FormatCurrent(timeKit.FormatEntire)
@@ -88,10 +94,6 @@ func verify(config *VerifyConfig) error {
 	}
 	logger.Infof("texts:\n%s\n.", json)
 
-	xid := idKit.NewXid()
-	tag := xid
-	consumerGroup := xid
-
 	/* (1) producer */
 	producer, err := NewProducer()
 	if err != nil {
@@ -102,7 +104,7 @@ func verify(config *VerifyConfig) error {
 	/* (2) consumer */
 	consumer, err := NewSimpleConsumer(consumerGroup, map[string]*rmq_client.FilterExpression{
 		//topic: rmq_client.SUB_ALL,
-		config.Topic: rmq_client.NewFilterExpression(tag),
+		topic: rmq_client.NewFilterExpression(tag),
 	})
 	if err != nil {
 		return err
@@ -122,11 +124,11 @@ func verify(config *VerifyConfig) error {
 
 		for _, text := range texts {
 			msg := &rmq_client.Message{
-				Topic: config.Topic,
+				Topic: topic,
 				Body:  []byte(text),
 				Tag:   &tag,
 			}
-			ctx, _ := context.WithTimeout(context.TODO(), sendTimeout)
+			ctx, _ := context.WithTimeout(context.TODO(), verifySendTimeout)
 			_, err := producer.Send(ctx, msg)
 			if err != nil {
 				err = errorKit.Wrap(err, "Producer fails to send message(%s).", text)
