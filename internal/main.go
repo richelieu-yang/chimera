@@ -4,6 +4,7 @@ import (
 	jose "github.com/dvsekhvalnov/jose2go"
 	"golang.org/x/arch/x86/x86asm"
 	"golang.org/x/crypto/cast5"
+	"golang.org/x/exp/slog"
 	"golang.org/x/mobile/bind"
 	"golang.org/x/mod/modfile"
 	"golang.org/x/oauth2/jws"
@@ -39,5 +40,7 @@ func init() {
 		var _ *term.Terminal
 		// golang.org/x/tools
 		var _ *blog.Doc
+		// golang.org/x/exp
+		var _ slog.Handler
 	}
 }
