@@ -22,10 +22,10 @@ import (
 )
 
 const (
-	verifySendTimeout = time.Millisecond * 500
+	verifySendTimeout = time.Millisecond * 300
 
-	// verifyTimeout 验证的最长timeout
-	verifyTimeout = time.Second * 6
+	// verifyTimeLimit verify操作的最长时间，超过就失败
+	verifyTimeLimit = time.Second * 3
 )
 
 type VerifyConfig struct {
@@ -111,7 +111,7 @@ func verify(config *VerifyConfig) error {
 	}
 	defer consumer.GracefulStop()
 
-	ctx, cancel := context.WithTimeout(context.TODO(), verifyTimeout)
+	ctx, cancel := context.WithTimeout(context.TODO(), verifyTimeLimit)
 	defer cancel()
 	var producerCh = make(chan error, 1)
 	var consumerCh = make(chan error, 1)
@@ -152,7 +152,7 @@ func verify(config *VerifyConfig) error {
 		for {
 			select {
 			case <-ctx.Done():
-				consumerCh <- errorKit.New("Consumer fails to receive all messages within timeout(%s).", verifyTimeout)
+				consumerCh <- errorKit.New("Consumer fails to receive all messages within timeout(%s).", verifyTimeLimit)
 				return
 			case <-time.After(time.Millisecond * 100):
 				// do nothing
@@ -172,7 +172,7 @@ func verify(config *VerifyConfig) error {
 						//	break LOOP
 						//case codes.DeadlineExceeded:
 						//	/* 超时结束 */
-						//	consumerErr = errorKit.New("consumer fails to receive all messages(count: %d) within timeout(%s), missing(%d)", len(texts), verifyTimeout.String(), len(text1))
+						//	consumerErr = errorKit.New("consumer fails to receive all messages(count: %d) within timeout(%s), missing(%d)", len(texts), verifyTimeLimit.String(), len(text1))
 						//	break LOOP
 					}
 				}
@@ -240,6 +240,6 @@ func verify(config *VerifyConfig) error {
 		// 通过验证
 		return nil
 	case <-ctx.Done():
-		return errorKit.New("Fail to pass verification within timeout(%s).", verifyTimeout)
+		return errorKit.New("Fail to pass verification within timeout(%s).", verifyTimeLimit)
 	}
 }
