@@ -54,23 +54,24 @@ func Intercept[T any](s []T, from, to int, maxArgs ...int) []T {
 	}
 	/* 情况2: 人为干预返回slice的cap（cap = max - from），适用场景: 想要减少内存消耗. */
 	// max的理论取值范围: [to, len(s)]
-	max := maxArgs[0]
-	if max < to {
-		max = to
-	} else if max > len(s) {
-		max = len(s)
+	m := maxArgs[0]
+	if m < to {
+		m = to
+	} else if m > len(s) {
+		m = len(s)
 	}
-	return s[from:to:max]
+	return s[from:to:m]
 }
 
 // InterceptBefore
 /*
 @param s		可以为nil
 @param index	取值范围: [0, length]
-@return 		(1) [0, index)
-				(2) s为空，返回: s
-				(3) s非空 && index == 0，返回: []（空）
-				(4) s非空 && index == length，返回: s
+@return 		(1) 必定非nil && length >= 0
+				(2) [0, index)
+				(3) s为空，返回: s
+				(4) s非空 && index == 0，返回: []（空）
+				(5) s非空 && index == length，返回: s
 
 e.g.
 	s := []int{1}
@@ -79,7 +80,8 @@ e.g.
 */
 func InterceptBefore[T any](s []T, index int) []T {
 	if len(s) == 0 {
-		return s
+		//return s
+		return []T{}
 	}
 
 	// 此时返回值必定非nil，且len >= 0
@@ -90,10 +92,11 @@ func InterceptBefore[T any](s []T, index int) []T {
 /*
 @param s		可以为nil
 @param index	取值范围: [0, length]
-@return 		(1) [index, length)
-				(2) s为空，返回: s
-				(3) s非空 && index == 0，返回: s
-				(4) s非空 && index == length，返回: []（空）
+@return 		(1) 必定非nil
+				(2) [index, length)
+				(3) s为空，返回: s
+				(4) s非空 && index == 0，返回: s
+				(5) s非空 && index == length，返回: []（空）
 
 e.g.
 	s := []int{1}
@@ -102,7 +105,8 @@ e.g.
 */
 func InterceptAfter[T any](s []T, index int) []T {
 	if len(s) == 0 {
-		return s
+		//return s
+		return []T{}
 	}
 
 	// 此时返回值必定非nil，且len >= 0

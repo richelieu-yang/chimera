@@ -7,7 +7,7 @@ import (
 )
 
 func main() {
-	s := []int{1}
+	var s []int = nil
 	fmt.Println(sliceKit.InterceptAfter(s, 0)) // [1]
 	fmt.Println(sliceKit.InterceptAfter(s, 1)) // []
 }
