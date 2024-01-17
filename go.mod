@@ -93,14 +93,14 @@ require (
 	go.opentelemetry.io/otel/trace v1.21.0
 	go.uber.org/automaxprocs v1.5.3
 	go.uber.org/zap v1.26.0
-	golang.org/x/arch v0.5.0
+	golang.org/x/arch v0.7.0
 	golang.org/x/crypto v0.18.0
 	golang.org/x/exp v0.0.0-20240112132812-db7319d0e0e3
 	golang.org/x/image v0.15.0
-	golang.org/x/mobile v0.0.0-20230531173138-3c911d8e3eda
+	golang.org/x/mobile v0.0.0-20240112133503-c713f31d574b
 	golang.org/x/mod v0.14.0
 	golang.org/x/net v0.20.0
-	golang.org/x/oauth2 v0.15.0
+	golang.org/x/oauth2 v0.16.0
 	golang.org/x/sync v0.6.0
 	golang.org/x/sys v0.16.0
 	golang.org/x/term v0.16.0
