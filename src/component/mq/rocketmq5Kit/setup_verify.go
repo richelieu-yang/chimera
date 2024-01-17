@@ -29,17 +29,17 @@ const (
 )
 
 type VerifyConfig struct {
-	// Topic 用于测试的topic（理论上，此topic仅用于测试，不能同时用于业务，因为测试发的消息无意义）
+	// Topic 用于验证的topic（理论上，此topic仅用于测试，不能同时用于业务，因为测试发的消息无意义）.
 	/*
 		PS: 为空则不进行验证.
 	*/
 	Topic string
 
-	// LogPath 用于测试的日志文件路径（如果为空，则输出到控制台）
+	// LogPath 用于测试的日志文件路径（如果为空，则输出到控制台）.
 	LogPath string
 }
 
-// verify 测试RocketMQ5服务是否启动正常.
+// verify 测试RocketMQ5服务是否正常工作.
 /*
 @param endpoint 用于测试的RocketMQ5服务的endpoint
 @param topic 	用于测试的topic（理论上，此topic仅用于测试，不能同时用于业务，因为测试发的消息无意义）
