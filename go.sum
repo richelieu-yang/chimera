@@ -664,8 +664,8 @@ github.com/apache/arrow/go/v10 v10.0.1/go.mod h1:YvhnlEePVnBS4+0z3fhPfUy7W1Ikj0I
 github.com/apache/arrow/go/v11 v11.0.0/go.mod h1:Eg5OsL5H+e299f7u5ssuXsuHQVEGC4xei5aX110hRiI=
 github.com/apache/pulsar-client-go v0.11.1 h1:WxLitlPG4Dz62BblGlx51wm0rw76eRefJsWdawI22QM=
 github.com/apache/pulsar-client-go v0.11.1/go.mod h1:FoijqJwgjroSKptIWp1vvK1CXs8dXnQiL8I+MHOri4A=
-github.com/apache/rocketmq-clients/golang/v5 v5.0.1-rc.5 h1:dSQxPWmu2PQ/kj8PqQzYsjLHC1RslV4emxTmnspWrT0=
-github.com/apache/rocketmq-clients/golang/v5 v5.0.1-rc.5/go.mod h1:7/YwUJ8EDlOciZNLJlUMKSDjfP8rWiaLs7yYIBq7YQY=
+github.com/apache/rocketmq-clients/golang/v5 v5.1.0-rc.1 h1:Pqt0CvT7dVCMGsgX3QC0SFz4CZjsn5VYY56OYvLasV8=
+github.com/apache/rocketmq-clients/golang/v5 v5.1.0-rc.1/go.mod h1:7/YwUJ8EDlOciZNLJlUMKSDjfP8rWiaLs7yYIBq7YQY=
 github.com/apache/thrift v0.16.0/go.mod h1:PHK3hniurgQaNMZYaCLEqXKsYK8upmhPbmdP2FXSqgU=
 github.com/ardielle/ardielle-go v1.5.2 h1:TilHTpHIQJ27R1Tl/iITBzMwiUGSlVfiVhwDNGM3Zj4=
 github.com/ardielle/ardielle-go v1.5.2/go.mod h1:I4hy1n795cUhaVt/ojz83SNVCYIGsAFAONtv2Dr7HUI=

@@ -6,7 +6,7 @@ require (
 	fyne.io/fyne/v2 v2.4.3
 	github.com/alwindoss/morse v1.0.1
 	github.com/apache/pulsar-client-go v0.11.1
-	github.com/apache/rocketmq-clients/golang/v5 v5.0.1-rc.5
+	github.com/apache/rocketmq-clients/golang/v5 v5.1.0-rc.1
 	github.com/bytedance/sonic v1.10.2
 	github.com/coocood/freecache v1.2.4
 	github.com/dablelv/cyan v0.0.54
