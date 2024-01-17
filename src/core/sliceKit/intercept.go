@@ -67,12 +67,20 @@ func Intercept[T any](s []T, from, to int, maxArgs ...int) []T {
 /*
 @param s		可以为nil
 @param index	取值范围: [0, length]
-@return 		[0, index)
+@return 		(1) [0, index)
+				(2) index == 0，
+				(3) index == length，
+
+e.g.
+	s := []int{1}
+	fmt.Println(sliceKit.InterceptBefore(s, 0)) // []
+	fmt.Println(sliceKit.InterceptBefore(s, 1)) // [1]
 */
 func InterceptBefore[T any](s []T, index int) []T {
 	if len(s) == 0 {
 		return s
 	}
+
 	// 此时返回值必定非nil，且len >= 0
 	return s[:index]
 }
@@ -87,6 +95,7 @@ func InterceptAfter[T any](s []T, index int) []T {
 	if len(s) == 0 {
 		return s
 	}
+
 	// 此时返回值必定非nil，且len >= 0
 	return s[index:]
 }
