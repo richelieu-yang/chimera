@@ -1,4 +1,4 @@
-package raftKit
+package raftLogKit
 
 import (
 	"fmt"
@@ -10,17 +10,12 @@ import (
 func TestNewHcLogger(t *testing.T) {
 	fmt.Println(hclog.LevelFromString(""))
 
-	logger := NewHcLogger(&hclog.LoggerOptions{
+	logger := NewLogger(&hclog.LoggerOptions{
 		Name:   "prefix",
 		Level:  hclog.LevelFromString(""),
 		Output: hclog.DefaultOutput,
 		TimeFn: time.Now,
 	})
-
-	//hclog.New(&hclog.LoggerOptions{
-	//	Name:  "raft",
-	//	Level: hclog.LevelFromString(""),
-	//})
 
 	logger.Trace("trace")
 	logger.Debug("debug")
