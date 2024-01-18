@@ -25,12 +25,12 @@ PS: 将 传参addr 作为id，所以传参中无id.
 @param logger 		(1) raft节点的日志输出，
 					(2) 可以为nil（将使用默认的logger，控制台 debug级别 由于默认配置）
 */
-func NewRaftNodeAndBootstrapCluster(addr string, nodeAddrs []string, dir string, fsm raft.FSM, logger hclog.Logger) (*raft.Raft, error) {
+func NewRaftNodeAndBootstrapCluster(addr string, addrs []string, dir string, fsm raft.FSM, logger hclog.Logger) (*raft.Raft, error) {
 	if err := validateKit.Var(addr, "hostname_port"); err != nil {
 		return nil, errorKit.Wrap(err, "param addr is invalid")
 	}
-	if err := validateKit.Var(nodeAddrs, "unique,gte=3,dive,hostname_port"); err != nil {
-		return nil, errorKit.Wrap(err, "param nodeAddrs is invalid")
+	if err := validateKit.Var(addrs, "unique,gte=3,dive,hostname_port"); err != nil {
+		return nil, errorKit.Wrap(err, "param addrs is invalid")
 	}
 	if err := fileKit.AssertNotExistOrIsDir(dir); err != nil {
 		return nil, err
@@ -85,7 +85,7 @@ func NewRaftNodeAndBootstrapCluster(addr string, nodeAddrs []string, dir string,
 		@param logOutput	是一个io.Writer接口，表示日志输出的目标，用于记录传输层的信息。如果为nil，则使用os.Stderr作为输出。
 
 		e.g.
-			raft.NewTCPTransport(raftAddr, addr, 2, 5*time.Second, os.Stderr)
+			raft.NewTCPTransport(addr, addr, 2, 5*time.Second, os.Stderr)
 		e.g.1
 			raft.NewTCPTransport(address.String(), address, 3, 10*time.Second, os.Stderr)
 	*/
@@ -104,7 +104,7 @@ func NewRaftNodeAndBootstrapCluster(addr string, nodeAddrs []string, dir string,
 
 	/* (6) Bootstrap */
 	var configuration raft.Configuration
-	for _, addr := range nodeAddrs {
+	for _, addr := range addrs {
 		server := raft.Server{
 			ID:      raft.ServerID(addr),
 			Address: raft.ServerAddress(addr),
