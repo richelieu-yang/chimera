@@ -1,6 +1,7 @@
 package logrusKit
 
 import (
+	"errors"
 	"fmt"
 	"github.com/richelieu-yang/chimera/v2/src/consts"
 	"github.com/richelieu-yang/chimera/v2/src/core/cpuKit"
@@ -11,10 +12,12 @@ import (
 	"github.com/richelieu-yang/chimera/v2/src/core/userKit"
 	"github.com/richelieu-yang/chimera/v2/src/dataSizeKit"
 	"github.com/richelieu-yang/chimera/v2/src/diskKit"
+	"github.com/richelieu-yang/chimera/v2/src/dockerKit"
 	"github.com/richelieu-yang/chimera/v2/src/ip/ipKit"
 	"github.com/richelieu-yang/chimera/v2/src/processKit"
 	"github.com/richelieu-yang/chimera/v2/src/serialize/json/jsonKit"
 	"github.com/richelieu-yang/chimera/v2/src/time/timeKit"
+	"github.com/shirou/gopsutil/v3/docker"
 	"github.com/sirupsen/logrus"
 )
 
@@ -119,16 +122,16 @@ func PrintBasicDetails(logger *logrus.Logger) {
 	//}
 
 	// Richelieu: 要有条件地使用 gopsutil
-	///* docker */
-	//if dockerIds, err := dockerKit.GetDockerIdList(); err != nil {
-	//	if errors.Is(err, docker.ErrDockerNotAvailable) {
-	//		logger.Info("[CHIMERA, DOCKER] Docker isn't available.")
-	//	} else {
-	//		logger.WithError(err).Warn("[CHIMERA, DOCKER] Fail to get docker id list.")
-	//	}
-	//} else {
-	//	logger.Infof("[CHIMERA, DOCKER] docker id list: %v.", dockerIds)
-	//}
+	/* docker */
+	if dockerIds, err := dockerKit.GetDockerIdList(); err != nil {
+		if errors.Is(err, docker.ErrDockerNotAvailable) {
+			logger.Info("[CHIMERA, DOCKER] Docker isn't available.")
+		} else {
+			logger.WithError(err).Warn("[CHIMERA, DOCKER] Fail to get docker id list.")
+		}
+	} else {
+		logger.Infof("[CHIMERA, DOCKER] docker id list: %v.", dockerIds)
+	}
 
 	_, _ = out.Write([]byte("===========================================================\n"))
 }
