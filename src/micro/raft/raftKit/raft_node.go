@@ -18,13 +18,19 @@ import (
 /*
 PS: 将 传参addr 作为id，所以传参中无id.
 
-@param addr 	raft节点的地址（不能为""）
-@param fsm 		不能为nil
-@param logger 	节点的日志输出，可以为nil（将使用默认的logger，控制台 debug级别 由于默认配置）
+@param addr 		raft节点的地址（不能为""）
+@param nodeAddrs 	raft集群所有节点的地址（至少3个）
+@param dir			raft节点的数据目录
+@param fsm 			不能为nil
+@param logger 		(1) raft节点的日志输出，
+					(2) 可以为nil（将使用默认的logger，控制台 debug级别 由于默认配置）
 */
-func NewRaftNodeAndBootstrapCluster(addr, dir string, fsm raft.FSM, logger hclog.Logger, nodeAddrs []string) (*raft.Raft, error) {
+func NewRaftNodeAndBootstrapCluster(addr string, nodeAddrs []string, dir string, fsm raft.FSM, logger hclog.Logger) (*raft.Raft, error) {
 	if err := validateKit.Var(addr, "hostname_port"); err != nil {
 		return nil, errorKit.Wrap(err, "param addr is invalid")
+	}
+	if err := validateKit.Var(nodeAddrs, "unique,gte=3,dive,hostname_port"); err != nil {
+		return nil, errorKit.Wrap(err, "param nodeAddrs is invalid")
 	}
 	if err := fileKit.AssertNotExistOrIsDir(dir); err != nil {
 		return nil, err
@@ -32,26 +38,24 @@ func NewRaftNodeAndBootstrapCluster(addr, dir string, fsm raft.FSM, logger hclog
 	if err := interfaceKit.AssertNotNil(fsm, "fsm"); err != nil {
 		return nil, err
 	}
-	if err := validateKit.Var(nodeAddrs, "unique,gte=3,dive,hostname_port"); err != nil {
-		return nil, errorKit.Wrap(err, "param nodeAddrs is invalid")
-	}
 
 	/* (0) config */
 	// Richelieu: 此处不需要配置 config.NotifyCh，用不着
 	config := raft.DefaultConfig()
 	config.LocalID = raft.ServerID(addr)
 	config.Logger = logger
-	config.SnapshotInterval = 20 * time.Second
-	config.SnapshotThreshold = 2
+	config.SnapshotInterval = 60 * time.Second // 默认120s
 
 	/* (1) logStore */
-	logStore, err := raftboltdb.NewBoltStore(filepath.Join(dir, "raft-log.db"))
+	logStorePath := filepath.Join(dir, "raft-log.db")
+	logStore, err := raftboltdb.NewBoltStore(logStorePath)
 	if err != nil {
 		return nil, err
 	}
 
 	/* (2) stableStore */
-	stableStore, err := raftboltdb.NewBoltStore(filepath.Join(dir, "raft-stable.db"))
+	stableStorePath := filepath.Join(dir, "raft-stable.db")
+	stableStore, err := raftboltdb.NewBoltStore(stableStorePath)
 	if err != nil {
 		return nil, err
 	}
