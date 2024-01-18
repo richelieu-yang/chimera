@@ -22,8 +22,10 @@ type (
 	RaftNode struct {
 		*raft.Raft
 
-		FSM        raft.FSM
-		Logger     hclog.Logger
+		localAddr raft.ServerAddress
+		FSM       raft.FSM
+		logger    hclog.Logger
+
 		leaderFlag *gtype.Bool
 	}
 )
@@ -125,7 +127,7 @@ func NewRaftNodeAndBootstrapCluster(addr string, addrs []string, dir string, fsm
 	node := &RaftNode{
 		Raft:       r,
 		FSM:        fsm,
-		Logger:     logger,
+		logger:     logger,
 		leaderFlag: atomicKit.NewBool(false),
 	}
 	// 监听leader变化（使用此方法无法保证强一致性读，仅做leader变化过程观察）
@@ -156,7 +158,15 @@ func NewRaftNodeAndBootstrapCluster(addr string, addrs []string, dir string, fsm
 	return node, nil
 }
 
-// IsLeader 当前Raft节点是否是 Leader ？
 func (node *RaftNode) IsLeader() bool {
+	leaderAddr, _ := node.LeaderWithID()
+	return node.localAddr == leaderAddr
+}
+
+// IsLeader1 当前Raft节点是否是 Leader ？
+/*
+	监听leader变化（使用此方法无法保证强一致性读，仅做leader变化过程观察）
+*/
+func (node *RaftNode) IsLeader1() bool {
 	return node.leaderFlag.Val()
 }
