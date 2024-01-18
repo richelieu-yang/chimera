@@ -1,17 +1,31 @@
 package raftKit
 
 import (
+	"fmt"
+	"github.com/gogf/gf/v2/container/gtype"
 	"github.com/hashicorp/go-hclog"
 	"github.com/hashicorp/raft"
 	raftboltdb "github.com/hashicorp/raft-boltdb"
+	"github.com/richelieu-yang/chimera/v2/src/atomicKit"
 	"github.com/richelieu-yang/chimera/v2/src/core/errorKit"
 	"github.com/richelieu-yang/chimera/v2/src/core/interfaceKit"
 	"github.com/richelieu-yang/chimera/v2/src/file/fileKit"
+	"github.com/richelieu-yang/chimera/v2/src/micro/raft/raftLogKit"
 	"github.com/richelieu-yang/chimera/v2/src/validateKit"
 	"net"
 	"os"
 	"path/filepath"
 	"time"
+)
+
+type (
+	RaftNode struct {
+		*raft.Raft
+
+		FSM        raft.FSM
+		Logger     hclog.Logger
+		leaderFlag *gtype.Bool
+	}
 )
 
 // NewRaftNodeAndBootstrapCluster
@@ -22,10 +36,10 @@ PS: 将 传参addr 作为id，所以传参中无id.
 @param nodeAddrs 	raft集群所有节点的地址（至少3个）
 @param dir			raft节点的数据目录
 @param fsm 			不能为nil
-@param logger 		(1) raft节点的日志输出，
-					(2) 可以为nil（将使用默认的logger，控制台 debug级别 由于默认配置）
+@param logger 		(1) raft节点的日志输出
+					(2) 可以为nil（将使用默认值）
 */
-func NewRaftNodeAndBootstrapCluster(addr string, addrs []string, dir string, fsm raft.FSM, logger hclog.Logger) (*raft.Raft, error) {
+func NewRaftNodeAndBootstrapCluster(addr string, addrs []string, dir string, fsm raft.FSM, logger hclog.Logger) (*RaftNode, error) {
 	if err := validateKit.Var(addr, "hostname_port"); err != nil {
 		return nil, errorKit.Wrap(err, "param addr is invalid")
 	}
@@ -37,6 +51,13 @@ func NewRaftNodeAndBootstrapCluster(addr string, addrs []string, dir string, fsm
 	}
 	if err := interfaceKit.AssertNotNil(fsm, "fsm"); err != nil {
 		return nil, err
+	}
+	if logger == nil {
+		logger = raftLogKit.NewLogger(&hclog.LoggerOptions{
+			Name:   "RAFT",
+			Level:  hclog.LevelFromString("debug"),
+			Output: os.Stderr,
+		})
 	}
 
 	/* (0) config */
@@ -97,10 +118,29 @@ func NewRaftNodeAndBootstrapCluster(addr string, addrs []string, dir string, fsm
 	}
 
 	/* (5) raft node */
-	node, err := raft.NewRaft(config, fsm, logStore, stableStore, snapshotStore, transport)
+	r, err := raft.NewRaft(config, fsm, logStore, stableStore, snapshotStore, transport)
 	if err != nil {
 		return nil, err
 	}
+	node := &RaftNode{
+		Raft:       r,
+		FSM:        fsm,
+		Logger:     logger,
+		leaderFlag: atomicKit.NewBool(false),
+	}
+	// 监听leader变化（使用此方法无法保证强一致性读，仅做leader变化过程观察）
+	go func() {
+		for leaderFlag := range node.LeaderCh() {
+			currentLeader, _ := node.LeaderWithID()
+
+			if leaderFlag {
+				logger.Info(fmt.Sprintf("Be leader and current leader is [%s].", currentLeader))
+			} else {
+				logger.Warn(fmt.Sprintf("Lose leader and current leader is [%s].", currentLeader))
+			}
+			node.leaderFlag.Set(leaderFlag)
+		}
+	}()
 
 	/* (6) Bootstrap */
 	var configuration raft.Configuration
@@ -114,4 +154,9 @@ func NewRaftNodeAndBootstrapCluster(addr string, addrs []string, dir string, fsm
 	node.BootstrapCluster(configuration)
 
 	return node, nil
+}
+
+// IsLeader 当前Raft节点是否是 Leader ？
+func (node *RaftNode) IsLeader() bool {
+	return node.leaderFlag.Val()
 }

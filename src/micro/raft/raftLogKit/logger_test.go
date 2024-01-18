@@ -21,5 +21,4 @@ func TestNewHcLogger(t *testing.T) {
 	logger.Debug("debug")
 	logger.Info("info")
 	logger.Warn("warn")
-	logger.Error("error")
 }
