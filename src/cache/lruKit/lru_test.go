@@ -7,11 +7,11 @@ import (
 )
 
 func TestNewCache(t *testing.T) {
-	l, _ := NewCache[int, any](8)
+	cache, _ := NewCache[int, any](8)
 	for i := 0; i < 16; i++ {
-		l.Add(i, nil)
+		cache.Add(i, nil)
 	}
-	fmt.Println(l.Len()) // 8
+	fmt.Println(cache.Len()) // 8
 }
 
 func TestNewExpirableCache(t *testing.T) {
