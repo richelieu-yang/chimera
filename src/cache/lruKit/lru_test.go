@@ -7,7 +7,10 @@ import (
 )
 
 func TestNewCache(t *testing.T) {
-	cache, _ := NewCache[int, any](8)
+	cache, err := NewCache[int, any](8)
+	if err != nil {
+		panic(err)
+	}
 	for i := 0; i < 16; i++ {
 		cache.Add(i, nil)
 	}
