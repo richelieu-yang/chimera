@@ -10,7 +10,7 @@ func GetHomeDir() string {
 	return userKit.GetUserHomeDir()
 }
 
-// ExpandTilde "~"（波浪号） => 当前用户主目录
+// ExpandTilde 拓展路径中的"~"（"~"（波浪号） => 当前用户主目录）.
 /*
 e.g.
 ("")		=> "", nil
