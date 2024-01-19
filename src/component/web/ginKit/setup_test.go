@@ -52,5 +52,5 @@ func TestMustSetUp(t *testing.T) {
 		//	ctx.String(404, "[TARGET] no route")
 		//})
 		return nil
-	}, WithServiceInfo("TEST"))
+	}, WithServiceInfo("TEST"), WithDefaultFavicon(false))
 }

@@ -9,7 +9,10 @@ func main() {
 	engine := gin.Default()
 
 	engine.Any("/", func(ctx *gin.Context) {
-		ctx.String(200, "hello world")
+		ctx.String(200, "Don't communicate by sharing memory, share memory by communicating.Don't communicate by sharing memory, share memory by communicating.Don't communicate by sharing memory, share memory by communicating.")
+	})
+	engine.NoRoute(func(ctx *gin.Context) {
+		ctx.String(404, "no route")
 	})
 
 	if err := engine.Run(":8888"); err != nil {
