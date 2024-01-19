@@ -3,8 +3,10 @@ package ginKit
 import (
 	"fmt"
 	"github.com/gin-gonic/gin"
+	"github.com/richelieu-yang/chimera/v2/src/component/web/proxyKit"
 	"github.com/richelieu-yang/chimera/v2/src/config/viperKit"
 	"github.com/richelieu-yang/chimera/v2/src/consts"
+	"github.com/richelieu-yang/chimera/v2/src/core/errorKit"
 	"github.com/richelieu-yang/chimera/v2/src/core/pathKit"
 	"github.com/richelieu-yang/chimera/v2/src/log/logrusKit"
 	"github.com/sirupsen/logrus"
@@ -39,6 +41,11 @@ func TestMustSetUp(t *testing.T) {
 		//})
 
 		engine.Any("*path", func(ctx *gin.Context) {
+			if err := proxyKit.Proxy(ctx.Writer, ctx.Request, "127.0.0.1:8888"); err != nil {
+				err = errorKit.Wrap(err, "")
+				ctx.String(500, err.Error())
+			}
+
 			str := ctx.Request.Header.Get("Accept-Encoding")
 			fmt.Println(str)
 
@@ -52,5 +59,5 @@ func TestMustSetUp(t *testing.T) {
 		//	ctx.String(404, "[TARGET] no route")
 		//})
 		return nil
-	}, WithServiceInfo("TEST"), WithDefaultFavicon(false))
+	}, WithServiceInfo("TEST"))
 }

@@ -2,6 +2,7 @@ package proxyKit
 
 import (
 	"github.com/richelieu-yang/chimera/v2/src/component/web/httpKit"
+	"github.com/richelieu-yang/chimera/v2/src/core/errorKit"
 	"github.com/richelieu-yang/chimera/v2/src/core/strKit"
 	"github.com/richelieu-yang/chimera/v2/src/urlKit"
 	"log"
@@ -81,10 +82,10 @@ scheme="http" addr="127.0.0.1:8889" reqUrlPath=ptrKit.ToPtr("/group1/test1")
 e.g.4	将 wss://127.0.0.1:8888/test 转发给 ws://127.0.0.1:80/ws/connect
 scheme="http" addr="127.0.0.1:80" reqUrlPath=ptrKit.ToPtr("/ws/connect")
 */
-func (opts *proxyOptions) proxy(w http.ResponseWriter, r *http.Request, addr string) error {
+func (opts *proxyOptions) proxy(w http.ResponseWriter, r *http.Request, addr string) (err error) {
 	// reset Request.Body
-	if err := httpKit.ResetRequestBody(r); err != nil {
-		return err
+	if err = httpKit.ResetRequestBody(r); err != nil {
+		return
 	}
 
 	//// scheme
@@ -97,11 +98,10 @@ func (opts *proxyOptions) proxy(w http.ResponseWriter, r *http.Request, addr str
 	//}
 
 	// addr
-	if err := strKit.AssertNotEmpty(addr, "addr"); err != nil {
-		return err
+	if err = strKit.AssertNotEmpty(addr, "addr"); err != nil {
+		return
 	}
 
-	var err error
 	director := func(req *http.Request) {
 		req.URL.Scheme = opts.scheme
 		req.URL.Host = addr
@@ -116,9 +116,9 @@ func (opts *proxyOptions) proxy(w http.ResponseWriter, r *http.Request, addr str
 		Director: director,
 		ErrorLog: opts.errorLogger,
 		ErrorHandler: func(rw http.ResponseWriter, req *http.Request, e error) {
-			err = e
+			err = errorKit.Wrap(e, "Fail to proxy")
 		},
 	}
 	reverseProxy.ServeHTTP(w, r)
-	return err
+	return
 }
