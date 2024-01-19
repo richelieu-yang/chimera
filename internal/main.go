@@ -12,7 +12,7 @@ func main() {
 	engine.Use(gzip.Gzip(gzip.BestSpeed))
 
 	engine.Any("/", func(ctx *gin.Context) {
-		ctx.String(200, "Don't communicate by sharing memory, share memory by communicating.Don't communicate by sharing memory, share memory by communicating.Don't communicate by sharing memory, share memory by communicating.")
+		ctx.String(200, "hello world")
 	})
 	engine.NoRoute(func(ctx *gin.Context) {
 		ctx.String(404, "no route")
