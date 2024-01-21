@@ -1,4 +1,3 @@
-// 编译标签(build tag): 参考gin中的"sonic.go"
 //go:build sonic && avx && go1.16 && amd64 && (linux || windows || darwin)
 
 package jsonKit
