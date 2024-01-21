@@ -33,6 +33,7 @@ require (
 	github.com/go-playground/validator/v10 v10.17.0
 	github.com/go-redis/redis/v8 v8.11.5
 	github.com/go-redsync/redsync/v4 v4.11.0
+	github.com/goccy/go-json v0.10.2
 	github.com/gogf/gf/v2 v2.6.1
 	github.com/golang-jwt/jwt/v5 v5.2.0
 	github.com/golang-module/carbon/v2 v2.3.5
@@ -165,7 +166,6 @@ require (
 	github.com/go-task/slim-sprig v0.0.0-20230315185526-52ccab3ef572 // indirect
 	github.com/go-text/render v0.0.0-20230619120952-35bccb6164b8 // indirect
 	github.com/go-text/typesetting v0.0.0-20230616162802-9c17dd34aa4a // indirect
-	github.com/goccy/go-json v0.10.2 // indirect
 	github.com/godbus/dbus v0.0.0-20190726142602-4481cbc300e2 // indirect
 	github.com/godbus/dbus/v5 v5.1.0 // indirect
 	github.com/gogo/protobuf v1.3.2 // indirect
