@@ -30,6 +30,8 @@ func (i *impl) UnmarshalFromString(str string, v interface{}) error {
 
 func init() {
 	library = "encoding/json"
-	defaultApi = &impl{}
-	stdApi = &impl{}
+
+	i := &impl{}
+	defaultApi = i
+	stdApi = i
 }
