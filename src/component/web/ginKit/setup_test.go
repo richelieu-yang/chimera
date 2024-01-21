@@ -5,6 +5,7 @@ import (
 	"github.com/richelieu-yang/chimera/v2/src/config/viperKit"
 	"github.com/richelieu-yang/chimera/v2/src/consts"
 	"github.com/richelieu-yang/chimera/v2/src/core/pathKit"
+	"github.com/richelieu-yang/chimera/v2/src/ip/ipKit"
 	"github.com/richelieu-yang/chimera/v2/src/log/logrusKit"
 	"github.com/sirupsen/logrus"
 	"testing"
@@ -39,8 +40,12 @@ func TestMustSetUp(t *testing.T) {
 		//	}
 		//})
 		engine.GET("/", func(ctx *gin.Context) {
-			ctx.String(200, "hello world")
+			ctx.String(200, ipKit.GetInternalIp()+" hello world")
 		})
+		engine.NoMethod(func(ctx *gin.Context) {
+			ctx.String(500, "no method")
+		})
+
 		return nil
 	}, WithServiceInfo("TEST"), WithDefaultFavicon(false))
 }
