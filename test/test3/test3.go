@@ -1,12 +1,9 @@
 package main
 
-import "github.com/goccy/go-json"
+import "encoding/json"
 
 func main() {
 	json.Marshal()
-	json.MarshalWithOption()
-
-	json.Marshal
-
+	json.MarshalIndent()
 	json.Unmarshal()
 }
