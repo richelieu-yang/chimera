@@ -1,6 +1,7 @@
 package ginKit
 
 import (
+	"fmt"
 	"github.com/gin-contrib/pprof"
 	"github.com/gin-gonic/gin"
 	"github.com/richelieu-yang/chimera/v2/src/consts"
@@ -10,6 +11,7 @@ import (
 	"github.com/richelieu-yang/chimera/v2/src/netKit"
 	"github.com/richelieu-yang/chimera/v2/src/validateKit"
 	"github.com/sirupsen/logrus"
+	"net/http"
 	"time"
 )
 
@@ -93,6 +95,16 @@ func SetUp(config *Config, businessLogic func(engine *gin.Engine) error, options
 		if err := DefaultNoRoute(engine); err != nil {
 			return err
 		}
+	}
+
+	/* 405 */
+	if opts.DefaultNoMethod {
+		engine.HandleMethodNotAllowed = true
+		engine.NoMethod(func(ctx *gin.Context) {
+			ctx.String(http.StatusMethodNotAllowed, fmt.Sprintf("Method(%s) not allowed.", ctx.Request.Method))
+		})
+	} else {
+		engine.HandleMethodNotAllowed = false
 	}
 
 	/* 业务逻辑 */

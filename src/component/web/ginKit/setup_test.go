@@ -39,11 +39,9 @@ func TestMustSetUp(t *testing.T) {
 		//		return
 		//	}
 		//})
-		engine.GET("/", func(ctx *gin.Context) {
+
+		engine.GET("/test", func(ctx *gin.Context) {
 			ctx.String(200, ipKit.GetInternalIp()+" hello world")
-		})
-		engine.NoMethod(func(ctx *gin.Context) {
-			ctx.String(500, "no method")
 		})
 
 		return nil

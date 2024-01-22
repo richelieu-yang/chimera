@@ -19,6 +19,9 @@ type (
 		// DefaultNoRoute 是否使用默认的404页面
 		DefaultNoRoute bool
 
+		// DefaultNoMethod 是否使用默认的405页面
+		DefaultNoMethod bool
+
 		// DefaultFavicon 是否使用默认的favicon.ico
 		DefaultFavicon bool
 	}
@@ -31,6 +34,7 @@ func loadOptions(options ...GinOption) *ginOptions {
 		ServiceInfo:        "",
 		RecoveryMiddleware: nil,
 		DefaultNoRoute:     true,
+		DefaultNoMethod:    true,
 		DefaultFavicon:     true,
 	}
 
@@ -60,6 +64,12 @@ func WithRecoveryMiddleware(recoveryMiddleware gin.HandlerFunc) GinOption {
 func WithDefaultNoRoute(defaultNoRoute bool) GinOption {
 	return func(opts *ginOptions) {
 		opts.DefaultNoRoute = defaultNoRoute
+	}
+}
+
+func WithDefaultNoMethod(defaultNoMethod bool) GinOption {
+	return func(opts *ginOptions) {
+		opts.DefaultNoMethod = defaultNoMethod
 	}
 }
 
