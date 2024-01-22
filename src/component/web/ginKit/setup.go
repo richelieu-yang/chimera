@@ -98,13 +98,11 @@ func SetUp(config *Config, businessLogic func(engine *gin.Engine) error, options
 	}
 
 	/* 405 */
-	if opts.DefaultNoMethod {
-		engine.HandleMethodNotAllowed = true
+	engine.HandleMethodNotAllowed = opts.DefaultNoMethod
+	if engine.HandleMethodNotAllowed {
 		engine.NoMethod(func(ctx *gin.Context) {
 			ctx.String(http.StatusMethodNotAllowed, fmt.Sprintf("Method(%s) not allowed.", ctx.Request.Method))
 		})
-	} else {
-		engine.HandleMethodNotAllowed = false
 	}
 
 	/* 业务逻辑 */
