@@ -101,7 +101,8 @@ func SetUp(config *Config, businessLogic func(engine *gin.Engine) error, options
 	engine.HandleMethodNotAllowed = opts.DefaultNoMethod
 	if engine.HandleMethodNotAllowed {
 		engine.NoMethod(func(ctx *gin.Context) {
-			ctx.String(http.StatusMethodNotAllowed, fmt.Sprintf("Method(%s) not allowed.", ctx.Request.Method))
+			text := fmt.Sprintf("Method(%s) isn't allowed for route(%s).", ctx.Request.Method, ctx.Request.URL.Path)
+			ctx.String(http.StatusMethodNotAllowed, text)
 		})
 	}
 
