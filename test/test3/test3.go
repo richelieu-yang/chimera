@@ -1,7 +1,9 @@
 package main
 
 import (
+	"fmt"
 	"github.com/gin-gonic/gin"
+	"net/http"
 )
 
 func main() {
@@ -15,7 +17,17 @@ func main() {
 	// 设置NoMethod处理器
 	engine.HandleMethodNotAllowed = true
 	engine.NoMethod(func(ctx *gin.Context) {
-		ctx.JSON(405, gin.H{"code": "METHOD_NOT_ALLOWED", "message": "方法不允许"})
+		var allowed []string
+		route := ctx.Request.URL.Path
+		routeInfoSlice := engine.Routes()
+		for _, routeInfo := range routeInfoSlice {
+			if routeInfo.Path == route {
+				allowed = append(allowed, routeInfo.Method)
+			}
+		}
+
+		text := fmt.Sprintf("Method(%s) isn't allowed for route(%s) and allowed methods is %s.", ctx.Request.Method, ctx.Request.URL.Path, allowed)
+		ctx.String(http.StatusMethodNotAllowed, text)
 	})
 
 	// 其他路由和方法
