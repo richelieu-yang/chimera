@@ -97,7 +97,7 @@ func SetUp(config *Config, businessLogic func(engine *gin.Engine) error, options
 		}
 	}
 
-	/* 405 */
+	/* 405（不设置的话，就会走到404） */
 	engine.HandleMethodNotAllowed = opts.DefaultNoMethod
 	if engine.HandleMethodNotAllowed {
 		engine.NoMethod(func(ctx *gin.Context) {
