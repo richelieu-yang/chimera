@@ -3,6 +3,7 @@ package main
 import (
 	"fmt"
 	"github.com/gin-gonic/gin"
+	"github.com/richelieu-yang/chimera/v2/src/component/web/ginKit"
 	"net/http"
 )
 
@@ -23,6 +24,7 @@ func main() {
 		for _, routeInfo := range routeInfoSlice {
 			if routeInfo.Path == route {
 				allowed = append(allowed, routeInfo.Method)
+				ginKit.AddResponseHeader(ctx, "Allow", routeInfo.Method)
 			}
 		}
 
