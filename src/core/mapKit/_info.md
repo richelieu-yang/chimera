@@ -11,3 +11,11 @@ GoFrame 字典类型-基本使用
 GoFrame的gmap相比Go原生的map，天然支持排序和有序遍历！？
     https://mp.weixin.qq.com/s/5ZFkSGA_iVQZnPUftzoxZg
 
+## 操作
+* put
+* get 
+* remove
+* size
+* clear
+
+
