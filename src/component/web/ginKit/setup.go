@@ -90,14 +90,14 @@ func SetUp(config *Config, businessLogic func(engine *gin.Engine) error, options
 		DefaultFavicon(engine)
 	}
 
-	/* 404 */
+	/* http状态码404 */
 	if opts.DefaultNoRoute {
 		if err := DefaultNoRoute(engine); err != nil {
 			return err
 		}
 	}
 
-	/* 405（不设置的话，就会走到404） */
+	/* http状态码405（不设置的话，就会走到404） */
 	engine.HandleMethodNotAllowed = opts.DefaultNoMethod
 	if engine.HandleMethodNotAllowed {
 		engine.NoMethod(func(ctx *gin.Context) {
