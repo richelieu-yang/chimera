@@ -63,7 +63,7 @@ func NewRaftNodeAndBootstrapCluster(addr string, nodeAddrs []string, dir string,
 	}
 	if logger == nil {
 		logger = raftLogKit.NewLogger(&hclog.LoggerOptions{
-			Name:   "RAFT",
+			Name:   "RAFT_NODE",
 			Level:  hclog.LevelFromString("debug"),
 			Output: os.Stderr,
 		})
@@ -133,6 +133,7 @@ func NewRaftNodeAndBootstrapCluster(addr string, nodeAddrs []string, dir string,
 	}
 	node := &RaftNode{
 		Raft:       r,
+		localAddr:  raft.ServerAddress(addr),
 		FSM:        fsm,
 		logger:     logger,
 		leaderFlag: atomicKit.NewBool(false),
@@ -165,9 +166,13 @@ func NewRaftNodeAndBootstrapCluster(addr string, nodeAddrs []string, dir string,
 	return node, nil
 }
 
-func (node *RaftNode) IsLeader() bool {
+func (node *RaftNode) GetLeaderAddr() string {
 	leaderAddr, _ := node.LeaderWithID()
-	return node.localAddr == leaderAddr
+	return string(leaderAddr)
+}
+
+func (node *RaftNode) IsLeader() bool {
+	return string(node.localAddr) == node.GetLeaderAddr()
 }
 
 // IsLeader1 当前Raft节点是否是 Leader ？
