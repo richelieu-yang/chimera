@@ -43,10 +43,10 @@ PS: 将 传参addr 作为id，所以传参中无id.
 */
 func NewRaftNodeAndBootstrapCluster(addr string, addrs []string, dir string, fsm raft.FSM, logger hclog.Logger) (*RaftNode, error) {
 	if err := validateKit.Var(addr, "hostname_port"); err != nil {
-		return nil, errorKit.Wrap(err, "param addr is invalid")
+		return nil, errorKit.Wrap(err, "param addr(%s) is invalid", addr)
 	}
 	if err := validateKit.Var(addrs, "unique,gte=3,dive,hostname_port"); err != nil {
-		return nil, errorKit.Wrap(err, "param addrs is invalid")
+		return nil, errorKit.Wrap(err, "param addrs(%s) is invalid", addrs)
 	}
 	if err := fileKit.AssertNotExistOrIsDir(dir); err != nil {
 		return nil, err
