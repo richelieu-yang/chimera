@@ -45,8 +45,8 @@ func DefaultNoRouteHtml(engine IEngine) error {
 	if strKit.IsNotEmpty(serviceInfo) {
 		prefix = fmt.Sprintf("[%s] ", serviceInfo)
 	}
+	name := fileKit.GetFileName(htmlPath)
 	engine.NoRoute(func(ctx *gin.Context) {
-		name := fileKit.GetFileName(htmlPath)
 		ctx.HTML(http.StatusNotFound, name, gin.H{
 			"prefix": prefix,
 			"route":  ctx.Request.URL.Path,
