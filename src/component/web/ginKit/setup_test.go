@@ -15,6 +15,10 @@ func TestMustSetUp(t *testing.T) {
 	{
 		logrusKit.MustSetUp(nil)
 
+		if err := pathKit.SetTempDir("temp"); err != nil {
+			panic(err)
+		}
+
 		wd, err := pathKit.ReviseWorkingDirInTestMode(consts.ProjectName)
 		if err != nil {
 			panic(err)

@@ -1,34 +1,18 @@
 package ginKit
 
 import (
+	"fmt"
 	"github.com/gin-gonic/gin"
 	"github.com/richelieu-yang/chimera/v2/internal/resources"
-	"github.com/richelieu-yang/chimera/v2/src/core/ioKit"
 	"github.com/richelieu-yang/chimera/v2/src/core/pathKit"
-	"github.com/sirupsen/logrus"
+	"github.com/richelieu-yang/chimera/v2/src/core/strKit"
+	"github.com/richelieu-yang/chimera/v2/src/file/fileKit"
 	"net/http"
 	"sync"
 )
 
-var noRouteData []byte
-var noRouteErr error
 var noRouteOnce sync.Once
-
-func init() {
-	var err error
-
-	fs := resources.AssetFile()
-	f, err := fs.Open("_resources/html/404.min.html")
-	if err != nil {
-		logrus.Fatal(err)
-	}
-	defer f.Close()
-
-	noRouteData, err = ioKit.ReadFromReader(f)
-	if err != nil {
-		logrus.Fatal(err)
-	}
-}
+var noRouteErr error
 
 // NoRoute 404
 func NoRoute(engine IEngine, handlers ...gin.HandlerFunc) {
@@ -37,31 +21,38 @@ func NoRoute(engine IEngine, handlers ...gin.HandlerFunc) {
 
 // DefaultNoRouteHtml 使用自带的404页面.
 func DefaultNoRouteHtml(engine IEngine) error {
+	htmlPath := "_resources/html/404.min.html"
+
 	noRouteOnce.Do(func() {
-		path := "_resources/html/404.min.html"
-
-		resources.RestoreAsset(pathKit.GetExclusiveTempDir(), path)
-
-		fs := resources.AssetFile()
-		f, err := fs.Open(path)
+		tempDir, err := pathKit.GetExclusiveTempDir()
 		if err != nil {
 			noRouteErr = err
 			return
 		}
-		defer f.Close()
-
-		noRouteData, err = ioKit.ReadFromReader(f)
-		if err != nil {
+		err = resources.RestoreAsset(tempDir, htmlPath)
+		filePath := pathKit.Join(tempDir, htmlPath)
+		if err := fileKit.AssertExistAndIsFile(filePath); err != nil {
 			noRouteErr = err
 			return
 		}
+		engine.LoadHTMLFiles(filePath)
 	})
-
 	if noRouteErr != nil {
 		return noRouteErr
 	}
+
+	var prefix string
+	if strKit.IsNotEmpty(serviceInfo) {
+		prefix = fmt.Sprintf("[%s] ", serviceInfo)
+	}
 	engine.NoRoute(func(ctx *gin.Context) {
-		ctx.Data(http.StatusNotFound, "text/html; charset=utf-8", noRouteData)
+		name := fileKit.GetFileName(htmlPath)
+		ctx.HTML(http.StatusNotFound, name, gin.H{
+			"prefix": prefix,
+			"route":  ctx.Request.URL.Path,
+		})
+
+		//ctx.Data(http.StatusNotFound, "text/html; charset=utf-8", noRouteData)
 
 		//// 此处不使用 ctx.FileFromFS ，原因: 这样的话，响应状态码就会是200，改不了
 		//fs := resources.AssetFile()
