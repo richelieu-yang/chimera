@@ -63,7 +63,7 @@ func NewRaftNodeAndBootstrapCluster(addr string, nodeAddrs []string, dir string,
 	}
 	if logger == nil {
 		logger = raftLogKit.NewLogger(&hclog.LoggerOptions{
-			Name:   "RAFT_NODE",
+			Name:   "RAFT",
 			Level:  hclog.LevelFromString("debug"),
 			Output: os.Stderr,
 		})
@@ -74,7 +74,7 @@ func NewRaftNodeAndBootstrapCluster(addr string, nodeAddrs []string, dir string,
 	config := raft.DefaultConfig()
 	config.LocalID = raft.ServerID(addr)
 	config.Logger = logger
-	config.SnapshotInterval = 60 * time.Second // 默认120s
+	config.SnapshotInterval = 120 * time.Second // 默认120s
 
 	/* (1) logStore */
 	logStorePath := filepath.Join(dir, "raft-log.db")
