@@ -19,7 +19,7 @@ type (
 		// DefaultNoRouteHtml 是否使用默认的 404 页面
 		DefaultNoRouteHtml bool
 
-		// DefaultNoMethod 是否使用默认的 405 页面
+		// DefaultNoMethod 是否使用默认的 405 处理
 		DefaultNoMethod bool
 
 		// DefaultFavicon 是否使用默认的favicon.ico
