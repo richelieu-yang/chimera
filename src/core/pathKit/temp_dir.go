@@ -9,6 +9,7 @@ import (
 )
 
 var tempDir string
+var innerXid string = idKit.NewXid()
 
 // GetOsTempDir 获取系统的临时目录.
 /*
@@ -45,7 +46,7 @@ func SetTempDir(dirPath string) error {
 	() => "/var/folders/4_/33p_vn057msfh2nvgx6hwv_40000gn/T/$$chimera/cmnmk1pus0n0snnatg40 <nil>", nil
 */
 func GetExclusiveTempDir() (string, error) {
-	dir := Join(GetTempDir(), "$$"+consts.ProjectName, idKit.NewXid())
+	dir := Join(GetTempDir(), "$$"+consts.ProjectName, innerXid)
 	if err := fileKit.MkDirs(dir); err != nil {
 		return "", err
 	}
