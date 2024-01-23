@@ -90,14 +90,14 @@ func SetUp(config *Config, businessLogic func(engine *gin.Engine) error, options
 		DefaultFavicon(engine)
 	}
 
-	/* http状态码404 */
+	/* 404 */
 	if opts.DefaultNoRoute {
 		if err := DefaultNoRoute(engine); err != nil {
 			return err
 		}
 	}
 
-	/* http状态码405（不设置的话，就会走到404） */
+	/* 405（不设置的话，就会走到404） */
 	engine.HandleMethodNotAllowed = opts.DefaultNoMethod
 	if engine.HandleMethodNotAllowed {
 		engine.NoMethod(func(ctx *gin.Context) {
@@ -112,6 +112,9 @@ func SetUp(config *Config, businessLogic func(engine *gin.Engine) error, options
 			}
 
 			text := fmt.Sprintf("Method(%s) isn't allowed for route(%s) and allowed methods is %s.", ctx.Request.Method, ctx.Request.URL.Path, allowed)
+			if strKit.IsNotEmpty(serviceInfo) {
+				text = fmt.Sprintf("[%s] %s", serviceInfo, text)
+			}
 			ctx.String(http.StatusMethodNotAllowed, text)
 		})
 	}
