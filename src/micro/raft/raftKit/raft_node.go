@@ -41,18 +41,25 @@ PS: 将 传参addr 作为id，所以传参中无id.
 @param logger 		(1) raft节点的日志输出
 					(2) 可以为nil（将使用默认值: debug级别、输出到控制台）
 */
-func NewRaftNodeAndBootstrapCluster(addr string, addrs []string, dir string, fsm raft.FSM, logger hclog.Logger) (*RaftNode, error) {
+func NewRaftNodeAndBootstrapCluster(addr string, nodeAddrs []string, dir string, fsm raft.FSM, logger hclog.Logger) (*RaftNode, error) {
 	if err := validateKit.Var(addr, "hostname_port"); err != nil {
-		return nil, errorKit.Wrap(err, "param addr(%s) is invalid", addr)
+		return nil, errorKit.Wrap(err, "param nodeAddr(%s) is invalid", addr)
 	}
-	if err := validateKit.Var(addrs, "unique,gte=3,dive,hostname_port"); err != nil {
-		return nil, errorKit.Wrap(err, "param addrs(%s) is invalid", addrs)
+	if err := validateKit.Var(nodeAddrs, "unique,gte=3,dive,hostname_port"); err != nil {
+		return nil, errorKit.Wrap(err, "param nodeAddrs(%s) is invalid", nodeAddrs)
 	}
 	if err := fileKit.AssertNotExistOrIsDir(dir); err != nil {
 		return nil, err
 	}
 	if err := interfaceKit.AssertNotNil(fsm, "fsm"); err != nil {
 		return nil, err
+	}
+	snapshot, err := fsm.Snapshot()
+	if err != nil {
+		return nil, errorKit.Wrap(err, "fail to get snapshot")
+	}
+	if snapshot == nil {
+		return nil, errorKit.New("snapshot == nil")
 	}
 	if logger == nil {
 		logger = raftLogKit.NewLogger(&hclog.LoggerOptions{
@@ -108,7 +115,7 @@ func NewRaftNodeAndBootstrapCluster(addr string, addrs []string, dir string, fsm
 		@param logOutput	是一个io.Writer接口，表示日志输出的目标，用于记录传输层的信息。如果为nil，则使用os.Stderr作为输出。
 
 		e.g.
-			raft.NewTCPTransport(addr, addr, 2, 5*time.Second, os.Stderr)
+			raft.NewTCPTransport(nodeAddr, nodeAddr, 2, 5*time.Second, os.Stderr)
 		e.g.1
 			raft.NewTCPTransport(address.String(), address, 3, 10*time.Second, os.Stderr)
 	*/
@@ -146,10 +153,10 @@ func NewRaftNodeAndBootstrapCluster(addr string, addrs []string, dir string, fsm
 
 	/* (6) Bootstrap */
 	var configuration raft.Configuration
-	for _, addr := range addrs {
+	for _, nodeAddr := range nodeAddrs {
 		server := raft.Server{
-			ID:      raft.ServerID(addr),
-			Address: raft.ServerAddress(addr),
+			ID:      raft.ServerID(nodeAddr),
+			Address: raft.ServerAddress(nodeAddr),
 		}
 		configuration.Servers = append(configuration.Servers, server)
 	}
