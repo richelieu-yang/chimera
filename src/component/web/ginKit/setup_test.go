@@ -40,10 +40,7 @@ func TestMustSetUp(t *testing.T) {
 		//	}
 		//})
 
-		engine.TrustedPlatform
-		engine.SetTrustedProxies()
-
-		engine.GET("/test", func(ctx *gin.Context) {
+		engine.POST("/test", func(ctx *gin.Context) {
 			ctx.String(200, ipKit.GetInternalIp()+" hello world")
 		})
 
