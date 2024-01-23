@@ -91,8 +91,8 @@ func SetUp(config *Config, businessLogic func(engine *gin.Engine) error, options
 	}
 
 	/* 404 */
-	if opts.DefaultNoRoute {
-		if err := DefaultNoRoute(engine); err != nil {
+	if opts.DefaultNoRouteHtml {
+		if err := DefaultNoRouteHtml(engine); err != nil {
 			return err
 		}
 	}

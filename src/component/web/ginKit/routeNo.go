@@ -34,8 +34,8 @@ func NoRoute(engine IEngine, handlers ...gin.HandlerFunc) {
 	engine.NoRoute(handlers...)
 }
 
-// DefaultNoRoute 使用自带的404页面.
-func DefaultNoRoute(engine IEngine) error {
+// DefaultNoRouteHtml 使用自带的404页面.
+func DefaultNoRouteHtml(engine IEngine) error {
 	noRouteOnce.Do(func() {
 		path := "_resources/html/404.min.html"
 
