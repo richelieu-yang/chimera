@@ -9,11 +9,11 @@ import (
 	"io"
 )
 
-// ObtainGetParam 从url获取参数
+// ObtainGetParam 从url获取参数.
 /*
-Deprecated: 使用原生方法，用法更加丰富.
-
-PS: 不需要额外手动解码.
+PS:
+(1) 原生方法的用法更加丰富!
+(2) 不需要额外手动解码.
 */
 func ObtainGetParam(ctx *gin.Context, key string) string {
 	return ctx.Query(key)
@@ -21,11 +21,10 @@ func ObtainGetParam(ctx *gin.Context, key string) string {
 
 // ObtainPostParam
 /*
-Deprecated: 使用原生方法，用法更加丰富.
-
 PS:
-(1) 不需要额外手动解码.
-(2) 支持的Content-Type: multipart/form-data、x-www-form-urlencoded ...
+(1) 原生方法的用法更加丰富!
+(2) 不需要额外手动解码;
+(3) 支持的Content-Type: multipart/form-data、x-www-form-urlencoded ...
 */
 func ObtainPostParam(ctx *gin.Context, key string) string {
 	return ctx.PostForm(key)
