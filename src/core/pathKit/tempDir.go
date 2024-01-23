@@ -14,8 +14,8 @@ var tempDir string
 Deprecated: 不建议向系统临时目录中放东西（服务器不一定会给权限）.
 
 e.g.
-Windows: 	"C:\Users\Lenovo\AppData\Local\Temp"
-Mac: 		"/var/folders/4_/33p_vn057msfh2nvgx6hwv_40000gn/T/"
+	Windows	"C:\Users\Lenovo\AppData\Local\Temp"
+	Mac		"/var/folders/4_/33p_vn057msfh2nvgx6hwv_40000gn/T/"
 */
 var GetTempDir func() string = os.TempDir
 
@@ -38,11 +38,11 @@ func GetExclusiveTempDir() (string, error) {
 	return dir, nil
 }
 
-func SetTempDir(path string) error {
-	if err := fileKit.AssertNotExistOrIsDir(path); err != nil {
+func SetTempDir(dirPath string) error {
+	if err := fileKit.AssertNotExistOrIsDir(dirPath, true); err != nil {
 		return err
 	}
 
-	tempDir = path
+	tempDir = dirPath
 	return nil
 }
