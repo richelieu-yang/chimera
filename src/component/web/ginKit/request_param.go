@@ -30,9 +30,11 @@ func ObtainPostParam(ctx *gin.Context, key string) string {
 	return ctx.PostForm(key)
 }
 
-// ObtainParam 获取请求参数（顺序: GET、POST）.
+// ObtainParam 获取请求参数.
 /*
-PS: 不需要额外手动解码.
+PS:
+(1) 优先级（从左到右）: GET、POST;
+(2) 不需要额外手动解码.
 */
 func ObtainParam(ctx *gin.Context, key string) string {
 	// (1) GET
@@ -40,6 +42,7 @@ func ObtainParam(ctx *gin.Context, key string) string {
 	if strKit.IsNotEmpty(value) {
 		return value
 	}
+
 	// (2) POST
 	return ctx.PostForm(key)
 }
