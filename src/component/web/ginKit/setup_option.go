@@ -61,9 +61,9 @@ func WithRecoveryMiddleware(recoveryMiddleware gin.HandlerFunc) GinOption {
 	}
 }
 
-func WithDefaultNoRoute(defaultNoRoute bool) GinOption {
+func WithDefaultNoRouteHtml(defaultNoRouteHtml bool) GinOption {
 	return func(opts *ginOptions) {
-		opts.DefaultNoRouteHtml = defaultNoRoute
+		opts.DefaultNoRouteHtml = defaultNoRouteHtml
 	}
 }
 

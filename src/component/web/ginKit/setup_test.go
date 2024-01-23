@@ -49,5 +49,5 @@ func TestMustSetUp(t *testing.T) {
 		})
 
 		return nil
-	}, WithServiceInfo("TEST"), WithDefaultFavicon(false))
+	}, WithServiceInfo("TEST"), WithDefaultFavicon(true))
 }
