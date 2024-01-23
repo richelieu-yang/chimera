@@ -39,7 +39,7 @@ PS: 将 传参addr 作为id，所以传参中无id.
 @param dir			raft节点的数据目录
 @param fsm 			不能为nil
 @param logger 		(1) raft节点的日志输出
-					(2) 可以为nil（将使用默认值）
+					(2) 可以为nil（将使用默认值: debug级别、输出到控制台）
 */
 func NewRaftNodeAndBootstrapCluster(addr string, addrs []string, dir string, fsm raft.FSM, logger hclog.Logger) (*RaftNode, error) {
 	if err := validateKit.Var(addr, "hostname_port"); err != nil {
