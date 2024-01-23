@@ -33,3 +33,6 @@
 /src/component/database/local/rocksdbKit/_testDir/
 **/_test.db
 /chimera-*
+/_temp
+
+
