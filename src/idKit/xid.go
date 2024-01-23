@@ -18,6 +18,6 @@ func NewXid() string {
 	return xid.New().String()
 }
 
-func NewWithTime(t time.Time) string {
+func NewXidWithTime(t time.Time) string {
 	return xid.NewWithTime(t).String()
 }
