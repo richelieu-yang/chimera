@@ -142,11 +142,10 @@ func NewRaftNodeAndBootstrapCluster(addr string, nodeAddrs []string, dir string,
 	go func() {
 		for leaderFlag := range node.LeaderCh() {
 			currentLeader, _ := node.LeaderWithID()
-
 			if leaderFlag {
-				logger.Info(fmt.Sprintf("Be leader and current leader is [%s].", currentLeader))
+				logger.Info(fmt.Sprintf("### Node(%s) becomes leader.", node.localAddr))
 			} else {
-				logger.Warn(fmt.Sprintf("Lose leader and current leader is [%s].", currentLeader))
+				logger.Warn(fmt.Sprintf("### Node(%s) loses leader and current leader is [%s].", node.localAddr, currentLeader))
 			}
 			node.leaderFlag.Set(leaderFlag)
 		}
