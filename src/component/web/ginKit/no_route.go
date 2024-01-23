@@ -11,6 +11,14 @@ import (
 	"sync"
 )
 
+var (
+	// noRouteHtmlPath 相对路径
+	noRouteHtmlPath = "_resources/html/404.min.html"
+
+	// noRouteHtmlName 文件名
+	noRouteHtmlName = fileKit.GetFileName(noRouteHtmlPath)
+)
+
 var noRouteOnce sync.Once
 var noRouteErr error
 
@@ -21,16 +29,14 @@ func NoRoute(engine IEngine, handlers ...gin.HandlerFunc) {
 
 // DefaultNoRouteHtml 使用自带的404页面.
 func DefaultNoRouteHtml(engine IEngine) error {
-	htmlPath := "_resources/html/404.min.html"
-
 	noRouteOnce.Do(func() {
 		tempDir, err := pathKit.GetExclusiveTempDir()
 		if err != nil {
 			noRouteErr = err
 			return
 		}
-		err = resources.RestoreAsset(tempDir, htmlPath)
-		filePath := pathKit.Join(tempDir, htmlPath)
+		err = resources.RestoreAsset(tempDir, noRouteHtmlPath)
+		filePath := pathKit.Join(tempDir, noRouteHtmlPath)
 		if err := fileKit.AssertExistAndIsFile(filePath); err != nil {
 			noRouteErr = err
 			return
@@ -45,9 +51,8 @@ func DefaultNoRouteHtml(engine IEngine) error {
 	if strKit.IsNotEmpty(serviceInfo) {
 		prefix = fmt.Sprintf("[%s] ", serviceInfo)
 	}
-	name := fileKit.GetFileName(htmlPath)
 	engine.NoRoute(func(ctx *gin.Context) {
-		ctx.HTML(http.StatusNotFound, name, gin.H{
+		ctx.HTML(http.StatusNotFound, noRouteHtmlName, gin.H{
 			"prefix": prefix,
 			"route":  ctx.Request.URL.Path,
 		})
