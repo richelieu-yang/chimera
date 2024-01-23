@@ -4,6 +4,7 @@ import (
 	"github.com/gin-gonic/gin"
 	"github.com/richelieu-yang/chimera/v2/internal/resources"
 	"github.com/richelieu-yang/chimera/v2/src/core/ioKit"
+	"github.com/richelieu-yang/chimera/v2/src/core/pathKit"
 	"github.com/sirupsen/logrus"
 	"net/http"
 	"sync"
@@ -38,6 +39,8 @@ func NoRoute(engine IEngine, handlers ...gin.HandlerFunc) {
 func DefaultNoRouteHtml(engine IEngine) error {
 	noRouteOnce.Do(func() {
 		path := "_resources/html/404.min.html"
+
+		resources.RestoreAsset(pathKit.GetExclusiveTempDir(), path)
 
 		fs := resources.AssetFile()
 		f, err := fs.Open(path)
