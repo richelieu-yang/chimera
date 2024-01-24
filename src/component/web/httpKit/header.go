@@ -86,9 +86,10 @@ func DelHeader(header http.Header, key string) {
 
 // AddHeader
 /*
+PS: key对应的 切片 中，在 最后面 添加value.
+
 e.g.
 	header := make(map[string][]string)
-
 	AddHeader(header, "k", "0")
 	fmt.Println(header) 		// map[K:[0]]
 	AddHeader(header, "k", "1")
