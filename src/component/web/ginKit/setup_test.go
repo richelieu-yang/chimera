@@ -2,10 +2,10 @@ package ginKit
 
 import (
 	"github.com/gin-gonic/gin"
+	"github.com/richelieu-yang/chimera/v2/src/component/web/httpKit"
 	"github.com/richelieu-yang/chimera/v2/src/config/viperKit"
 	"github.com/richelieu-yang/chimera/v2/src/consts"
 	"github.com/richelieu-yang/chimera/v2/src/core/pathKit"
-	"github.com/richelieu-yang/chimera/v2/src/ip/ipKit"
 	"github.com/richelieu-yang/chimera/v2/src/log/logrusKit"
 	"github.com/sirupsen/logrus"
 	"testing"
@@ -44,9 +44,24 @@ func TestMustSetUp(t *testing.T) {
 		//	}
 		//})
 
-		engine.POST("/test", func(ctx *gin.Context) {
-			ctx.String(200, ipKit.GetInternalIp()+" hello world")
+		engine.Any("/test", func(ctx *gin.Context) {
+			keys := []string{
+				"Host",
+				"X-Real-IP",
+				"X-Forwarded-Proto",
+				"X-Forwarded-For",
+			}
+			for _, key := range keys {
+				s := httpKit.GetHeaderValues(ctx.Request.Header, key)
+				logrus.Infof("%s: %s", key, s)
+			}
+			logrus.Info("======")
+
+			ctx.String(200, "test")
 		})
+		//engine.Any("/a/b", func(ctx *gin.Context) {
+		//	ctx.String(200, "hello world")
+		//})
 
 		return nil
 	}, WithServiceInfo("TEST"), WithDefaultFavicon(true))
