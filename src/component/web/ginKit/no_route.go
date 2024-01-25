@@ -22,13 +22,8 @@ var (
 var noRouteOnce sync.Once
 var noRouteErr error
 
-// NoRoute 404
-func NoRoute(engine IEngine, handlers ...gin.HandlerFunc) {
-	engine.NoRoute(handlers...)
-}
-
 // DefaultNoRouteHtml 使用自带的404页面.
-func DefaultNoRouteHtml(engine IEngine) error {
+func DefaultNoRouteHtml(engine *gin.Engine) error {
 	noRouteOnce.Do(func() {
 		tempDir, err := pathKit.GetExclusiveTempDir()
 		if err != nil {
