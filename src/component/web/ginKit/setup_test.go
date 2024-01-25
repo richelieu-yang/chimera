@@ -45,7 +45,7 @@ func TestMustSetUp(t *testing.T) {
 		//	}
 		//})
 
-		err := RegisterHandlers(engine, "test", []string{http.MethodHead, http.MethodPost}, func(ctx *gin.Context) {
+		err := BindHandlersToRoute(engine, "test", []string{http.MethodHead, http.MethodPost}, func(ctx *gin.Context) {
 			keys := []string{
 				"Host",
 				"X-Real-IP",
