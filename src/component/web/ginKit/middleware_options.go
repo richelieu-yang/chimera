@@ -15,13 +15,13 @@ func NewOptionsMiddleware() gin.HandlerFunc {
 	return func(ctx *gin.Context) {
 		if ctx.Request.Method == http.MethodOptions {
 
-			ctx.Header("Access-Control-Allow-Credentials", "true")
 			// 预检请求的返回结果能缓存多久？24h
 			ctx.Header("Access-Control-Max-Age", "86400")
+			ctx.Header("Access-Control-Allow-Credentials", "true")
 
 			// TODO:
 			ctx.Header("Access-Control-Allow-Headers", "Content-Type, Content-Length, Accept-Encoding, X-CSRF-Token, Authorization, accept, origin, Cache-Control, X-Requested-With")
-			ctx.Header("Access-Control-Allow-Methods", "POST, OPTIONS, GET, PUT")
+			ctx.Header("Access-Control-Allow-Methods", "OPTIONS, GET, POST")
 
 			ctx.Header("Content-Type", "text/plain; charset=utf-8")
 			ctx.Header("Content-Length", "0")
