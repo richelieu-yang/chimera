@@ -48,8 +48,9 @@ func TestMustSetUp(t *testing.T) {
 			keys := []string{
 				"Host",
 				"X-Real-IP",
-				"X-Forwarded-Proto",
+				"Client-IP",
 				"X-Forwarded-For",
+				"X-Forwarded-Proto",
 			}
 			for _, key := range keys {
 				s := httpKit.GetHeaderValues(ctx.Request.Header, key)
