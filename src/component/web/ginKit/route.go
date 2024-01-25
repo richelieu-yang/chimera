@@ -19,7 +19,6 @@ func RegisterHandlers(group IGroup, route string, methods []string, handlers ...
 	if len(handlers) == 0 {
 		return
 	}
-
 	sliceKit.Each(handlers, func(handler gin.HandlerFunc, index int) bool {
 		if handler == nil {
 			err = errorKit.New("handlers[%d] == nil", index)

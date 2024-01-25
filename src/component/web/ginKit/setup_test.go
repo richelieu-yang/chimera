@@ -8,6 +8,7 @@ import (
 	"github.com/richelieu-yang/chimera/v2/src/core/pathKit"
 	"github.com/richelieu-yang/chimera/v2/src/log/logrusKit"
 	"github.com/sirupsen/logrus"
+	"net/http"
 	"testing"
 )
 
@@ -44,7 +45,7 @@ func TestMustSetUp(t *testing.T) {
 		//	}
 		//})
 
-		engine.Any("/test", func(ctx *gin.Context) {
+		err := RegisterHandlers(engine, "test", []string{http.MethodHead, http.MethodPost}, func(ctx *gin.Context) {
 			keys := []string{
 				"Host",
 				"X-Real-IP",
@@ -60,6 +61,10 @@ func TestMustSetUp(t *testing.T) {
 
 			ctx.String(200, "test")
 		})
+		if err != nil {
+			return err
+		}
+
 		//engine.Any("/a/b", func(ctx *gin.Context) {
 		//	ctx.String(200, "hello world")
 		//})
