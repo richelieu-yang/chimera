@@ -3,36 +3,35 @@ package ginKit
 import (
 	"fmt"
 	"github.com/gin-gonic/gin"
-	"github.com/richelieu-yang/chimera/v2/src/core/errorKit"
 	"github.com/richelieu-yang/chimera/v2/src/core/sliceKit"
 	"github.com/richelieu-yang/chimera/v2/src/core/strKit"
 	"github.com/richelieu-yang/chimera/v2/src/micro/rateLimitKit"
 	"golang.org/x/time/rate"
 )
 
-// UseMiddlewares
-/*
-@param middlewares 其中的元素不能为nil!!!
-*/
-func UseMiddlewares(engine *gin.Engine, middlewares ...gin.HandlerFunc) (err error) {
-	if len(middlewares) == 0 {
-		return
-	}
-
-	sliceKit.Each(middlewares, func(middleware gin.HandlerFunc, index int) bool {
-		if middleware == nil {
-			err = errorKit.New("middlewares[%d] == nil", index)
-			return true
-		}
-		return false
-	})
-	if err != nil {
-		return
-	}
-
-	engine.Use(middlewares...)
-	return
-}
+//// UseMiddlewares
+///*
+//@param middlewares 其中的元素不能为nil!!!
+//*/
+//func UseMiddlewares(engine *gin.Engine, middlewares ...gin.HandlerFunc) (err error) {
+//	if len(middlewares) == 0 {
+//		return
+//	}
+//
+//	sliceKit.Each(middlewares, func(middleware gin.HandlerFunc, index int) bool {
+//		if middleware == nil {
+//			err = errorKit.New("middlewares[%d] == nil", index)
+//			return true
+//		}
+//		return false
+//	})
+//	if err != nil {
+//		return
+//	}
+//
+//	engine.Use(middlewares...)
+//	return
+//}
 
 // attachMiddlewares 绑定一些常用的中间件.
 func attachMiddlewares(engine *gin.Engine, config MiddlewareConfig, opts *ginOptions) error {
