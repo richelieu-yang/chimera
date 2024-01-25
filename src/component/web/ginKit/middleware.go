@@ -64,16 +64,6 @@ func attachMiddlewares(engine *gin.Engine, config MiddlewareConfig, opts *ginOpt
 		}
 	}
 
-	// bodyLimit
-	// TODO: 因为http.MaxBytesReader()，如果涉及"请求转发（代理）"，转发方不要全局配置此属性，否则会导致: 有时成功，有时代理失败（error），有时http客户端失败
-	if config.BodyLimit > 0 {
-		middleware, err := NewSizeLimiterMiddleware(config.BodyLimit)
-		if err != nil {
-			return err
-		}
-		engine.Use(middleware)
-	}
-
 	/* rate limiter（限流器） */
 	rlConfig := config.RateLimiter
 	if rlConfig != nil {
@@ -83,6 +73,16 @@ func attachMiddlewares(engine *gin.Engine, config MiddlewareConfig, opts *ginOpt
 		}
 
 		middleware := rateLimitKit.NewGinMiddleware(rate.Limit(rlConfig.R), rlConfig.B, forbiddenText)
+		engine.Use(middleware)
+	}
+
+	/* bodyLimit */
+	// TODO: 因为http.MaxBytesReader()，如果涉及"请求转发（代理）"，转发方不要全局配置此属性，否则会导致: 有时成功，有时代理失败（error），有时http客户端失败
+	if config.BodyLimit > 0 {
+		middleware, err := NewSizeLimiterMiddleware(config.BodyLimit)
+		if err != nil {
+			return err
+		}
 		engine.Use(middleware)
 	}
 
