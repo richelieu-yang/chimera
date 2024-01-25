@@ -45,7 +45,7 @@ func TestMustSetUp(t *testing.T) {
 		//	}
 		//})
 
-		err := BindHandlersToRoute(engine, "test", []string{http.MethodHead, http.MethodPost}, func(ctx *gin.Context) {
+		BindHandlersToRoute(engine, "test", []string{http.MethodHead, http.MethodPost}, func(ctx *gin.Context) {
 			keys := []string{
 				"Host",
 				"X-Real-IP",
@@ -61,9 +61,6 @@ func TestMustSetUp(t *testing.T) {
 
 			ctx.String(200, "test")
 		})
-		if err != nil {
-			return err
-		}
 
 		//engine.Any("/a/b", func(ctx *gin.Context) {
 		//	ctx.String(200, "hello world")
