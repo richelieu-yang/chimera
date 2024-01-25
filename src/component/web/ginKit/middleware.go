@@ -46,10 +46,10 @@ func attachMiddlewares(engine *gin.Engine, config MiddlewareConfig, opts *ginOpt
 		engine.Use(NewFastGzipMiddleware())
 	}
 
-	// logger(necessary) && recovery(necessary)
+	/* logger(necessary) && recovery(necessary) */
 	engine.Use(gin.Logger(), opts.RecoveryMiddleware)
 
-	// cors(optional)
+	/* cors(optional) */
 	{
 		cc := config.Cors
 		if cc.Access {
@@ -63,6 +63,9 @@ func attachMiddlewares(engine *gin.Engine, config MiddlewareConfig, opts *ginOpt
 			// 不配置cors
 		}
 	}
+
+	/* OPTIONS */
+	engine.Use(NewOptionsMiddleware())
 
 	/* rate limiter（限流器） */
 	rlConfig := config.RateLimiter

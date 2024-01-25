@@ -18,13 +18,11 @@ func NewOptionsMiddleware() gin.HandlerFunc {
 			// 预检请求的返回结果能缓存多久？24h
 			ctx.Header("Access-Control-Max-Age", "86400")
 			ctx.Header("Access-Control-Allow-Credentials", "true")
-
-			// TODO: 笔记
-			ctx.Header("Access-Control-Allow-Headers", "Content-Type, Content-Length, Accept-Encoding, X-CSRF-Token, Authorization, accept, origin, Cache-Control, X-Requested-With")
 			ctx.Header("Access-Control-Allow-Methods", "OPTIONS, GET, POST")
+			ctx.Header("Access-Control-Allow-Headers", "Content-Type, Content-Length, Accept, Accept-Encoding, X-CSRF-Token, Authorization, accept, origin, Cache-Control, X-Requested-With")
 
 			ctx.Header("Content-Type", "text/plain; charset=utf-8")
-			ctx.Header("Content-Length", "0")
+			//ctx.Header("Content-Length", "0")
 
 			ctx.AbortWithStatus(http.StatusNoContent)
 			return

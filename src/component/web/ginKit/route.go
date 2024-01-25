@@ -20,7 +20,7 @@ func BindHandlersToRoute(group IGroup, route string, methods []string, handlers 
 	}
 	for i, handler := range handlers {
 		if handler == nil {
-			logrus.Panic("handler(index: %d) == nil", i)
+			logrus.Panicf("handler(index: %d) == nil", i)
 		}
 	}
 
