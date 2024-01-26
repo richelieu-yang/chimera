@@ -32,6 +32,7 @@ type (
 
 func loadOptions(options ...ProxyOption) *proxyOptions {
 	opts := &proxyOptions{
+		scheme:         "http",
 		polyfillHeader: true,
 	}
 
@@ -94,14 +95,14 @@ func (opts *proxyOptions) proxy(w http.ResponseWriter, r *http.Request, addr str
 		return
 	}
 
-	//// scheme
-	//scheme = strKit.EmptyToDefault(scheme, "http", true)
-	//switch scheme {
-	//case "https":
-	//case "http":
-	//default:
-	//	return errorKit.New("invalid scheme: %s", scheme)
-	//}
+	// check scheme
+	scheme := opts.scheme
+	switch scheme {
+	case "https":
+	case "http":
+	default:
+		return errorKit.New("invalid scheme: %s", scheme)
+	}
 
 	// addr
 	if err = strKit.AssertNotEmpty(addr, "addr"); err != nil {
