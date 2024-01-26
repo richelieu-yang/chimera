@@ -90,12 +90,12 @@ e.g.4	将 wss://127.0.0.1:8888/test 转发给 ws://127.0.0.1:80/ws/connect
 scheme="http" addr="127.0.0.1:80" reqUrlPath=ptrKit.ToPtr("/ws/connect")
 */
 func (opts *proxyOptions) proxy(w http.ResponseWriter, r *http.Request, addr string) (err error) {
-	// reset Request.Body
+	/* reset Request.Body */
 	if err = httpKit.ResetRequestBody(r); err != nil {
 		return
 	}
 
-	// check scheme
+	/* check scheme */
 	scheme := opts.scheme
 	switch scheme {
 	case "https":
@@ -104,11 +104,17 @@ func (opts *proxyOptions) proxy(w http.ResponseWriter, r *http.Request, addr str
 		return errorKit.New("invalid scheme: %s", scheme)
 	}
 
-	// addr
+	/* check addr */
 	if err = strKit.AssertNotEmpty(addr, "addr"); err != nil {
 		return
 	}
 
+	/* polyfill header */
+	if opts.polyfillHeader {
+
+	}
+
+	/* proxy */
 	director := func(req *http.Request) {
 		req.URL.Scheme = opts.scheme
 		req.URL.Host = addr
@@ -127,5 +133,6 @@ func (opts *proxyOptions) proxy(w http.ResponseWriter, r *http.Request, addr str
 		},
 	}
 	reverseProxy.ServeHTTP(w, r)
+
 	return
 }
