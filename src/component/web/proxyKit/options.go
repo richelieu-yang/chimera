@@ -2,9 +2,11 @@ package proxyKit
 
 import (
 	"github.com/richelieu-yang/chimera/v2/src/component/web/httpKit"
+	"github.com/richelieu-yang/chimera/v2/src/core/conditionKit"
 	"github.com/richelieu-yang/chimera/v2/src/core/errorKit"
 	"github.com/richelieu-yang/chimera/v2/src/core/strKit"
 	"github.com/richelieu-yang/chimera/v2/src/urlKit"
+	"github.com/richelieu-yang/chimera/v2/src/validateKit"
 	"log"
 	"net/http"
 	"net/http/httputil"
@@ -104,13 +106,24 @@ func (opts *proxyOptions) proxy(w http.ResponseWriter, req *http.Request, target
 	}
 
 	/* check targetHost */
-	if err = strKit.AssertNotEmpty(targetHost, "targetHost"); err != nil {
+	if err = validateKit.Var(targetHost, "hostname_port"); err != nil {
+		err = errorKit.Wrap(err, "targetHost(%s) is invalid", targetHost)
 		return
 	}
 
 	/* polyfill header */
 	if opts.polyfillHeader {
-
+		/*
+			X-Forwarded-Proto: 客户端与代理服务器（或负载均衡服务器）间的连接所采用的传输协议（HTTP 或 HTTPS）
+		*/
+		var value string
+		tmp := httpKit.GetHeader(req.Header, "X-Forwarded-Proto")
+		if strKit.IsEmpty(tmp) {
+			value = httpKit.GetScheme(req)
+		} else {
+			value = conditionKit.TernaryOperator(tmp == "https", "https", "http")
+		}
+		httpKit.SetHeader(req.Header, "X-Forwarded-Proto", value)
 	}
 
 	/* proxy */
