@@ -28,7 +28,7 @@ func NewSizeLimiterMiddleware(limit int64) (gin.HandlerFunc, error) {
 		}
 
 		// (2) Based on content length
-		if ctx.Request.ContentLength > limit {
+		if ctx.Request.ContentLength > bodyLimit {
 			ctx.AbortWithStatus(http.StatusRequestEntityTooLarge)
 			return
 		}
