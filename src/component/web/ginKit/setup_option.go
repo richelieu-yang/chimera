@@ -16,13 +16,16 @@ type (
 		// RecoveryMiddleware panic恢复中间件（可以为nil，将采用默认值: gin.Recovery()）
 		RecoveryMiddleware gin.HandlerFunc
 
-		// DefaultNoRouteHtml 是否使用默认的 404 页面
+		// DefaultOptionsMiddleware 是否使用 默认的Options中间件？
+		DefaultOptionsMiddleware bool
+
+		// DefaultNoRouteHtml 是否使用 默认的404页面？
 		DefaultNoRouteHtml bool
 
-		// DefaultNoMethod 是否使用默认的 405 处理
+		// DefaultNoMethod 是否使用 默认的405处理？
 		DefaultNoMethod bool
 
-		// DefaultFavicon 是否使用默认的favicon.ico
+		// DefaultFavicon 是否使用 默认的favicon.ico？
 		DefaultFavicon bool
 	}
 
@@ -31,11 +34,12 @@ type (
 
 func loadOptions(options ...GinOption) *ginOptions {
 	opts := &ginOptions{
-		ServiceInfo:        "",
-		RecoveryMiddleware: nil,
-		DefaultNoRouteHtml: true,
-		DefaultNoMethod:    true,
-		DefaultFavicon:     true,
+		ServiceInfo:              "",
+		RecoveryMiddleware:       nil,
+		DefaultOptionsMiddleware: true,
+		DefaultNoRouteHtml:       true,
+		DefaultNoMethod:          true,
+		DefaultFavicon:           true,
 	}
 
 	for _, option := range options {
@@ -58,6 +62,12 @@ func WithServiceInfo(serviceInfo string) GinOption {
 func WithRecoveryMiddleware(recoveryMiddleware gin.HandlerFunc) GinOption {
 	return func(opts *ginOptions) {
 		opts.RecoveryMiddleware = recoveryMiddleware
+	}
+}
+
+func WithDefaultOptionsMiddleware(defaultOptionsMiddleware bool) GinOption {
+	return func(opts *ginOptions) {
+		opts.DefaultOptionsMiddleware = defaultOptionsMiddleware
 	}
 }
 

@@ -49,22 +49,22 @@ func attachMiddlewares(engine *gin.Engine, config MiddlewareConfig, opts *ginOpt
 	engine.Use(gin.Logger(), opts.RecoveryMiddleware)
 
 	/* cors(optional) */
-	{
-		cc := config.Cors
-		if cc.Access {
-			// 配置cors
-			origins := cc.Origins
-			origins = sliceKit.RemoveEmpty(origins, true)
-			origins = sliceKit.Uniq(origins)
+	cors := config.Cors
+	if cors.Access {
+		// 配置cors
+		origins := cors.Origins
+		origins = sliceKit.RemoveEmpty(origins, true)
+		origins = sliceKit.Uniq(origins)
 
-			engine.Use(NewCorsMiddleware(origins))
-		} else {
-			// 不配置cors
-		}
+		engine.Use(NewCorsMiddleware(origins))
+	} else {
+		// 不配置cors
 	}
 
 	/* OPTIONS */
-	engine.Use(NewOptionsMiddleware())
+	if opts.DefaultOptionsMiddleware {
+		engine.Use(NewOptionsMiddleware())
+	}
 
 	/* rate limiter（限流器） */
 	rlConfig := config.RateLimiter
