@@ -23,7 +23,9 @@ func GetScheme(req *http.Request) string {
 
 // GetProto
 /*
-@return "HTTP/1.0" || "HTTP/1.1" || ...
+@return (1) "HTTP/1.0"
+		(2) "HTTP/1.1"
+		(3) "HTTP/2.0"（https）
 */
 func GetProto(req *http.Request) string {
 	return req.Proto

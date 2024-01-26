@@ -1,7 +1,9 @@
 package ginKit
 
 import (
+	"fmt"
 	"github.com/gin-gonic/gin"
+	"github.com/richelieu-yang/chimera/v2/src/component/web/httpKit"
 	"github.com/richelieu-yang/chimera/v2/src/config/viperKit"
 	"github.com/richelieu-yang/chimera/v2/src/consts"
 	"github.com/richelieu-yang/chimera/v2/src/core/pathKit"
@@ -57,6 +59,9 @@ func TestMustSetUp(t *testing.T) {
 			//	logrus.Infof("%s: %s", key, s)
 			//}
 			//logrus.Info("======")
+
+			fmt.Println("scheme:", httpKit.GetScheme(ctx.Request))
+			fmt.Println("proto:", httpKit.GetProto(ctx.Request))
 
 			ctx.String(200, "test")
 		})
