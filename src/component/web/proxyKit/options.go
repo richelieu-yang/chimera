@@ -49,7 +49,7 @@ func loadOptions(options ...ProxyOption) *proxyOptions {
 /*
 @param errLogger 	可以为nil，但不建议这么干，因为错误会输出到控制台（通过 log.Printf()），不利于错误定位
 @param scheme 		"http" || "https"
-@param addr 		e.g."127.0.0.1:8888"
+@param targetHost	e.g."127.0.0.1:8888"
 @param reqUrlPath 	(1) 可以为nil（此时不修改 req.URL.Path）
 					(2) 非nil的话，个人感觉: 字符串的第一个字符应该是"/"
 @param queryParams 	可以为nil
@@ -62,36 +62,35 @@ PS:
 (0) 通过 httputil.ReverseProxy 实现请求转发;
 (1) 支持代理的协议: https、http、wss、ws...
 (2) 如果请求转发的目标有效，但处理此请求需要花费大量时间（比如20+min），此时如果请求的客户端终端了请求（e.g.浏览器页面被直接关闭了），将返回 context.Canceled.
-(3) addr有效，reqUrlPath非nil但事实上不存在该路由的情况，返回值为nil && 原始客户端得到404（404 page not found）.
+(3) targetHost有效，reqUrlPath非nil但事实上不存在该路由的情况，返回值为nil && 原始客户端得到404（404 page not found）.
 (4) 代理请求前，如果读取了Request.Body的内容但不恢复（即重置其内容），将直接返回error（e.g.net/http: HTTP/1.x transport connection broken: http: ContentLength=161 with Body length 0）.
-
-	且目标方不会收到请求.（TODO: 很奇怪，会走两遍，第二次返回的error为: context canceled）
+	且目标方不会收到请求.
 
 e.g.	将 https://127.0.0.1:8888/test 转发给 http://127.0.0.1:8889/test
 传参可以是：
-(1) scheme=http addr=127.0.0.1:8889 reqUrlPath=nil
-(2) scheme=http addr=127.0.0.1:8889 reqUrlPath=&"/test"
+(1) scheme=http targetHost=127.0.0.1:8889 reqUrlPath=nil
+(2) scheme=http targetHost=127.0.0.1:8889 reqUrlPath=&"/test"
 传参不能是：
-(1) scheme=http addr=127.0.0.1:8889 reqUrlPath=&"test" （400 Bad Request）
+(1) scheme=http targetHost=127.0.0.1:8889 reqUrlPath=&"test" （400 Bad Request）
 
 e.g.1	将 https://127.0.0.1:8888/test 转发给 http://127.0.0.1:8889/test1
 传参可以是：
-(1) scheme=http addr=127.0.0.1:8889 reqUrlPath=&"/test1"
+(1) scheme=http targetHost=127.0.0.1:8889 reqUrlPath=&"/test1"
 传参不能是：
-(1) scheme=http addr=127.0.0.1:8889 reqUrlPath=&"test1"
+(1) scheme=http targetHost=127.0.0.1:8889 reqUrlPath=&"test1"
 
 e.g.2	将 https://127.0.0.1:8888/group/test 转发给 http://127.0.0.1:8889/test1
-scheme="http" addr="127.0.0.1:8889" reqUrlPath=ptrKit.ToPtr("/test1")
+scheme="http" targetHost="127.0.0.1:8889" reqUrlPath=ptrKit.ToPtr("/test1")
 
 e.g.3	将 https://127.0.0.1:8888/group/test 转发给 http://127.0.0.1:8889/group1/test1
-scheme="http" addr="127.0.0.1:8889" reqUrlPath=ptrKit.ToPtr("/group1/test1")
+scheme="http" targetHost="127.0.0.1:8889" reqUrlPath=ptrKit.ToPtr("/group1/test1")
 
 e.g.4	将 wss://127.0.0.1:8888/test 转发给 ws://127.0.0.1:80/ws/connect
-scheme="http" addr="127.0.0.1:80" reqUrlPath=ptrKit.ToPtr("/ws/connect")
+scheme="http" targetHost="127.0.0.1:80" reqUrlPath=ptrKit.ToPtr("/ws/connect")
 */
-func (opts *proxyOptions) proxy(w http.ResponseWriter, r *http.Request, addr string) (err error) {
+func (opts *proxyOptions) proxy(w http.ResponseWriter, req *http.Request, targetHost string) (err error) {
 	/* reset Request.Body */
-	if err = httpKit.ResetRequestBody(r); err != nil {
+	if err = httpKit.TryToResetRequestBody(req); err != nil {
 		return
 	}
 
@@ -104,8 +103,8 @@ func (opts *proxyOptions) proxy(w http.ResponseWriter, r *http.Request, addr str
 		return errorKit.New("invalid scheme: %s", scheme)
 	}
 
-	/* check addr */
-	if err = strKit.AssertNotEmpty(addr, "addr"); err != nil {
+	/* check targetHost */
+	if err = strKit.AssertNotEmpty(targetHost, "targetHost"); err != nil {
 		return
 	}
 
@@ -117,7 +116,7 @@ func (opts *proxyOptions) proxy(w http.ResponseWriter, r *http.Request, addr str
 	/* proxy */
 	director := func(req *http.Request) {
 		req.URL.Scheme = opts.scheme
-		req.URL.Host = addr
+		req.URL.Host = targetHost
 		if opts.reqUrlPath != nil {
 			req.URL.Path = *opts.reqUrlPath
 		}
@@ -132,7 +131,7 @@ func (opts *proxyOptions) proxy(w http.ResponseWriter, r *http.Request, addr str
 			err = errorKit.Wrap(e, "Fail to proxy")
 		},
 	}
-	reverseProxy.ServeHTTP(w, r)
+	reverseProxy.ServeHTTP(w, req)
 
 	return
 }
