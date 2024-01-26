@@ -31,6 +31,10 @@ func GetProto(req *http.Request) string {
 	return req.Proto
 }
 
+func GetMethod(req *http.Request) string {
+	return req.Method
+}
+
 // GetRoute 获取: 路由（不带query）.
 /*
 e.g.
@@ -49,12 +53,12 @@ func GetRouteWithQuery(req *http.Request) string {
 	return req.RequestURI
 }
 
-// GetURLRawQuery
+// GetRawQuery
 /*
 e.g.
 http://127.0.0.1/a/b?1=1&2=2 => "1=1&2=2"
 */
-func GetURLRawQuery(req *http.Request) string {
+func GetRawQuery(req *http.Request) string {
 	return req.URL.RawQuery
 }
 
