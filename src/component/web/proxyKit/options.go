@@ -2,7 +2,6 @@ package proxyKit
 
 import (
 	"github.com/richelieu-yang/chimera/v2/src/component/web/httpKit"
-	"github.com/richelieu-yang/chimera/v2/src/core/conditionKit"
 	"github.com/richelieu-yang/chimera/v2/src/core/errorKit"
 	"github.com/richelieu-yang/chimera/v2/src/core/strKit"
 	"github.com/richelieu-yang/chimera/v2/src/urlKit"
@@ -117,14 +116,7 @@ func (opts *proxyOptions) proxy(w http.ResponseWriter, req *http.Request, target
 			(0) X-Forwarded-Proto: 客户端与代理服务器（或负载均衡服务器）间的连接所采用的传输协议（HTTP 或 HTTPS）
 				!!!: 值不一定准确，除非 代理s 好好配合（有的话）.
 		*/
-		var value string
-		tmp := httpKit.GetHeader(req.Header, "X-Forwarded-Proto")
-		if strKit.IsEmpty(tmp) {
-			value = httpKit.GetScheme(req)
-		} else {
-			value = conditionKit.TernaryOperator(tmp == "https", "https", "http")
-		}
-		httpKit.SetHeader(req.Header, "X-Forwarded-Proto", value)
+		httpKit.SetHeader(req.Header, "X-Forwarded-Proto", httpKit.GetClientScheme(req))
 	}
 
 	/* proxy */

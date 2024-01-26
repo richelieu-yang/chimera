@@ -1,35 +1,8 @@
 package httpKit
 
 import (
-	"github.com/richelieu-yang/chimera/v2/src/core/strKit"
 	"net/http"
 )
-
-// GetScheme 请求使用的Web协议.
-/*
-@return "http" || "https"
-*/
-func GetScheme(req *http.Request) string {
-	scheme := req.URL.Scheme
-	if strKit.IsNotEmpty(scheme) {
-		return scheme
-	}
-
-	if req.TLS != nil {
-		return "https"
-	}
-	return "http"
-}
-
-// GetProto 服务器的HTTP版本.
-/*
-@return (1) "HTTP/1.0"
-		(2) "HTTP/1.1"
-		(3) "HTTP/2.0"（https）
-*/
-func GetProto(req *http.Request) string {
-	return req.Proto
-}
 
 // GetMethod 请求的method.
 func GetMethod(req *http.Request) string {
