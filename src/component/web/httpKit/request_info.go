@@ -1,8 +1,25 @@
 package httpKit
 
 import (
+	"github.com/richelieu-yang/chimera/v2/src/core/strKit"
 	"net/http"
 )
+
+// GetScheme
+/*
+@return "http" || "https"
+*/
+func GetScheme(req *http.Request) string {
+	scheme := req.URL.Scheme
+	if strKit.IsNotEmpty(scheme) {
+		return scheme
+	}
+
+	if req.TLS != nil {
+		return "https"
+	}
+	return "http"
+}
 
 // GetProto
 /*
