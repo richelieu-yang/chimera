@@ -2,6 +2,7 @@ package httpKit
 
 import (
 	"bytes"
+	"errors"
 	"github.com/richelieu-yang/chimera/v2/src/core/errorKit"
 	"github.com/richelieu-yang/chimera/v2/src/core/ioKit"
 	"github.com/richelieu-yang/chimera/v2/src/core/strKit"
@@ -9,6 +10,10 @@ import (
 	"io"
 	"net/http"
 	"strings"
+)
+
+var (
+	NotSeekableError = errorKit.New("request body is not seekable")
 )
 
 // MakeRequestBodySeekable
@@ -41,27 +46,32 @@ func MakeRequestBodySeekable(req *http.Request) error {
 	return nil
 }
 
+func TryToResetRequestBody(req *http.Request) error {
+	err := ResetRequestBody(req)
+	if errors.Is(err, NotSeekableError) {
+		// 请求体无法重置
+		return nil
+	}
+	return err
+}
+
 // ResetRequestBody 重置请求体，以防: 已经读完body了，请求转发给别人，别人收到的请求没内容.
 /*
 PS: req.Body可能为nil.
 */
-func ResetRequestBody(req *http.Request) error {
+func ResetRequestBody(req *http.Request) (err error) {
 	if strKit.EqualsIgnoreCase(req.Method, http.MethodGet) || req.Body == nil || req.Body == http.NoBody {
-		// 无需重置
-		return nil
+		// do nothing(无需重置)
+		return
 	}
 
 	seeker, ok := req.Body.(io.Seeker)
 	if !ok {
-		// 不能重置
-		return errorKit.New("body(%T) is unable to seek", req.Body)
+		err = NotSeekableError
+		return
 	}
-	_, err := ioKit.SeekToStart(seeker)
-	if err != nil {
-		// 重置失败
-		return err
-	}
-	return nil
+	_, err = ioKit.SeekToStart(seeker)
+	return
 }
 
 // ToRequestBodyString
