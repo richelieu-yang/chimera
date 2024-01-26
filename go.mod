@@ -36,7 +36,7 @@ require (
 	github.com/goccy/go-json v0.10.2
 	github.com/gogf/gf/v2 v2.6.2
 	github.com/golang-jwt/jwt/v5 v5.2.0
-	github.com/golang-module/carbon/v2 v2.3.6
+	github.com/golang-module/carbon/v2 v2.3.7
 	github.com/google/go-cmp v0.6.0
 	github.com/google/uuid v1.6.0
 	github.com/google/wire v0.5.0
@@ -74,7 +74,7 @@ require (
 	github.com/rs/xid v1.5.0
 	github.com/saintfish/chardet v0.0.0-20230101081208-5e3ef4b5456d
 	github.com/samber/lo v1.39.0
-	github.com/shirou/gopsutil/v3 v3.23.11
+	github.com/shirou/gopsutil/v3 v3.23.12
 	github.com/shopspring/decimal v1.3.1
 	github.com/sirupsen/logrus v1.9.3
 	github.com/sony/sonyflake v1.2.0
