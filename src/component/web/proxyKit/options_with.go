@@ -32,3 +32,9 @@ func WithQueryParams(queryParams map[string][]string) ProxyOption {
 		opts.queryParams = queryParams
 	}
 }
+
+func WithPolyfillHeader(polyfillHeader bool) ProxyOption {
+	return func(opts *proxyOptions) {
+		opts.polyfillHeader = polyfillHeader
+	}
+}

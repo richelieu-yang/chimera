@@ -22,13 +22,19 @@ type (
 
 		// errorLogger 错误日志（可以为nil，但不建议这么干，因为错误会输出到控制台（通过 log.Printf()），不利于错误定位）
 		errorLogger *log.Logger
+
+		// polyfillHeader 是否额外处理请求头?
+		polyfillHeader bool
 	}
 
 	ProxyOption func(opts *proxyOptions)
 )
 
 func loadOptions(options ...ProxyOption) *proxyOptions {
-	opts := &proxyOptions{}
+	opts := &proxyOptions{
+		polyfillHeader: true,
+	}
+
 	for _, option := range options {
 		option(opts)
 	}
