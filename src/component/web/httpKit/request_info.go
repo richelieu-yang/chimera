@@ -31,6 +31,7 @@ func GetProto(req *http.Request) string {
 	return req.Proto
 }
 
+// GetMethod 请求的method.
 func GetMethod(req *http.Request) string {
 	return req.Method
 }
