@@ -5,7 +5,7 @@ import (
 	"net/http"
 )
 
-// GetScheme 协议的标识符.
+// GetScheme 请求使用的Web协议.
 /*
 @return "http" || "https"
 */
@@ -21,7 +21,7 @@ func GetScheme(req *http.Request) string {
 	return "http"
 }
 
-// GetProto 实际的传输协议.
+// GetProto 服务器的HTTP版本.
 /*
 @return (1) "HTTP/1.0"
 		(2) "HTTP/1.1"
