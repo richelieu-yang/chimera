@@ -43,7 +43,7 @@ func MakeRequestBodySeekable(req *http.Request) error {
 
 // ResetRequestBody 重置请求体，以防: 已经读完body了，请求转发给别人，别人收到的请求没内容.
 /*
-PS: req.Body可以为nil.
+PS: req.Body可能为nil.
 */
 func ResetRequestBody(req *http.Request) error {
 	if strKit.EqualsIgnoreCase(req.Method, http.MethodGet) || req.Body == nil || req.Body == http.NoBody {
