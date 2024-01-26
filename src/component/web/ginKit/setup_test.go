@@ -62,6 +62,7 @@ func TestMustSetUp(t *testing.T) {
 
 			fmt.Println("scheme:", httpKit.GetScheme(ctx.Request))
 			fmt.Println("proto:", httpKit.GetProto(ctx.Request))
+			fmt.Println("request url:", httpKit.GetRequestUrl(ctx.Request))
 
 			ctx.String(200, "test")
 		})
