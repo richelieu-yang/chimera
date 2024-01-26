@@ -4,6 +4,14 @@ import (
 	"net/http"
 )
 
+// GetProto
+/*
+@return "HTTP/1.0" || "HTTP/1.1" || ...
+*/
+func GetProto(req *http.Request) string {
+	return req.Proto
+}
+
 // GetRoute 获取: 路由（不带query）.
 /*
 e.g.
@@ -29,14 +37,6 @@ http://127.0.0.1/a/b?1=1&2=2 => "1=1&2=2"
 */
 func GetURLRawQuery(req *http.Request) string {
 	return req.URL.RawQuery
-}
-
-// GetProto
-/*
-@return "HTTP/1.0" || "HTTP/1.1" || ...
-*/
-func GetProto(req *http.Request) string {
-	return req.Proto
 }
 
 // GetRequestUrl 返回当前接口的url.

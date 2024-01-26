@@ -2,7 +2,6 @@ package ginKit
 
 import (
 	"github.com/gin-gonic/gin"
-	"github.com/richelieu-yang/chimera/v2/src/component/web/httpKit"
 	"github.com/richelieu-yang/chimera/v2/src/config/viperKit"
 	"github.com/richelieu-yang/chimera/v2/src/consts"
 	"github.com/richelieu-yang/chimera/v2/src/core/pathKit"
@@ -45,19 +44,19 @@ func TestMustSetUp(t *testing.T) {
 		//	}
 		//})
 
-		BindHandlersToRoute(engine, "test", []string{http.MethodHead, http.MethodPost}, func(ctx *gin.Context) {
-			keys := []string{
-				"Host",
-				"X-Real-IP",
-				"Client-IP",
-				"X-Forwarded-For",
-				"X-Forwarded-Proto",
-			}
-			for _, key := range keys {
-				s := httpKit.GetHeaderValues(ctx.Request.Header, key)
-				logrus.Infof("%s: %s", key, s)
-			}
-			logrus.Info("======")
+		BindHandlersToRoute(engine, "test", []string{http.MethodGet, http.MethodPost}, func(ctx *gin.Context) {
+			//keys := []string{
+			//	"Host",
+			//	"X-Real-IP",
+			//	"Client-IP",
+			//	"X-Forwarded-For",
+			//	"X-Forwarded-Proto",
+			//}
+			//for _, key := range keys {
+			//	s := httpKit.GetHeaderValues(ctx.Request.Header, key)
+			//	logrus.Infof("%s: %s", key, s)
+			//}
+			//logrus.Info("======")
 
 			ctx.String(200, "test")
 		})
