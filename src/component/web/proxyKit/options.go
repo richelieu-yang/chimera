@@ -25,8 +25,8 @@ type (
 		// errorLogger 错误日志（可以为nil，但不建议这么干，因为错误会输出到控制台（通过 log.Printf()），不利于错误定位）
 		errorLogger *log.Logger
 
-		// polyfillHeader 是否额外处理请求头?
-		polyfillHeader bool
+		// polyfillHeaders 是否额外处理请求头?
+		polyfillHeaders bool
 	}
 
 	ProxyOption func(opts *proxyOptions)
@@ -34,8 +34,8 @@ type (
 
 func loadOptions(options ...ProxyOption) *proxyOptions {
 	opts := &proxyOptions{
-		scheme:         "http",
-		polyfillHeader: true,
+		scheme:          "http",
+		polyfillHeaders: true,
 	}
 
 	for _, option := range options {
@@ -96,6 +96,12 @@ func (opts *proxyOptions) proxy(w http.ResponseWriter, req *http.Request, target
 		return
 	}
 
+	/* check targetHost */
+	if err = validateKit.Var(targetHost, "hostname_port"); err != nil {
+		err = errorKit.Wrap(err, "targetHost(%s) is invalid", targetHost)
+		return
+	}
+
 	/* check scheme */
 	scheme := opts.scheme
 	switch scheme {
@@ -105,16 +111,11 @@ func (opts *proxyOptions) proxy(w http.ResponseWriter, req *http.Request, target
 		return errorKit.New("invalid scheme: %s", scheme)
 	}
 
-	/* check targetHost */
-	if err = validateKit.Var(targetHost, "hostname_port"); err != nil {
-		err = errorKit.Wrap(err, "targetHost(%s) is invalid", targetHost)
-		return
-	}
-
 	/* polyfill header */
-	if opts.polyfillHeader {
+	if opts.polyfillHeaders {
 		/*
-			X-Forwarded-Proto: 客户端与代理服务器（或负载均衡服务器）间的连接所采用的传输协议（HTTP 或 HTTPS）
+			(0) X-Forwarded-Proto: 客户端与代理服务器（或负载均衡服务器）间的连接所采用的传输协议（HTTP 或 HTTPS）
+				!!!: 值不一定准确，除非 代理s 好好配合（有的话）.
 		*/
 		var value string
 		tmp := httpKit.GetHeader(req.Header, "X-Forwarded-Proto")
