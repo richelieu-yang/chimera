@@ -12,7 +12,7 @@ PS: 如果安装失败（因为部分依赖 i/o timeout等原因），可以考�
 go get github.com/richelieu42/chimera
 
 #### (2) 在main()所在的.go文件中，通过"import _"导入一些包  
-- logrusInitKit（最优先）
+- logrusInitKit（最优先，应该在最上面）
 - jsonKit
 - 业务自己的 config 包
 
