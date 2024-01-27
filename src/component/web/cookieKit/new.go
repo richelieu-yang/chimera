@@ -10,8 +10,10 @@ type (
 	options struct {
 		// Path 可以为""（此时将采用默认值"/"）
 		Path string
+
 		// Domain 可以为""（此时为对应url的hostname，可能是ip）
 		Domain string
+
 		// MaxAge
 		/*
 			(1) > 0:	表示此cookie从创建到过期所能存在的时间，以秒为单位
@@ -19,18 +21,21 @@ type (
 			(3)	< 0:	删除此cookie（一般用-1）
 		*/
 		MaxAge int
+
 		// Secure
 		/*
 			true:	浏览器只会在https、SSL等安全协议中传输此Cookie，不会在不安全的HTTP协议中传输此Cookie
 			false:	此Cookie在所有协议中传输
 		*/
 		Secure bool
+
 		// HttpOnly
 		/*
 			true:	不能被js检测到（读||写），发送请求时依旧会携带此Cookie（允许的话）。
 			false:	能被js检测到（读||写），发送请求时依旧会携带此Cookie（允许的话）
 		*/
 		HttpOnly bool
+
 		// SameSite
 		/*
 			http.SameSiteDefaultMode:	默认值
