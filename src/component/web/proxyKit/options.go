@@ -34,7 +34,7 @@ type (
 func loadOptions(options ...ProxyOption) *proxyOptions {
 	opts := &proxyOptions{
 		scheme:          "http",
-		polyfillHeaders: true,
+		polyfillHeaders: false,
 	}
 
 	for _, option := range options {
