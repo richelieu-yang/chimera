@@ -7,6 +7,7 @@ import (
 	"github.com/klauspost/cpuid/v2"
 	"github.com/richelieu-yang/chimera/v2/src/consts"
 	"github.com/richelieu-yang/chimera/v2/src/core/cpuKit"
+	"github.com/richelieu-yang/chimera/v2/src/core/osKit"
 	"github.com/sirupsen/logrus"
 )
 
@@ -19,7 +20,10 @@ func init() {
 	stdApi = sonic.ConfigStd
 
 	if !cpuKit.HasFeature(cpuid.AVX) {
-		logrus.Fatalf("[%s, JSON, SONIC] AVX isn't supported by CPU!!!", consts.UpperProjectName)
+		logrus.WithFields(logrus.Fields{
+			"os":   osKit.OS,
+			"arch": osKit.ARCH,
+		}).Fatalf("[%s, JSON, SONIC] AVX isn't supported by CPU!!!", consts.UpperProjectName)
 		return
 	}
 

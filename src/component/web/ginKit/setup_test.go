@@ -1,11 +1,10 @@
 package ginKit
 
 import (
-	"fmt"
 	"github.com/gin-gonic/gin"
-	"github.com/richelieu-yang/chimera/v2/src/component/web/httpKit"
 	"github.com/richelieu-yang/chimera/v2/src/config/viperKit"
 	"github.com/richelieu-yang/chimera/v2/src/consts"
+	"github.com/richelieu-yang/chimera/v2/src/core/ioKit"
 	"github.com/richelieu-yang/chimera/v2/src/core/pathKit"
 	"github.com/richelieu-yang/chimera/v2/src/log/logrusKit"
 	"github.com/sirupsen/logrus"
@@ -60,9 +59,16 @@ func TestMustSetUp(t *testing.T) {
 			//}
 			//logrus.Info("======")
 
-			fmt.Println("scheme:", httpKit.GetScheme(ctx.Request))
-			fmt.Println("proto:", httpKit.GetProto(ctx.Request))
-			fmt.Println("request url:", httpKit.GetRequestUrl(ctx.Request))
+			//fmt.Println("scheme:", httpKit.GetScheme(ctx.Request))
+			//fmt.Println("proto:", httpKit.GetProto(ctx.Request))
+			//fmt.Println("request url:", httpKit.GetRequestUrl(ctx.Request))
+
+			data, err := ioKit.ReadFromReader(ctx.Request.Body)
+			if err != nil {
+				ctx.String(500, err.Error())
+				return
+			}
+			logrus.Infof("body: [%s]", data)
 
 			ctx.String(200, "test")
 		})
