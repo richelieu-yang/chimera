@@ -2,9 +2,9 @@ package ginKit
 
 import (
 	"github.com/gin-gonic/gin"
+	"github.com/richelieu-yang/chimera/v2/src/component/web/proxyKit"
 	"github.com/richelieu-yang/chimera/v2/src/config/viperKit"
 	"github.com/richelieu-yang/chimera/v2/src/consts"
-	"github.com/richelieu-yang/chimera/v2/src/core/ioKit"
 	"github.com/richelieu-yang/chimera/v2/src/core/pathKit"
 	"github.com/richelieu-yang/chimera/v2/src/log/logrusKit"
 	"github.com/sirupsen/logrus"
@@ -45,7 +45,14 @@ func TestMustSetUp(t *testing.T) {
 		//	}
 		//})
 
-		BindHandlersToRoute(engine, "test", []string{http.MethodGet, http.MethodPost}, func(ctx *gin.Context) {
+		BindHandlersToRoute(engine, "/*path", []string{http.MethodGet, http.MethodPost}, func(ctx *gin.Context) {
+			if err := proxyKit.Proxy(ctx.Writer, ctx.Request, "127.0.0.1:8888", proxyKit.WithPolyfillHeaders(true)); err != nil {
+				ctx.String(500, err.Error())
+				return
+			}
+			// 转发成功
+			return
+
 			//keys := []string{
 			//	"Host",
 			//	"X-Real-IP",
@@ -63,14 +70,14 @@ func TestMustSetUp(t *testing.T) {
 			//fmt.Println("proto:", httpKit.GetProto(ctx.Request))
 			//fmt.Println("request url:", httpKit.GetRequestUrl(ctx.Request))
 
-			data, err := ioKit.ReadFromReader(ctx.Request.Body)
-			if err != nil {
-				ctx.String(500, err.Error())
-				return
-			}
-			logrus.Infof("body: [%s]", data)
-
-			ctx.String(200, "test")
+			//data, err := ioKit.ReadFromReader(ctx.Request.Body)
+			//if err != nil {
+			//	ctx.String(500, err.Error())
+			//	return
+			//}
+			//logrus.Infof("body: [%s]", data)
+			//
+			//ctx.String(200, "test")
 		})
 
 		//engine.Any("/a/b", func(ctx *gin.Context) {
@@ -78,5 +85,5 @@ func TestMustSetUp(t *testing.T) {
 		//})
 
 		return nil
-	}, WithServiceInfo("TEST"), WithDefaultFavicon(true))
+	}, WithServiceInfo("TEST"), WithDefaultFavicon(false))
 }
