@@ -7,6 +7,8 @@ import (
 func NewEngine() *gin.Engine {
 	engine := gin.New()
 
+	// 默认: true
+	engine.ForwardedByClientIP = true
 	// 默认: []string{"X-Forwarded-For", "X-Real-IP"}
 	engine.RemoteIPHeaders = []string{"X-Forwarded-For", "X-Real-IP", "Client-IP"}
 
