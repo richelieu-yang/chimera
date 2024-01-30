@@ -79,7 +79,8 @@ var (
 // Ceil 向上取整，类似于 math.Ceil()，但功能更强大.
 /*
 PS:
-个人感觉: x轴向右.
+(1) NOTE: this will panic on NaN, +/-inf
+(2) 个人感觉: x轴向右.
 
 e.g.
 (3.14, 1)	=> 3.2
@@ -93,7 +94,8 @@ func Ceil(f float64, places int) float64 {
 // Floor 向下取整，类似于 math.Floor()，但功能更强大.
 /*
 PS:
-(1) 个人感觉: x轴向左.
+(1) NOTE: this will panic on NaN, +/-inf
+(2) 个人感觉: x轴向左.
 
 e.g.
 (3.14, 1)	=> 3.1

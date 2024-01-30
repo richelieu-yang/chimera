@@ -1,12 +1,12 @@
 package main
 
 import (
-	"github.com/richelieu-yang/chimera/v2/src/validateKit"
+	"fmt"
+	"github.com/richelieu-yang/chimera/v2/src/core/mathKit"
+	"math"
 )
 
 func main() {
-	err := validateKit.Var("", "hostname_port")
-	if err != nil {
-		panic(err)
-	}
+	fmt.Println(mathKit.Round(math.NaN(), 2))
+	fmt.Println(mathKit.Round(-math.NaN(), 2))
 }
