@@ -57,25 +57,6 @@ var (
 //	return f
 //}
 
-//// Round 四舍五入，保留n位小数.
-///*
-//@param n 保留的小数位（可以 < 0，依然生效）
-//
-//e.g.
-//	(123.124, -1)	// 120
-//	(123.124, 0)	// 123
-//	(123.124, 1)	// 123.1
-//	(100.125, 2)	// 100.13
-//	(100.125, 3)	// 100.125
-//*/
-//var Round func(x float64, n int) float64 = mathutil.RoundToFloat
-
-//// RoundToString 四舍五入，保留n位小数.
-///*
-//PS: 相较于 Round ，多了最后一步转换为string类型.
-//*/
-//var RoundToString func(x float64, n int) string = mathutil.RoundToString
-
 // Ceil 向上取整，类似于 math.Ceil()，但功能更强大.
 /*
 PS:
