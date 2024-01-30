@@ -83,8 +83,8 @@ PS:
 (2) 个人感觉: x轴向右.
 
 e.g.
-(3.14, 1)	=> 3.2
-(-3.14, 1)	=> -3.1
+	(3.14, 1)	=> 3.2
+	(-3.14, 1)	=> -3.1
 */
 func Ceil(f float64, places int) float64 {
 	f, _ = decimal.NewFromFloat(f).RoundCeil(int32(places)).Float64()
@@ -98,8 +98,8 @@ PS:
 (2) 个人感觉: x轴向左.
 
 e.g.
-(3.14, 1)	=> 3.1
-(-3.14, 1)	=> -3.2
+	(3.14, 1)	=> 3.1
+	(-3.14, 1)	=> -3.2
 */
 func Floor(f float64, places int) float64 {
 	f, _ = decimal.NewFromFloat(f).RoundFloor(int32(places)).Float64()
