@@ -2,6 +2,15 @@ package ginKit
 
 import "github.com/gin-gonic/gin"
 
+// GetRemoteIP 获取客户端IP地址（客户端的远程IP地址）.
+/*
+e.g.
+当客户端通过代理服务器连接时，RemoteIP() 返回代理服务器的 IP 地址
+*/
+func GetRemoteIP(ctx *gin.Context) string {
+	return ctx.RemoteIP()
+}
+
 // GetClientIp 获取客户端IP地址（客户端的真实IP地址，但结果并不总是可靠的）.
 /*
 PS:
@@ -18,13 +27,4 @@ PS:
 */
 func GetClientIp(ctx *gin.Context) string {
 	return ctx.ClientIP()
-}
-
-// GetRemoteIP 获取客户端IP地址（客户端的远程IP地址）.
-/*
-e.g.
-当客户端通过代理服务器连接时，RemoteIP() 返回代理服务器的 IP 地址
-*/
-func GetRemoteIP(ctx *gin.Context) string {
-	return ctx.RemoteIP()
 }

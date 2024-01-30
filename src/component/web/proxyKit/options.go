@@ -1,6 +1,7 @@
 package proxyKit
 
 import (
+	"github.com/gin-gonic/gin"
 	"github.com/richelieu-yang/chimera/v2/src/component/web/httpKit"
 	"github.com/richelieu-yang/chimera/v2/src/core/errorKit"
 	"github.com/richelieu-yang/chimera/v2/src/core/strKit"
@@ -117,6 +118,11 @@ func (opts *proxyOptions) proxy(w http.ResponseWriter, req *http.Request, target
 				!!!: 值不一定准确，除非 代理s 好好配合（有的话）.
 		*/
 		httpKit.SetHeader(req.Header, "X-Forwarded-Proto", httpKit.GetClientScheme(req))
+
+		// (1) client ip
+		httpKit.GetHeader(req.Header, "X-Real-IP")
+		httpKit.GetHeader(req.Header, "X-Forwarded-For")
+
 	}
 
 	/* proxy */
@@ -140,4 +146,8 @@ func (opts *proxyOptions) proxy(w http.ResponseWriter, req *http.Request, target
 	reverseProxy.ServeHTTP(w, req)
 
 	return
+}
+
+func (opts *proxyOptions) proxyWithGin(ctx *gin.Context, targetHost string) (err error) {
+	return opts.proxy(ctx.Writer, ctx.Request, targetHost)
 }
