@@ -14,6 +14,8 @@ import (
 
 type (
 	proxyOptions struct {
+		ctx *gin.Context
+
 		// scheme "http"（默认） || "https"
 		scheme string
 
@@ -90,7 +92,7 @@ scheme="http" targetHost="127.0.0.1:8889" reqUrlPath=ptrKit.ToPtr("/group1/test1
 e.g.4	将 wss://127.0.0.1:8888/test 转发给 ws://127.0.0.1:80/ws/connect
 scheme="http" targetHost="127.0.0.1:80" reqUrlPath=ptrKit.ToPtr("/ws/connect")
 */
-func (opts *proxyOptions) proxy(w http.ResponseWriter, req *http.Request, targetHost string) (err error) {
+func (opts *proxyOptions) proxy(writer http.ResponseWriter, req *http.Request, targetHost string) (err error) {
 	/* reset Request.Body */
 	if err = httpKit.TryToResetRequestBody(req); err != nil {
 		return
@@ -120,8 +122,19 @@ func (opts *proxyOptions) proxy(w http.ResponseWriter, req *http.Request, target
 		httpKit.SetHeader(req.Header, "X-Forwarded-Proto", httpKit.GetClientScheme(req))
 
 		// (1) client ip
-		httpKit.GetHeader(req.Header, "X-Real-IP")
+		var clientIP string
+		if opts.ctx != nil {
+			clientIP = opts.ctx.ClientIP()
+		} else {
+			clientIP = httpKit.GetClientIP(req)
+		}
+
 		httpKit.GetHeader(req.Header, "X-Forwarded-For")
+
+		tmp := httpKit.GetHeader(req.Header, "X-Real-IP")
+		if strKit.IsEmpty(tmp) {
+
+		}
 
 	}
 
@@ -143,11 +156,12 @@ func (opts *proxyOptions) proxy(w http.ResponseWriter, req *http.Request, target
 			err = errorKit.Wrap(e, "Fail to proxy")
 		},
 	}
-	reverseProxy.ServeHTTP(w, req)
+	reverseProxy.ServeHTTP(writer, req)
 
 	return
 }
 
 func (opts *proxyOptions) proxyWithGin(ctx *gin.Context, targetHost string) (err error) {
+	opts.ctx = ctx
 	return opts.proxy(ctx.Writer, ctx.Request, targetHost)
 }
