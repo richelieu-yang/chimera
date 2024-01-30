@@ -1,5 +1,6 @@
 ## richelieu-yang/chimera
 Golang的工具类.
+- [github]https://github.com/richelieu-yang/chimera  
 
 #### 手动更新ip库（ip2region.xdb）
 src:  https://github.com/lionsoul2014/ip2region/blob/master/data/ip2region.xdb  
