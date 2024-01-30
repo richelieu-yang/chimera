@@ -49,6 +49,13 @@ func loadOptions(options ...ProxyOption) *proxyOptions {
 	return opts
 }
 
+func (opts *proxyOptions) getClientIP(req *http.Request) string {
+	if opts.ctx != nil {
+		return opts.ctx.ClientIP()
+	}
+	return httpKit.GetClientIP(req)
+}
+
 // proxy
 /*
 @param errLogger 	可以为nil，但不建议这么干，因为错误会输出到控制台（通过 log.Printf()），不利于错误定位
