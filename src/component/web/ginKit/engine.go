@@ -11,6 +11,9 @@ import (
 func NewEngine() *gin.Engine {
 	engine := gin.New()
 
+	// 默认为: []string{"X-Forwarded-For", "X-Real-IP"}
+	engine.RemoteIPHeaders = []string{"X-Real-IP", "Client-IP", "X-Forwarded-For"}
+
 	engine.RedirectTrailingSlash = true
 
 	return engine

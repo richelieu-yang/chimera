@@ -54,6 +54,8 @@ func TestMustSetUp(t *testing.T) {
 			//// 转发成功
 			//return
 
+			ctx.ClientIP()
+
 			c := cookieKit.NewCookie("test", idKit.NewXid(), cookieKit.WithSecure(true), cookieKit.WithSameSite(http.SameSiteNoneMode))
 			//c := cookieKit.NewCookie("test", "2")
 			cookieKit.SetCookie(ctx.Writer, c)
