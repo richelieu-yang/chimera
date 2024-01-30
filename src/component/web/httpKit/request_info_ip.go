@@ -60,8 +60,7 @@ func GetClientIPFromHeader(req *http.Request) string {
 	//}
 	//return ctx.ClientIP()
 
-	remoteIPHeaders := []string{"X-Forwarded-For", "X-Real-IP"}
-	for _, headerName := range remoteIPHeaders {
+	for _, headerName := range RemoteIPHeaders {
 		ip, valid := validateHeader(GetHeader(req.Header, headerName))
 		if valid {
 			return ip
