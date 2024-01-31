@@ -107,7 +107,7 @@ func (opts *proxyOptions) proxy(writer http.ResponseWriter, req *http.Request, t
 
 	/* check targetHost */
 	if err = validateKit.Var(targetHost, "hostname_port"); err != nil {
-		err = errorKit.Wrap(err, "targetHost(%s) is invalid", targetHost)
+		err = errorKit.Wrap(err, "invalid targetHost(%s)", targetHost)
 		return
 	}
 
@@ -117,32 +117,22 @@ func (opts *proxyOptions) proxy(writer http.ResponseWriter, req *http.Request, t
 	case "https":
 	case "http":
 	default:
-		return errorKit.New("invalid scheme: %s", scheme)
+		return errorKit.New("invalid scheme(%s)", scheme)
 	}
 
 	/* polyfill header */
 	if opts.polyfillHeaders {
 		/*
 			(0) X-Forwarded-Proto: 客户端与代理服务器（或负载均衡服务器）间的连接所采用的传输协议（HTTP 或 HTTPS）
-				!!!: 值不一定准确，除非 代理s 好好配合（有的话）.
+				!!!: 值不一定准确，除非 代理(s) 好好配合（有的话）.
 		*/
 		httpKit.SetHeader(req.Header, "X-Forwarded-Proto", httpKit.GetClientScheme(req))
 
 		// (1) client ip
-		var clientIP string
-		if opts.ctx != nil {
-			clientIP = opts.ctx.ClientIP()
-		} else {
-			clientIP = httpKit.GetClientIP(req)
-		}
-
-		httpKit.GetHeader(req.Header, "X-Forwarded-For")
-
-		tmp := httpKit.GetHeader(req.Header, "X-Real-IP")
+		tmp := httpKit.GetClientIPFromHeader(req)
 		if strKit.IsEmpty(tmp) {
-
+			httpKit.SetHeader(req.Header, "X-Real-IP", opts.getClientIP(req))
 		}
-
 	}
 
 	/* proxy */
@@ -166,9 +156,4 @@ func (opts *proxyOptions) proxy(writer http.ResponseWriter, req *http.Request, t
 	reverseProxy.ServeHTTP(writer, req)
 
 	return
-}
-
-func (opts *proxyOptions) proxyWithGin(ctx *gin.Context, targetHost string) (err error) {
-	opts.ctx = ctx
-	return opts.proxy(ctx.Writer, ctx.Request, targetHost)
 }

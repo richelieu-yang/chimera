@@ -1,6 +1,7 @@
 package proxyKit
 
 import (
+	"github.com/gin-gonic/gin"
 	"net/http"
 )
 
@@ -15,5 +16,13 @@ PS: 转发请求前如果想变更请求头(Request Header)，可以在调用此
 */
 func Proxy(w http.ResponseWriter, r *http.Request, targetAddr string, options ...ProxyOption) error {
 	opts := loadOptions(options...)
+
 	return opts.proxy(w, r, targetAddr)
+}
+
+func ProxyWithGin(ctx *gin.Context, targetAddr string, options ...ProxyOption) error {
+	opts := loadOptions(options...)
+	opts.ctx = ctx
+
+	return opts.proxy(ctx.Writer, ctx.Request, targetAddr)
 }
