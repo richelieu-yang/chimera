@@ -5,7 +5,7 @@ import (
 	"github.com/gin-gonic/gin"
 	"github.com/gorilla/sessions"
 	"github.com/redis/go-redis/v9"
-	"github.com/richelieu-yang/chimera/v2/src/atomic/gtypeKit"
+	"github.com/richelieu-yang/chimera/v2/src/atomic/atomicKit"
 	"github.com/richelieu-yang/chimera/v2/src/core/intKit"
 	"github.com/richelieu-yang/chimera/v2/src/idKit"
 	"github.com/richelieu-yang/chimera/v2/src/time/timeKit"
@@ -15,7 +15,7 @@ import (
 	"testing"
 )
 
-var i = gtypeKit.NewInt()
+var i = atomicKit.NewInt64(0)
 
 // TestRedisStore
 /*
