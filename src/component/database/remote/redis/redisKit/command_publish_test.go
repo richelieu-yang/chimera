@@ -2,11 +2,11 @@ package redisKit
 
 import (
 	"context"
+	"github.com/richelieu-yang/chimera/v2/src/atomic/atomicKit"
 	"testing"
 )
 
 import (
-	"github.com/richelieu-yang/chimera/v2/src/atomicKit"
 	"github.com/richelieu-yang/chimera/v2/src/config/confKit"
 	"github.com/richelieu-yang/chimera/v2/src/consts"
 	"github.com/richelieu-yang/chimera/v2/src/core/pathKit"
