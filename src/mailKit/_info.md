@@ -13,3 +13,10 @@ jordan-wright/email:
 - [go-gin-api mail](https://www.yuque.com/xinliangnote/go-gin-api/rwim2a)
 
 
+## SMTP协议（Simple Mail Transfer Protocol; 简单邮件传输协议）
+作用: 发送邮件.
+
+## IMAP协议（Internet Mail Access Protocol; 即互联网邮件访问协议）
+作用: 获取邮件信息、下载邮件...
+
+
