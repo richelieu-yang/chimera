@@ -6,12 +6,6 @@ import (
 )
 
 var (
-	// GetInternalIp 获取内部ip.
-	/*
-		e.g.
-		fmt.Println(ipKit.GetInternalIp()) // 172.20.10.4
-	*/
-	GetInternalIp func() string = netutil.GetInternalIp
 
 	// GetIps 获取ipv4地址列表.
 	/*
@@ -51,9 +45,6 @@ var (
 
 	// IsPublicIP 判断ip是否是公共ip.
 	IsPublicIP func(IP net.IP) bool = netutil.IsPublicIP
-
-	// IsInternalIP 判断ip是否是局域网ip.
-	IsInternalIP func(IP net.IP) bool = netutil.IsInternalIP
 )
 
 //// GetLocalIPs

@@ -20,3 +20,4 @@ PS: 简单来说，SMTP负责“发”，而POP3和IMAP负责“收”。
 
 ![_protocols.png](_protocols.png)
 
+
