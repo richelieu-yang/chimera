@@ -4,6 +4,8 @@ import "reflect"
 
 // IsNil Deprecated: 反射有性能问题，应尽可能避免使用此方法.
 /*
+go里面的类型包含 type 和 value 的，一般对于业务我们更在意value是不是空.
+
 e.g.
 	var src interface{} = nil
 	var src1 []string = nil
