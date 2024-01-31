@@ -66,8 +66,7 @@ func PrintBasicDetails(logger *logrus.Logger) {
 	//}
 
 	/* ip */
-	InternalIp := ipKit.GetInternalIp()
-	logger.Infof("[CHIMERA, IP] internal ip: [%s].", InternalIp)
+	logger.Infof("[CHIMERA, IP] internal ip: [%s].", ipKit.GetInternalIp())
 	ips := ipKit.GetIps()
 	logger.Infof("[CHIMERA, IP] ips: [%s].", sliceKit.Join(ips, ", "))
 
