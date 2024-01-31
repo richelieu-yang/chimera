@@ -2,11 +2,7 @@ package redisKit
 
 import (
 	"context"
-	"github.com/richelieu-yang/chimera/v2/src/atomic/gtypeKit"
-	"testing"
-)
-
-import (
+	"github.com/richelieu-yang/chimera/v2/src/atomic/atomicKit"
 	"github.com/richelieu-yang/chimera/v2/src/config/confKit"
 	"github.com/richelieu-yang/chimera/v2/src/consts"
 	"github.com/richelieu-yang/chimera/v2/src/core/pathKit"
@@ -15,6 +11,7 @@ import (
 	"github.com/sirupsen/logrus"
 	"strconv"
 	"sync"
+	"testing"
 	"time"
 )
 
@@ -120,7 +117,7 @@ func TestClient_Publish1(t *testing.T) {
 	client = client
 
 	{
-		flag := gtypeKit.NewBool()
+		flag := atomicKit.NewBool(false)
 		id := idKit.NewULID()
 
 		/* pubSub使用方法1 */
@@ -151,7 +148,7 @@ func TestClient_Publish1(t *testing.T) {
 					"payLoad": msg.Payload, // 过期的键（key）
 				}).Info("Receive a message.")
 				if msg.Payload == id {
-					flag.Cas(false, true)
+					flag.CompareAndSwap(false, true)
 				}
 			}
 		}()
@@ -164,7 +161,7 @@ func TestClient_Publish1(t *testing.T) {
 		}()
 
 		time.Sleep(time.Second * 5)
-		if !flag.Val() {
+		if !flag.Load() {
 			panic("value of param flag is [false]")
 		}
 	}

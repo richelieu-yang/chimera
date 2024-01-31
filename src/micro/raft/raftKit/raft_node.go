@@ -2,16 +2,16 @@ package raftKit
 
 import (
 	"fmt"
-	"github.com/gogf/gf/v2/container/gtype"
 	"github.com/hashicorp/go-hclog"
 	"github.com/hashicorp/raft"
 	raftboltdb "github.com/hashicorp/raft-boltdb"
-	"github.com/richelieu-yang/chimera/v2/src/atomic/gtypeKit"
+	"github.com/richelieu-yang/chimera/v2/src/atomic/atomicKit"
 	"github.com/richelieu-yang/chimera/v2/src/core/errorKit"
 	"github.com/richelieu-yang/chimera/v2/src/core/interfaceKit"
 	"github.com/richelieu-yang/chimera/v2/src/file/fileKit"
 	"github.com/richelieu-yang/chimera/v2/src/micro/raft/raftLogKit"
 	"github.com/richelieu-yang/chimera/v2/src/validateKit"
+	"go.uber.org/atomic"
 	"net"
 	"os"
 	"path/filepath"
@@ -26,7 +26,7 @@ type (
 		FSM       raft.FSM
 		logger    hclog.Logger
 
-		leaderFlag *gtype.Bool
+		leaderFlag *atomic.Bool
 	}
 )
 
@@ -136,7 +136,7 @@ func NewRaftNodeAndBootstrapCluster(addr string, nodeAddrs []string, dir string,
 		localAddr:  raft.ServerAddress(addr),
 		FSM:        fsm,
 		logger:     logger,
-		leaderFlag: gtypeKit.NewBool(false),
+		leaderFlag: atomicKit.NewBool(false),
 	}
 	// 监听leader变化（使用此方法无法保证强一致性读，仅做leader变化过程观察）
 	go func() {
@@ -147,7 +147,7 @@ func NewRaftNodeAndBootstrapCluster(addr string, nodeAddrs []string, dir string,
 			} else {
 				logger.Warn(fmt.Sprintf("### Node(%s) loses leader and current leader is [%s].", node.localAddr, currentLeader))
 			}
-			node.leaderFlag.Set(leaderFlag)
+			node.leaderFlag.Store(leaderFlag)
 		}
 	}()
 
@@ -179,5 +179,5 @@ func (node *RaftNode) IsLeader() bool {
 	监听leader变化（使用此方法无法保证强一致性读，仅做leader变化过程观察）
 */
 func (node *RaftNode) IsLeader1() bool {
-	return node.leaderFlag.Val()
+	return node.leaderFlag.Load()
 }
