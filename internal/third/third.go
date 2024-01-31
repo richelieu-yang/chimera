@@ -1,6 +1,8 @@
 package third
 
 import (
+	"go.opentelemetry.io/otel/exporters/otlp/otlptrace"
+	"go.opentelemetry.io/otel/exporters/otlp/otlptrace/otlptracehttp"
 	"golang.org/x/arch/x86/x86asm"
 	"golang.org/x/crypto/cast5"
 	"golang.org/x/exp/slog"
@@ -33,5 +35,9 @@ func init() {
 		var _ proxy.Dialer
 		var _ *currency.Amount
 		var _ *rate.Limit
+
+		/* otel */
+		var _ = otlptracehttp.NewClient
+		var _ = otlptrace.Version()
 	}
 }
