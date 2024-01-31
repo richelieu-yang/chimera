@@ -1,4 +1,4 @@
-package atomicKit
+package gtypeKit
 
 import (
 	"fmt"

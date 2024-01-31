@@ -6,7 +6,7 @@ import (
 	"github.com/hashicorp/go-hclog"
 	"github.com/hashicorp/raft"
 	raftboltdb "github.com/hashicorp/raft-boltdb"
-	"github.com/richelieu-yang/chimera/v2/src/atomic/atomicKit"
+	"github.com/richelieu-yang/chimera/v2/src/atomic/gtypeKit"
 	"github.com/richelieu-yang/chimera/v2/src/core/errorKit"
 	"github.com/richelieu-yang/chimera/v2/src/core/interfaceKit"
 	"github.com/richelieu-yang/chimera/v2/src/file/fileKit"
@@ -136,7 +136,7 @@ func NewRaftNodeAndBootstrapCluster(addr string, nodeAddrs []string, dir string,
 		localAddr:  raft.ServerAddress(addr),
 		FSM:        fsm,
 		logger:     logger,
-		leaderFlag: atomicKit.NewBool(false),
+		leaderFlag: gtypeKit.NewBool(false),
 	}
 	// 监听leader变化（使用此方法无法保证强一致性读，仅做leader变化过程观察）
 	go func() {

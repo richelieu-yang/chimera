@@ -1,4 +1,4 @@
-package atomicKit
+package gtypeKit
 
 import "github.com/gogf/gf/v2/container/gtype"
 

@@ -2,7 +2,7 @@ package redisKit
 
 import (
 	"context"
-	"github.com/richelieu-yang/chimera/v2/src/atomic/atomicKit"
+	"github.com/richelieu-yang/chimera/v2/src/atomic/gtypeKit"
 	"testing"
 )
 
@@ -120,7 +120,7 @@ func TestClient_Publish1(t *testing.T) {
 	client = client
 
 	{
-		flag := atomicKit.NewBool()
+		flag := gtypeKit.NewBool()
 		id := idKit.NewULID()
 
 		/* pubSub使用方法1 */
