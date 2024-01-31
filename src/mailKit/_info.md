@@ -8,3 +8,8 @@ Go 每日一库之 email
 jordan-wright/email:
     https://github.com/jordan-wright/email
 
+## gopkg.in/gomail.v2
+- [github](https://github.com/go-gomail/gomail)
+- [go-gin-api mail](https://www.yuque.com/xinliangnote/go-gin-api/rwim2a)
+
+
