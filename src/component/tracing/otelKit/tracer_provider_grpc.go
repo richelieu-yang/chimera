@@ -7,9 +7,11 @@ import (
 	"go.opentelemetry.io/otel/sdk/trace"
 )
 
-// NewGrpcTracerProvider 使用otlptracegrpc.
+// NewGrpcTracerProvider
 /*
-PS: 此方法第二个返回值为nil的情况下，建议立即调用 otel.SetTracerProvider.
+PS:
+(1) 使用 otlptracegrpc;
+(2) 此方法第二个返回值为nil的情况下，建议立即调用 otel.SetTracerProvider.
 
 @param endpoint 	可以为""，将采用默认值: "localhost:4317"
 @param serviceName 	服务名
