@@ -19,46 +19,47 @@ func TestNewJaegerTracerProvider(t *testing.T) {
 	}
 	otel.SetTracerProvider(tp)
 
-	a := func(ctx context.Context, wg *sync.WaitGroup) {
+	funA := func(ctx context.Context, wg *sync.WaitGroup) {
 		defer wg.Done()
 
-		time.Sleep(time.Second)
-
-		tracer := otel.Tracer("my-tracer")
-		_, span := tracer.Start(ctx, "a")
-		defer span.End()
-
-		span.SetAttributes(attribute.KeyValue{
-			Key:   "a",
-			Value: attribute.StringValue("a"),
-		})
-
 		time.Sleep(time.Second * 2)
-	}
-	b := func(ctx context.Context) {
+
 		tracer := otel.Tracer("my-tracer")
-		_, span := tracer.Start(ctx, "b")
+		_, span := tracer.Start(ctx, "funA")
 		defer span.End()
 
 		span.SetAttributes(attribute.KeyValue{
-			Key:   "b",
-			Value: attribute.StringValue("b"),
+			Key:   "funA",
+			Value: attribute.StringValue("funA"),
 		})
 
-		time.Sleep(time.Second * 3)
+		time.Sleep(time.Second)
 	}
+	funB := func(ctx context.Context) {
+		tracer := otel.Tracer("my-tracer")
+		_, span := tracer.Start(ctx, "funB")
+		defer span.End()
+
+		span.SetAttributes(attribute.KeyValue{
+			Key:   "funB",
+			Value: attribute.StringValue("funB"),
+		})
+
+		time.Sleep(time.Second)
+	}
+
 	engine := gin.Default()
 	engine.Any("/test", func(ctx *gin.Context) {
-		tracer := otel.Tracer("my-tracer")
-		spanCtx, span := tracer.Start(ctx, "spanName")
+		tracer := otel.Tracer("TRACER-NAME")
+		spanCtx, span := tracer.Start(ctx, "SPAN_NAME")
 		defer span.End()
 
 		wg := new(sync.WaitGroup)
 		wg.Add(1)
-		go a(spanCtx, wg)
-		b(spanCtx)
-
+		go funA(spanCtx, wg)
+		funB(spanCtx)
 		wg.Wait()
+
 		ctx.String(http.StatusOK, "hello")
 	})
 	if err := engine.Run(":80"); err != nil {
