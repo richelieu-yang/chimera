@@ -13,7 +13,9 @@ import (
 )
 
 func TestNewHttpTracerProvider(t *testing.T) {
-	tp, err := NewHttpTracerProvider("localhost:4318", "SERVICE", "ENVIRONMENT", 666)
+	tp, err := NewHttpTracerProvider("localhost:4318", "SERVICE_NAME", map[string]string{
+		"hello": "world",
+	})
 	if err != nil {
 		panic(err)
 	}

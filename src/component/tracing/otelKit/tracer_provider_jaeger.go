@@ -8,7 +8,7 @@ import (
 	semconv "go.opentelemetry.io/otel/semconv/v1.17.0"
 )
 
-// NewJaegerTracerProvider
+// NewJaegerTracerProvider Deprecated: Use NewHttpTracerProvider instead.
 /*
 PS:
 (1) agent		默认端口: 6831
