@@ -1,28 +1,20 @@
 package otelKit
 
 import (
+	"context"
 	"go.opentelemetry.io/otel/attribute"
-	"go.opentelemetry.io/otel/exporters/jaeger"
+	"go.opentelemetry.io/otel/exporters/otlp/otlptrace/otlptracehttp"
 	"go.opentelemetry.io/otel/sdk/resource"
 	"go.opentelemetry.io/otel/sdk/trace"
 	semconv "go.opentelemetry.io/otel/semconv/v1.17.0"
 )
 
-// NewJaegerTracerProvider
+// NewHttpTracerProvider 通过otlptracehttp
 /*
-PS:
-(1) agent		默认端口: 6831
-(2) collector	默认端口: 14268
-(3) 创建 TracerProvider 成功的情况下（即第2个返回值为nil），建议调用 otel.SetTracerProvider().
-
-@param url 连接的jaeger服务（agent || collector） e.g."http://localhost:14268/api/traces"
+@param endpoint e.g."localhost:4318"
 */
-func NewJaegerTracerProvider(url, serviceName, environment string, id int64) (*trace.TracerProvider, error) {
-	/*
-		创建jaeger provider.
-		PS: 可以直接连collector，也可以连agent
-	*/
-	exporter, err := jaeger.New(jaeger.WithCollectorEndpoint(jaeger.WithEndpoint(url)))
+func NewHttpTracerProvider(endpoint, serviceName, environment string, id int64) (*trace.TracerProvider, error) {
+	exporter, err := otlptracehttp.New(context.TODO(), otlptracehttp.WithEndpoint(endpoint), otlptracehttp.WithInsecure())
 	if err != nil {
 		return nil, err
 	}
@@ -40,3 +32,7 @@ func NewJaegerTracerProvider(url, serviceName, environment string, id int64) (*t
 	)
 	return tp, nil
 }
+
+//func a(Attributes) {
+//
+//}
