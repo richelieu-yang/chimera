@@ -9,56 +9,56 @@ package sliceKit
 
 import (
 	"github.com/duke-git/lancet/v2/algorithm"
-	"github.com/duke-git/lancet/v2/lancetconstraints"
+	"github.com/duke-git/lancet/v2/constraints"
 )
 
-// BubbleSort 冒泡排序，参数comparator需要实现包lancetconstraints.Comparator。
-func BubbleSort[T any](slice []T, comparator lancetconstraints.Comparator) {
+// BubbleSort 冒泡排序，参数comparator需要实现包constraints.Comparator。
+func BubbleSort[T any](slice []T, comparator constraints.Comparator) {
 	algorithm.BubbleSort(slice, comparator)
 }
 
-// InsertionSort 插入排序，参数comparator需要实现包lancetconstraints.Comparator。
-func InsertionSort[T any](slice []T, comparator lancetconstraints.Comparator) {
+// InsertionSort 插入排序，参数comparator需要实现包constraints.Comparator。
+func InsertionSort[T any](slice []T, comparator constraints.Comparator) {
 	algorithm.InsertionSort(slice, comparator)
 }
 
-// SelectionSort 选择排序，参数comparator需要实现包lancetconstraints.Comparator。
-func SelectionSort[T any](slice []T, comparator lancetconstraints.Comparator) {
+// SelectionSort 选择排序，参数comparator需要实现包constraints.Comparator。
+func SelectionSort[T any](slice []T, comparator constraints.Comparator) {
 	algorithm.SelectionSort(slice, comparator)
 }
 
-// ShellSort 希尔排序，参数comparator需要实现包lancetconstraints.Comparator。
-func ShellSort[T any](slice []T, comparator lancetconstraints.Comparator) {
+// ShellSort 希尔排序，参数comparator需要实现包constraints.Comparator。
+func ShellSort[T any](slice []T, comparator constraints.Comparator) {
 	algorithm.ShellSort(slice, comparator)
 }
 
-// QuickSort 快速排序，参数comparator需要实现包lancetconstraints.Comparator。
-func QuickSort[T any](slice []T, comparator lancetconstraints.Comparator) {
+// QuickSort 快速排序，参数comparator需要实现包constraints.Comparator。
+func QuickSort[T any](slice []T, comparator constraints.Comparator) {
 	algorithm.QuickSort(slice, comparator)
 }
 
-// HeapSort 堆排序，参数comparator需要实现包lancetconstraints.Comparator。
-func HeapSort[T any](slice []T, comparator lancetconstraints.Comparator) {
+// HeapSort 堆排序，参数comparator需要实现包constraints.Comparator。
+func HeapSort[T any](slice []T, comparator constraints.Comparator) {
 	algorithm.HeapSort(slice, comparator)
 }
 
-// MergeSort 归并排序，参数comparator需要实现包lancetconstraints.Comparator。
-func MergeSort[T any](slice []T, comparator lancetconstraints.Comparator) {
+// MergeSort 归并排序，参数comparator需要实现包constraints.Comparator。
+func MergeSort[T any](slice []T, comparator constraints.Comparator) {
 	algorithm.MergeSort(slice, comparator)
 }
 
-// CountSort 计数排序，参数comparator需要实现包lancetconstraints.Comparator。
-func CountSort[T any](slice []T, comparator lancetconstraints.Comparator) []T {
+// CountSort 计数排序，参数comparator需要实现包constraints.Comparator。
+func CountSort[T any](slice []T, comparator constraints.Comparator) []T {
 	return algorithm.CountSort(slice, comparator)
 }
 
-// BinarySearch （二分法）二分递归查找，返回元素索引，未找到元素返回-1，参数comparator需要实现包lancetconstraints.Comparator。
-func BinarySearch[T any](sortedSlice []T, target T, lowIndex, highIndex int, comparator lancetconstraints.Comparator) int {
+// BinarySearch （二分法）二分递归查找，返回元素索引，未找到元素返回-1，参数comparator需要实现包constraints.Comparator。
+func BinarySearch[T any](sortedSlice []T, target T, lowIndex, highIndex int, comparator constraints.Comparator) int {
 	return algorithm.BinarySearch(sortedSlice, target, lowIndex, highIndex, comparator)
 }
 
-// BinaryIterativeSearch 二分迭代查找，返回元素索引，未找到元素返回-1，参数comparator需要实现包lancetconstraints.Comparator。
-func BinaryIterativeSearch[T any](sortedSlice []T, target T, lowIndex, highIndex int, comparator lancetconstraints.Comparator) int {
+// BinaryIterativeSearch 二分迭代查找，返回元素索引，未找到元素返回-1，参数comparator需要实现包constraints.Comparator。
+func BinaryIterativeSearch[T any](sortedSlice []T, target T, lowIndex, highIndex int, comparator constraints.Comparator) int {
 	return algorithm.BinaryIterativeSearch(sortedSlice, target, lowIndex, highIndex, comparator)
 }
 
