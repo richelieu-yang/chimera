@@ -13,7 +13,7 @@ require (
 	github.com/dablelv/cyan v0.0.54
 	github.com/davidbyttow/govips/v2 v2.13.0
 	github.com/deckarep/golang-set/v2 v2.6.0
-	github.com/duke-git/lancet/v2 v2.2.8
+	github.com/duke-git/lancet/v2 v2.2.9
 	github.com/emersion/go-imap v1.2.1
 	github.com/emersion/go-imap-id v0.0.0-20190926060100-f94a56b9ecde
 	github.com/emersion/go-message v0.18.0
@@ -89,7 +89,6 @@ require (
 	github.com/zeromicro/zero-contrib/logx/logrusx v0.0.0-20231030135404-af9ae855016f
 	go.etcd.io/etcd/client/v3 v3.5.12
 	go.opentelemetry.io/otel v1.22.0
-	go.opentelemetry.io/otel/exporters/jaeger v1.17.0
 	go.opentelemetry.io/otel/exporters/otlp/otlptrace v1.22.0
 	go.opentelemetry.io/otel/exporters/otlp/otlptrace/otlptracegrpc v1.22.0
 	go.opentelemetry.io/otel/exporters/otlp/otlptrace/otlptracehttp v1.22.0
