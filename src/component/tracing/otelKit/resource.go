@@ -6,8 +6,8 @@ import (
 	semconv "go.opentelemetry.io/otel/semconv/v1.22.0"
 )
 
-// NewResourceWithAttributes Record information about this application in a Resource.
-func NewResourceWithAttributes(serviceName string, attributeMap map[string]string) *resource.Resource {
+// newResourceWithAttributes Record information about this application in a Resource.
+func newResourceWithAttributes(serviceName string, attributeMap map[string]string) *resource.Resource {
 	var attrs = []attribute.KeyValue{
 		semconv.ServiceNameKey.String(serviceName),
 	}

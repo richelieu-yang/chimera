@@ -30,7 +30,7 @@ func NewHttpTracerProvider(endpoint, serviceName string, attributeMap map[string
 		return nil, err
 	}
 
-	res := NewResourceWithAttributes(serviceName, attributeMap)
+	res := newResourceWithAttributes(serviceName, attributeMap)
 
 	tp := trace.NewTracerProvider(
 		// Always be sure to batch in production.
