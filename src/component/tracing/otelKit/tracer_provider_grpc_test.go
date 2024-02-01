@@ -12,10 +12,10 @@ import (
 	"time"
 )
 
-func TestNewHttpTracerProvider(t *testing.T) {
-	tp, err := NewHttpTracerProvider("", "SERVICE_NAME_HTTP", nil) /*map[string]string{
+func TestNewGrpcTracerProvider(t *testing.T) {
+	tp, err := NewGrpcTracerProvider("", "SERVICE_NAME_GRPC", map[string]string{
 		"hello": "world",
-	}*/
+	})
 	if err != nil {
 		panic(err)
 	}
