@@ -25,11 +25,11 @@ func BindHandlersToRoute(group IGroup, route string, methods []string, handlers 
 	}
 
 	if len(methods) == 0 {
-		// (1) Any
+		// (1) any method
 		group.Any(route, handlers...)
 		return
 	}
-	// (2) 指定类型的methods
+	// (2) 特定 methods
 	for _, method := range methods {
 		group.Handle(method, route, handlers...)
 	}
