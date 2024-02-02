@@ -71,11 +71,7 @@ func (p *SseProcessor) newChannel(w http.ResponseWriter, r *http.Request, closeC
 		return nil, err
 	}
 
-	ip, err := httpKit.GetClientIP(r)
-	if err != nil {
-		ip = err.Error()
-	}
-
+	ip := httpKit.GetClientIP(r)
 	channel := &SseChannel{
 		BaseChannel: pushKit.BaseChannel{
 			RWMutex:      mutexKit.RWMutex{},

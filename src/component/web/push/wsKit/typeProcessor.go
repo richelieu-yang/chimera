@@ -116,11 +116,7 @@ func (p *WsProcessor) newChannel(r *http.Request, conn *websocket.Conn, closeCh 
 		return nil, err
 	}
 
-	ip, err := httpKit.GetClientIP(r)
-	if err != nil {
-		ip = err.Error()
-	}
-
+	ip := httpKit.GetClientIP(r)
 	channel := &WsChannel{
 		BaseChannel: pushKit.BaseChannel{
 			RWMutex:      mutexKit.RWMutex{},
