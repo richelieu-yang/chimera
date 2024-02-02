@@ -6,6 +6,7 @@ import (
 	"github.com/sirupsen/logrus"
 	"go.opentelemetry.io/otel"
 	"go.opentelemetry.io/otel/attribute"
+	"go.opentelemetry.io/otel/exporters/otlp/otlptrace/otlptracehttp"
 	"net/http"
 	"sync"
 	"testing"
@@ -13,9 +14,9 @@ import (
 )
 
 func TestNewHttpTracerProvider(t *testing.T) {
-	tp, err := NewHttpTracerProvider("", "SERVICE_NAME_HTTP", nil) /*map[string]string{
+	tp, err := NewHttpTracerProvider("", "SERVICE_NAME_HTTP", map[string]string{
 		"hello": "world",
-	}*/
+	}, otlptracehttp.WithInsecure())
 	if err != nil {
 		panic(err)
 	}

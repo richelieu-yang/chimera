@@ -17,10 +17,12 @@ PS:
 @param serviceName 	服务名
 @param attributeMap	可以为nil
 @param opts 		额外配置（不要涉及 otlptracehttp.WithEndpoint，因为在此处配了也没用）
+@param opts 		(1) 额外配置（不要涉及 otlptracegrpc.WithEndpoint，因为在此处配了也没用）
+					(2) otlptracegrpc.WithInsecure(): 	(a) 配置的话，将使用非安全协议（http...）;
+														(b) 不配置的话，将使用安全协议（https...）.
+					(3) 一般情况下，传个 otlptracegrpc.WithInsecure() 就足够了.
 */
 func NewHttpTracerProvider(endpoint, serviceName string, attributeMap map[string]string, opts ...otlptracehttp.Option) (*trace.TracerProvider, error) {
-	// 默认: 使用非安全协议（http）
-	opts = append([]otlptracehttp.Option{otlptracehttp.WithInsecure()}, opts...)
 	// 放在最后面（优先级最高）
 	if strKit.IsNotEmpty(endpoint) {
 		opts = append(opts, otlptracehttp.WithEndpoint(endpoint))

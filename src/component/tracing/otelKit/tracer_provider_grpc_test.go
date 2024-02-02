@@ -6,6 +6,7 @@ import (
 	"github.com/sirupsen/logrus"
 	"go.opentelemetry.io/otel"
 	"go.opentelemetry.io/otel/attribute"
+	"go.opentelemetry.io/otel/exporters/otlp/otlptrace/otlptracegrpc"
 	"net/http"
 	"sync"
 	"testing"
@@ -15,7 +16,7 @@ import (
 func TestNewGrpcTracerProvider(t *testing.T) {
 	tp, err := NewGrpcTracerProvider("", "SERVICE_NAME_GRPC", map[string]string{
 		"hello": "world",
-	})
+	}, otlptracegrpc.WithInsecure())
 	if err != nil {
 		panic(err)
 	}
