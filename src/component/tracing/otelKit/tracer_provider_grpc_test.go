@@ -77,7 +77,7 @@ func TestNewGrpcTracerProvider(t *testing.T) {
 
 		ctx.String(http.StatusOK, "hello")
 	})
-	if err := engine.Run(":80"); err != nil {
+	if err := engine.Run(":8888"); err != nil {
 		logrus.Fatal(engine)
 	}
 }

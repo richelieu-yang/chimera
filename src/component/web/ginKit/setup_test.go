@@ -45,8 +45,9 @@ func TestMustSetUp(t *testing.T) {
 		//	}
 		//})
 
-		BindHandlersToRoute(engine, "/*path", []string{http.MethodGet, http.MethodPost}, func(ctx *gin.Context) {
-			if err := proxyKit.Proxy(ctx.Writer, ctx.Request, "127.0.0.1:8888", proxyKit.WithPolyfillHeaders(true)); err != nil {
+		BindHandlersToRoute(engine, "/test/*path", []string{http.MethodGet, http.MethodPost}, func(ctx *gin.Context) {
+			path := ctx.Param("path")
+			if err := proxyKit.ProxyWithGin(ctx, "127.0.0.1:8888", proxyKit.WithReqUrlPath(&path)); err != nil {
 				ctx.String(500, err.Error())
 				return
 			}
