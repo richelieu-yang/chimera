@@ -1,7 +1,7 @@
 package otelKit
 
 const (
-	TraceIdKey = "trace-id"
+	KeyTraceId = "trace-id"
 
-	SpanIdKey = "span-id"
+	KeySpanId = "span-id"
 )
