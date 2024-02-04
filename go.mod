@@ -35,7 +35,7 @@ require (
 	github.com/goccy/go-json v0.10.2
 	github.com/gogf/gf/v2 v2.6.2
 	github.com/golang-jwt/jwt/v5 v5.2.0
-	github.com/golang-module/carbon/v2 v2.3.7
+	github.com/golang-module/carbon/v2 v2.3.8
 	github.com/google/go-cmp v0.6.0
 	github.com/google/uuid v1.6.0
 	github.com/google/wire v0.5.0
@@ -85,7 +85,7 @@ require (
 	github.com/tidwall/gjson v1.17.0
 	github.com/unidoc/unioffice v1.29.1
 	github.com/xuri/excelize/v2 v2.8.0
-	github.com/zeromicro/go-zero v1.6.1
+	github.com/zeromicro/go-zero v1.6.2
 	github.com/zeromicro/zero-contrib/logx/logrusx v0.0.0-20231030135404-af9ae855016f
 	go.etcd.io/etcd/client/v3 v3.5.12
 	go.opentelemetry.io/otel v1.22.0
@@ -201,21 +201,21 @@ require (
 	github.com/mattn/go-colorable v0.1.13 // indirect
 	github.com/mattn/go-isatty v0.0.20 // indirect
 	github.com/mattn/go-runewidth v0.0.15 // indirect
-	github.com/matttproud/golang_protobuf_extensions v1.0.4 // indirect
+	github.com/matttproud/golang_protobuf_extensions/v2 v2.0.0 // indirect
 	github.com/modern-go/concurrent v0.0.0-20180306012644-bacd9c7ef1dd // indirect
 	github.com/mohae/deepcopy v0.0.0-20170929034955-c48cc78d4826 // indirect
 	github.com/mtibben/percent v0.2.1 // indirect
 	github.com/natefinch/lumberjack v2.0.0+incompatible // indirect
 	github.com/onsi/ginkgo/v2 v2.13.2 // indirect
-	github.com/pelletier/go-toml/v2 v2.1.0 // indirect
+	github.com/pelletier/go-toml/v2 v2.1.1 // indirect
 	github.com/pierrec/lz4 v2.0.5+incompatible // indirect
 	github.com/pkg/errors v0.9.1 // indirect
 	github.com/pmezard/go-difflib v1.0.1-0.20181226105442-5d4384ee4fb2 // indirect
 	github.com/power-devops/perfstat v0.0.0-20221212215047-62379fc7944b // indirect
-	github.com/prometheus/client_golang v1.17.0 // indirect
-	github.com/prometheus/client_model v0.4.1-0.20230718164431-9a2bf3000d16 // indirect
-	github.com/prometheus/common v0.44.0 // indirect
-	github.com/prometheus/procfs v0.11.1 // indirect
+	github.com/prometheus/client_golang v1.18.0 // indirect
+	github.com/prometheus/client_model v0.5.0 // indirect
+	github.com/prometheus/common v0.45.0 // indirect
+	github.com/prometheus/procfs v0.12.0 // indirect
 	github.com/quic-go/qpack v0.4.0 // indirect
 	github.com/quic-go/qtls-go1-20 v0.4.1 // indirect
 	github.com/quic-go/quic-go v0.40.1 // indirect
