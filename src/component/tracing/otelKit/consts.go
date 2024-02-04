@@ -1,7 +1,9 @@
 package otelKit
 
 const (
-	KeyTraceId = "trace-id"
+	// HeaderBaggage 跨服务相关的请求头
+	HeaderBaggage = "Baggage"
 
-	KeySpanId = "span-id"
+	KeyTraceId = "trace-id"
+	KeySpanId  = "span-id"
 )

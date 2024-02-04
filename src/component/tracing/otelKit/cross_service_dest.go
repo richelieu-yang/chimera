@@ -2,7 +2,6 @@ package otelKit
 
 import (
 	"context"
-	"github.com/richelieu-yang/chimera/v2/src/component/web/httpKit"
 	"github.com/richelieu-yang/chimera/v2/src/core/errorKit"
 	"go.opentelemetry.io/otel"
 	"go.opentelemetry.io/otel/baggage"
@@ -12,7 +11,6 @@ import (
 )
 
 func GetRemoteSpanCtx(r *http.Request) (remoteSpanCtx context.Context, err error) {
-	httpKit.GetHeader()
 
 	defer func() {
 		if err != nil {
@@ -25,11 +23,11 @@ func GetRemoteSpanCtx(r *http.Request) (remoteSpanCtx context.Context, err error
 	propagatorCtx := otel.GetTextMapPropagator().Extract(r.Context(), propagation.HeaderCarrier(r.Header))
 
 	b := baggage.FromContext(propagatorCtx)
-	traceId, err := trace.TraceIDFromHex(b.Member("trace-id").Value())
+	traceId, err := trace.TraceIDFromHex(b.Member(KeyTraceId).Value())
 	if err != nil {
 		return
 	}
-	spanId, err := trace.SpanIDFromHex(b.Member("span-id").Value())
+	spanId, err := trace.SpanIDFromHex(b.Member(KeySpanId).Value())
 	if err != nil {
 		return
 	}

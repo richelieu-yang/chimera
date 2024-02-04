@@ -11,11 +11,11 @@ import (
 
 // InjectBaggage 使用 baggage 写入 trace id 和 span id
 func InjectBaggage(spanCtx context.Context, span trace.Span, r *http.Request) error {
-	traceMember, err := baggage.NewMember("trace-id", span.SpanContext().TraceID().String())
+	traceMember, err := baggage.NewMember(KeyTraceId, span.SpanContext().TraceID().String())
 	if err != nil {
 		return err
 	}
-	spanMember, err := baggage.NewMember("span-id", span.SpanContext().SpanID().String())
+	spanMember, err := baggage.NewMember(KeySpanId, span.SpanContext().SpanID().String())
 	if err != nil {
 		return err
 	}
