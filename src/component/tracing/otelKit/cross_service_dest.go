@@ -2,7 +2,9 @@ package otelKit
 
 import (
 	"context"
+	"github.com/richelieu-yang/chimera/v2/src/component/web/httpKit"
 	"github.com/richelieu-yang/chimera/v2/src/core/errorKit"
+	"github.com/richelieu-yang/chimera/v2/src/core/strKit"
 	"go.opentelemetry.io/otel"
 	"go.opentelemetry.io/otel/baggage"
 	"go.opentelemetry.io/otel/propagation"
@@ -11,6 +13,12 @@ import (
 )
 
 func GetRemoteSpanCtx(r *http.Request) (remoteSpanCtx context.Context, err error) {
+	baggageStr := httpKit.GetHeader(r.Header, HeaderBaggage)
+	if strKit.IsEmpty(baggageStr) {
+		// 非链路追踪请求
+		err = NotOtelRequestError
+		return
+	}
 
 	defer func() {
 		if err != nil {
