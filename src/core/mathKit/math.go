@@ -48,9 +48,6 @@ var (
 	RadianToAngle func(radian float64) float64 = mathutil.RadianToAngle
 
 	// Sin 正弦函数（计算弧度的正弦值）.
-	/*
-	   Deprecated: 有bug（传参precision无效），不建议使用.
-	*/
 	Sin func(radian float64, precision ...int) float64 = mathutil.Sin
 
 	// Cos 余弦函数（计算弧度的余弦值）.
