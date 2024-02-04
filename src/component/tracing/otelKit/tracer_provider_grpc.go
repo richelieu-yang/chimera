@@ -19,7 +19,7 @@ PS:
 @param opts 		(1) 额外配置（不要涉及 otlptracegrpc.WithEndpoint，因为在此处配了也没用）
 					(2) otlptracegrpc.WithInsecure(): 	(a) 配置的话，将使用非安全协议（http...）;
 														(b) 不配置的话，将使用安全协议（https...）.
-					(3) 一般情况下，传个 otlptracegrpc.WithInsecure() 就足够了.
+					(3) 一般情况下，建议使用: otlptracegrpc.WithInsecure(), otlptracegrpc.WithDialOption(grpc.WithBlock())
 */
 func NewGrpcTracerProvider(endpoint, serviceName string, attributeMap map[string]string, opts ...otlptracegrpc.Option) (*trace.TracerProvider, error) {
 	// 放在最后面（优先级最高）
