@@ -66,7 +66,7 @@ func SetHeaderIfMissingIgnoreCase(header http.Header, key, value string) {
 /*
 PS:
 (1) 不存在与 key 对应值的话，将返回 "";
-(2) 存在多个值的话（[]string），返回第一个值.
+(2) 存在多个值的话（[]string && len > 1），返回第一个值.
 */
 func GetHeader(header http.Header, key string) string {
 	return header.Get(key)

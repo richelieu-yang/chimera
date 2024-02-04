@@ -2,6 +2,8 @@ package otelKit
 
 import (
 	"context"
+	"github.com/richelieu-yang/chimera/v2/src/component/web/httpKit"
+	"github.com/richelieu-yang/chimera/v2/src/core/errorKit"
 	"go.opentelemetry.io/otel"
 	"go.opentelemetry.io/otel/baggage"
 	"go.opentelemetry.io/otel/propagation"
@@ -10,6 +12,14 @@ import (
 )
 
 func GetRemoteSpanCtx(r *http.Request) (remoteSpanCtx context.Context, err error) {
+	httpKit.GetHeader()
+
+	defer func() {
+		if err != nil {
+			err = errorKit.Wrap(err, "Fail to get remote span context")
+		}
+	}()
+
 	//var propagator = propagation.TextMapPropagator(propagation.Baggage{})
 	//propagatorCtx := propagator.Extract(r.Context(), propagation.HeaderCarrier(r.Header))
 	propagatorCtx := otel.GetTextMapPropagator().Extract(r.Context(), propagation.HeaderCarrier(r.Header))
