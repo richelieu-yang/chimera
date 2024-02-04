@@ -17,7 +17,7 @@ go get github.com/richelieu42/chimera
 - jsonKit
 - 业务自己的 config 包
 
-## TODOS
+## 参考
 (1) duke-git/lancet
     官方API说明
         https://www.golancet.cn/api/overview.html
@@ -30,3 +30,8 @@ go get github.com/richelieu42/chimera
 (3) GoFramev2
     https://goframe.org/pages/viewpage.action?pageId=1114859
     github(10.4k): https://github.com/gogf/gf
+
+### TODOs
+https://github.com/duke-git/lancet/issues/166
+
+
