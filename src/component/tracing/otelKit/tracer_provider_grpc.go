@@ -32,13 +32,17 @@ func NewGrpcTracerProvider(endpoint, serviceName string, attributeMap map[string
 		return nil, err
 	}
 
-	res := newResourceWithAttributes(serviceName, attributeMap)
+	res, err := newDetailedResource(serviceName, attributeMap)
+	if err != nil {
+		return nil, err
+	}
 
 	tp := trace.NewTracerProvider(
 		// Always be sure to batch in production.
 		trace.WithBatcher(exporter),
 		// Record information about this application in a Resource.
 		trace.WithResource(res),
+		trace.WithSampler(trace.AlwaysSample()),
 	)
 	return tp, nil
 }
