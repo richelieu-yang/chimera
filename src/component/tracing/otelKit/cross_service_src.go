@@ -2,6 +2,7 @@ package otelKit
 
 import (
 	"context"
+	"github.com/richelieu-yang/chimera/v2/src/core/errorKit"
 	"go.opentelemetry.io/otel"
 	"go.opentelemetry.io/otel/baggage"
 	"go.opentelemetry.io/otel/propagation"
@@ -10,23 +11,32 @@ import (
 )
 
 // InjectBaggage 使用 baggage 写入 trace id 和 span id
-func InjectBaggage(spanCtx context.Context, span trace.Span, r *http.Request) error {
+/*
+适用场景: 跨服务 + 发送端
+*/
+func InjectBaggage(r *http.Request, spanCtx context.Context, span trace.Span) (err error) {
+	defer func() {
+		if err != nil {
+			err = errorKit.Wrap(err, "Fail to inject baggage")
+		}
+	}()
+
 	traceMember, err := baggage.NewMember(KeyTraceId, span.SpanContext().TraceID().String())
 	if err != nil {
-		return err
+		return
 	}
 	spanMember, err := baggage.NewMember(KeySpanId, span.SpanContext().SpanID().String())
 	if err != nil {
-		return err
+		return
 	}
 	b, err := baggage.New(traceMember, spanMember)
 	if err != nil {
-		return err
+		return
 	}
 	baggageCtx := baggage.ContextWithBaggage(spanCtx, b)
 
 	//propagation.Baggage{}.Inject(baggageCtx, propagation.HeaderCarrier(r.Header))
 	otel.GetTextMapPropagator().Inject(baggageCtx, propagation.HeaderCarrier(r.Header))
 
-	return nil
+	return
 }

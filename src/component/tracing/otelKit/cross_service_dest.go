@@ -12,6 +12,12 @@ import (
 	"net/http"
 )
 
+// GetRemoteSpanCtx
+/*
+PS:
+(1) 适用场景: 跨服务 + 接收端
+(2) 返回的error != nil的情况下，可以判断是否等于 otelKit.NotOtelRequestError.
+*/
 func GetRemoteSpanCtx(r *http.Request) (remoteSpanCtx context.Context, err error) {
 	baggageStr := httpKit.GetHeader(r.Header, HeaderBaggage)
 	if strKit.IsEmpty(baggageStr) {
