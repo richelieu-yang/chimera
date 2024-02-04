@@ -32,6 +32,7 @@ go get github.com/richelieu42/chimera
     github(10.4k): https://github.com/gogf/gf
 
 ### TODOs
-https://github.com/duke-git/lancet/issues/166
+github.com/duke-git/lancet/v2 v2.2.9 开始有问题
+    https://github.com/duke-git/lancet/issues/166
 
 
