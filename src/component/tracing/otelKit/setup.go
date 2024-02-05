@@ -1,6 +1,7 @@
 package otelKit
 
 import (
+	"github.com/richelieu-yang/chimera/v2/src/core/strKit"
 	"github.com/richelieu-yang/chimera/v2/src/log/logrusKit"
 	"github.com/sirupsen/logrus"
 	"go.opentelemetry.io/otel"
@@ -21,6 +22,10 @@ func MustSetUp(grpcEndpoint, serviceName string, attributeMap map[string]string,
 }
 
 func SetUp(grpcEndpoint, serviceName string, attributeMap map[string]string, opts ...otlptracegrpc.Option) (err error) {
+	if err = strKit.AssertNotEmpty(serviceName, "serviceName"); err != nil {
+		return
+	}
+
 	tp, err = NewGrpcTracerProvider(grpcEndpoint, serviceName, attributeMap, opts...)
 	if err != nil {
 		return
