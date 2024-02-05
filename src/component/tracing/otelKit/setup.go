@@ -6,8 +6,11 @@ import (
 	"go.opentelemetry.io/otel"
 	"go.opentelemetry.io/otel/exporters/otlp/otlptrace/otlptracegrpc"
 	"go.opentelemetry.io/otel/propagation"
+	"go.opentelemetry.io/otel/sdk/trace"
 	"time"
 )
+
+var tp *trace.TracerProvider
 
 func MustSetUp(grpcEndpoint, serviceName string, attributeMap map[string]string, opts ...otlptracegrpc.Option) {
 	err := SetUp(grpcEndpoint, serviceName, attributeMap, opts...)
@@ -17,10 +20,10 @@ func MustSetUp(grpcEndpoint, serviceName string, attributeMap map[string]string,
 	}
 }
 
-func SetUp(grpcEndpoint, serviceName string, attributeMap map[string]string, opts ...otlptracegrpc.Option) error {
-	tp, err := NewGrpcTracerProvider(grpcEndpoint, serviceName, attributeMap, opts...)
+func SetUp(grpcEndpoint, serviceName string, attributeMap map[string]string, opts ...otlptracegrpc.Option) (err error) {
+	tp, err = NewGrpcTracerProvider(grpcEndpoint, serviceName, attributeMap, opts...)
 	if err != nil {
-		return err
+		return
 	}
 
 	otel.SetTextMapPropagator(propagation.NewCompositeTextMapPropagator(propagation.TraceContext{}, propagation.Baggage{}))
@@ -29,6 +32,5 @@ func SetUp(grpcEndpoint, serviceName string, attributeMap map[string]string, opt
 	logrus.RegisterExitHandler(func() {
 		ShutdownTracerProvider(tp, time.Second*3)
 	})
-
-	return nil
+	return
 }
