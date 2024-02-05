@@ -46,6 +46,7 @@ func NewGrpcTracerProvider(endpoint, serviceName string, attributeMap map[string
 									默认情况下，每隔一段时间（默认批处理5s超时触发）发送，或者当达到最大批处理长度（默认512）时，会把要批处理的 Span 发送出去。
 		*/
 		trace.WithBatcher(exporter),
+
 		/*
 			Record information about this application in a Resource.
 
@@ -53,6 +54,7 @@ func NewGrpcTracerProvider(endpoint, serviceName string, attributeMap map[string
 									资源是一组描述 TracerProvider 的属性，例如服务名称、环境、地理位置等。这些属性可以帮助你更好地理解和过滤跟踪数据1。
 		*/
 		trace.WithResource(res),
+
 		/*
 			trace.WithSampler():	是一个配置选项，用于设置采样器的行为，采样器决定了哪些跟踪信息应该被记录和导出.
 			trace.AlwaysSample():	创建了一个采样器，它会选择所有的跟踪进行采样。
@@ -60,7 +62,7 @@ func NewGrpcTracerProvider(endpoint, serviceName string, attributeMap map[string
 									然而，在生产环境中，这可能会产生大量的数据，因此可能需要使用更复杂的采样策略。
 		*/
 		trace.WithSampler(trace.AlwaysSample()),
+		//trace.WithSampler(trace.NeverSample()),
 	)
-
 	return tp, nil
 }
