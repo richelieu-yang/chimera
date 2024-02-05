@@ -9,5 +9,8 @@
 - notes/_GolandProjects/jaeger-baggage-demo
 
 ## service name VS tracer name VS span name
+PS: tracer name可以为 "" ，此时会采用默认值 "go.opentelemetry.io/otel/sdk/tracer" （推荐将 tracer name 置为""）. 
+
+![_names.png](_names.png)  
 
 
