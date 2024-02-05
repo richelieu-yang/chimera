@@ -8,11 +8,21 @@
 - notes/_GolandProjects/jaeger-demo
 - notes/_GolandProjects/jaeger-baggage-demo
 
-## service name VS tracer name VS span name
+## !!!: service name VS tracer name VS span name
 PS: 
 - tracer name可以为 "" ，此时会采用默认值 "go.opentelemetry.io/otel/sdk/tracer"; 
 - 推荐将 tracer name 置为 "" . 
 
 ![_names.png](_names.png)  
 
+## !!!: span
+### span 的 attributes
+PS: 建议给 span 加上 attributes，这样就可以在UI页面进行搜索了（通过 Tags）.  
 
+e.g.  
+```go
+tracer := otel.Tracer("")
+spanCtx, span := tracer.Start(context.TODO(), "main", trace.WithAttributes(attribute.String("111", "111")))
+defer span.End()
+```
+![img.png](img.png)
