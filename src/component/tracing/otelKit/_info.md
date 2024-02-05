@@ -8,4 +8,6 @@
 - notes/_GolandProjects/jaeger-demo
 - notes/_GolandProjects/jaeger-baggage-demo
 
+## service name VS tracer name VS span name
+
 
