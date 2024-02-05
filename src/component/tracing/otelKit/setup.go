@@ -39,3 +39,10 @@ func SetUp(grpcEndpoint, serviceName string, attributeMap map[string]string, opt
 	})
 	return
 }
+
+func check() error {
+	if tp == nil {
+		return NotSetupError
+	}
+	return nil
+}
