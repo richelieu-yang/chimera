@@ -1,11 +1,8 @@
 package setKit
 
 import (
-	"github.com/richelieu-yang/chimera/v2/src/concurrency/mutexKit"
-)
-
-import (
 	mapset "github.com/deckarep/golang-set/v2"
+	"github.com/richelieu-yang/chimera/v2/src/concurrency/mutexKit"
 )
 
 type (
