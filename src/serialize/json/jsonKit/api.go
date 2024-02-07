@@ -1,8 +1,8 @@
 package jsonKit
 
 import (
-	"github.com/richelieu-yang/chimera/v2/src/compareKit"
-	"github.com/richelieu-yang/chimera/v2/src/consts"
+	"github.com/richelieu-yang/chimera/v3/src/compareKit"
+	"github.com/richelieu-yang/chimera/v3/src/consts"
 	"github.com/sirupsen/logrus"
 )
 

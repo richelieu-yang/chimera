@@ -2,7 +2,7 @@ package typeKit
 
 import (
 	"fmt"
-	"github.com/richelieu-yang/chimera/v2/src/core/interfaceKit"
+	"github.com/richelieu-yang/chimera/v3/src/core/interfaceKit"
 )
 
 // GetTypeString 获取对象的类型字符串.

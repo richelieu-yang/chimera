@@ -3,10 +3,10 @@ package ginKit
 import (
 	"fmt"
 	"github.com/gin-gonic/gin"
-	"github.com/richelieu-yang/chimera/v2/internal/resources"
-	"github.com/richelieu-yang/chimera/v2/src/core/pathKit"
-	"github.com/richelieu-yang/chimera/v2/src/core/strKit"
-	"github.com/richelieu-yang/chimera/v2/src/file/fileKit"
+	"github.com/richelieu-yang/chimera/v3/internal/resources"
+	"github.com/richelieu-yang/chimera/v3/src/core/pathKit"
+	"github.com/richelieu-yang/chimera/v3/src/core/strKit"
+	"github.com/richelieu-yang/chimera/v3/src/file/fileKit"
 	"net/http"
 	"sync"
 )

@@ -2,7 +2,7 @@ package sliceKit
 
 import (
 	"fmt"
-	"github.com/richelieu-yang/chimera/v2/src/core/runtimeKit"
+	"github.com/richelieu-yang/chimera/v3/src/core/runtimeKit"
 	"testing"
 )
 

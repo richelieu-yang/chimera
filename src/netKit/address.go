@@ -9,8 +9,8 @@ host in js: 	"127.0.0.1:8888"
 package netKit
 
 import (
-	"github.com/richelieu-yang/chimera/v2/src/core/errorKit"
-	"github.com/richelieu-yang/chimera/v2/src/core/strKit"
+	"github.com/richelieu-yang/chimera/v3/src/core/errorKit"
+	"github.com/richelieu-yang/chimera/v3/src/core/strKit"
 	"net"
 	"strconv"
 )

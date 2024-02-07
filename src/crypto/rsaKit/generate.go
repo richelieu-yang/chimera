@@ -5,8 +5,8 @@ import (
 	"crypto/rsa"
 	"crypto/x509"
 	"encoding/pem"
-	"github.com/richelieu-yang/chimera/v2/src/core/errorKit"
-	"github.com/richelieu-yang/chimera/v2/src/file/fileKit"
+	"github.com/richelieu-yang/chimera/v3/src/core/errorKit"
+	"github.com/richelieu-yang/chimera/v3/src/file/fileKit"
 	"os"
 )
 

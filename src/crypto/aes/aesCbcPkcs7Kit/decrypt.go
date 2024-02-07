@@ -4,9 +4,9 @@ import (
 	"crypto/aes"
 	"crypto/cipher"
 	"encoding/base64"
-	"github.com/richelieu-yang/chimera/v2/src/core/errorKit"
-	"github.com/richelieu-yang/chimera/v2/src/crypto/base64Kit"
-	"github.com/richelieu-yang/chimera/v2/src/crypto/hexKit"
+	"github.com/richelieu-yang/chimera/v3/src/core/errorKit"
+	"github.com/richelieu-yang/chimera/v3/src/crypto/base64Kit"
+	"github.com/richelieu-yang/chimera/v3/src/crypto/hexKit"
 )
 
 // Decrypt AES/CBC/PKCS7 解密.

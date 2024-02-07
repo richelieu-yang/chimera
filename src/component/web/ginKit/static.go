@@ -4,7 +4,7 @@ package ginKit
 
 import (
 	"github.com/gin-gonic/gin"
-	"github.com/richelieu-yang/chimera/v2/src/file/fileKit"
+	"github.com/richelieu-yang/chimera/v3/src/file/fileKit"
 )
 
 // LoadHTMLFiles 加载（多个）html文件

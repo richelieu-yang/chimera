@@ -3,7 +3,7 @@ package fileKit
 import (
 	"bufio"
 	"bytes"
-	"github.com/richelieu-yang/chimera/v2/src/core/strKit"
+	"github.com/richelieu-yang/chimera/v3/src/core/strKit"
 )
 
 // ReadLuaFileToString 按行读取 .lua文件 的内容.

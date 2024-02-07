@@ -2,7 +2,7 @@ package signalKit
 
 import (
 	"fmt"
-	"github.com/richelieu-yang/chimera/v2/src/processKit"
+	"github.com/richelieu-yang/chimera/v3/src/processKit"
 	"os"
 	"testing"
 )

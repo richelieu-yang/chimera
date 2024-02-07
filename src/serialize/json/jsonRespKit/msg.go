@@ -1,9 +1,9 @@
 package jsonRespKit
 
 import (
-	"github.com/richelieu-yang/chimera/v2/src/config/viperKit"
-	"github.com/richelieu-yang/chimera/v2/src/core/mapKit"
-	"github.com/richelieu-yang/chimera/v2/src/file/fileKit"
+	"github.com/richelieu-yang/chimera/v3/src/config/viperKit"
+	"github.com/richelieu-yang/chimera/v3/src/core/mapKit"
+	"github.com/richelieu-yang/chimera/v3/src/file/fileKit"
 )
 
 type FileData struct {

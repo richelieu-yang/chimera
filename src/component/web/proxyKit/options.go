@@ -2,11 +2,11 @@ package proxyKit
 
 import (
 	"github.com/gin-gonic/gin"
-	"github.com/richelieu-yang/chimera/v2/src/component/web/httpKit"
-	"github.com/richelieu-yang/chimera/v2/src/core/errorKit"
-	"github.com/richelieu-yang/chimera/v2/src/core/strKit"
-	"github.com/richelieu-yang/chimera/v2/src/urlKit"
-	"github.com/richelieu-yang/chimera/v2/src/validateKit"
+	"github.com/richelieu-yang/chimera/v3/src/component/web/httpKit"
+	"github.com/richelieu-yang/chimera/v3/src/core/errorKit"
+	"github.com/richelieu-yang/chimera/v3/src/core/strKit"
+	"github.com/richelieu-yang/chimera/v3/src/urlKit"
+	"github.com/richelieu-yang/chimera/v3/src/validateKit"
 	"log"
 	"net/http"
 	"net/http/httputil"

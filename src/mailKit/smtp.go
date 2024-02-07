@@ -3,9 +3,9 @@ package mailKit
 import (
 	"fmt"
 	"github.com/jordan-wright/email"
-	"github.com/richelieu-yang/chimera/v2/src/consts"
-	"github.com/richelieu-yang/chimera/v2/src/core/errorKit"
-	"github.com/richelieu-yang/chimera/v2/src/core/strKit"
+	"github.com/richelieu-yang/chimera/v3/src/consts"
+	"github.com/richelieu-yang/chimera/v3/src/core/errorKit"
+	"github.com/richelieu-yang/chimera/v3/src/core/strKit"
 	"net/smtp"
 	"sync"
 	"time"

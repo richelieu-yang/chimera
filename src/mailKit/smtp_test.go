@@ -1,8 +1,8 @@
 package mailKit
 
 import (
-	"github.com/richelieu-yang/chimera/v2/src/core/intKit"
-	"github.com/richelieu-yang/chimera/v2/src/time/timeKit"
+	"github.com/richelieu-yang/chimera/v3/src/core/intKit"
+	"github.com/richelieu-yang/chimera/v3/src/time/timeKit"
 	"testing"
 )
 

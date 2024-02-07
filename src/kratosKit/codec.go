@@ -2,7 +2,7 @@ package kratosKit
 
 import (
 	"encoding/json"
-	"github.com/richelieu-yang/chimera/v2/src/serialize/json/jsonKit"
+	"github.com/richelieu-yang/chimera/v3/src/serialize/json/jsonKit"
 	"reflect"
 
 	"github.com/go-kratos/kratos/v2/encoding"

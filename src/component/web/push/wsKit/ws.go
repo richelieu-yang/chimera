@@ -2,7 +2,7 @@ package wsKit
 
 import (
 	"github.com/gorilla/websocket"
-	"github.com/richelieu-yang/chimera/v2/src/component/web/push/pushKit"
+	"github.com/richelieu-yang/chimera/v3/src/component/web/push/pushKit"
 	"net/http"
 	"time"
 )

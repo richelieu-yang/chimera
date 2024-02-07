@@ -2,7 +2,7 @@ package jsonRespKit
 
 import (
 	"fmt"
-	"github.com/richelieu-yang/chimera/v2/src/core/strKit"
+	"github.com/richelieu-yang/chimera/v3/src/core/strKit"
 )
 
 // Pack 封装成响应结构体实例.

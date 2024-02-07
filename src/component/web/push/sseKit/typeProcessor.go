@@ -2,11 +2,11 @@ package sseKit
 
 import (
 	"github.com/gin-gonic/gin"
-	"github.com/richelieu-yang/chimera/v2/src/component/web/httpKit"
-	"github.com/richelieu-yang/chimera/v2/src/component/web/push/pushKit"
-	"github.com/richelieu-yang/chimera/v2/src/concurrency/mutexKit"
-	"github.com/richelieu-yang/chimera/v2/src/core/errorKit"
-	"github.com/richelieu-yang/chimera/v2/src/core/strKit"
+	"github.com/richelieu-yang/chimera/v3/src/component/web/httpKit"
+	"github.com/richelieu-yang/chimera/v3/src/component/web/push/pushKit"
+	"github.com/richelieu-yang/chimera/v3/src/concurrency/mutexKit"
+	"github.com/richelieu-yang/chimera/v3/src/core/errorKit"
+	"github.com/richelieu-yang/chimera/v3/src/core/strKit"
 	"net/http"
 )
 

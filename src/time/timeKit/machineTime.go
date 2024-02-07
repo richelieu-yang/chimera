@@ -3,8 +3,8 @@ package timeKit
 import (
 	"context"
 	"fmt"
-	"github.com/richelieu-yang/chimera/v2/src/cmd/cmdKit"
-	"github.com/richelieu-yang/chimera/v2/src/core/strKit"
+	"github.com/richelieu-yang/chimera/v3/src/cmd/cmdKit"
+	"github.com/richelieu-yang/chimera/v3/src/core/strKit"
 	"time"
 )
 

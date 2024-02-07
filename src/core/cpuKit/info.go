@@ -2,7 +2,7 @@ package cpuKit
 
 import (
 	"github.com/klauspost/cpuid/v2"
-	"github.com/richelieu-yang/chimera/v2/src/core/sliceKit"
+	"github.com/richelieu-yang/chimera/v3/src/core/sliceKit"
 	"github.com/sirupsen/logrus"
 	"runtime"
 )

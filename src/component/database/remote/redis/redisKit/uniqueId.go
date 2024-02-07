@@ -2,7 +2,7 @@ package redisKit
 
 import (
 	"context"
-	"github.com/richelieu-yang/chimera/v2/src/core/intKit"
+	"github.com/richelieu-yang/chimera/v3/src/core/intKit"
 )
 
 // NewUniqueId 通过Redis生成唯一id.

@@ -3,9 +3,9 @@ package redisKit
 import (
 	"context"
 	"github.com/redis/go-redis/v9"
-	"github.com/richelieu-yang/chimera/v2/src/concurrency/mutexKit"
-	"github.com/richelieu-yang/chimera/v2/src/core/errorKit"
-	"github.com/richelieu-yang/chimera/v2/src/core/sliceKit"
+	"github.com/richelieu-yang/chimera/v3/src/concurrency/mutexKit"
+	"github.com/richelieu-yang/chimera/v3/src/core/errorKit"
+	"github.com/richelieu-yang/chimera/v3/src/core/sliceKit"
 	"time"
 )
 

@@ -1,8 +1,8 @@
 package gormKit
 
 import (
-	"github.com/richelieu-yang/chimera/v2/src/core/errorKit"
-	"github.com/richelieu-yang/chimera/v2/src/core/strKit"
+	"github.com/richelieu-yang/chimera/v3/src/core/errorKit"
+	"github.com/richelieu-yang/chimera/v3/src/core/strKit"
 	"gorm.io/gorm/logger"
 )
 

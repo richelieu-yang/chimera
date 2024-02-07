@@ -1,9 +1,9 @@
 package etcdKit
 
 import (
-	"github.com/richelieu-yang/chimera/v2/src/core/errorKit"
-	"github.com/richelieu-yang/chimera/v2/src/core/interfaceKit"
-	"github.com/richelieu-yang/chimera/v2/src/core/sliceKit"
+	"github.com/richelieu-yang/chimera/v3/src/core/errorKit"
+	"github.com/richelieu-yang/chimera/v3/src/core/interfaceKit"
+	"github.com/richelieu-yang/chimera/v3/src/core/sliceKit"
 )
 
 type (

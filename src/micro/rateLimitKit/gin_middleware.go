@@ -3,7 +3,7 @@ package rateLimitKit
 import (
 	"fmt"
 	"github.com/gin-gonic/gin"
-	"github.com/richelieu-yang/chimera/v2/src/core/strKit"
+	"github.com/richelieu-yang/chimera/v3/src/core/strKit"
 	"golang.org/x/time/rate"
 	"net/http"
 )

@@ -5,7 +5,7 @@ byte <=> uint8
 package byteKit
 
 import (
-	"github.com/richelieu-yang/chimera/v2/src/core/strKit"
+	"github.com/richelieu-yang/chimera/v3/src/core/strKit"
 	"github.com/spf13/cast"
 )
 

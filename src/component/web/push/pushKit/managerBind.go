@@ -2,8 +2,8 @@ package pushKit
 
 import (
 	"fmt"
-	"github.com/richelieu-yang/chimera/v2/src/core/setKit"
-	"github.com/richelieu-yang/chimera/v2/src/core/strKit"
+	"github.com/richelieu-yang/chimera/v3/src/core/setKit"
+	"github.com/richelieu-yang/chimera/v3/src/core/strKit"
 )
 
 func BindId(channel Channel, id string) {

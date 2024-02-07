@@ -2,7 +2,7 @@ package ginKit
 
 import (
 	"github.com/gin-gonic/gin"
-	"github.com/richelieu-yang/chimera/v2/src/component/web/httpKit"
+	"github.com/richelieu-yang/chimera/v3/src/component/web/httpKit"
 )
 
 // SetHttpStatusCode （响应头）设置http状态码

@@ -2,10 +2,10 @@ package rocketmq5Kit
 
 import (
 	"fmt"
-	"github.com/richelieu-yang/chimera/v2/src/config/viperKit"
-	"github.com/richelieu-yang/chimera/v2/src/consts"
-	"github.com/richelieu-yang/chimera/v2/src/core/pathKit"
-	"github.com/richelieu-yang/chimera/v2/src/serialize/json/jsonKit"
+	"github.com/richelieu-yang/chimera/v3/src/config/viperKit"
+	"github.com/richelieu-yang/chimera/v3/src/consts"
+	"github.com/richelieu-yang/chimera/v3/src/core/pathKit"
+	"github.com/richelieu-yang/chimera/v3/src/serialize/json/jsonKit"
 	"github.com/sirupsen/logrus"
 	"testing"
 )

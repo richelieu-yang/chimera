@@ -1,9 +1,9 @@
 package reqKit
 
 import (
-	"github.com/richelieu-yang/chimera/v2/src/component/web/httpKit"
-	"github.com/richelieu-yang/chimera/v2/src/core/interfaceKit"
-	"github.com/richelieu-yang/chimera/v2/src/file/fileKit"
+	"github.com/richelieu-yang/chimera/v3/src/component/web/httpKit"
+	"github.com/richelieu-yang/chimera/v3/src/core/interfaceKit"
+	"github.com/richelieu-yang/chimera/v3/src/file/fileKit"
 	"io"
 )
 

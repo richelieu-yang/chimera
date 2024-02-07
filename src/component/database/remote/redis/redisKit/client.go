@@ -4,9 +4,9 @@ import (
 	"context"
 	"errors"
 	"github.com/redis/go-redis/v9"
-	"github.com/richelieu-yang/chimera/v2/src/core/errorKit"
-	"github.com/richelieu-yang/chimera/v2/src/core/strKit"
-	"github.com/richelieu-yang/chimera/v2/src/validateKit"
+	"github.com/richelieu-yang/chimera/v3/src/core/errorKit"
+	"github.com/richelieu-yang/chimera/v3/src/core/strKit"
+	"github.com/richelieu-yang/chimera/v3/src/validateKit"
 	"time"
 )
 

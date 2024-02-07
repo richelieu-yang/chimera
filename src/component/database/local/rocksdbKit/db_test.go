@@ -1,7 +1,7 @@
 package rocksdbKit
 
 import (
-	"github.com/richelieu-yang/chimera/v2/src/idKit"
+	"github.com/richelieu-yang/chimera/v3/src/idKit"
 	"github.com/sirupsen/logrus"
 	"testing"
 )

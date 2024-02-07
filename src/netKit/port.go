@@ -1,7 +1,7 @@
 package netKit
 
 import (
-	"github.com/richelieu-yang/chimera/v2/src/reflectKit"
+	"github.com/richelieu-yang/chimera/v3/src/reflectKit"
 	"reflect"
 	"strconv"
 	"time"

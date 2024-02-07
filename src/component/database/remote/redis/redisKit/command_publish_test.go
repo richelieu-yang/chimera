@@ -2,12 +2,12 @@ package redisKit
 
 import (
 	"context"
-	"github.com/richelieu-yang/chimera/v2/src/atomic/atomicKit"
-	"github.com/richelieu-yang/chimera/v2/src/config/confKit"
-	"github.com/richelieu-yang/chimera/v2/src/consts"
-	"github.com/richelieu-yang/chimera/v2/src/core/pathKit"
-	"github.com/richelieu-yang/chimera/v2/src/idKit"
-	"github.com/richelieu-yang/chimera/v2/src/log/logrusKit"
+	"github.com/richelieu-yang/chimera/v3/src/atomic/atomicKit"
+	"github.com/richelieu-yang/chimera/v3/src/config/confKit"
+	"github.com/richelieu-yang/chimera/v3/src/consts"
+	"github.com/richelieu-yang/chimera/v3/src/core/pathKit"
+	"github.com/richelieu-yang/chimera/v3/src/idKit"
+	"github.com/richelieu-yang/chimera/v3/src/log/logrusKit"
 	"github.com/sirupsen/logrus"
 	"strconv"
 	"sync"

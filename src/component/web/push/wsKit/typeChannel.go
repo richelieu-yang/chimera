@@ -3,9 +3,9 @@ package wsKit
 import (
 	"fmt"
 	"github.com/gorilla/websocket"
-	"github.com/richelieu-yang/chimera/v2/src/component/web/push/pushKit"
-	"github.com/richelieu-yang/chimera/v2/src/core/errorKit"
-	"github.com/richelieu-yang/chimera/v2/src/time/timeKit"
+	"github.com/richelieu-yang/chimera/v3/src/component/web/push/pushKit"
+	"github.com/richelieu-yang/chimera/v3/src/core/errorKit"
+	"github.com/richelieu-yang/chimera/v3/src/time/timeKit"
 	"time"
 )
 

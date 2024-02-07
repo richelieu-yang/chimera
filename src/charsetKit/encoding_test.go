@@ -2,7 +2,7 @@ package charsetKit
 
 import (
 	"fmt"
-	"github.com/richelieu-yang/chimera/v2/src/file/fileKit"
+	"github.com/richelieu-yang/chimera/v3/src/file/fileKit"
 	"testing"
 )
 

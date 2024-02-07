@@ -3,12 +3,12 @@ package ginKit
 import (
 	"github.com/gin-contrib/pprof"
 	"github.com/gin-gonic/gin"
-	"github.com/richelieu-yang/chimera/v2/src/consts"
-	"github.com/richelieu-yang/chimera/v2/src/core/errorKit"
-	"github.com/richelieu-yang/chimera/v2/src/core/strKit"
-	"github.com/richelieu-yang/chimera/v2/src/log/logrusKit"
-	"github.com/richelieu-yang/chimera/v2/src/netKit"
-	"github.com/richelieu-yang/chimera/v2/src/validateKit"
+	"github.com/richelieu-yang/chimera/v3/src/consts"
+	"github.com/richelieu-yang/chimera/v3/src/core/errorKit"
+	"github.com/richelieu-yang/chimera/v3/src/core/strKit"
+	"github.com/richelieu-yang/chimera/v3/src/log/logrusKit"
+	"github.com/richelieu-yang/chimera/v3/src/netKit"
+	"github.com/richelieu-yang/chimera/v3/src/validateKit"
 	"github.com/sirupsen/logrus"
 	"time"
 )

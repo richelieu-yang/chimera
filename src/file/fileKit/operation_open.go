@@ -2,7 +2,7 @@ package fileKit
 
 import (
 	"github.com/gogf/gf/v2/os/gfile"
-	"github.com/richelieu-yang/chimera/v2/src/core/strKit"
+	"github.com/richelieu-yang/chimera/v3/src/core/strKit"
 	"os"
 )
 

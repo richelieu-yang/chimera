@@ -1,7 +1,7 @@
 package sseKit
 
 import (
-	"github.com/richelieu-yang/chimera/v2/src/component/web/push/pushKit"
+	"github.com/richelieu-yang/chimera/v3/src/component/web/push/pushKit"
 )
 
 // NewProcessor

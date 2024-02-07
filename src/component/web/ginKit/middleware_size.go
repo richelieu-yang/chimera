@@ -3,8 +3,8 @@ package ginKit
 import (
 	limits "github.com/gin-contrib/size"
 	"github.com/gin-gonic/gin"
-	"github.com/richelieu-yang/chimera/v2/src/core/errorKit"
-	"github.com/richelieu-yang/chimera/v2/src/validateKit"
+	"github.com/richelieu-yang/chimera/v3/src/core/errorKit"
+	"github.com/richelieu-yang/chimera/v3/src/validateKit"
 	"net/http"
 )
 

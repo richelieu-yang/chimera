@@ -3,7 +3,7 @@ package reqKit
 import (
 	"fmt"
 	"github.com/gin-gonic/gin"
-	"github.com/richelieu-yang/chimera/v2/src/idKit"
+	"github.com/richelieu-yang/chimera/v3/src/idKit"
 	"net/http"
 	"testing"
 	"time"

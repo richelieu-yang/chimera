@@ -2,9 +2,9 @@ package ipRegionKit
 
 import (
 	"github.com/lionsoul2014/ip2region/binding/golang/xdb"
-	"github.com/richelieu-yang/chimera/v2/src/core/errorKit"
-	"github.com/richelieu-yang/chimera/v2/src/file/fileKit"
-	"github.com/richelieu-yang/chimera/v2/src/log/logrusKit"
+	"github.com/richelieu-yang/chimera/v3/src/core/errorKit"
+	"github.com/richelieu-yang/chimera/v3/src/file/fileKit"
+	"github.com/richelieu-yang/chimera/v3/src/log/logrusKit"
 	"github.com/sirupsen/logrus"
 )
 

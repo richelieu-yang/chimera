@@ -1,6 +1,6 @@
 package jsoniterKit
 
-import "github.com/richelieu-yang/chimera/v2/src/core/strKit"
+import "github.com/richelieu-yang/chimera/v3/src/core/strKit"
 
 // Marshal 序列化（可选配置: api && indent）.
 /*

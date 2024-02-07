@@ -1,7 +1,7 @@
 package osKit
 
 import (
-	"github.com/richelieu-yang/chimera/v2/src/core/errorKit"
+	"github.com/richelieu-yang/chimera/v3/src/core/errorKit"
 )
 
 func GetPidMax() (int, error) {

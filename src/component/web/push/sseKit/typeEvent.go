@@ -3,7 +3,7 @@ package sseKit
 import (
 	"fmt"
 	"github.com/gin-contrib/sse"
-	"github.com/richelieu-yang/chimera/v2/src/urlKit"
+	"github.com/richelieu-yang/chimera/v3/src/urlKit"
 	"net/http"
 )
 

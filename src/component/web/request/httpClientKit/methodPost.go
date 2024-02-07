@@ -1,8 +1,8 @@
 package httpClientKit
 
 import (
-	httpKit2 "github.com/richelieu-yang/chimera/v2/src/component/web/httpKit"
-	"github.com/richelieu-yang/chimera/v2/src/urlKit"
+	httpKit2 "github.com/richelieu-yang/chimera/v3/src/component/web/httpKit"
+	"github.com/richelieu-yang/chimera/v3/src/urlKit"
 	"io"
 	"net/http"
 	"strings"

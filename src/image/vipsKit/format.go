@@ -2,7 +2,7 @@ package vipsKit
 
 import (
 	"github.com/davidbyttow/govips/v2/vips"
-	"github.com/richelieu-yang/chimera/v2/src/file/fileKit"
+	"github.com/richelieu-yang/chimera/v3/src/file/fileKit"
 	"os"
 )
 

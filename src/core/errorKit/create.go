@@ -2,7 +2,7 @@ package errorKit
 
 import (
 	"github.com/gogf/gf/v2/errors/gerror"
-	"github.com/richelieu-yang/chimera/v2/src/funcKit"
+	"github.com/richelieu-yang/chimera/v3/src/funcKit"
 )
 
 // New 用于创建一个自定义错误信息的error对象，并包含堆栈信息.

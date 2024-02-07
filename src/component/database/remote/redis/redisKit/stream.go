@@ -4,10 +4,10 @@ import (
 	"context"
 	"fmt"
 	"github.com/redis/go-redis/v9"
-	"github.com/richelieu-yang/chimera/v2/src/consts"
-	"github.com/richelieu-yang/chimera/v2/src/core/errorKit"
-	"github.com/richelieu-yang/chimera/v2/src/core/strKit"
-	"github.com/richelieu-yang/chimera/v2/src/idKit"
+	"github.com/richelieu-yang/chimera/v3/src/consts"
+	"github.com/richelieu-yang/chimera/v3/src/core/errorKit"
+	"github.com/richelieu-yang/chimera/v3/src/core/strKit"
+	"github.com/richelieu-yang/chimera/v3/src/idKit"
 )
 
 // IsStreamSupported

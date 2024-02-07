@@ -1,6 +1,8 @@
-module github.com/richelieu-yang/chimera/v2
+module github.com/richelieu-yang/chimera/v3
 
-go 1.21
+go 1.22
+
+toolchain go1.22.0
 
 require (
 	fyne.io/fyne/v2 v2.4.3

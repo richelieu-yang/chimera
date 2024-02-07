@@ -1,9 +1,9 @@
 package viperKit
 
 import (
-	"github.com/richelieu-yang/chimera/v2/src/core/interfaceKit"
-	"github.com/richelieu-yang/chimera/v2/src/file/fileKit"
-	"github.com/richelieu-yang/chimera/v2/src/serialize/json/jsonKit"
+	"github.com/richelieu-yang/chimera/v3/src/core/interfaceKit"
+	"github.com/richelieu-yang/chimera/v3/src/file/fileKit"
+	"github.com/richelieu-yang/chimera/v3/src/serialize/json/jsonKit"
 )
 
 // MarshalToFile

@@ -2,7 +2,7 @@ package gaodeKit
 
 import (
 	"fmt"
-	"github.com/richelieu-yang/chimera/v2/src/serialize/json/jsonKit"
+	"github.com/richelieu-yang/chimera/v3/src/serialize/json/jsonKit"
 	"testing"
 )
 

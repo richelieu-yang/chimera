@@ -2,7 +2,7 @@ package skyWalkingKit
 
 import (
 	"fmt"
-	"github.com/richelieu-yang/chimera/v2/src/netKit"
+	"github.com/richelieu-yang/chimera/v3/src/netKit"
 	"github.com/sirupsen/logrus"
 )
 

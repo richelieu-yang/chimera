@@ -4,8 +4,8 @@ import (
 	"bytes"
 	"crypto/rand"
 	"crypto/rsa"
-	"github.com/richelieu-yang/chimera/v2/src/core/sliceKit"
-	"github.com/richelieu-yang/chimera/v2/src/crypto/base64Kit"
+	"github.com/richelieu-yang/chimera/v3/src/core/sliceKit"
+	"github.com/richelieu-yang/chimera/v3/src/crypto/base64Kit"
 )
 
 // Encrypt 公钥加密.

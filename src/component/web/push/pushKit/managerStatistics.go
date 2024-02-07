@@ -2,7 +2,7 @@ package pushKit
 
 import (
 	"github.com/jedib0t/go-pretty/v6/table"
-	"github.com/richelieu-yang/chimera/v2/src/prettyKit"
+	"github.com/richelieu-yang/chimera/v3/src/prettyKit"
 )
 
 // GetStatistics

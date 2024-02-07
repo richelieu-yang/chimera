@@ -2,9 +2,9 @@ package rocketmq5Kit
 
 import (
 	"github.com/apache/rocketmq-clients/golang/v5/credentials"
-	"github.com/richelieu-yang/chimera/v2/src/core/errorKit"
-	"github.com/richelieu-yang/chimera/v2/src/log/logrusKit"
-	"github.com/richelieu-yang/chimera/v2/src/validateKit"
+	"github.com/richelieu-yang/chimera/v3/src/core/errorKit"
+	"github.com/richelieu-yang/chimera/v3/src/log/logrusKit"
+	"github.com/richelieu-yang/chimera/v3/src/validateKit"
 	"github.com/sirupsen/logrus"
 )
 

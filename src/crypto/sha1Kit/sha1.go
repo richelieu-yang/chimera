@@ -4,7 +4,7 @@ import (
 	"crypto/sha1"
 	"encoding/hex"
 	"github.com/gogf/gf/v2/crypto/gsha1"
-	"github.com/richelieu-yang/chimera/v2/src/file/fileKit"
+	"github.com/richelieu-yang/chimera/v3/src/file/fileKit"
 )
 
 var Encrypt func(v interface{}) string = gsha1.Encrypt

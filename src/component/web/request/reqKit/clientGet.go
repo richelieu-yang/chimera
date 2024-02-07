@@ -2,7 +2,7 @@ package reqKit
 
 import (
 	"github.com/imroc/req/v3"
-	"github.com/richelieu-yang/chimera/v2/src/urlKit"
+	"github.com/richelieu-yang/chimera/v3/src/urlKit"
 )
 
 // SimpleGet

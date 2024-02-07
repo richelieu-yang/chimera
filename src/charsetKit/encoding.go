@@ -2,7 +2,7 @@ package charsetKit
 
 import (
 	"github.com/gogf/gf/v2/encoding/gcharset"
-	"github.com/richelieu-yang/chimera/v2/src/core/interfaceKit"
+	"github.com/richelieu-yang/chimera/v3/src/core/interfaceKit"
 	"github.com/saintfish/chardet"
 	"golang.org/x/net/html/charset"
 	"golang.org/x/text/encoding"

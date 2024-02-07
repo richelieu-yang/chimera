@@ -2,7 +2,7 @@ package validateKit
 
 import (
 	"github.com/go-playground/validator/v10"
-	"github.com/richelieu-yang/chimera/v2/src/netKit"
+	"github.com/richelieu-yang/chimera/v3/src/netKit"
 )
 
 var bakedInValidators = map[string]validator.Func{

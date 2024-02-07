@@ -2,7 +2,7 @@
 package consts
 
 import (
-	"github.com/richelieu-yang/chimera/v2/internal/resources"
+	"github.com/richelieu-yang/chimera/v3/internal/resources"
 	"github.com/sirupsen/logrus"
 )
 

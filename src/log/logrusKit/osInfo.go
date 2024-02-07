@@ -1,7 +1,7 @@
 package logrusKit
 
 import (
-	"github.com/richelieu-yang/chimera/v2/src/core/osKit"
+	"github.com/richelieu-yang/chimera/v3/src/core/osKit"
 	"github.com/sirupsen/logrus"
 )
 

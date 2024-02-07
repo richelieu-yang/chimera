@@ -2,7 +2,7 @@ package gosseractKit
 
 import (
 	"github.com/otiai10/gosseract/v2"
-	"github.com/richelieu-yang/chimera/v2/src/file/fileKit"
+	"github.com/richelieu-yang/chimera/v3/src/file/fileKit"
 )
 
 // GertText

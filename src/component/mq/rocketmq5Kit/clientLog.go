@@ -2,10 +2,10 @@ package rocketmq5Kit
 
 import (
 	rmq_client "github.com/apache/rocketmq-clients/golang/v5"
-	"github.com/richelieu-yang/chimera/v2/src/core/envKit"
-	"github.com/richelieu-yang/chimera/v2/src/core/pathKit"
-	"github.com/richelieu-yang/chimera/v2/src/core/strKit"
-	"github.com/richelieu-yang/chimera/v2/src/file/fileKit"
+	"github.com/richelieu-yang/chimera/v3/src/core/envKit"
+	"github.com/richelieu-yang/chimera/v3/src/core/pathKit"
+	"github.com/richelieu-yang/chimera/v3/src/core/strKit"
+	"github.com/richelieu-yang/chimera/v3/src/file/fileKit"
 	"os"
 )
 

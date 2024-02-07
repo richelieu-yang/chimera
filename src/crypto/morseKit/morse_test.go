@@ -2,8 +2,8 @@ package morseKit
 
 import (
 	"fmt"
-	"github.com/richelieu-yang/chimera/v2/src/core/strKit"
-	"github.com/richelieu-yang/chimera/v2/src/crypto/base64Kit"
+	"github.com/richelieu-yang/chimera/v3/src/core/strKit"
+	"github.com/richelieu-yang/chimera/v3/src/crypto/base64Kit"
 	"testing"
 )
 

@@ -4,9 +4,9 @@ package diskKit
 
 import (
 	"fmt"
-	"github.com/richelieu-yang/chimera/v2/src/core/conditionKit"
-	"github.com/richelieu-yang/chimera/v2/src/core/osKit"
-	"github.com/richelieu-yang/chimera/v2/src/dataSizeKit"
+	"github.com/richelieu-yang/chimera/v3/src/core/conditionKit"
+	"github.com/richelieu-yang/chimera/v3/src/core/osKit"
+	"github.com/richelieu-yang/chimera/v3/src/dataSizeKit"
 	"github.com/shirou/gopsutil/v3/disk"
 	"github.com/sirupsen/logrus"
 )

@@ -2,7 +2,7 @@ package proxyKit
 
 import (
 	"github.com/gin-gonic/gin"
-	"github.com/richelieu-yang/chimera/v2/src/component/web/httpKit"
+	"github.com/richelieu-yang/chimera/v3/src/component/web/httpKit"
 	"net/http"
 	"testing"
 )

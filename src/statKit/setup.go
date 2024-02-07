@@ -1,10 +1,10 @@
 package statKit
 
 import (
-	"github.com/richelieu-yang/chimera/v2/src/core/strKit"
-	"github.com/richelieu-yang/chimera/v2/src/cronKit"
-	"github.com/richelieu-yang/chimera/v2/src/file/fileKit"
-	"github.com/richelieu-yang/chimera/v2/src/log/logrusKit"
+	"github.com/richelieu-yang/chimera/v3/src/core/strKit"
+	"github.com/richelieu-yang/chimera/v3/src/cronKit"
+	"github.com/richelieu-yang/chimera/v3/src/file/fileKit"
+	"github.com/richelieu-yang/chimera/v3/src/log/logrusKit"
 	"github.com/sirupsen/logrus"
 )
 

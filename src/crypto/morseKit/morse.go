@@ -2,7 +2,7 @@ package morseKit
 
 import (
 	"github.com/alwindoss/morse"
-	"github.com/richelieu-yang/chimera/v2/src/core/ioKit"
+	"github.com/richelieu-yang/chimera/v3/src/core/ioKit"
 )
 
 // Encode

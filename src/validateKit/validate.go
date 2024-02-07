@@ -2,8 +2,8 @@ package validateKit
 
 import (
 	"github.com/go-playground/validator/v10"
-	"github.com/richelieu-yang/chimera/v2/src/core/sliceKit"
-	"github.com/richelieu-yang/chimera/v2/src/core/strKit"
+	"github.com/richelieu-yang/chimera/v3/src/core/sliceKit"
+	"github.com/richelieu-yang/chimera/v3/src/core/strKit"
 )
 
 // New

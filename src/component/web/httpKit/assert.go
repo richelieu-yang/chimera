@@ -1,9 +1,9 @@
 package httpKit
 
 import (
-	"github.com/richelieu-yang/chimera/v2/src/core/errorKit"
-	"github.com/richelieu-yang/chimera/v2/src/funcKit"
-	"github.com/richelieu-yang/chimera/v2/src/validateKit"
+	"github.com/richelieu-yang/chimera/v3/src/core/errorKit"
+	"github.com/richelieu-yang/chimera/v3/src/funcKit"
+	"github.com/richelieu-yang/chimera/v3/src/validateKit"
 )
 
 func AssertHttpUrl(httpUrl string) error {

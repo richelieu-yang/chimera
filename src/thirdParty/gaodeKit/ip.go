@@ -1,10 +1,10 @@
 package gaodeKit
 
 import (
-	"github.com/richelieu-yang/chimera/v2/src/component/web/request/reqKit"
-	"github.com/richelieu-yang/chimera/v2/src/core/errorKit"
-	"github.com/richelieu-yang/chimera/v2/src/ip/ipKit"
-	"github.com/richelieu-yang/chimera/v2/src/serialize/json/jsonKit"
+	"github.com/richelieu-yang/chimera/v3/src/component/web/request/reqKit"
+	"github.com/richelieu-yang/chimera/v3/src/core/errorKit"
+	"github.com/richelieu-yang/chimera/v3/src/ip/ipKit"
+	"github.com/richelieu-yang/chimera/v3/src/serialize/json/jsonKit"
 	"github.com/tidwall/gjson"
 )
 

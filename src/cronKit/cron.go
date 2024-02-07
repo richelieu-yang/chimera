@@ -1,8 +1,8 @@
 package cronKit
 
 import (
-	"github.com/richelieu-yang/chimera/v2/src/core/interfaceKit"
-	"github.com/richelieu-yang/chimera/v2/src/core/strKit"
+	"github.com/richelieu-yang/chimera/v3/src/core/interfaceKit"
+	"github.com/richelieu-yang/chimera/v3/src/core/strKit"
 	"github.com/robfig/cron/v3"
 )
 

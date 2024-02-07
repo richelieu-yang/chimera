@@ -2,7 +2,7 @@ package brotliKit
 
 import (
 	"fmt"
-	"github.com/richelieu-yang/chimera/v2/src/core/bytesKit"
+	"github.com/richelieu-yang/chimera/v3/src/core/bytesKit"
 	"testing"
 )
 

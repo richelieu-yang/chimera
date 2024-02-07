@@ -2,11 +2,11 @@ package ocrKit
 
 import (
 	"fmt"
-	httpClientKit2 "github.com/richelieu-yang/chimera/v2/src/component/web/request/httpClientKit"
-	"github.com/richelieu-yang/chimera/v2/src/core/errorKit"
-	"github.com/richelieu-yang/chimera/v2/src/crypto/base64Kit"
-	"github.com/richelieu-yang/chimera/v2/src/serialize/json/jsonKit"
-	"github.com/richelieu-yang/chimera/v2/src/urlKit"
+	httpClientKit2 "github.com/richelieu-yang/chimera/v3/src/component/web/request/httpClientKit"
+	"github.com/richelieu-yang/chimera/v3/src/core/errorKit"
+	"github.com/richelieu-yang/chimera/v3/src/crypto/base64Kit"
+	"github.com/richelieu-yang/chimera/v3/src/serialize/json/jsonKit"
+	"github.com/richelieu-yang/chimera/v3/src/urlKit"
 )
 
 const (

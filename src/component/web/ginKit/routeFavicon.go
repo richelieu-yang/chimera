@@ -2,7 +2,7 @@ package ginKit
 
 import (
 	"github.com/gin-gonic/gin"
-	"github.com/richelieu-yang/chimera/v2/internal/resources"
+	"github.com/richelieu-yang/chimera/v3/internal/resources"
 )
 
 func DefaultFavicon(engine *gin.Engine) {

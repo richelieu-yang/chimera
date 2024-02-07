@@ -3,10 +3,10 @@ package sseKit
 import (
 	"encoding/base64"
 	"fmt"
-	"github.com/richelieu-yang/chimera/v2/src/component/web/push/pushKit"
-	"github.com/richelieu-yang/chimera/v2/src/crypto/base64Kit"
-	"github.com/richelieu-yang/chimera/v2/src/time/timeKit"
-	"github.com/richelieu-yang/chimera/v2/src/urlKit"
+	"github.com/richelieu-yang/chimera/v3/src/component/web/push/pushKit"
+	"github.com/richelieu-yang/chimera/v3/src/crypto/base64Kit"
+	"github.com/richelieu-yang/chimera/v3/src/time/timeKit"
+	"github.com/richelieu-yang/chimera/v3/src/urlKit"
 	"net/http"
 	"time"
 )

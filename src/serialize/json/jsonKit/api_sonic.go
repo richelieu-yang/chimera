@@ -5,9 +5,9 @@ package jsonKit
 import (
 	"github.com/bytedance/sonic"
 	"github.com/klauspost/cpuid/v2"
-	"github.com/richelieu-yang/chimera/v2/src/consts"
-	"github.com/richelieu-yang/chimera/v2/src/core/cpuKit"
-	"github.com/richelieu-yang/chimera/v2/src/core/osKit"
+	"github.com/richelieu-yang/chimera/v3/src/consts"
+	"github.com/richelieu-yang/chimera/v3/src/core/cpuKit"
+	"github.com/richelieu-yang/chimera/v3/src/core/osKit"
 	"github.com/sirupsen/logrus"
 )
 

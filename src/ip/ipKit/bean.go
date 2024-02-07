@@ -1,7 +1,7 @@
 package ipKit
 
 import (
-	"github.com/richelieu-yang/chimera/v2/src/ip/ipKit/ipType"
+	"github.com/richelieu-yang/chimera/v3/src/ip/ipKit/ipType"
 	"net"
 )
 
