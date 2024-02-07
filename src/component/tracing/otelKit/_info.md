@@ -8,14 +8,17 @@
 - notes/_GolandProjects/jaeger-demo
 - notes/_GolandProjects/jaeger-baggage-demo
 
-## !!!: service name VS tracer name VS span name
+## ### 定期任务
+更新 resource.go 中的: semconv "go.opentelemetry.io/otel/semconv/v1.23.0"
+
+## service name VS tracer name VS span name
 PS: 
 - tracer name可以为 "" ，此时会采用默认值 "go.opentelemetry.io/otel/sdk/tracer"; 
 - 推荐将 tracer name 置为 "" . 
 
 ![_names.png](_names.png)  
 
-## !!!: span
+## span
 ### span 的 attributes
 PS: 建议给 span 加上 attributes，这样就可以在UI页面进行搜索了（通过 Tags）.  
 
@@ -26,3 +29,5 @@ spanCtx, span := tracer.Start(context.TODO(), "main", trace.WithAttributes(attri
 defer span.End()
 ```
 ![img.png](img.png)
+
+
