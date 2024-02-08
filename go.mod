@@ -35,12 +35,12 @@ require (
 	github.com/go-redis/redis/v8 v8.11.5
 	github.com/go-redsync/redsync/v4 v4.11.0
 	github.com/goccy/go-json v0.10.2
-	github.com/gogf/gf/v2 v2.6.2
+	github.com/gogf/gf/v2 v2.6.3
 	github.com/golang-jwt/jwt/v5 v5.2.0
 	github.com/golang-module/carbon/v2 v2.3.8
 	github.com/google/go-cmp v0.6.0
 	github.com/google/uuid v1.6.0
-	github.com/google/wire v0.5.0
+	github.com/google/wire v0.6.0
 	github.com/gorilla/securecookie v1.1.2
 	github.com/gorilla/sessions v1.2.2
 	github.com/gorilla/websocket v1.5.1
@@ -90,27 +90,27 @@ require (
 	github.com/zeromicro/go-zero v1.6.2
 	github.com/zeromicro/zero-contrib/logx/logrusx v0.0.0-20231030135404-af9ae855016f
 	go.etcd.io/etcd/client/v3 v3.5.12
-	go.opentelemetry.io/otel v1.23.0
-	go.opentelemetry.io/otel/exporters/otlp/otlptrace v1.23.0
-	go.opentelemetry.io/otel/exporters/otlp/otlptrace/otlptracegrpc v1.23.0
-	go.opentelemetry.io/otel/exporters/otlp/otlptrace/otlptracehttp v1.23.0
-	go.opentelemetry.io/otel/metric v1.23.0
-	go.opentelemetry.io/otel/sdk v1.23.0
-	go.opentelemetry.io/otel/trace v1.23.0
+	go.opentelemetry.io/otel v1.23.1
+	go.opentelemetry.io/otel/exporters/otlp/otlptrace v1.23.1
+	go.opentelemetry.io/otel/exporters/otlp/otlptrace/otlptracegrpc v1.23.1
+	go.opentelemetry.io/otel/exporters/otlp/otlptrace/otlptracehttp v1.23.1
+	go.opentelemetry.io/otel/metric v1.23.1
+	go.opentelemetry.io/otel/sdk v1.23.1
+	go.opentelemetry.io/otel/trace v1.23.1
 	go.uber.org/atomic v1.11.0
 	go.uber.org/automaxprocs v1.5.3
 	go.uber.org/zap v1.26.0
 	golang.org/x/arch v0.7.0
-	golang.org/x/crypto v0.18.0
+	golang.org/x/crypto v0.19.0
 	golang.org/x/exp v0.0.0-20240205201215-2c58cdc269a3
 	golang.org/x/image v0.15.0
 	golang.org/x/mobile v0.0.0-20240112133503-c713f31d574b
 	golang.org/x/mod v0.15.0
-	golang.org/x/net v0.20.0
+	golang.org/x/net v0.21.0
 	golang.org/x/oauth2 v0.16.0
 	golang.org/x/sync v0.6.0
-	golang.org/x/sys v0.16.0
-	golang.org/x/term v0.16.0
+	golang.org/x/sys v0.17.0
+	golang.org/x/term v0.17.0
 	golang.org/x/text v0.14.0
 	golang.org/x/time v0.5.0
 	golang.org/x/tools v0.17.0
