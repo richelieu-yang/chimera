@@ -1,3 +1,8 @@
+// Package redisKit
+/*
+Redis 如何使用 HyperLogLog
+	https://blog.csdn.net/SunnyYoona/article/details/124764009
+*/
 package redisKit
 
 import "context"
