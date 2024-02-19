@@ -5,12 +5,12 @@ go 1.22
 toolchain go1.22.0
 
 require (
-	fyne.io/fyne/v2 v2.4.3
+	fyne.io/fyne/v2 v2.4.4
 	github.com/alwindoss/morse v1.0.1
 	github.com/andybalholm/brotli v1.1.0
 	github.com/apache/pulsar-client-go v0.12.0
 	github.com/apache/rocketmq-clients/golang/v5 v5.1.0-rc.1
-	github.com/bytedance/sonic v1.10.2
+	github.com/bytedance/sonic v1.11.0
 	github.com/coocood/freecache v1.2.4
 	github.com/dablelv/cyan v0.0.54
 	github.com/davidbyttow/govips/v2 v2.13.0
@@ -31,9 +31,9 @@ require (
 	github.com/go-kratos/kratos/v2 v2.7.2
 	github.com/go-oauth2/oauth2/v4 v4.5.2
 	github.com/go-oauth2/redis/v4 v4.1.1
-	github.com/go-playground/validator/v10 v10.17.0
+	github.com/go-playground/validator/v10 v10.18.0
 	github.com/go-redis/redis/v8 v8.11.5
-	github.com/go-redsync/redsync/v4 v4.11.0
+	github.com/go-redsync/redsync/v4 v4.12.0
 	github.com/goccy/go-json v0.10.2
 	github.com/gogf/gf/v2 v2.6.3
 	github.com/golang-jwt/jwt/v5 v5.2.0
@@ -47,7 +47,7 @@ require (
 	github.com/h2non/bimg v1.1.9
 	github.com/hashicorp/go-hclog v1.6.2
 	github.com/hashicorp/golang-lru/v2 v2.0.7
-	github.com/hashicorp/raft v1.6.0
+	github.com/hashicorp/raft v1.6.1
 	github.com/hashicorp/raft-boltdb v0.0.0-20231211162105-6c830fa4535e
 	github.com/hibiken/asynq v0.24.1
 	github.com/imroc/req/v3 v3.42.3
@@ -70,7 +70,7 @@ require (
 	github.com/otiai10/gosseract/v2 v2.4.1
 	github.com/panjf2000/ants/v2 v2.9.0
 	github.com/pkg/browser v0.0.0-20240102092130-5ac0b6a4141c
-	github.com/redis/go-redis/v9 v9.4.0
+	github.com/redis/go-redis/v9 v9.5.0
 	github.com/robfig/cron/v3 v3.0.1
 	github.com/rs/xid v1.5.0
 	github.com/saintfish/chardet v0.0.0-20230101081208-5e3ef4b5456d
@@ -84,8 +84,8 @@ require (
 	github.com/spf13/cobra v1.8.0
 	github.com/spf13/viper v1.18.2
 	github.com/tidwall/buntdb v1.3.0
-	github.com/tidwall/gjson v1.17.0
-	github.com/unidoc/unioffice v1.29.1
+	github.com/tidwall/gjson v1.17.1
+	github.com/unidoc/unioffice v1.30.0
 	github.com/xuri/excelize/v2 v2.8.0
 	github.com/zeromicro/go-zero v1.6.2
 	github.com/zeromicro/zero-contrib/logx/logrusx v0.0.0-20231030135404-af9ae855016f
@@ -102,19 +102,19 @@ require (
 	go.uber.org/zap v1.26.0
 	golang.org/x/arch v0.7.0
 	golang.org/x/crypto v0.19.0
-	golang.org/x/exp v0.0.0-20240205201215-2c58cdc269a3
+	golang.org/x/exp v0.0.0-20240213143201-ec583247a57a
 	golang.org/x/image v0.15.0
-	golang.org/x/mobile v0.0.0-20240112133503-c713f31d574b
+	golang.org/x/mobile v0.0.0-20240213143359-d1f7d3436075
 	golang.org/x/mod v0.15.0
 	golang.org/x/net v0.21.0
-	golang.org/x/oauth2 v0.16.0
+	golang.org/x/oauth2 v0.17.0
 	golang.org/x/sync v0.6.0
 	golang.org/x/sys v0.17.0
 	golang.org/x/term v0.17.0
 	golang.org/x/text v0.14.0
 	golang.org/x/time v0.5.0
-	golang.org/x/tools v0.17.0
-	google.golang.org/grpc v1.61.0
+	golang.org/x/tools v0.18.0
+	google.golang.org/grpc v1.61.1
 	google.golang.org/protobuf v1.32.0
 	gopkg.in/yaml.v3 v3.0.1
 	gorm.io/driver/mysql v1.5.4
@@ -171,7 +171,7 @@ require (
 	github.com/go-sql-driver/mysql v1.7.1 // indirect
 	github.com/go-task/slim-sprig v0.0.0-20230315185526-52ccab3ef572 // indirect
 	github.com/go-text/render v0.0.0-20230619120952-35bccb6164b8 // indirect
-	github.com/go-text/typesetting v0.0.0-20230616162802-9c17dd34aa4a // indirect
+	github.com/go-text/typesetting v0.1.0 // indirect
 	github.com/godbus/dbus v0.0.0-20190726142602-4481cbc300e2 // indirect
 	github.com/godbus/dbus/v5 v5.1.0 // indirect
 	github.com/gogo/protobuf v1.3.2 // indirect
@@ -196,7 +196,7 @@ require (
 	github.com/jinzhu/now v1.1.5 // indirect
 	github.com/jmespath/go-jmespath v0.3.0 // indirect
 	github.com/jsummers/gobmp v0.0.0-20151104160322-e2ba15ffa76e // indirect
-	github.com/leodido/go-urn v1.2.4 // indirect
+	github.com/leodido/go-urn v1.4.0 // indirect
 	github.com/linkedin/goavro/v2 v2.9.8 // indirect
 	github.com/lufia/plan9stats v0.0.0-20230326075908-cb1d2100619a // indirect
 	github.com/magiconair/properties v1.8.7 // indirect
