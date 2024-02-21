@@ -10,7 +10,9 @@ import (
 // NewVersion
 /*
 @param v	(1) 不能为""
-			(2) e.g. "1.3.10+meta" || "v1.3.10+meta"
+			(2) e.g. 	"1.0.0-alpha+001"
+						"1.3.10+meta"
+						"v1.3.10+meta"
 */
 func NewVersion(v string) (*version.Version, error) {
 	if err := strKit.AssertNotEmpty(v, "v"); err != nil {
