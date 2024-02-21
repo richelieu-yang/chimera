@@ -10,7 +10,8 @@ import (
 // NewVersion
 /*
 @param v	(1) 不能为""
-			(2) e.g. 	"1.0.0-alpha+001"
+			(2) e.g. 	""1.0.0-alpha.1+build.123""
+						"1.0.0-alpha+001"
 						"1.3.10+meta"
 						"v1.3.10+meta"
 */
