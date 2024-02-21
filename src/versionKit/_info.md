@@ -9,3 +9,9 @@
 - 对多个版本号进行排序
 - 判断版本号是否在某个范围
 - ...
+
+#### Prerelease（预发布版） VS Metadata（元数据）
+Prerelease（预发布版）: 用于区分正式版与非正式版之间的软件发展阶段，如 alpha、beta、rc 等。
+Metadata（元数据）: 提供给开发人员更多有关软件构建历史和环境背景的附加信息。
+
+![_img.png](_img.png)
