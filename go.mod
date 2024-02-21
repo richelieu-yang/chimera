@@ -37,7 +37,7 @@ require (
 	github.com/goccy/go-json v0.10.2
 	github.com/gogf/gf/v2 v2.6.3
 	github.com/golang-jwt/jwt/v5 v5.2.0
-	github.com/golang-module/carbon/v2 v2.3.8
+	github.com/golang-module/carbon/v2 v2.3.9
 	github.com/google/go-cmp v0.6.0
 	github.com/google/uuid v1.6.0
 	github.com/google/wire v0.6.0
@@ -70,7 +70,7 @@ require (
 	github.com/otiai10/gosseract/v2 v2.4.1
 	github.com/panjf2000/ants/v2 v2.9.0
 	github.com/pkg/browser v0.0.0-20240102092130-5ac0b6a4141c
-	github.com/redis/go-redis/v9 v9.5.0
+	github.com/redis/go-redis/v9 v9.5.1
 	github.com/robfig/cron/v3 v3.0.1
 	github.com/rs/xid v1.5.0
 	github.com/saintfish/chardet v0.0.0-20230101081208-5e3ef4b5456d
@@ -99,7 +99,7 @@ require (
 	go.opentelemetry.io/otel/trace v1.23.1
 	go.uber.org/atomic v1.11.0
 	go.uber.org/automaxprocs v1.5.3
-	go.uber.org/zap v1.26.0
+	go.uber.org/zap v1.27.0
 	golang.org/x/arch v0.7.0
 	golang.org/x/crypto v0.19.0
 	golang.org/x/exp v0.0.0-20240213143201-ec583247a57a
