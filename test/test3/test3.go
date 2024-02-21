@@ -2,25 +2,32 @@ package main
 
 import (
 	"fmt"
-	"github.com/bytedance/sonic"
+	"github.com/richelieu-yang/chimera/v3/src/versionKit"
 )
 
 func main() {
-	var str string = `{"a":"1","b":true}`
-
-	{
-		node, err := sonic.Get([]byte(str), "a")
-		if err != nil {
-			panic(err)
-		}
-		fmt.Println(node.String())
+	v, err := versionKit.NewVersion("1.3.10+meta")
+	if err != nil {
+		panic(err)
 	}
+	fmt.Println(v)
+	fmt.Println(v.String())
 
-	{
-		node, err := sonic.Get([]byte(str), "b")
-		if err != nil {
-			panic(err)
-		}
-		fmt.Println(node.Bool())
-	}
+	//var str string = `{"a":"1","b":true}`
+	//
+	//{
+	//	node, err := sonic.Get([]byte(str), "a")
+	//	if err != nil {
+	//		panic(err)
+	//	}
+	//	fmt.Println(node.String())
+	//}
+	//
+	//{
+	//	node, err := sonic.Get([]byte(str), "b")
+	//	if err != nil {
+	//		panic(err)
+	//	}
+	//	fmt.Println(node.Bool())
+	//}
 }

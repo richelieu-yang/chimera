@@ -1,0 +1,38 @@
+package versionKit
+
+import (
+	"github.com/hashicorp/go-version"
+	"github.com/richelieu-yang/chimera/v3/src/core/strKit"
+)
+
+// NewVersion
+/*
+@param v	(1) 不能为""
+			(2) e.g."1.3.10+meta"
+					"v1.3.10+meta"
+*/
+func NewVersion(v string) (*version.Version, error) {
+	if err := strKit.AssertNotEmpty(v, "v"); err != nil {
+		return nil, err
+	}
+
+	return version.NewVersion(v)
+}
+
+// CheckConstraint 判断范围...
+/*
+@param versionStr		e.g. "1.2"
+@param constraintStr	e.g. ">= 1.0, < 1.4"
+*/
+func CheckConstraint(versionStr, constraintStr string) (bool, error) {
+	v, err := NewVersion(versionStr)
+	if err != nil {
+		return false, err
+	}
+	constraint, err := version.NewConstraint(constraintStr)
+	if err != nil {
+		return false, err
+	}
+
+	return constraint.Check(v), nil
+}
