@@ -2,25 +2,36 @@ package main
 
 import (
 	"fmt"
+	jsoniter "github.com/json-iterator/go"
 	"github.com/nicksnyder/go-i18n/v2/i18n"
 	"golang.org/x/text/language"
 )
 
 func main() {
-	// 初始化翻译包，通常会从文件加载资源
+	properties.De
+
 	bundle := i18n.NewBundle(language.English)
-	bundle.MustParseMessageFileBytes([]byte(`hello = Hello, world!`), "en-US")
-	bundle.MustParseMessageFileBytes([]byte(`hello = Bonjour le monde!`), "fr-FR")
+	bundle.RegisterUnmarshalFunc("json", jsoniter.Unmarshal)
+	_, err := bundle.LoadMessageFile("active.en.json")
+	if err != nil {
+		panic(err)
+	}
+	_, err = bundle.LoadMessageFile("active.zh-CN.json")
+	if err != nil {
+		panic(err)
+	}
 
-	// 创建一个本地化器（localizer），用于获取指定语言的翻译
-	localizer := i18n.NewLocalizer(bundle, "")
-
-	// 设置用户偏好语言
-	//tag, _ := language.Parse("fr-FR") // 假设用户选择法语
-
-	// 获取翻译并打印
-	msg := localizer.MustLocalize(&i18n.LocalizeConfig{
-		MessageID: "hello",
+	//localizer := i18n.NewLocalizer(bundle, "en")
+	//localizer := i18n.NewLocalizer(bundle, "zh-CN")
+	localizer := i18n.NewLocalizer(bundle, "111")
+	helloPerson := localizer.MustLocalize(&i18n.LocalizeConfig{
+		DefaultMessage: &i18n.Message{
+			ID: "HelloPerson",
+			//Other: "Hello {{.Name}}",
+		},
+		//TemplateData: map[string]interface{}{
+		//	"Name": "Nick",
+		//},
 	})
-	fmt.Println(msg) // 输出：Bonjour le monde!
+	fmt.Println(helloPerson) // 输出: Hello Nick
 }
