@@ -6,28 +6,13 @@ import (
 )
 
 func main() {
-	v, err := versionKit.NewVersion("1.3.10+meta")
+	v, err := versionKit.NewVersion("1.0.0-alpha+001")
 	if err != nil {
 		panic(err)
 	}
+	/*
+		v.pre == "alpha"
+		v.metadata == "001"
+	*/
 	fmt.Println(v)
-	fmt.Println(v.String())
-
-	//var str string = `{"a":"1","b":true}`
-	//
-	//{
-	//	node, err := sonic.Get([]byte(str), "a")
-	//	if err != nil {
-	//		panic(err)
-	//	}
-	//	fmt.Println(node.String())
-	//}
-	//
-	//{
-	//	node, err := sonic.Get([]byte(str), "b")
-	//	if err != nil {
-	//		panic(err)
-	//	}
-	//	fmt.Println(node.Bool())
-	//}
 }

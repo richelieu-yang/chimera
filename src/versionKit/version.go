@@ -2,14 +2,15 @@ package versionKit
 
 import (
 	"github.com/hashicorp/go-version"
+	"github.com/richelieu-yang/chimera/v3/src/core/errorKit"
 	"github.com/richelieu-yang/chimera/v3/src/core/strKit"
+	"sort"
 )
 
 // NewVersion
 /*
 @param v	(1) 不能为""
-			(2) e.g."1.3.10+meta"
-					"v1.3.10+meta"
+			(2) e.g. "1.3.10+meta" || "v1.3.10+meta"
 */
 func NewVersion(v string) (*version.Version, error) {
 	if err := strKit.AssertNotEmpty(v, "v"); err != nil {
@@ -35,4 +36,20 @@ func CheckConstraint(versionStr, constraintStr string) (bool, error) {
 	}
 
 	return constraint.Check(v), nil
+}
+
+// Sort 排序.
+func Sort(s []string) ([]*version.Version, error) {
+	versions := make([]*version.Version, len(s))
+	for i, ele := range s {
+		v, err := version.NewVersion(ele)
+		if err != nil {
+			return nil, errorKit.Wrap(err, "ele(index: %d, value: %s) of param s is invalid", i, ele)
+		}
+		versions[i] = v
+	}
+
+	// After this, the versions are properly sorted
+	sort.Sort(version.Collection(versions))
+	return versions, nil
 }

@@ -6,6 +6,18 @@ import (
 )
 
 func TestNewVersion(t *testing.T) {
+	v, err := NewVersion("1.0.0-alpha+001")
+	if err != nil {
+		panic(err)
+	}
+	/*
+		v.pre == "alpha"
+		v.metadata == "001"
+	*/
+	fmt.Println(v)
+}
+
+func TestNewVersion1(t *testing.T) {
 	{
 		v, err := NewVersion("1.3.10+meta")
 		if err != nil {
@@ -31,4 +43,9 @@ func TestCheckConstraint(t *testing.T) {
 
 	fmt.Println(CheckConstraint("v1.2", ">= 1.0, <= 1.2")) // true <nil>
 	fmt.Println(CheckConstraint("v1.2", ">= 1.0,<= 1.2"))  // true <nil>
+}
+
+func TestSort(t *testing.T) {
+	s := []string{"3.4", "4.0", "3.3", "4.0+metadata", "1.0.0-alpha+001"}
+	fmt.Println(Sort(s))
 }
