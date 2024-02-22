@@ -2,17 +2,21 @@ package main
 
 import (
 	"fmt"
-	"github.com/magiconair/properties"
+	"github.com/richelieu-yang/chimera/v3/src/config/propertiesKit"
+	"github.com/richelieu-yang/chimera/v3/src/file/fileKit"
 )
 
 func main() {
-	//conf.LoadProperties()
-
-	p, err := properties.LoadFile("demo.properties", properties.UTF8)
+	data, err := fileKit.ReadFile("demo.properties")
 	if err != nil {
 		panic(err)
 	}
-	fmt.Println(p.Map())
+
+	var raw interface{}
+	if err := propertiesKit.Unmarshal(data, &raw); err != nil {
+		panic(err)
+	}
+	fmt.Println(raw)
 
 	//bundle := i18n.NewBundle(language.English)
 	//bundle.RegisterUnmarshalFunc("json", jsoniter.Unmarshal)
