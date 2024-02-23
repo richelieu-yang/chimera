@@ -68,6 +68,7 @@ require (
 	github.com/modern-go/reflect2 v1.0.2
 	github.com/nacos-group/nacos-sdk-go/v2 v2.2.5
 	github.com/natefinch/lumberjack/v3 v3.0.0-alpha
+	github.com/nicksnyder/go-i18n/v2 v2.4.0
 	github.com/oklog/ulid/v2 v2.1.0
 	github.com/otiai10/gosseract/v2 v2.4.1
 	github.com/panjf2000/ants/v2 v2.9.0
