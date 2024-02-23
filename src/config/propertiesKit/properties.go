@@ -3,6 +3,7 @@ package propertiesKit
 import (
 	"github.com/magiconair/properties"
 	"github.com/mitchellh/mapstructure"
+	"github.com/richelieu-yang/chimera/v3/src/core/mapKit"
 )
 
 var (
@@ -33,5 +34,10 @@ func unmarshal(content []byte, enc properties.Encoding, ptr interface{}) error {
 		return err
 	}
 
-	return mapstructure.Decode(p.Map(), ptr)
+	// map[string]string => map[string]interface{}
+	m := mapKit.MapValues(p.Map(), func(value string, key string) interface{} {
+		return value
+	})
+
+	return mapstructure.Decode(m, ptr)
 }
