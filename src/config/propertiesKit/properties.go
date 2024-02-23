@@ -36,9 +36,9 @@ func unmarshal(content []byte, enc properties.Encoding, ptr interface{}) error {
 
 	/*
 		map[string]string => map[string]interface{}
-		加这个主要是为了 i18nKit 需要
+		加这个主要是为了 i18nKit读取.properties文件 的需要
 	*/
-	m := mapKit.MapValues(p.Map(), func(value string, key string) interface{} {
+	var m map[string]interface{} = mapKit.MapValues(p.Map(), func(value string, key string) interface{} {
 		return value
 	})
 
