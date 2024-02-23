@@ -5,6 +5,9 @@ logrus:
   printBasic: true
 
 gin:
+  responseHeaders:
+    X-XSS-Protection: 1;mode=block
+    Strict-Transport-Security: "max-age=604800; includeSubDomains"
   # Gin的模式（默认: debug，可选值: debug|release|test）
   mode: debug
   hostName:
@@ -15,6 +18,13 @@ gin:
   # 是否开启pprof路由？（默认: false）
   # PS: 只应该在性能测试的时候才在代码中引入pprof.
   pprof: false
+  ssl:
+    # https server使用的端口（默认0: 不使用https server）
+    #    port: 443
+    # 证书文件(建议".pem"后缀)
+    certFile: _chimera-lib/ssl.pem
+    # key文件(".key"后缀)
+    keyFile: _chimera-lib/ssl.key
   middleware:
     # 是否开启gzip压缩（默认: false）
     # true:   客户端支持的话使用gzip压缩，否则不压缩
@@ -24,37 +34,28 @@ gin:
     # 不建议在此处配置，想限制上传文件大小可以在handler中进行处理
     # TODO: 因为http.MaxBytesReader()，如果涉及"请求转发（代理）"，转发方不要全局配置此属性，否则会导致: 有时成功，有时代理失败（error），有时http客户端失败
     bodyLimit: -1
-    # 响应头的"X-Frame-Options"（全部小写！），可选值:
-    # (1) deny                页面不允许在frame中显示
-    # (2) sameorigin          页面允许在相同域名页面的frame中显示
-    # (3) allow-from $(uri)   页面可以在制定来源的frame中显示，e.g. allow-from https://example.com/
-    xFrameOptions:
     cors:
       # 是否配置cors？默认: false（此时下面的 origins配置 将无效）
       access: true
       # 支持的Origin(s)，即响应头中的Access-Control-Allow-Origin
       # (1) 默认（origins配置项全注释了）: 支持所有的Origin（即动态支持请求的Origin，并非"*"）
       # (2) 支持通配符"*"
-#      origins:
-#        - "https://*.github.com"
-#        - "https://api.*"
-#        - "http://*"
-#        - "*.golang.org"
-#        - "https://facebook.com"
-#        - "http://192.168.9.141:8080"
+    #      origins:
+    #        - "https://*.github.com"
+    #        - "https://api.*"
+    #        - "http://*"
+    #        - "*.golang.org"
+    #        - "https://facebook.com"
+    #        - "http://192.168.9.141:8080"
     # 限流器（令牌桶算法）
     rateLimiter:
       # 每秒生成的令牌数.
       r: 1000
       # 令牌桶的容量.
       b: 2000
-  ssl:
-    # https server使用的端口（默认0: 不使用https server）
-    port: 443
-    # 证书文件(建议".pem"后缀)
-    certFile: _chimera-lib/ssl.pem
-    # key文件(".key"后缀)
-    keyFile: _chimera-lib/ssl.key
+    responseHeaders:
+      X-XSS-Protection: 1;mode=block
+      Strict-Transport-Security: "max-age=604800; includeSubDomains"
 
 redis:
   # key的前缀（默认: ""）

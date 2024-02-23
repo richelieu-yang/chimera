@@ -2,13 +2,11 @@ package ginKit
 
 import (
 	"github.com/gin-gonic/gin"
-	"github.com/richelieu-yang/chimera/v3/src/component/web/proxyKit"
-	"github.com/richelieu-yang/chimera/v3/src/config/viperKit"
+	"github.com/richelieu-yang/chimera/v3/src/config/yaml/yamlKit"
 	"github.com/richelieu-yang/chimera/v3/src/consts"
 	"github.com/richelieu-yang/chimera/v3/src/core/pathKit"
 	"github.com/richelieu-yang/chimera/v3/src/log/logrusKit"
 	"github.com/sirupsen/logrus"
-	"net/http"
 	"testing"
 )
 
@@ -29,61 +27,22 @@ func TestMustSetUp(t *testing.T) {
 
 	path := "_chimera-lib/config.yaml"
 	type config struct {
-		Gin *Config `json:"Gin"`
+		Gin *Config `json:"gin" yaml:"gin"`
 	}
 	c := &config{}
-	_, err := viperKit.UnmarshalFromFile(path, nil, c)
+	/*
+		TODO: 反序列化.yaml文件，先用 yamlKit.UnmarshalFromFile 替换 viperKit.UnmarshalFromFile，原因: https://github.com/spf13/viper/issues/1769
+	*/
+	err := yamlKit.UnmarshalFromFile(path, c)
+	//_, err := viperKit.UnmarshalFromFile(path, nil, c)
 	if err != nil {
 		panic(err)
 	}
 
 	MustSetUp(c.Gin, func(engine *gin.Engine) error {
-		//engine.Any("*path", func(ctx *gin.Context) {
-		//	if err := proxyKit.Proxy(ctx.Writer, ctx.Request, "127.0.0.1:8888"); err != nil {
-		//		ctx.String(500, err.Error())
-		//		return
-		//	}
-		//})
-
-		BindHandlersToRoute(engine, "/test/*path", []string{http.MethodGet, http.MethodPost}, func(ctx *gin.Context) {
-			path := ctx.Param("path")
-			if err := proxyKit.ProxyWithGin(ctx, "127.0.0.1:16686", proxyKit.WithReqUrlPath(&path)); err != nil {
-				ctx.String(500, err.Error())
-				return
-			}
-			// 转发成功
-			return
-
-			//keys := []string{
-			//	"Host",
-			//	"X-Real-IP",
-			//	"Client-IP",
-			//	"X-Forwarded-For",
-			//	"X-Forwarded-Proto",
-			//}
-			//for _, key := range keys {
-			//	s := httpKit.GetHeaderValues(ctx.Request.Header, key)
-			//	logrus.Infof("%s: %s", key, s)
-			//}
-			//logrus.Info("======")
-
-			//fmt.Println("scheme:", httpKit.GetScheme(ctx.Request))
-			//fmt.Println("proto:", httpKit.GetProto(ctx.Request))
-			//fmt.Println("request url:", httpKit.GetRequestUrl(ctx.Request))
-
-			//data, err := ioKit.ReadFromReader(ctx.Request.Body)
-			//if err != nil {
-			//	ctx.String(500, err.Error())
-			//	return
-			//}
-			//logrus.Infof("body: [%s]", data)
-			//
-			//ctx.String(200, "test")
+		engine.Any("/test", func(ctx *gin.Context) {
+			ctx.String(200, "ok")
 		})
-
-		//engine.Any("/a/b", func(ctx *gin.Context) {
-		//	ctx.String(200, "hello world")
-		//})
 
 		return nil
 	}, WithServiceInfo("TEST"), WithDefaultFavicon(false))

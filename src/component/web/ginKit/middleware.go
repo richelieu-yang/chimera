@@ -3,6 +3,7 @@ package ginKit
 import (
 	"fmt"
 	"github.com/gin-gonic/gin"
+	"github.com/richelieu-yang/chimera/v3/src/core/mapKit"
 	"github.com/richelieu-yang/chimera/v3/src/core/sliceKit"
 	"github.com/richelieu-yang/chimera/v3/src/core/strKit"
 	"github.com/richelieu-yang/chimera/v3/src/micro/rateLimitKit"
@@ -88,16 +89,33 @@ func attachMiddlewares(engine *gin.Engine, config MiddlewareConfig, opts *ginOpt
 		engine.Use(middleware)
 	}
 
-	// others
-	engine.Use(func(ctx *gin.Context) {
-		if strKit.IsNotEmpty(config.XFrameOptions) {
-			// e.g.不能被嵌入到任何iframe或frame中
-			ctx.Header("X-Frame-Options", config.XFrameOptions)
-		}
+	/* response headers */
+	if mapKit.IsNotEmpty(config.ResponseHeadersConfig) {
+		engine.Use(func(ctx *gin.Context) {
+			for k, v := range config.ResponseHeadersConfig {
+				ctx.Header(k, v)
+			}
+			ctx.Next()
+		})
+	}
 
-		// 解决漏洞: 未启用Web浏览器XSS保护
-		ctx.Header("X-XSS-Protection", "1;mode=block")
-	})
+	/*
+	   # 响应头的"X-Frame-Options"（全部小写！），可选值:
+	   # (1) deny                页面不允许在frame中显示
+	   # (2) sameorigin          页面允许在相同域名页面的frame中显示
+	   # (3) allow-from $(uri)   页面可以在制定来源的frame中显示，e.g. allow-from https://example.com/
+	   xFrameOptions:
+	*/
+	//// others
+	//engine.Use(func(ctx *gin.Context) {
+	//	if strKit.IsNotEmpty(config.XFrameOptions) {
+	//		// e.g.不能被嵌入到任何iframe或frame中
+	//		ctx.Header("X-Frame-Options", config.XFrameOptions)
+	//	}
+	//
+	//	// 解决漏洞: 未启用Web浏览器XSS保护
+	//	ctx.Header("X-XSS-Protection", "1;mode=block")
+	//})
 
 	return nil
 }
