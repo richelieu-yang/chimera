@@ -54,7 +54,7 @@ gin:
       # 令牌桶的容量.
       b: 2000
     responseHeaders:
-      X-XSS-Protection: 1;mode=block
+      X-XSS-Protection: "1;mode=block"
       Strict-Transport-Security: "max-age=604800; includeSubDomains"
 
 redis:
