@@ -2,6 +2,7 @@ package ginKit
 
 import (
 	"github.com/gin-gonic/gin"
+	"github.com/richelieu-yang/chimera/v3/src/component/web/httpKit"
 	"github.com/richelieu-yang/chimera/v3/src/config/yaml/yamlKit"
 	"github.com/richelieu-yang/chimera/v3/src/consts"
 	"github.com/richelieu-yang/chimera/v3/src/core/pathKit"
@@ -41,9 +42,9 @@ func TestMustSetUp(t *testing.T) {
 
 	MustSetUp(c.Gin, func(engine *gin.Engine) error {
 		engine.Any("/test", func(ctx *gin.Context) {
-			ctx.String(200, "ok")
+			ctx.String(200, httpKit.GetScheme(ctx.Request))
 		})
 
 		return nil
-	}, WithServiceInfo("TEST"), WithDefaultFavicon(false))
+	}, WithServiceInfo("TEST"), WithDefaultFavicon(true))
 }
