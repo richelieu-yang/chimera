@@ -13,6 +13,6 @@ I18N国际化
 - [github 62](https://github.com/gin-contrib/i18n)
 
 ## 请求头Accept-Language
-
+参考: httpKit.GetAcceptLanguages()
 
 
