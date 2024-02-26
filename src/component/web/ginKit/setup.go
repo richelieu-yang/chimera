@@ -116,37 +116,36 @@ func SetUp(config *Config, businessLogic func(engine *gin.Engine) error, options
 				return errorKit.Wrap(err, "Https port(%d) should be set to a valid value.", ssl.Port)
 			}
 			return engine.RunTLS(netKit.JoinHostnameAndPort(config.HostName, ssl.Port), ssl.CertFile, ssl.KeyFile)
-		} else {
-			// (2) https port + http port（本服务使用2个端口）
-			if err := netKit.AssertValidPort(ssl.Port); err != nil {
-				return errorKit.Wrap(err, "Https port(%d) should be set to a valid value.", ssl.Port)
-			}
-			if err := netKit.AssertValidPort(config.Port); err != nil {
-				return errorKit.Wrap(err, "Http port(%d) should be set to a valid value.", config.Port)
-			}
-			if config.Port == ssl.Port {
-				return errorKit.New("Http port and https port are same(%d).", config.Port)
-			}
-
-			go func() {
-				if err := engine.Run(netKit.JoinHostnameAndPort(config.HostName, config.Port)); err != nil {
-					logrus.WithError(err).WithFields(logrus.Fields{
-						"port": config.Port,
-					}).Fatalf("[%s, GIN] Fail to start http server.", consts.UpperProjectName)
-				}
-			}()
-			go func() {
-				time.Sleep(time.Millisecond * 20)
-				if err := engine.RunTLS(netKit.JoinHostnameAndPort(config.HostName, ssl.Port), ssl.CertFile, ssl.KeyFile); err != nil {
-					logrus.WithError(err).WithFields(logrus.Fields{
-						"port":     ssl.Port,
-						"certFile": ssl.CertFile,
-						"keyFile":  ssl.KeyFile,
-					}).Fatalf("[%s, GIN] Fail to start https server.", consts.UpperProjectName)
-				}
-			}()
-			select {}
 		}
+		// (2) https port + http port（本服务使用2个端口）
+		if err := netKit.AssertValidPort(ssl.Port); err != nil {
+			return errorKit.Wrap(err, "Https port(%d) should be set to a valid value.", ssl.Port)
+		}
+		if err := netKit.AssertValidPort(config.Port); err != nil {
+			return errorKit.Wrap(err, "Http port(%d) should be set to a valid value.", config.Port)
+		}
+		if config.Port == ssl.Port {
+			return errorKit.New("Http port and https port are same(%d).", config.Port)
+		}
+
+		go func() {
+			if err := engine.Run(netKit.JoinHostnameAndPort(config.HostName, config.Port)); err != nil {
+				logrus.WithError(err).WithFields(logrus.Fields{
+					"port": config.Port,
+				}).Fatalf("[%s, GIN] Fail to start http server.", consts.UpperProjectName)
+			}
+		}()
+		go func() {
+			time.Sleep(time.Millisecond * 20)
+			if err := engine.RunTLS(netKit.JoinHostnameAndPort(config.HostName, ssl.Port), ssl.CertFile, ssl.KeyFile); err != nil {
+				logrus.WithError(err).WithFields(logrus.Fields{
+					"port":     ssl.Port,
+					"certFile": ssl.CertFile,
+					"keyFile":  ssl.KeyFile,
+				}).Fatalf("[%s, GIN] Fail to start https server.", consts.UpperProjectName)
+			}
+		}()
+		select {}
 	}
 	// (3) http port（本服务使用1个端口）
 	if config.Port == 0 {
