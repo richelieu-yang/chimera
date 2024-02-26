@@ -35,6 +35,8 @@ func SetUp(defaultLanguage language.Tag, messageFilePaths ...string) error {
 
 // GetMessage
 /*
+PS: 如果返回的error不为nil，可能是 i18n.MessageNotFoundErr 类型.
+
 @param langs 可以不传，此时将使用 innerBundle 的默认语言
 */
 func GetMessage(messageId string, langs ...string) (string, error) {
