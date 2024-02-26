@@ -21,7 +21,7 @@ func main() {
 	})
 
 	// 启动服务（这里假设是HTTPS服务）
-	err := r.RunTLS(":443", "ssl.crt", "ssl.key")
+	err := r.RunTLS(":443", "_chimera-lib/ssl.crt", "_chimera-lib/ssl.key")
 	if err != nil {
 		panic(err)
 	}

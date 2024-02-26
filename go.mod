@@ -90,7 +90,7 @@ require (
 	github.com/tidwall/buntdb v1.3.0
 	github.com/tidwall/gjson v1.17.1
 	github.com/unidoc/unioffice v1.30.0
-	github.com/xuri/excelize/v2 v2.8.0
+	github.com/xuri/excelize/v2 v2.8.1
 	github.com/zeromicro/go-zero v1.6.2
 	github.com/zeromicro/zero-contrib/logx/logrusx v0.0.0-20231030135404-af9ae855016f
 	go.etcd.io/etcd/client/v3 v3.5.12
@@ -249,8 +249,8 @@ require (
 	github.com/twitchyliquid64/golang-asm v0.15.1 // indirect
 	github.com/ugorji/go/codec v1.2.11 // indirect
 	github.com/valyala/fastrand v1.1.0 // indirect
-	github.com/xuri/efp v0.0.0-20230802181842-ad255f2331ca // indirect
-	github.com/xuri/nfp v0.0.0-20230819163627-dc951e3ffe1a // indirect
+	github.com/xuri/efp v0.0.0-20231025114914-d1ff6096ae53 // indirect
+	github.com/xuri/nfp v0.0.0-20230919160717-d98342af3f05 // indirect
 	github.com/yuin/goldmark v1.5.5 // indirect
 	github.com/yusufpapurcu/wmi v1.2.3 // indirect
 	go.etcd.io/etcd/api/v3 v3.5.12 // indirect
