@@ -13,7 +13,7 @@ require (
 	github.com/bytedance/sonic v1.11.0
 	github.com/coocood/freecache v1.2.4
 	github.com/dablelv/cyan v0.0.54
-	github.com/davidbyttow/govips/v2 v2.13.0
+	github.com/davidbyttow/govips/v2 v2.14.0
 	github.com/deckarep/golang-set/v2 v2.6.0
 	github.com/duke-git/lancet/v2 v2.2.9
 	github.com/emersion/go-imap v1.2.1
