@@ -10,9 +10,10 @@ func TestStringToRegexp(t *testing.T) {
 	if err != nil {
 		panic(err)
 	}
-	fmt.Println(re)
-	fmt.Println(re.MatchString("11yozo2com"))
-	fmt.Println(re.MatchString(".yozo.com"))
-	fmt.Println(re.MatchString("1.yozo.com"))
-	fmt.Println(re.MatchString("www.yozo.com"))
+
+	fmt.Println(re)                             // .+\.yozo\.com
+	fmt.Println(re.MatchString("11yozo2com"))   // false
+	fmt.Println(re.MatchString(".yozo.com"))    // false
+	fmt.Println(re.MatchString("1.yozo.com"))   // true
+	fmt.Println(re.MatchString("www.yozo.com")) // true
 }
