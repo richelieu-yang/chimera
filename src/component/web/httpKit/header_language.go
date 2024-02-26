@@ -9,12 +9,11 @@ import (
 func GetAcceptLanguages(req *http.Request) []string {
 	langs := make([]string, 0)
 
+	// e.g. "zh-CN,zh;q=0.9"
 	headerValue := GetHeader(req.Header, "Accept-Language")
 	str := strKit.Split(headerValue, ";")[0]
-
 	str = strKit.TrimSpace(str)
-	s := strKit.Split(str, ",")
-	for _, lang := range s {
+	for _, lang := range strKit.Split(str, ",") {
 		if strKit.IsEmpty(lang) {
 			continue
 		}

@@ -15,4 +15,15 @@ I18N国际化
 ## 请求头Accept-Language
 参考: httpKit.GetAcceptLanguages()
 
+## lang
+- zh
+- zh-Hans     简体中文
+- zh-Hant     繁体中文
+- zh-CN       中国大陆区域的中文
+- zh-HK       中国香港特别行政区的繁体中文
+- zh-TW       中国台湾的繁体中文
+- en
+- en-US       美国英语
+- en-GB       英国英语
+
 
