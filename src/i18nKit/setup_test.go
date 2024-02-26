@@ -14,5 +14,10 @@ func TestMustSetUp(t *testing.T) {
 	fmt.Println(GetMessage("0", "zh")) // 无错误 <nil>
 	fmt.Println(GetMessage("0", "en")) // no error <nil>
 
+	/*
+		第1个lang是无效的;
+		第2个lang是有效的;
+		最终采用了第2个lang.
+	*/
 	fmt.Println(GetMessage("1", "zh-CN", "zh")) // 参数错误 <nil>
 }
