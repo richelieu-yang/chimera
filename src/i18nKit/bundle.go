@@ -17,7 +17,7 @@ import (
 @param messageFilePaths (1) 可以为nil
 						(2) 支持的文件类型: toml、json、yaml、properties
 */
-func NewBundle(defaultLanguage language.Tag, messageFilePaths []string) (*i18n.Bundle, error) {
+func NewBundle(defaultLanguage language.Tag, messageFilePaths ...string) (*i18n.Bundle, error) {
 	bundle := i18n.NewBundle(defaultLanguage)
 
 	bundle.RegisterUnmarshalFunc("toml", tomlKit.Unmarshal)

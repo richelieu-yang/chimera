@@ -16,15 +16,15 @@ var (
 	innerBundle *i18n.Bundle
 )
 
-func MustSetUp(defaultLanguage language.Tag, messageFilePaths []string) {
-	if err := SetUp(defaultLanguage, messageFilePaths); err != nil {
+func MustSetUp(defaultLanguage language.Tag, messageFilePaths ...string) {
+	if err := SetUp(defaultLanguage, messageFilePaths...); err != nil {
 		logrusKit.DisableQuote(nil)
 		logrus.Fatalf("%+v", err)
 	}
 }
 
-func SetUp(defaultLanguage language.Tag, messageFilePaths []string) error {
-	bundle, err := NewBundle(defaultLanguage, messageFilePaths)
+func SetUp(defaultLanguage language.Tag, messageFilePaths ...string) error {
+	bundle, err := NewBundle(defaultLanguage, messageFilePaths...)
 	if err != nil {
 		return err
 	}
