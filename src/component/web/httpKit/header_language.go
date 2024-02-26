@@ -9,8 +9,8 @@ import (
 func GetAcceptLanguages(req *http.Request) []string {
 	langs := make([]string, 0)
 
-	tmp := GetHeader(req.Header, "Accept-Language")
-	str := strKit.Split(tmp, ";")[0]
+	headerValue := GetHeader(req.Header, "Accept-Language")
+	str := strKit.Split(headerValue, ";")[0]
 
 	str = strKit.TrimSpace(str)
 	s := strKit.Split(str, ",")
