@@ -5,11 +5,11 @@ import (
 	"github.com/richelieu-yang/chimera/v3/src/core/interfaceKit"
 )
 
-// GetMessageByBundle
+// GetMessage
 /*
 @param langs 可以不传，此时将使用 bundle 的默认语言
 */
-func GetMessageByBundle(bundle *i18n.Bundle, messageId string, langs ...string) (string, error) {
+func GetMessage(bundle *i18n.Bundle, messageId string, langs ...string) (string, error) {
 	if err := interfaceKit.AssertNotNil(bundle, "bundle"); err != nil {
 		return "", err
 	}
