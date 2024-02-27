@@ -15,7 +15,7 @@ I18N国际化
 ## 请求头Accept-Language
 参考: httpKit.GetAcceptLanguages()
 
-## lang
+## 语言代码
 - zh          中文
 - zh-Hans     简体中文
 - zh-Hant     繁体中文
