@@ -1,32 +1,24 @@
 package i18nPackKit
 
-import (
-	"fmt"
-	"github.com/richelieu-yang/chimera/v3/src/core/strKit"
-)
-
 type (
-	Packager struct {
-		langs []string
+	// Maker
+	/*
+		@return (1) 返回值是一个结构体实例指针
+				(2) 结构体建议加上json tag
+	*/
+	Maker func(code, msg string, data interface{}) inteØrface{}
+
+	bean struct {
+		Code    string      `json:"code"`
+		Message string      `json:"message"`
+		Data    interface{} `json:"data,omitempty"`
 	}
 )
 
-func NewPackager(langs ...string) *Packager {
-	return &Packager{
-		langs: langs,
+var defaultMaker = func(code, msg string, data interface{}) interface{} {
+	return &bean{
+		Code:    code,
+		Message: msg,
+		Data:    data,
 	}
-}
-
-func (p *Packager) Pack(code string, data interface{}, msgArgs ...interface{}) interface{} {
-	return PackFully(code, "", data, msgArgs...)
-}
-
-func (p *Packager) PackFully(code, msg string, data interface{}, msgArgs ...interface{}) interface{} {
-	if strKit.IsEmpty(msg) {
-		msg = msgMap[code]
-	}
-	if strKit.IsNotEmpty(msg) && msgArgs != nil {
-		msg = fmt.Sprintf(msg, msgArgs...)
-	}
-	return provider(code, msg, data)
 }
