@@ -11,30 +11,28 @@ import (
 /*
 @param path 文件的路径（绝对 || 相对; 必须存在且是个文件）
 */
-func LoadMessageFile(bundle *i18n.Bundle, path string) error {
+func LoadMessageFile(bundle *i18n.Bundle, path string) (*i18n.MessageFile, error) {
 	if err := interfaceKit.AssertNotNil(bundle, "bundle"); err != nil {
-		return err
+		return nil, err
 	}
 	if err := fileKit.AssertExistAndIsFile(path); err != nil {
-		return err
+		return nil, err
 	}
 
-	_, err := bundle.LoadMessageFile(path)
-	return err
+	return bundle.LoadMessageFile(path)
 }
 
 // LoadMessageFileBytes
 /*
 @param path 文件名 或 文件的路径（绝对 || 相对; 可以不存在）
 */
-func LoadMessageFileBytes(bundle *i18n.Bundle, content []byte, path string) error {
+func LoadMessageFileBytes(bundle *i18n.Bundle, content []byte, path string) (*i18n.MessageFile, error) {
 	if err := interfaceKit.AssertNotNil(bundle, "bundle"); err != nil {
-		return err
+		return nil, err
 	}
 	if err := strKit.AssertNotEmpty(path, "path"); err != nil {
-		return err
+		return nil, err
 	}
 
-	_, err := bundle.ParseMessageFileBytes(content, path)
-	return err
+	return bundle.ParseMessageFileBytes(content, path)
 }

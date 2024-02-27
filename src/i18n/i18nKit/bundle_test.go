@@ -7,10 +7,7 @@ import (
 )
 
 func TestNewBundle(t *testing.T) {
-	bundle, err := NewBundle(language.English, "_test.en.properties", "_test.zh.properties")
-	if err != nil {
-		panic(err)
-	}
+	bundle := NewBundle(language.English)
 
 	fmt.Println(GetMessage(bundle, "0"))       // no error <nil>
 	fmt.Println(GetMessage(bundle, "0", ""))   // no error <nil>
@@ -27,10 +24,7 @@ func TestNewBundle(t *testing.T) {
 
 // 使用 Bundle.ParseMessageFileBytes
 func TestNewBundle1(t *testing.T) {
-	bundle, err := NewBundle(language.English)
-	if err != nil {
-		panic(err)
-	}
+	bundle := NewBundle(language.English)
 
 	{
 		text := `

@@ -42,7 +42,7 @@ func SetUp(defaultLanguage language.Tag, messageFilePaths []string, maker BeanMa
 		}
 	}()
 
-	innerBundle, err = i18nKit.NewBundle(defaultLanguage, messageFilePaths...)
+	innerBundle, err = i18nKit.NewBundle(defaultLanguage)
 	innerBeanMaker = maker
 	return
 }
