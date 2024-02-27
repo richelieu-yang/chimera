@@ -13,6 +13,9 @@ import (
 
 // NewBundle
 /*
+PS:
+(1) 返回的 *i18n.Bundle 实例，后续可以通过 Bundle.LoadMessageFile 或 Bundle.ParseMessageFileBytes 继续加载message file.
+
 @param defaultLanguage e.g. language.English || language.Chinese
 @param messageFilePaths (1) 可以为nil
 						(2) 支持的文件类型: toml、json、yaml、properties
