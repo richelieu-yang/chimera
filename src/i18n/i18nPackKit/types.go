@@ -6,7 +6,7 @@ type (
 		@return (1) 返回值是一个结构体实例指针
 				(2) 结构体建议加上json tag
 	*/
-	Maker func(code, msg string, data interface{}) inteØrface{}
+	Maker func(code, msg string, data interface{}) interface{}
 
 	bean struct {
 		Code    string      `json:"code"`
@@ -14,11 +14,3 @@ type (
 		Data    interface{} `json:"data,omitempty"`
 	}
 )
-
-var defaultMaker = func(code, msg string, data interface{}) interface{} {
-	return &bean{
-		Code:    code,
-		Message: msg,
-		Data:    data,
-	}
-}

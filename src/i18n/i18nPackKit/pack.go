@@ -7,11 +7,12 @@ import (
 )
 
 func Pack(langs []string, code string, data interface{}, msgArgs ...interface{}) interface{} {
-	return PackFully(code, "", data, msgArgs...)
+	return PackFully(langs, code, "", data, msgArgs...)
 }
 
 func PackFully(langs []string, code, msg string, data interface{}, msgArgs ...interface{}) interface{} {
 	var err error
+
 	if strKit.IsEmpty(msg) {
 		msg, err = i18nKit.GetMessage(innerBundle, code, langs...)
 	}
@@ -22,6 +23,5 @@ func PackFully(langs []string, code, msg string, data interface{}, msgArgs ...in
 			msg = fmt.Sprintf(msg, msgArgs...)
 		}
 	}
-
-	return provider(code, msg, data)
+	return getMaker()(code, msg, data)
 }
