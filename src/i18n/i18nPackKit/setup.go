@@ -15,10 +15,10 @@ var (
 )
 
 var (
-	innerBundle *i18n.Bundle
-	innerMaker  Maker
+	innerBundle    *i18n.Bundle
+	innerBeanMaker BeanMaker
 
-	defaultMaker = func(code, msg string, data interface{}) interface{} {
+	defaultBeanMaker = func(code, msg string, data interface{}) interface{} {
 		return &bean{
 			Code:    code,
 			Message: msg,
@@ -27,26 +27,26 @@ var (
 	}
 )
 
-func MustSetUp(defaultLanguage language.Tag, messageFilePaths []string, maker Maker) {
+func MustSetUp(defaultLanguage language.Tag, messageFilePaths []string, maker BeanMaker) {
 	if err := SetUp(defaultLanguage, messageFilePaths, maker); err != nil {
 		logrusKit.DisableQuote(nil)
 		logrus.Fatalf("%+v", err)
 	}
 }
 
-func SetUp(defaultLanguage language.Tag, messageFilePaths []string, maker Maker) (err error) {
+func SetUp(defaultLanguage language.Tag, messageFilePaths []string, maker BeanMaker) (err error) {
 	defer func() {
 		if err != nil {
 			innerBundle = nil
-			innerMaker = nil
+			innerBeanMaker = nil
 		}
 	}()
 
 	innerBundle, err = i18nKit.NewBundle(defaultLanguage, messageFilePaths...)
-	innerMaker = maker
+	innerBeanMaker = maker
 	return
 }
 
-func getMaker() Maker {
-	return condition.TernaryOperator(innerMaker != nil, innerMaker, defaultMaker)
+func getMaker() BeanMaker {
+	return condition.TernaryOperator(innerBeanMaker != nil, innerBeanMaker, defaultBeanMaker)
 }
