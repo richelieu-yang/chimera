@@ -1,4 +1,8 @@
-// Package jsonRespKit Deprecated: Use i18nRespKit instead.
+// Package jsonRespKit
+//
+// Deprecated: Use i18nRespKit instead.
+//
+// This package is frozen and no new functionality will be added.
 package jsonRespKit
 
 import (
@@ -7,6 +11,10 @@ import (
 	"github.com/sirupsen/logrus"
 )
 
+// MustSetUp 必须初始化.
+/*
+Deprecated: Use i18nRespKit instead.
+*/
 func MustSetUp(respProvider RespProvider, options ...Option) {
 	if err := SetUp(respProvider, options...); err != nil {
 		logrusKit.DisableQuote(nil)
