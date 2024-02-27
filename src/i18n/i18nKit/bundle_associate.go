@@ -7,7 +7,7 @@ import (
 	"golang.org/x/text/language"
 )
 
-// Associate 关联
+// Associate 关联其他语言代码.
 /*
 @param languageCode 语言代码，可参考: i18nKit/_info.md
 */
