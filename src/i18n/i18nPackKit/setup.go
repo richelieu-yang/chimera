@@ -47,6 +47,24 @@ func SetUp(defaultLanguage language.Tag, messageFilePaths []string, maker BeanMa
 	return
 }
 
+func LoadMessageFile(path string) error {
+	if innerBundle == nil {
+		return NotSetupError
+	}
+
+	_, err := innerBundle.LoadMessageFile(path)
+	return err
+}
+
+func LoadMessageFileBytes(buf []byte, path string) error {
+	if innerBundle == nil {
+		return NotSetupError
+	}
+
+	_, err := innerBundle.ParseMessageFileBytes(buf, path)
+	return err
+}
+
 func getMaker() BeanMaker {
 	return condition.TernaryOperator(innerBeanMaker != nil, innerBeanMaker, defaultBeanMaker)
 }
