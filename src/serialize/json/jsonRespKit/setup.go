@@ -1,3 +1,4 @@
+// Package jsonRespKit Deprecated: Use i18nRespKit instead.
 package jsonRespKit
 
 import (

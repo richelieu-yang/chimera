@@ -8,10 +8,6 @@ import (
 )
 
 func TestMustSetUp(t *testing.T) {
-	fmt.Println(Seal("0", nil)) // {"code":"0","message":""} <nil>
-}
-
-func TestMustSetUp1(t *testing.T) {
 	if _, err := pathKit.ReviseWorkingDirInTestMode(consts.ProjectName); err != nil {
 		panic(err)
 	}
