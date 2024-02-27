@@ -14,7 +14,8 @@ import (
 // NewBundle
 /*
 PS:
-(1) 返回的 *i18n.Bundle 实例，后续可以通过 Bundle.LoadMessageFile 或 Bundle.ParseMessageFileBytes 继续加载message file.
+(1) 返回的 *i18n.Bundle 实例，后续可以通过 Bundle.LoadMessageFile() 或 Bundle.ParseMessageFileBytes() 继续加载message file;
+(2) Bundle.ParseMessageFileBytes(buf []byte, path string)，传参path可以是 文件名 || 文件路径（相对或绝对，可以不存在）.
 
 @param defaultLanguage e.g. language.English || language.Chinese
 @param messageFilePaths (1) 可以为nil
