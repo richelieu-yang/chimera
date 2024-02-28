@@ -61,6 +61,7 @@ require (
 	github.com/klauspost/cpuid/v2 v2.2.7
 	github.com/linxGnu/grocksdb v1.8.12
 	github.com/lionsoul2014/ip2region/binding/golang v0.0.0-20231013030745-3066d243cd04
+	github.com/liuzl/gocc v0.0.0-20231231122217-0372e1059ca5
 	github.com/magiconair/properties v1.8.7
 	github.com/matoous/go-nanoid/v2 v2.0.0
 	github.com/mitchellh/go-homedir v1.1.0
@@ -87,7 +88,6 @@ require (
 	github.com/spf13/cast v1.6.0
 	github.com/spf13/cobra v1.8.0
 	github.com/spf13/viper v1.18.2
-	github.com/stevenyao/go-opencc v0.0.0-20161014062826-cc376a51b65e
 	github.com/tidwall/buntdb v1.3.0
 	github.com/tidwall/gjson v1.17.1
 	github.com/unidoc/unioffice v1.30.0
@@ -134,6 +134,7 @@ require (
 	github.com/99designs/keyring v1.2.1 // indirect
 	github.com/AthenZ/athenz v1.10.39 // indirect
 	github.com/DataDog/zstd v1.5.2 // indirect
+	github.com/adamzy/cedar-go v0.0.0-20170805034717-80a9c64b256d // indirect
 	github.com/alibabacloud-go/debug v0.0.0-20190504072949-9472017b5c68 // indirect
 	github.com/alibabacloud-go/tea v1.1.17 // indirect
 	github.com/alibabacloud-go/tea-utils v1.4.4 // indirect
@@ -203,6 +204,8 @@ require (
 	github.com/jsummers/gobmp v0.0.0-20151104160322-e2ba15ffa76e // indirect
 	github.com/leodido/go-urn v1.4.0 // indirect
 	github.com/linkedin/goavro/v2 v2.9.8 // indirect
+	github.com/liuzl/cedar-go v0.0.0-20170805034717-80a9c64b256d // indirect
+	github.com/liuzl/da v0.0.0-20180704015230-14771aad5b1d // indirect
 	github.com/lufia/plan9stats v0.0.0-20230326075908-cb1d2100619a // indirect
 	github.com/mattn/go-colorable v0.1.13 // indirect
 	github.com/mattn/go-isatty v0.0.20 // indirect
