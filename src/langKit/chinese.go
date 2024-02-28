@@ -4,6 +4,11 @@ import (
 	"github.com/liuzl/gocc"
 )
 
+// T2S 繁体中文 => 简体中文
+func T2S(in string) (string, error) {
+	return convert("t2s", in)
+}
+
 // S2T 简体中文 => 繁体中文
 func S2T(in string) (string, error) {
 	return convert("s2t", in)
