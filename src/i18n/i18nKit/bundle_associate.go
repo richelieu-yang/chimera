@@ -10,7 +10,8 @@ import (
 
 // Associate 关联其他语言代码.
 /*
-@param languageCode 语言代码，可参考: i18nKit/_info.md
+@param languageCode 语言代码，(1) 可参考: i18nKit/_info.md
+							(2) 大小写“不敏感”
 */
 func Associate(bundle *i18n.Bundle, messageFile *i18n.MessageFile, languageCodes ...string) (err error) {
 	if err = interfaceKit.AssertNotNil(bundle, "bundle"); err != nil {
