@@ -6,9 +6,6 @@ I18N国际化
 时间相关的国际化
     https://github.com/golang-module/carbon
 
-## 第三方库 nicksnyder/go-i18n
-- [github 2.7k](https://github.com/nicksnyder/go-i18n)
-
 ## 第三方库 gin-contrib/i18n（搭配Gin; 实际上是封装了nicksnyder/go-i18n）
 - [github 62](https://github.com/gin-contrib/i18n)
 
@@ -27,5 +24,9 @@ I18N国际化
 - en          英语
 - en-US       美国英语
 - en-GB       英国英语
+
+## （推荐）第三方库 nicksnyder/go-i18n
+- [github 2.7k](https://github.com/nicksnyder/go-i18n)
+- 对于语言代码（lang），大小写"不敏感".
 
 
