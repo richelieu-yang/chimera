@@ -2,24 +2,23 @@ package main
 
 import (
 	"fmt"
-	"github.com/richelieu-yang/chimera/v3/src/langKit"
+	"regexp"
 )
 
 func main() {
-	fmt.Println(langKit.S2T("鼠标"))
-	fmt.Println(langKit.S2HK("鼠标"))
-	fmt.Println(langKit.S2TW("鼠标"))
+	str := `
+3个码：2BTE7KLR4PEQ兑换码4ATWKLRTPZWU兑换码QBBSZ57HHS24
+2个码：DBSGA96YL3YQ MAT7Y6NJQP2Y
+5个兑换码烦请分别兑换
+可+微上新第一时间通知：sanqiangame
+游戏内>左上角菜单>右上角...>兑换码
+如需本店更多星铁商品请点击：https://s.tb.cn/c.0vdwpI
+`
 
-	//s2t, err := gocc.New("s2t")
-	//if err != nil {
-	//	log.Fatal(err)
-	//}
-	//in := `自然语言处理是人工智能领域中的一个重要方向。`
-	//out, err := s2t.Convert(in)
-	//if err != nil {
-	//	log.Fatal(err)
-	//}
-	//fmt.Printf("%s\n%s\n", in, out)
-	////自然语言处理是人工智能领域中的一个重要方向。
-	////自然語言處理是人工智能領域中的一個重要方向。
+	{
+		re := regexp.MustCompile("[a-zA-Z0-9]{12,14}")
+		s := re.FindAllString(str, -1)
+		fmt.Println(len(s)) // 5
+		fmt.Println(s)      // [2BTE7KLR4PEQ 4ATWKLRTPZWU QBBSZ57HHS24 DBSGA96YL3YQ MAT7Y6NJQP2Y]
+	}
 }
