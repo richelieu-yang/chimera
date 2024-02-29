@@ -47,12 +47,15 @@ func MakeRequestBodySeekable(req *http.Request) error {
 }
 
 func TryToResetRequestBody(req *http.Request) error {
-	err := ResetRequestBody(req)
-	if errors.Is(err, NotSeekableError) {
-		// 请求体无法重置
+	if err := ResetRequestBody(req); err != nil {
+		if !errors.Is(err, NotSeekableError) {
+			// (1) 重置失败
+			return err
+		}
+		// (2) 请求体无法重置
 		return nil
 	}
-	return err
+	return nil
 }
 
 // ResetRequestBody 重置请求体，以防: 已经读完body了，请求转发给别人，别人收到的请求没内容.
