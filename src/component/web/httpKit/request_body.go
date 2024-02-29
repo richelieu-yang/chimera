@@ -91,15 +91,16 @@ func ToRequestBodyString(m map[string][]string) string {
 	return urlKit.ToEscapedQueryString(m)
 }
 
-// OverrideRequestBody 覆盖request body.
-/*
-条件:
-(1) POST
-(2) x-www-form-urlencoded
-*/
-func OverrideRequestBody(req *http.Request, m map[string][]string) {
+// OverrideRequestBody 覆盖 POST请求 的请求体（request body）.
+func OverrideRequestBody(req *http.Request, m map[string][]string) error {
+	if req.Method != http.MethodPost {
+		return errorKit.New("Method(%s) isn't POST", req.Method)
+	}
+
 	content := ToRequestBodyString(m)
 	reader := strings.NewReader(content)
 	req.Body = ioKit.NopCloser(reader)
 	req.ContentLength = int64(len(content))
+	SetHeader(req.Header, "Content-Type", "application/x-www-form-urlencoded")
+	return nil
 }
