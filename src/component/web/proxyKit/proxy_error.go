@@ -1,4 +1,4 @@
-package httpKit
+package proxyKit
 
 import (
 	"errors"

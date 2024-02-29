@@ -2,7 +2,6 @@ package proxyKit
 
 import (
 	"github.com/gin-gonic/gin"
-	"github.com/richelieu-yang/chimera/v3/src/component/web/httpKit"
 	"net/http"
 	"testing"
 )
@@ -13,7 +12,7 @@ func TestProxy(t *testing.T) {
 	engine.Any("/proxy", func(ctx *gin.Context) {
 		err := Proxy(ctx.Writer, ctx.Request, "127.0.0.1:8888")
 		if err != nil {
-			if httpKit.IsProxyDialError(err) {
+			if IsProxyDialError(err) {
 				ctx.String(520, "proxy dial error")
 				return
 			}
