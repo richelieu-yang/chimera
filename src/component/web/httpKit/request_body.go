@@ -56,22 +56,32 @@ func TryToResetRequestBody(req *http.Request) error {
 }
 
 // ResetRequestBody 重置请求体，以防: 已经读完body了，请求转发给别人，别人收到的请求没内容.
-/*
-PS: req.Body可能为nil.
-*/
-func ResetRequestBody(req *http.Request) (err error) {
-	if strKit.EqualsIgnoreCase(req.Method, http.MethodGet) || req.Body == nil || req.Body == http.NoBody {
+func ResetRequestBody(req *http.Request) error {
+	if req.Body == nil || req.Body == http.NoBody {
 		// do nothing(无需重置)
-		return
+		return nil
 	}
 
 	seeker, ok := req.Body.(io.Seeker)
 	if !ok {
-		err = NotSeekableError
-		return
+		return NotSeekableError
 	}
-	_, err = ioKit.SeekToStart(seeker)
-	return
+	_, err := ioKit.SeekToStart(seeker)
+	return err
+}
+
+// OverrideRequestBody 覆盖 POST请求 的请求体（request body）.
+func OverrideRequestBody(req *http.Request, m map[string][]string) error {
+	if req.Method != http.MethodPost {
+		return errorKit.New("Method(%s) isn't POST", req.Method)
+	}
+
+	content := ToRequestBodyString(m)
+	reader := strings.NewReader(content)
+	req.Body = ioKit.NopCloser(reader)
+	req.ContentLength = int64(len(content))
+	SetHeader(req.Header, "Content-Type", "application/x-www-form-urlencoded")
+	return nil
 }
 
 // ToRequestBodyString
@@ -89,18 +99,4 @@ e.g.
 */
 func ToRequestBodyString(m map[string][]string) string {
 	return urlKit.ToEscapedQueryString(m)
-}
-
-// OverrideRequestBody 覆盖 POST请求 的请求体（request body）.
-func OverrideRequestBody(req *http.Request, m map[string][]string) error {
-	if req.Method != http.MethodPost {
-		return errorKit.New("Method(%s) isn't POST", req.Method)
-	}
-
-	content := ToRequestBodyString(m)
-	reader := strings.NewReader(content)
-	req.Body = ioKit.NopCloser(reader)
-	req.ContentLength = int64(len(content))
-	SetHeader(req.Header, "Content-Type", "application/x-www-form-urlencoded")
-	return nil
 }
