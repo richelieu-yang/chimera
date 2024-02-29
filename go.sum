@@ -708,8 +708,8 @@ github.com/buger/jsonparser v1.1.1/go.mod h1:6RYKKt7H4d4+iWqouImQ9R2FZql3VbhNgx2
 github.com/bytedance/sonic v1.5.0/go.mod h1:ED5hyg4y6t3/9Ku1R6dU/4KyJ48DZ4jPhfY1O2AihPM=
 github.com/bytedance/sonic v1.9.1/go.mod h1:i736AoUSYt75HyZLoJW9ERYxcy6eaN6h4BZXU064P/U=
 github.com/bytedance/sonic v1.10.0-rc/go.mod h1:ElCzW+ufi8qKqNW0FY314xriJhyJhuoJ3gFZdAHF7NM=
-github.com/bytedance/sonic v1.11.1 h1:JC0+6c9FoWYYxakaoa+c5QTtJeiSZNeByOBhXtAFSn4=
-github.com/bytedance/sonic v1.11.1/go.mod h1:iZcSUejdk5aukTND/Eu/ivjQuEL0Cu9/rf50Hi0u/g4=
+github.com/bytedance/sonic v1.11.2 h1:ywfwo0a/3j9HR8wsYGWsIWl2mvRsI950HyoxiBERw5A=
+github.com/bytedance/sonic v1.11.2/go.mod h1:iZcSUejdk5aukTND/Eu/ivjQuEL0Cu9/rf50Hi0u/g4=
 github.com/cenkalti/backoff/v4 v4.2.0/go.mod h1:Y3VNntkOUPxTVeUxJ/G5vcM//AlwfmyYozVcomhLiZE=
 github.com/cenkalti/backoff/v4 v4.2.1 h1:y4OZtCnogmCPw98Zjyt5a6+QwPLGkiQsYW5oUqylYbM=
 github.com/cenkalti/backoff/v4 v4.2.1/go.mod h1:Y3VNntkOUPxTVeUxJ/G5vcM//AlwfmyYozVcomhLiZE=
@@ -907,9 +907,8 @@ github.com/go-oauth2/oauth2/v4 v4.5.2 h1:CuZhD3lhGuI6aNLyUbRHXsgG2RwGRBOuCBfd4WQ
 github.com/go-oauth2/oauth2/v4 v4.5.2/go.mod h1:wk/2uLImWIa9VVQDgxz99H2GDbhmfi/9/Xr+GvkSUSQ=
 github.com/go-oauth2/redis/v4 v4.1.1 h1:uYLGPbAEZ3tb2Qg+BHzrtMHbJ7NeX6S9Ol0+iYyBF5E=
 github.com/go-oauth2/redis/v4 v4.1.1/go.mod h1:cYNT5bLEwCnrFXqSbWDvxXzfTaF/fKMf1XoRVFwBPrc=
+github.com/go-ole/go-ole v1.2.6 h1:/Fpf6oFPoeFik9ty7siob0G6Ke8QvQEuVcuChpwXzpY=
 github.com/go-ole/go-ole v1.2.6/go.mod h1:pprOEPIfldk/42T2oK7lQ4v4JSDwmV0As9GaiUsvbm0=
-github.com/go-ole/go-ole v1.3.0 h1:Dt6ye7+vXGIKZ7Xtk4s6/xVdGDQynvom7xCFEdWr6uE=
-github.com/go-ole/go-ole v1.3.0/go.mod h1:5LS6F96DhAwUc7C+1HLexzMXY1xGRSryjyPPKW6zv78=
 github.com/go-openapi/jsonpointer v0.19.3/go.mod h1:Pl9vOtqEWErmShwVjC8pYs9cog34VGT37dQOVbmoatg=
 github.com/go-openapi/jsonpointer v0.19.5/go.mod h1:Pl9vOtqEWErmShwVjC8pYs9cog34VGT37dQOVbmoatg=
 github.com/go-openapi/jsonpointer v0.19.6/go.mod h1:osyAmYz/mB/C3I+WsTTSgw1ONzaLJoLCyoi6/zppojs=
@@ -1291,8 +1290,8 @@ github.com/linkedin/goavro/v2 v2.9.8 h1:jN50elxBsGBDGVDEKqUlDuU1cFwJ11K/yrJCBMe/
 github.com/linkedin/goavro/v2 v2.9.8/go.mod h1:UgQUb2N/pmueQYH9bfqFioWxzYCZXSfF8Jw03O5sjqA=
 github.com/linxGnu/grocksdb v1.8.12 h1:1/pCztQUOa3BX/1gR3jSZDoaKFpeHFvQ1XrqZpSvZVo=
 github.com/linxGnu/grocksdb v1.8.12/go.mod h1:xZCIb5Muw+nhbDK4Y5UJuOrin5MceOuiXkVUR7vp4WY=
-github.com/lionsoul2014/ip2region/binding/golang v0.0.0-20231013030745-3066d243cd04 h1:FfdA6VoXuyjsRqZlbm5H97zGtmlcM/yB6k1Expsym1E=
-github.com/lionsoul2014/ip2region/binding/golang v0.0.0-20231013030745-3066d243cd04/go.mod h1:C5LA5UO2ZXJrLaPLYtE1wUJMiyd/nwWaCO5cw/2pSHs=
+github.com/lionsoul2014/ip2region/binding/golang v0.0.0-20240228023524-27b5efde55c7 h1:gMM+Ed3aRedBTe6Ur4LeDv80EJebj4WTud3MAOmfJ+M=
+github.com/lionsoul2014/ip2region/binding/golang v0.0.0-20240228023524-27b5efde55c7/go.mod h1:C5LA5UO2ZXJrLaPLYtE1wUJMiyd/nwWaCO5cw/2pSHs=
 github.com/liuzl/cedar-go v0.0.0-20170805034717-80a9c64b256d h1:qSmEGTgjkESUX5kPMSGJ4pcBUtYVDdkNzMrjQyvRvp0=
 github.com/liuzl/cedar-go v0.0.0-20170805034717-80a9c64b256d/go.mod h1:x7SghIWwLVcJObXbjK7S2ENsT1cAcdJcPl7dRaSFog0=
 github.com/liuzl/da v0.0.0-20180704015230-14771aad5b1d h1:hTRDIpJ1FjS9ULJuEzu69n3qTgc18eI+ztw/pJv47hs=

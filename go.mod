@@ -10,7 +10,7 @@ require (
 	github.com/andybalholm/brotli v1.1.0
 	github.com/apache/pulsar-client-go v0.12.0
 	github.com/apache/rocketmq-clients/golang/v5 v5.1.0-rc.1
-	github.com/bytedance/sonic v1.11.1
+	github.com/bytedance/sonic v1.11.2
 	github.com/coocood/freecache v1.2.4
 	github.com/dablelv/cyan v0.0.54
 	github.com/davidbyttow/govips/v2 v2.14.0
@@ -60,7 +60,7 @@ require (
 	github.com/klauspost/compress v1.17.7
 	github.com/klauspost/cpuid/v2 v2.2.7
 	github.com/linxGnu/grocksdb v1.8.12
-	github.com/lionsoul2014/ip2region/binding/golang v0.0.0-20231013030745-3066d243cd04
+	github.com/lionsoul2014/ip2region/binding/golang v0.0.0-20240228023524-27b5efde55c7
 	github.com/liuzl/gocc v0.0.0-20231231122217-0372e1059ca5
 	github.com/magiconair/properties v1.8.7
 	github.com/matoous/go-nanoid/v2 v2.0.0
@@ -171,7 +171,7 @@ require (
 	github.com/go-gl/glfw/v3.3/glfw v0.0.0-20221017161538-93cebf72946b // indirect
 	github.com/go-logr/logr v1.4.1 // indirect
 	github.com/go-logr/stdr v1.2.2 // indirect
-	github.com/go-ole/go-ole v1.3.0 // indirect
+	github.com/go-ole/go-ole v1.2.6 // indirect
 	github.com/go-playground/locales v0.14.1 // indirect
 	github.com/go-playground/universal-translator v0.18.1 // indirect
 	github.com/go-sql-driver/mysql v1.7.1 // indirect
