@@ -2,23 +2,9 @@ package main
 
 import (
 	"fmt"
-	"regexp"
+	"github.com/richelieu-yang/chimera/v3/src/langKit"
 )
 
 func main() {
-	str := `
-3个码：2BTE7KLR4PEQ兑换码4ATWKLRTPZWU兑换码QBBSZ57HHS24
-2个码：DBSGA96YL3YQ MAT7Y6NJQP2Y
-5个兑换码烦请分别兑换
-可+微上新第一时间通知：sanqiangame
-游戏内>左上角菜单>右上角...>兑换码
-如需本店更多星铁商品请点击：https://s.tb.cn/c.0vdwpI
-`
-
-	{
-		re := regexp.MustCompile("[a-zA-Z0-9]{12,14}")
-		s := re.FindAllString(str, -1)
-		fmt.Println(len(s)) // 5
-		fmt.Println(s)      // [2BTE7KLR4PEQ 4ATWKLRTPZWU QBBSZ57HHS24 DBSGA96YL3YQ MAT7Y6NJQP2Y]
-	}
+	fmt.Println(langKit.S2T("0=无错误。\n1=程序退出中。\n\n1000=新的配置与旧的配置一致。\n\n2000=参数错误：%s。\n"))
 }
