@@ -40,8 +40,8 @@ func TestEncryptWithRawURLBase64(t *testing.T) {
 	plainText := "测试 ~！@#￥%……&*（）——+·1234567890-=【】、「」|；‘。、，：“《》？abcDEF"
 	var shift = 16
 
-	cipherText := EncryptWithBase64(plainText, shift)
-	decryptedText, err := DecryptWithBase64(cipherText, shift)
+	cipherText := EncryptWithRawURLBase64(plainText, shift)
+	decryptedText, err := DecryptWithRawURLBase64(cipherText, shift)
 	if err != nil {
 		panic(err)
 	}
@@ -50,5 +50,7 @@ func TestEncryptWithRawURLBase64(t *testing.T) {
 
 	if plainText != decryptedText {
 		panic("not equal")
+	} else {
+		fmt.Println("equal")
 	}
 }
