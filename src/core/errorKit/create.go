@@ -6,6 +6,10 @@ import (
 )
 
 // New 用于创建一个自定义错误信息的error对象，并包含堆栈信息.
+/*
+@param format !!!: 类似于fmt.Errorf()，	(1) 不应该首字母大写;
+										(2) 不应该以标点符号结尾.
+*/
 func New(format string, args ...interface{}) error {
 	skip := 1
 	return gerror.NewSkipf(skip, funcKit.AddEntireCaller(skip+1, format), args...)
@@ -23,6 +27,10 @@ func NewSkip(skip int, format string, args ...interface{}) error {
 }
 
 // Wrap 用于包裹其他错误error对象，构造成多级的错误信息，包含堆栈信息.
+/*
+@param format !!!: 类似于fmt.Errorf()，	(1) 不应该首字母大写;
+										(2) 不应该以标点符号结尾.
+*/
 func Wrap(err error, format string, args ...interface{}) error {
 	skip := 1
 	return gerror.WrapSkipf(skip, err, funcKit.AddEntireCaller(skip+1, format), args...)
