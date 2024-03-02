@@ -41,9 +41,11 @@ func PrintBasicDetails(logger *logrus.Logger) {
 	printOsInfo()
 
 	/* user */
+	logger.Infof("[CHIMERA, USER] uid: [%s].", userKit.GetUid())
+	logger.Infof("[CHIMERA, USER] gid: [%s].", userKit.GetGid())
 	logger.Infof("[CHIMERA, USER] name: [%s].", userKit.GetName())
 	logger.Infof("[CHIMERA, USER] user name: [%s].", userKit.GetUserName())
-	logger.Infof("[CHIMERA, PATH] home dir: [%s].", userKit.GetUserHomeDir())
+	logger.Infof("[CHIMERA, USER] home dir: [%s].", userKit.GetUserHomeDir())
 
 	/* path */
 	logger.Infof("[CHIMERA, PATH] working directory: [%s].", pathKit.GetWorkingDir())

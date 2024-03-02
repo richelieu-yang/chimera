@@ -1,5 +1,31 @@
 package userKit
 
+import (
+	"github.com/sirupsen/logrus"
+	"os/user"
+)
+
+var u *user.User
+
+func init() {
+	var err error
+
+	u, err = user.Current()
+	if err != nil {
+		logrus.Fatal("Fail to get current user, error: ", err.Error())
+	}
+}
+
+// GetUid user ID
+func GetUid() string {
+	return u.Uid
+}
+
+// GetGid primary group ID
+func GetGid() string {
+	return u.Gid
+}
+
 func GetName() string {
 	return u.Name
 }
@@ -16,7 +42,7 @@ e.g.
 () => "/Users/richelieu"
 */
 func GetUserHomeDir() string {
-	return userHomeDir
+	return u.HomeDir
 }
 
 //func getUserHomeDir() (string, error) {

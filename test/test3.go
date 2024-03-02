@@ -1,10 +1,18 @@
 package main
 
-import "fmt"
+import (
+	"fmt"
+	_ "github.com/richelieu-yang/chimera/v3/src/log/logrusInitKit"
+	"os/user"
+)
 
 func main() {
-	for i := 0; i < 26; i++ {
-		fmt.Println(string('a'+i), string('a'+25-i))
-		fmt.Println("---")
+	u, err := user.Current()
+	if err != nil {
+		panic(err)
 	}
+	fmt.Println(u.Uid)
+	fmt.Println(u.Gid)
+	fmt.Println(u.Name)
+	fmt.Println(u.Username)
 }
