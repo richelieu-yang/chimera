@@ -7,6 +7,7 @@ import (
 	"github.com/richelieu-yang/chimera/v3/src/core/mapKit"
 	"github.com/richelieu-yang/chimera/v3/src/core/sliceKit"
 	"github.com/richelieu-yang/chimera/v3/src/core/strKit"
+	"github.com/richelieu-yang/chimera/v3/src/crypto/caesarKit"
 )
 
 type JWT struct {
@@ -59,6 +60,8 @@ func (j *JWT) New(method jwt.SigningMethod, claims jwt.MapClaims, options ...jwt
 
 // Parse
 /*
+PS: 如果 token 过期，会返回 error（可以通过 IsTokenExpiredError 判断）.
+
 @param keyFunc e.g.
 	func(token *jwt.Token) (interface{}, error) {
 		// Don't forget to validate the alg is what you expect:
@@ -101,4 +104,21 @@ func (j *JWT) Parse(tokenString string, keyFunc jwt.Keyfunc, options ...jwt.Pars
 		return nil, errorKit.New("type(%T) of claims is invalid", token.Claims)
 	}
 	return claims, nil
+}
+
+func (j *JWT) NewComplexly(method jwt.SigningMethod, claims jwt.MapClaims, options ...jwt.TokenOption) (cipherText string, err error) {
+	var tokenString string
+	tokenString, err = j.New(method, claims, options...)
+	if err != nil {
+		return
+	}
+
+	cipherText = caesarKit.Encrypt(tokenString, j.shift)
+	return
+}
+
+func (j *JWT) ParseComplexly(cipherText string, keyFunc jwt.Keyfunc, options ...jwt.ParserOption) (jwt.MapClaims, error) {
+	tokenString := caesarKit.Decrypt(cipherText, j.shift)
+
+	return j.Parse(tokenString, keyFunc, options...)
 }
