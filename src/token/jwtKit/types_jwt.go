@@ -60,7 +60,7 @@ func (j *JWT) New(method jwt.SigningMethod, claims jwt.MapClaims, options ...jwt
 
 // Parse
 /*
-PS: 如果 token 过期，会返回 error（可以通过 IsTokenExpiredError 判断）.
+PS: 如果 token 过期（根据"exp"，有的话），会返回 error（可以通过 IsTokenExpiredError 判断）.
 
 @param keyFunc e.g.
 	func(token *jwt.Token) (interface{}, error) {
