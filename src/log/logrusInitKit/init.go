@@ -13,6 +13,9 @@ func init() {
 	logrusKit.MustSetUp(nil)
 }
 
-// Initialize Deprecated: 不要调用此函数，建议通过 "import _" 引入.
-func Initialize() {
+// SetUp
+/*
+Deprecated: 不要调用此函数，建议通过 "import _" 引入.
+*/
+func SetUp() {
 }
