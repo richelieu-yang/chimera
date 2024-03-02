@@ -7,15 +7,42 @@ import (
 
 func TestEncrypt(t *testing.T) {
 	plainText := "测试 abcDEF"
-	var shift = 8
 
-	cipherText := Encrypt(plainText, shift)
-	decryptedText := Decrypt(cipherText, shift)
-	fmt.Println("cipherText:\n", cipherText)
-	fmt.Println("decryptedText:\n", decryptedText)
-
-	if plainText != decryptedText {
-		panic("not equal")
+	{
+		shift := 0
+		fmt.Println("shift:", shift)
+		cipherText := Encrypt(plainText, shift)
+		decryptedText := Decrypt(cipherText, shift)
+		fmt.Println("cipherText:", cipherText)
+		fmt.Println("decryptedText:", decryptedText)
+		if plainText != decryptedText {
+			panic("not equal")
+		}
+		fmt.Println("---")
+	}
+	{
+		shift := 25
+		fmt.Println("shift:", shift)
+		cipherText := Encrypt(plainText, shift)
+		decryptedText := Decrypt(cipherText, shift)
+		fmt.Println("cipherText:", cipherText)
+		fmt.Println("decryptedText:", decryptedText)
+		if plainText != decryptedText {
+			panic("not equal")
+		}
+		fmt.Println("---")
+	}
+	{
+		shift := 26
+		fmt.Println("shift:", shift)
+		cipherText := Encrypt(plainText, shift)
+		decryptedText := Decrypt(cipherText, shift)
+		fmt.Println("cipherText:", cipherText)
+		fmt.Println("decryptedText:", decryptedText)
+		if plainText != decryptedText {
+			panic("not equal")
+		}
+		fmt.Println("---")
 	}
 }
 
