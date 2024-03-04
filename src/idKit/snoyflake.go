@@ -1,7 +1,7 @@
 package idKit
 
 import (
-	"github.com/richelieu-yang/chimera/v3/src/core/errorKit"
+	"github.com/richelieu-yang/chimera/v3/src/core/interfaceKit"
 	"github.com/sony/sonyflake"
 	"time"
 )
@@ -31,8 +31,8 @@ func NewSonyFlake(settings *sonyflake.Settings) (*sonyflake.Sonyflake, error) {
 	}
 
 	sf := sonyflake.NewSonyflake(*settings)
-	if sf == nil {
-		return nil, errorKit.New("sf == nil")
+	if err := interfaceKit.AssertNotNil(sf, "sf"); err != nil {
+		return nil, err
 	}
 	return sf, nil
 }
