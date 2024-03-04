@@ -1,6 +1,5 @@
 ## 参考
-- 
-
+- [使用Go轻松实现JWT身份验证](https://mp.weixin.qq.com/s/mmeVZnrYzYPukdatjZ9Ydg)
 
 ## golang-jwt/jwt
 - [github 6.1k Star](https://github.com/golang-jwt/jwt)
@@ -30,3 +29,5 @@ func main() {
 	fmt.Println(base64Kit.DecodeStringToString("-BRTwjN-sAlUjO-82qDrNHdMtGAwgWH05PrN49Ep_sU", base64Kit.WithEncoding(base64.RawURLEncoding)))
 }
 ```
+
+
