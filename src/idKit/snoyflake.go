@@ -3,6 +3,12 @@ package idKit
 import (
 	"github.com/richelieu-yang/chimera/v3/src/core/errorKit"
 	"github.com/sony/sonyflake"
+	"time"
+)
+
+var (
+	// Decompose returns a set of Sonyflake ID parts.
+	Decompose func(id uint64) map[string]uint64 = sonyflake.Decompose
 )
 
 // NewSonyFlake 雪花算法.
@@ -17,7 +23,11 @@ golang实现的雪花算法 https://mp.weixin.qq.com/s/visG_GHtU67xCtsvvG1aPQ
 */
 func NewSonyFlake(settings *sonyflake.Settings) (*sonyflake.Sonyflake, error) {
 	if settings == nil {
-		settings = &sonyflake.Settings{}
+		settings = &sonyflake.Settings{
+			StartTime:      time.Now(),
+			MachineID:      nil,
+			CheckMachineID: nil,
+		}
 	}
 
 	sf := sonyflake.NewSonyflake(*settings)

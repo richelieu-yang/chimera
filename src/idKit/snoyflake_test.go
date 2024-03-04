@@ -17,6 +17,9 @@ func TestNewSonyFlake(t *testing.T) {
 		}
 
 		str := fmt.Sprintf("%d", id)
-		fmt.Println(str, len(str))
+		if len(str) != 18 {
+			panic("len(str) != 18")
+		}
+		fmt.Println(str)
 	}
 }
