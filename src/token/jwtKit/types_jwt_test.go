@@ -14,9 +14,9 @@ func TestJWT(t *testing.T) {
 	//method := jwt.SigningMethodHS512
 
 	tokenString, err := j.New(method, map[string]interface{}{
-		"a":   "b",
-		"exp": jwt.NewNumericDate(time.Now().Add(-time.Hour)),
-		//"exp": jwt.NewNumericDate(time.Now().Add(time.Hour)),
+		"a": "b",
+		//"exp": jwt.NewNumericDate(time.Now().Add(-time.Hour)),
+		"iat": jwt.NewNumericDate(time.Now().Add(-time.Hour)),
 	})
 	if err != nil {
 		panic(err)
@@ -39,6 +39,7 @@ func TestJWT(t *testing.T) {
 		panic(err)
 	}
 	fmt.Println(mc)
+	fmt.Println(mc.GetIssuedAt())
 }
 
 func TestJWTComplexly(t *testing.T) {

@@ -5,6 +5,11 @@
 ## golang-jwt/jwt
 - [github 6.1k Star](https://github.com/golang-jwt/jwt)
 
+#### MapClaims
+时间相关的字段exp、nbf、iat: 
+- get 建议使用 MapClaims 里面的方法; 
+- set 建议通过 jwt.NewNumericDate().
+
 #### 使用的是 base64.RawURLEncoding，生成的 jwt 可以直接放到 url 中
 详见源码: Token.SignedString()
 
