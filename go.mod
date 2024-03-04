@@ -31,7 +31,7 @@ require (
 	github.com/go-kratos/kratos/v2 v2.7.2
 	github.com/go-oauth2/oauth2/v4 v4.5.2
 	github.com/go-oauth2/redis/v4 v4.1.1
-	github.com/go-playground/validator/v10 v10.18.0
+	github.com/go-playground/validator/v10 v10.19.0
 	github.com/go-redis/redis/v8 v8.11.5
 	github.com/go-redsync/redsync/v4 v4.12.1
 	github.com/goccy/go-json v0.10.2
@@ -92,7 +92,7 @@ require (
 	github.com/tidwall/gjson v1.17.1
 	github.com/unidoc/unioffice v1.30.0
 	github.com/xuri/excelize/v2 v2.8.1
-	github.com/zeromicro/go-zero v1.6.2
+	github.com/zeromicro/go-zero v1.6.3
 	github.com/zeromicro/zero-contrib/logx/logrusx v0.0.0-20231030135404-af9ae855016f
 	go.etcd.io/etcd/client/v3 v3.5.12
 	go.opentelemetry.io/otel v1.24.0
@@ -239,7 +239,7 @@ require (
 	github.com/spf13/pflag v1.0.5 // indirect
 	github.com/srwiley/oksvg v0.0.0-20221011165216-be6e8873101c // indirect
 	github.com/srwiley/rasterx v0.0.0-20220730225603-2ab79fcdd4ef // indirect
-	github.com/stretchr/testify v1.8.4 // indirect
+	github.com/stretchr/testify v1.9.0 // indirect
 	github.com/subosito/gotenv v1.6.0 // indirect
 	github.com/tevino/abool v1.2.0 // indirect
 	github.com/tidwall/btree v1.4.2 // indirect
