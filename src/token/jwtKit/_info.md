@@ -1,4 +1,5 @@
 ## 参考
+- notes/Web（漏洞等）/WEB - Token（JWT）.wps
 - [使用Go轻松实现JWT身份验证](https://mp.weixin.qq.com/s/mmeVZnrYzYPukdatjZ9Ydg)
 
 ## golang-jwt/jwt
