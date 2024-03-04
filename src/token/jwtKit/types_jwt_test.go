@@ -8,7 +8,7 @@ import (
 )
 
 func TestJWT(t *testing.T) {
-	j := NewJWT([]byte("qwdqwdqwdq46456465"))
+	j := NewJWT([]byte("my_secret"))
 	method := jwt.SigningMethodHS256
 	//method := jwt.SigningMethodHS384
 	//method := jwt.SigningMethodHS512
@@ -21,7 +21,7 @@ func TestJWT(t *testing.T) {
 	if err != nil {
 		panic(err)
 	}
-	fmt.Println("tokenString", tokenString)
+	fmt.Println("tokenString:", tokenString)
 
 	mc, err := j.Parse(tokenString, func(token *jwt.Token) (interface{}, error) {
 		// Don't forget to validate the alg is what you expect:
