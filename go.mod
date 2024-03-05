@@ -15,7 +15,7 @@ require (
 	github.com/dablelv/cyan v0.0.54
 	github.com/davidbyttow/govips/v2 v2.14.0
 	github.com/deckarep/golang-set/v2 v2.6.0
-	github.com/duke-git/lancet/v2 v2.2.9
+	github.com/duke-git/lancet/v2 v2.3.0
 	github.com/emersion/go-imap v1.2.1
 	github.com/emersion/go-imap-id v0.0.0-20190926060100-f94a56b9ecde
 	github.com/emersion/go-message v0.18.0
@@ -36,7 +36,7 @@ require (
 	github.com/go-redsync/redsync/v4 v4.12.1
 	github.com/goccy/go-json v0.10.2
 	github.com/gogf/gf/v2 v2.6.3
-	github.com/golang-jwt/jwt/v5 v5.2.0
+	github.com/golang-jwt/jwt/v5 v5.2.1
 	github.com/golang-module/carbon/v2 v2.3.9
 	github.com/google/go-cmp v0.6.0
 	github.com/google/uuid v1.6.0
