@@ -3,36 +3,41 @@ package mathKit
 import (
 	"github.com/duke-git/lancet/v2/mathutil"
 	"github.com/shopspring/decimal"
+	"golang.org/x/exp/constraints"
 )
 
-var (
-	// Round 四舍五入，保留n位小数
-	/*
-	   e.g.
-	   	fmt.Println(Round(3.14, 1))  // 3.1
-	   	fmt.Println(Round(3.15, 1))  // 3.2
-	   	fmt.Println(Round(-3.14, 1)) // -3.1
-	   	fmt.Println(Round(-3.15, 1)) // -3.2
-	*/
-	Round = mathutil.RoundToFloat
+// Round 四舍五入，保留n位小数
+/*
+   e.g.
+   	fmt.Println(Round(3.14, 1))  // 3.1
+   	fmt.Println(Round(3.15, 1))  // 3.2
+   	fmt.Println(Round(-3.14, 1)) // -3.1
+   	fmt.Println(Round(-3.15, 1)) // -3.2
+*/
+func Round[T constraints.Float | constraints.Integer](x T, n int) float64 {
+	return mathutil.RoundToFloat(x, n)
+}
 
-	// RoundToString 四舍五入，保留n位小数，返回字符串
-	RoundToString = mathutil.RoundToString
+// RoundToString 四舍五入，保留n位小数，返回字符串
+func RoundToString[T constraints.Float | constraints.Integer](x T, n int) string {
+	return mathutil.RoundToString(x, n)
+}
 
-	// TruncRound 截断n位小数（不进行四舍五入）
-	/*
-	   @param n 保留的小数位（可以 < 0，但有点奇怪!!!）
+// TruncRound 截断n位小数（不进行四舍五入）
+/*
+   @param n 保留的小数位（可以 < 0，但有点奇怪!!!）
 
-	   e.g.
-	   (1234.124, 0)	=> 1234
-	   (1234.124, -1)	=> 1234
-	   (1234.124, -2)	=> 0
+   e.g.
+   (1234.124, 0)	=> 1234
+   (1234.124, -1)	=> 1234
+   (1234.124, -2)	=> 0
 
-	   (100.125, 2)	=> 100.12
-	   (100.125, 3)	=> 100.125
-	*/
-	TruncRound func(x float64, n int) float64 = mathutil.TruncRound
-)
+   (100.125, 2)	=> 100.12
+   (100.125, 3)	=> 100.125
+*/
+func TruncRound[T constraints.Float | constraints.Integer](x T, n int) T {
+	return mathutil.TruncRound(x, n)
+}
 
 //// Round 保留小数位（四舍五入），类似于 math.Round()，但功能更强大
 ///*
