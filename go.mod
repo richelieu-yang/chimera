@@ -2,8 +2,6 @@ module github.com/richelieu-yang/chimera/v3
 
 go 1.22
 
-toolchain go1.22.0
-
 require (
 	fyne.io/fyne/v2 v2.4.4
 	github.com/alwindoss/morse v1.0.1
@@ -37,7 +35,7 @@ require (
 	github.com/goccy/go-json v0.10.2
 	github.com/gogf/gf/v2 v2.6.3
 	github.com/golang-jwt/jwt/v5 v5.2.1
-	github.com/golang-module/carbon/v2 v2.3.9
+	github.com/golang-module/carbon/v2 v2.3.10
 	github.com/google/go-cmp v0.6.0
 	github.com/google/uuid v1.6.0
 	github.com/google/wire v0.6.0
@@ -119,8 +117,8 @@ require (
 	golang.org/x/text v0.14.0
 	golang.org/x/time v0.5.0
 	golang.org/x/tools v0.19.0
-	google.golang.org/grpc v1.62.0
-	google.golang.org/protobuf v1.32.0
+	google.golang.org/grpc v1.62.1
+	google.golang.org/protobuf v1.33.0
 	gopkg.in/yaml.v3 v3.0.1
 	gorm.io/driver/mysql v1.5.4
 	gorm.io/gorm v1.25.7
