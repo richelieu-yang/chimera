@@ -33,7 +33,7 @@ require (
 	github.com/go-redis/redis/v8 v8.11.5
 	github.com/go-redsync/redsync/v4 v4.12.1
 	github.com/goccy/go-json v0.10.2
-	github.com/gogf/gf/v2 v2.6.3
+	github.com/gogf/gf/v2 v2.6.4
 	github.com/golang-jwt/jwt/v5 v5.2.1
 	github.com/golang-module/carbon/v2 v2.3.10
 	github.com/google/go-cmp v0.6.0
@@ -58,7 +58,7 @@ require (
 	github.com/klauspost/compress v1.17.7
 	github.com/klauspost/cpuid/v2 v2.2.7
 	github.com/linxGnu/grocksdb v1.8.12
-	github.com/lionsoul2014/ip2region/binding/golang v0.0.0-20240228023524-27b5efde55c7
+	github.com/lionsoul2014/ip2region/binding/golang v0.0.0-20240307020853-f8f5f687e6a2
 	github.com/liuzl/gocc v0.0.0-20231231122217-0372e1059ca5
 	github.com/magiconair/properties v1.8.7
 	github.com/matoous/go-nanoid/v2 v2.0.0
