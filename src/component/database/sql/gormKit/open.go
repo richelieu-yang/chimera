@@ -35,9 +35,7 @@ func Open(dialector gorm.Dialector, poolConfig *PoolConfig, options ...gorm.Opti
 	/*
 		连接池（GORM 使用 database/sql 来维护连接池） https://gorm.io/zh_CN/docs/connecting_to_the_database.html#%E8%BF%9E%E6%8E%A5%E6%B1%A0
 	*/
-	if err := poolConfig.TakeEffect(sqlDB); err != nil {
-		return nil, err
-	}
+	poolConfig.TakeEffect(sqlDB)
 
 	return db, nil
 }
