@@ -20,6 +20,12 @@ e.g.1 区分大小写
 */
 var StartWith func(s, prefix string) bool = strings.HasPrefix
 
+// CutPrefix
+/*
+e.g.
+fmt.Println(strKit.CutPrefix("abcd", "ab")) // cd true
+fmt.Println(strKit.CutPrefix("abcd", "e"))  // abcd false
+*/
 var CutPrefix func(s, prefix string) (after string, found bool) = strings.CutPrefix
 
 // RemovePrefixIfExists 去掉指定的"前缀"（如果存在的话）
@@ -31,7 +37,11 @@ PS:
 @param s		如果为""，返回""
 @param prefix	如果为""，返回传参s
 
-e.g. ""的情况
+e.g.
+fmt.Println(strKit.RemovePrefixIfExists("abcd", "ab")) // cd
+fmt.Println(strKit.RemovePrefixIfExists("abcd", "e"))  // abcd
+
+e.g.1 ""的情况
 ("", "")	=> ""
 ("1", "")	=> "1"
 ("", "1") 	=> ""
