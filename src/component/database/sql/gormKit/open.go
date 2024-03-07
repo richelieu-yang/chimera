@@ -7,6 +7,10 @@ import (
 )
 
 // Open 返回一个 *gorm.DB 实例.
+/*
+@param options	(1) 可以为nil（将采用默认值）
+				(2) 建议配置 gorm.Config.Logger，配置日志输出
+*/
 func Open(dialector gorm.Dialector, poolConfig *PoolConfig, options ...gorm.Option) (*gorm.DB, error) {
 	if err := interfaceKit.AssertNotNil(dialector, "dialector"); err != nil {
 		return nil, err
