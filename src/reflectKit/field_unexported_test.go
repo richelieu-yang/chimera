@@ -16,12 +16,12 @@ func TestGetUnexportedFieldAddr(t *testing.T) {
 		flag: true,
 	}
 
-	addr := GetUnexportedFieldAddr(b, "id")
+	addr := GetUnexportedFieldAddrOfBasicType(b, "id")
 	// 转换回原始类型，这里假设我们确切知道原始类型是什么
 	i := *(*uint)(addr)
 	fmt.Println(i) // 123
 
-	addr1 := GetUnexportedFieldAddr(b, "flag")
+	addr1 := GetUnexportedFieldAddrOfBasicType(b, "flag")
 	// 转换回原始类型，这里假设我们确切知道原始类型是什么
 	f := *(*bool)(addr1)
 	fmt.Println(f) // true
