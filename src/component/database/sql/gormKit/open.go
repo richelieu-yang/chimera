@@ -24,7 +24,7 @@ func Open(dialector gorm.Dialector, poolConfig *PoolConfig, options ...gorm.Opti
 	if err != nil {
 		return nil, err
 	}
-	// Richelieu: 此处不要Close，原因: sql.DB.Close()源码的注释.
+	// Richelieu: 此处不要Close，原因: sql.DB.Close() 源码的注释.
 	//defer sqlDB.Close()
 
 	/* ping */
