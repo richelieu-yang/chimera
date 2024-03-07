@@ -13,8 +13,7 @@ import (
 			e.g.
 				"user:pass@tcp(127.0.0.1:3306)/dbname?charset=utf8mb4&parseTime=True&loc=Local"
 */
-func NewGormDB(dsn string, opts ...gorm.Option) (*gorm.DB, error) {
+func NewGormDB(dsn string, poolConfig *gormKit.PoolConfig, opts ...gorm.Option) (*gorm.DB, error) {
 	dialector := mysql.Open(dsn)
-
-	return gormKit.Open(dialector, opts...)
+	return gormKit.Open(dialector, poolConfig, opts...)
 }

@@ -1,7 +1,8 @@
-package gormKit
+package aKit
 
 import (
 	"fmt"
+	"github.com/richelieu-yang/chimera/v3/src/component/database/sql/gormKit"
 	"gorm.io/gorm/logger"
 	"io"
 	"time"
@@ -20,7 +21,7 @@ type (
 	Config struct {
 		DsnConfig
 
-		Pool PoolConfig `json:"pool" yaml:"pool"`
+		Pool gormKit.PoolConfig `json:"pool" yaml:"pool"`
 	}
 
 	DsnConfig struct {
@@ -29,12 +30,6 @@ type (
 		// Host e.g."127.0.0.1:3306"
 		Host   string `json:"host" yaml:"host"`
 		DBName string `json:"dbName" yaml:"dbName"`
-	}
-
-	PoolConfig struct {
-		MaxIdleConns    int           `json:"maxIdleConns" yaml:"maxIdleConns"`
-		MaxOpenConns    int           `json:"maxOpenConns" yaml:"maxOpenConns"`
-		ConnMaxLifetime time.Duration `json:"connMaxLifetime" yaml:"connMaxLifetime"`
 	}
 )
 

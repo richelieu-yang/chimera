@@ -10,8 +10,7 @@ import (
 /*
 @param dsn	e.g."sqlserver://gorm:LoremIpsum86@localhost:9930?database=gorm"
 */
-func NewGormDB(dsn string, opts ...gorm.Option) (*gorm.DB, error) {
+func NewGormDB(dsn string, poolConfig *gormKit.PoolConfig, opts ...gorm.Option) (*gorm.DB, error) {
 	dialector := sqlserver.Open(dsn)
-
-	return gormKit.Open(dialector, opts...)
+	return gormKit.Open(dialector, poolConfig, opts...)
 }

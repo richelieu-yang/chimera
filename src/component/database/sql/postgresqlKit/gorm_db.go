@@ -10,8 +10,7 @@ import (
 /*
 @param dsn e.g."host=localhost user=gorm password=gorm dbname=gorm port=9920 sslmode=disable TimeZone=Asia/Shanghai"
 */
-func NewGormDB(dsn string, opts ...gorm.Option) (*gorm.DB, error) {
+func NewGormDB(dsn string, poolConfig *gormKit.PoolConfig, opts ...gorm.Option) (*gorm.DB, error) {
 	dialector := postgres.Open(dsn)
-
-	return gormKit.Open(dialector, opts...)
+	return gormKit.Open(dialector, poolConfig, opts...)
 }

@@ -1,4 +1,4 @@
-package gormKit
+package aKit
 
 import (
 	"gorm.io/gorm/logger"

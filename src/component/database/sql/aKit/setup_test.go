@@ -1,4 +1,4 @@
-package gormKit
+package aKit
 
 import (
 	"database/sql"

@@ -21,7 +21,7 @@ import (
 				"/path/to/your/database.sqlite"
 				"file:/path/to/your/database.sqlite?_loc=Local"
 */
-func NewGormDB(dsn string, opts ...gorm.Option) (*gorm.DB, error) {
+func NewGormDB(dsn string, poolConfig *gormKit.PoolConfig, opts ...gorm.Option) (*gorm.DB, error) {
 	if err := strKit.AssertNotEmpty(dsn, "dsn"); err != nil {
 		return nil, err
 	}
@@ -49,5 +49,5 @@ func NewGormDB(dsn string, opts ...gorm.Option) (*gorm.DB, error) {
 	}
 
 	dialector := sqlite.Open(dsn)
-	return gormKit.Open(dialector, opts...)
+	return gormKit.Open(dialector, poolConfig, opts...)
 }
