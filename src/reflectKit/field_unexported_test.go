@@ -5,7 +5,7 @@ import (
 	"testing"
 )
 
-func TestGetUnexportedFieldAddr(t *testing.T) {
+func TestGetUnexportedFieldAddrOfBasicType(t *testing.T) {
 	type Bean struct {
 		id   uint
 		flag bool
