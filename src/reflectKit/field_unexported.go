@@ -4,7 +4,10 @@ import (
 	"unsafe"
 )
 
-// GetUnexportedFieldAddrOfBasicType 获取未导出字段的地址.
+// GetUnexportedFieldAddrOfBasicType 获取未导出字段（基本类型）的地址.
+/*
+基本类型: bool、int...
+*/
 func GetUnexportedFieldAddrOfBasicType(ptr any, fieldName string) unsafe.Pointer {
 	field := GetField(ptr, fieldName)
 
