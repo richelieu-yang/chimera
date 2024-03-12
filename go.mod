@@ -6,7 +6,7 @@ require (
 	fyne.io/fyne/v2 v2.4.4
 	github.com/alwindoss/morse v1.0.1
 	github.com/andybalholm/brotli v1.1.0
-	github.com/apache/pulsar-client-go v0.12.0
+	github.com/apache/pulsar-client-go v0.12.1
 	github.com/apache/rocketmq-clients/golang/v5 v5.1.0-rc.1
 	github.com/bytedance/sonic v1.11.2
 	github.com/coocood/freecache v1.2.4
@@ -20,7 +20,7 @@ require (
 	github.com/fatih/structs v1.1.0
 	github.com/fsnotify/fsnotify v1.7.0
 	github.com/gabriel-vasile/mimetype v1.4.3
-	github.com/gin-contrib/cors v1.6.0
+	github.com/gin-contrib/cors v1.7.0
 	github.com/gin-contrib/gzip v0.0.6
 	github.com/gin-contrib/pprof v1.4.0
 	github.com/gin-contrib/size v0.0.0-20231230013409-e0f46cc9c1db
@@ -122,7 +122,7 @@ require (
 	gopkg.in/yaml.v3 v3.0.1
 	gorm.io/driver/clickhouse v0.6.0
 	gorm.io/driver/mysql v1.5.4
-	gorm.io/driver/postgres v1.5.6
+	gorm.io/driver/postgres v1.5.7
 	gorm.io/driver/sqlite v1.5.5
 	gorm.io/driver/sqlserver v1.5.3
 	gorm.io/gorm v1.25.7
