@@ -49,7 +49,7 @@ require (
 	github.com/hashicorp/raft v1.6.1
 	github.com/hashicorp/raft-boltdb v0.0.0-20231211162105-6c830fa4535e
 	github.com/hibiken/asynq v0.24.1
-	github.com/imroc/req/v3 v3.43.0
+	github.com/imroc/req/v3 v3.43.1
 	github.com/jedib0t/go-pretty/v6 v6.5.4
 	github.com/jinzhu/copier v0.4.0
 	github.com/joho/godotenv v1.5.1
