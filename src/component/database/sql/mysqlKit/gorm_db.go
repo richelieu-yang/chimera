@@ -12,6 +12,8 @@ import (
 
 // NewGormDB
 /*
+PS: 适用于 MySQL、MariaDB...
+
 @param dsn 	参考 https://github.com/go-sql-driver/mysql#dsn-data-source-name 获取详情
 			想要正确的处理 time.Time ，您需要带上 parseTime 参数， (更多参数) 要支持完整的 UTF-8 编码，您需要将 charset=utf8 更改为 charset=utf8mb4
 			e.g.
