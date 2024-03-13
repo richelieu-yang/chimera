@@ -13,5 +13,9 @@ func TestNewClientSimply(t *testing.T) {
 	}
 	defer client.Disconnect(nil)
 
-	fmt.Print("ok")
+	db := client.Database("bigdata")
+	collection := db.Collection("bigdata")
+	fmt.Println(collection)
+
+	fmt.Println("ok")
 }
