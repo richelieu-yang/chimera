@@ -16,7 +16,6 @@ import (
 func NewClient(ctx context.Context, uri string) (*mongo.Client, error) {
 	clientOptions := options.Client()
 	clientOptions.ApplyURI(uri)
-
 	// The default is 0, meaning a connection can remain unused indefinitely.
 	clientOptions.SetMaxConnIdleTime(0)
 	// 设置连接池大小（默认: 100）
