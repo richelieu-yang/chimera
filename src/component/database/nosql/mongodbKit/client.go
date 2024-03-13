@@ -9,11 +9,13 @@ import (
 	"time"
 )
 
-// NewClient
+// NewClientSimply
 /*
+PS: 单点启动MongoDB，默认使用 27017 端口.
+
 @param uri e.g."mongodb://localhost:27017"
 */
-func NewClient(ctx context.Context, uri string) (*mongo.Client, error) {
+func NewClientSimply(ctx context.Context, uri string) (*mongo.Client, error) {
 	clientOptions := options.Client()
 	clientOptions.ApplyURI(uri)
 	// The default is 0, meaning a connection can remain unused indefinitely.
@@ -22,7 +24,11 @@ func NewClient(ctx context.Context, uri string) (*mongo.Client, error) {
 	// If this is 0, maximum connection pool size is not limited. The default is 100.
 	clientOptions.SetMaxPoolSize(100)
 
-	client, err := mongo.Connect(ctx, clientOptions)
+	return NewClient(ctx, clientOptions)
+}
+
+func NewClient(ctx context.Context, opts ...*options.ClientOptions) (*mongo.Client, error) {
+	client, err := mongo.Connect(ctx, opts...)
 	if err != nil {
 		return nil, errorKit.Wrap(err, "fail to connect")
 	}
