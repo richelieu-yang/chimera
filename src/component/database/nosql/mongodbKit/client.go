@@ -35,7 +35,7 @@ func NewClient(ctx context.Context, opts ...*options.ClientOptions) (*mongo.Clie
 		return nil, errorKit.Wrap(err, "fail to connect")
 	}
 
-	/* ping */
+	// 检查连接是否成功
 	ctx1, cancel := context.WithTimeout(context.Background(), time.Second*2)
 	defer cancel()
 	if err := client.Ping(ctx1, readpref.Primary()); err != nil {
