@@ -26,13 +26,16 @@ func SetUp(grpcEndpoint, serviceName string, attributeMap map[string]string, opt
 		return
 	}
 
+	/* TracerProvider */
 	tp, err = NewGrpcTracerProvider(grpcEndpoint, serviceName, attributeMap, opts...)
 	if err != nil {
 		return
 	}
-
-	otel.SetTextMapPropagator(propagation.NewCompositeTextMapPropagator(propagation.TraceContext{}, propagation.Baggage{}))
 	otel.SetTracerProvider(tp)
+
+	/* TextMapPropagator */
+	textMapPropagator := propagation.NewCompositeTextMapPropagator(propagation.TraceContext{}, propagation.Baggage{})
+	otel.SetTextMapPropagator(textMapPropagator)
 
 	logrus.RegisterExitHandler(func() {
 		ShutdownTracerProvider(tp, time.Second*3)
@@ -40,6 +43,10 @@ func SetUp(grpcEndpoint, serviceName string, attributeMap map[string]string, opt
 	return
 }
 
+// check
+/*
+Deprecated: 无意义.
+*/
 func check() error {
 	if tp == nil {
 		return NotSetupError

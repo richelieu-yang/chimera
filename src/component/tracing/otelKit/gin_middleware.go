@@ -4,7 +4,7 @@ import "github.com/gin-gonic/gin"
 
 // NewGinMiddleware
 /*
-PS: 需要先setup!!!
+PS: 需要先 SetUp || MustSetUp !!!
 */
 func NewGinMiddleware() (gin.HandlerFunc, error) {
 	if err := check(); err != nil {
