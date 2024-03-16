@@ -7,8 +7,10 @@ import (
 	"go.opentelemetry.io/otel/sdk/trace"
 )
 
-// NewHttpTracerProvider Deprecated: Use NewGrpcTracerProvider instead.
+// NewHttpTracerProvider
 /*
+Deprecated: Use NewGrpcTracerProvider instead.
+
 PS:
 (1) 使用 otlptracehttp;
 (2) 此方法第二个返回值为nil的情况下，建议立即调用 otel.SetTracerProvider.
