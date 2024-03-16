@@ -2,12 +2,13 @@ package main
 
 import (
 	"fmt"
-	"go.opentelemetry.io/otel"
+	"github.com/richelieu-yang/chimera/v3/src/validateKit"
 )
 
 func main() {
-	tp := otel.GetTracerProvider()
+	fmt.Println(validateKit.Var("", "omitempty,hostname_port"))
+	fmt.Println(validateKit.Var("127.0.0.1:80", "omitempty,hostname_port"))
+	fmt.Println(validateKit.Var("127.0.0.1:65535", "omitempty,hostname_port"))
 
-	fmt.Println(tp != nil)        // true
-	fmt.Printf("%T %v\n", tp, tp) // *global.tracerProvider &{<nil> {0 0} map[] <nil>}
+	fmt.Println(validateKit.Var("127.0.0.1:65536", "omitempty,hostname_port"))
 }
