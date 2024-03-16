@@ -2,7 +2,9 @@ package otelKit
 
 import (
 	"context"
+	"github.com/richelieu-yang/chimera/v3/src/core/errorKit"
 	"github.com/richelieu-yang/chimera/v3/src/core/strKit"
+	"github.com/richelieu-yang/chimera/v3/src/validateKit"
 	"go.opentelemetry.io/otel/exporters/otlp/otlptrace/otlptracegrpc"
 	"go.opentelemetry.io/otel/sdk/trace"
 )
@@ -22,6 +24,9 @@ PS:
 					(3) 一般情况下，建议使用: otlptracegrpc.WithInsecure(), otlptracegrpc.WithDialOption(grpc.WithBlock())
 */
 func NewGrpcTracerProvider(endpoint, serviceName string, attributeMap map[string]string, opts ...otlptracegrpc.Option) (*trace.TracerProvider, error) {
+	if err := validateKit.Var(endpoint, "omitempty,hostname_port"); err != nil {
+		return nil, errorKit.New("invalid grpc endpoint(%s)", endpoint)
+	}
 	// 放在最后面（优先级最高）
 	if strKit.IsNotEmpty(endpoint) {
 		opts = append(opts, otlptracegrpc.WithEndpoint(endpoint))
