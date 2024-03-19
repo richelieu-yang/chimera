@@ -43,7 +43,38 @@ func RegisterOpts(service *api.AgentServiceRegistration, opts api.ServiceRegiste
 	return innerClient.Agent().ServiceRegisterOpts(service, opts)
 }
 
-// Discover 服务发现.
-func Discover() {
+// Deregister 服务注销.
+func Deregister(serviceID string) error {
+	if innerClient == nil {
+		return NotSetupError
+	}
 
+	return innerClient.Agent().ServiceDeregister(serviceID)
+}
+
+// Discover 服务发现.
+func Discover() (map[string]*api.AgentService, error) {
+	if innerClient == nil {
+		return nil, NotSetupError
+	}
+
+	return innerClient.Agent().Services()
+}
+
+// DiscoverWithFilter 服务发现.
+func DiscoverWithFilter(filter string) (map[string]*api.AgentService, error) {
+	if innerClient == nil {
+		return nil, NotSetupError
+	}
+
+	return innerClient.Agent().ServicesWithFilter(filter)
+}
+
+// DiscoverWithFilterOpts 服务发现.
+func DiscoverWithFilterOpts(filter string, q *api.QueryOptions) (map[string]*api.AgentService, error) {
+	if innerClient == nil {
+		return nil, NotSetupError
+	}
+
+	return innerClient.Agent().ServicesWithFilterOpts(filter, q)
 }
