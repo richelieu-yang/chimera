@@ -36,6 +36,7 @@ func Register(service *api.AgentServiceRegistration) error {
 
 // RegisterOpts 服务注册.
 func RegisterOpts(service *api.AgentServiceRegistration, opts api.ServiceRegisterOpts) error {
+
 	if innerClient == nil {
 		return NotSetupError
 	}

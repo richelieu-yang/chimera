@@ -15,5 +15,6 @@ func NewClient(config *api.Config) (*api.Client, error) {
 	if err := interfaceKit.AssertNotNil(config, "config"); err != nil {
 		return nil, err
 	}
+
 	return api.NewClient(config)
 }
