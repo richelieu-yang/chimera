@@ -58,7 +58,7 @@ require (
 	github.com/json-iterator/go v1.1.12
 	github.com/klauspost/compress v1.17.7
 	github.com/klauspost/cpuid/v2 v2.2.7
-	github.com/linxGnu/grocksdb v1.8.12
+	github.com/linxGnu/grocksdb v1.8.14
 	github.com/lionsoul2014/ip2region/binding/golang v0.0.0-20240314125457-c82399f3b9fd
 	github.com/liuzl/gocc v0.0.0-20231231122217-0372e1059ca5
 	github.com/magiconair/properties v1.8.7
