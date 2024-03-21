@@ -3,6 +3,9 @@ package bcryptKit
 import "golang.org/x/crypto/bcrypt"
 
 // HashPassword 加密用户密码（生成一个带盐（salt）的哈希值）.
+/*
+PS: 传参相同，多次执行的结果不同.
+*/
 func HashPassword(password []byte) ([]byte, error) {
 	// 迭代次数，可以根据需要调整
 	cost := bcrypt.DefaultCost
