@@ -2,13 +2,20 @@ package main
 
 import (
 	"fmt"
-	"github.com/richelieu-yang/chimera/v3/src/validateKit"
+	"golang.org/x/crypto/bcrypt"
 )
 
 func main() {
-	fmt.Println(validateKit.Var("", "omitempty,hostname_port"))                // <nil>
-	fmt.Println(validateKit.Var("127.0.0.1:80", "omitempty,hostname_port"))    // <nil>
-	fmt.Println(validateKit.Var("127.0.0.1:65535", "omitempty,hostname_port")) // <nil>
+	password := []byte("MyDarkSecret")
 
-	fmt.Println(validateKit.Var("127.0.0.1:65536", "omitempty,hostname_port")) // Key: '' Error:Field validation for '' failed on the 'hostname_port' tag
+	// Hashing the password with the default cost of 10
+	hashedPassword, err := bcrypt.GenerateFromPassword(password, bcrypt.DefaultCost)
+	if err != nil {
+		panic(err)
+	}
+	fmt.Println(string(hashedPassword))
+
+	// Comparing the password with the hash
+	err = bcrypt.CompareHashAndPassword(hashedPassword, password)
+	fmt.Println(err) // nil means it is a match
 }
