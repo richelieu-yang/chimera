@@ -4,4 +4,7 @@
 - [Go | Go 使用 consul 做服务发现](https://mp.weixin.qq.com/s/fHh_7MCCOmNup96ya7WhZQ)
 - [Gin框架接入Consul实现服务注册与发现](https://mp.weixin.qq.com/s/XywGt0qLm71jE_L4TAJRaQ)
 
+## test demo 
+- notes/_GolandProjects/consul-demo
+
 
