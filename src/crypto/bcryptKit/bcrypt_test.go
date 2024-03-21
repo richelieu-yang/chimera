@@ -14,5 +14,5 @@ func TestHashPassword(t *testing.T) {
 	}
 	fmt.Println("hashedPwd:", string(hashedPwd)) // hashedPwd: $2a$10$wqkTtz2ZWBYhZUo6knRNf.bYRTA/Mjv27XMuwNJJB2AKZZocAyIxi
 
-	fmt.Println(ComparePasswords(hashedPwd, []byte(plainPwd))) // true
+	fmt.Println(ComparePasswords(hashedPwd, []byte(plainPwd)) == nil) // true
 }

@@ -17,8 +17,8 @@ func HashPassword(password []byte) ([]byte, error) {
 /*
 @param hashedPassword HashPassword() 的返回值
 @param plainPassword 密码明文
+@return err == nil: 已哈希过的密码 与 原始明文密码 匹配
 */
-func ComparePasswords(hashedPassword, plainPassword []byte) bool {
-	err := bcrypt.CompareHashAndPassword(hashedPassword, plainPassword)
-	return err == nil
+func ComparePasswords(hashedPassword, plainPassword []byte) error {
+	return bcrypt.CompareHashAndPassword(hashedPassword, plainPassword)
 }
