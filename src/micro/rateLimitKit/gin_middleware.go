@@ -12,9 +12,9 @@ import (
 /*
 PS: 传参说明详见 NewLimiter.
 
-@param limit			每秒生成的令牌数，	(1) 可以直接是 某个数值;
+@param r				每秒生成的令牌数，	(1) 可以直接是 某个数值;
 										(2) 也可以是 rate.Every() 的返回值;
-@param burst 			令牌桶的容量
+@param b 				令牌桶的容量
 @param forbiddenText 	被限流时，响应给前端的内容（状态码固定为 403）
 */
 func NewGinMiddleware(r rate.Limit, b int, forbiddenText string) gin.HandlerFunc {
