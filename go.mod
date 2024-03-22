@@ -59,7 +59,7 @@ require (
 	github.com/klauspost/compress v1.17.7
 	github.com/klauspost/cpuid/v2 v2.2.7
 	github.com/linxGnu/grocksdb v1.8.14
-	github.com/lionsoul2014/ip2region/binding/golang v0.0.0-20240314125457-c82399f3b9fd
+	github.com/lionsoul2014/ip2region/binding/golang v0.0.0-20240322004431-22d2e2ed01d3
 	github.com/liuzl/gocc v0.0.0-20231231122217-0372e1059ca5
 	github.com/magiconair/properties v1.8.7
 	github.com/matoous/go-nanoid/v2 v2.0.0
@@ -124,7 +124,7 @@ require (
 	gopkg.in/yaml.v3 v3.0.1
 	gorm.io/driver/bigquery v1.2.0
 	gorm.io/driver/clickhouse v0.6.0
-	gorm.io/driver/mysql v1.5.5
+	gorm.io/driver/mysql v1.5.6
 	gorm.io/driver/postgres v1.5.7
 	gorm.io/driver/sqlite v1.5.5
 	gorm.io/driver/sqlserver v1.5.3
