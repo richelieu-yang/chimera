@@ -12,7 +12,7 @@ gin:
   mode: debug
   hostName:
   # http server使用的端口（默认0: 不使用http server）
-  port: 80
+  port: 9000
   # 禁用日志带颜色输出?（默认: false）
   disableColor: false
   # 是否开启pprof路由？（默认: false）

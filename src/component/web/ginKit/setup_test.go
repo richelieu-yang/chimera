@@ -1,7 +1,6 @@
 package ginKit
 
 import (
-	"fmt"
 	"github.com/gin-gonic/gin"
 	"github.com/richelieu-yang/chimera/v3/src/component/web/httpKit"
 	"github.com/richelieu-yang/chimera/v3/src/config/yaml/yamlKit"
@@ -43,8 +42,6 @@ func TestMustSetUp(t *testing.T) {
 
 	MustSetUp(c.Gin, func(engine *gin.Engine) error {
 		engine.Any("/test", func(ctx *gin.Context) {
-			fmt.Println(httpKit.GetAcceptLanguages(ctx.Request))
-
 			ctx.String(200, httpKit.GetScheme(ctx.Request))
 		})
 
