@@ -10,11 +10,11 @@ import (
 	"net/http"
 )
 
-// InjectBaggage 使用 baggage 写入 trace id 和 span id
+// InjectWithBaggage 使用 baggage 写入 trace id 和 span id.
 /*
-适用场景: 跨服务 + 发送端
+适用场景: 跨服务（跨应用通讯） + 发送端
 */
-func InjectBaggage(r *http.Request, spanCtx context.Context, span trace.Span) (err error) {
+func InjectWithBaggage(r *http.Request, spanCtx context.Context, span trace.Span) (err error) {
 	defer func() {
 		if err != nil {
 			err = errorKit.Wrap(err, "Fail to inject baggage")

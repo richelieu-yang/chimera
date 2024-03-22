@@ -12,13 +12,13 @@ import (
 	"net/http"
 )
 
-// GetRemoteSpanCtx
+// ExtractFromRequest
 /*
 PS:
-(1) 适用场景: 跨服务 + 接收端
+(1) 适用场景: 跨服务（跨应用通讯） + 接收端
 (2) 返回的error != nil的情况下，可以判断是否等于 otelKit.NotOtelRequestError.
 */
-func GetRemoteSpanCtx(r *http.Request) (remoteSpanCtx context.Context, err error) {
+func ExtractFromRequest(r *http.Request) (remoteSpanCtx context.Context, err error) {
 	baggageStr := httpKit.GetHeader(r.Header, HeaderBaggage)
 	if strKit.IsEmpty(baggageStr) {
 		// 非链路追踪请求
@@ -28,7 +28,7 @@ func GetRemoteSpanCtx(r *http.Request) (remoteSpanCtx context.Context, err error
 
 	defer func() {
 		if err != nil {
-			err = errorKit.Wrap(err, "Fail to get remote span context")
+			err = errorKit.Wrap(err, "fail to extract from request")
 		}
 	}()
 
