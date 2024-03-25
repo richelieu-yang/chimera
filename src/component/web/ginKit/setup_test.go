@@ -2,12 +2,13 @@ package ginKit
 
 import (
 	"github.com/gin-gonic/gin"
-	"github.com/richelieu-yang/chimera/v3/src/component/web/httpKit"
+	"github.com/richelieu-yang/chimera/v3/src/component/web/proxyKit"
 	"github.com/richelieu-yang/chimera/v3/src/config/yaml/yamlKit"
 	"github.com/richelieu-yang/chimera/v3/src/consts"
 	"github.com/richelieu-yang/chimera/v3/src/core/pathKit"
 	_ "github.com/richelieu-yang/chimera/v3/src/log/logrusInitKit"
 	"github.com/sirupsen/logrus"
+	"net/http"
 	"testing"
 )
 
@@ -40,7 +41,15 @@ func TestMustSetUp(t *testing.T) {
 
 	MustSetUp(c.Gin, func(engine *gin.Engine) error {
 		engine.Any("/test", func(ctx *gin.Context) {
-			ctx.String(200, httpKit.GetScheme(ctx.Request))
+			qm := map[string][]string{
+				"b": {"bOx"},
+				"c": {"caT"},
+			}
+
+			if err := proxyKit.ProxyWithGin(ctx, "127.0.0.1:10000", proxyKit.WithOverrideQueryParams(qm)); err != nil {
+				ctx.String(http.StatusInternalServerError, err.Error())
+				return
+			}
 		})
 
 		return nil

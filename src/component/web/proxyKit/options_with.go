@@ -27,12 +27,20 @@ func WithReqUrlPath(reqUrlPath *string) ProxyOption {
 	}
 }
 
+// WithOverrideQueryParams
+/*
+PS: WithOverrideQueryParams 和 WithExtraQueryParams 只能二选一.
+*/
 func WithOverrideQueryParams(overrideQueryParams map[string][]string) ProxyOption {
 	return func(opts *proxyOptions) {
 		opts.overrideQueryParams = overrideQueryParams
 	}
 }
 
+// WithExtraQueryParams
+/*
+PS: WithOverrideQueryParams 和 WithExtraQueryParams 只能二选一.
+*/
 func WithExtraQueryParams(extraQueryParams map[string][]string) ProxyOption {
 	return func(opts *proxyOptions) {
 		opts.extraQueryParams = extraQueryParams

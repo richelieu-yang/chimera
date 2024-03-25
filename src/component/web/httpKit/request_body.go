@@ -76,7 +76,7 @@ func ResetRequestBody(req *http.Request) error {
 // OverrideRequestBody 覆盖 POST请求 的请求体（request body）.
 func OverrideRequestBody(req *http.Request, m map[string][]string) error {
 	if req.Method != http.MethodPost {
-		return errorKit.New("Method(%s) isn't POST", req.Method)
+		return errorKit.New("method(%s) isn't POST", req.Method)
 	}
 
 	content := ToRequestBodyString(m)
