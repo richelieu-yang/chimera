@@ -8,7 +8,7 @@ import (
 	"github.com/sirupsen/logrus"
 )
 
-var NotSetupError = errorKit.Newf("Haven’t been set up correctly")
+var NotSetupError = errorKit.Newf("haven’t been set up correctly")
 
 // 缓存整个xdb数据的情况下，searcher对象可以安全用于并发
 var searcher *xdb.Searcher

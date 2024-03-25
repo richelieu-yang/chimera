@@ -9,7 +9,7 @@ import (
 )
 
 var (
-	NotSetupError = errorKit.Newf("Haven’t been set up correctly")
+	NotSetupError = errorKit.Newf("haven’t been set up correctly")
 )
 
 var config *Config
