@@ -148,7 +148,11 @@ func (opts *proxyOptions) proxy(writer http.ResponseWriter, req *http.Request, t
 		}
 
 		// 可能会修改 req.URL.RawQuery
-		urlKit.AddQueryParamsToRawQuery(req.URL, opts.extraQueryParams)
+		if opts.overrideQueryParams != nil {
+
+		} else if opts.extraQueryParams != nil {
+			urlKit.AddToRawQuery(req.URL, opts.extraQueryParams)
+		}
 	}
 	reverseProxy := &httputil.ReverseProxy{
 		Director: director,

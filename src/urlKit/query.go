@@ -48,11 +48,20 @@ func AddQueryParamsToValues(values url.Values, queryParams map[string][]string) 
 	return values
 }
 
-// AddQueryParamsToRawQuery
+// OverrideRawQuery 覆盖请求的query.
 /*
 PS: 可能会修改 req.URL.RawQuery.
 */
-func AddQueryParamsToRawQuery(u *url.URL, queryParams map[string][]string) {
+func OverrideRawQuery(u *url.URL, queryParams map[string][]string) {
+	values := AddQueryParamsToValues(nil, queryParams)
+	u.RawQuery = values.Encode()
+}
+
+// AddToRawQuery 增添请求的query.
+/*
+PS: 可能会修改 req.URL.RawQuery.
+*/
+func AddToRawQuery(u *url.URL, queryParams map[string][]string) {
 	values := u.Query()
 	values = AddQueryParamsToValues(values, queryParams)
 	u.RawQuery = values.Encode()
@@ -68,7 +77,7 @@ func AddQueryParamsToUrl(rawURL string, queryParams map[string][]string) (string
 		!!!: 不要只使用 URL.String() ，原因: 该方法内部直接使用了 RawQuery 属性（满足条件的话），导致如果 RawQuery 中包含未处理字符（比如中文），返回值中还是会包含未处理字符
 		TODO: 后续看官方是否会修改 URL.String() 中对query的处理.
 	*/
-	AddQueryParamsToRawQuery(u, queryParams)
+	AddToRawQuery(u, queryParams)
 
 	return u.String(), nil
 }
