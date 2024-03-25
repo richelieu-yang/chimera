@@ -7,7 +7,9 @@ import (
 
 // Proxy 代理请求（反向代理，请求转发）.
 /*
-PS: 转发请求前如果想变更请求头(Request Header)，可以在调用此函数前设置请求头.
+调用此方法就行请求转发前，可以:
+(1) POST请求，覆盖 request body;
+(2) 变更请求头（request header）.
 
 @param w			e.g.ctx.Writer
 @param r 			e.g.ctx.Request

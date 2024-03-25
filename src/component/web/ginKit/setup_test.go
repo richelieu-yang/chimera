@@ -6,15 +6,13 @@ import (
 	"github.com/richelieu-yang/chimera/v3/src/config/yaml/yamlKit"
 	"github.com/richelieu-yang/chimera/v3/src/consts"
 	"github.com/richelieu-yang/chimera/v3/src/core/pathKit"
-	"github.com/richelieu-yang/chimera/v3/src/log/logrusKit"
+	_ "github.com/richelieu-yang/chimera/v3/src/log/logrusInitKit"
 	"github.com/sirupsen/logrus"
 	"testing"
 )
 
 func TestMustSetUp(t *testing.T) {
 	{
-		logrusKit.MustSetUp(nil)
-
 		if err := pathKit.SetTempDir("_temp"); err != nil {
 			panic(err)
 		}
