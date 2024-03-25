@@ -29,6 +29,7 @@ func Rename(src, dst string) error {
 	return err
 }
 
+// RenameInSameDir 同目录下重命名.
 func RenameInSameDir(path string, name string) error {
 	if err := AssertExist(path); err != nil {
 		return err
