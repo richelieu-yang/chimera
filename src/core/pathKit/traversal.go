@@ -2,12 +2,13 @@ package pathKit
 
 import (
 	"io/fs"
+	"os"
 	"path/filepath"
 )
 
 // Walk 遍历目录.
 /*
-Deprecated: 使用 WalkDir.
+Deprecated: Use WalkDir instead.
 
 PS:
 (1) 遍历包含 传参root;
@@ -18,4 +19,20 @@ PS:
 */
 var Walk func(root string, fn filepath.WalkFunc) error = filepath.Walk
 
+// WalkDir 遍历目录.
+/*
+PS:
+(1) 有子目录的话，"会" 继续遍历;
+(2) "会" 遍历到到传参root目录;
+(3) 例子可以参考 notes/Golang/Golang.wps.
+*/
 var WalkDir func(root string, fn fs.WalkDirFunc) error = filepath.WalkDir
+
+// ReadDir 遍历目录.
+/*
+PS:
+(1) 有子目录的话，"不会" 继续遍历;
+(2) "不会" 遍历到到传参name目录;
+(3) 例子可以参考 notes/Golang/Golang.wps.
+*/
+var ReadDir func(name string) ([]os.DirEntry, error) = os.ReadDir
