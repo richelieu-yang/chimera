@@ -1,25 +1,34 @@
 package main
 
 import (
-	"github.com/gin-gonic/gin"
-	"github.com/richelieu-yang/chimera/v3/src/component/web/ginKit"
+	"fmt"
 	_ "github.com/richelieu-yang/chimera/v3/src/log/logrusInitKit"
-	"github.com/sirupsen/logrus"
-	"net/http"
+	"path/filepath"
+	"regexp"
 )
 
 func main() {
-	engine := gin.Default()
 
-	engine.Any("/test", func(ctx *gin.Context) {
-		logrus.Infof("a: [%s]", ginKit.ObtainGetParam(ctx, "a"))
-		logrus.Infof("b: [%s]", ginKit.ObtainGetParam(ctx, "b"))
-		logrus.Infof("c: [%s]", ginKit.ObtainGetParam(ctx, "c"))
+	filepath.Walk()
+	filepath.WalkDir()
 
-		ctx.String(http.StatusOK, "10000")
-	})
+	re := regexp.MustCompile("\\[(\\d+)[vV]*(\\d*)\\]")
 
-	if err := engine.Run(":10000"); err != nil {
-		panic(err)
+	s := []string{
+		"[Sakurato] Mato Seihei no Slave [01][AVC-8bit 1080p AAC][CHS].mp4",
+		"[Sakurato] Mato Seihei no Slave [02v2][AVC-8bit 1080p AAC][CHT].mp4",
+		"[Sakurato] Mato Seihei no Slave [03][AVC-8bit 1080p AAC][CHT].mp4",
+	}
+	for i, str := range s {
+		if !re.MatchString(str) {
+			continue
+		}
+
+		fmt.Printf("--- %d ---\n", i)
+		// string 类型
+		fmt.Println(re.ReplaceAllString(str, "$1"))
+		// []string 类型
+		fmt.Println(re.FindAllString(str, -1))
+		fmt.Printf("--- %d ---\n", i)
 	}
 }
