@@ -2,12 +2,15 @@ package main
 
 import (
 	"fmt"
-	"github.com/richelieu-yang/chimera/v3/src/dataSizeKit"
+	"html"
 )
 
 func main() {
-	fmt.Println(dataSizeKit.ToReadableIecString(5867))
-	fmt.Println(dataSizeKit.ToReadableIecString(6132))
+	htmlStr := "<html>Hello.</html>"
+	escaped := html.EscapeString(htmlStr)
+	fmt.Println(escaped)
+	htmlStr1 := html.UnescapeString(escaped)
+	fmt.Println(htmlStr1)
 
 	//fmt.Println(base64Kit.DecodeStringToString("cG9uZw=="))
 
