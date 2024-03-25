@@ -27,9 +27,15 @@ func WithReqUrlPath(reqUrlPath *string) ProxyOption {
 	}
 }
 
-func WithExtraQueryParams(queryParams map[string][]string) ProxyOption {
+func WithOverrideQueryParams(overrideQueryParams map[string][]string) ProxyOption {
 	return func(opts *proxyOptions) {
-		opts.extraQueryParams = queryParams
+		opts.overrideQueryParams = overrideQueryParams
+	}
+}
+
+func WithExtraQueryParams(extraQueryParams map[string][]string) ProxyOption {
+	return func(opts *proxyOptions) {
+		opts.extraQueryParams = extraQueryParams
 	}
 }
 
