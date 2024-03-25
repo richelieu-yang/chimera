@@ -41,7 +41,7 @@ type (
 func loadOptions(options ...ProxyOption) *proxyOptions {
 	opts := &proxyOptions{
 		scheme:          "http",
-		polyfillHeaders: false,
+		polyfillHeaders: true,
 	}
 
 	for _, option := range options {
@@ -149,7 +149,7 @@ func (opts *proxyOptions) proxy(writer http.ResponseWriter, req *http.Request, t
 
 		// 可能会修改 req.URL.RawQuery
 		if opts.overrideQueryParams != nil {
-
+			urlKit.OverrideRawQuery(req.URL, opts.overrideQueryParams)
 		} else if opts.extraQueryParams != nil {
 			urlKit.AddToRawQuery(req.URL, opts.extraQueryParams)
 		}
