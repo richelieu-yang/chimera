@@ -8,6 +8,10 @@ import (
 	"net/http"
 )
 
+var (
+	RequestTooLargeError = errorKit.New("HTTP request too large")
+)
+
 // NewSizeLimiterMiddleware 参考了echo中的 middleware.BodyLimit()
 /*
 	@param limit 	(1) 单位: MiB
@@ -29,7 +33,12 @@ func NewSizeLimiterMiddleware(limit int64) (gin.HandlerFunc, error) {
 
 		// (2) Based on content length
 		if ctx.Request.ContentLength > bodyLimit {
+			// 参考: github.com/gin-contrib/size
+			_ = ctx.Error(RequestTooLargeError)
+			ctx.Header("connection", "close")
+			ctx.String(http.StatusRequestEntityTooLarge, "request too large")
 			ctx.AbortWithStatus(http.StatusRequestEntityTooLarge)
+
 			return
 		}
 
