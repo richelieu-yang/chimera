@@ -43,10 +43,10 @@ func TestMustSetUp(t *testing.T) {
 		engine.Any("/test", func(ctx *gin.Context) {
 			qm := map[string][]string{
 				"b": {"bOx"},
-				"c": {"caT"},
+				"c": {"阿德去外地"},
 			}
 
-			if err := proxyKit.ProxyWithGin(ctx, "127.0.0.1:10000", proxyKit.WithOverrideQueryParams(qm)); err != nil {
+			if err := proxyKit.ProxyWithGin(ctx, "127.0.0.1:10000", proxyKit.WithExtraQueryParams(qm)); err != nil {
 				ctx.String(http.StatusInternalServerError, err.Error())
 				return
 			}

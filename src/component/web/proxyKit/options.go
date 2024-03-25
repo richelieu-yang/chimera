@@ -158,7 +158,7 @@ func (opts *proxyOptions) proxy(writer http.ResponseWriter, req *http.Request, t
 		Director: director,
 		ErrorLog: opts.errorLogger,
 		ErrorHandler: func(rw http.ResponseWriter, req *http.Request, e error) {
-			err = errorKit.Wrap(e, "Fail to proxy")
+			err = errorKit.Wrap(e, "fail to proxy")
 		},
 	}
 	reverseProxy.ServeHTTP(writer, req)
