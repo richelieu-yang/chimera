@@ -55,7 +55,7 @@ func RecognizeUniversalWords(imagePath string) (*Words, error) {
 		return nil, err
 	}
 	if words == nil {
-		return nil, errorKit.New("failure response(%s)", string(respData))
+		return nil, errorKit.Newf("failure response(%s)", string(respData))
 	}
 	return words, nil
 }

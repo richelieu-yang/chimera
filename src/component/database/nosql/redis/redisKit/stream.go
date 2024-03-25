@@ -32,7 +32,7 @@ func (client *Client) IsStreamSupported(ctx context.Context) error {
 		},
 	})
 	if err != nil {
-		return errorKit.Wrap(err, "Redis Stream isn't supported")
+		return errorKit.Wrapf(err, "Redis Stream isn't supported")
 	}
 	return nil
 }
@@ -79,10 +79,10 @@ PS:
 func (client *Client) XGroupCreate(ctx context.Context, stream, group, start string) error {
 	resp, err := client.universalClient.XGroupCreate(ctx, stream, group, start).Result()
 	if err != nil {
-		return errorKit.Wrap(err, "Fail with stream(%s), group(%s) and start(%s)", stream, group, start)
+		return errorKit.Wrapf(err, "Fail with stream(%s), group(%s) and start(%s)", stream, group, start)
 	}
 	if !strKit.EqualsIgnoreCase(resp, "OK") {
-		return errorKit.New("invalid resp(%s)", resp)
+		return errorKit.Newf("invalid resp(%s)", resp)
 	}
 	return nil
 }
@@ -104,10 +104,10 @@ PS:
 func (client *Client) XGroupCreateMkStream(ctx context.Context, stream, group, start string) error {
 	resp, err := client.universalClient.XGroupCreateMkStream(ctx, stream, group, start).Result()
 	if err != nil {
-		return errorKit.Wrap(err, "Fail with stream(%s), group(%s) and start(%s)", stream, group, start)
+		return errorKit.Wrapf(err, "Fail with stream(%s), group(%s) and start(%s)", stream, group, start)
 	}
 	if !strKit.EqualsIgnoreCase(resp, "OK") {
-		return errorKit.New("invalid resp(%s)", resp)
+		return errorKit.Newf("invalid resp(%s)", resp)
 	}
 	return nil
 }

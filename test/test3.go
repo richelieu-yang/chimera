@@ -2,33 +2,35 @@ package main
 
 import (
 	"fmt"
+	"github.com/richelieu-yang/chimera/v3/src/file/fileKit"
 	_ "github.com/richelieu-yang/chimera/v3/src/log/logrusInitKit"
+	"io/fs"
 	"path/filepath"
 	"regexp"
 )
 
 func main() {
-
-	filepath.Walk()
-	filepath.WalkDir()
-
 	re := regexp.MustCompile("\\[(\\d+)[vV]*(\\d*)\\]")
 
-	s := []string{
-		"[Sakurato] Mato Seihei no Slave [01][AVC-8bit 1080p AAC][CHS].mp4",
-		"[Sakurato] Mato Seihei no Slave [02v2][AVC-8bit 1080p AAC][CHT].mp4",
-		"[Sakurato] Mato Seihei no Slave [03][AVC-8bit 1080p AAC][CHT].mp4",
-	}
-	for i, str := range s {
-		if !re.MatchString(str) {
-			continue
+	err := filepath.WalkDir("/Users/richelieu/Downloads/魔都精兵的奴隶", func(path string, d fs.DirEntry, err error) error {
+		if err != nil {
+			return err
+		}
+		if !fileKit.IsFile(path) {
+			return nil
 		}
 
-		fmt.Printf("--- %d ---\n", i)
-		// string 类型
-		fmt.Println(re.ReplaceAllString(str, "$1"))
-		// []string 类型
-		fmt.Println(re.FindAllString(str, -1))
-		fmt.Printf("--- %d ---\n", i)
+		name := fileKit.GetName(path)
+		ext := fileKit.GetExt(path)
+		s := re.FindAllStringSubmatch(name, -1)
+		newName := s[0][1] + ext
+
+		//fileKit.Rename()
+
+		fmt.Println(newName)
+		return nil
+	})
+	if err != nil {
+		panic(err)
 	}
 }

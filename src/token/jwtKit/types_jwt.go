@@ -81,7 +81,7 @@ func (j *JWT) Parse(tokenString string, keyFunc jwt.Keyfunc, options ...jwt.Pars
 		return nil, err
 	}
 	if len(strKit.Split(tokenString, ".")) != 3 {
-		return nil, errorKit.New("tokenString(%s) is invalid", tokenString)
+		return nil, errorKit.Newf("tokenString(%s) is invalid", tokenString)
 	}
 	if err := interfaceKit.AssertNotNil(keyFunc, "keyFunc"); err != nil {
 		return nil, err
@@ -96,12 +96,12 @@ func (j *JWT) Parse(tokenString string, keyFunc jwt.Keyfunc, options ...jwt.Pars
 		return nil, err
 	}
 	if !token.Valid {
-		return nil, errorKit.New("token is invalid")
+		return nil, errorKit.Newf("token is invalid")
 	}
 
 	claims, ok := token.Claims.(jwt.MapClaims)
 	if !ok {
-		return nil, errorKit.New("type(%T) of claims is invalid", token.Claims)
+		return nil, errorKit.Newf("type(%T) of claims is invalid", token.Claims)
 	}
 	return claims, nil
 }

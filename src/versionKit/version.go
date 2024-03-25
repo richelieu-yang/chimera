@@ -47,7 +47,7 @@ func Sort(s []string) ([]*version.Version, error) {
 	for i, ele := range s {
 		v, err := version.NewVersion(ele)
 		if err != nil {
-			return nil, errorKit.Wrap(err, "ele(index: %d, value: %s) of param s is invalid", i, ele)
+			return nil, errorKit.Wrapf(err, "ele(index: %d, value: %s) of param s is invalid", i, ele)
 		}
 		versions[i] = v
 	}

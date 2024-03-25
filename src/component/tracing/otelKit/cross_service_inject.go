@@ -17,7 +17,7 @@ import (
 func InjectWithBaggage(r *http.Request, spanCtx context.Context, span trace.Span) (err error) {
 	defer func() {
 		if err != nil {
-			err = errorKit.Wrap(err, "Fail to inject baggage")
+			err = errorKit.Wrapf(err, "Fail to inject baggage")
 		}
 	}()
 

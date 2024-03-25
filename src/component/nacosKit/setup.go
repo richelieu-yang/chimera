@@ -45,7 +45,7 @@ func SetUp(config *Config, options ...constant.ClientOption) (err error) {
 
 	/* (0) validate */
 	if err = validateKit.Struct(config); err != nil {
-		err = errorKit.Wrap(err, "Fail to verify")
+		err = errorKit.Wrapf(err, "Fail to verify")
 		return
 	}
 
@@ -70,17 +70,17 @@ func SetUp(config *Config, options ...constant.ClientOption) (err error) {
 		var u *url.URL
 		u, err = urlKit.Parse(addr)
 		if err != nil {
-			err = errorKit.Wrap(err, "Fail to parse address(%s).", addr)
+			err = errorKit.Wrapf(err, "Fail to parse address(%s).", addr)
 			return
 		}
 		var port uint64
 		port, err = intKit.ToUint64E(u.Port())
 		if err != nil {
-			err = errorKit.Wrap(err, "Invalid address(%s) with port string(%s).", addr, u.Port())
+			err = errorKit.Wrapf(err, "Invalid address(%s) with port string(%s).", addr, u.Port())
 			return
 		}
 		if err = netKit.AssertValidPort(int(port)); err != nil {
-			err = errorKit.Wrap(err, "Invalid address(%s) with port(%d).", addr, port)
+			err = errorKit.Wrapf(err, "Invalid address(%s) with port(%d).", addr, port)
 			return
 		}
 
@@ -92,7 +92,7 @@ func SetUp(config *Config, options ...constant.ClientOption) (err error) {
 		})
 	}
 	if sliceKit.IsEmpty(serverConfigs) {
-		err = errorKit.New("No valid address.")
+		err = errorKit.Newf("No valid address.")
 		return
 	}
 

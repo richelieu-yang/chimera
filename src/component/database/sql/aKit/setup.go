@@ -49,7 +49,7 @@ func SetUp(config *Config, logConfig *LogConfig) (err error) {
 		db = tmp
 	}()
 	if err = sqlDB.Ping(); err != nil {
-		err = errorKit.Wrap(err, "Fail to ping")
+		err = errorKit.Wrapf(err, "Fail to ping")
 		return
 	}
 

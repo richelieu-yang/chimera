@@ -15,7 +15,7 @@ func GetDiskUsageStats() (*DiskUsageStats, error) {
 }
 
 func GetDiskUsageStatsByPath(path string) (*DiskUsageStats, error) {
-	return nil, errorKit.New("Currently not supported")
+	return nil, errorKit.Newf("Currently not supported")
 }
 
 func PrintBasicDetails(logger *logrus.Logger) {

@@ -45,7 +45,7 @@ func NewConfigClient(options ...constant.ClientOption) (config_client.IConfigCli
 		Group:  tmp,
 	})
 	if err != nil {
-		err = errorKit.Wrap(err, "Fail to pass verification, check the configuration please!")
+		err = errorKit.Wrapf(err, "Fail to pass verification, check the configuration please!")
 		return nil, err
 	}
 
@@ -87,7 +87,7 @@ func NewNamingClient(options ...constant.ClientOption) (naming_client.INamingCli
 		// TODO: 此处比较low，比较错误的文本内容，看后续库有没有更新吧.
 		tmp := "instance list is empty!"
 		if !strKit.EqualsIgnoreCase(err.Error(), tmp) {
-			err = errorKit.Wrap(err, "Fail to pass verification, check the configuration please!")
+			err = errorKit.Wrapf(err, "Fail to pass verification, check the configuration please!")
 			return nil, err
 		}
 	}

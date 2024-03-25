@@ -25,7 +25,7 @@ func NewClient(config *api.Config) (*api.Client, error) {
 	// 防止 Address 是无效的
 	_, err = client.Agent().Checks()
 	if err != nil {
-		return nil, errorKit.Wrap(err, "fail to get the locally registered checks")
+		return nil, errorKit.Wrapf(err, "fail to get the locally registered checks")
 	}
 
 	return client, nil

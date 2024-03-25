@@ -28,7 +28,7 @@ func ExtractFromRequest(r *http.Request) (remoteSpanCtx context.Context, err err
 
 	defer func() {
 		if err != nil {
-			err = errorKit.Wrap(err, "fail to extract from request")
+			err = errorKit.Wrapf(err, "fail to extract from request")
 		}
 	}()
 

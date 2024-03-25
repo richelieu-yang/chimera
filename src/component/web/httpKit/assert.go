@@ -8,7 +8,7 @@ import (
 
 func AssertHttpUrl(httpUrl string) error {
 	if err := validateKit.HttpUrl(httpUrl); err != nil {
-		return errorKit.NewSkip(1, "[%s] httpUrl(%s) is because of with error(%s)", funcKit.GetFuncName(1), httpUrl, err.Error())
+		return errorKit.NewfWithSkip(1, "[%s] httpUrl(%s) is because of with error(%s)", funcKit.GetFuncName(1), httpUrl, err.Error())
 	}
 	return nil
 }

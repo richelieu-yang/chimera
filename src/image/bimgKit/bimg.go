@@ -28,7 +28,7 @@ func GetImageType(path string) (bimg.ImageType, error) {
 	extName = strKit.ToLower(extName)
 	imageType, ok := bimgMapper[extName]
 	if !ok {
-		return bimg.UNKNOWN, errorKit.New("extName(%s) of dest is invalid", extName)
+		return bimg.UNKNOWN, errorKit.Newf("extName(%s) of dest is invalid", extName)
 	}
 	return imageType, nil
 }
@@ -69,7 +69,7 @@ func Convert(src, dest string) error {
 		return err
 	}
 	if !bimg.IsTypeSupportedSave(imageType) {
-		return errorKit.New("imageType(%d, %s) isn't supported to save by current libvips compilation",
+		return errorKit.Newf("imageType(%d, %s) isn't supported to save by current libvips compilation",
 			imageType, mapKit.Get(bimg.ImageTypes, imageType))
 	}
 

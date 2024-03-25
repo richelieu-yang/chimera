@@ -49,7 +49,7 @@ func GenerateKeys(bits int, format KeyFormat, password string) (pri []byte, pub 
 			return nil, nil, err
 		}
 	default:
-		return nil, nil, errorKit.New("invalid format(%v)", format)
+		return nil, nil, errorKit.Newf("invalid format(%v)", format)
 	}
 	block := &pem.Block{
 		Type:  "PRIVATE KEY",

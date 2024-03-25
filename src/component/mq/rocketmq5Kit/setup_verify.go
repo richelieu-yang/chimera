@@ -131,7 +131,7 @@ func verify(config *VerifyConfig) error {
 			ctx, _ := context.WithTimeout(context.TODO(), verifySendTimeout)
 			_, err := producer.Send(ctx, msg)
 			if err != nil {
-				err = errorKit.Wrap(err, "Producer fails to send message(%s).", text)
+				err = errorKit.Wrapf(err, "Producer fails to send message(%s).", text)
 				producerCh <- err
 				return
 			}
@@ -152,7 +152,7 @@ func verify(config *VerifyConfig) error {
 		for {
 			select {
 			case <-ctx.Done():
-				consumerCh <- errorKit.New("Consumer fails to receive all messages within timeout(%s).", verifyTimeLimit)
+				consumerCh <- errorKit.Newf("Consumer fails to receive all messages within timeout(%s).", verifyTimeLimit)
 				return
 			case <-time.After(time.Millisecond * 100):
 				// do nothing
@@ -172,7 +172,7 @@ func verify(config *VerifyConfig) error {
 						//	break LOOP
 						//case codes.DeadlineExceeded:
 						//	/* 超时结束 */
-						//	consumerErr = errorKit.New("consumer fails to receive all messages(count: %d) within timeout(%s), missing(%d)", len(texts), verifyTimeLimit.String(), len(text1))
+						//	consumerErr = errorKit.Newf("consumer fails to receive all messages(count: %d) within timeout(%s), missing(%d)", len(texts), verifyTimeLimit.String(), len(text1))
 						//	break LOOP
 					}
 				}
@@ -240,6 +240,6 @@ func verify(config *VerifyConfig) error {
 		// 通过验证
 		return nil
 	case <-ctx.Done():
-		return errorKit.New("Fail to pass verification within timeout(%s).", verifyTimeLimit)
+		return errorKit.Newf("Fail to pass verification within timeout(%s).", verifyTimeLimit)
 	}
 }

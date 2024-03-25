@@ -10,5 +10,5 @@ import (
 TODO: 看后续"plugin标准库"是否会支持Windows环境.
 */
 func LoadLinkLibrary(path string) (*plugin.Plugin, error) {
-	return nil, errorKit.New("Link libraries cannot be loaded in Windows!")
+	return nil, errorKit.Newf("Link libraries cannot be loaded in Windows!")
 }

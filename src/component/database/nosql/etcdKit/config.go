@@ -22,7 +22,7 @@ func (config *Config) Check() error {
 	config.Endpoints = sliceKit.Uniq(config.Endpoints)
 	config.Endpoints = sliceKit.RemoveEmpty(config.Endpoints, true)
 	if sliceKit.IsEmpty(config.Endpoints) {
-		return errorKit.New("config.Endpoints is empty")
+		return errorKit.Newf("config.Endpoints is empty")
 	}
 
 	return nil

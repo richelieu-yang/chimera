@@ -27,7 +27,7 @@ func StringToLevel(str string) (level logger.LogLevel, err error) {
 	case "info":
 		level = logger.Info
 	default:
-		err = errorKit.New("invalid str: %s", str)
+		err = errorKit.Newf("invalid str: %s", str)
 	}
 	return
 }

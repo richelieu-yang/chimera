@@ -9,7 +9,7 @@ import (
 )
 
 var (
-	RequestTooLargeError = errorKit.New("HTTP request too large")
+	RequestTooLargeError = errorKit.Newf("HTTP request too large")
 )
 
 // NewSizeLimiterMiddleware 参考了echo中的 middleware.BodyLimit()
@@ -19,7 +19,7 @@ var (
 */
 func NewSizeLimiterMiddleware(limit int64) (gin.HandlerFunc, error) {
 	if err := validateKit.Var(limit, "gt=0"); err != nil {
-		return nil, errorKit.Wrap(err, "invalid limit(%d)", limit)
+		return nil, errorKit.Wrapf(err, "invalid limit(%d)", limit)
 	}
 
 	// bodyLimit 单位: B

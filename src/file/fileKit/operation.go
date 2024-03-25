@@ -14,12 +14,6 @@ var (
 	// CutAndPaste 剪贴.
 	CutAndPaste func(src string, dst string) (err error) = gfile.Move
 
-	// Move 移动.
-	Move func(src string, dst string) (err error) = gfile.Move
-
-	// Rename 重命名.
-	Rename func(src string, dst string) (err error) = gfile.Move
-
 	// Remove 删除文件（或目录）.
 	/*
 		PS: 如果是目录且内部有文件或目录，也会一并删除.

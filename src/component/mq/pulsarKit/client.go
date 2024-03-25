@@ -42,7 +42,7 @@ func NewClient(addresses []string, logPath string) (pulsar.Client, error) {
 		Logger: logger,
 	})
 	if err != nil {
-		err = errorKit.Wrap(err, "fail to new client")
+		err = errorKit.Wrapf(err, "fail to new client")
 		return nil, err
 	}
 

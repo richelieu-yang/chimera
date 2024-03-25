@@ -14,7 +14,7 @@ func printBasicDetails(logger *logrus.Logger) {
 
 // GetUsagePercent CPU使用率
 func GetUsagePercent() (float64, error) {
-	return 0, errorKit.New("Not supported on this platform")
+	return 0, errorKit.Newf("Not supported on this platform")
 }
 
 // GetCurrentProcessUsagePercent 获取 当前进程 的CPU使用百分比.
@@ -28,5 +28,5 @@ func GetCurrentProcessUsagePercent() (float64, error) {
 
 // GetProcessUsagePercent 获取 指定进程 的CPU使用百分比.
 func GetProcessUsagePercent(pid int32) (float64, error) {
-	return 0, errorKit.New("Not supported on this platform")
+	return 0, errorKit.Newf("Not supported on this platform")
 }

@@ -30,14 +30,14 @@ func SetUp(pulsarConfig *Config, verifyConfig *VerifyConfig) (err error) {
 	}()
 
 	if err = validateKit.Struct(pulsarConfig); err != nil {
-		err = errorKit.Wrap(err, "Fail to verify")
+		err = errorKit.Wrapf(err, "Fail to verify")
 		return
 	}
 	config = pulsarConfig
 
 	// verify
 	if err = verify(verifyConfig); err != nil {
-		err = errorKit.Wrap(err, "Fail to verify")
+		err = errorKit.Wrapf(err, "Fail to verify")
 		return
 	}
 

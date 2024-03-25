@@ -43,10 +43,10 @@ PS: 将 传参addr 作为id，所以传参中无id.
 */
 func NewRaftNodeAndBootstrapCluster(addr string, nodeAddrs []string, dir string, fsm raft.FSM, logger hclog.Logger) (*RaftNode, error) {
 	if err := validateKit.Var(addr, "hostname_port"); err != nil {
-		return nil, errorKit.Wrap(err, "param nodeAddr(%s) is invalid", addr)
+		return nil, errorKit.Wrapf(err, "param nodeAddr(%s) is invalid", addr)
 	}
 	if err := validateKit.Var(nodeAddrs, "unique,gte=3,dive,hostname_port"); err != nil {
-		return nil, errorKit.Wrap(err, "param nodeAddrs(%s) is invalid", nodeAddrs)
+		return nil, errorKit.Wrapf(err, "param nodeAddrs(%s) is invalid", nodeAddrs)
 	}
 	if err := fileKit.AssertNotExistOrIsDir(dir); err != nil {
 		return nil, err
@@ -56,10 +56,10 @@ func NewRaftNodeAndBootstrapCluster(addr string, nodeAddrs []string, dir string,
 	}
 	snapshot, err := fsm.Snapshot()
 	if err != nil {
-		return nil, errorKit.Wrap(err, "fail to get snapshot")
+		return nil, errorKit.Wrapf(err, "fail to get snapshot")
 	}
 	if snapshot == nil {
-		return nil, errorKit.New("snapshot == nil")
+		return nil, errorKit.Newf("snapshot == nil")
 	}
 	if logger == nil {
 		logger = raftLogKit.NewLogger(&hclog.LoggerOptions{

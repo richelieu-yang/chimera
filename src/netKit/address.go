@@ -57,7 +57,7 @@ func ParseToAddress(str string) (*Address, error) {
 	tmp := strKit.TrimSpace(str)
 	tmp = strKit.ReplaceAll(tmp, "\\", "/")
 	if strKit.IsEmpty(tmp) {
-		return nil, errorKit.New("invalid str(%s)", str)
+		return nil, errorKit.Newf("invalid str(%s)", str)
 	}
 
 	var scheme string
@@ -72,7 +72,7 @@ func ParseToAddress(str string) (*Address, error) {
 		tmp = strKit.Substring(tmp, 0, index)
 	}
 	if strKit.IsEmpty(tmp) {
-		return nil, errorKit.New("invalid str(%s)", str)
+		return nil, errorKit.Newf("invalid str(%s)", str)
 	}
 
 	arr := strKit.Split(tmp, ":")
@@ -81,7 +81,7 @@ func ParseToAddress(str string) (*Address, error) {
 		hostname := arr[0]
 		port, err := getDefaultPortByScheme(scheme)
 		if err != nil {
-			return nil, errorKit.Wrap(err, "invalid str(%s)", str)
+			return nil, errorKit.Wrapf(err, "invalid str(%s)", str)
 		}
 		return &Address{
 			Hostname: hostname,
@@ -91,7 +91,7 @@ func ParseToAddress(str string) (*Address, error) {
 		hostname := arr[0]
 		portStr := arr[1]
 		if strKit.IsAllEmpty(hostname, portStr) {
-			return nil, errorKit.New("invalid str(%s)", str)
+			return nil, errorKit.Newf("invalid str(%s)", str)
 		}
 
 		var port int
@@ -102,7 +102,7 @@ func ParseToAddress(str string) (*Address, error) {
 			port, err = strconv.Atoi(portStr)
 		}
 		if err != nil {
-			return nil, errorKit.Wrap(err, "invalid str(%s)", str)
+			return nil, errorKit.Wrapf(err, "invalid str(%s)", str)
 		}
 
 		return &Address{
@@ -110,7 +110,7 @@ func ParseToAddress(str string) (*Address, error) {
 			Port:     port,
 		}, nil
 	default:
-		return nil, errorKit.New("invalid str(%s)", str)
+		return nil, errorKit.Newf("invalid str(%s)", str)
 	}
 }
 
@@ -121,6 +121,6 @@ func getDefaultPortByScheme(scheme string) (int, error) {
 	case "https":
 		return 443, nil
 	default:
-		return -1, errorKit.New("invalid scheme(%s)", scheme)
+		return -1, errorKit.Newf("invalid scheme(%s)", scheme)
 	}
 }

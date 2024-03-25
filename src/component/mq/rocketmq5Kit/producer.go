@@ -28,10 +28,10 @@ func NewProducer() (rmq_client.Producer, error) {
 		Credentials: config.Credentials,
 	})
 	if err != nil {
-		return nil, errorKit.Wrap(err, "Fail to new producer")
+		return nil, errorKit.Wrapf(err, "Fail to new producer")
 	}
 	if err := producer.Start(); err != nil {
-		return nil, errorKit.Wrap(err, "Fail to start producer")
+		return nil, errorKit.Wrapf(err, "Fail to start producer")
 	}
 	return producer, nil
 }

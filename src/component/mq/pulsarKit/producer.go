@@ -53,7 +53,7 @@ func NewProducerOriginally(ctx context.Context, addresses []string, options puls
 		}
 		producer, err = client.CreateProducer(options)
 		if err != nil {
-			err = errorKit.Wrap(err, "client fails to create producer")
+			err = errorKit.Wrapf(err, "client fails to create producer")
 			errCh <- err
 			return
 		}

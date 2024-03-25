@@ -61,7 +61,7 @@ func GetInfo(path string) (*Info, error) {
 	case "bmp":
 		imgConf, err = bmp.DecodeConfig(bytes.NewReader(data))
 	default:
-		return nil, errorKit.New("invalid extName(%s)", extName)
+		return nil, errorKit.Newf("invalid extName(%s)", extName)
 	}
 	if err != nil {
 		return nil, err

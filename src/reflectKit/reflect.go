@@ -9,7 +9,7 @@ import (
 // GetNestedField 获取（层层嵌套的）字段
 func GetNestedField(ptr interface{}, fieldNames ...string) (reflect.Value, error) {
 	if fieldNames == nil {
-		return reflect.Value{}, errorKit.New("fieldNames == nil")
+		return reflect.Value{}, errorKit.Newf("fieldNames == nil")
 	}
 
 	v := reflect.ValueOf(ptr).Elem()
@@ -40,7 +40,7 @@ func SetField(ptr interface{}, fieldName string, newFieldValue interface{}) erro
 
 	v1 := reflect.ValueOf(newFieldValue)
 	if v.Kind() != v1.Kind() {
-		return errorKit.New("expected kind %v, got kind: %v", v.Kind(), v1.Kind())
+		return errorKit.Newf("expected kind %v, got kind: %v", v.Kind(), v1.Kind())
 	}
 	v.Set(v1)
 	return nil

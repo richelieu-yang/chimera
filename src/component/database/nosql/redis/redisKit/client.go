@@ -63,7 +63,7 @@ func NewClient(config *Config) (client *Client, err error) {
 	/* 先简化，再验证（以免通不过验证） */
 	config.Simplify()
 	if err = validateKit.Struct(config); err != nil {
-		err = errorKit.Wrap(err, "Fail to verify")
+		err = errorKit.Wrapf(err, "Fail to verify")
 		return
 	}
 
@@ -78,7 +78,7 @@ func NewClient(config *Config) (client *Client, err error) {
 	case ModeCluster:
 		opts, err = newClusterOptions(config)
 	default:
-		err = errorKit.New("mode(%s) is invalid", config.Mode)
+		err = errorKit.Newf("mode(%s) is invalid", config.Mode)
 	}
 	if err != nil {
 		return
@@ -109,14 +109,14 @@ func NewClient(config *Config) (client *Client, err error) {
 	str, err := client.Ping(ctx)
 	if err != nil {
 		if errors.Is(err, context.DeadlineExceeded) {
-			err = errorKit.New("initial ping timeout(%s)", pingTimeout)
+			err = errorKit.Newf("initial ping timeout(%s)", pingTimeout)
 		} else {
-			err = errorKit.Wrap(err, "initial ping fails")
+			err = errorKit.Wrapf(err, "initial ping fails")
 		}
 		return
 	}
 	if !strKit.EqualsIgnoreCase(str, "PONG") {
-		err = errorKit.New("result(%s) of initial ping is invalid", str)
+		err = errorKit.Newf("result(%s) of initial ping is invalid", str)
 		return
 	}
 	return
@@ -141,7 +141,7 @@ func newSingleOptions(config *Config) (*redis.UniversalOptions, error) {
 
 // newMasterSlaveOptions 主从模式
 func newMasterSlaveOptions(config *Config) (*redis.UniversalOptions, error) {
-	return nil, errorKit.New("mode(%s) is unsupported now", config.Mode)
+	return nil, errorKit.Newf("mode(%s) is unsupported now", config.Mode)
 }
 
 // newSentinelOptions 哨兵模式

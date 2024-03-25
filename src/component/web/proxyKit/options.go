@@ -111,7 +111,7 @@ func (opts *proxyOptions) proxy(writer http.ResponseWriter, req *http.Request, t
 
 	/* check targetHost */
 	if err = validateKit.Var(targetHost, "hostname_port"); err != nil {
-		err = errorKit.Wrap(err, "invalid targetHost(%s)", targetHost)
+		err = errorKit.Wrapf(err, "invalid targetHost(%s)", targetHost)
 		return
 	}
 
@@ -121,7 +121,7 @@ func (opts *proxyOptions) proxy(writer http.ResponseWriter, req *http.Request, t
 	case "https":
 	case "http":
 	default:
-		return errorKit.New("invalid scheme(%s)", scheme)
+		return errorKit.Newf("invalid scheme(%s)", scheme)
 	}
 
 	/* polyfill header */
@@ -158,7 +158,7 @@ func (opts *proxyOptions) proxy(writer http.ResponseWriter, req *http.Request, t
 		Director: director,
 		ErrorLog: opts.errorLogger,
 		ErrorHandler: func(rw http.ResponseWriter, req *http.Request, e error) {
-			err = errorKit.Wrap(e, "fail to proxy")
+			err = errorKit.Wrapf(e, "fail to proxy")
 		},
 	}
 	reverseProxy.ServeHTTP(writer, req)

@@ -54,13 +54,13 @@ func (client *Client) GetIpInfo(ip string) (*IpInfo, error) {
 				Rectangle: "",
 			}, nil
 		}
-		return nil, errorKit.New("invalid response(%s)", string(jsonData))
+		return nil, errorKit.Newf("invalid response(%s)", string(jsonData))
 	}
 
 	/* 国内ip */
 	resp := &IpResponse{}
 	if err := jsonKit.Unmarshal(jsonData, resp); err != nil {
-		return nil, errorKit.Wrap(err, "Fail to unmarshal")
+		return nil, errorKit.Wrapf(err, "Fail to unmarshal")
 	}
 	if err := resp.IsSuccess(); err != nil {
 		return nil, err

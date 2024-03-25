@@ -26,13 +26,13 @@ func (client *Client) GetLive(city string) (*Live, error) {
 
 	resp := &WeatherResponse{}
 	if err := jsonKit.Unmarshal(data, resp); err != nil {
-		return nil, errorKit.Wrap(err, "Fail to unmarshal with json: %s", string(data))
+		return nil, errorKit.Wrapf(err, "Fail to unmarshal with json: %s", string(data))
 	}
 	if err := resp.IsSuccess(); err != nil {
 		return nil, err
 	}
 	if len(resp.Lives) == 0 {
-		return nil, errorKit.New("len(resp.Lives) == 0")
+		return nil, errorKit.Newf("len(resp.Lives) == 0")
 	}
 	return resp.Lives[0], nil
 }
@@ -45,7 +45,7 @@ func (client *Client) GetTodayCast(city string) (*Cast, error) {
 	}
 
 	if len(forecast.Casts) == 0 {
-		return nil, errorKit.New("len(forecast.Casts) == 0")
+		return nil, errorKit.Newf("len(forecast.Casts) == 0")
 	}
 
 	return forecast.Casts[0], nil
@@ -67,13 +67,13 @@ func (client *Client) GetForecast(city string) (*Forecast, error) {
 
 	resp := &WeatherResponse{}
 	if err := jsonKit.Unmarshal(data, resp); err != nil {
-		return nil, errorKit.Wrap(err, "Fail to unmarshal with json: %s", string(data))
+		return nil, errorKit.Wrapf(err, "Fail to unmarshal with json: %s", string(data))
 	}
 	if err := resp.IsSuccess(); err != nil {
 		return nil, err
 	}
 	if len(resp.Forecasts) == 0 {
-		return nil, errorKit.New("len(resp.Forecasts) == 0")
+		return nil, errorKit.Newf("len(resp.Forecasts) == 0")
 	}
 	return resp.Forecasts[0], nil
 }

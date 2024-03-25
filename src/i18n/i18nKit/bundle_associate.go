@@ -23,12 +23,12 @@ func Associate(bundle *i18n.Bundle, messageFile *i18n.MessageFile, languageCodes
 
 	for i, languageCode := range languageCodes {
 		if strKit.IsEmpty(languageCode) {
-			err = errorKit.New("languageCode(index: %d, value: %s) is invalid", i, languageCode)
+			err = errorKit.Newf("languageCode(index: %d, value: %s) is invalid", i, languageCode)
 			return
 		}
 		tag := language.Make(languageCode)
 		if err = bundle.AddMessages(tag, messageFile.Messages...); err != nil {
-			err = errorKit.Wrap(err, "AddMessages() fails with languageCode(index: %d, value: %s)", i, languageCode)
+			err = errorKit.Wrapf(err, "AddMessages() fails with languageCode(index: %d, value: %s)", i, languageCode)
 			return
 		}
 	}

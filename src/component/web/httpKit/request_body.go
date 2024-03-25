@@ -13,7 +13,7 @@ import (
 )
 
 var (
-	NotSeekableError = errorKit.New("request body is not seekable")
+	NotSeekableError = errorKit.Newf("request body is not seekable")
 )
 
 // MakeRequestBodySeekable
@@ -76,7 +76,7 @@ func ResetRequestBody(req *http.Request) error {
 // OverrideRequestBody 覆盖 POST请求 的请求体（request body）.
 func OverrideRequestBody(req *http.Request, m map[string][]string) error {
 	if req.Method != http.MethodPost {
-		return errorKit.New("method(%s) isn't POST", req.Method)
+		return errorKit.Newf("method(%s) isn't POST", req.Method)
 	}
 
 	content := ToRequestBodyString(m)

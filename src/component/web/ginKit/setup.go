@@ -104,7 +104,7 @@ func SetUp(config *Config, businessLogic func(engine *gin.Engine) error, options
 	/* 业务逻辑 */
 	if businessLogic != nil {
 		if err := businessLogic(engine); err != nil {
-			return errorKit.Wrap(err, "Fail to execute businessLogic().")
+			return errorKit.Wrapf(err, "Fail to execute businessLogic().")
 		}
 	}
 
@@ -113,19 +113,19 @@ func SetUp(config *Config, businessLogic func(engine *gin.Engine) error, options
 		if config.Port == 0 {
 			// (1) https port（本服务使用1个端口）
 			if err := netKit.AssertValidPort(ssl.Port); err != nil {
-				return errorKit.Wrap(err, "Https port(%d) should be set to a valid value.", ssl.Port)
+				return errorKit.Wrapf(err, "Https port(%d) should be set to a valid value.", ssl.Port)
 			}
 			return engine.RunTLS(netKit.JoinHostnameAndPort(config.HostName, ssl.Port), ssl.CertFile, ssl.KeyFile)
 		}
 		// (2) https port + http port（本服务使用2个端口）
 		if err := netKit.AssertValidPort(ssl.Port); err != nil {
-			return errorKit.Wrap(err, "Https port(%d) should be set to a valid value.", ssl.Port)
+			return errorKit.Wrapf(err, "Https port(%d) should be set to a valid value.", ssl.Port)
 		}
 		if err := netKit.AssertValidPort(config.Port); err != nil {
-			return errorKit.Wrap(err, "Http port(%d) should be set to a valid value.", config.Port)
+			return errorKit.Wrapf(err, "Http port(%d) should be set to a valid value.", config.Port)
 		}
 		if config.Port == ssl.Port {
-			return errorKit.New("Http port and https port are same(%d).", config.Port)
+			return errorKit.Newf("Http port and https port are same(%d).", config.Port)
 		}
 
 		go func() {
@@ -149,10 +149,10 @@ func SetUp(config *Config, businessLogic func(engine *gin.Engine) error, options
 	}
 	// (3) http port（本服务使用1个端口）
 	if config.Port == 0 {
-		return errorKit.New("At least one of http port and https port should be set to a valid value.")
+		return errorKit.Newf("At least one of http port and https port should be set to a valid value.")
 	}
 	if err := netKit.AssertValidPort(config.Port); err != nil {
-		return errorKit.Wrap(err, "Http port(%d) should be set to a valid value.", config.Port)
+		return errorKit.Wrapf(err, "Http port(%d) should be set to a valid value.", config.Port)
 	}
 	return engine.Run(netKit.JoinHostnameAndPort(config.HostName, config.Port))
 }

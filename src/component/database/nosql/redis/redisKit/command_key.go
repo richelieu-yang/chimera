@@ -152,7 +152,7 @@ e.g. db为空（|| db中不存在符合条件的key）
 */
 func (client *Client) ScanFully(ctx context.Context, match string, count int64) ([]string, error) {
 	if count < 1 {
-		return nil, errorKit.New("invalid count(%d)", count)
+		return nil, errorKit.Newf("invalid count(%d)", count)
 	}
 
 	var keys = make([]string, 0, count*6)

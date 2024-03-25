@@ -8,8 +8,8 @@ import (
 
 func TestIs(t *testing.T) {
 	err := redis.Nil
-	err1 := Wrap(err, "1")
-	err2 := Wrap(err1, "2")
+	err1 := Wrapf(err, "1")
+	err2 := Wrapf(err1, "2")
 
 	fmt.Printf("%+v\n", err2)
 
@@ -34,7 +34,7 @@ func TestAs(t *testing.T) {
 	err := myError{
 		Text: "cyy",
 	}
-	err1 := Wrap(err, "1")
+	err1 := Wrapf(err, "1")
 
 	target := &myError{}
 	if ok := As(err1, target); !ok {
@@ -59,7 +59,7 @@ func TestAs1(t *testing.T) {
 	err := &myError1{
 		Text: "cyy",
 	}
-	err1 := Wrap(err, "1")
+	err1 := Wrapf(err, "1")
 
 	target := &myError1{}
 	// 相较于 TestAs，多了个 &

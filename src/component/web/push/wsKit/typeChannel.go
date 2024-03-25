@@ -46,7 +46,7 @@ func (channel *WsChannel) PushMessage(messageType messageType, data []byte) (err
 	case MessageTypeText:
 	case MessageTypeBinary:
 	default:
-		err = errorKit.New("invalid message type(%d)", messageType)
+		err = errorKit.Newf("invalid message type(%d)", messageType)
 		return
 	}
 	if channel.Closed {

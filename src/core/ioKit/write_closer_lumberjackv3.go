@@ -80,7 +80,7 @@ func NewLumberJackWriteCloser(filePath string, maxSize int64, options ...LumberJ
 
 	opts := loadOptions(options...)
 	if opts.maxAge > 0 && opts.maxAge < time.Minute {
-		return nil, errorKit.New("maxAge(%s) is too small", opts.maxAge)
+		return nil, errorKit.Newf("maxAge(%s) is too small", opts.maxAge)
 	}
 	return lumberjack.NewRoller(filePath, maxSize, &lumberjack.Options{
 		MaxAge:     opts.maxAge,

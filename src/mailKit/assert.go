@@ -8,7 +8,7 @@ import (
 
 func AssertEmail(email string) error {
 	if err := validateKit.Email(email); err != nil {
-		return errorKit.NewSkip(1, "[%s] email(%s) is invalid with error(%s)", funcKit.GetFuncName(1), email, err.Error())
+		return errorKit.NewfWithSkip(1, "[%s] email(%s) is invalid with error(%s)", funcKit.GetFuncName(1), email, err.Error())
 	}
 	return nil
 }

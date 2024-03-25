@@ -13,7 +13,7 @@ type (
 
 func (baseResp *BaseResponse) IsSuccess() error {
 	if baseResp.Status != "1" {
-		return errorKit.New("Fail to get weather, status: %s, infocode: %s, info: %s", baseResp.Status, baseResp.InfoCode, baseResp.Info)
+		return errorKit.Newf("Fail to get weather, status: %s, infocode: %s, info: %s", baseResp.Status, baseResp.InfoCode, baseResp.Info)
 	}
 	return nil
 }

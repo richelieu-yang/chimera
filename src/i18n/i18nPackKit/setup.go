@@ -9,7 +9,7 @@ import (
 )
 
 var (
-	NotSetupError = errorKit.New("Haven’t been set up correctly")
+	NotSetupError = errorKit.Newf("Haven’t been set up correctly")
 )
 
 var (

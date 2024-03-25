@@ -9,10 +9,10 @@ var pongInterval time.Duration = time.Second * 15
 
 func setPongInterval(interval time.Duration) error {
 	if interval <= 0 {
-		return errorKit.New("interval(%s) must be greater than 0", interval.String())
+		return errorKit.Newf("interval(%s) must be greater than 0", interval.String())
 	}
 	if interval < time.Millisecond*500 {
-		return errorKit.New("interval(%s) is too small", interval.String())
+		return errorKit.Newf("interval(%s) is too small", interval.String())
 	}
 
 	pongInterval = interval

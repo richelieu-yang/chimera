@@ -42,10 +42,10 @@ func NewSimpleConsumer(consumerGroup string, subscriptionExpressions map[string]
 		rmq_client.WithSubscriptionExpressions(subscriptionExpressions),
 	)
 	if err != nil {
-		return nil, errorKit.Wrap(err, "Fail to new simple consumer")
+		return nil, errorKit.Wrapf(err, "Fail to new simple consumer")
 	}
 	if err := simpleConsumer.Start(); err != nil {
-		return nil, errorKit.Wrap(err, "Fail to start simple consumer")
+		return nil, errorKit.Wrapf(err, "Fail to start simple consumer")
 	}
 	return simpleConsumer, nil
 }

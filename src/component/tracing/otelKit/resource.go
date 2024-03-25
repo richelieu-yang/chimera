@@ -27,7 +27,7 @@ func newDetailedResource(serviceName string, attributeMap map[string]string) (*r
 		resource.WithAttributes(attributes...),
 	)
 	if err != nil {
-		return nil, errorKit.New("Fail to create resource")
+		return nil, errorKit.Newf("Fail to create resource")
 	}
 	return res, nil
 }

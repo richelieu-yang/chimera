@@ -25,7 +25,7 @@ PS:
 */
 func NewGrpcTracerProvider(endpoint, serviceName string, attributeMap map[string]string, opts ...otlptracegrpc.Option) (*trace.TracerProvider, error) {
 	if err := validateKit.Var(endpoint, "omitempty,hostname_port"); err != nil {
-		return nil, errorKit.New("invalid grpc endpoint(%s)", endpoint)
+		return nil, errorKit.Newf("invalid grpc endpoint(%s)", endpoint)
 	}
 	// 放在最后面（优先级最高）
 	if strKit.IsNotEmpty(endpoint) {

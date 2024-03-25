@@ -32,7 +32,7 @@ func NewClientSimply(ctx context.Context, uri string) (*mongo.Client, error) {
 func NewClient(ctx context.Context, opts ...*options.ClientOptions) (*mongo.Client, error) {
 	client, err := mongo.Connect(ctx, opts...)
 	if err != nil {
-		return nil, errorKit.Wrap(err, "fail to connect")
+		return nil, errorKit.Wrapf(err, "fail to connect")
 	}
 
 	// 检查连接是否成功
@@ -40,7 +40,7 @@ func NewClient(ctx context.Context, opts ...*options.ClientOptions) (*mongo.Clie
 	defer cancel()
 	if err := client.Ping(ctx1, readpref.Primary()); err != nil {
 		_ = client.Disconnect(context.TODO())
-		return nil, errorKit.Wrap(err, "fail to ping")
+		return nil, errorKit.Wrapf(err, "fail to ping")
 	}
 
 	return client, nil

@@ -25,5 +25,5 @@ func GetProcessCount() (int, error) {
 
 // GetProcessThreadCount 获取: (瞬时的值)系统中所有进程及其线程的数量.
 func GetProcessThreadCount() (int, error) {
-	return 0, errorKit.New("not yet realized")
+	return 0, errorKit.Newf("not yet realized")
 }
