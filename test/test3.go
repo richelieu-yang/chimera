@@ -1,31 +1,20 @@
 package main
 
 import (
-	"fmt"
-	"html"
+	"github.com/gin-gonic/gin"
+	"github.com/richelieu-yang/chimera/v3/src/log/logrusInitKit"
+	_ "github.com/richelieu-yang/chimera/v3/src/log/logrusInitKit"
 )
 
 func main() {
-	htmlStr := "<html>Hello.</html>"
-	escaped := html.EscapeString(htmlStr)
-	fmt.Println(escaped)
-	htmlStr1 := html.UnescapeString(escaped)
-	fmt.Println(htmlStr1)
+	logrusInitKit.SetUp()
+	engine := gin.Default()
 
-	//fmt.Println(base64Kit.DecodeStringToString("cG9uZw=="))
+	engine.Any("/test", func(ctx *gin.Context) {
 
-	//fmt.Println(base64Kit.DecodeStringToString(""))
+	})
 
-	//password := []byte("MyDarkSecret")
-	//
-	//// Hashing the password with the default cost of 10
-	//hashedPassword, err := bcrypt.GenerateFromPassword(password, bcrypt.DefaultCost)
-	//if err != nil {
-	//	panic(err)
-	//}
-	//fmt.Println(string(hashedPassword))
-	//
-	//// Comparing the password with the hash
-	//err = bcrypt.CompareHashAndPassword(hashedPassword, password)
-	//fmt.Println(err) // nil means it is a match
+	if err := engine.Run(":10000"); err != nil {
+		panic(err)
+	}
 }

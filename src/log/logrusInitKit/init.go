@@ -15,7 +15,7 @@ func init() {
 
 // SetUp
 /*
-Deprecated: 不要调用此函数，建议通过 "import _" 引入.
+Deprecated: 不要调用此函数，建议通过 "import _" 导入此包.
 */
 func SetUp() {
 }
