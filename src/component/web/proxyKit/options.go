@@ -22,7 +22,7 @@ type (
 		// reqUrlPath 请求路由
 		reqUrlPath *string
 
-		queryParams map[string][]string
+		extraQueryParams map[string][]string
 
 		// errorLogger 错误日志（可以为nil，但不建议这么干，因为错误会输出到控制台（通过 log.Printf()），不利于错误定位）
 		errorLogger *log.Logger
@@ -63,7 +63,7 @@ func (opts *proxyOptions) getClientIP(req *http.Request) string {
 @param targetHost	e.g."127.0.0.1:8888"
 @param reqUrlPath 	(1) 可以为nil（此时不修改 req.URL.Path）
 					(2) 非nil的话，个人感觉: 字符串的第一个字符应该是"/"
-@param queryParams 	可以为nil
+@param extraQueryParams 	可以为nil
 @return 可能是 context.Canceled（可以用 == 进行比较）
 
 更多可参考:
@@ -144,7 +144,7 @@ func (opts *proxyOptions) proxy(writer http.ResponseWriter, req *http.Request, t
 		}
 
 		// 可能会修改 req.URL.RawQuery
-		urlKit.AddQueryParamsToRawQuery(req.URL, opts.queryParams)
+		urlKit.AddQueryParamsToRawQuery(req.URL, opts.extraQueryParams)
 	}
 	reverseProxy := &httputil.ReverseProxy{
 		Director: director,
