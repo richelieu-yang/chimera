@@ -1,3 +1,6 @@
+## !!!
+- 不要在本包内调用 pathKit，以防 import cycle.
+
 ## TODOs
 * GoFrame的 gfile 
     https://goframe.org/pages/viewpage.action?pageId=1114225

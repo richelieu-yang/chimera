@@ -1,18 +1,24 @@
 package fileKit
 
 import (
+	"github.com/gogf/gf/v2/os/gfile"
 	"github.com/richelieu-yang/chimera/v3/src/core/errorKit"
-	"github.com/richelieu-yang/chimera/v3/src/core/pathKit"
 	"github.com/richelieu-yang/chimera/v3/src/core/strKit"
 	"os"
+	"path/filepath"
 )
 
 // Move 移动.
+/*
+PS: 移动成功后，path 将不再存在.
+*/
 var Move func(src, dst string) error = Rename
 
 // Rename 重命名.
 /*
-PS: 参考 gfile.Rename.
+PS:
+(1) 参考 gfile.Rename;
+(2) 重命名成功后，src 将不再存在.
 */
 func Rename(src, dst string) error {
 	if err := AssertExist(src); err != nil {
@@ -30,6 +36,9 @@ func Rename(src, dst string) error {
 }
 
 // RenameInSameDir 同目录下重命名.
+/*
+PS: 重命名成功后，path 将不再存在.
+*/
 func RenameInSameDir(path string, name string) error {
 	if err := AssertExist(path); err != nil {
 		return err
@@ -38,6 +47,6 @@ func RenameInSameDir(path string, name string) error {
 		return err
 	}
 
-	parentDir := pathKit.ParentDir(path)
-	return Rename(path, pathKit.Join(parentDir, name))
+	parentDir := gfile.Dir(path)
+	return Rename(path, filepath.Join(parentDir, name))
 }
