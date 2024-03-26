@@ -10,14 +10,32 @@ import (
 	"net/http"
 )
 
-// InjectWithBaggage 使用 baggage 写入 trace id 和 span id.
+// InjectToHeader 使用 baggage 写入 trace id 和 span id.
 /*
-适用场景: 跨服务（跨应用通讯） + 发送端
+PS:
+(1) 需要先 set up;
+(2) 适用场景: 跨服务（跨应用通讯） + 发送端.
 */
-func InjectWithBaggage(r *http.Request, spanCtx context.Context, span trace.Span) (err error) {
+func InjectToHeader(header http.Header, spanCtx context.Context, span trace.Span) error {
+	carrier := propagation.HeaderCarrier(header)
+	return inject(carrier, spanCtx, span)
+}
+
+// InjectToMap
+/*
+PS:
+(1) 需要先 set up;
+(2) 适用场景: 跨服务（跨应用通讯） + 发送端.
+*/
+func InjectToMap(m map[string]string, spanCtx context.Context, span trace.Span) error {
+	carrier := propagation.MapCarrier(m)
+	return inject(carrier, spanCtx, span)
+}
+
+func inject(carrier propagation.TextMapCarrier, spanCtx context.Context, span trace.Span) (err error) {
 	defer func() {
 		if err != nil {
-			err = errorKit.Wrapf(err, "Fail to inject baggage")
+			err = errorKit.Wrapf(err, "fail to inject baggage")
 		}
 	}()
 
@@ -35,8 +53,8 @@ func InjectWithBaggage(r *http.Request, spanCtx context.Context, span trace.Span
 	}
 	baggageCtx := baggage.ContextWithBaggage(spanCtx, b)
 
-	//propagation.Baggage{}.Inject(baggageCtx, propagation.HeaderCarrier(r.Header))
-	otel.GetTextMapPropagator().Inject(baggageCtx, propagation.HeaderCarrier(r.Header))
+	//propagation.Baggage{}.Inject(baggageCtx, carrier)
+	otel.GetTextMapPropagator().Inject(baggageCtx, carrier)
 
 	return
 }
