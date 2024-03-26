@@ -34,6 +34,7 @@ func NewGrpcTracerProvider(endpoint, serviceName string, attributeMap map[string
 	}
 
 	/* 创建 exporter 实例 */
+	// 3s超时的ctx: 以防 传参endpoint 是无效的（比如未启动jaeger服务）
 	ctx, cancel := context.WithTimeout(context.TODO(), time.Second*3)
 	defer cancel()
 	exporter, err := otlptracegrpc.New(ctx, opts...)
