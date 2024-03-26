@@ -40,6 +40,12 @@ func TestMustSetUp(t *testing.T) {
 	}
 
 	MustSetUp(c.Gin, func(engine *gin.Engine) error {
+		engine.Use(func(ctx *gin.Context) {
+			ctx.String(333, "three three three")
+			ctx.Abort()
+			return
+		})
+
 		engine.Any("/test", func(ctx *gin.Context) {
 			qm := map[string][]string{
 				"b": {"bOx"},
