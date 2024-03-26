@@ -6,4 +6,6 @@ const (
 
 	KeyTraceId = "trace-id"
 	KeySpanId  = "span-id"
+
+	KeyParentContext = "parent-context"
 )
