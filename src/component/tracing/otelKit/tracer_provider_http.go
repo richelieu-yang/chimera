@@ -28,7 +28,7 @@ PS:
 */
 func NewHttpTracerProvider(endpoint, serviceName string, attributeMap map[string]string, opts ...otlptracehttp.Option) (*trace.TracerProvider, error) {
 	if err := validateKit.Var(endpoint, "omitempty,hostname_port"); err != nil {
-		return nil, errorKit.Newf("invalid http endpoint(%s)", endpoint)
+		return nil, errorKit.Newf("invalid endpoint(%s)", endpoint)
 	}
 	// 放在最后面（优先级最高）
 	if strKit.IsNotEmpty(endpoint) {
