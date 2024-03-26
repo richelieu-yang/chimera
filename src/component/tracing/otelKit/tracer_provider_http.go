@@ -7,6 +7,7 @@ import (
 	"github.com/richelieu-yang/chimera/v3/src/validateKit"
 	"go.opentelemetry.io/otel/exporters/otlp/otlptrace/otlptracehttp"
 	"go.opentelemetry.io/otel/sdk/trace"
+	"time"
 )
 
 // NewHttpTracerProvider
@@ -30,14 +31,17 @@ func NewHttpTracerProvider(endpoint, serviceName string, attributeMap map[string
 	if err := validateKit.Var(endpoint, "omitempty,hostname_port"); err != nil {
 		return nil, errorKit.Newf("invalid endpoint(%s)", endpoint)
 	}
-	// 放在最后面（优先级最高）
 	if strKit.IsNotEmpty(endpoint) {
+		// 放在最后面（优先级最高）
 		opts = append(opts, otlptracehttp.WithEndpoint(endpoint))
 	}
-	// 创建 exporter 实例
-	exporter, err := otlptracehttp.New(context.TODO(), opts...)
+
+	/* 创建 exporter 实例 */
+	ctx, cancel := context.WithTimeout(context.TODO(), time.Second*3)
+	defer cancel()
+	exporter, err := otlptracehttp.New(ctx, opts...)
 	if err != nil {
-		return nil, err
+		return nil, errorKit.Wrapf(err, "fail to new exporter")
 	}
 
 	res, err := newDetailedResource(serviceName, attributeMap)

@@ -28,17 +28,17 @@ func NewGrpcTracerProvider(endpoint, serviceName string, attributeMap map[string
 	if err := validateKit.Var(endpoint, "omitempty,hostname_port"); err != nil {
 		return nil, errorKit.Newf("invalid endpoint(%s)", endpoint)
 	}
-
 	if strKit.IsNotEmpty(endpoint) {
 		// 放在最后面（优先级最高）
 		opts = append(opts, otlptracegrpc.WithEndpoint(endpoint))
 	}
-	// 创建 exporter 实例
+
+	/* 创建 exporter 实例 */
 	ctx, cancel := context.WithTimeout(context.TODO(), time.Second*3)
 	defer cancel()
 	exporter, err := otlptracegrpc.New(ctx, opts...)
 	if err != nil {
-		return nil, err
+		return nil, errorKit.Wrapf(err, "fail to new exporter")
 	}
 
 	res, err := newDetailedResource(serviceName, attributeMap)
