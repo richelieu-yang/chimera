@@ -7,6 +7,7 @@ import (
 	"github.com/richelieu-yang/chimera/v3/src/validateKit"
 	"go.opentelemetry.io/otel/exporters/otlp/otlptrace/otlptracegrpc"
 	"go.opentelemetry.io/otel/sdk/trace"
+	"time"
 )
 
 // NewGrpcTracerProvider
@@ -27,12 +28,15 @@ func NewGrpcTracerProvider(endpoint, serviceName string, attributeMap map[string
 	if err := validateKit.Var(endpoint, "omitempty,hostname_port"); err != nil {
 		return nil, errorKit.Newf("invalid grpc endpoint(%s)", endpoint)
 	}
-	// 放在最后面（优先级最高）
+
 	if strKit.IsNotEmpty(endpoint) {
+		// 放在最后面（优先级最高）
 		opts = append(opts, otlptracegrpc.WithEndpoint(endpoint))
 	}
 	// 创建 exporter 实例
-	exporter, err := otlptracegrpc.New(context.TODO(), opts...)
+	ctx, cancel := context.WithTimeout(context.TODO(), time.Second*3)
+	defer cancel()
+	exporter, err := otlptracegrpc.New(ctx, opts...)
 	if err != nil {
 		return nil, err
 	}

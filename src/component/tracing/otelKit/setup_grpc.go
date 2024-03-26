@@ -10,6 +10,10 @@ import (
 	"time"
 )
 
+// MustSetUp
+/*
+@param opts e.g. otlptracegrpc.WithInsecure(), otlptracegrpc.WithDialOption(grpc.WithBlock())
+*/
 func MustSetUp(grpcEndpoint, serviceName string, attributeMap map[string]string, opts ...otlptracegrpc.Option) {
 	err := SetUp(grpcEndpoint, serviceName, attributeMap, opts...)
 	if err != nil {
