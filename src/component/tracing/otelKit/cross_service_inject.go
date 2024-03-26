@@ -10,29 +10,29 @@ import (
 	"net/http"
 )
 
-// InjectToHeader 使用 baggage 写入 trace id 和 span id.
+// InjectIntoRequest 使用 baggage 写入 trace id 和 span id.
 /*
 PS:
 (1) 需要先 set up;
 (2) 适用场景: 跨服务（跨应用通讯） + 发送端.
 */
-func InjectToHeader(header http.Header, spanCtx context.Context, span trace.Span) error {
-	carrier := propagation.HeaderCarrier(header)
-	return inject(carrier, spanCtx, span)
+func InjectIntoRequest(r *http.Request, spanCtx context.Context, span trace.Span) error {
+	carrier := propagation.HeaderCarrier(r.Header)
+	return injectWithCarrier(carrier, spanCtx, span)
 }
 
-// InjectToMap
+// InjectIntoMap
 /*
 PS:
 (1) 需要先 set up;
 (2) 适用场景: 跨服务（跨应用通讯） + 发送端.
 */
-func InjectToMap(m map[string]string, spanCtx context.Context, span trace.Span) error {
+func InjectIntoMap(m map[string]string, spanCtx context.Context, span trace.Span) error {
 	carrier := propagation.MapCarrier(m)
-	return inject(carrier, spanCtx, span)
+	return injectWithCarrier(carrier, spanCtx, span)
 }
 
-func inject(carrier propagation.TextMapCarrier, spanCtx context.Context, span trace.Span) (err error) {
+func injectWithCarrier(carrier propagation.TextMapCarrier, spanCtx context.Context, span trace.Span) (err error) {
 	defer func() {
 		if err != nil {
 			err = errorKit.Wrapf(err, "fail to inject baggage")
