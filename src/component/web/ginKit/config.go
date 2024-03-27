@@ -35,7 +35,7 @@ type (
 		//Referer       []*refererKit.RefererVerifierBuilder `json:"referer" yaml:"referer"`
 		RateLimiter *RateLimiterConfig `json:"rateLimiter" yaml:"rateLimiter"`
 
-		ResponseHeadersConfig map[string]string `json:"responseHeaders" yaml:"responseHeaders"`
+		ResponseHeaders map[string]string `json:"responseHeaders" yaml:"responseHeaders" mapstructure:"responseHeaders"`
 	}
 
 	// CorsConfig cors（跨源资源共享）的配置

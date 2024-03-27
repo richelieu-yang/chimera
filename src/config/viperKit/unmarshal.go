@@ -52,8 +52,6 @@ func UnmarshalFromData(data *Data, defaultMap map[string]interface{}, ptr interf
 
 // UnmarshalFromFile 读取配置文件，并反序列化.
 /*
-Deprecated: 反序列化.yaml文件，先用 yamlKit.UnmarshalFromFile 替换 viperKit.UnmarshalFromFile，原因: https://github.com/spf13/viper/issues/1769
-
 PS:
 (1) 配置文件 和 defaultMap 中，key首字母的大小写无所谓，都支持；
 (2) 支持配置文件的格式：JSON, TOML, HCL, .env, .yaml, .properties.

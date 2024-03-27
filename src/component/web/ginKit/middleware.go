@@ -90,9 +90,9 @@ func attachMiddlewares(engine *gin.Engine, config MiddlewareConfig, opts *ginOpt
 	}
 
 	/* response headers */
-	if mapKit.IsNotEmpty(config.ResponseHeadersConfig) {
+	if mapKit.IsNotEmpty(config.ResponseHeaders) {
 		engine.Use(func(ctx *gin.Context) {
-			for k, v := range config.ResponseHeadersConfig {
+			for k, v := range config.ResponseHeaders {
 				ctx.Header(k, v)
 			}
 			ctx.Next()
