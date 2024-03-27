@@ -50,7 +50,7 @@ func ExtractFromRequest(r *http.Request) (remoteSpanCtx context.Context, err err
 	spanCtx := trace.NewSpanContext(trace.SpanContextConfig{
 		TraceID:    traceId,
 		SpanID:     spanId,
-		TraceFlags: trace.FlagsSampled, //这个没写，是不会记录的
+		TraceFlags: trace.FlagsSampled, // 这个没写，是不会记录的
 		TraceState: trace.TraceState{},
 		Remote:     true,
 	})
