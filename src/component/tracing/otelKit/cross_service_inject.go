@@ -10,7 +10,7 @@ import (
 	"net/http"
 )
 
-// InjectIntoRequest 使用 baggage 写入 trace id 和 span id.
+// InjectIntoRequest 使用 baggage 写入 trace id 和 span id（实际上是写到 Header 中）.
 /*
 PS:
 (1) 需要先 set up;
