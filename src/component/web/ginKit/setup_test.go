@@ -2,13 +2,11 @@ package ginKit
 
 import (
 	"github.com/gin-gonic/gin"
-	"github.com/richelieu-yang/chimera/v3/src/component/web/proxyKit"
 	"github.com/richelieu-yang/chimera/v3/src/config/viperKit"
 	"github.com/richelieu-yang/chimera/v3/src/consts"
 	"github.com/richelieu-yang/chimera/v3/src/core/pathKit"
 	_ "github.com/richelieu-yang/chimera/v3/src/log/logrusInitKit"
 	"github.com/sirupsen/logrus"
-	"net/http"
 	"testing"
 )
 
@@ -37,22 +35,18 @@ func TestMustSetUp(t *testing.T) {
 	}
 
 	MustSetUp(c.Gin, func(engine *gin.Engine) error {
-		engine.Use(func(ctx *gin.Context) {
-			ctx.String(333, "three three three")
-			ctx.Abort()
-			return
-		})
-
 		engine.Any("/test", func(ctx *gin.Context) {
-			qm := map[string][]string{
-				"b": {"bOx"},
-				"c": {"阿德去外地"},
-			}
+			ctx.String(200, "oK")
 
-			if err := proxyKit.ProxyWithGin(ctx, "127.0.0.1:10000", proxyKit.WithExtraQueryParams(qm)); err != nil {
-				ctx.String(http.StatusInternalServerError, err.Error())
-				return
-			}
+			//qm := map[string][]string{
+			//	"b": {"bOx"},
+			//	"c": {"阿德去外地"},
+			//}
+			//
+			//if err := proxyKit.ProxyWithGin(ctx, "127.0.0.1:10000", proxyKit.WithExtraQueryParams(qm)); err != nil {
+			//	ctx.String(http.StatusInternalServerError, err.Error())
+			//	return
+			//}
 		})
 
 		return nil
