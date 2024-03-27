@@ -1,6 +1,7 @@
 package third
 
 import (
+	"github.com/jackc/pgx/v5"
 	"go.opentelemetry.io/otel/exporters/otlp/otlptrace"
 	"go.opentelemetry.io/otel/exporters/otlp/otlptrace/otlptracegrpc"
 	"go.opentelemetry.io/otel/exporters/otlp/otlptrace/otlptracehttp"
@@ -44,5 +45,10 @@ func init() {
 		var _ = otlptrace.Version()
 		var _ = otlptracehttp.NewClient
 		var _ = otlptracegrpc.NewClient
+	}
+
+	/* github.com/jackc/pgx/v5 v5.5.3是脆弱的 */
+	{
+		var _ *pgx.ConnConfig
 	}
 }
