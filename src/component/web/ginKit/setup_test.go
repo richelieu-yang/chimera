@@ -23,10 +23,11 @@ func TestMustSetUp(t *testing.T) {
 		logrus.Infof("wd: [%s].", wd)
 	}
 
-	path := "_chimera-lib/config.yaml"
 	type config struct {
 		Gin *Config `json:"gin" yaml:"gin"`
 	}
+
+	path := "_chimera-lib/config.yaml"
 	c := &config{}
 	//err := yamlKit.UnmarshalFromFile(path, c)
 	_, err := viperKit.UnmarshalFromFile(path, nil, c)

@@ -53,6 +53,7 @@ gin:
       r: 1000
       # 令牌桶的容量.
       b: 2000
+    # 请求的响应头
     responseHeaders:
       X-XSS-Protection: "1;mode=block"
       Strict-Transport-Security: "max-age=31536000; includeSubDomains; preload"
