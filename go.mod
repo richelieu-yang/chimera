@@ -23,11 +23,11 @@ require (
 	github.com/fatih/structs v1.1.0
 	github.com/fsnotify/fsnotify v1.10.1
 	github.com/gabriel-vasile/mimetype v1.4.15
-	github.com/gin-contrib/cors v1.7.7
-	github.com/gin-contrib/pprof v1.5.4
+	github.com/gin-contrib/cors v1.7.8
+	github.com/gin-contrib/pprof v1.5.5
 	github.com/gin-contrib/size v1.0.2
-	github.com/gin-contrib/sse v1.1.1
-	github.com/gin-contrib/static v1.1.6
+	github.com/gin-contrib/sse v1.1.2
+	github.com/gin-contrib/static v1.1.7
 	github.com/gin-gonic/gin v1.12.0
 	github.com/go-kratos/kratos/v2 v2.9.2
 	github.com/go-oauth2/oauth2/v4 v4.6.0
@@ -114,7 +114,7 @@ require (
 	github.com/yeqown/go-qrcode/v2 v2.3.0
 	github.com/yeqown/go-qrcode/writer/standard v1.4.0
 	go.etcd.io/etcd/client/v3 v3.7.1
-	go.mongodb.org/mongo-driver/v2 v2.8.2
+	go.mongodb.org/mongo-driver/v2 v2.9.0
 	go.opentelemetry.io/otel v1.46.0
 	go.opentelemetry.io/otel/exporters/otlp/otlptrace v1.46.0
 	go.opentelemetry.io/otel/exporters/otlp/otlptrace/otlptracegrpc v1.46.0
@@ -209,7 +209,7 @@ require (
 	github.com/boltdb/bolt v1.3.1 // indirect
 	github.com/boyter/go-string v1.0.5 // indirect
 	github.com/buger/jsonparser v1.1.1 // indirect
-	github.com/bytedance/gopkg v0.1.3 // indirect
+	github.com/bytedance/gopkg v0.1.4 // indirect
 	github.com/bytedance/sonic/loader v0.5.2 // indirect
 	github.com/cenkalti/backoff/v5 v5.0.3 // indirect
 	github.com/census-instrumentation/opencensus-proto v0.4.1 // indirect
@@ -217,7 +217,7 @@ require (
 	github.com/cespare/xxhash/v2 v2.3.0 // indirect
 	github.com/clbanning/mxj/v2 v2.7.0 // indirect
 	github.com/clipperhouse/uax29/v2 v2.7.0 // indirect
-	github.com/cloudwego/base64x v0.1.6 // indirect
+	github.com/cloudwego/base64x v0.1.7 // indirect
 	github.com/cockroachdb/logtags v0.0.0-20230118201751-21c54148d20b // indirect
 	github.com/cockroachdb/redact v1.1.5 // indirect
 	github.com/coreos/go-semver v0.3.1 // indirect
@@ -308,7 +308,7 @@ require (
 	github.com/mailru/easyjson v0.7.7 // indirect
 	github.com/maruel/rs v1.1.0 // indirect
 	github.com/mattn/go-colorable v0.1.15 // indirect
-	github.com/mattn/go-isatty v0.0.22 // indirect
+	github.com/mattn/go-isatty v0.0.23 // indirect
 	github.com/mattn/go-runewidth v0.0.27 // indirect
 	github.com/mattn/go-sqlite3 v1.14.22 // indirect
 	github.com/maypok86/otter/v2 v2.3.0 // indirect
