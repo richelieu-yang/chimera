@@ -9,7 +9,7 @@ import (
 )
 
 var (
-	// level 全局日志级别: DEBUG.
+	// level 全局日志级别（默认: DEBUG）.
 	/*
 		此处用 zap.AtomicLevel 而非 zapcore.Level，原因:
 		(1) 修改级别时无需重建 logger，故下面4个logger指针终身稳定;
