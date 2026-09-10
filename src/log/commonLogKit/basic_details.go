@@ -27,7 +27,8 @@ func PrintBasicDetails(logger Logger) {
 		return
 	}
 
-	logger.Info(strings.Repeat("=", 42))
+	count := 42 // "="的数量
+	logger.Info(strings.Repeat("=", count))
 	logger.Infof("\n%s", consts.Banner)
 
 	// 作用: 通知外部（可以是多个）协程a已执行完毕
@@ -112,7 +113,7 @@ func PrintBasicDetails(logger Logger) {
 		// 等了200ms（但 协程b 还在执行，就不管它了）
 	}
 
-	logger.Info(strings.Repeat("=", 42))
+	logger.Info(strings.Repeat("=", count))
 }
 
 func printTimeDetails(logger Logger, ch chan struct{}) {
