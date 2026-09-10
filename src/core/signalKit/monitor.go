@@ -62,7 +62,11 @@ func MonitorExitSignals(callbacks ...func(sig os.Signal)) {
 		}
 
 		console.Warn("Program is exiting...")
-		console.Sync()
+
+		// 这里其实不需要 flush: console 的输出目标(os.Stdout)无缓冲，日志在 Write 返回时已进入内核;
+		// 而对 os.Stdout 做同步，在 终端/管道 下必然返回平台相关的错误，故显式忽略.
+		_ = console.Sync()
+
 		os.Exit(1)
 	}()
 

@@ -18,6 +18,12 @@ var (
 	*/
 	level = zap.NewAtomicLevelAt(zapcore.DebugLevel)
 
+	// core 4个logger共享的唯一core，同时也是 Sync() 的唯一落点.
+	/*
+		默认的输出目标是 os.Stdout（无缓冲），详见 Sync() 的说明.
+	*/
+	core zapcore.Core
+
 	// 下面4个logger仅在 init() 中创建一次，此后不再被修改
 	l       *zap.Logger
 	sl      *zap.SugaredLogger
@@ -37,8 +43,8 @@ func init() {
 */
 func initialize() {
 	encoder := zapKit.NewEncoder()
-	ws := os.Stdout
-	core := zapKit.NewCore(encoder, ws, level)
+	ws := zapKit.NewLockedWriteSyncer(os.Stdout)
+	core = zapKit.NewCore(encoder, ws, level)
 
 	l = zapKit.NewLogger(core, zapKit.WithCallerSkip(0))
 	sl = l.Sugar()
@@ -72,12 +78,26 @@ func getInnerSL() *zap.SugaredLogger {
 	return innerSL
 }
 
-// Sync 刷新所有logger的缓冲区
-func Sync() {
-	_ = l.Sync()
-	_ = sl.Sync()
-	_ = innerL.Sync()
-	_ = innerSL.Sync()
+// Sync 刷新底层 core 的输出缓冲.
+/*
+!!!: 默认的输出目标(os.Stdout)是 无缓冲 的，所以本方法在默认配置下 不会改变任何结果.
+
+"无缓冲"意味着: 每次 Write 都会立刻发起一次 write(2) 系统调用，日志在 Write 返回时
+就已经进入操作系统内核，不存在"滞留在用户态缓冲区、还没写出去"的数据.
+因此本方法唯一可能做的事只是把内核页缓存刷到物理磁盘(fsync)，而这与
+"进程退出时会不会丢日志"无关 —— 正常退出/panic/os.Exit 都不会丢弃已进入内核的页缓存，
+只有 断电 / 内核崩溃 才会.
+
+而且对 os.Stdout 调用同步在多数目标上根本不成立（实测 macOS/Apple M1 Pro）:
+	终端(TTY)     => "inappropriate ioctl for device" (ENOTTY)
+	管道          => "bad file descriptor"           (EBADF)
+	/dev/null     => "operation not supported by device" (ENODEV)
+	重定向到文件    => nil，此时才是一次真正的 fsync
+
+@return 底层 core 的 Sync 结果; 上述平台相关的错误属 预期行为，调用方可以直接忽略.
+*/
+func Sync() error {
+	return core.Sync()
 }
 
 // SetLogLevel 修改全局日志级别
