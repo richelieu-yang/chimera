@@ -100,7 +100,7 @@ func Sync() error {
 	return core.Sync()
 }
 
-// SetLogLevel 修改全局日志级别
+// SetLogLevel 修改全局日志级别.
 /*
 PS:
 (1) 修改后立即对所有logger生效;
