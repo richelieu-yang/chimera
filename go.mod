@@ -8,7 +8,7 @@ require (
 	github.com/andybalholm/brotli v1.2.4
 	github.com/apache/pulsar-client-go v0.21.0
 	github.com/apache/rocketmq-clients/golang/v5 v5.1.4
-	github.com/bytedance/sonic v1.15.3
+	github.com/bytedance/sonic v1.15.4
 	github.com/centrifugal/centrifuge v0.39.0
 	github.com/centrifugal/gocent/v3 v3.4.0
 	github.com/cockroachdb/errors v1.14.0
