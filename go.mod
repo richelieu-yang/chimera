@@ -84,7 +84,7 @@ require (
 	github.com/olahol/melody v1.4.0
 	github.com/otiai10/gosseract/v2 v2.4.1
 	github.com/panjf2000/ants/v2 v2.12.1
-	github.com/pdfcpu/pdfcpu v0.16.1
+	github.com/pdfcpu/pdfcpu v0.16.2
 	github.com/pelletier/go-toml/v2 v2.4.3
 	github.com/pierrec/lz4/v4 v4.1.33
 	github.com/pkg/browser v0.0.0-20240102092130-5ac0b6a4141c
@@ -125,20 +125,20 @@ require (
 	go.uber.org/ratelimit v0.3.1
 	go.uber.org/zap v1.28.0
 	gocv.io/x/gocv v0.43.0
-	golang.org/x/arch v0.31.0
-	golang.org/x/crypto v0.57.0
-	golang.org/x/exp v0.0.0-20261007192929-f45ad48fbe92
-	golang.org/x/image v0.46.0
-	golang.org/x/mobile v0.0.0-20260908204917-8b95e45f8d3e
-	golang.org/x/mod v0.41.0
-	golang.org/x/net v0.60.0
+	golang.org/x/arch v0.32.0
+	golang.org/x/crypto v0.58.0
+	golang.org/x/exp v0.0.0-20261011100332-faecfb24eb49
+	golang.org/x/image v0.47.0
+	golang.org/x/mobile v0.0.0-20261011034528-197770444867
+	golang.org/x/mod v0.42.0
+	golang.org/x/net v0.61.0
 	golang.org/x/oauth2 v0.37.0
-	golang.org/x/sync v0.23.0
-	golang.org/x/sys v0.48.0
-	golang.org/x/term v0.46.0
-	golang.org/x/text v0.42.0
+	golang.org/x/sync v0.24.0
+	golang.org/x/sys v0.49.0
+	golang.org/x/term v0.47.0
+	golang.org/x/text v0.43.0
 	golang.org/x/time v0.16.0
-	golang.org/x/tools v0.51.0
+	golang.org/x/tools v0.52.0
 	google.golang.org/grpc v1.84.0
 	google.golang.org/protobuf v1.36.12
 	gopkg.in/natefinch/lumberjack.v2 v2.2.1
@@ -379,7 +379,7 @@ require (
 	go.uber.org/multierr v1.11.0 // indirect
 	go.yaml.in/yaml/v2 v2.4.4 // indirect
 	go.yaml.in/yaml/v3 v3.0.5 // indirect
-	golang.org/x/telemetry v0.0.0-20260924152758-ed294f943157 // indirect
+	golang.org/x/telemetry v0.0.0-20261009151841-97e8ea77aa2a // indirect
 	golang.org/x/xerrors v0.0.0-20240903120638-7835f813f4da // indirect
 	google.golang.org/api v0.278.0 // indirect
 	google.golang.org/appengine v1.6.8 // indirect
