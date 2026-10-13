@@ -4,7 +4,6 @@ import (
 	"path/filepath"
 
 	"github.com/gogf/gf/v2/os/gfile"
-	"github.com/richelieu042/chimera/v3/src/core/strKit"
 )
 
 var (
@@ -106,17 +105,24 @@ var (
 
 // CheckSkip 检查是否发生"路径穿越"（路径穿透）.
 /*
-@param path	 	父路径
-@param path1	子路径
-@return true: 发生"路径穿越"
+PS:
+（1）仅进行词法路径检查，不访问文件系统或解析符号链接。
+（2）Windows：不区分大小写。 C:\safe\upload 与 c:\SAFE\UPLOAD\file 会判定为目录内，返回 false。
+（3）Linux、macOS：区分大小写。 /safe/upload 与 /safe/UPLOAD/file 会判定为目录外，返回 true。
+
+@param parent 父路径
+@param path   目标路径；相对路径与父路径基于相同工作目录
+@return true: 目标在父路径之外、任一路径为空，或无法计算相对路径
 
 e.g.
 ("/a//b/", "/a//b//../c.docx")	=> true
 ("/a//b/", "//a//b///c.docx")	=> false
 */
 func CheckSkip(parent, path string) bool {
-	parent = Join(parent)
-	path = Join(path)
+	if parent == "" || path == "" {
+		return true
+	}
 
-	return !strKit.StartWith(path, parent)
+	relative, err := filepath.Rel(parent, path)
+	return err != nil || !filepath.IsLocal(relative)
 }
