@@ -2,8 +2,9 @@ package jwtKit
 
 import (
 	"fmt"
-	"github.com/golang-jwt/jwt/v5"
 	"testing"
+
+	"github.com/golang-jwt/jwt/v5"
 )
 
 func TestJwt(t *testing.T) {

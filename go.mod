@@ -12,7 +12,7 @@ require (
 	github.com/bytedance/sonic v1.15.4
 	github.com/cockroachdb/errors v1.14.0
 	github.com/coocood/freecache v1.2.7
-	github.com/davidbyttow/govips/v2 v2.19.0
+	github.com/davidbyttow/govips/v2 v2.20.0
 	github.com/deckarep/golang-set/v3 v3.0.0
 	github.com/dromara/carbon/v2 v2.6.18
 	github.com/duke-git/lancet/v2 v2.3.9
@@ -21,7 +21,7 @@ require (
 	github.com/emersion/go-message v0.18.2
 	github.com/fatih/structs v1.1.0
 	github.com/fsnotify/fsnotify v1.10.1
-	github.com/gabriel-vasile/mimetype v1.4.15
+	github.com/gabriel-vasile/mimetype v1.4.16
 	github.com/gin-contrib/cors v1.7.9
 	github.com/gin-contrib/gzip v1.2.8
 	github.com/gin-contrib/pprof v1.5.6
@@ -66,9 +66,9 @@ require (
 	github.com/joho/godotenv v1.5.1
 	github.com/jordan-wright/email v4.0.1-0.20210109023952-943e75fe5223+incompatible
 	github.com/klauspost/compress v1.20.3
-	github.com/klauspost/cpuid/v2 v2.4.0
+	github.com/klauspost/cpuid/v2 v2.4.1
 	github.com/linxGnu/grocksdb v1.11.1
-	github.com/lionsoul2014/ip2region/binding/golang v0.0.0-20261014021221-1bf6cabfb63c
+	github.com/lionsoul2014/ip2region/binding/golang v0.0.0-20261018023631-f8b0792b0cd7
 	github.com/liuzl/gocc v0.0.0-20231231122217-0372e1059ca5
 	github.com/magiconair/properties v1.18.12
 	github.com/matoous/go-nanoid/v2 v2.1.0
@@ -96,7 +96,7 @@ require (
 	github.com/saintfish/chardet v0.0.0-20230101081208-5e3ef4b5456d
 	github.com/samber/lo v1.53.0
 	github.com/shirou/gopsutil/v4 v4.26.9
-	github.com/shopspring/decimal v1.5.0
+	github.com/shopspring/decimal v1.6.0
 	github.com/sirupsen/logrus v1.10.2
 	github.com/skip2/go-qrcode v0.0.0-20200617195104-da1b6568686e
 	github.com/sony/sonyflake v1.3.0
