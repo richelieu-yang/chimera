@@ -962,8 +962,8 @@ github.com/unidoc/unioffice v1.39.0 h1:Wo5zvrzCqhyK/1Zi5dg8a5F5+NRftIMZPnFPYwruL
 github.com/unidoc/unioffice v1.39.0/go.mod h1:Axz6ltIZZTUUyHoEnPe4Mb3VmsN4TRHT5iZCGZ1rgnU=
 github.com/valyala/fastrand v1.1.0 h1:f+5HkLW4rsgzdNoleUOB69hyT9IlD2ZQh9GyDMfb5G8=
 github.com/valyala/fastrand v1.1.0/go.mod h1:HWqCzkrkg6QXT8V2EXWvXCoow7vLwOFN002oeRzjapQ=
-github.com/vulcand/oxy/v2 v2.2.1 h1:ENZb5FjiYTTXV99it9FiJNZsE5kw3JpJkXXTOh2Sr+o=
-github.com/vulcand/oxy/v2 v2.2.1/go.mod h1:iIM9ASk0fRs926AtnLaKVWB+Y6qjHw1ZFLZ7WudM2gA=
+github.com/vulcand/oxy/v2 v2.3.0 h1:hi/zBnfuYILg7Q5HYBFbj0spAQ8t+1n7hg0elj54nus=
+github.com/vulcand/oxy/v2 v2.3.0/go.mod h1:iIM9ASk0fRs926AtnLaKVWB+Y6qjHw1ZFLZ7WudM2gA=
 github.com/vulcand/predicate v1.3.0 h1:jtNe4PHbLJ649dR7Gl+MSAzUhLGtLspAkWlSjoOiXg8=
 github.com/vulcand/predicate v1.3.0/go.mod h1:opzv9MetRuMNnuoPeTSWtwzjcXsxQC00/fuWzkPTn4s=
 github.com/x448/float16 v0.8.4 h1:qLwI1I70+NjRFUR3zs1JPUCgaCXSh3SW62uAKT1mSBM=
