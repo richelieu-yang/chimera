@@ -112,7 +112,7 @@ require (
 	github.com/xuri/excelize/v2 v2.11.0
 	github.com/yeqown/go-qrcode/v2 v2.3.0
 	github.com/yeqown/go-qrcode/writer/standard v1.4.0
-	go.etcd.io/etcd/client/v3 v3.7.2
+	go.etcd.io/etcd/client/v3 v3.7.3
 	go.mongodb.org/mongo-driver/v2 v2.9.2
 	go.opentelemetry.io/otel v1.47.0
 	go.opentelemetry.io/otel/exporters/otlp/otlptrace v1.47.0
@@ -368,8 +368,8 @@ require (
 	github.com/yuin/goldmark v1.8.2 // indirect
 	github.com/yusufpapurcu/wmi v1.2.4 // indirect
 	github.com/zeebo/xxh3 v1.1.0 // indirect
-	go.etcd.io/etcd/api/v3 v3.7.2 // indirect
-	go.etcd.io/etcd/client/pkg/v3 v3.7.2 // indirect
+	go.etcd.io/etcd/api/v3 v3.7.3 // indirect
+	go.etcd.io/etcd/client/pkg/v3 v3.7.3 // indirect
 	go.opencensus.io v0.24.0 // indirect
 	go.opentelemetry.io/auto/sdk v1.2.1 // indirect
 	go.opentelemetry.io/contrib/instrumentation/google.golang.org/grpc/otelgrpc v0.70.0 // indirect
